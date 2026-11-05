@@ -540,5 +540,101 @@
       },
       "run_record_sha256": "130471803fa9473d3912067864d6a555adc444cd247a5f9784b70d0592a9bd31"
     }
-  ]
+  ],
+  "round8": {
+    "implementation_commit": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "reviewed_base": "b1e66f69d0a0049d773f4535efbec8457fe46493",
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "positives": 6836,
+      "negatives": 6536,
+      "integration_checks": 138
+    },
+    "inventory": {
+      "failures": [],
+      "nodes": 233,
+      "other_owner_nodes": 100,
+      "status": "pass",
+      "storage_nodes": 133,
+      "unclassified_nodes": 0
+    },
+    "gate_injections": {
+      "total": 20,
+      "refused": 20,
+      "positive_detection_controls": 5,
+      "integrity_mutations_refused": 3
+    },
+    "runtime": {
+      "routes": 266,
+      "invalid_baselines": 0,
+      "escaping_eager": 0,
+      "escaping_lazy": 0,
+      "samples": []
+    },
+    "other_owner_controls": {
+      "existing_nodes": 78,
+      "existing_controls": 1092,
+      "new_name_maps": 21,
+      "new_controls": 1008,
+      "failures": 0
+    },
+    "number_probe_checks": 2041,
+    "index": {
+      "exit": 1,
+      "status": "fail",
+      "failures": 29,
+      "disposition": "21 inherited ledger-shape failures and eight comparisons against newer origin/main units; all their owner inputs unchanged from reviewed base."
+    },
+    "commands": [
+      {
+        "name": "final-selftest",
+        "command": [
+          "/tmp/numrule-fix8-venv/bin/python",
+          "scripts/pm_event_numbers.py",
+          "--self-test"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix8",
+        "exit": 0,
+        "start": "2026-11-05T12:35:14.018550+00:00",
+        "end": "2026-11-05T12:36:40.106062+00:00",
+        "seconds": 86.08742210501805,
+        "available_memory_before": 16563777536,
+        "available_memory_after": 16568246272
+      },
+      {
+        "name": "shards",
+        "command": [
+          "/tmp/numrule-fix8-venv/bin/python",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix8",
+        "exit": 0,
+        "start": "2026-11-05T12:36:40.106703+00:00",
+        "end": "2026-11-05T12:37:02.660789+00:00",
+        "seconds": 22.55407313501928,
+        "available_memory_before": 16567488512,
+        "available_memory_after": 16117514240
+      }
+    ],
+    "scope_audit": {
+      "base": "b1e66f69d0a0049d773f4535efbec8457fe46493",
+      "unchanged": {
+        "Plans/Contracts_V0.md": true,
+        "Plans/storage-plan.md": true,
+        "Plans/event_number_recipe_corpus.json": true,
+        "scripts/pm_event_numbers.py": true
+      },
+      "original_nodes_preserved": 212,
+      "new_nodes": 21,
+      "original_corpus_cases": 13372,
+      "pinned_schemas_and_owner_prose_unchanged": true
+    },
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix8",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING"
+  }
 }

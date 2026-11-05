@@ -435,3 +435,74 @@ Artifacts below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
   - Reviewer injections: list-then-blockquote, blockquote-list-blockquote, the indented literal close (escaped and literal keys), the unclosed blockquote fence (escaped and literal keys), details without a blank line, and a simple blockquote each make the CLI exit 1, with 213 nodes and 1 `unclassified_schema_node`. The indented-close cases also record a parse error from the supplementary span, which fails closed.
   - Self-test: clean, it passes 13,372/13,372 cases and 71/71 integration checks. With the list-then-blockquote node injected, it exits 1, failing only `datetime_inventory_complete_and_classified`, with 213 nodes and 1 unclassified.
 - No owner prose, pinned schema, corpus case or inventory entry changed.
+
+
+## Review round 8: findings and responses
+
+**Implementation:** `31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2`, based on Astra's reviewed `b1e66f69d0a0049d773f4535efbec8457fe46493`. B1, B2, B3 and the dependency should-fix are fixed in this commit. The finite shared-boundary checks pass; complete lane installation, native custody and the shared guard-isolation sweep retain their existing limits. No Jared decision, family admission or new PlanUnit ID is involved.
+
+| Finding | Where / cause / fix | Verification |
+|---|---|---|
+| **B1: lazy retrieval and unclassified declarations** | `scripts/pm_event_datetime.py:148` and `:167`: preloaded-only binding missed later resource retrieval. Both root iteration and fragment descent now admit the evaluated schema object; the retrieval wrapper installs its complete resource before returning it to referencing. `scripts/pm_event_datetime_inventory.py:577` raises typed `DatetimeAdmissionError` for an unclassified declaration instead of selecting the broad profile. Explicit custom resolver configurations refuse. | Adapted Astra `runtime_probes.py`: 266 valid baselines; **0/133 escaping eager nodes, 0/133 escaping lazy nodes**, including current and frozen objects. |
+| **B2: incomplete static universe** | `scripts/pm_event_datetime_inventory.py:141`, `:151`, `:256`: suffix/property-only discovery missed valid declarations and unsupported containers. The gate now reads every regular Plans file, follows symlinks, decodes UTF JSON/JSONL, Markdown/MDX code and HTML blocks, and recursively serialized JSON. It recognizes all requested declaration forms and wildcard patterns even without literal field names. Mentioning containers it cannot read/classify require a committed reason/citation exclusion. | Astra's **20/20 injections exit 1**; all five positive detection controls still detect additions. The full-tree census and final self-test both pass at 233 classified nodes. |
+| **B3: unchecked inventory assertions** | `scripts/pm_event_datetime_inventory.py:395`, `:532` and `scripts/pm_event_datetime_inventory.schema.json`: schema validation now precedes installation. Citations are typed, nonempty and phrase-sized; an authority quote must name the selected profile. Source fingerprints, field sets and `role_evidence` are recomputed. Storage classification/CV-253 cannot select `owner_schema`; other-owner identity/profile/evidence must agree. | All three exact data-only mutations fail the gate and actual self-test CLI: current-envelope profile flip, empty citations, and false role/invented profile. Admission stops before corpus execution. |
+| **Should-fix: dependency** | `reports/event-authority-20261105/NUMRULE-ADOPTION.md:271` now lists **markdown-it-py 3.0.0 / python3-markdown-it**. | The final run used 3.0.0; the dependency remains mandatory for CommonMark discovery. |
+
+### Stated static universe and exclusions
+
+The scanner covers all regular files under `Plans/`, irrespective of suffix/case, and follows file/directory symlinks to their targets. JSON/JSONL supports UTF-8/16/32 with or without BOM. Markdown/MDX covers every CommonMark fence, indented code block and HTML block, independently retaining the previous supplementary fence scan. JSON-shaped inline code is also checked; ordinary prose and inline field-name references outside code blocks are outside this container universe. JSON strings recursively decoding to objects/arrays, including multiple serialization layers, are inspected.
+
+Declarations include `properties`, matching `patternProperties`, `required`, both sides of `dependentRequired`, `dependentSchemas`, `propertyNames` (including boolean and conservatively classified reference forms), and field-naming string/object `const`/`enum` values. Unsupported mentioning text such as YAML and HTML script blocks refuses. Unreadable files, broken symlinks, cycles, duplicate keys and stale exclusions fail closed. Runtime admission is independent of this static discovery boundary.
+
+`scripts/pm_event_datetime_exclusions.json` has **162 exact container exclusions across 158 existing paths**, each with a reason and source citation. They cover existing instance/report/governance/lineage data, non-JSON code examples, and the inventory's own quoted `required` evidence arrays. Container fingerprints bind decoded text or parsed JSON content; there are no directory globs or suffix exemptions. Changed/unlisted content fails until reviewed. The inventory itself is separately checked against its schema and source assertions before runtime use.
+
+### Inventory and preservation
+
+**233 nodes = 133 Storage + 100 other-owner; zero unclassified.** All original **212** nodes preserve their path, structural fingerprints, field sets, classification, effective profile, owner and role evidence. The other-owner profile labels now name profiles in exact phrase citations; their original schema constraints remain unchanged. One other-owner row is source-lineage only and is never installed at runtime.
+
+The widened scanner adds **21 generic name-map nodes**. Wildcard key/property-name rules can admit these spellings, but the values remain their original permission, tab, schema-resource, settings or other local data types. They receive no Storage assignment. Each new row cites its exact schema node and the existing CV-1101 format binding. The full path/pointer list and source hashes are in `scope-audit.json` and the committed inventory. Source-owner text already decides these constraints; no owner prose change or question is needed.
+
+| Existing/new other-owner oracle | Result |
+|---|---|
+| Original 78 runtime nodes | **1,092/1,092 controls** preserve the original schema plus broad enforced format checker. |
+| New 21 name maps, eager and lazy registries | **1,008/1,008 controls** match their original schema constraints; zero unresolved source outcomes after supplying the complete offline resource bank. |
+| Production number recipes | **2,041/2,041 independent probes**, including physical floats/signed zero and four focused cuts across 37 non-date-time history fixtures. |
+| Existing corpus | **13,372/13,372**, unchanged bytes: 6,836 positives and 6,536 labelled negatives. |
+| Integration checks | **138/138**, including 67 new discovery/admission/inventory controls. |
+
+Both owner documents, all existing pinned schema files, the production number helper, all 13,372 case records and shard/index artifacts remain byte-identical to the reviewed base. Only the inventory changes under Plans. No shard/index regeneration is required or performed. Shard body/path verification passes read-only.
+
+### Actual CLI failures and check scope
+
+The actual `pm_event_numbers.py --self-test` now performs the inventory gate before evaluating cases. With an unclassified pattern schema, profile flip, empty citations or false role injected, it exits **1**, reports `NOT_RUN_ADMISSION_REFUSED`, and does not claim any case execution. Restored, the complete real-worktree run exits **0** with the counts above.
+
+Astra's scripts were copied before editing/running. Runtime, source-field, number and injection replays use a **97-input-file, approximately 38 MB scratch extraction** with the authentic inventory/source resources and the applicable six exclusions. The real whole-Plans census is run independently, including the final self-test. Scratch probe adaptations only supply the new root/output paths, catch the new typed refusal in the old mutation probe, record progress, preserve the original 78-node source control set, and load the full offline resource bank for the new map controls. `replay-inputs.json`, `replay_setup.py` and the retained scripts document reconstruction.
+
+| Check | Exit / result |
+|---|---|
+| Final real-worktree self-test | **0**, 13,372 cases, 138 checks, 233 classified nodes. |
+| Runtime probe, eager / on-demand | **0**, zero invalid baselines and zero escapes in either registry mode. |
+| Gate injection replay | **0** for the probe driver; **20/20 product gate invocations exit 1**. |
+| Three inventory-only mutations | Each gate and each actual self-test invocation exits **1**. |
+| New map/source/number probes | **0**, all finite controls pass. |
+| `pm-shard-plans.py --check --config Plans/sharding_config.json` | **0**. |
+| `pm-plan-index.py validate` | **1**, top-level `fail`, **29 failures**: 21 inherited ledger-shape failures plus eight newer-main comparisons: DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038. All named owner/index inputs are unchanged by round 8. No index/governance PASS is claimed. |
+| `git diff --check` and changed-module compilation | **0**. |
+
+The 15 ignored currentness inputs were copied and hash-verified solely for index validation, then removed before the final self-test. The first new-map probe lacked an external resource alias; its corrected complete offline bank yields zero exceptions and no schema changes. Preliminary full-tree probes were stopped while the discovery boundary was widened to include wildcard-only schemas; the retained final replay supersedes them.
+
+CV-1101 changes from Astra B1/B2/B3 **BLOCKED** to **finite runtime/static/integrity oracles PASS within the stated universe**. Aggregate lane integration remains **PARTIAL**, native authority **NOT_RUN**, complete guard isolation **SWEEP_PENDING**. The four existing focused non-date-time predicate cuts retain their isolated flip sets; no new general guard-proof tool is authored. Family grades are **N/A**, membership **ABSENT**. IDs used: CV-1100, CV-1101, SP-1100 and SP-1101; none minted. No registry, Decision Log, Spec Lock, governance evidence, generated index/shard, `.gitignore` or main push.
+
+Evidence is retained at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix8/`. Its `SHA256SUMS` binds retained probes, inputs, result files, report and self-grade. Important results:
+
+| Evidence file | SHA-256 |
+|---|---|
+| `final-selftest.json` | `ecb6bdb5b34a6bdcf69257243ca9e419d4859c5af1cf55391d35f392420397df` |
+| `runtime-probes.json` | `ff3e31274a8cfc23a475932185720a10d4eda69b53482cce41b25e59ecc2cc18` |
+| `gate-probes.json` | `8d0fce044db931ea73a84f256a8869555ee1e979e4dc1d7ec34267ecf7e77a95` |
+| `other-owner-probes.json` | `1fa84f0264d1157cc1ef953a0ba0333c5f203faf02b4449a430944537c999056` |
+| `new-map-probes.json` | `8f42d8eb6cc086c460456ae43160239691e19dcd0366b5adcde4e35cd554c60d` |
+| `number-probes.json` | `5576b0e7aa7985c833959e301bad1a4d34bc1baa66d3d056c50a7949a578240a` |
+| `scope-audit.json` | `8ee463372499fbe2f795824d78f1b31b34aa55cb3d6b9149ab0f0702c046e3a2` |
+| `index-validation.json` | `75d26fadb29558848e23d22217325525180f99ceb3b0233be0b25e53b497193c` |
+| `final-checks.json` | `d74150cf63210fd0fa394c94caf820933b4ec207ed0ff3d70bcf47eac313d2d6` |

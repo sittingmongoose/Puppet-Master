@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-FIX5-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX8-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -55,13 +55,16 @@
       "reviewed_embedded_schema_nodes": 13,
       "pinned_schema_bytes": "PRESERVED",
       "classified_timestamp_inventory": "PASS",
-      "inventory_nodes": 212,
+      "inventory_nodes": 233,
       "storage_classified_nodes": 133,
-      "other_owner_nodes": 79,
+      "other_owner_nodes": 100,
       "unclassified_nodes": 0,
       "storage_resource_path_oracles": "PASS",
-      "completeness_gate": "PASS",
-      "native_schema_custody": "NOT_RUN"
+      "completeness_gate": "PASS_WITHIN_STATED_UNIVERSE",
+      "native_schema_custody": "NOT_RUN",
+      "runtime_resource_admission": "PASS_FINITE_PRELOADED_AND_LAZY_ROUTES",
+      "inventory_assertion_integrity": "PASS_FINITE_MUTATIONS",
+      "new_name_map_nodes": 21
     }
   ],
   "corpus": {
@@ -70,7 +73,7 @@
     "negatives": 6536,
     "labelled_negatives": 6536,
     "passed": 13372,
-    "owner_integration_checks": 70,
+    "owner_integration_checks": 138,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
@@ -98,11 +101,10 @@
     "Native original-owner custody/recipe installation and resource authentication",
     "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
     "Integration/governance work belongs to the lead, outside this drafting task",
-    "Index validation before integration: PLS-025 from newer main plus 21 unchanged legacy ledger-shape errors; no affected file was edited in this fix round.",
-    "Live origin/main adds six unchanged-owner retention comparisons (DL-330/331/332, DP-064/066, PWIZ-038); original 22 index failure records match the reviewed comparison exactly."
+    "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8."
   ],
-  "reviewed_head": "bb74b97e6be675d786537daa143b997deefb8cb8",
-  "review_round": 5,
+  "reviewed_head": "b1e66f69d0a0049d773f4535efbec8457fe46493",
+  "review_round": 8,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -112,7 +114,8 @@
     "CV-1101.owner_specification": "cycle-2 review PARTIAL -> finite reference owner binding PASS; native/lane integration NOT_RUN",
     "CV-1101.enforced_format_oracles": "Astra PARTIAL -> bounded direct/reference/nested/retained composition oracles PASS; complete lane/native integration NOT_RUN",
     "CV-1101.embedded_v2_envelope_oracles": "cycle-4 B1 BLOCKED -> finite cases/probes PASS; native/lane integration NOT_RUN",
-    "CV-1101.complete_storage_schema_boundary": "cycle-5 B1 BLOCKED -> complete classified inventory and finite current/frozen schema-path oracles PASS; native/lane installation NOT_RUN"
+    "CV-1101.complete_storage_schema_boundary": "cycle-5 B1 BLOCKED -> complete classified inventory and finite current/frozen schema-path oracles PASS; native/lane installation NOT_RUN",
+    "CV-1101.round8": "Astra B1/B2/B3 BLOCKED -> stated-universe discovery, inventory integrity, and finite eager/lazy current/frozen routes PASS; complete lane/native integration NOT_RUN."
   },
   "implementation_commit": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
   "round1_validation": {
@@ -148,7 +151,11 @@
     "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda",
     "B1_round3": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3",
     "B1_round5": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
-    "B1_round4": "493e2974c885609d2b64e1ec8f863f234a6da38f"
+    "B1_round4": "493e2974c885609d2b64e1ec8f863f234a6da38f",
+    "B1_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "B2_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "B3_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "dependency_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -255,5 +262,101 @@
     "scope_audit_status": "pass",
     "failure_exit": 1
   },
-  "scanner_hardening_commit": "c4e2beaeb3419a9339f5f28043a7c22f6fce37f5"
+  "scanner_hardening_commit": "c4e2beaeb3419a9339f5f28043a7c22f6fce37f5",
+  "round8_validation": {
+    "implementation_commit": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "reviewed_base": "b1e66f69d0a0049d773f4535efbec8457fe46493",
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "positives": 6836,
+      "negatives": 6536,
+      "integration_checks": 138
+    },
+    "inventory": {
+      "failures": [],
+      "nodes": 233,
+      "other_owner_nodes": 100,
+      "status": "pass",
+      "storage_nodes": 133,
+      "unclassified_nodes": 0
+    },
+    "gate_injections": {
+      "total": 20,
+      "refused": 20,
+      "positive_detection_controls": 5,
+      "integrity_mutations_refused": 3
+    },
+    "runtime": {
+      "routes": 266,
+      "invalid_baselines": 0,
+      "escaping_eager": 0,
+      "escaping_lazy": 0,
+      "samples": []
+    },
+    "other_owner_controls": {
+      "existing_nodes": 78,
+      "existing_controls": 1092,
+      "new_name_maps": 21,
+      "new_controls": 1008,
+      "failures": 0
+    },
+    "number_probe_checks": 2041,
+    "index": {
+      "exit": 1,
+      "status": "fail",
+      "failures": 29,
+      "disposition": "21 inherited ledger-shape failures and eight comparisons against newer origin/main units; all their owner inputs unchanged from reviewed base."
+    },
+    "commands": [
+      {
+        "name": "final-selftest",
+        "command": [
+          "/tmp/numrule-fix8-venv/bin/python",
+          "scripts/pm_event_numbers.py",
+          "--self-test"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix8",
+        "exit": 0,
+        "start": "2026-11-05T12:35:14.018550+00:00",
+        "end": "2026-11-05T12:36:40.106062+00:00",
+        "seconds": 86.08742210501805,
+        "available_memory_before": 16563777536,
+        "available_memory_after": 16568246272
+      },
+      {
+        "name": "shards",
+        "command": [
+          "/tmp/numrule-fix8-venv/bin/python",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix8",
+        "exit": 0,
+        "start": "2026-11-05T12:36:40.106703+00:00",
+        "end": "2026-11-05T12:37:02.660789+00:00",
+        "seconds": 22.55407313501928,
+        "available_memory_before": 16567488512,
+        "available_memory_after": 16117514240
+      }
+    ],
+    "scope_audit": {
+      "base": "b1e66f69d0a0049d773f4535efbec8457fe46493",
+      "unchanged": {
+        "Plans/Contracts_V0.md": true,
+        "Plans/storage-plan.md": true,
+        "Plans/event_number_recipe_corpus.json": true,
+        "scripts/pm_event_numbers.py": true
+      },
+      "original_nodes_preserved": 212,
+      "new_nodes": 21,
+      "original_corpus_cases": 13372,
+      "pinned_schemas_and_owner_prose_unchanged": true
+    },
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix8",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING"
+  }
 }
