@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DS15-fix8",
+  "assessment_id": "DS15-r9",
   "assessment_kind": "worker_self_grade_prepared_without_admission",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -19,12 +19,12 @@
       "positive_negative_oracles"
     ]
   },
-  "assessed_tree": "915ba234e375e130a7a2b448762fd2814272a682",
+  "assessed_tree": "5296fd85cbc7ddb699d5d57c1cd51e6fe839674f",
   "native_execution": "NOT_RUN",
-  "prepared_family_count": 16,
+  "prepared_family_count": 23,
   "prepared_complete_family_count": 0,
   "all_twelve_PASS_family_count": 0,
-  "guard_proof_complete": true,
+  "guard_proof_complete": false,
   "oracle_completeness": false,
   "rows": [
     {
@@ -339,527 +339,561 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "browser.context_share_revoked",
-      "family_revision": null,
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event name absent from Event Authority registry; no admission expected in this lane.",
+          "finding": "No Event Authority admission or storage-value registry append was made. Production writes and checkpoint advance remain disabled.",
           "evidence": [
             {
-              "path": "Plans/event_family_registry.json",
-              "unit": "#/families",
-              "line_start": 8,
-              "line_end": 8,
-              "quote": "\"families\": ["
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13961,
+              "line_end": 13961,
+              "quote": "prepared without admission."
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current semantic/storage owners are identifiable; missing full per-family binding is incomplete, not proof of an owner conflict.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines owner_doc for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13961,
+              "line_end": 13961,
+              "quote": "newly authored owner contract"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Commands/behavior are listed but full exact emit and receipt ordering remains unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines producer for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13965,
+              "line_end": 13965,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact closed 1.0.0 payload contract for this family was prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines closed_payload_schema for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false"
+            },
+            {
+              "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+              "unit": "root",
+              "line_start": 16,
+              "line_end": 16,
+              "quote": "\"const\": \"1.0.0\""
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Subject identifiers exist but complete exact envelope/idempotency joins remain unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines scope_identity for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13966,
+              "line_end": 13966,
+              "quote": "Scope and identity:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact per-family retry/dedupe/result recipe was found. Generic runtime safeguards do not establish this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines replay_idempotency for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13969,
+              "line_end": 13969,
+              "quote": "Replay and transitions:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact event/checkpoint policy assigned on this stopped row.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "DL-401 G10 names Chat, but the governing chat(s) for an all-grants revoke and the scope-wide checkpoint lifetime are pending.",
           "evidence": [
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "Case L-3",
-              "line_start": 17403,
-              "line_end": 17403,
-              "quote": "Every materialized family/event registration carries an exact structured"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13971,
+              "line_end": 13971,
+              "quote": "Retention:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Shared privacy/ref restrictions exist; full original family custody and restore closure remain incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines redaction_custody for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13968,
+              "line_end": 13968,
+              "quote": "Original source and custody:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Some lifecycle behavior is already specified; missing event projection/policy detail is PARTIAL, not the claimed blanket CONFLICT.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines transitions for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13965,
+              "line_end": 13965,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact reader/version/checkpoint/CAS binding prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines consumers_checkpoints for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13970,
+              "line_end": 13970,
+              "quote": "Consumer and checkpoint:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact version/withdrawal protocol prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-321 independently defines compatibility_withdrawal for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13972,
+              "line_end": 13972,
+              "quote": "Compatibility and withdrawal:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own complete positive/negative event-contract oracle suite prepared.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Own saved positive/negative and reference-closure cases pass serially, including coherent source/receipt copies. Universal predicate-isolation proof for these seven new families awaits the mandated shared-tool sweep; S-FMT1/S-N1/S-N2 are inherited. No full oracle-completeness PASS is claimed.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 831,
-              "line_end": 831,
-              "quote": "| `cmd.browser.revoke_share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-321",
+              "line_start": 13973,
+              "line_end": 13973,
+              "quote": "Oracles:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         }
       },
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "native_execution": "NOT_RUN",
-      "pass_count": 0,
+      "pass_count": 9,
       "normative_depth_complete": false,
-      "question_id": "Q2",
-      "question": "Can several target-thread grants coexist for one ordinary BrowserSession, does a new share replace an earlier recipient, and what exactly does revoke without thread_id revoke? Namespace and ownership are already decided; do not reopen them.",
       "remaining_gaps": [
-        "Can several target-thread grants coexist for one ordinary BrowserSession, does a new share replace an earlier recipient, and what exactly does revoke without thread_id revoke? Namespace and ownership are already decided; do not reopen them."
+        "No registry admission.",
+        "Shared guard-tool/number/format sweep remains open.",
+        "PRODUCT RETENTION: scope-wide checkpoint lifetime; for all-chat revoke also governing chat deletion/hold lifetime. Exact questions are in SMPFS-321."
       ],
       "grade_counts": {
-        "ABSENT": 7,
-        "PARTIAL": 5
-      }
+        "ABSENT": 1,
+        "PASS": 9,
+        "PARTIAL": 2
+      },
+      "current_owner_units": [
+        "SMPFS-321",
+        "ATS-329"
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked"
+      ],
+      "notes": "Round 9 answer application, not review repair. Full twelve-criterion owner prose; conservative C12 PARTIAL until the shared sweep. Native NOT_RUN."
     },
     {
       "event_type": "browser.context_shared",
-      "family_revision": null,
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event name absent from Event Authority registry; no admission expected in this lane.",
+          "finding": "No Event Authority admission or storage-value registry append was made. Production writes and checkpoint advance remain disabled.",
           "evidence": [
             {
-              "path": "Plans/event_family_registry.json",
-              "unit": "#/families",
-              "line_start": 8,
-              "line_end": 8,
-              "quote": "\"families\": ["
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13909,
+              "line_end": 13909,
+              "quote": "prepared without admission."
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current semantic/storage owners are identifiable; missing full per-family binding is incomplete, not proof of an owner conflict.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines owner_doc for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13909,
+              "line_end": 13909,
+              "quote": "newly authored owner contract"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Commands/behavior are listed but full exact emit and receipt ordering remains unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines producer for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13913,
+              "line_end": 13913,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact closed 1.0.0 payload contract for this family was prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines closed_payload_schema for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/ds15_browser_context_shared.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false"
+            },
+            {
+              "path": "Plans/ds15_browser_context_shared.schema.json",
+              "unit": "root",
+              "line_start": 17,
+              "line_end": 17,
+              "quote": "\"const\": \"1.0.0\""
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Subject identifiers exist but complete exact envelope/idempotency joins remain unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines scope_identity for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13914,
+              "line_end": 13914,
+              "quote": "Scope and identity:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact per-family retry/dedupe/result recipe was found. Generic runtime safeguards do not establish this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines replay_idempotency for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13917,
+              "line_end": 13917,
+              "quote": "Replay and transitions:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact event/checkpoint policy assigned on this stopped row.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "DL-401 G10 binds shared event history to its named recipient chat, but the scope-wide checkpoint lifetime is pending.",
           "evidence": [
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "Case L-3",
-              "line_start": 17403,
-              "line_end": 17403,
-              "quote": "Every materialized family/event registration carries an exact structured"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13919,
+              "line_end": 13919,
+              "quote": "Retention:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Shared privacy/ref restrictions exist; full original family custody and restore closure remain incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines redaction_custody for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13916,
+              "line_end": 13916,
+              "quote": "Original source and custody:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Some lifecycle behavior is already specified; missing event projection/policy detail is PARTIAL, not the claimed blanket CONFLICT.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines transitions for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13913,
+              "line_end": 13913,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact reader/version/checkpoint/CAS binding prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines consumers_checkpoints for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13918,
+              "line_end": 13918,
+              "quote": "Consumer and checkpoint:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact version/withdrawal protocol prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-320 independently defines compatibility_withdrawal for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13920,
+              "line_end": 13920,
+              "quote": "Compatibility and withdrawal:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own complete positive/negative event-contract oracle suite prepared.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Own saved positive/negative and reference-closure cases pass serially, including coherent source/receipt copies. Universal predicate-isolation proof for these seven new families awaits the mandated shared-tool sweep; S-FMT1/S-N1/S-N2 are inherited. No full oracle-completeness PASS is claimed.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-064 / browser capture and share command rows",
-              "line_start": 830,
-              "line_end": 830,
-              "quote": "| `cmd.browser.share_with_agent` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-320",
+              "line_start": 13921,
+              "line_end": 13921,
+              "quote": "Oracles:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.c / DL-433 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         }
       },
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "native_execution": "NOT_RUN",
-      "pass_count": 0,
+      "pass_count": 9,
       "normative_depth_complete": false,
-      "question_id": "Q2",
-      "question": "Can several target-thread grants coexist for one ordinary BrowserSession, does a new share replace an earlier recipient, and what exactly does revoke without thread_id revoke? Namespace and ownership are already decided; do not reopen them.",
       "remaining_gaps": [
-        "Can several target-thread grants coexist for one ordinary BrowserSession, does a new share replace an earlier recipient, and what exactly does revoke without thread_id revoke? Namespace and ownership are already decided; do not reopen them."
+        "No registry admission.",
+        "Shared guard-tool/number/format sweep remains open.",
+        "PRODUCT RETENTION: scope-wide checkpoint lifetime; for all-chat revoke also governing chat deletion/hold lifetime. Exact questions are in SMPFS-320."
       ],
       "grade_counts": {
-        "ABSENT": 7,
-        "PARTIAL": 5
-      }
+        "ABSENT": 1,
+        "PASS": 9,
+        "PARTIAL": 2
+      },
+      "current_owner_units": [
+        "SMPFS-320",
+        "ATS-329"
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared"
+      ],
+      "notes": "Round 9 answer application, not review repair. Full twelve-criterion owner prose; conservative C12 PARTIAL until the shared sweep. Native NOT_RUN."
     },
     {
       "event_type": "catalog.install.completed",
@@ -1194,7 +1228,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "catalog.install.started",
@@ -1529,1047 +1565,1109 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "catalog.remove.completed",
-      "family_revision": null,
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event name absent from Event Authority registry; no admission expected in this lane.",
+          "finding": "No Event Authority admission or storage-value registry append was made. Production writes and checkpoint advance remain disabled.",
           "evidence": [
             {
-              "path": "Plans/event_family_registry.json",
-              "unit": "#/families",
-              "line_start": 8,
-              "line_end": 8,
-              "quote": "\"families\": ["
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14172,
+              "line_end": 14172,
+              "quote": "prepared without admission."
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current semantic/storage owners are identifiable; missing full per-family binding is incomplete, not proof of an owner conflict.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines owner_doc for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14172,
+              "line_end": 14172,
+              "quote": "newly authored owner contract"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Commands/behavior are listed but full exact emit and receipt ordering remains unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines producer for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14176,
+              "line_end": 14176,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact closed 1.0.0 payload contract for this family was prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines closed_payload_schema for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/ds15_catalog_remove_completed.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false"
+            },
+            {
+              "path": "Plans/ds15_catalog_remove_completed.schema.json",
+              "unit": "root",
+              "line_start": 19,
+              "line_end": 19,
+              "quote": "\"const\": \"1.0.0\""
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Subject identifiers exist but complete exact envelope/idempotency joins remain unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines scope_identity for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14178,
+              "line_end": 14178,
+              "quote": "Scope and identity:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact per-family retry/dedupe/result recipe was found. Generic runtime safeguards do not establish this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines replay_idempotency for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14181,
+              "line_end": 14181,
+              "quote": "Replay and transitions:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact event/checkpoint policy assigned on this stopped row.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines retention for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "Case L-3",
-              "line_start": 17403,
-              "line_end": 17403,
-              "quote": "Every materialized family/event registration carries an exact structured"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14183,
+              "line_end": 14183,
+              "quote": "Retention:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Shared privacy/ref restrictions exist; full original family custody and restore closure remain incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines redaction_custody for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14180,
+              "line_end": 14180,
+              "quote": "Original source and custody:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Some lifecycle behavior is already specified; missing event projection/policy detail is PARTIAL, not the claimed blanket CONFLICT.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines transitions for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14176,
+              "line_end": 14176,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact reader/version/checkpoint/CAS binding prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines consumers_checkpoints for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14182,
+              "line_end": 14182,
+              "quote": "Consumer and checkpoint:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact version/withdrawal protocol prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-325 independently defines compatibility_withdrawal for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14184,
+              "line_end": 14184,
+              "quote": "Compatibility and withdrawal:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own complete positive/negative event-contract oracle suite prepared.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Own saved positive/negative and reference-closure cases pass serially, including coherent source/receipt copies. Universal predicate-isolation proof for these seven new families awaits the mandated shared-tool sweep; S-FMT1/S-N1/S-N2 are inherited. No full oracle-completeness PASS is claimed.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-325",
+              "line_start": 14185,
+              "line_end": 14185,
+              "quote": "Oracles:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         }
       },
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "native_execution": "NOT_RUN",
-      "pass_count": 0,
+      "pass_count": 10,
       "normative_depth_complete": false,
-      "question_id": "Q3",
-      "question": "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases.",
       "remaining_gaps": [
-        "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases."
+        "No registry admission.",
+        "Shared guard-tool/number/format sweep remains open."
       ],
       "grade_counts": {
-        "ABSENT": 7,
-        "PARTIAL": 5
-      }
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "current_owner_units": [
+        "SMPFS-325",
+        "ATS-329"
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed"
+      ],
+      "notes": "Round 9 answer application, not review repair. Full twelve-criterion owner prose; conservative C12 PARTIAL until the shared sweep. Native NOT_RUN."
     },
     {
       "event_type": "catalog.remove.started",
-      "family_revision": null,
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event name absent from Event Authority registry; no admission expected in this lane.",
+          "finding": "No Event Authority admission or storage-value registry append was made. Production writes and checkpoint advance remain disabled.",
           "evidence": [
             {
-              "path": "Plans/event_family_registry.json",
-              "unit": "#/families",
-              "line_start": 8,
-              "line_end": 8,
-              "quote": "\"families\": ["
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14119,
+              "line_end": 14119,
+              "quote": "prepared without admission."
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current semantic/storage owners are identifiable; missing full per-family binding is incomplete, not proof of an owner conflict.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines owner_doc for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14119,
+              "line_end": 14119,
+              "quote": "newly authored owner contract"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Commands/behavior are listed but full exact emit and receipt ordering remains unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines producer for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14123,
+              "line_end": 14123,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact closed 1.0.0 payload contract for this family was prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines closed_payload_schema for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/ds15_catalog_remove_started.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false"
+            },
+            {
+              "path": "Plans/ds15_catalog_remove_started.schema.json",
+              "unit": "root",
+              "line_start": 19,
+              "line_end": 19,
+              "quote": "\"const\": \"1.0.0\""
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Subject identifiers exist but complete exact envelope/idempotency joins remain unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines scope_identity for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14125,
+              "line_end": 14125,
+              "quote": "Scope and identity:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact per-family retry/dedupe/result recipe was found. Generic runtime safeguards do not establish this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines replay_idempotency for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14128,
+              "line_end": 14128,
+              "quote": "Replay and transitions:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact event/checkpoint policy assigned on this stopped row.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines retention for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "Case L-3",
-              "line_start": 17403,
-              "line_end": 17403,
-              "quote": "Every materialized family/event registration carries an exact structured"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14130,
+              "line_end": 14130,
+              "quote": "Retention:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Shared privacy/ref restrictions exist; full original family custody and restore closure remain incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines redaction_custody for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14127,
+              "line_end": 14127,
+              "quote": "Original source and custody:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Some lifecycle behavior is already specified; missing event projection/policy detail is PARTIAL, not the claimed blanket CONFLICT.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines transitions for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14123,
+              "line_end": 14123,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact reader/version/checkpoint/CAS binding prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines consumers_checkpoints for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14129,
+              "line_end": 14129,
+              "quote": "Consumer and checkpoint:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact version/withdrawal protocol prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-324 independently defines compatibility_withdrawal for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14131,
+              "line_end": 14131,
+              "quote": "Compatibility and withdrawal:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own complete positive/negative event-contract oracle suite prepared.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Own saved positive/negative and reference-closure cases pass serially, including coherent source/receipt copies. Universal predicate-isolation proof for these seven new families awaits the mandated shared-tool sweep; S-FMT1/S-N1/S-N2 are inherited. No full oracle-completeness PASS is claimed.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 938,
-              "line_end": 938,
-              "quote": "| `cmd.catalog.remove_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-324",
+              "line_start": 14132,
+              "line_end": 14132,
+              "quote": "Oracles:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.e / DL-435 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         }
       },
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "native_execution": "NOT_RUN",
-      "pass_count": 0,
+      "pass_count": 10,
       "normative_depth_complete": false,
-      "question_id": "Q3",
-      "question": "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases.",
       "remaining_gaps": [
-        "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases."
+        "No registry admission.",
+        "Shared guard-tool/number/format sweep remains open."
       ],
       "grade_counts": {
-        "ABSENT": 7,
-        "PARTIAL": 5
-      }
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "current_owner_units": [
+        "SMPFS-324",
+        "ATS-329"
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.started"
+      ],
+      "notes": "Round 9 answer application, not review repair. Full twelve-criterion owner prose; conservative C12 PARTIAL until the shared sweep. Native NOT_RUN."
     },
     {
       "event_type": "catalog.update.completed",
-      "family_revision": null,
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event name absent from Event Authority registry; no admission expected in this lane.",
+          "finding": "No Event Authority admission or storage-value registry append was made. Production writes and checkpoint advance remain disabled.",
           "evidence": [
             {
-              "path": "Plans/event_family_registry.json",
-              "unit": "#/families",
-              "line_start": 8,
-              "line_end": 8,
-              "quote": "\"families\": ["
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14066,
+              "line_end": 14066,
+              "quote": "prepared without admission."
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current semantic/storage owners are identifiable; missing full per-family binding is incomplete, not proof of an owner conflict.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines owner_doc for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14066,
+              "line_end": 14066,
+              "quote": "newly authored owner contract"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Commands/behavior are listed but full exact emit and receipt ordering remains unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines producer for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14070,
+              "line_end": 14070,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact closed 1.0.0 payload contract for this family was prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines closed_payload_schema for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/ds15_catalog_update_completed.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false"
+            },
+            {
+              "path": "Plans/ds15_catalog_update_completed.schema.json",
+              "unit": "root",
+              "line_start": 21,
+              "line_end": 21,
+              "quote": "\"const\": \"1.0.0\""
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Subject identifiers exist but complete exact envelope/idempotency joins remain unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines scope_identity for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14072,
+              "line_end": 14072,
+              "quote": "Scope and identity:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact per-family retry/dedupe/result recipe was found. Generic runtime safeguards do not establish this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines replay_idempotency for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14075,
+              "line_end": 14075,
+              "quote": "Replay and transitions:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact event/checkpoint policy assigned on this stopped row.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines retention for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "Case L-3",
-              "line_start": 17403,
-              "line_end": 17403,
-              "quote": "Every materialized family/event registration carries an exact structured"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14077,
+              "line_end": 14077,
+              "quote": "Retention:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Shared privacy/ref restrictions exist; full original family custody and restore closure remain incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines redaction_custody for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14074,
+              "line_end": 14074,
+              "quote": "Original source and custody:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Some lifecycle behavior is already specified; missing event projection/policy detail is PARTIAL, not the claimed blanket CONFLICT.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines transitions for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14070,
+              "line_end": 14070,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact reader/version/checkpoint/CAS binding prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines consumers_checkpoints for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14076,
+              "line_end": 14076,
+              "quote": "Consumer and checkpoint:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact version/withdrawal protocol prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-323 independently defines compatibility_withdrawal for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14078,
+              "line_end": 14078,
+              "quote": "Compatibility and withdrawal:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own complete positive/negative event-contract oracle suite prepared.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Own saved positive/negative and reference-closure cases pass serially, including coherent source/receipt copies. Universal predicate-isolation proof for these seven new families awaits the mandated shared-tool sweep; S-FMT1/S-N1/S-N2 are inherited. No full oracle-completeness PASS is claimed.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-323",
+              "line_start": 14079,
+              "line_end": 14079,
+              "quote": "Oracles:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         }
       },
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "native_execution": "NOT_RUN",
-      "pass_count": 0,
+      "pass_count": 10,
       "normative_depth_complete": false,
-      "question_id": "Q3",
-      "question": "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases.",
       "remaining_gaps": [
-        "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases."
+        "No registry admission.",
+        "Shared guard-tool/number/format sweep remains open."
       ],
       "grade_counts": {
-        "ABSENT": 7,
-        "PARTIAL": 5
-      }
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "current_owner_units": [
+        "SMPFS-323",
+        "ATS-329"
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.completed"
+      ],
+      "notes": "Round 9 answer application, not review repair. Full twelve-criterion owner prose; conservative C12 PARTIAL until the shared sweep. Native NOT_RUN."
     },
     {
       "event_type": "catalog.update.started",
-      "family_revision": null,
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event name absent from Event Authority registry; no admission expected in this lane.",
+          "finding": "No Event Authority admission or storage-value registry append was made. Production writes and checkpoint advance remain disabled.",
           "evidence": [
             {
-              "path": "Plans/event_family_registry.json",
-              "unit": "#/families",
-              "line_start": 8,
-              "line_end": 8,
-              "quote": "\"families\": ["
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14013,
+              "line_end": 14013,
+              "quote": "prepared without admission."
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current semantic/storage owners are identifiable; missing full per-family binding is incomplete, not proof of an owner conflict.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines owner_doc for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14013,
+              "line_end": 14013,
+              "quote": "newly authored owner contract"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Commands/behavior are listed but full exact emit and receipt ordering remains unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines producer for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14017,
+              "line_end": 14017,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact closed 1.0.0 payload contract for this family was prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines closed_payload_schema for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/ds15_catalog_update_started.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false"
+            },
+            {
+              "path": "Plans/ds15_catalog_update_started.schema.json",
+              "unit": "root",
+              "line_start": 21,
+              "line_end": 21,
+              "quote": "\"const\": \"1.0.0\""
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Subject identifiers exist but complete exact envelope/idempotency joins remain unbound.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines scope_identity for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14019,
+              "line_end": 14019,
+              "quote": "Scope and identity:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact per-family retry/dedupe/result recipe was found. Generic runtime safeguards do not establish this criterion.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines replay_idempotency for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14022,
+              "line_end": 14022,
+              "quote": "Replay and transitions:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No exact event/checkpoint policy assigned on this stopped row.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines retention for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "Case L-3",
-              "line_start": 17403,
-              "line_end": 17403,
-              "quote": "Every materialized family/event registration carries an exact structured"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14024,
+              "line_end": 14024,
+              "quote": "Retention:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Shared privacy/ref restrictions exist; full original family custody and restore closure remain incomplete.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines redaction_custody for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14021,
+              "line_end": 14021,
+              "quote": "Original source and custody:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Some lifecycle behavior is already specified; missing event projection/policy detail is PARTIAL, not the claimed blanket CONFLICT.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines transitions for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14017,
+              "line_end": 14017,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact reader/version/checkpoint/CAS binding prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines consumers_checkpoints for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14023,
+              "line_end": 14023,
+              "quote": "Consumer and checkpoint:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own exact version/withdrawal protocol prepared.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-322 independently defines compatibility_withdrawal for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14025,
+              "line_end": 14025,
+              "quote": "Compatibility and withdrawal:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No own complete positive/negative event-contract oracle suite prepared.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Own saved positive/negative and reference-closure cases pass serially, including coherent source/receipt copies. Universal predicate-isolation proof for these seven new families awaits the mandated shared-tool sweep; S-FMT1/S-N1/S-N2 are inherited. No full oracle-completeness PASS is claimed.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Catalog lifecycle commands",
-              "line_start": 937,
-              "line_end": 937,
-              "quote": "| `cmd.catalog.update_item` |"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-322",
+              "line_start": 14026,
+              "line_end": 14026,
+              "quote": "Oracles:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.d / DL-434 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         }
       },
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "native_execution": "NOT_RUN",
-      "pass_count": 0,
+      "pass_count": 10,
       "normative_depth_complete": false,
-      "question_id": "Q3",
-      "question": "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases.",
       "remaining_gaps": [
-        "For each catalog item/subsystem and active/referenced state whose current owner leaves update/remove outcomes unspecified, which states block or defer, and when does a deferred owner transaction emit completed? The six catalog event names remain required; receipts are not aliases."
+        "No registry admission.",
+        "Shared guard-tool/number/format sweep remains open."
       ],
       "grade_counts": {
-        "ABSENT": 7,
-        "PARTIAL": 5
-      }
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "current_owner_units": [
+        "SMPFS-322",
+        "ATS-329"
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started"
+      ],
+      "notes": "Round 9 answer application, not review repair. Full twelve-criterion owner prose; conservative C12 PARTIAL until the shared sweep. Native NOT_RUN."
     },
     {
       "event_type": "dev.session.restarting",
@@ -2883,7 +2981,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "dev.session.started",
@@ -3197,7 +3297,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "dev.session.stopped",
@@ -3511,7 +3613,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "dev.session.stopping",
@@ -3825,7 +3929,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "doctor.custom_headless.checked",
@@ -4139,7 +4245,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "live.artifact.created",
@@ -4453,7 +4561,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "live.session.completed",
@@ -4767,7 +4877,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "live.session.degraded",
@@ -5081,7 +5193,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "live.session.started",
@@ -5395,7 +5509,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "live.step.updated",
@@ -5709,7 +5825,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "preview.session.refreshed",
@@ -6023,7 +6141,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "preview.session.started",
@@ -6337,7 +6457,9 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "preview.session.stopped",
@@ -6651,284 +6773,297 @@
         "PASS": 10,
         "PARTIAL": 1
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "pass_count": 10,
+      "normative_depth_complete": false
     },
     {
       "event_type": "tool.custom_headless.skipped",
-      "family_revision": null,
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "finding": "No Event Authority admission or storage-value registry append was made. Production writes and checkpoint advance remain disabled.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14225,
+              "line_end": 14225,
+              "quote": "prepared without admission."
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines owner_doc for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14225,
+              "line_end": 14225,
+              "quote": "newly authored owner contract"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines producer for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14229,
+              "line_end": 14229,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines closed_payload_schema for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/ds15_tool_custom_headless_skipped.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false"
+            },
+            {
+              "path": "Plans/ds15_tool_custom_headless_skipped.schema.json",
+              "unit": "root",
+              "line_start": 15,
+              "line_end": 15,
+              "quote": "\"const\": \"1.0.0\""
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines scope_identity for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14230,
+              "line_end": 14230,
+              "quote": "Scope and identity:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines replay_idempotency for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14233,
+              "line_end": 14233,
+              "quote": "Replay and transitions:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "retention": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines retention for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14235,
+              "line_end": 14235,
+              "quote": "Retention:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines redaction_custody for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14232,
+              "line_end": 14232,
+              "quote": "Original source and custody:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines transitions for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14229,
+              "line_end": 14229,
+              "quote": "Producer:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines consumers_checkpoints for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14234,
+              "line_end": 14234,
+              "quote": "Consumer and checkpoint:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SMPFS-326 independently defines compatibility_withdrawal for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14236,
+              "line_end": 14236,
+              "quote": "Compatibility and withdrawal:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "DS15 draft withdrawn; DT owns the unanswered eligibility/reset/restore question. Existing behavior alone does not bind this cell.",
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Own saved positive/negative and reference-closure cases pass serially, including coherent source/receipt copies. Universal predicate-isolation proof for these seven new families awaits the mandated shared-tool sweep; S-FMT1/S-N1/S-N2 are inherited. No full oracle-completeness PASS is claimed.",
           "evidence": [
             {
-              "path": "Plans/newtools.md",
-              "unit": "N2-218",
-              "line_start": 9172,
-              "line_end": 9172,
-              "quote": "DS15 withdraws its unsupported draft"
+              "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+              "unit": "SMPFS-326",
+              "line_start": 14237,
+              "line_end": 14237,
+              "quote": "Oracles:"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-astra.md at d8d4c511ce6020fb5e38a656dd2308c183f17a48",
+            "source": "DS15 round-8 self-grade at 30dc9245bc",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "The product question remains held for Jared; no answer is adopted."
+          "change": "upgraded",
+          "change_reason": "Deck-2 item 4.f / DL-436 resolves the held behavior. The new contract remains prepared without admission, with honest pending retention/proof cells."
         }
       },
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "native_execution": "NOT_RUN",
-      "pass_count": 0,
+      "pass_count": 10,
       "normative_depth_complete": false,
-      "question_id": "DT-first-Doctor",
-      "question": "DT owns the first Doctor run eligibility/reset/restore question; see origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. DS15 supplies no second draft or answer.",
       "current_owner_units": [
-        "N2-066",
-        "N2-218"
+        "SMPFS-326",
+        "ATS-329"
       ],
       "remaining_gaps": [
-        "DT owns the first Doctor run eligibility/reset/restore question; see origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. DS15 supplies no second draft or answer."
+        "No registry admission.",
+        "Shared guard-tool/number/format sweep remains open."
       ],
       "grade_counts": {
-        "ABSENT": 7,
-        "PARTIAL": 5
-      }
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "static_checks_seen": [
+        "python3 scripts/pm-ds15-deck2-contracts.py --family tool.custom_headless.skipped"
+      ],
+      "notes": "Round 9 answer application, not review repair. Full twelve-criterion owner prose; conservative C12 PARTIAL until the shared sweep. Native NOT_RUN."
     }
   ],
   "questions": {
-    "browser_share_revoke": "Multiplicity and omitted-thread revoke semantics remain held.",
-    "catalog_update_remove": "Only four update/remove families remain held for the precise active/referenced item/state matrix and deferred completion boundary.",
-    "tool_custom_headless_skipped": "First-Doctor eligibility/reset/import/restore stays held with DT."
+    "browser_revoke_all_retention": "For one browser.context_share_revoked record that removes every session grant across several chats, which chat or combination of chat deletion/hold lifetimes governs that record?",
+    "browser_shared_checkpoint_retention": "What retention and deletion rule governs the scope-wide browser.context_shared reader checkpoint when its source events belong to different recipient chats?",
+    "browser_revoked_checkpoint_retention": "What retention and deletion rule governs the scope-wide browser.context_share_revoked reader checkpoint when its source events belong to different recipient chats?"
   },
   "evidence_quote_checks": {
-    "count": 394,
-    "all_match": true
+    "checked": 401,
+    "mismatches": 0
   },
-  "applicable_round_oracle_status": "PASS",
-  "guard_proof_qualification": "Legacy enumerated inventory; the shared guard-isolation tool adoption remains a sweep item. Native execution NOT_RUN. S-FMT1/S-N1/S-N2 remain open under the assigned round scope.",
+  "applicable_round_oracle_status": "Original sixteen C12 grades unchanged; seven new C12 cells PARTIAL pending shared-tool isolation and inherited sweep qualifications.",
+  "guard_proof_qualification": "No lane-local proof machinery rebuilt or universal proof claimed; adopt scripts/pm_guard_isolation.py in the assigned cross-lane sweep. Existing fix8 proof evidence remains historical and unchanged.",
   "sweep_items": [
     {
       "id": "S-FMT1",
@@ -6968,5 +7103,122 @@
       ],
       "response": "Adopt scripts/pm_guard_isolation.py from the shared-tool lane. Existing inventory/compound or named-set limitations are not redesigned locally or credited as stronger duplicate proof."
     }
-  ]
+  ],
+  "round9_family_exits": {
+    "browser.context_shared": {
+      "family": "browser.context_shared",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    "browser.context_share_revoked": {
+      "family": "browser.context_share_revoked",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    "catalog.update.started": {
+      "family": "catalog.update.started",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    "catalog.update.completed": {
+      "family": "catalog.update.completed",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    "catalog.remove.started": {
+      "family": "catalog.remove.started",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    "catalog.remove.completed": {
+      "family": "catalog.remove.completed",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    "tool.custom_headless.skipped": {
+      "family": "tool.custom_headless.skipped",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    "doctor.custom_headless.checked": {
+      "family": "doctor.custom_headless.checked",
+      "exit": 0,
+      "checker": "original"
+    },
+    "live.session.started": {
+      "family": "live.session.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    "live.step.updated": {
+      "family": "live.step.updated",
+      "exit": 0,
+      "checker": "original"
+    },
+    "live.artifact.created": {
+      "family": "live.artifact.created",
+      "exit": 0,
+      "checker": "original"
+    },
+    "live.session.completed": {
+      "family": "live.session.completed",
+      "exit": 0,
+      "checker": "original"
+    },
+    "live.session.degraded": {
+      "family": "live.session.degraded",
+      "exit": 0,
+      "checker": "original"
+    },
+    "browser.context_captured": {
+      "family": "browser.context_captured",
+      "exit": 0,
+      "checker": "original"
+    },
+    "dev.session.started": {
+      "family": "dev.session.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    "dev.session.stopping": {
+      "family": "dev.session.stopping",
+      "exit": 0,
+      "checker": "original"
+    },
+    "dev.session.stopped": {
+      "family": "dev.session.stopped",
+      "exit": 0,
+      "checker": "original"
+    },
+    "dev.session.restarting": {
+      "family": "dev.session.restarting",
+      "exit": 0,
+      "checker": "original"
+    },
+    "preview.session.started": {
+      "family": "preview.session.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    "preview.session.refreshed": {
+      "family": "preview.session.refreshed",
+      "exit": 0,
+      "checker": "original"
+    },
+    "preview.session.stopped": {
+      "family": "preview.session.stopped",
+      "exit": 0,
+      "checker": "original"
+    },
+    "catalog.install.started": {
+      "family": "catalog.install.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    "catalog.install.completed": {
+      "family": "catalog.install.completed",
+      "exit": 0,
+      "checker": "original"
+    }
+  }
 }
