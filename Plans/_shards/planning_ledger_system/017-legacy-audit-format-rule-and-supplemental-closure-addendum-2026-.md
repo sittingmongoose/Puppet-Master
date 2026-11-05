@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1617-L1718
+Source lines: L1617-L1719
 
-Source SHA256: `402b5d0d62c16b4deed3f4ad6350e6d2ead43181b12078735ec03421e633d59f`
+Source SHA256: `75f07e9f0c48a78ea75291ebbb2e1beb47e2f04c263f9e2eb85fd0250790a840`
 
 ---
 
@@ -40,8 +40,9 @@ canonical_text: The per-audit closure check of scripts/pm-audit-closure.py appli
   identity fields give the same deterministic key as the identity fields of the registry closure it links to); an
   audit_report.json without repair_required_count or without a status; and historical closure rows over source rows
   that the compatibility inference, not an explicit repair_required or finding_level field on any row with that key,
-  treats as non-actionable. In those directories, and only for a file that still has its frozen bytes and is read
-  through no symlink, the compatibility inference also reads four older words as passed (DL-340) - the claim statuses
+  treats as non-actionable. In those directories, when the run requests none of those companion files as a source
+  and reads no input through a symlink, and only for a frozen file other than the closure matrix, the compatibility
+  inference also reads four older words as passed (DL-340) - the claim statuses
   pass, supported_by_source_atoms and previously_closed, and a validator result whose status is expected_fail when its
   command is one of the five governance commands the June audits expected to fail on stale generated files
   (pm-plans-verify.py run-gates, verify-spec-lock, validate-evidence and validate-plan-graph, and pm-shard-plans.py
