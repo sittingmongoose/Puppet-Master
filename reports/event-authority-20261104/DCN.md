@@ -4,6 +4,8 @@ Base `origin/main`: `16acf7594a3fe8559af89491b895f440b314b99e`. Branch: `plans/e
 
 **Sweep part 1 (text pass), 2026-11-05:** branch rebased onto `origin/main` `2989975e8f8a4a1e49235e8ae2095b3df7ea0321`; implementation head `17f785f5f3`; see the "Sweep part 1" section at the end for the current check state, landed-citation changes and part-2 items. The last review's family grades are carried unchanged; this pass re-grades nothing.
 
+**Sweep part 1 (fixture pass), 2026-11-05:** see the section "Sweep part 1 (fixture pass)" at the end. It corrects two things above: the census ledger now really keeps main's bytes, and the 30-failure Browser baseline is gone at this head.
+
 **Scope count:** DCN is assigned 17 names: 7 Browser + 8 memory + 2 already-retired names. All 17 are handled. The lane also explicitly lists `chat.response_stop_requested` as **not yours**, assigned to DCH; including that held name gives 18 overall. This branch leaves that name to DCH and does not extend DCN’s scope.
 
 ## Per-row outcome
@@ -1271,3 +1273,93 @@ Text pass only (stream E, 2026-11-05): rebase, landed citations, checkers, regen
 | **Browser numeric ranges** | `scripts/pm_card2_events.py:253-270` (`browser_field_bad`), `:218-222` (`strict_equal`); `Plans/storage-plan.md:1208-1210` | Adopt u32 dimensions and finite f64 / physical-number rules through the shared sweep; preserve exact types and signed zero (this pass validated exact types only). |
 | **SW1 — retained lowercase RFC 3339 timestamps rejected without authenticated recipe selection** | `scripts/pm_card2_events.py:60-66` (`timestamp_valid`), global FormatChecker registration, `envelope_bad`/`storage_format_*`, retained original paths | Shared exact envelope grammar (CV-1101) plus SP-1101 original resource/profile dispatch; preserve genuine originals, refuse forged weaker-edition selection. Date-time gate pending; this lane's timestamp review is interim. |
 | **Shared proof-tool adoption (guard tables)** | `scripts/pm_card2_events.py:751-774` (`_run` removal machinery) and compound registered callables | Replace lane-local check-11 proof machinery with `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105` once it passes review; restructure the checker into named guard tables. |
+
+## Sweep part 1 (fixture pass): findings and responses
+
+Task: `lanes/SWEEP-P1-OPUS.md`. Worker head before the report commit: `688884f97b`. Base stays `origin/main` `2989975e8f`: the text pass finished its rebase, so no second rebase was made. Evidence: `drafts/DCN/sweep-p1/fixture-pass/`. No Decision Log entry, registry append, admission, seal or reseal; `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl`, `.gitignore`, the frozen validator and the canonical individual union are unchanged.
+
+| Item | Result | Commit, path:line | How to verify |
+|---|---|---|---|
+| **Census ledger check** (lead's request) | **Correct by row, wrong by bytes. Fixed.** Details below. | `6217c9f580`; `Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl` | `git diff --numstat origin/main HEAD -- <ledger>` gives `11 11`. |
+| **1. Browser admission unittest** | **Fixed.** Where: `tests/test_pm_browser_event_admission.py:71`. Why: the pinned fingerprint of the 40 live rows was last true just before `c0d688db9f` (2026-10-10), so 30 tests aborted in `all_prepared_snapshot` and asserted nothing, on `main` too. Fix: recomputed from the rows. Negative added. | `6bb2e66a24`; `tests/test_pm_browser_event_admission.py:67-72`, `:79-86` | The test exits 0 with 39 tests here. On `main` it still exits 1 with 30 of 38 failing. Pin details below. |
+| **2. Coordination checker baseline** | **Left as baseline.** Where: `scripts/pm_coordination_events.py`, checks `payload_schema` (the payload census predates the `*ApplicationV1` definitions) and `coordination_read_model_projections` `value_schema`. Why not here: DO carries edits to this file and DO-C8-N5 assigns its reconciliation to DCO, so a fix on this branch would collide. | none | Exit 1 here and on `main`, byte-identical stdout. |
+| **3. Stale lineage in report artifacts** | **Fixed.** Pre-rebase commit SHAs stay as written, since they are the record of those rounds; a new map reaches all 18 commits on today's branch. Checking the pins also found stale citations, below. | `688884f97b`; `reports/event-authority-20261104/DCN-rebase-lineage.json`, `DCN-self-grade.json`, `DCN-checks.json`, `DCN-exclusion-application.json`, `DCN.md:19-29` | `refs-after-relocate.json`: 155 of 155 and 20 of 20 citations resolve; the 23 `DCN-checks.json` hashes match. |
+| **4. Readiness and currentness refresh** | **Left for the reseal phase.** The lane regenerates and does not reseal. | none | `pm-implementation-readiness.py validate`: `main` 59 rows, here 61. The 2 extra are `event_authority_currentness_source_drift` for `Plans/Automated_Testing_System.md` and `Plans/assistant-memory-subsystem.md`, documents the lane edits. |
+
+### Census ledger: the check, and what was wrong
+
+**The lead's check holds by row.** Parsed row by row against `main`, the file is `main` plus 11 in-place replacements, with `disposition` and `notes` the only changed fields. `category` and `cohort_pins` are unchanged, order is unchanged, 528 rows on both sides, and the 11 rows equal the lane's drafted rows.
+
+**It does not hold by bytes.**
+- **Where:** the ledger and the 11 `rows/ROW_*.json` files.
+- **Why:** on `main`, 525 of the 528 ledger rows end in CRLF. The lane's first commit (`0216428b0c`) rewrote them all as LF, so `git diff` against `main` showed 525 changed rows, 514 of them line endings only. That is why the rebase saw one conflict across the whole row block. The text pass's "raw line bytes preserved" and `rebase-ledger-preservation.json`'s `all_other_row_bytes_preserved: true` are not true of the raw file, and no review to date flagged it.
+- **Fix:** every row and row file takes the terminator it has on `main`. Parsed content is checked equal for all 12 files (`eol-restore.json`).
+
+**Result:** the ledger diff is now `11 11` and each row file shows only its real changes, for example `ROW_browser.session.navigated.json` went from 129/119 to 12/2. A trial merge into current `origin/main` `b78a5957fd` now conflicts only in 4 generated index files.
+
+**One side effect:** plain `git diff --check` now reports 133 CR hits on the changed lines, as any edit to these CRLF files would. `git -c core.whitespace=cr-at-eol diff --check` reports none.
+
+### Pins and hashes changed
+
+| Pin | Old | New | Why |
+|---|---|---|---|
+| Upstream40 fingerprint, `tests/test_pm_browser_event_admission.py:71` | `a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050` | `2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e` | Three landed registry changes: `c0d688db9f` and `634412b3ac` (`workspace.layout_changed` 2.0.0, DL-188) and `102a7e99e8` (lane F-d added `scope_policy`, `payload_versions`, `payload_selection_policy` to 11 goal rows). 12 of the 40 rows moved (`upstream40-changed-rows.json`). |
+| Census `before_sha256`, exclusion record | `83a1698ac3df…` | `0ee088985c80…` | Main's file at the rebase base, which differs in 33 other rows. The old value is kept as `drafting_before_sha256`. |
+| Census `after_sha256`, exclusion record | `b3af78deab32…` | `3b3ee99f53b7…` | Rebase and restored line endings. The old value is kept as `drafting_after_sha256`. |
+| 11 row `after_sha256` values, exclusion record | see `after_sha256_lf_superseded` | current file hash | Line endings only; `before_sha256` still matches `main`. |
+
+**Why the fingerprint re-pin is safe:** the preservation check beside it still judges each changed row against its reviewed successor, and once setup stops aborting, all 38 original tests run and pass. This is the probe in `browser-tests-probe-repinned.out`.
+
+**Pins checked and left alone:** `source_input_pins` (`b6332f391a`, `2663667e14`). Both branch tips are on origin, and their SHA-256 values match both the blobs and the evidence copies. Whether they re-point to the landed decisions stays the parent's integration call, as the text pass said.
+
+### Citations repaired
+
+The rebase moved 138 of 155 self-grade citations and 10 of 20 in the exclusion record, and the text pass reworded the owner lines behind 12 retention quotes in SP-760..765 without updating those quotes. Line numbers now come from git's own diff map from `c5acd8834e`, and each result is checked to hold its quote (`quote-relocation.json`). The 12 quotes now carry the current owner words (`quote-requote.json`). My first attempt used the nearest match and put 14 shared sentences in a sibling family's section; a check against the diff map caught that, and it was discarded.
+
+### Census derivation
+
+DCN adds no storage or registry family. `Plans/storage_value_registry.json` stays at 344 families and `Plans/event_family_registry.json` at 46, so no count pin moves; `tests.test_shared_runtime_storage_contracts` exits 0. The census ledger stays at 528 rows, with 11 dispositions replaced in place.
+
+### Checker runs (serial, this head)
+
+| Command | Exit | Result | `origin/main` |
+|---|---:|---|---|
+| `python3 scripts/pm_card2_events.py --family browser.session.created` | 0 | 44 positives, 1,826 negatives | not applicable |
+| `... --family browser.session.state_changed` | 0 | 44, 2,898 | not applicable |
+| `... --family browser.session.closed` | 0 | 44, 2,900 | not applicable |
+| `... --family browser.session.promoted` | 0 | 44, 2,900 | not applicable |
+| `... --family browser.session.takeover_state_changed` | 0 | 44, 2,900 | not applicable |
+| `... --family memory.gist_state_changed` | 0 | 123, 2,919 | not applicable |
+| `python3 -m unittest discover -s tests -p test_pm_browser_program_semantics.py` | 0 | 10 tests | not run |
+| `python3 scripts/pm-browser-event-admission.py` | 0 | pass | not run |
+| `python3 -m unittest discover -s tests -p test_pm_browser_event_admission.py` | **0** | 39 tests | 1, 30 of 38 failing |
+| `python3 -m unittest discover -s tests -p test_pm_emit_only_event_boundaries.py` | 1 | 1 of 13 failing | same test failing |
+| `python3 scripts/pm_coordination_events.py` | 1 | 2 baseline failures | same, byte-identical stdout |
+| `python3 -m unittest tests.test_shared_runtime_storage_contracts` | 0 | 16 tests | not run |
+| `python3 scripts/pm-implementation-readiness.py validate` | 1 | 61 rows | 1, 59 rows |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | no change | not applicable |
+| `python3 scripts/pm-plan-index.py generate` | 0 | timestamps only, so not committed | not applicable |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass | not applicable |
+| `python3 scripts/pm-plan-index.py validate` | **1** | 25 rows, below | 0, no rows, at `b78a5957fd` |
+
+Family counts equal Sol cycle 5's.
+
+### Index findings
+
+All 25 rows appear only because `main` moved past this branch's base, and `main` itself has none of them.
+- **4 rows, `plan_unit_removed_without_ledger_decision`:** DL-337, DL-338, DL-339 and DL-340. Main added them after `2989975e8f`.
+- **21 rows, `plan_unit_removal_ledger_invalid`:** legacy ledgers, read only once a removal needs adjudicating.
+
+**Check:** a trial merge into `b78a5957fd` regenerated cleanly: validate exits 0 with no rows, `--family browser.session.created` exits 0 and the Browser tests exit 0. The trial was discarded, and nothing from it is on the branch.
+
+**Validate reads a moving ref:** its baseline is the `origin/main` ref, not the checkout, so one run on a `main` checkout at `6861d332de` reported 22 rows because the shared ref had already moved. The result above comes from a checkout at the ref itself.
+
+### Integration note, not fixed
+
+The same stale registry fingerprint sits in `tests/test_pm_emit_only_event_boundaries.py:28` (`a27cf49b…`) and `scripts/pm_emit_only_event_contract.py:19` (`237b757a…`), which an emit-only manifest also pins. `test_exact_six_absent_and_preexisting_forty_unchanged` fails the same way on `main`. It is not on this lane's list and it spans another owner's script and manifest.
+
+### Grades
+
+Family grades carry unchanged from the cycle-five Sol review: `browser.session.created` 7 PASS / 4 PARTIAL / 1 ABSENT, each of the other five 6 PASS / 5 PARTIAL / 1 ABSENT. No fix here changes a cell. Membership stays ABSENT and native execution NOT_RUN. Part 2 items are unchanged from the list above.
+
+This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
