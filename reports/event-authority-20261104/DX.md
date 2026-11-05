@@ -1,21 +1,25 @@
-# DX round 9 — retention application, exact types, coherent versions and exact clocks
+# DX sweep part 1 — retention text and isolated graph-ID fixtures
 
-Branch `plans/ea-w2-executor-20261104`; reviewed base `d1bdb7cc479477a9b6f4b907001eb7f81bba84f0`; graded code/fixtures `5db3831aa1475c9318648498bb46205698319d46`. The following report-only commit preserves that code. Final pushed head is recorded in `drafts/DX/head.txt`. Sixteen families prepared without admission. Native execution **NOT_RUN**.
+Branch `plans/ea-w2-executor-20261104`; original lane head `976fc2bea824659e86baf3130fe8bc0ce877b70a`; rebased onto fetched main `d5ec2f70c0d69c469796eea9b9cfdae30f281f42`. Graded code/fixture head `52fb3ad7809f29eb7d4f37730530ed5ba3c2dc09`; the following report-only commit preserves that tree. Final pushed head is in `sweep-p1/head.txt`.
 
-## Review round 9: findings and responses
+**NOT_READY: part 2 remains required.** Sixteen prepared contracts remain unadmitted; native execution **NOT_RUN**. No deck-2 items were assigned to DX in this task. The assigned decision application is the residual first-deck G28/DL-401 text repair. No new owner choice is needed.
 
-| Finding | Location, cause and fix | Commit and verification |
+## Sweep part 1: findings and responses
+
+| Item | Location, cause and fix | Commit / verification |
 |---|---|---|
-| **F16** | `Plans/storage-plan.md:29852` (SP-506) and the companion assignment retained a stale pending question. Apply first-deck G28/DL-401: `RP-OPERATIONAL-2555D@1.0.0`, anchored to the original committed fallback result. Remove the pending marker/question. | `be6b138f20`. Exact G28 answer at `decision-answers/E-CARDS-1.as-presented-578a6774.md:92`; applied owner at `origin/plans/ea-retention-cards1-20261104`, `2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md:17461-17464`. EP-216 still governs the same pre-lock fallback without a run. Holds/count-overflow refusal and independent linked-body/checkpoint policies remain. |
-| **F17** | `scripts/pm_executor_event_semantics.py:520` and post-state effects used Python cross-type equality. Validate graph IDs/revisions and effect-count primitive types/domains before comparison, on both sides. | `e19b791890`. 504 new full-capture/type negatives: 192 effect counts, 144 revisions, 168 graph IDs. Boolean, float, string, null, array and object forms included. All 56 reviewed bool aliases now reject; 56 field-specific type cuts expose exactly their own bool witness while the family's other new type negatives reject. Existing owner minimums; no numeric cap. |
-| **F18** | `Plans/executor_event_semantic_fixtures.json:2505`, case `coupled-change-original-schema_version`, had stale original/mirror copies. Rebuild all 16 with every copy at `1.0.1` and the source hash refreshed. | `2745807023`. Removing only that schema-version property's domain makes each full capture pass; all other schema predicates, original equality and hashes stay enabled. This is not a duplicate set. Prior source-value-disagreement controls remain separate. |
-| **F19** | `scripts/pm_executor_event_semantics.py:352` and its retry/refresh/scheduler callers admitted weaker clock spellings and lost sub-microsecond precision; scheduler sorts used text. Current source clocks require uppercase T/final Z. Exact rational seconds preserve every fraction digit for retry arithmetic, comparison and scheduler ready/wake sorting. | `5db3831aa1`. 168 new cases (155 reject, 13 accept): source/refresh/wake formats, exact early/equal/late boundaries, 61-digit clocks, older-ready/node-ID and wake-ID ties, plus shape routes. All 28 reviewed clock/ordering counterexamples now reject. Exact 90 ns early refuses; equal and 9 ns late accept. No precision cap or retained-original rewrite. |
+| **F16 / G28** | `Plans/Executor_Protocol.md:9773` (EP-216) still declared retention stopped after SP-506 and its companion had applied DL-401. Replace that stop with `RP-OPERATIONAL-2555D@1.0.0` from original fallback commitment and the SP-506 pointer. Preserve pre-lock/no-run, holds, overflow refusal and independent body/checkpoint policies. | `52fb3ad7809f29eb7d4f37730530ed5ba3c2dc09`. Compare EP-216 with `Plans/storage-plan.md:29961` and landed `Plans/Decision_Log.md:4493`; the old stop is absent. Shard check and both decomposition family CLIs pass. |
+| **F20** | Graph-ID cases in twelve families changed an ID but left its joined peer well typed and different. Rebuild all 144 demonstrated multi-defect cases at the owner-read boundary, plus the 24 float cases previously masked by canonical admission. Keep 24 separate full-capture equality negatives with nonempty string IDs and recomputed source digests. | `7693cd0ba8`. `scripts/pm_executor_event_semantics.py:151` / `911`; `Plans/executor_event_semantic_fixtures.json:39770` / `12529`. Run both family CLIs and external `verify-f20.py`, `verify-cli.py`. |
+| **F19** | Ordinary scheduler clocks still refuse CV-515-admitted lowercase `t`; the two `F19-wake-*-lower-t` negatives encode that mistake. | **Part 2**, as assigned: adopt CV-1101's field-owner profile with NUMRULE. Exact locations and required controls below. No new local format/number helper. |
+| **Other review findings** | F1–F15, F17–F18 and S12 repairs are preserved. Cycle 10 reports no other lane-local non-number/non-proof blocker. N1/N2 remain integration gaps; N3 closes after rebase, as assessed below. | All old baselines, histories, traces, numeric/schema fixtures and unrelated source cases are unchanged; normal family suites and 230 fresh adversarial probes pass. |
 
-**No disputes.** All four blocking findings are fixed. Applying F16 uses an already-decided answer; no new product decision or Decision Log entry was made.
+### Landed decision and premise check
+
+DL-401 records Jared's answer **“approve all except 4c B”** and the approved G28 option at `Plans/Decision_Log.md:4493`: **“The 2 restore-point records: Run year. The fallback record: 7 years, kept as operational history and counted from when the fallback result was committed.”** The current EP-216 owner still describes pre-lock fallback without a run; SP-506 already binds the same terminal commitment anchor, 2,555 days, 2,000,000/Project, expired-unheld deletion only and new-write refusal on count overflow. This repair applies that decision only to the fallback's residual semantic-owner sentence. The two restore-point contracts are outside this repair.
 
 ## Family grades before and after
 
-PASS / PARTIAL / ABSENT against independent cycle 9. Normative/static grades only; membership stays ABSENT until separate admission.
+PASS / PARTIAL / ABSENT against independent cycle 10. These are finite normative/static rubric cells, not admission or whole-lane readiness. All sixteen verdicts remain `NOT_READY_PENDING_PART_2` until the shared tools/profile adoptions pass.
 
 | Family | Before | After |
 |---|---|---|
@@ -25,137 +29,100 @@ PASS / PARTIAL / ABSENT against independent cycle 9. Normative/static grades onl
 | `node.completed` | 10 / 1 / 1 | 11 / 0 / 1 |
 | `node.started` | 10 / 1 / 1 | 11 / 0 / 1 |
 | `node.unblocked` | 10 / 1 / 1 | 11 / 0 / 1 |
-| `plan.decomposition_degraded` | 9 / 2 / 1 | 11 / 0 / 1 |
+| `plan.decomposition_degraded` | 10 / 1 / 1 | 11 / 0 / 1 |
 | `remediation.resolved` | 10 / 1 / 1 | 11 / 0 / 1 |
 | `remediation.spawned` | 10 / 1 / 1 | 11 / 0 / 1 |
-| `run.completed` | 10 / 1 / 1 | 11 / 0 / 1 |
-| `run.graph_integrity_failed` | 10 / 1 / 1 | 11 / 0 / 1 |
+| `run.completed` | 11 / 0 / 1 | 11 / 0 / 1 |
+| `run.graph_integrity_failed` | 11 / 0 / 1 | 11 / 0 / 1 |
 | `run.node_backoff_expired` | 10 / 1 / 1 | 11 / 0 / 1 |
 | `run.node_backoff_started` | 10 / 1 / 1 | 11 / 0 / 1 |
 | `run.node_ready` | 10 / 1 / 1 | 11 / 0 / 1 |
 | `run.node_retry_scheduled` | 10 / 1 / 1 | 11 / 0 / 1 |
-| `scheduler.pass` | 10 / 1 / 1 | 11 / 0 / 1 |
+| `scheduler.pass` | 10 / 1 / 1 | 10 / 1 / 1 |
 
-Overall **159 PASS / 17 PARTIAL / 16 ABSENT → 176 PASS / 0 PARTIAL / 16 ABSENT**. All sixteen are self-graded PASS_AS_PREPARED_WITHOUT_ADMISSION within the finite static scope. All current evidence quotations are mechanically revalidated. Shared sweep items below remain open; this is neither an admission nor a native clearance.
+Totals: **162 PASS / 14 PARTIAL / 16 ABSENT → 175 PASS / 1 PARTIAL / 16 ABSENT**. F16 upgrades one retention cell; F20 upgrades twelve oracle cells. Scheduler's oracle cell stays PARTIAL for F19. Current source quotations were mechanically relocated/rechecked and source pins refreshed; no governance hash was restamped.
 
-## Targeted predicate witnesses and whole-lane check 11
+## Finding-specific guard witnesses
 
-The round-8 aggregate table is superseded as a completeness claim by **P1**. Per FIX-ROUND's 04:45 shared-tool instruction, no lane proof inventory was rebuilt. Whole-lane per-predicate proof is pending adoption of `scripts/pm_guard_isolation.py`; aggregate counts and compound cuts do not prove duplicates. A duplicate means the same field and same predicate at multiple sites, with each site tested alone and all together. None of the targeted cuts below merges distinct predicates.
+The owner-read ID boundary is called separately for node and run before equality. String type and nonempty-string are different predicates. Nonempty applies to strings only, so null/false cannot add a second emptiness defect. Boundary cases have one value and no peer/hash observation to leave stale. Every seed is the valid ID from that family's real owner record. Full-capture equality cases retain both type/nonempty checks, all revisions, copies and independently recomputed source hashes.
 
-| Guard / scope | Negatives that flip | Negatives still rejected / limit |
+| Single predicate removed | Negatives that flip in each affected family | Others remain rejected |
 |---|---|---|
-| Exact primitive integer type, one effect key or one node/run revision | 56 individual bool-alias witnesses, one per field cut | Every other new F17 negative in that family reruns and rejects; exact IDs are in `fix-verification.json`. Wrong float observations also hit the existing current numeric-domain guard; no general numeric proof is inferred. |
-| Version membership, one schema property only | All 16 rebuilt unsupported-version negatives | Peer schema rules and all original-copy/hash joins remain enabled. Version membership is not equality with an original. |
-| UTC spelling, one source-clock value | 48 offset/lowercase witnesses | Calendar parser, exact comparison, source copies/hashes and peer clock admission stay enabled. Other source paths are not weakened. |
-| Early timer comparison | 90 ns and 61-digit early controls | All other retry policy/clock/custody predicates remain enabled. |
-| Scheduler score ordering | 3 coherent wrong selections | Candidate partition, capacity, selected-score copies and owner hashes remain enabled. |
-| Primary wake ordering | 2 coherent wrong primary reasons | Coalesced reasons and wake refs remain correct and enabled; each specimen has only one ordering defect. |
+| Node ID string type | Six node wrong-type values, including null/float | Eight boundary negatives retain their exact own refusal |
+| Run ID string type | Six run wrong-type values, including null/float | Eight boundary negatives retain their exact own refusal |
+| Node ID nonempty string | One node empty string | Thirteen boundary negatives retain their exact own refusal |
+| Run ID nonempty string | One run empty string | Thirteen boundary negatives retain their exact own refusal |
+| Node/run ID equality only | Two well-typed, nonempty full-capture disagreements per family | Source hashes, revisions, type and emptiness predicates stay enabled |
 
-Targeted witnesses are finding-specific evidence, not a full-lane per-predicate inventory. F18's fixture defect is repaired now; P1 does not excuse stale copies or accepting product guards.
+All twelve families pass these witnesses. The full `attempt.completed` semantic CLI fails on exactly its own six/six/one/one boundary cases under the four corresponding per-field cuts and passes after restoration. No unrelated predicate is removed; no distinct predicates are called duplicates. This is F20-specific evidence. **Whole-lane check 11 completeness remains P1 for part 2; no new inventory, guard table or general proof machinery was authored.**
 
-## Sweep items
+## Checks and integration limits
 
-- **S-N1** — `scripts/pm_executor_event_semantics.py: run_numeric_case`: Raw -0 token is lost by json.loads. Adopt shared exact current integer-token admission, preserving authenticated original editions.
-- **S-N2** — `scripts/pm_executor_event_semantics.py: canonical/validate_canonical_domain`: Binary64 integer exactness does not qualify JCS output decimal exactness (2^60). Adopt shared qualification over each actual owner preimage.
-- **S-N3** — `scripts/pm_executor_event_semantics.py: validate_capture_domain/stored_digest/source-dependency walks`: Current JCS admissibility is applied outside identity preimages. Separate owner integer ranges, Storage uint64 and physical domains; no new lane caps.
-- **S-N4** — `scripts/pm_executor_event_semantics.py: payload_bytes`: Restricted integer/string fixture codec is not the general physical profile. Adopt SP-1100 selected physical codec, preserving float types and signed zero.
-- **S-N5** — `scripts/pm_executor_event_semantics.py: record_rules/identity/schema_validate`: Original verification still resolves current same-URI resources. Adopt SP-1101 authenticated original tuple and frozen schema/recipe resources.
-- **P1** — `Existing lane AST proof inventory and named removal sets`: Aggregate sites and sets are not per-predicate completeness proofs. Adopt scripts/pm_guard_isolation.py in the shared sweep; do not rebuild lane proof machinery.
+All DX jobs run serially with the 6 GB available-memory floor; no aggregate checker was launched. The bounded check/generator children peaked at 463.1 MiB RSS, with at least 14 GB available at every normal command start; no low-memory pause was needed. No checker failure is hidden by a nested status. All 32 normal family commands exit 0 with top-level `pass`. Fresh adversarial probes: **230 expected outcomes**. Targeted F20 witnesses, all unchanged-original fixture preservation checks and source-pin/quotation checks pass.
 
-These use the review's shared-rule comparison at `origin/plans/ea-numrule-20261105` `e20fa723c14a3e514005381c9c18cff7470c0bad`. No new lane-local serializer, number cap, float normalization, signed-zero erasure or unapproved format policy was added. CV-1101 was absent from that reviewed shared revision; F19 enforces this lane's existing UTC owner grammar.
-
-## Checks and results
-
-All family checks ran **one family/process at a time**, with resource checks and a 6 GB floor (resume threshold 7 GB). No low-memory pause was needed in the completed round-9 runs. Initial disk/RAM were 103 GB / 11 GB. All 32 normal family commands return exit 0 and top-level pass. A final scheduler rerun passes after the two new primary-wake cases were narrowed to one predicate.
+Semantic totals:
 
 ```json
 {
-  "semantic": {
-    "source_transition_cases": 3358,
-    "receipt_replay_withdrawal_traces": 230,
-    "source_score_domain_cases": 16,
-    "isolated_schema_cases": 326,
-    "schema_reference_cases": 208,
-    "historical_read_cases": 1345,
-    "numeric_boundary_cases": 2060,
-    "exact_type_cases": 4020
-  },
-  "shape": {
-    "fixture_cases": 775,
-    "identity_replay_cases": 80,
-    "schema_reference_cases": 208
-  },
-  "shared_helpers_per_family_process": 56,
-  "shared_goldens_per_family_process": 21,
-  "targeted_review_verification": {
-    "typed_regressions": 56,
-    "clock_regressions": 28,
-    "version_isolation": 16,
-    "predicate_witnesses": 111,
-    "precision": 5,
-    "retained": 128,
-    "status": "pass"
-  }
+  "source_transition_cases": 3214,
+  "receipt_replay_withdrawal_traces": 230,
+  "source_score_domain_cases": 16,
+  "isolated_schema_cases": 326,
+  "schema_reference_cases": 208,
+  "historical_read_cases": 1345,
+  "numeric_boundary_cases": 2060,
+  "exact_type_cases": 4020,
+  "workgraph_id_boundary_cases": 168
 }
 ```
 
-The precision probes distinguish adjacent admitted fractions at 7, 8, 9, 61 and 4,501 digits, beyond Python's decimal-string conversion limit. `.1Z` and `.10Z` compare as the same instant. Exact timestamp parsing affects comparison only; original timestamp strings, physical bodies, identities, source hashes and first receipts remain unchanged.
-
-All 128 predecessor originals reproduce the review's exact unchanged custody hashes and read under ordinary/replay-only policies; 128 forged originals refuse. All original fixture prefixes, baselines, traces, histories, numeric/schema cases and the custody catalogue are unchanged, except the sixteen documented F18 negative repairs. All 504 new type cases reject; all 168 new clock cases match expectations. No guard was weakened in production.
+The sixteen semantic processes also run 56 shared helper and 21 canonical golden cases each. The 168 graph-ID boundary cases are counted separately from full captures.
 
 | Check | Exit / result |
 |---|---|
-| `semantic-scheduler-final` | 0 / pass |
-| `shards-check` | 0 / pass |
-| `index-validate` | 1 / fail |
-| `event-index-tests` | 0 / see captured test output |
-| `runtime-vocabulary-tests` | 1 / see captured test output |
-| `diff-check` | 0 / see captured test output |
+| Shards generate / check | 0 / 0 |
+| Index generate | 0 / pass |
+| Index validate | 0 / top-level `pass`, 0 failures |
+| Event-index tests | 0 |
+| Runtime-vocabulary tests | 1 / existing N1 |
+| `git diff --check` | 0 |
 
-Index validation is judged by its **top-level** status. N1 remains the pre-existing runtime-vocabulary renderer assertion. N2 remains the shared dormant goal-body schema reference outside this lane. N3 remains the 21 legacy-ledger rows plus DL-302 absent on this older branch: 22 existing integration index failures, with no new DX unit named. These are reported without changing unrelated owners or restamping governance. The owning integration/reseal phase must address expected changed-owner hash staleness.
+**N1:** renderer-order assertion remains outside DX. Its test and both governing GUI/release sources are byte-identical to rebased main. **N2:** the shared dormant `execution_unit_context.schema.json` → goal `body_application_v1` reference remains outside lane-owned schemas; its source is byte-identical to rebased main. **N3 is resolved by the required rebase:** current index validation exits 0 with top-level pass and zero failures, replacing cycle 10's 22 integration failures. The comparison is in `index-baseline-comparison.json`; DL-302 is now present. Changed-owner governance staleness remains for integration/reseal; no reseal was attempted.
 
-## All eleven standing checks and recurring classes
+### Standing and recurring checks
 
-| Check / class | Evidence and disposition |
-|---|---|
-| 1 append/replay policy | All sixteen current capture/shape/trace refusals remain; retained read routes are separate. |
-| 2 application key | Project-only families; application scope refuses, CV-366 app key N/A. |
-| 3 Project partition | Encoded `project~` positives and raw-ID refusals retained. |
-| 4 sizes / class 6 | 16,384/16,385-byte boundaries and referenced pack/custody cases retained; S-N4 limits the fixture codec claim. Native full-record bytes NOT_RUN. |
-| 5 exact end / class 12 | Full schema/source/shape formats, F19 T/Z admission and exact fractional boundaries pass. |
-| 6 semantic retry body / class 2 | Storage metadata-only retry preserves one original receipt/effect; caller semantic changes conflict. |
-| 7 source/checkpoint joins / classes 1 and 4 | Original digests/parents/identities and F17 typed graph/effect joins refuse contradictory inputs; SP-278 nine-field tokens remain explicitly adopted. |
-| 8 failure exit | Closed family payloads refuse `exit_code=0`; no subprocess-exit family. |
-| 9 refs / class 5 | All lane payload/proof eager-reference cases pass; shared N2 remains an integration item. |
-| 10 retained direction / classes 3 and 10a | All 128 unchanged prior originals read; forged originals and current withdrawal/access/deletion denials refuse. S-N5 frozen-resource adoption remains open. |
-| 11 masks / class 8 | F18 now flips on its version-domain cut alone; targeted F17/F19 controls pass. Whole-lane proof machinery remains P1. |
-| Class 7 custody | Source/Storage/family mismatch and current linked-body read checks remain in all-family production suites. |
-| Class 9 grades | All 192 cells cite current text; explicit shared sweep/native limits retained. |
-| Class 10 number domain | S-N1–S-N4 recorded for the shared sweep; no lane caps or physical float normalization. |
-| Class 11 primitive types | 4,020 exact-type cases and all 56 reviewed alias counterexamples pass; no universal type-surface clearance is claimed. |
+1–3: all current append/retry/replay refusals, encoded Project scope and independent foreign-Project probes pass; CV-366 application keys are N/A to these Project-only families. 4–5: existing exact inline limits, referenced logical bodies and whole-string/calendar refusals pass; scheduler lowercase-`t` remains F19 and general physical codec remains S-N4. 6–7: original semantic retry body/first receipt, source revisions/roots, checkpoint identities and exact primitive joins remain tested. 8: closed payloads still refuse success-exit injection; these are not process-exit families. 9: dormant lane reference mutations refuse; N2 remains shared. 10: unchanged retained originals read after live transitions, while withdrawal/source loss/foreign disclosure refuse; S-N5 remains. 11: F20-specific isolation passes; P1 remains open.
 
-## Scope, IDs and evidence
+Fresh own mutations cover recurring classes 1–7, 11 and 12: forged source hashes, Storage identity/revision disagreement, retained disclosure fences, typed equality, dormant refs, large linked-body corruption and publication ordering. The full existing family suites retain exact size thresholds and fresh custody cases. Class 8 has the F20 table above. Class 9 is the explicit partial/readiness reporting here. Number domains (10), frozen write-time resources (10a) and full physical bytes remain the named shared adoptions; no broader clearance is claimed.
 
-Shared-file hunk: **SP-506 only** in `Plans/storage-plan.md`, plus its companion retention row. Only Storage-derived shards and the generated plan index changed; all 15 ignored currentness inputs were copied and SHA-256 matched before generation. CV/EP/ATS prose, registry, Decision Log, Spec Lock, generated evidence and auto-decisions remain untouched. No admission, WorkNodes, governance seal, subagent, pm-mail, browser or server. The temporary sparse worktree is removed after push.
+## Part 2 items
 
-**IDs used:** EP-210..225, CV-500..515, SP-500..515 and ATS-250..257 (56 existing IDs; zero minted). DL-401 and first-deck G28 are cited existing decision evidence. No new bindings or family IDs.
+- **F19 / CV-1101:** `scripts/pm_executor_event_semantics.py:362` (`instant`, default UTC), `458` (`validate_score_domain`), scheduler ready/wake sorts and `scripts/pm_executor_event_contracts.py:92`. Owner `Plans/Contracts_V0.md:25295` (CV-515). Adopt CV-1101's field-owner profile: ordinary ready-since and prerequisite/capacity wake clocks admit lowercase `t`; backoff observations retain uppercase T; final Z/calendar/full precision remain. Add four coherent admitted lowercase-`t` capture/shape/wake positives and replace the two contrary wake negatives, preserving source copies/digests/originals.
+- **S-N1:** `run_numeric_case` loses original `-0` tokens; adopt shared current token admission at declared slots, preserving authenticated old editions.
+- **S-N2:** `canonical` / `validate_canonical_domain` admit `2^60` without qualifying actual JCS decimal output; adopt CV-1100 qualification over actual owner preimages and existing tuple/prefix rules.
+- **S-N3:** `validate_capture_domain`, `stored_digest`, source/dependency walks conflate JCS inputs, owner integers, Storage uint64 and physical values; separate domains with the shared helper, without local caps.
+- **S-N4:** `payload_bytes` uses the restricted integer/string fixture codec; adopt SP-1100 where general physical values are needed, preserving float types and signed zero.
+- **S-N5:** `record_rules`, `identity`, `schema_validate` still resolve current same-URI resources for originals; adopt SP-1101's authenticated original tuple and frozen schema/recipe/format resources. Keep valid predecessor and forgery controls.
+- **P1:** restructure into named predicate guard tables and adopt `scripts/pm_guard_isolation.py` after the shared tool passes. Whole-lane predicate/duplicate completeness remains unproved until then. Existing AST/removal-set artifacts are superseded as proof claims.
 
-Raw evidence is external under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/`. Each cited receipt has an exact SHA-256 below; `evidence-manifest.json` covers the retained evidence, excluding itself.
+## Scope and evidence
 
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/family-jobs.json` — `527e6f604e434eec6ff44b99280c6d619f254d2a2c38d69f282b462140728372`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/final-checks.json` — `94b399270840b5eaed3fd601e045efd195656af12ac5203dee9ff90dfbc270af`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/fix-verification.json` — `90c1da95061de46c7fb0fef03ce0f0b85a9d71a0c574404f9b82210f5e369468`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/f17-added.json` — `287a72d90612a1a16bfc19819d0dd9c6a33efe1847143a9975b4bb46779df54a`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/f18-repairs.json` — `33b61ddaefa4cc58c0565bb07708bd9f8565ded89694d1bdbebca23bfdbd5594`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/f19-added.json` — `0e89ea5c526699bd3fff7d9902dc15b0b3d9e063733915c4ad06816d0300866d`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/preservation.json` — `51116321bc8eab6a20831300987db1df8a6ec1aac8008067b85a17482b7ec956`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/quote-audit.json` — `d586aebd69d503408f1619c4c656b14bf55eb3c332e311d097955320381a9031`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/currentness.json` — `5c99f673f4396a206bc852dafe6ba4c976ec1cb26b3a3ce75cdad69d6e4db75a`.
-- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/scope-integration.json` — `7f16fdf7520d9b9a8633ba1a1502bde6acfb9588244562e41239c77a4830cf1c`.
+No admissions, registry append, Decision Log entry, new PlanUnit ID, new binding, test-file edit, governance artifact edit, local number helper, pm-mail or subagent. Existing IDs only: EP-210..225, CV-500..515, SP-500..515, ATS-250..257; cited DL-401. Source changes in this sweep are EP-216, the semantic checker and its graph-ID fixtures. Rebase regeneration covers the lane's existing EP/CV/SP/ATS edits; no other document's shards changed. All 15 ignored currentness inputs were copied and SHA-256 matched. The temporary worktree is removed after the lane branch is pushed; main is never pushed.
+
+Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/`.
+
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json` — SHA-256 `f32545d00250430b2d6021ab471d6c0537b1e73333b465eb2060be62ca34179a`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-cli-verification.json` — SHA-256 `f8b46c3cf4d9cc23b9471a58f34f648d5c7cea5d2adb174fb0b132c45112f4ad`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/own-probes.json` — SHA-256 `64213529110079724adf1dfcdeb02ad881876505ad7779efe51fc759bfcd0f7c`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/preservation.json` — SHA-256 `5754ef09343ef79076393da68deea3cfb3397f6dee3f728cd8ab3acb78122b9c`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/checks.json` — SHA-256 `3a9de2be5e8064860fd928adb8e11596202ba1f624b901eb1f42ffddf32b1582`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/quote-audit.json` — SHA-256 `fe013898af395ac50dc3b6b8f23c2faf405520d316f931ae60dd00a87c28a296`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/currentness.json` — SHA-256 `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/index-baseline-comparison.json` — SHA-256 `86d9e1dcb562a0beb6fbeaddb299ce2b7d6291163e30e4cec1813cb2a54d26da`.
 
 ## Original contract binding/search lineage
 
-The earlier per-family searches and newly authored bindings below are retained as source lineage. Their earlier grades and round-8 proof-completeness claims are superseded by round 9. The original binding searches remain source lineage; CV-500..515 and SP-500..515 received round 8’s numeric/format amendments.
+The earlier per-family searches and newly authored bindings below are retained as source lineage. Their earlier grades and proof-completeness claims are superseded by this sweep report and its explicit part-2 gaps. The original binding searches remain source lineage; CV-500..515 and SP-500..515 received round 8’s numeric/format amendments.
 
 ### First-pass independent binding searches
 

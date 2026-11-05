@@ -1,477 +1,39 @@
 {
-  "graded_code_head": "5db3831aa1475c9318648498bb46205698319d46",
-  "base": "d1bdb7cc479477a9b6f4b907001eb7f81bba84f0",
-  "families": 16,
-  "family_commands": {
-    "commands": [
-      {
-        "family": "attempt.completed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "attempt.completed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 1.1,
-        "available_gb": 9,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-attempt.completed.json"
-      },
-      {
-        "family": "attempt.completed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "attempt.completed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 7.28,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-attempt.completed.json"
-      },
-      {
-        "family": "attempt.started",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "attempt.started"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 1.12,
-        "available_gb": 9,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-attempt.started.json"
-      },
-      {
-        "family": "attempt.started",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "attempt.started"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 8.28,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-attempt.started.json"
-      },
-      {
-        "family": "node.blocked",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "node.blocked"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.68,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-node.blocked.json"
-      },
-      {
-        "family": "node.blocked",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "node.blocked"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 7.4,
-        "available_gb": 9,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-node.blocked.json"
-      },
-      {
-        "family": "node.completed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "node.completed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.68,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-node.completed.json"
-      },
-      {
-        "family": "node.completed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "node.completed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 5.32,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-node.completed.json"
-      },
-      {
-        "family": "node.started",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "node.started"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.69,
-        "available_gb": 12,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-node.started.json"
-      },
-      {
-        "family": "node.started",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "node.started"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 5.31,
-        "available_gb": 12,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-node.started.json"
-      },
-      {
-        "family": "node.unblocked",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "node.unblocked"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.84,
-        "available_gb": 11,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-node.unblocked.json"
-      },
-      {
-        "family": "node.unblocked",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "node.unblocked"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 2.7,
-        "available_gb": 11,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-node.unblocked.json"
-      },
-      {
-        "family": "plan.decomposition_degraded",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "plan.decomposition_degraded"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.59,
-        "available_gb": 11,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-plan.decomposition_degraded.json"
-      },
-      {
-        "family": "plan.decomposition_degraded",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "plan.decomposition_degraded"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 2.76,
-        "available_gb": 11,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-plan.decomposition_degraded.json"
-      },
-      {
-        "family": "remediation.resolved",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "remediation.resolved"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.68,
-        "available_gb": 11,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-remediation.resolved.json"
-      },
-      {
-        "family": "remediation.resolved",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "remediation.resolved"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 4.07,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-remediation.resolved.json"
-      },
-      {
-        "family": "remediation.spawned",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "remediation.spawned"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.79,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-remediation.spawned.json"
-      },
-      {
-        "family": "remediation.spawned",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "remediation.spawned"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 3.65,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-remediation.spawned.json"
-      },
-      {
-        "family": "run.completed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "run.completed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.71,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-run.completed.json"
-      },
-      {
-        "family": "run.completed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "run.completed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 3.87,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-run.completed.json"
-      },
-      {
-        "family": "run.graph_integrity_failed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "run.graph_integrity_failed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.65,
-        "available_gb": 11,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-run.graph_integrity_failed.json"
-      },
-      {
-        "family": "run.graph_integrity_failed",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "run.graph_integrity_failed"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 2.73,
-        "available_gb": 11,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-run.graph_integrity_failed.json"
-      },
-      {
-        "family": "run.node_backoff_expired",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "run.node_backoff_expired"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.66,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-run.node_backoff_expired.json"
-      },
-      {
-        "family": "run.node_backoff_expired",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "run.node_backoff_expired"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 3.92,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-run.node_backoff_expired.json"
-      },
-      {
-        "family": "run.node_backoff_started",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "run.node_backoff_started"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.61,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-run.node_backoff_started.json"
-      },
-      {
-        "family": "run.node_backoff_started",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "run.node_backoff_started"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 4.27,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-run.node_backoff_started.json"
-      },
-      {
-        "family": "run.node_ready",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "run.node_ready"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.84,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-run.node_ready.json"
-      },
-      {
-        "family": "run.node_ready",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "run.node_ready"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 2.4,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-run.node_ready.json"
-      },
-      {
-        "family": "run.node_retry_scheduled",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "run.node_retry_scheduled"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.74,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-run.node_retry_scheduled.json"
-      },
-      {
-        "family": "run.node_retry_scheduled",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "run.node_retry_scheduled"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 4.98,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-run.node_retry_scheduled.json"
-      },
-      {
-        "family": "scheduler.pass",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_contracts.py",
-          "--family",
-          "scheduler.pass"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 0.81,
-        "available_gb": 10,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shape-scheduler.pass.json"
-      },
-      {
-        "family": "scheduler.pass",
-        "command": [
-          "python3",
-          "scripts/pm_executor_event_semantics.py",
-          "--family",
-          "scheduler.pass"
-        ],
-        "exit_code": 0,
-        "status": "pass",
-        "seconds": 5.66,
-        "available_gb": 9,
-        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-scheduler.pass.json"
-      }
-    ],
-    "memory_pauses": []
-  },
-  "checks": [
+  "phase": "sweep-part-1",
+  "assessed_head": "52fb3ad7809f29eb7d4f37730530ed5ba3c2dc09",
+  "commands": [
     {
-      "check": "semantic-scheduler-final",
+      "label": "shards-generate",
       "command": [
         "python3",
-        "scripts/pm_executor_event_semantics.py",
-        "--family",
-        "scheduler.pass"
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
       ],
+      "started": "2026-11-05T16:35:59.142140+00:00",
+      "available_gb_at_start": 14,
       "exit_code": 0,
       "top_level_status": "pass",
-      "seconds": 7.02,
-      "stdout": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-scheduler-final.stdout",
-      "stderr": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/semantic-scheduler-final.stderr"
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/shards-generate.log",
+      "peak_child_rss_kib_so_far": 72520
     },
     {
-      "check": "shards-check",
+      "label": "index-generate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "started": "2026-11-05T16:36:02.911269+00:00",
+      "available_gb_at_start": 14,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/index-generate.log",
+      "peak_child_rss_kib_so_far": 287136
+    },
+    {
+      "label": "shards-check",
       "command": [
         "python3",
         "scripts/pm-shard-plans.py",
@@ -479,27 +41,509 @@
         "--config",
         "Plans/sharding_config.json"
       ],
+      "started": "2026-11-05T16:36:42.823288+00:00",
+      "available_gb_at_start": 19,
       "exit_code": 0,
       "top_level_status": "pass",
-      "seconds": 26.43,
-      "stdout": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shards-check.stdout",
-      "stderr": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/shards-check.stderr"
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/shards-check.log",
+      "peak_child_rss_kib_so_far": 287136
     },
     {
-      "check": "index-validate",
+      "label": "index-validate",
       "command": [
         "python3",
         "scripts/pm-plan-index.py",
         "validate"
       ],
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "seconds": 52.55,
-      "stdout": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/index-validate.stdout",
-      "stderr": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/index-validate.stderr"
+      "started": "2026-11-05T16:36:59.385082+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/index-validate.log",
+      "peak_child_rss_kib_so_far": 474152
     },
     {
-      "check": "event-index-tests",
+      "label": "contracts-attempt.completed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "attempt.completed"
+      ],
+      "started": "2026-11-05T16:37:42.402162+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-attempt.completed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-attempt.completed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "attempt.completed"
+      ],
+      "started": "2026-11-05T16:37:43.331056+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-attempt.completed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-attempt.started",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "attempt.started"
+      ],
+      "started": "2026-11-05T16:37:49.325720+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-attempt.started.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-attempt.started",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "attempt.started"
+      ],
+      "started": "2026-11-05T16:37:49.968443+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-attempt.started.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-node.blocked",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "node.blocked"
+      ],
+      "started": "2026-11-05T16:37:57.019803+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-node.blocked.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-node.blocked",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "node.blocked"
+      ],
+      "started": "2026-11-05T16:37:57.761821+00:00",
+      "available_gb_at_start": 16,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-node.blocked.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-node.completed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "node.completed"
+      ],
+      "started": "2026-11-05T16:38:02.341373+00:00",
+      "available_gb_at_start": 19,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-node.completed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-node.completed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "node.completed"
+      ],
+      "started": "2026-11-05T16:38:03.204349+00:00",
+      "available_gb_at_start": 19,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-node.completed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-node.started",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "node.started"
+      ],
+      "started": "2026-11-05T16:38:07.333871+00:00",
+      "available_gb_at_start": 19,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-node.started.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-node.started",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "node.started"
+      ],
+      "started": "2026-11-05T16:38:07.884608+00:00",
+      "available_gb_at_start": 19,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-node.started.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-node.unblocked",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "node.unblocked"
+      ],
+      "started": "2026-11-05T16:38:12.904521+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-node.unblocked.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-node.unblocked",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "node.unblocked"
+      ],
+      "started": "2026-11-05T16:38:13.455037+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-node.unblocked.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-plan.decomposition_degraded",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "plan.decomposition_degraded"
+      ],
+      "started": "2026-11-05T16:38:16.036637+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-plan.decomposition_degraded.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-plan.decomposition_degraded",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "plan.decomposition_degraded"
+      ],
+      "started": "2026-11-05T16:38:16.793288+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-plan.decomposition_degraded.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-remediation.resolved",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "remediation.resolved"
+      ],
+      "started": "2026-11-05T16:38:19.172134+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-remediation.resolved.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-remediation.resolved",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "remediation.resolved"
+      ],
+      "started": "2026-11-05T16:38:19.847178+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-remediation.resolved.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-remediation.spawned",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "remediation.spawned"
+      ],
+      "started": "2026-11-05T16:38:22.997307+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-remediation.spawned.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-remediation.spawned",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "remediation.spawned"
+      ],
+      "started": "2026-11-05T16:38:23.639271+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-remediation.spawned.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-run.completed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "run.completed"
+      ],
+      "started": "2026-11-05T16:38:26.875557+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-run.completed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-run.completed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "run.completed"
+      ],
+      "started": "2026-11-05T16:38:27.421278+00:00",
+      "available_gb_at_start": 18,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-run.completed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-run.graph_integrity_failed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "run.graph_integrity_failed"
+      ],
+      "started": "2026-11-05T16:38:30.285085+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-run.graph_integrity_failed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-run.graph_integrity_failed",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "run.graph_integrity_failed"
+      ],
+      "started": "2026-11-05T16:38:30.908438+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-run.graph_integrity_failed.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-run.node_backoff_expired",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "run.node_backoff_expired"
+      ],
+      "started": "2026-11-05T16:38:33.709335+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-run.node_backoff_expired.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-run.node_backoff_expired",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "run.node_backoff_expired"
+      ],
+      "started": "2026-11-05T16:38:34.311197+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-run.node_backoff_expired.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-run.node_backoff_started",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "run.node_backoff_started"
+      ],
+      "started": "2026-11-05T16:38:37.194001+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-run.node_backoff_started.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-run.node_backoff_started",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "run.node_backoff_started"
+      ],
+      "started": "2026-11-05T16:38:37.797869+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-run.node_backoff_started.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-run.node_ready",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "run.node_ready"
+      ],
+      "started": "2026-11-05T16:38:41.165896+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-run.node_ready.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-run.node_ready",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "run.node_ready"
+      ],
+      "started": "2026-11-05T16:38:41.921482+00:00",
+      "available_gb_at_start": 16,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-run.node_ready.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-run.node_retry_scheduled",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "run.node_retry_scheduled"
+      ],
+      "started": "2026-11-05T16:38:44.192040+00:00",
+      "available_gb_at_start": 17,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-run.node_retry_scheduled.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-run.node_retry_scheduled",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "run.node_retry_scheduled"
+      ],
+      "started": "2026-11-05T16:38:45.115382+00:00",
+      "available_gb_at_start": 16,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-run.node_retry_scheduled.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "contracts-scheduler.pass",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py",
+        "--family",
+        "scheduler.pass"
+      ],
+      "started": "2026-11-05T16:38:49.263575+00:00",
+      "available_gb_at_start": 16,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/contracts-scheduler.pass.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "semantics-scheduler.pass",
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py",
+        "--family",
+        "scheduler.pass"
+      ],
+      "started": "2026-11-05T16:38:50.341316+00:00",
+      "available_gb_at_start": 16,
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/semantics-scheduler.pass.log",
+      "peak_child_rss_kib_so_far": 474152
+    },
+    {
+      "label": "event-index-tests",
       "command": [
         "python3",
         "-m",
@@ -510,14 +554,15 @@
         "-p",
         "test_pm_event_index_binding.py"
       ],
+      "started": "2026-11-05T16:38:54.960361+00:00",
+      "available_gb_at_start": 16,
       "exit_code": 0,
       "top_level_status": null,
-      "seconds": 0.62,
-      "stdout": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/event-index-tests.stdout",
-      "stderr": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/event-index-tests.stderr"
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/event-index-tests.log",
+      "peak_child_rss_kib_so_far": 474152
     },
     {
-      "check": "runtime-vocabulary-tests",
+      "label": "runtime-vocabulary-tests",
       "command": [
         "python3",
         "-m",
@@ -528,94 +573,30 @@
         "-p",
         "test_pm_runtime_vocabulary_migration.py"
       ],
+      "started": "2026-11-05T16:38:55.506242+00:00",
+      "available_gb_at_start": 16,
       "exit_code": 1,
       "top_level_status": null,
-      "seconds": 14.55,
-      "stdout": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/runtime-vocabulary-tests.stdout",
-      "stderr": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/runtime-vocabulary-tests.stderr"
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/runtime-vocabulary-tests.log",
+      "peak_child_rss_kib_so_far": 474152
     },
     {
-      "check": "diff-check",
+      "label": "diff-check",
       "command": [
         "git",
         "diff",
         "--check"
       ],
+      "started": "2026-11-05T16:39:07.776700+00:00",
+      "available_gb_at_start": 15,
       "exit_code": 0,
       "top_level_status": null,
-      "seconds": 0.02,
-      "stdout": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/diff-check.stdout",
-      "stderr": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix9/diff-check.stderr"
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/diff-check.log",
+      "peak_child_rss_kib_so_far": 474152
     }
   ],
-  "semantic_totals": {
-    "source_transition_cases": 3358,
-    "receipt_replay_withdrawal_traces": 230,
-    "source_score_domain_cases": 16,
-    "isolated_schema_cases": 326,
-    "schema_reference_cases": 208,
-    "historical_read_cases": 1345,
-    "numeric_boundary_cases": 2060,
-    "exact_type_cases": 4020
-  },
-  "shape_totals": {
-    "fixture_cases": 775,
-    "identity_replay_cases": 80,
-    "schema_reference_cases": 208
-  },
-  "shared_goldens_per_family_process": 21,
-  "shared_helpers_per_family_process": 56,
-  "new_cases": {
-    "F17": 504,
-    "F18_repaired": 16,
-    "F19": 168
-  },
-  "targeted_verification": {
-    "typed_regressions": 56,
-    "clock_regressions": 28,
-    "version_isolation": 16,
-    "predicate_witnesses": 111,
-    "precision": 5,
-    "retained": 128,
-    "status": "pass"
-  },
-  "sweep_items": [
-    {
-      "id": "S-N1",
-      "location": "scripts/pm_executor_event_semantics.py: run_numeric_case",
-      "issue": "Raw -0 token is lost by json.loads.",
-      "fix": "Adopt shared exact current integer-token admission, preserving authenticated original editions."
-    },
-    {
-      "id": "S-N2",
-      "location": "scripts/pm_executor_event_semantics.py: canonical/validate_canonical_domain",
-      "issue": "Binary64 integer exactness does not qualify JCS output decimal exactness (2^60).",
-      "fix": "Adopt shared qualification over each actual owner preimage."
-    },
-    {
-      "id": "S-N3",
-      "location": "scripts/pm_executor_event_semantics.py: validate_capture_domain/stored_digest/source-dependency walks",
-      "issue": "Current JCS admissibility is applied outside identity preimages.",
-      "fix": "Separate owner integer ranges, Storage uint64 and physical domains; no new lane caps."
-    },
-    {
-      "id": "S-N4",
-      "location": "scripts/pm_executor_event_semantics.py: payload_bytes",
-      "issue": "Restricted integer/string fixture codec is not the general physical profile.",
-      "fix": "Adopt SP-1100 selected physical codec, preserving float types and signed zero."
-    },
-    {
-      "id": "S-N5",
-      "location": "scripts/pm_executor_event_semantics.py: record_rules/identity/schema_validate",
-      "issue": "Original verification still resolves current same-URI resources.",
-      "fix": "Adopt SP-1101 authenticated original tuple and frozen schema/recipe resources."
-    },
-    {
-      "id": "P1",
-      "location": "Existing lane AST proof inventory and named removal sets",
-      "issue": "Aggregate sites and sets are not per-predicate completeness proofs.",
-      "fix": "Adopt scripts/pm_guard_isolation.py in the shared sweep; do not rebuild lane proof machinery."
-    }
-  ],
+  "f20": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
+  "own_probes": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/own-probes.json",
+  "integration_baseline": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/integration-source-baseline.json",
   "native_execution": "NOT_RUN"
 }
