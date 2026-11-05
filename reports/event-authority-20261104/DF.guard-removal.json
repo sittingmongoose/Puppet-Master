@@ -1,7 +1,7 @@
 {
   "lane": "DF",
   "round": 6,
-  "status": "pass",
+  "status": "historical_matrix_only_not_predicate_proof",
   "base": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
   "negative_count": 3466,
   "guard_count": 846,
@@ -65330,5 +65330,10 @@
       "reason": "The original byte-SHA guard and complete original decoder both refuse the same changed historical body."
     }
   },
-  "scope": "Static synthetic model, complete schema, predicate, materialization, body read and protocol boundaries only. Native NOT_RUN; membership ABSENT. All original integration traces and negative IDs retained; no trace-proof or own-only bypass in this literal matrix."
+  "scope": "Static synthetic model, complete schema, predicate, materialization, body read and protocol boundaries only. Native NOT_RUN; membership ABSENT. All original integration traces and negative IDs retained; no trace-proof or own-only bypass in this literal matrix.",
+  "prior_literal_matrix_status": "pass",
+  "current_round": 7,
+  "current_assessed_head": "7f3e1c0fbc209b42ce07c83b27b1c734dcef74d7",
+  "sweep_item": "S5",
+  "current_scope": "Round-6 literal mechanical observations retained as history only; not an isolated input-invariant proof. Shared pm_guard_isolation.py adoption will replace whole-keyword/compound/merged-predicate cuts. R6-B2 fixtures are repaired and their two exact predicate cuts are in fix7/focused-probes.json; the legacy operation-kind/subject set is invalid as a duplicate proof."
 }
