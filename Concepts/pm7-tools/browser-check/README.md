@@ -22,13 +22,13 @@ browser-check run $K/checks --set sandbox=1                    # every check in 
 Parallel runs are safe: each gets its own browser and run folder. Give each its own copy of the build (a rebuild during a run mixes builds) and its own `--out`. The page loads as `file://`, so `--host` can't open it: to use another machine, ssh there with a checkout of the branch (`~/.local/bin/browser-check`). Motion claims need the VM, Windows or Nas1, because the Mac records about 36 fps and refuses pixel checks while recording.
 
 | Check file | What it asserts |
+|---|---|
 | `diagnostics/choice-hit-bounds` | Runs the existing boundary assertions unchanged; `probeOut=<file>` retains native event targets, trusted flags and contemporaneous boxes for an unexpected outside activation. |
 | `look-menu-targets` | FO-75: every look-option pixel avoids other controls; help keeps its usable expanded target; real held right-edge presses in ten looks and three motion paths. |
 | `button-consent-face` | FO-73: empty and checked proxy-consent rings preserve the look press cue; twelve native 1/2 px edge and rounded-corner holds keep the target fixed, ten looks and three motion paths. |
 | `button-copy-face` | FO-73: real Copy/Copied acknowledgments and reset preserve the inner press face; native held edge activation and look feedback in ten looks and three motion paths. |
 | `button-press-faces` | FO-73: native resting/held primary and secondary face crops in ten looks, with calibrated recording marks and hit-box drift assertions; `segment=1` films the segmented-mode magnification face. |
 | `button-press-edges` | FO-73: representative non-choice onboarding button families across screens, the Look menu and sheets; ten looks and three motion paths, held edge/corner presses and a stationary hit box. Eight holds by default; `twoPx=1` adds the 2 px side holds. |
-|---|---|
 | `place-seed-boundaries` | SW-33: original SSH and known PM saved references without a session/cache, including another backup session; constructor/toString/__proto__ cache regressions. Both surfaces. |
 | `choice-visuals` | FO-49: stationary painted native boundaries, internal content lift, zero lift for media/attribute Reduced Motion, and native keyboard focus rings, all ten looks. `--set visualShots=1` lists native crops. |
 | `choice-boundary-film` | FO-49: filmed native painted boundary and bottom-edge activation, normal/media/attribute motion, Basic/Glass Light, two repetitions. |

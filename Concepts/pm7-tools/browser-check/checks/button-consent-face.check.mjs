@@ -24,7 +24,7 @@ export default async function(t) {
      if(t.args.film)await t.mark(`down ${tag} ${JSON.stringify(base)}`);await t.page.mouse.down();
      const h=await c.evaluate((e,b)=>new Promise(resolve=>{let worst=0,frames=0;const start=performance.now(),tick=()=>{const r=e.getBoundingClientRect();frames++;worst=Math.max(worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.w),Math.abs(r.height-b.h));if(performance.now()-start<350)requestAnimationFrame(tick);else{const face=e.querySelector('.o55-checkface'),p=face||e,s=getComputedStyle(p),q=p.getBoundingClientRect();resolve({worst,frames,face:!!face,paintWidth:q.width,paintBorder:parseFloat(s.borderTopWidth),scale:s.scale,transform:s.transform,rootBorder:parseFloat(getComputedStyle(e).borderTopWidth)});}};requestAnimationFrame(tick);}),base);
      if(t.args.film){await t.crop(`${tag}-held`,rect,'Held ring: inner paint squeezes in Friendly; native target stays fixed.');await t.mark(`up ${tag}`);}
-     await t.page.mouse.up();await f.waitForFunction(()=>window.__consent.clicks.length,{timeout:1000}).catch(()=>{});
+     await t.page.mouse.up();await f.waitForFunction(()=>window.__consent.clicks.length,null,{timeout:1000}).catch(()=>{});
      const clicks=await f.evaluate(()=>{window.__consent.hold=false;return window.__consent.clicks;});data.push({x,y,base,h,clicks});await f.waitForTimeout(220);
     }
     await t.check(`FO-73 consent native held edges and corners ${tag}`,data.every(v=>v.h.worst<=.01&&v.h.frames>=2&&v.clicks.length===1&&v.clicks[0].trusted&&v.clicks[0].own),JSON.stringify(data));
