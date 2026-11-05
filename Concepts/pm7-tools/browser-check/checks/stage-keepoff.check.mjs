@@ -7,9 +7,10 @@
 //    settles (the cloud), and Creating lowers its blocks (each went down behind the tab and the box), with three blocks
 //    and with four (an online copy signed in by the concept's stand-in owner), and the settled four-block stack stands
 //    below the box and its tab;
-//  - Glass Dark, Basic Light, Friendly Light and Retro Dark at 1920x1080, 1390x900 and 860x768: a prop under the bubble
-//    on Name > Safe > Add one > Back > Review (a leaving prop rose through the bubble, or the next words' bubble moved onto
-//    a prop still fading out);
+//  - Glass Dark, Basic Light, Friendly Light, Retro Light and Retro Dark at 1920x1080, 1390x900, 860x768 and 740x768: a
+//    prop under the bubble on Name > Safe > Add one > Back > Review (a leaving prop rose through the bubble, the next words'
+//    bubble moved onto a prop still fading out, or, in Retro's 740 banner where no place was clear, claimed a place over
+//    the leaving sign); --set leaveLooks= limits the looks;
 //  - Glass Dark and Basic Light at 1920x1080 and 1390x900, Begins as: an existing folder picked, then New, then the folder
 //    again, then New (AST3: the folder leaving went behind the new words' bubble for 11 frames);
 //  - Basic Light at 1920x1080 and 1390x900: Basic's check badge or the ring spreading from it past the stage's visible
@@ -146,7 +147,7 @@ async function nier(t, mode) {
 }
 
 async function leave(t, mode) {
-	for (const look of ['glass-dark', 'basic-light', 'friendly-light', 'retro-dark']) for (const size of [[1920, 1080], [1390, 900], [860, 768]]) {
+	for (const look of t.args.leaveLooks ? String(t.args.leaveLooks).split(',') : ['glass-dark', 'basic-light', 'friendly-light', 'retro-light', 'retro-dark']) for (const size of [[1920, 1080], [1390, 900], [860, 768], [740, 768]]) {
 		const tag = `${look} ${size.join('x')} ${mode}`;
 		const f = await openAt(t, mode, look, size, 'name');
 		await nameIt(t, f);
