@@ -21,7 +21,7 @@ from referencing.jsonschema import DRAFT202012
 from referencing.exceptions import Unresolvable
 
 from pm_event_index_binding import binding_digest
-from pm_projects_refresh_contracts import semantic_hash, scope_failures
+from pm_projects_refresh_contracts import semantic_hash, scope_failures, typed_tree
 from pm_event_numbers import JsonNumber, Refusal, storage_uint64
 
 
@@ -540,7 +540,7 @@ def board_source_errors(case, root, formats):
                     errors.append('source_' + k)
         if (source['original_operation_id'] != payload['operation_id'] or source['thread_id'] != payload['thread_id']
                 or source['scope'] != message['scope'] or wrapper['scope'] != message['scope']
-                or wrapper['record'] != message):
+                or typed_tree(wrapper['record']) != typed_tree(message)):
             errors.append('source_original_join')
         if source['original_input_semantic_sha256'] != semantic_hash('accepted_source', message):
             errors.append('source_input_digest')
@@ -555,7 +555,7 @@ def board_source_errors(case, root, formats):
                 errors.append('source_stage_method')
         witness = case.get('accepted_source_witness', {})
         if (witness.get('ref') != source['accepted_source_ref']
-                or witness.get('value') != message
+                or typed_tree(witness.get('value')) != typed_tree(message)
                 or source['accepted_source_sha256'] != semantic_hash('accepted_source', witness.get('value'))):
             errors.append('accepted_original_source_join')
         if case.get('physical_record_sha256') != hashlib.sha256(packed(wrapper)).hexdigest():
@@ -568,7 +568,7 @@ def board_source_errors(case, root, formats):
             witness = case.get('stage_evidence_witnesses', {}).get(name, {})
             if (proof is None or stage['request_ref'] is None or stage['result_ref'] is None
                     or witness.get('ref') != (proof or {}).get('source_ref')
-                    or witness.get('value') != stage_witness_value(case, name)
+                    or typed_tree(witness.get('value')) != typed_tree(stage_witness_value(case, name))
                     or (proof or {}).get('source_sha256') != semantic_hash('accepted_source', witness.get('value'))):
                 errors.append('source_stage_evidence')
         for k in ('thread_id', 'crew_id', 'run_id'):
@@ -899,14 +899,21 @@ def refresh_stage_witnesses(case):
 
 
 def custody_case(base, test):
-    case = copy.deepcopy(base)
+    case = numeric_board_original_case(base) if test.get('original_integral_float') else copy.deepcopy(base)
     target = case
     for field in test['path'][:-1]:
         target = target[field]
     if test.get('remove'):
         target.pop(test['path'][-1])
     else:
-        target[test['path'][-1]] = copy.deepcopy(test['value'])
+        value = copy.deepcopy(test['value'])
+        if test.get('opposite_primitive_type'):
+            original = target[test['path'][-1]]
+            assert type(original) in (int, float)
+            value = float(original) if type(original) is int else int(original)
+        target[test['path'][-1]] = value
+    if test.get('sync_physical_record'):
+        case['physical_record_sha256'] = hashlib.sha256(packed(case['wrapper'])).hexdigest()
     if test.get('sync_stage_witnesses'):
         refresh_stage_witnesses(case)
     else:

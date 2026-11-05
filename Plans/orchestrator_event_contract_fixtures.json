@@ -163371,6 +163371,1224 @@
       "remove": false,
       "expected_error": "source_stage_evidence",
       "expected_exit_code": 1
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_wrapper_source_sequence",
+      "board_index": 0,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_wrapper_source_sequence:retained_float_original",
+      "board_index": 0,
+      "original_integral_float": true,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:original_intent:revision",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:original_intent:generation",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:accepted_original_source:revision",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:accepted_original_source:generation",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:current_owner_and_stop_fence:revision",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:current_owner_and_stop_fence:generation",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:canonical_pending_or_reservation:revision",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:canonical_pending_or_reservation:generation",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:owner_commit:revision",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:0:typed_stage:owner_commit:generation",
+      "board_index": 0,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_wrapper_source_sequence",
+      "board_index": 2,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_wrapper_source_sequence:retained_float_original",
+      "board_index": 2,
+      "original_integral_float": true,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:original_intent:revision",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:original_intent:generation",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:accepted_original_source:revision",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:accepted_original_source:generation",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:current_owner_and_stop_fence:revision",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:current_owner_and_stop_fence:generation",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:canonical_pending_or_reservation:revision",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:canonical_pending_or_reservation:generation",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:owner_commit:revision",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:2:typed_stage:owner_commit:generation",
+      "board_index": 2,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_wrapper_source_sequence",
+      "board_index": 4,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_wrapper_source_sequence:retained_float_original",
+      "board_index": 4,
+      "original_integral_float": true,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:original_intent:revision",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:original_intent:generation",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:accepted_original_source:revision",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:accepted_original_source:generation",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:current_owner_and_stop_fence:revision",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:current_owner_and_stop_fence:generation",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:canonical_pending_or_reservation:revision",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:canonical_pending_or_reservation:generation",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:owner_commit:revision",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:4:typed_stage:owner_commit:generation",
+      "board_index": 4,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_wrapper_source_sequence",
+      "board_index": 6,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_wrapper_source_sequence:retained_float_original",
+      "board_index": 6,
+      "original_integral_float": true,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:original_intent:revision",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:original_intent:generation",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:accepted_original_source:revision",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:accepted_original_source:generation",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:current_owner_and_stop_fence:revision",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:current_owner_and_stop_fence:generation",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:canonical_pending_or_reservation:revision",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:canonical_pending_or_reservation:generation",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:owner_commit:revision",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_posted:6:typed_stage:owner_commit:generation",
+      "board_index": 6,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_wrapper_source_sequence",
+      "board_index": 8,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_wrapper_source_sequence:retained_float_original",
+      "board_index": 8,
+      "original_integral_float": true,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:original_intent:revision",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:original_intent:generation",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:accepted_original_source:revision",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:accepted_original_source:generation",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:current_owner_and_stop_fence:revision",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:current_owner_and_stop_fence:generation",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:canonical_pending_or_reservation:revision",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:canonical_pending_or_reservation:generation",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:owner_commit:revision",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_message_read:8:typed_stage:owner_commit:generation",
+      "board_index": 8,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_wrapper_source_sequence",
+      "board_index": 9,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_wrapper_source_sequence:retained_float_original",
+      "board_index": 9,
+      "original_integral_float": true,
+      "path": [
+        "wrapper",
+        "record",
+        "source_sequence"
+      ],
+      "value": 1,
+      "sync_stage_witnesses": true,
+      "sync_physical_record": true,
+      "remove": false,
+      "expected_error": "source_original_join",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:original_intent:revision",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:original_intent:generation",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "original_intent",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:accepted_original_source:revision",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:accepted_original_source:generation",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "accepted_original_source",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:current_owner_and_stop_fence:revision",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:current_owner_and_stop_fence:generation",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "current_owner_and_stop_fence",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:canonical_pending_or_reservation:revision",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:canonical_pending_or_reservation:generation",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "canonical_pending_or_reservation",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:owner_commit:revision",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "revision"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
+    },
+    {
+      "name": "crew.board_messages_archived:9:typed_stage:owner_commit:generation",
+      "board_index": 9,
+      "path": [
+        "source",
+        "stage_custody",
+        "owner_commit",
+        "custody_evidence",
+        "generation"
+      ],
+      "value": 1.0,
+      "sync_stage_witnesses": false,
+      "remove": false,
+      "expected_error": "source_stage_evidence",
+      "expected_exit_code": 1,
+      "opposite_primitive_type": true
     }
   ],
   "retained_event_cases": [
