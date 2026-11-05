@@ -2,7 +2,7 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4216-L4385
+Source lines: L4216-L4387
 
 Source SHA256: `ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e`
 
@@ -54,9 +54,11 @@ preserved_exact_tokens:
   - "Auditor Model"
   - "Auditor audit-to-repair loop"
   - "critical block"
+  - "Do not introduce new references or meta-comments using the old Chain Wizard name."
 negative_constraints:
   - Do not enable this automatic launch yet.
   - Do not introduce new references using retired Chain Wizard or Plan Wizard names as active terminology.
+  - Do not introduce new references or meta-comments using the old Chain Wizard name.
 compatibility_only_notes:
   - Pre-rename Plan Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
 stale_retired_dispositions:
