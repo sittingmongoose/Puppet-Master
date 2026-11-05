@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2690-L3285
+Source lines: L2690-L3311
 
-Source SHA256: `1072cbedb42411edcca5d98d79dd4bff551e7612ef4950692de2a3c4deeb173c`
+Source SHA256: `6de6145a909b2377959ef84fe2d1b6f2c8cb1a61a28c71e776ad150175b9df89`
 
 ---
 
@@ -507,7 +507,21 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.g
   both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length
   bounds, including trailing-LF rejection. It holds metadata, revisions, changed field names and opaque owner-record/evidence
   references only, never URL, screenshot/page content, cookies, memory claims/text or secrets. Complete semantic
-  before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source
+  before/after values remain with the existing source owner. Evidence has no 16-reference or other new count cap:
+  section 3.1 and section 3.3 retain the complete ordered evidence list. The payload evidence_refs is that complete
+  list of opaque owner pointers while the encoded full metadata body fits within the SP-337 16 KiB inline ceiling.
+  If it would exceed that ceiling, evidence_refs instead holds the closed SP-337 collection descriptor defined
+  by the payload schema: id (lowercase BLAKE3), size_bytes (exact integer byte count), and media_type exactly
+  application/vnd.puppetmaster.memory-evidence-refs+msgpack. Its pack bytes are the complete canonical MessagePack
+  evidence pointer array using the existing minimal-width/string/array encoding of pm_event_index_binding.binding_bytes,
+  not gist text, claim bodies, evidence content or a second memory store. Resolve it in the original authenticated
+  Storage/server/scope/thread payload store; recompute BLAKE3, byte count and canonical bytes and require durable
+  bytes/index before event acknowledgment under SP-337. Compare the entire resolved array to the immutable source,
+  never truncate it or compare only the descriptor. Freeze the selected inline/reference representation with the
+  original operation; the unchanged CV-785 semantic digest covers it and retries reuse it. References inherit SP-765
+  custody/access/deletion/backup and SP-337 hold/pack rules on append, retry and history. The reference route is
+  selected only when the full list would exceed 16 KiB; the resulting full inline metadata body must still fit.
+  revision_after=revision_before+1 over u64. The source
   must authenticate the exact subject, scope, operation, before/after revisions and committed outcome; an all-true
   fixture is not native producer authority. Scope is application_or_project only for these existing owner-supported
   editions: real Project keys/bytes remain unchanged; application has project_id=null, actual Computer/server and
@@ -555,6 +569,18 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.g
   Two matching projections with the same required field omitted are incomplete sources and refuse on append,
   retry and history. Optional absence remains distinct from explicit null; never supply defaults to repair a source.
   Validate exact field types before values, including booleans versus numbers and complete claim objects.
+  Each before and after claim includes claim_id, text, created_at and all three AMS-044 support facts:
+  evidence_support is a list of distinct opaque references forming a subset of that same gist version evidence_refs;
+  support_scope is a nonempty textual account of what those references cover; currentness is exactly current,
+  needs_revalidation or source_unavailable. Claim identities are distinct within a gist. Missing or wrongly typed
+  nested facts refuse even when both snapshots omit the same fact. Optional gist-level claim_support/currentness
+  summaries never replace the claims; when present their references and currentness use the same valid domain.
+  Section 5.3 and AMS-044/045 require every after-claim to have nonempty support and currentness=current for a
+  successful verify or new automatic Verified transition, in addition to the genuine owner evaluation of support,
+  scope, resolvability and validity context. Only manual verify with the existing explicit configured override
+  may bypass that verification gate; it never permits malformed facts, foreign support or an automatic override.
+  Noncurrent retained before facts remain valid history, not current verification authority. These are structural
+  checks of the existing owner rules, never deterministic natural-language entailment.
   changed_fields is exactly
   the set of canonical semantic fields whose values differ, including presence versus absence; it is never a
   manually selected subset. Revision is checked separately and is not a semantic field. Payload previous_pinned,

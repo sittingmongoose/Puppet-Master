@@ -11,6 +11,8 @@ import copy
 import json
 import hashlib
 import rfc8785
+import blake3
+import msgpack
 from datetime import datetime
 import re
 from functools import lru_cache
@@ -77,6 +79,9 @@ def pattern_failures(value, schema, root):
         for part in schema['$ref'][2:].split('/'):
             target = target[part]
         return pattern_failures(value, target, root)
+    if 'anyOf' in schema:
+        selected = [s for s in schema['anyOf'] if Draft202012Validator(s).is_valid(value)]
+        return bool(selected) and all(pattern_failures(value, s, root) for s in selected)
     if isinstance(value, str):
         if 'pattern' in schema and re.fullmatch(schema['pattern'], value) is None:
             return True
@@ -85,9 +90,6 @@ def pattern_failures(value, schema, root):
                    for k, v in value.items())
     if isinstance(value, list):
         return any(pattern_failures(v, schema.get('items', {}), root) for v in value)
-    if 'anyOf' in schema:
-        selected = [s for s in schema['anyOf'] if Draft202012Validator(s).is_valid(value)]
-        return bool(selected) and all(pattern_failures(value, s, root) for s in selected)
     return False
 
 
@@ -199,6 +201,34 @@ MEMORY_OPTIONAL_FACTS = {
     'thread_id': (str, type(None)), 'claim_support': (list,),
     'currentness': (str,), 'deleted': (bool,),
 }
+CLAIM_REQUIRED = {'claim_id': str, 'text': str, 'created_at': str,
+                  'evidence_support': list, 'support_scope': str, 'currentness': str}
+CURRENTNESS = {'current', 'needs_revalidation', 'source_unavailable'}
+EVIDENCE_MEDIA_TYPE = 'application/vnd.puppetmaster.memory-evidence-refs+msgpack'
+
+
+def evidence_list_bad(value):
+    return (type(value) is not list or any(type(v) is not str or
+            re.fullmatch(r'[A-Za-z0-9_.:/-]{1,192}', v) is None for v in value)
+            or len(value) != len(set(value)))
+
+
+def memory_claims_bad(facts):
+    # AMS-044/045 and section 5.3: these are actual per-claim facts, never
+    # inferred from the optional gist-level summaries or the owner boolean.
+    claims = facts['claims']
+    ids = []
+    for claim in claims:
+        if type(claim) is not dict or any(type(claim.get(k)) is not kind
+                                        for k, kind in CLAIM_REQUIRED.items()):
+            return True
+        if (not claim['claim_id'] or not claim['text'] or not timestamp_valid(claim['created_at'])
+                or not claim['support_scope'].strip() or claim['currentness'] not in CURRENTNESS
+                or evidence_list_bad(claim['evidence_support'])
+                or not set(claim['evidence_support']) <= set(facts['evidence_refs'])):
+            return True
+        ids.append(claim['claim_id'])
+    return len(ids) != len(set(ids))
 
 
 def memory_facts_bad(facts):
@@ -227,15 +257,97 @@ def memory_facts_bad(facts):
     for key in ['tags', 'evidence_refs', 'claim_support']:
         if key in facts and any(type(v) is not str for v in facts[key]):
             return True
-    # Claim bodies stay in the memory owner. This witness verifies complete
-    # structural facts, not natural-language entailment or evidence authority.
+    if evidence_list_bad(facts['evidence_refs']):
+        return True
+    if 'claim_support' in facts and (evidence_list_bad(facts['claim_support']) or
+                                    not set(facts['claim_support']) <= set(facts['evidence_refs'])):
+        return True
+    if 'currentness' in facts and facts['currentness'] not in CURRENTNESS:
+        return True
+    return memory_claims_bad(facts)
+
+
+def memory_evidence(e, c):
+    value = e['payload']['evidence_refs']
+    if type(value) is not dict:
+        return value
+    # Applicability only: custody below independently validates the pack source,
+    # bytes, commitment and descriptor before accepting any reference route.
+    try:
+        resolved = msgpack.unpackb(bytes.fromhex(c['payload_store'][value['id']]['bytes_hex']), raw=False)
+        return None if evidence_list_bad(resolved) else resolved
+    except (KeyError, TypeError, ValueError, msgpack.UnpackException):
+        return None
+
+
+def evidence_custody_bad(e, c):
+    value = e['payload']['evidence_refs']
+    if type(value) is list:
+        return False
+    row = c['payload_store'][value['id']]
+    raw = bytes.fromhex(row['bytes_hex'])
+    resolved = memory_evidence(e, c)
+    if resolved is None:
+        return True
+    inline = dict(e['payload'], evidence_refs=resolved)
+    return (row['authentic'] is not True or row['durable'] is not True or
+            any(not strict_equal(row[k], c['owner'][k]) for k in
+                ['storage_instance_id', 'server_id', 'scope_kind', 'project_id', 'thread_id']) or
+            type(value['size_bytes']) is not int or value['size_bytes'] != len(raw) or
+            value['media_type'] != EVIDENCE_MEDIA_TYPE or value['id'] != blake3.blake3(raw).hexdigest() or
+            evidence_list_bad(resolved) or raw != binding_bytes(resolved) or
+            len(binding_bytes(inline)) <= 16384)
+
+
+def verified_claims_bad(e, c):
+    p = e['payload']
+    if (e['event_type'] != 'memory.gist_state_changed' or p['verification_state'] != 'Verified' or
+            (p['operation'] != 'verify' and p['previous_verification_state'] == 'Verified') or
+            (p['operation'] == 'verify' and c['owner']['manual_override'] is True)):
+        return False
+    facts = records(c)[1]['facts']
+    # Read only values in their declared domains. Source shape rejects missing
+    # or malformed fields; an unrelated malformed field never masks a genuine
+    # empty-support or noncurrent claim in this independent transition guard.
+    if type(facts) is not dict or type(facts.get('claims')) is not list:
+        return False
     for claim in facts['claims']:
-        if type(claim) is not dict or any(type(claim.get(k)) is not str
-                                        for k in ['claim_id', 'text', 'created_at']):
+        if type(claim) is not dict:
+            continue
+        support = claim.get('evidence_support')
+        currentness = claim.get('currentness')
+        if type(support) is list and not evidence_list_bad(support) and not support:
             return True
-        if not claim['claim_id'] or not claim['text'] or not timestamp_valid(claim['created_at']):
+        if type(currentness) is str and currentness in CURRENTNESS and currentness != 'current':
             return True
     return False
+
+
+def verification_support_bad(e, c):
+    p = e['payload']
+    if (e['event_type'] != 'memory.gist_state_changed' or p['verification_state'] != 'Verified' or
+            (p['operation'] != 'verify' and p['previous_verification_state'] == 'Verified')):
+        return False
+    o = c['owner']
+    refs = memory_evidence(e, c)
+    unresolved_pack = type(p['evidence_refs']) is dict and refs is None
+    return (type(o['manual_override']) is not bool or type(o['claim_support_current']) is not bool or
+            (o['manual_override'] and p['operation'] != 'verify') or
+            (not o['manual_override'] and
+             ((not unresolved_pack and not refs) or o['claim_support_current'] is not True)))
+
+
+def memory_fact_bad(e, c, payload_key, fact_key, side):
+    if e['event_type'] != 'memory.gist_state_changed':
+        return False
+    actual = memory_evidence(e, c) if fact_key == 'evidence_refs' else e['payload'][payload_key]
+    if fact_key == 'evidence_refs' and type(e['payload']['evidence_refs']) is dict and actual is None:
+        # No decoded observation exists until the mandatory pack custody guard
+        # succeeds. Other field/lineage/record guards still execute normally.
+        return False
+    record = records(c)[side]
+    expected = record['facts'][fact_key] if record else (False if fact_key == 'pinned' else None)
+    return not strict_equal(actual, expected)
 
 
 def semantic_digest(e):
@@ -340,11 +452,9 @@ def transition_bad(e, c):
 
 
 event_rule('transition', transition_bad)
-event_rule('verification_support', lambda e,c: e['event_type']=='memory.gist_state_changed' and
-           e['payload']['verification_state']=='Verified' and
-           (e['payload']['operation']=='verify' or e['payload']['previous_verification_state']!='Verified') and
-           (type(c['owner']['manual_override']) is not bool or type(c['owner']['claim_support_current']) is not bool or
-            (c['owner']['manual_override'] is False and (not e['payload']['evidence_refs'] or c['owner']['claim_support_current'] is not True))))
+event_rule('verification_support', verification_support_bad)
+event_rule('memory_evidence_custody', lambda e,c: e['event_type']=='memory.gist_state_changed' and evidence_custody_bad(e,c))
+event_rule('memory_verified_claims', verified_claims_bad)
 rule('memory_source_shape', 'append retry history', lambda c: c['event']['event_type']=='memory.gist_state_changed' and
      any(r is not None and memory_facts_bad(r['facts']) for r in records(c)))
 event_rule('memory_delta', lambda e,c: e['event_type']=='memory.gist_state_changed' and
@@ -353,8 +463,7 @@ for payload_key, fact_key, side in [('previous_pinned','pinned',0),('pinned','pi
                                    ('previous_verification_state','verification_state',0),('verification_state','verification_state',1),
                                    ('source','source',1),('evidence_refs','evidence_refs',1)]:
     event_rule('memory_fact_' + payload_key, lambda e,c,p=payload_key,k=fact_key,s=side:
-               e['event_type']=='memory.gist_state_changed' and not strict_equal(e['payload'][p],
-               (records(c)[s]['facts'][k] if records(c)[s] else (False if k=='pinned' else None))))
+               memory_fact_bad(e,c,p,k,s))
 
 for payload_key,fact_key,side in [('previous_session_class','session_class',0),('session_class','session_class',1),
                                   ('previous_takeover_state','takeover_state',0),('takeover_state','takeover_state',1),
@@ -465,7 +574,7 @@ def failures(c):
         if name=='scenario_shape' and not valid_path: continue
         if name not in ['scenario_path','scenario_shape'] and (not valid_path or ('event' in c)!=(c.get('path')!='no_event')): continue
         if '*' not in PATHS[name] and c.get('path') not in PATHS[name]: continue
-        if name != 'record_resolution' and name.startswith(('record_', 'memory_source_shape', 'memory_delta','memory_fact_','browser_fact_','browser_delta')) and GUARDS_ORIGINAL_RESOLUTION(c): continue
+        if name != 'record_resolution' and name.startswith(('record_', 'memory_source_shape', 'memory_verified_claims', 'memory_delta','memory_fact_','browser_fact_','browser_delta')) and GUARDS_ORIGINAL_RESOLUTION(c): continue
         try:
             if guard(c): result.append(name)
         except (KeyError,TypeError,ValueError,IndexError,StopIteration,AttributeError):

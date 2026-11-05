@@ -1484,15 +1484,44 @@
           "type": "boolean"
         },
         "evidence_refs": {
-          "type": "array",
-          "maxItems": 16,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 192,
-            "pattern": "^[A-Za-z0-9_.:/-]+$"
-          }
+          "description": "Complete ordered owner evidence pointers, without a count cap. If the full inline body would exceed 16 KiB, use the SP-337 collection descriptor; resolve the exact canonical MessagePack array before source equality, support and delta checks.",
+          "anyOf": [
+            {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 192,
+                "pattern": "^[A-Za-z0-9_.:/-]+$"
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "size_bytes",
+                "media_type"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
+                },
+                "size_bytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 18446744073709551615
+                },
+                "media_type": {
+                  "const": "application/vnd.puppetmaster.memory-evidence-refs+msgpack"
+                }
+              }
+            }
+          ]
         },
         "owner_change_id": {
           "type": "string",

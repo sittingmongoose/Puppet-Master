@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28061-L30122
+Source lines: L28061-L30129
 
-Source SHA256: `e1fc75290eaaef881210d7a7bde664fb47f56b3715c87f83709aef9f0485b826`
+Source SHA256: `e43cad0f3391b91b4b7ee625296c84afb5abf3bf63949f9bf07d0fbf580f8d44`
 
 ---
 
@@ -1975,10 +1975,17 @@ canonical_text: 'Newly authored Storage owner contract for exactly memory.gist_s
   EventRecord canonical seglog plus event_record_index, never a second event log or new canonical session/gist store.
   Explicitly adopt SP-026/SP-236 first-native wire, SP-278 full generic index/read selection, SP-286/CV-339 full-value
   v2 first receipt and recovery, and SP-337 payload custody. Each closed metadata payload in Plans/card2_event_payloads.schema.json#/$defs/memory_gist_state_changed
-  is bounded below 16 KiB even at all maximum lengths (browser <=4096 bytes; memory <=6144 bytes). No inline base64
-  or embedded body is permitted; if a future separately governed successor needs a larger body, it must use SP-337
-  BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
-  inline limit.
+  obeys the existing 16 KiB inline ceiling without a new evidence-reference count limit. AMS-130 carries the
+  complete ordered opaque evidence list inline when the whole metadata body fits; otherwise its evidence_refs
+  field carries the closed SP-337 collection reference with BLAKE3 id, exact byte size and media type. The complete
+  canonical MessagePack pointer array is stored once in the existing payload pack store. Authenticate original
+  Storage/server/scope/thread custody, resolve exact bytes, recompute BLAKE3/size/canonical encoding, and compare
+  every resolved pointer to the original MemoryGist version before append, retry or historical disclosure. Pack
+  bytes and their index are durable before acknowledgment; ordinary SP-337 holds, backups, access and deleting-owner
+  deadlines apply. The resulting complete inline metadata body still fits within 16 KiB. Envelope payload_ref
+  stays null because this field-level reference externalizes only the evidence collection. No gist/claim/evidence
+  content or inline base64 is permitted, no truncation or enlarged inline ceiling, and no successor is required
+  merely because a valid gist has more than sixteen evidence references.
 
   Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
   (Case L-3, Card 1 retention assignments: G03 exactly memory.gist_state_changed; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
