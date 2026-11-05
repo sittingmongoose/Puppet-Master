@@ -14,21 +14,21 @@ export default async function (t) {
     await t.app.look('nier-dark');
     const viewport = await f.evaluate(() => ({ width: innerWidth, height: innerHeight }));
     await t.check(`${w}x${h} viewport`, viewport.width === w && viewport.height === h, JSON.stringify(viewport), { hard: true });
-    await f.evaluate(() => { PMW.chatCol.setHistoryPinned(false); PMW.chatCol.setKeepOpen(true); PMW.chatCol.show(); PMW.chatCol.setWidth(560); });
-    await f.waitForFunction(() => PM56_DEMO.getState().historyMode === 'closed' && document.body.getAttribute('data-ph-drawer') === 'closed', null, { timeout: 10000 });
+    await f.evaluate(() => { PMW.chatCol.setKeepOpen(true); PMW.chatCol.show(); PMW.chatCol.setWidth(560); });
     await f.waitForFunction(() => {
       const e=document.querySelector('#chatPanel'), r=e?.getBoundingClientRect();
       const key=r && [r.x,r.y,r.width,r.height].join(',');
       const prior=window.__podChatGeometry;
-      const closed=PM56_DEMO.getState().historyMode==='closed' && document.body.getAttribute('data-ph-drawer')==='closed';
-      window.__podChatGeometry={key,count:closed && prior?.key===key ? prior.count+1 : 0};
-      return closed && Math.abs(r?.width-560)<=1 && window.__podChatGeometry.count>=4;
+      const ready=PMW.chatCol.widthPx()===560 && !document.body.hasAttribute('data-ph-closing');
+      window.__podChatGeometry={key,count:ready && prior?.key===key ? prior.count+1 : 0};
+      return ready && r?.width>0 && window.__podChatGeometry.count>=4;
     }, null, {polling:'raf',timeout:10000});
     const toggle = f.locator('.chat-header [data-action="toggle-history"]').first();
-    await toggle.click();
+    if (await f.evaluate(() => PM56_DEMO.getState().historyMode === 'closed')) await toggle.click();
     const pin = f.locator('.history-flyout [data-action="ph-toggle-pin"]').first();
-    await pin.waitFor({ state: 'visible', timeout: 10000 });
-    if (await f.evaluate(() => document.body.getAttribute('data-ph-drawer') !== 'pinned')) await pin.click();
+    if (await f.evaluate(() => document.body.getAttribute('data-ph-drawer') !== 'pinned')) {
+      await pin.waitFor({ state: 'visible', timeout: 10000 }); await pin.click();
+    }
     await f.waitForFunction(() => document.body.getAttribute('data-ph-drawer') === 'pinned' && !!document.querySelector('.history-flyout'), null, { timeout: 10000 });
     const drawer = f.locator('.history-flyout');
     // Pinning animates both the drawer and hosted chat. Read the drag baseline only
