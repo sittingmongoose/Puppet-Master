@@ -3364,12 +3364,16 @@ def build_reaudit_row(
 
 
 class _RegistryLock:
-    """Exclusive advisory lock on the registry file itself for a whole read-validate-append
-    transaction, so concurrent appends serialize; aliases of the same file share the lock.
-    Where POSIX locking is unavailable the append is refused rather than left racing."""
+    """Advisory lock on the registry file itself for a whole read-validate-append transaction,
+    so concurrent appends serialize; aliases of the same file share the lock. A writing append
+    takes an exclusive lock through an append-mode descriptor (NFS grants exclusive locks only on
+    descriptors open for writing; nothing is written through it); a dry run takes a shared lock
+    through a read-only descriptor, so it also works on read-only registries. Where POSIX locking
+    is unavailable or refused the command fails with a diagnostic rather than racing."""
 
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, exclusive: bool = True) -> None:
         self.path = path
+        self.exclusive = exclusive
         self.handle: Any = None
 
     def __enter__(self) -> "_RegistryLock":
@@ -3378,8 +3382,14 @@ class _RegistryLock:
         except ImportError as exc:  # pragma: no cover - platform dependent
             raise AnchorError("reaudit-append needs POSIX file locking (fcntl) to serialize registry appends") from exc
         if self.path.exists():
-            self.handle = self.path.open("rb")
-            fcntl.flock(self.handle.fileno(), fcntl.LOCK_EX)
+            try:
+                self.handle = self.path.open("ab" if self.exclusive else "rb")
+                fcntl.flock(self.handle.fileno(), fcntl.LOCK_EX if self.exclusive else fcntl.LOCK_SH)
+            except OSError as exc:
+                if self.handle is not None:
+                    self.handle.close()
+                    self.handle = None
+                raise AnchorError(f"cannot lock {rel(self.path)} for {'append' if self.exclusive else 'a dry run'}: {exc}") from exc
         return self
 
     def __exit__(self, *exc: Any) -> None:
@@ -3394,7 +3404,7 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
     """Serialize the whole append transaction on the registry, then run it."""
     registry_path = repo_path(args.registry)
     try:
-        with _RegistryLock(registry_path):
+        with _RegistryLock(registry_path, exclusive=not getattr(args, "dry_run", False)):
             return _reaudit_append(args)
     except AnchorError as exc:
         print(json.dumps({"schema_id": "pm.audit_closure.reaudit_append_report.v1", "status": "fail", "errors": [str(exc)]}, indent=2))
@@ -3646,7 +3656,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
     global ROOT  # noqa: PLW0603 - the fixtures live in a temporary repository root.
     saved_root = ROOT
     results: list[dict[str, Any]] = []
-    tmp = Path(tempfile.mkdtemp(prefix="pm-audit-closure-selftest-"))
+    tmp = Path(tempfile.mkdtemp(prefix="pm-audit-closure-selftest-")).resolve()  # resolved: TMPDIR may sit behind a symlink
     try:
         ROOT = tmp
         audit_dir = tmp / "Plans/.audits/reaudit-fixture"
@@ -4486,15 +4496,32 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         # SOL10-2: the append transaction holds an exclusive lock on the registry.
         import fcntl  # noqa: PLC0415
         write_registry([legacy_row()])
+        # Probe from another process (on NFS, flock is per-process POSIX locking), with a writable descriptor.
+        probe = ("import fcntl, sys\nh = open(sys.argv[1], 'ab')\ntry:\n    fcntl.flock(h.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)\n"
+                 "except BlockingIOError:\n    sys.exit(3)\nsys.exit(0)\n")
         with _RegistryLock(registry):
-            with registry.open("rb") as other:
-                try:
-                    fcntl.flock(other.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-                    locked_out = False
-                    fcntl.flock(other.fileno(), fcntl.LOCK_UN)
-                except BlockingIOError:
-                    locked_out = True
-        check("reaudit_append_lock_is_exclusive", locked_out)
+            held_result = subprocess.run([sys.executable, "-c", probe, str(registry)], capture_output=True).returncode
+        free_result = subprocess.run([sys.executable, "-c", probe, str(registry)], capture_output=True).returncode
+        check("reaudit_append_lock_is_exclusive", held_result == 3 and free_result == 0, [held_result, free_result])
+        with _RegistryLock(registry) as held:
+            exclusive_mode = held.handle.mode
+        with _RegistryLock(registry, exclusive=False) as held:
+            shared_mode = held.handle.mode
+        check("reaudit_append_lock_uses_writable_descriptor_for_exclusive", exclusive_mode == "ab" and shared_mode == "rb",
+              [exclusive_mode, shared_mode])
+        # A read-only registry: a dry run still works, a writing append fails with a diagnostic, not a traceback.
+        append_with()
+        write_registry([legacy_row()])
+        before_ro = registry.read_bytes()
+        registry.chmod(0o444)
+        try:
+            code_dry, dry_ro = run_append(dry_run=True)
+            code_real, real_ro = run_append()
+        finally:
+            registry.chmod(0o644)
+        check("reaudit_append_dry_run_on_read_only_registry", code_dry == 0 and dry_ro["would_append"] == 1, dry_ro)
+        check("reaudit_append_unwritable_registry_fails_cleanly", (os.geteuid() == 0) or (code_real != 0 and real_ro["status"] == "fail"
+              and any("cannot lock" in e for e in real_ro["errors"]) and registry.read_bytes() == before_ro), real_ro)
         # Two concurrent CLI appends of the same record: one appends, the other skips it as done.
         append_with()
         write_registry([legacy_row()])
