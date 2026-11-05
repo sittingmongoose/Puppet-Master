@@ -497,7 +497,7 @@ const NO_PICK_DONE = (screen) => {
     || (screen === 'online-signin' && O55.S.sess.signin.state === 'done'));
 };
 /* nas-mounted only checks readability of the volume already chosen on nas-find. Its only other action is Back;
-   the volume alternatives are exercised on nas-find, so there is no independent pick or typed field here. */
+   the volume alternatives live on nas-find, so there is no independent pick or typed field here. */
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
    links: the restore source and place, the NAS device, method and folder, the service, the computer kind, the files
