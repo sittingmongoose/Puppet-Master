@@ -28912,8 +28912,9 @@ canonical_text: >-
   placement, types, defaults, required identity, envelope, narrowings, results, provenance and command kinds. Jared's
   only words in this decision are "approve all". The ten questions the Q5 design left open were settled by the
   coordinator (pm7-build, 2026-11-05) as technical calls under that answer, not as owner answers; they are listed in
-  coordinator_resolutions. A command whose resolution is not yet applied stays in UCC-230's contested list and gets
-  no definition until it is.
+  coordinator_resolutions. Resolution 11, the checker's literal-default scope, is a later coordinator call under the
+  same answer. A command whose resolution is not yet applied stays in UCC-230's contested list and gets no
+  definition until it is.
 coordinator_resolutions:
   - "Resolution 1 (PRD Builder, Planning Wizard and Plan Compile ids): the catalog ids stay canonical for the 28 commands; the field lists of Plans/prd_planning_runtime_contracts.json ui_command_contracts move under the catalog ids and that file's own ids are recorded as aliases; topic.open and annotation.resolve take their fields from the catalog rows; cmd.plan_compile.open_build takes the PlanCompileRun identity the catalog names, not goal_run_id."
   - "Resolution 2: cmd.docker.image.push is a primary command with its own DockerImagePushV3Request; the UCC-051 compatibility-alias note goes."
@@ -28926,6 +28927,7 @@ coordinator_resolutions:
   - "Resolution 9a: typing /teach opens the Teach popup, as DL-127 already decided; UCC-102 and CS-053 no longer treat /teach as a Teacher launch. The Teacher keeps the help icon and CS-053's intent-classified natural-language route. This is not a new owner decision."
   - "Resolution 9b: History (UCC-100), Vision bridge (UCC-101) and Teach guided GUI (UCC-102) get minted command ids, catalog rows, unit tokens, owner definitions and production wiring rows from the actions those units already list. An action too vague to define without inventing behaviour is reported to the coordinator instead of being minted."
   - "Resolution 10: the catalog's existing payload columns stay as history with a one-line pointer to the owner definition."
+  - "Resolution 11 (checker scope; pm7-build, pm-mail 1105094308-ee03): fields of type timestamp, url or path take no literal default. The checker refuses any such literal and fails closed instead of validating its syntax; the owners (webfetch for URLs, FileSafe for paths, RFC 3339 consumers for timestamps) validate syntax at run time, and an owner that needs a literal default first adds its validation to the checker. No definition writes one today, so no canon behavior changes."
 gui_related: false
 gui_classification_reason: Records where command payload shapes live; no GUI behavior changes.
 split_recommended: false
@@ -28952,6 +28954,7 @@ node_compile_hint:
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the stream C owner questions; Q5 is this entry"
   - "pm-mail 1105034552-f6f4 (pm7-build, 2026-11-05): coordinator resolutions 1-10 under that answer"
+  - "pm-mail 1105094308-ee03 (pm7-build, 2026-11-05): coordinator resolution 11, the checker's literal-default scope"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/drafts/for-jared-rows.md (B16 row 607)"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/DESIGN.md and inventory.jsonl"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"

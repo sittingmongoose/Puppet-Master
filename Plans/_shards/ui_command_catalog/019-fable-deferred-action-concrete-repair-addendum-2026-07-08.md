@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8824-L10378
+Source lines: L8824-L10384
 
-Source SHA256: `cad7b70d23430c7ce8c4bc8fc6f5007714be672563b6e727bf344021f8a9705c`
+Source SHA256: `861ac87872450ceb89a2f7922feac41e40b2b70ce7c948543553bdc11b7b804c`
 
 ---
 
@@ -69,8 +69,10 @@ canonical_text: >-
   command gets no definition until the coordinator rules. Owner disabled states that fall outside the closed set
   map to closed codes through owner_state_code_map and stay display detail; identity exemptions exist only where
   this map records them with a decision. The catalog stays the command-id and alias authority and its command rows
-  hold no data shapes. scripts/pm-command-payload-defs-check.py checks this map against the overlay and every
-  definition against this map.
+  hold no data shapes. Fields of type timestamp, url or path take no literal default: their default is none,
+  their owners validate syntax at run time, and an owner that needs a literal default first adds its validation to
+  the checker (DL-333 coordinator resolution 11). scripts/pm-command-payload-defs-check.py checks this map against
+  the overlay and every definition against this map.
 gui_related: false
 gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.
 split_recommended: false
@@ -155,6 +157,10 @@ command_payload_definition_map:
   - Primitive:OpenSubject
   - Primitive:ExecutionContext
   - local:<Name> (a result named in the same definitions block)
+  literal_default_forbidden_types:
+  - timestamp
+  - url
+  - path
   default_sentinel: none (absent; the handler applies no implied value)
   error_narrowing:
     always:
