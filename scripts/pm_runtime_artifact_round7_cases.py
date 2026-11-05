@@ -1,5 +1,6 @@
 """One-leaf owner-snapshot type witnesses; no candidate or custody mutation."""
 import copy
+from pm_runtime_artifact_round8_cases import observation_source
 
 
 def boolean_paths(value, path=()):
@@ -39,6 +40,7 @@ def cases(m, rows, fixtures):
                     event['payload'], event['payload_ref'] = m.storage_form(event['payload'], packs)
                 source = dict(proof_valid=True, predecessor_complete=True, snapshot_current=True,
                               canonical_point=copy.deepcopy(point))
+                source = observation_source(m, fixtures, row, previous, packs, source)
                 def observe(n, source, e=event, p=previous, r=row, packs=packs):
                     return n.observation_admissible(e, p, r, packs, source)
                 for path in boolean_paths(point):

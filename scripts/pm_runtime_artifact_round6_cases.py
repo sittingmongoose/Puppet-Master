@@ -1,5 +1,6 @@
 """Round-six source, numeric and exact-type causal witnesses for every family."""
 import copy
+from pm_runtime_artifact_round8_cases import observation_source
 import hashlib
 import json
 
@@ -169,6 +170,7 @@ def cases(m, rows, fixtures):
                 lambda n,v=value:n.validator({'type':'boolean'}).is_valid(v))
         if family.endswith('.restore_point'):
             successor=fixtures['restore_successor'];src=dict(proof_valid=True,predecessor_complete=True,snapshot_current=True,canonical_point=successor['payload']['type_payload'])
+            src=observation_source(m,fixtures,row,full,{},src)
             for field in ('proof_valid','predecessor_complete','snapshot_current'):
                 for index,value in enumerate(wrong_flags):
                     bad=dict(src,**{field:value})

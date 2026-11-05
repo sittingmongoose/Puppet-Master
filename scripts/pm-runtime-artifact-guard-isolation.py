@@ -218,6 +218,14 @@ block('O07','observation_admissible',"old_status != 'available'")
 expr('O08','observation_admissible',"candidate['producer_sequence_id'] == previous['producer_sequence_id'] + 1")
 expr('O09','observation_admissible',"candidate['parent_event_id'] == previous['event_id']")
 expr('O10','observation_admissible',"candidate['correlation_id'] == previous['correlation_id']")
+block('O11','observation_admissible','not full_value_matches',
+    label='predecessor: original event, SP-286 first result and custody authentication')
+GUARDS['O12']=('predecessor recorded recipe support and explicit historical dispatch',
+    lambda s:replace(condition(s,'observation_admissible','decoder not in'),
+        'observation_admissible',
+        "decoder = predecessor_source['recorded_decoder']", 'decoder = HISTORICAL_V1'))
+block('O13','observation_admissible','inspect(row, old, predecessor_source)',
+    label='predecessor: forward authenticated historical source inspection')
 GUARDS['S01']=('whole-document schema references, including optional/unvisited definitions',lambda s:replace(s,'errors','        return errors','        return []'))
 expr('S02','exact_pattern',"re.search(pattern, instance) and re.fullmatch(pattern, instance) is None",'False')
 expr('S04','exact_pattern_properties',"re.search(pattern, key) and re.fullmatch(pattern, key) is None",'False')
@@ -307,8 +315,8 @@ def main():
         # These are the SAME rule/fault at a forwarded caller boundary, not an
         # unrelated negative: append uses full_value's schema precondition;
         # historical resolution uses its exact authenticated custody equality.
-        linked={'F01':{'A07'},'F13':{'H06'}}.get(guard,set())
-        forwarded=lambda k: ((guard=='F11' and k[0]=='C06' and k[2]=='shipped_wrong_custody_event') or (guard=='D12' and k[0]=='B01' and (k[2].endswith('_decode') or k[2].endswith('_packed_append'))))
+        linked={'F01':{'A07'},'F13':{'H06'},'H01':{'O13'}}.get(guard,set())
+        forwarded=lambda k: ((guard=='F13' and k[0]=='O11' and k[2].endswith('_forged_custody')) or (guard=='F11' and k[0]=='C06' and k[2]=='shipped_wrong_custody_event') or (guard=='D12' and k[0]=='B01' and (k[2].endswith('_decode') or k[2].endswith('_packed_append'))))
         own=[k for k in outcomes if k[0] in {guard}|linked or forwarded(k)]
         flips=[k for k in own if actual[k]==(True,True)]
         masked=[k for k in own if actual[k]!=(True,True)]
@@ -322,7 +330,7 @@ def main():
             code,report=family_checkers(m)
         passed=bool(own) and not masked and not cross and not baseline_bad
         if args.full_checker:passed=passed and code==1 and report['status']=='fail'
-        linked_names=sorted(linked)+(['C06:shipped_wrong_custody_event'] if guard=='F11' else [])+(['B01:*_inline_decode','B01:*_packed_decode','B01:*_packed_append'] if guard=='D12' else [])
+        linked_names=sorted(linked)+(['O11:*_forged_custody'] if guard=='F13' else [])+(['C06:shipped_wrong_custody_event'] if guard=='F11' else [])+(['B01:*_inline_decode','B01:*_packed_decode','B01:*_packed_append'] if guard=='D12' else [])
         if guard == 'O03':
             linked_names += ['O03:adopted_source_snapshot_schema', 'O03:exact_encoded_snapshot_join']
         row=dict(guard=guard,rule=label,pass_=passed,linked_same_rule_guards=linked_names,negatives_that_flip=flips,masked=masked,
@@ -337,6 +345,7 @@ def main():
         witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_guard_cases.py').read_bytes()).hexdigest(),
         round6_witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_round6_cases.py').read_bytes()).hexdigest(),
         round7_witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_round7_cases.py').read_bytes()).hexdigest(),
+        round8_witness_sha256=hashlib.sha256((ROOT/'scripts/pm_runtime_artifact_round8_cases.py').read_bytes()).hexdigest(),
         driver_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         negative_pairs=len(outcomes),baseline_failures=baseline_bad,rows=rows,native_execution='NOT_RUN',admission='NONE')
     body=json.dumps(report,indent=2)+'\n'

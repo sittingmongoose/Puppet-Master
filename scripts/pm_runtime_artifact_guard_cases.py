@@ -8,6 +8,7 @@ import copy
 import hashlib
 from pm_runtime_artifact_round6_cases import cases as round6_cases
 from pm_runtime_artifact_round7_cases import cases as round7_cases
+from pm_runtime_artifact_round8_cases import cases as round8_cases, observation_source
 
 
 def accepted(action):
@@ -232,6 +233,7 @@ def cases(m, excluded=()):
     shared_cases(m,rows,add)
     result.extend(round6_cases(m,rows,fixtures))
     result.extend(round7_cases(m,rows,fixtures))
+    result.extend(round8_cases(m,rows,fixtures))
     return result
 
 
@@ -269,7 +271,9 @@ def restore_cases(m,f,rows,add):
     family=row['event_type']
     old=f['positive_events'][family];good=f['restore_successor']
     src=dict(proof_valid=True,predecessor_complete=True,snapshot_current=True,canonical_point=good['payload']['type_payload'])
-    def obs(e,p=old,s=src):return lambda n:n.observation_admissible(e,p,row,{},s)
+    def obs(e,p=old,s=src):
+        proof = observation_source(m,f,row,p,{},s)
+        return lambda n:n.observation_admissible(e,p,row,{},proof)
     for flag in ('proof_valid','predecessor_complete','snapshot_current'):
         s=dict(src);s[flag]=False;add('O01',family,flag,obs(good),obs(good,s=s))
     bad=copy.deepcopy(good);bad['correlation_id']='foreign-group'

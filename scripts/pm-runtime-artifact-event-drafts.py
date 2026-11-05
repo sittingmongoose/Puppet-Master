@@ -27,6 +27,7 @@ from referencing.jsonschema import DRAFT202012
 
 from pm_event_index_binding import binding_digest
 from pm_runtime_artifact_guard_cases import accepted as guard_accepted, cases as guard_cases
+from pm_runtime_artifact_round8_cases import observation_source
 
 ROOT = Path(__file__).resolve().parents[1]
 INLINE_LIMIT = 16384
@@ -1031,7 +1032,22 @@ def observation_admissible(candidate, previous, row, packs, source):
         return False
     if previous is None:
         return candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None
-    old = decode(row, previous, packs)
+    # The adapter authenticates the write-time recipe independently of the
+    # supplied predecessor/receipt. Never select a profile from event data.
+    try:
+        predecessor_source = source['predecessor_source']
+        decoder = predecessor_source['recorded_decoder']
+        if decoder not in (CURRENT_WRITER, HISTORICAL_V1):
+            return False
+        if not full_value_matches(previous, predecessor_source['authenticated_original'],
+                                  source['predecessor_result'], source['predecessor_custody'],
+                                  validation=decoder):
+            return False
+        old = decode(row, previous, packs, validation=decoder)
+        if inspect(row, old, predecessor_source) not in ('metadata_only', 'metadata_and_authorized_refs'):
+            return False
+    except (ValueError, KeyError, TypeError, UnicodeError):
+        return False
     immutable = ('restore_point_id', 'project_id', 'record_ref', 'record_sha256', 'source_thread_id', 'source_branch_id', 'source_message_id')
     if payload['artifact_id'] != old['artifact_id'] or any(payload['type_payload'][k] != old['type_payload'][k] for k in immutable):
         return False
@@ -1248,22 +1264,26 @@ def main(families=None):
             check(event, 'external_fresh_policy_refused_' + policy, fresh.append(bad, True) == expected and not fresh.scoped and not fresh.global_ids)
             check(event, 'external_retry_policy_refused_' + policy, external_model.append(bad, True) == expected and (external_model.scoped, external_model.global_ids) == before)
         if event.endswith('.restore_point'):
+            def observe(candidate, previous, row, packs, source):
+                # Test setup issues current-format controls before the boundary.
+                proof = observation_source(SimpleNamespace(**globals()), fixtures, row, previous, packs, source)
+                return observation_admissible(candidate, previous, row, packs, proof)
             source = dict(proof_valid=True, predecessor_complete=True, snapshot_current=True, canonical_point=payload['type_payload'])
-            check(event, 'first_observation', observation_admissible(full,None,row,packs,source))
+            check(event, 'first_observation', observe(full,None,row,packs,source))
             check(event, 'grouping_known_answer', grouping_identity(event, payload) == full['correlation_id'])
             other_group = copy.deepcopy(payload); other_group['artifact_id'] += '-other-group'
             for name, correlation in [('incorrect', 'not-the-ra1-grouping-key'), ('cross_group', grouping_identity(event, other_group))]:
                 bad = copy.deepcopy(full); bad['correlation_id'] = correlation
                 check(event, 'first_' + name + '_correlation_schema_valid', decode(row, bad, packs) == payload)
-                check(event, 'first_' + name + '_correlation_refused', not observation_admissible(bad,None,row,packs,source))
+                check(event, 'first_' + name + '_correlation_refused', not observe(bad,None,row,packs,source))
             successor = copy.deepcopy(fixtures['restore_successor'])
             source['canonical_point'] = successor['payload']['type_payload']
-            check(event, 'next_lifecycle_observation', observation_admissible(successor,full,row,packs,source))
+            check(event, 'next_lifecycle_observation', observe(successor,full,row,packs,source))
             for name, correlation in [('incorrect', 'not-the-ra1-grouping-key'), ('cross_group', grouping_identity(event, other_group))]:
                 bad = copy.deepcopy(successor); bad['correlation_id'] = correlation
-                check(event, 'next_' + name + '_correlation_refused', not observation_admissible(bad,full,row,packs,source))
+                check(event, 'next_' + name + '_correlation_refused', not observe(bad,full,row,packs,source))
                 predecessor = copy.deepcopy(full); predecessor['correlation_id'] = correlation
-                check(event, 'matching_wrong_' + name + '_correlations_refused', not observation_admissible(bad,predecessor,row,packs,source))
+                check(event, 'matching_wrong_' + name + '_correlations_refused', not observe(bad,predecessor,row,packs,source))
             check(event, 'same_point_artifact_new_event_identity', successor['payload']['artifact_id'] == payload['artifact_id'] and successor['payload']['type_payload']['restore_point_id'] == payload['type_payload']['restore_point_id'] and successor['idempotency_key'] != full['idempotency_key'])
             second = model.append(successor,True)
             check(event, 'successor_replay', isinstance(second,dict) and model.append(copy.deepcopy(successor),True) is second and len(model.scoped)==2)
@@ -1272,21 +1292,21 @@ def main(families=None):
                 if field == 'producer_sequence_id':
                     bad['idempotency_key'] = identity(event, bad['payload'], value)
                 check(event, 'stale_predecessor_dispatch_'+field+'_'+str(value), decode(row,bad,packs) == bad['payload'])
-                check(event, 'stale_predecessor_'+field+'_'+str(value), not observation_admissible(bad,full,row,packs,source))
+                check(event, 'stale_predecessor_'+field+'_'+str(value), not observe(bad,full,row,packs,source))
             for flag in ('proof_valid','predecessor_complete','snapshot_current'):
                 bad_source = dict(source); bad_source[flag] = False
-                check(event, 'observation_'+flag, not observation_admissible(successor,full,row,packs,bad_source))
+                check(event, 'observation_'+flag, not observe(successor,full,row,packs,bad_source))
             refresh = copy.deepcopy(successor); refresh['payload'] = copy.deepcopy(payload)
             refresh['payload']['projection_freshness']='current'; refresh['payload']['summary']='viewer refresh'
             unchanged = dict(source,canonical_point=payload['type_payload'])
-            check(event, 'refresh_does_not_advance', not observation_admissible(refresh,full,row,packs,unchanged))
+            check(event, 'refresh_does_not_advance', not observe(refresh,full,row,packs,unchanged))
             bad = copy.deepcopy(successor); bad['payload']['type_payload']['restore_point_id'] += '-other'
-            check(event, 'cross_point_observation', not observation_admissible(bad,full,row,packs,dict(source,canonical_point=bad['payload']['type_payload'])))
+            check(event, 'cross_point_observation', not observe(bad,full,row,packs,dict(source,canonical_point=bad['payload']['type_payload'])))
             bad = copy.deepcopy(successor); bad['payload']['type_payload']['actions']['apply']['availability']='available'
             check(event, 'terminal_action_remains_unavailable', bool(list(valid.iter_errors(bad['payload']))))
             for status, terminal in fixtures['restore_terminal_observations'].items():
                 actual = dict(source, canonical_point=terminal['payload']['type_payload'])
-                check(event, 'terminal_' + status, observation_admissible(terminal,full,row,packs,actual))
+                check(event, 'terminal_' + status, observe(terminal,full,row,packs,actual))
                 for action in ('apply','branch','delete'):
                     broken = copy.deepcopy(terminal['payload']); broken['type_payload']['actions'][action]['availability']='available'
                     check(event, 'terminal_'+status+'_'+action+'_refused', bool(list(valid.iter_errors(broken))))
@@ -1295,7 +1315,9 @@ def main(families=None):
                 check(event, 'no_source_effect_' + flag, bool(list(valid.iter_errors(broken))))
     boundary = SimpleNamespace(**globals())
     boundary.SchemaReferences = lambda: references
-    for guard, family, name, positive, negative in guard_cases(boundary, excluded=unresolved_families):
+    omitted = unresolved_families | {r['event_type'] for r in document['rows']
+                                      if families is not None and r['event_type'] not in families}
+    for guard, family, name, positive, negative in guard_cases(boundary, excluded=omitted):
         check(family, 'S11_' + guard + '_' + name + '_positive', guard_accepted(lambda: positive(boundary)))
         check(family, 'S11_' + guard + '_' + name + '_negative', not guard_accepted(lambda: negative(boundary)))
     print(json.dumps(dict(status='fail' if failures else 'pass', cases=sum(counts.values()), per_family=counts,
