@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2717-L3294
+Source lines: L2717-L3339
 
-Source SHA256: `0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1`
+Source SHA256: `f85cb045048c7f767236015c14cff85d62c5498b1de0a0041de0d385ed5f124a`
 
 ---
 
@@ -586,3 +586,48 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-055, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### SIR-1120 - Original approved exception invocation and immutable result
+
+```yaml
+plan_unit_id: SIR-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: |-
+  Newly authored source/result adapter for exactly GRS-1122. Capture actual original host/caller/continuation and Project/thread/Goal/run/source revision, accepted body currentness, Stop/owner epochs, actor/account/lane/attempt and HITL request/resolution. EP-1120's original Workflow exception result precedes Goal consumption. Resolve that actual original result and receipt, exact approval and residual-risk/disposition set independently; never accept a worker label or caller hash. CV-1122 names the closed source/method/result roots and SP-1122 owns coherent custody.
+
+  Preserve the original invocation identity through restart, retry, model/provider/account changes, pending body/event and final publication. The same operation returns its original content-free result and exact original receipts, including an immutable no_effect or unknown; a semantic mismatch conflicts. A body_committed/event_pending result remains partial and cannot be replayed as a new Goal body CAS. Exact source/receipt/full-event and final approval/currentness checks follow the last helper before a new effect/publication; a current Stop never becomes an automatic resume. Original exception output remains certified_with_approved_exception and completed_with_approved_verification_exception, with approver and residual risks. Ordinary Goal completion and Standard certification never consume it as clean success. No new command, dispatch handler, GoalRun event or source-policy bypass is introduced. Native execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1122
+- EP-1120
+- HITL-1120
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```

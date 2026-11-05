@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6165-L6263
+Source lines: L6165-L6283
 
-Source SHA256: `2799727129b753f2c42a03e35fca9d7d03de933a6d3d69a4b8047b8efbfeaa5d`
+Source SHA256: `7f6b1a65bca1628c44e898f2bf5394c06dcd63c9f37aa66b26c81e0075732227`
 
 ---
 
@@ -42,66 +42,86 @@ plan_unit_id: GRS-064
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field accepted
-  origin. The Goal body currentness and history contract defines the exact local canonical JSON semantic
-  hashes, concrete scalar limit, single ordinary revision/history chain and owner.goal.body.mutation@1.0.0
-  shared body/control transaction. Original accepted source authority, current approval/owner/stop/access
-  facts and whole reserved control gate terminal writes. Independent current body/history and content-free
-  receipt readers use actual canonical origin; original receipt audit survives lawful body purge without
-  recreating text. SP-287 supplies separate physical wrappers/custody and DL-047 lifetime. The explicitly
-  adopted active updated-v3 Activity/body/control/history views use those current canonical readers;
-  separate SP-299 event/audit/input and original SIR replay boundaries preserve accepted effects and
-  original terminal meaning without event-built Goal state. GRS-073/SP-304 select the shared current
-  BodyControlV2 with independent cancellation_pending; every current mutation/read/backup route preserves
-  genuine Stop and cancellation effects. No sibling Goal event or Workflow certification closure follows
-  from this prerequisite. These exact Project semantic/physical editions remain immutable. GRS-086
-  requires separately versioned app body/origin/control/history/currentness and backup/source siblings as
-  one adopted graph, using real thread/Computer authority. Ordinary updates still cannot change
-  goal_id/project_id/thread_id/created_at, including a null binding; GRS-087 supplies conversion by linked
-  birth or separate association-owner transaction.
+canonical_text: Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field accepted
+  origin. The Goal body currentness and history contract defines the exact local canonical JSON semantic hashes,
+  concrete scalar limit, single ordinary revision/history chain and owner.goal.body.mutation@1.0.0 shared body/control
+  transaction. Original accepted source authority, current approval/owner/stop/access facts and whole reserved control
+  gate terminal writes. Independent current body/history and content-free receipt readers use actual canonical origin;
+  original receipt audit survives lawful body purge without recreating text. SP-287 supplies separate physical wrappers/custody
+  and DL-047 lifetime. The explicitly adopted active updated-v3 Activity/body/control/history views use those current
+  canonical readers; separate SP-299 event/audit/input and original SIR replay boundaries preserve accepted effects
+  and original terminal meaning without event-built Goal state. GRS-073/SP-304 select the shared current BodyControlV2
+  with independent cancellation_pending; every current mutation/read/backup route preserves genuine Stop and cancellation
+  effects. No sibling Goal event or Workflow certification closure follows from this prerequisite. These exact Project
+  semantic/physical editions remain immutable. GRS-086 requires separately versioned app body/origin/control/history/currentness
+  and backup/source siblings as one adopted graph, using real thread/Computer authority. Ordinary updates still
+  cannot change goal_id/project_id/thread_id/created_at, including a null binding; GRS-087 supplies conversion by
+  linked birth or separate association-owner transaction. For goal.blocked explicitly adopt GRS-1120/SP-1120 and
+  for goal.completed adopt GRS-1121/SP-1121; approved exception is separately GRS-1122/SP-1122. All use this one
+  body/control metadata CAS, including atomic lifecycle pending and original body receipt; no parallel body writer
+  is admitted.
 gui_related: true
-gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history visibility through deletion and recovery.
-depends_on: [GRS-048, GRS-050, GRS-051, GRS-054, GRS-056, DL-045, DL-047]
+gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history
+  visibility through deletion and recovery.
+depends_on:
+- GRS-048
+- GRS-050
+- GRS-051
+- GRS-054
+- GRS-056
+- DL-045
+- DL-047
 unblocks: []
 acceptance_criteria:
-  - Semantic 11/9/7 records and four-state Goal remain exact; hidden control and physical wrappers add no Goal fields.
-  - Every body writer uses shared ordinary revision/currentness and whole-control CAS; metadata creates no fake objective revision.
-  - Direct Save has null message/approval IDs, completed rejects editing, and approved proposals require exact current owner/approval/lineage.
-  - Pending recovery preserves original accepted intent without raw-source reconstruction and never waives current approval/stop/external/access fences.
-  - Stop defeats continuation immediately despite reservation; pure body receipt grants no event, SIR or completion success.
-  - Current and audit readers authenticate canonical origin and final current facts; deleted text is never recreated from receipt/reference evidence.
-  - Active goal.created Activity/body/history consumption uses the existing canonical readers and original durable body/command custody, not a deferred event-built Goal projection or invented checkpoint; passive creation inspection retains its separate complete source checks.
-  - Active goal.updated Activity/control/history uses current SP-287 custody and SP-299 complete original event/audit/input composition; no event reconstructs content, supplies action authority or substitutes for a terminal-selected original SIR replay epoch.
+- Semantic 11/9/7 records and four-state Goal remain exact; hidden control and physical wrappers add no Goal fields.
+- Every body writer uses shared ordinary revision/currentness and whole-control CAS; metadata creates no fake objective
+  revision.
+- Direct Save has null message/approval IDs, completed rejects editing, and approved proposals require exact current
+  owner/approval/lineage.
+- Pending recovery preserves original accepted intent without raw-source reconstruction and never waives current
+  approval/stop/external/access fences.
+- Stop defeats continuation immediately despite reservation; pure body receipt grants no event, SIR or completion
+  success.
+- Current and audit readers authenticate canonical origin and final current facts; deleted text is never recreated
+  from receipt/reference evidence.
+- Active goal.created Activity/body/history consumption uses the existing canonical readers and original durable
+  body/command custody, not a deferred event-built Goal projection or invented checkpoint; passive creation inspection
+  retains its separate complete source checks.
+- Active goal.updated Activity/control/history uses current SP-287 custody and SP-299 complete original event/audit/input
+  composition; no event reconstructs content, supplies action authority or substitutes for a terminal-selected original
+  SIR replay epoch.
 validation_surfaces:
-  - Plans/goal_body_custody.schema.json
-  - Plans/goal_body_custody_fixtures.json
-  - Plans/goal_updated_consumer_contracts.schema.json
-  - Plans/goal_updated_consumer_resources.json
-  - reports/event-authority-20260911/step-08-goal-body-validation.md
+- Plans/goal_body_custody.schema.json
+- Plans/goal_body_custody_fixtures.json
+- Plans/goal_updated_consumer_contracts.schema.json
+- Plans/goal_updated_consumer_resources.json
+- reports/event-authority-20260911/step-08-goal-body-validation.md
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_body_currentness_accepted_history_or_receipt_authority_escape
 reasoning_tier: high
 context_scope: shared_goal_body_history_custody_only
 implementation_surfaces:
-  - Plans/Goal_Runtime_System.md
-  - Plans/goal_body_custody.schema.json
-  - Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+- Plans/goal_body_custody.schema.json
+- Plans/storage-plan.md
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Goal_Runtime_System.md#GRS-048"
-  - "Plans/Goal_Runtime_System.md#GRS-054"
-  - "Plans/Goal_Runtime_System.md#GRS-056"
-  - "Plans/Decision_Log.md#DL-045"
-  - "Plans/Decision_Log.md#DL-047"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- Plans/Goal_Runtime_System.md#GRS-048
+- Plans/Goal_Runtime_System.md#GRS-054
+- Plans/Goal_Runtime_System.md#GRS-056
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
 negative_constraints:
-  - No Goal title/phase/child/budget/role fields, fifth state, inferred Goal, fabricated accepted lineage or certification exception.
-  - No automatic Goal event adoption/depth, native proof, WorkNode, NodeSeed, readiness or governance seal.
+- No Goal title/phase/child/budget/role fields, fifth state, inferred Goal, fabricated accepted lineage or certification
+  exception.
+- No automatic Goal event adoption/depth, native proof, WorkNode, NodeSeed, readiness or governance seal.
 ```
 
 The exact schema/static transaction evidence and native obligations are recorded in `reports/event-authority-20260911/step-08-goal-body-validation.md`. Supplied model origin seals, owner/approval observations, rollback sets and transaction captures are test adapters, not new durable authority services. Actual global writer adoption, native canonical origin/authentication, shared CAS/stop priority, coherent restore/tombstone replay and 24-hour/30-day purge enforcement remain `NOT_RUN`; no runtime/depth/readiness/seal claim follows.

@@ -22414,32 +22414,67 @@ plan_unit_id: SP-287
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: |-
-  Store exactly five canonical Goal body/history/origin/control/receipt families as closed schema_id/schema_version/record wrappers with independent physical and semantic byte domains. GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0 acceptance; Storage authenticates physical origin and supplies atomic whole-preimage custody, exact reader admission, coherent mandatory backup and explicit schema/codec migration. Four content families follow DL-047's bound-thread lifetime, immediate deletion hide and 24-hour/30-day purge limits under valid holds. Original content-free receipts remain independently auditable without retaining or rebuilding purged text. Detailed Goal body storage custody governs terminal fences, restore/tombstone replay and activation; sibling events remain separate. SP-304/GRS-073 select current control v2 in the same physical family/key, with independent cancellation_pending and complete retained v1 decoding; the other four wrappers remain exact. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
+canonical_text: "Store exactly five canonical Goal body/history/origin/control/receipt families as closed schema_id/schema_version/record\
+  \ wrappers with independent physical and semantic byte domains. GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0\
+  \ acceptance; Storage authenticates physical origin and supplies atomic whole-preimage custody, exact reader admission,\
+  \ coherent mandatory backup and explicit schema/codec migration. Four content families follow DL-047's bound-thread\
+  \ lifetime, immediate deletion hide and 24-hour/30-day purge limits under valid holds. Original content-free receipts\
+  \ remain independently auditable without retaining or rebuilding purged text. Detailed Goal body storage custody\
+  \ governs terminal fences, restore/tombstone replay and activation; sibling events remain separate. SP-304/GRS-073\
+  \ select current control v2 in the same physical family/key, with independent cancellation_pending and complete\
+  \ retained v1 decoding; the other four wrappers remain exact. The stated Project key/schema/codec is the preserved\
+  \ Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source\
+  \ graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native\
+  \ SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification,\
+  \ limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.\
+  \ SP-351\u2019s app Goal body/start/update/cancel/association operations require genuine original app source and\
+  \ retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow\
+  \ their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation\
+  \ identity; N25 uses linked new birth. Explicitly adopt SP-1120 for blocked, SP-1121 for ordinary completion and\
+  \ SP-1122 for approved-exception completion, atomically joining the selected lifecycle pending phase with the\
+  \ sole body/control/receipt transaction.\n\nFor only the newly installed GRS-1120/1121/1122 source editions, explicitly\
+  \ adopt each own SP-1120/1121/1122 whole-wrapper SP-337 transport for over-limit shared body/history/origin/control/receipt\
+  \ values. The complete original logical schemas, canonical key, sole writer, original recipe and deletion/retention\
+  \ meaning stay exact; all shared readers/writers must support that resolver before installation. No existing source\
+  \ edition is silently rewritten."
 gui_related: false
-gui_classification_reason: Defines physical storage, transaction, retention and recovery contracts; Goal presentation is owned by GRS-064.
-depends_on: [SP-231, SP-235, SP-237, SP-239, GRS-064, DL-045, DL-047]
+gui_classification_reason: Defines physical storage, transaction, retention and recovery contracts; Goal presentation
+  is owned by GRS-064.
+depends_on:
+- SP-231
+- SP-235
+- SP-237
+- SP-239
+- GRS-064
+- DL-045
+- DL-047
 unblocks: []
 acceptance_criteria:
-  - Five exact versioned wrappers preserve semantic 11/9/7 records; canonical bytes, selected origin and scope authenticate every route.
-  - All body writers share whole physical and semantic CAS, exact reserved control and final owner/stop/access fences.
-  - Coherent write sets and mandatory backup preserve complete accepted history and original receipts without synthetic reconstruction.
-  - Bound-thread deletion immediately hides content and enforces 24-hour active and 30-day backup purge unless held; holds do not restore visibility.
-  - Receipt-only lawful-purge recovery preserves independent original audit and replays genuine tombstones before any visibility.
-  - Exact schema/codec and writer/reader activation uses supported coordinator graph, protected backup, verify-before-stamp and terminal receipt.
+- Five exact versioned wrappers preserve semantic 11/9/7 records; canonical bytes, selected origin and scope authenticate
+  every route.
+- All body writers share whole physical and semantic CAS, exact reserved control and final owner/stop/access fences.
+- Coherent write sets and mandatory backup preserve complete accepted history and original receipts without synthetic
+  reconstruction.
+- Bound-thread deletion immediately hides content and enforces 24-hour active and 30-day backup purge unless held;
+  holds do not restore visibility.
+- Receipt-only lawful-purge recovery preserves independent original audit and replays genuine tombstones before
+  any visibility.
+- Exact schema/codec and writer/reader activation uses supported coordinator graph, protected backup, verify-before-stamp
+  and terminal receipt.
 validation_surfaces:
-  - Plans/goal_body_custody.schema.json
-  - Plans/goal_body_custody_fixtures.json
-  - Plans/storage_value_registry.json
-  - reports/event-authority-20260911/step-08-goal-body-validation.md
+- Plans/goal_body_custody.schema.json
+- Plans/goal_body_custody_fixtures.json
+- Plans/storage_value_registry.json
+- reports/event-authority-20260911/step-08-goal-body-validation.md
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_body_physical_origin_cas_retention_or_restore_authority_escape
 reasoning_tier: high
 context_scope: shared_goal_body_physical_custody_only
 implementation_surfaces:
-  - Plans/storage-plan.md
-  - Plans/Goal_Runtime_System.md
-  - Plans/goal_body_custody.schema.json
-  - Plans/storage_value_registry.json
+- Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+- Plans/goal_body_custody.schema.json
+- Plans/storage_value_registry.json
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false
@@ -22452,8 +22487,10 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
-  - No sixth family, semantic field/version exception, new lifecycle, generic authority service or receipt-based content reconstruction.
-  - No automatic Goal event adoption/depth, certification exception, native proof, WorkNode, NodeSeed, readiness or governance seal.
+- No sixth family, semantic field/version exception, new lifecycle, generic authority service or receipt-based content
+  reconstruction.
+- No automatic Goal event adoption/depth, certification exception, native proof, WorkNode, NodeSeed, readiness or
+  governance seal.
 ```
 
 The schema/model, physical adapter and independent review evidence is recorded in `reports/event-authority-20260911/step-08-goal-body-validation.md`. Private issued-row/receipt/backup/deletion cells, source observations and transaction captures are bounded fixture adapters, not additional durable families or native authentication. Native concurrency/CAS/fsync, actual global writer adoption, owner/approval/stop enforcement, migration, coherent backup/restore, tombstone replay and 24-hour/30-day purge enforcement remain `NOT_RUN`.
@@ -30109,7 +30146,8 @@ unit_type: owner_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: Newly authored goal.blocked v3 identity, SP-286 custody, original-body publication order and read-only
-  none_required observation; no event-built Goal state.
+  none_required observation; no event-built Goal state. SP-1120/CV-1120 now define the original blocked source and
+  resolver; actual installation/admission remains gated.
 gui_related: false
 gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
 split_recommended: false
@@ -30127,6 +30165,7 @@ validation_surfaces:
 - Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json
 - Plans/goal_lifecycle_successor_fixtures.json
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_event_authority
 reasoning_tier: high
 context_scope: sp-429_event_authority
@@ -30154,7 +30193,7 @@ owner_hints:
 
 **Consumers and exact checkpoint disposition.** Current Activity/body/history/continuation consume `reader.goal.body@1.0.0` and `reader.goal.objective_history@1.0.0` under GRS-064/SP-287. They read already committed canonical custody; they never build Goal state from this event. The existing SP-339 pm inspect / F3-666 raw record inspector, pm tail and pm export retain their own generic exact EventRecord reads and exact schema dispatch. This family adds no separately needed interpretation adapter or output binding. Generic current lookup independently requires SP-278's complete actual index/root/generation dataset, immutable birth anchor, global frontier/token/source-selection/frame/translation proof and current permission/deletion/hold/secret/maintenance fences, joining all represented Project/thread/Goal/event/sequence/Storage identities. Original body receipt and SP-286 first-receipt/full-value custody retain their separate owners; inspecting the event proves no terminal producer result or current lifecycle authority. Lawful body purge cannot recreate objective/history/source content. The generic inspector's bounded output stays exactly its existing contract; no new output shape is invented.
 
-For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. Native source/writer availability remains refused on GRS-203's concrete original-host-source dependency, independent of this consumer disposition.
+For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. SP-1120/CV-1120/GRS-1120 now supply the original host source contract. Native source/writer availability remains gated on actual whole-bank installation and separate exact selector adoption, independent of this consumer disposition.
 
 **Withdrawal.** A writer cutoff prevents new reservations/append before dedupe, preserving genuinely accepted original pending effects for the exact source/result resolver. It grants no retry under a new identity or event rollback. Reader withdrawal stops this exact binding; source, first receipts, old schemas, original meaning and retention remain. Rebuild may rebuild only the generic disposable index under a new admitted generation and full SP-278 fences; it cannot recreate canonical body, evidence, first receipts or a family projector. App and other payload versions never become fallbacks.
 
@@ -30166,7 +30205,8 @@ unit_type: owner_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: Newly authored goal.completed v3 identity, SP-286 custody, original-body publication order and read-only
-  none_required observation; no event-built Goal state.
+  none_required observation; no event-built Goal state. SP-1121/CV-1121 and separate SP-1122/CV-1122 now define
+  ordinary and approved-exception original sources/resolvers, with actual installation/admission gated.
 gui_related: false
 gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
 split_recommended: false
@@ -30184,6 +30224,7 @@ validation_surfaces:
 - Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json
 - Plans/goal_lifecycle_successor_fixtures.json
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_event_authority
 reasoning_tier: high
 context_scope: sp-430_event_authority
@@ -30211,7 +30252,7 @@ owner_hints:
 
 **Consumers and exact checkpoint disposition.** Current Activity/body/history/continuation consume `reader.goal.body@1.0.0` and `reader.goal.objective_history@1.0.0` under GRS-064/SP-287. They read already committed canonical custody; they never build Goal state from this event. The existing SP-339 pm inspect / F3-666 raw record inspector, pm tail and pm export retain their own generic exact EventRecord reads and exact schema dispatch. This family adds no separately needed interpretation adapter or output binding. Generic current lookup independently requires SP-278's complete actual index/root/generation dataset, immutable birth anchor, global frontier/token/source-selection/frame/translation proof and current permission/deletion/hold/secret/maintenance fences, joining all represented Project/thread/Goal/event/sequence/Storage identities. Original body receipt and SP-286 first-receipt/full-value custody retain their separate owners; inspecting the event proves no terminal producer result or current lifecycle authority. Lawful body purge cannot recreate objective/history/source content. The generic inspector's bounded output stays exactly its existing contract; no new output shape is invented.
 
-For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. Native source/writer availability remains refused on GRS-204's concrete original-host-source dependency, independent of this consumer disposition.
+For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. SP-1121/CV-1121/GRS-1121 now supply the original host source contract. Native source/writer availability remains gated on actual whole-bank installation and separate exact selector adoption, independent of this consumer disposition.
 
 **Withdrawal.** A writer cutoff prevents new reservations/append before dedupe, preserving genuinely accepted original pending effects for the exact source/result resolver. It grants no retry under a new identity or event rollback. Reader withdrawal stops this exact binding; source, first receipts, old schemas, original meaning and retention remain. Rebuild may rebuild only the generic disposable index under a new admitted generation and full SP-278 fences; it cannot recreate canonical body, evidence, first receipts or a family projector. App and other payload versions never become fallbacks.
 
@@ -30394,3 +30435,442 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 **Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-207, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+### SP-1120 - Original blocked lifecycle source custody and resolver
+
+```yaml
+plan_unit_id: SP-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored exact-family physical source contract for goal.blocked, adopting GRS-1120, SP-429,
+  SP-287 and SP-286 including its v2 full-value commitment independently. Prepared without registration or admission.
+  Source edition pm.goal.host.blocked_source.v1 and method bank Plans/goal_lifecycle_host_contracts/methods.json
+  select closed decision, reservation, pending and result resources; no sibling or application selector is inferred.
+
+
+  The physical canonical families are goal_lifecycle_blocked_source, goal_lifecycle_blocked_reservation, goal_lifecycle_blocked_pending
+  and goal_lifecycle_blocked_result. Keys are goal.lifecycle.blocked.{role}.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)},
+  where role is source|reservation|pending|result, partition is project~ plus unpadded base64url UTF-8 project_id,
+  and hex is lowercase exact UTF-8, not a raw Project id. Storage instance comes from the admitted store and is
+  joined in every wrapper. Each wrapper has exactly schema_id, schema_version and record, with role/family-specific
+  schema roots in CV-1120; schema_version is 1.0.0. DL-270/SP-339 requires native redb MessagePack. The complete
+  new source-role wrapper uses the existing Case L-2/SP-026/SP-236 canonical MessagePack value codec, pm.seglog_frame_v2.event_value.canonical_msgpack.v1.
+  Existing Goal semantic SHA-256 inputs still use pm.goal.canonical_json.v1; physical bytes never replace those
+  semantic hash inputs. The source resource bank selects the original semantic and physical recipe edition by immutable
+  installed source, never an untrusted request. Frozen older body/event resources keep original recipes; no numeric
+  cap or physical-float normalization is introduced here.
+
+
+  Capture the host/caller and decision before body work, using original source refs, complete currentness/authority
+  snapshots and their hashes. Exact body preimages and afterimages in source/reservation are bound-thread content
+  under DL-047, never an independent objective history or retention hold. They are hidden and purged with the shared
+  body content; other evidence remains at its real owner. Content-free results cannot recreate those bytes. The
+  reservation joins exact operation and continuation tuple, original accepted head, whole-control hash, expected
+  ordinary revision/currentness/Stop and source edition; compare whole preimages under the shared writer gate. Body/control/receipt
+  commit and lifecycle pending phase body_committed form one narrow atomic transaction. No seglog append occurs
+  inside that body transaction. Freeze complete caller-owned EventRecord input only after original body receipt
+  resolution; pending stores that exact input or its resolved SP-337 body reference, semantic digest, original body
+  receipt and intent. original source -> body receipt -> frozen event -> first event receipt -> final result is
+  acyclic; no source digest includes its future receipt.
+
+
+  Methods independently resolve the actual SP-287 body receipt by Storage/Project/thread/Goal/operation, validate
+  the full owner/intent/before/after/currentness/accepted-head fields and hash exact receipt bytes. SP-286 full_value_request
+  resolves the original event and first eleven-field AppendReceipt through canonical custody, not supplied metadata
+  or a projection. Compare all caller fields, event family/schema/scope/run, full-value commitment and original
+  receipt; Storage alone assigns sequence, times and frame/group positions. Semantic equality excludes those assigned
+  fields. Current writer selection, root generation and real admission are resolved out of band. A descriptor with
+  admitted=true cannot select a writer.
+
+
+  Every stored part, including source/reservation/pending/result and referenced semantic bodies, is measured in
+  encoded bytes under the existing Storage value ceiling; EventRecord inline body is at most 16 KiB. Larger bodies
+  use SP-337''s BLAKE3/byte-size/media-type reference with pack bytes durable before referring record acknowledgment.
+  Do not externalize only one oversized member and leave another mandatory value above its ceiling. A missing codec/reference
+  bank refuses installation. Complete original bytes, hash, size and reference custody are verified before use;
+  references do not change evidence/content retention or create a hold.
+
+
+  Recovery queries the same operation. Pending unavailable/unknown cannot become no_effect; only actual pre-body
+  no-effect proof permits that immutable terminal result. After body commit, no caller repeats a body mutation.
+  Lost append acknowledgment resolves the existing first receipt and full event; semantic mismatch conflicts. Published
+  and terminal unknown/no_effect are immutable; retries return their exact original bytes. Writer cutoff blocks
+  new reservations/appends before dedupe; reconciliation of genuine earlier effects requires the installed original
+  resolver and does not grant new action. Missing source/receipt stays unavailable. Reader withdrawal disables the
+  selected interpretation without deleting source or receipt evidence.
+
+
+  Original source/reservation content follows DL-047 bound-thread content lifetime, immediate deletion hiding and
+  existing hold/purge rules; content-free pending/result/body/Event receipt authority follows RP-AUTHORITY-INDEFINITE@1.0.0.
+  Pending reference metadata never retains deleted objective or owner evidence. Backup takes one coherent cut of
+  shared body/control/receipt and all four source roles plus original event/first receipt/full-value custody, source
+  edition and payload packs. Restore preserves Storage identity and tombstones/holds, authenticates every join before
+  exposure, retains pending/unknown and terminal original meaning, and fences incompatible or missing members instead
+  of reconstructing receipts. The existing independent SP-287/SP-286 content-free receipt audits survive lawful
+  body/source purge under their own current disclosure guards. Composed lifecycle inspection that still requires
+  unavailable original source returns unavailable; it never rebuilds source content or proves current completion
+  from raw receipt metadata.
+
+
+  inspect and resolve are separately callable and re-authenticate exact original row/source/receipt edition and
+  current access/deletion/hold/secret/maintenance after the final helper. Historical observation uses original lawful
+  issue-time predicates despite changed live Goal or retired current writer. Current Activity remains the canonical
+  SP-287 body reader; generic EventRecord inspection remains SP-278/SP-339 and this family''s durable checkpoint
+  remains individually none_required. No family projector, durable cursor, outbox or event-built Goal state is introduced.
+  Native execution, installation and transaction/durability proof remain NOT_RUN.
+
+
+  DL-270/SP-339 controls the new physical values: canonical MessagePack, using the existing Case L-2/SP-026/SP-236
+  value codec. The exact physical reference spelling is blake3:<64 lowercase hexadecimal digits>:<positive decimal
+  encoded byte size without a leading zero>:application/msgpack. Pack bytes are the complete selected logical record
+  in that codec. The separately selected EventRecord payload_ref spelling ends in application/json and covers the
+  existing selected JSON payload bytes. Both resolve exact bytes, BLAKE3, size and media type before decode, with
+  pack durability before referring acknowledgment; neither reference silently changes a semantic digest or retained
+  recipe.
+
+
+  This source''s shared_storage_editions in methods.json names five prepared MessagePack outer editions: body/revision/origin/receipt
+  schema_version=2.0.0 and control schema_version=3.0.0, with their original schema_id and exact existing SP-287
+  key. Each closed three-field wrapper chooses the whole original logical inner schema or a content_ref, so over-limit
+  body, accepted revision, reserved control/intent and receipt all resolve their exact original semantics. The five
+  own storage_shared_*_msgpack roots are complete physical successor resources, never a replacement of a frozen
+  original. Migration is exact semantic identity at the same owning key, with authentic original custody and all
+  shared-owner permission/currentness/Stop/maintenance/backup/purge fences; semantic hashes, accepted history and
+  original receipt bytes stay unchanged. Actual registry/migration/source installation and every canonical reader/writer''s
+  adoption are prerequisites before enabling a source. Unsupported, missing or mixed editions are unavailable; no
+  lazy per-request migration or historical relabeling is allowed. No registry or migration admission is performed
+  here. The whole-path oracle measures actual MessagePack bytes, including the lawful 4,000-scalar multibyte objective,
+  and resolves every over-limit stored part. Shared number-domain and original-edition authentication remain the
+  separately authorized sweep, with no lane-local serializer, integer ceiling or physical-float normalization.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1120
+- SP-287
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
+
+### SP-1121 - Original completed lifecycle source custody and resolver
+
+```yaml
+plan_unit_id: SP-1121
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored exact-family physical source contract for goal.completed, adopting GRS-1121, SP-430,
+  SP-287 and SP-286 including its v2 full-value commitment independently. Prepared without registration or admission.
+  Source edition pm.goal.host.completed_source.v1 and method bank Plans/goal_lifecycle_host_contracts/methods.json
+  select closed decision, reservation, pending and result resources; no sibling or application selector is inferred.
+
+
+  The physical canonical families are goal_lifecycle_completed_source, goal_lifecycle_completed_reservation, goal_lifecycle_completed_pending
+  and goal_lifecycle_completed_result. Keys are goal.lifecycle.completed.{role}.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)},
+  where role is source|reservation|pending|result, partition is project~ plus unpadded base64url UTF-8 project_id,
+  and hex is lowercase exact UTF-8, not a raw Project id. Storage instance comes from the admitted store and is
+  joined in every wrapper. Each wrapper has exactly schema_id, schema_version and record, with role/family-specific
+  schema roots in CV-1121; schema_version is 1.0.0. DL-270/SP-339 requires native redb MessagePack. The complete
+  new source-role wrapper uses the existing Case L-2/SP-026/SP-236 canonical MessagePack value codec, pm.seglog_frame_v2.event_value.canonical_msgpack.v1.
+  Existing Goal semantic SHA-256 inputs still use pm.goal.canonical_json.v1; physical bytes never replace those
+  semantic hash inputs. The source resource bank selects the original semantic and physical recipe edition by immutable
+  installed source, never an untrusted request. Frozen older body/event resources keep original recipes; no numeric
+  cap or physical-float normalization is introduced here.
+
+
+  Capture the host/caller and decision before body work, using original source refs, complete currentness/authority
+  snapshots and their hashes. Exact body preimages and afterimages in source/reservation are bound-thread content
+  under DL-047, never an independent objective history or retention hold. They are hidden and purged with the shared
+  body content; other evidence remains at its real owner. Content-free results cannot recreate those bytes. The
+  reservation joins exact operation and continuation tuple, original accepted head, whole-control hash, expected
+  ordinary revision/currentness/Stop and source edition; compare whole preimages under the shared writer gate. Body/control/receipt
+  commit and lifecycle pending phase body_committed form one narrow atomic transaction. No seglog append occurs
+  inside that body transaction. Freeze complete caller-owned EventRecord input only after original body receipt
+  resolution; pending stores that exact input or its resolved SP-337 body reference, semantic digest, original body
+  receipt and intent. original source -> body receipt -> frozen event -> first event receipt -> final result is
+  acyclic; no source digest includes its future receipt.
+
+
+  Methods independently resolve the actual SP-287 body receipt by Storage/Project/thread/Goal/operation, validate
+  the full owner/intent/before/after/currentness/accepted-head fields and hash exact receipt bytes. SP-286 full_value_request
+  resolves the original event and first eleven-field AppendReceipt through canonical custody, not supplied metadata
+  or a projection. Compare all caller fields, event family/schema/scope/run, full-value commitment and original
+  receipt; Storage alone assigns sequence, times and frame/group positions. Semantic equality excludes those assigned
+  fields. Current writer selection, root generation and real admission are resolved out of band. A descriptor with
+  admitted=true cannot select a writer.
+
+
+  Every stored part, including source/reservation/pending/result and referenced semantic bodies, is measured in
+  encoded bytes under the existing Storage value ceiling; EventRecord inline body is at most 16 KiB. Larger bodies
+  use SP-337''s BLAKE3/byte-size/media-type reference with pack bytes durable before referring record acknowledgment.
+  Do not externalize only one oversized member and leave another mandatory value above its ceiling. A missing codec/reference
+  bank refuses installation. Complete original bytes, hash, size and reference custody are verified before use;
+  references do not change evidence/content retention or create a hold.
+
+
+  Recovery queries the same operation. Pending unavailable/unknown cannot become no_effect; only actual pre-body
+  no-effect proof permits that immutable terminal result. After body commit, no caller repeats a body mutation.
+  Lost append acknowledgment resolves the existing first receipt and full event; semantic mismatch conflicts. Published
+  and terminal unknown/no_effect are immutable; retries return their exact original bytes. Writer cutoff blocks
+  new reservations/appends before dedupe; reconciliation of genuine earlier effects requires the installed original
+  resolver and does not grant new action. Missing source/receipt stays unavailable. Reader withdrawal disables the
+  selected interpretation without deleting source or receipt evidence.
+
+
+  Original source/reservation content follows DL-047 bound-thread content lifetime, immediate deletion hiding and
+  existing hold/purge rules; content-free pending/result/body/Event receipt authority follows RP-AUTHORITY-INDEFINITE@1.0.0.
+  Pending reference metadata never retains deleted objective or owner evidence. Backup takes one coherent cut of
+  shared body/control/receipt and all four source roles plus original event/first receipt/full-value custody, source
+  edition and payload packs. Restore preserves Storage identity and tombstones/holds, authenticates every join before
+  exposure, retains pending/unknown and terminal original meaning, and fences incompatible or missing members instead
+  of reconstructing receipts. The existing independent SP-287/SP-286 content-free receipt audits survive lawful
+  body/source purge under their own current disclosure guards. Composed lifecycle inspection that still requires
+  unavailable original source returns unavailable; it never rebuilds source content or proves current completion
+  from raw receipt metadata.
+
+
+  inspect and resolve are separately callable and re-authenticate exact original row/source/receipt edition and
+  current access/deletion/hold/secret/maintenance after the final helper. Historical observation uses original lawful
+  issue-time predicates despite changed live Goal or retired current writer. Current Activity remains the canonical
+  SP-287 body reader; generic EventRecord inspection remains SP-278/SP-339 and this family''s durable checkpoint
+  remains individually none_required. No family projector, durable cursor, outbox or event-built Goal state is introduced.
+  Native execution, installation and transaction/durability proof remain NOT_RUN.
+
+
+  DL-270/SP-339 controls the new physical values: canonical MessagePack, using the existing Case L-2/SP-026/SP-236
+  value codec. The exact physical reference spelling is blake3:<64 lowercase hexadecimal digits>:<positive decimal
+  encoded byte size without a leading zero>:application/msgpack. Pack bytes are the complete selected logical record
+  in that codec. The separately selected EventRecord payload_ref spelling ends in application/json and covers the
+  existing selected JSON payload bytes. Both resolve exact bytes, BLAKE3, size and media type before decode, with
+  pack durability before referring acknowledgment; neither reference silently changes a semantic digest or retained
+  recipe.
+
+
+  This source''s shared_storage_editions in methods.json names five prepared MessagePack outer editions: body/revision/origin/receipt
+  schema_version=2.0.0 and control schema_version=3.0.0, with their original schema_id and exact existing SP-287
+  key. Each closed three-field wrapper chooses the whole original logical inner schema or a content_ref, so over-limit
+  body, accepted revision, reserved control/intent and receipt all resolve their exact original semantics. The five
+  own storage_shared_*_msgpack roots are complete physical successor resources, never a replacement of a frozen
+  original. Migration is exact semantic identity at the same owning key, with authentic original custody and all
+  shared-owner permission/currentness/Stop/maintenance/backup/purge fences; semantic hashes, accepted history and
+  original receipt bytes stay unchanged. Actual registry/migration/source installation and every canonical reader/writer''s
+  adoption are prerequisites before enabling a source. Unsupported, missing or mixed editions are unavailable; no
+  lazy per-request migration or historical relabeling is allowed. No registry or migration admission is performed
+  here. The whole-path oracle measures actual MessagePack bytes, including the lawful 4,000-scalar multibyte objective,
+  and resolves every over-limit stored part. Shared number-domain and original-edition authentication remain the
+  separately authorized sweep, with no lane-local serializer, integer ceiling or physical-float normalization.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1121
+- SP-287
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
+
+### SP-1122 - Original exception lifecycle source custody and resolver
+
+```yaml
+plan_unit_id: SP-1122
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored exact-family physical source contract for goal.completed approved_verification_exception,
+  adopting GRS-1122, SP-430, SP-287 and SP-286 including its v2 full-value commitment independently. Prepared without
+  registration or admission. Source edition pm.goal.host.exception_source.v1 and method bank Plans/goal_lifecycle_host_contracts/methods.json
+  select closed decision, reservation, pending and result resources; no sibling or application selector is inferred.
+
+
+  The physical canonical families are goal_lifecycle_exception_source, goal_lifecycle_exception_reservation, goal_lifecycle_exception_pending
+  and goal_lifecycle_exception_result. Keys are goal.lifecycle.exception.{role}.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)},
+  where role is source|reservation|pending|result, partition is project~ plus unpadded base64url UTF-8 project_id,
+  and hex is lowercase exact UTF-8, not a raw Project id. Storage instance comes from the admitted store and is
+  joined in every wrapper. Each wrapper has exactly schema_id, schema_version and record, with role/family-specific
+  schema roots in CV-1122; schema_version is 1.0.0. DL-270/SP-339 requires native redb MessagePack. The complete
+  new source-role wrapper uses the existing Case L-2/SP-026/SP-236 canonical MessagePack value codec, pm.seglog_frame_v2.event_value.canonical_msgpack.v1.
+  Existing Goal semantic SHA-256 inputs still use pm.goal.canonical_json.v1; physical bytes never replace those
+  semantic hash inputs. The source resource bank selects the original semantic and physical recipe edition by immutable
+  installed source, never an untrusted request. Frozen older body/event resources keep original recipes; no numeric
+  cap or physical-float normalization is introduced here.
+
+
+  Capture the host/caller and decision before body work, using original source refs, complete currentness/authority
+  snapshots and their hashes. Exact body preimages and afterimages in source/reservation are bound-thread content
+  under DL-047, never an independent objective history or retention hold. They are hidden and purged with the shared
+  body content; other evidence remains at its real owner. Content-free results cannot recreate those bytes. The
+  reservation joins exact operation and continuation tuple, original accepted head, whole-control hash, expected
+  ordinary revision/currentness/Stop and source edition; compare whole preimages under the shared writer gate. Body/control/receipt
+  commit and lifecycle pending phase body_committed form one narrow atomic transaction. No seglog append occurs
+  inside that body transaction. Freeze complete caller-owned EventRecord input only after original body receipt
+  resolution; pending stores that exact input or its resolved SP-337 body reference, semantic digest, original body
+  receipt and intent. original source -> body receipt -> frozen event -> first event receipt -> final result is
+  acyclic; no source digest includes its future receipt.
+
+
+  Methods independently resolve the actual SP-287 body receipt by Storage/Project/thread/Goal/operation, validate
+  the full owner/intent/before/after/currentness/accepted-head fields and hash exact receipt bytes. SP-286 full_value_request
+  resolves the original event and first eleven-field AppendReceipt through canonical custody, not supplied metadata
+  or a projection. Compare all caller fields, event family/schema/scope/run, full-value commitment and original
+  receipt; Storage alone assigns sequence, times and frame/group positions. Semantic equality excludes those assigned
+  fields. Current writer selection, root generation and real admission are resolved out of band. A descriptor with
+  admitted=true cannot select a writer.
+
+
+  Every stored part, including source/reservation/pending/result and referenced semantic bodies, is measured in
+  encoded bytes under the existing Storage value ceiling; EventRecord inline body is at most 16 KiB. Larger bodies
+  use SP-337''s BLAKE3/byte-size/media-type reference with pack bytes durable before referring record acknowledgment.
+  Do not externalize only one oversized member and leave another mandatory value above its ceiling. A missing codec/reference
+  bank refuses installation. Complete original bytes, hash, size and reference custody are verified before use;
+  references do not change evidence/content retention or create a hold.
+
+
+  Recovery queries the same operation. Pending unavailable/unknown cannot become no_effect; only actual pre-body
+  no-effect proof permits that immutable terminal result. After body commit, no caller repeats a body mutation.
+  Lost append acknowledgment resolves the existing first receipt and full event; semantic mismatch conflicts. Published
+  and terminal unknown/no_effect are immutable; retries return their exact original bytes. Writer cutoff blocks
+  new reservations/appends before dedupe; reconciliation of genuine earlier effects requires the installed original
+  resolver and does not grant new action. Missing source/receipt stays unavailable. Reader withdrawal disables the
+  selected interpretation without deleting source or receipt evidence.
+
+
+  Original source/reservation content follows DL-047 bound-thread content lifetime, immediate deletion hiding and
+  existing hold/purge rules; content-free pending/result/body/Event receipt authority follows RP-AUTHORITY-INDEFINITE@1.0.0.
+  Pending reference metadata never retains deleted objective or owner evidence. Backup takes one coherent cut of
+  shared body/control/receipt and all four source roles plus original event/first receipt/full-value custody, source
+  edition and payload packs. Restore preserves Storage identity and tombstones/holds, authenticates every join before
+  exposure, retains pending/unknown and terminal original meaning, and fences incompatible or missing members instead
+  of reconstructing receipts. The existing independent SP-287/SP-286 content-free receipt audits survive lawful
+  body/source purge under their own current disclosure guards. Composed lifecycle inspection that still requires
+  unavailable original source returns unavailable; it never rebuilds source content or proves current completion
+  from raw receipt metadata.
+
+
+  inspect and resolve are separately callable and re-authenticate exact original row/source/receipt edition and
+  current access/deletion/hold/secret/maintenance after the final helper. Historical observation uses original lawful
+  issue-time predicates despite changed live Goal or retired current writer. Current Activity remains the canonical
+  SP-287 body reader; generic EventRecord inspection remains SP-278/SP-339 and this family''s durable checkpoint
+  remains individually none_required. No family projector, durable cursor, outbox or event-built Goal state is introduced.
+  Native execution, installation and transaction/durability proof remain NOT_RUN.
+
+
+  Before the Goal host source is captured, the original Workflow controller alone issues the separate canonical
+  goal_verification_exception_receipt family. Its key is goal.verification_exception.receipt.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(owning_run_id)}:{hex_utf8(receipt_id)},
+  with the same encoded Project partition and actual Storage target joins. CV-1122 supplies storage_workflow_exception_receipt,
+  a closed 1.0.0 wrapper over workflow_exception_receipt containing the exact original source inputs and separately
+  typed original exception result. This is source-before-result hashing, not a receipt bootstrap cycle. Use the
+  existing canonical MessagePack physical codec and the 16 KiB/BLAKE3 whole-value route; the content-free receipt/identity/authority
+  follows existing indefinite receipt custody, while referenced Workflow/evidence/approval content retains its actual
+  owner clock and creates no hold. Include this original receipt in the coherent backup/restore/read/withdrawal
+  cut. Equal issue returns its exact original bytes, conflicting source input refuses and missing/unknown original
+  issue never produces a substitute receipt. This new physical binding is prepared only, without a storage-registry
+  write or admission.
+
+
+  DL-270/SP-339 controls the new physical values: canonical MessagePack, using the existing Case L-2/SP-026/SP-236
+  value codec. The exact physical reference spelling is blake3:<64 lowercase hexadecimal digits>:<positive decimal
+  encoded byte size without a leading zero>:application/msgpack. Pack bytes are the complete selected logical record
+  in that codec. The separately selected EventRecord payload_ref spelling ends in application/json and covers the
+  existing selected JSON payload bytes. Both resolve exact bytes, BLAKE3, size and media type before decode, with
+  pack durability before referring acknowledgment; neither reference silently changes a semantic digest or retained
+  recipe.
+
+
+  This source''s shared_storage_editions in methods.json names five prepared MessagePack outer editions: body/revision/origin/receipt
+  schema_version=2.0.0 and control schema_version=3.0.0, with their original schema_id and exact existing SP-287
+  key. Each closed three-field wrapper chooses the whole original logical inner schema or a content_ref, so over-limit
+  body, accepted revision, reserved control/intent and receipt all resolve their exact original semantics. The five
+  own storage_shared_*_msgpack roots are complete physical successor resources, never a replacement of a frozen
+  original. Migration is exact semantic identity at the same owning key, with authentic original custody and all
+  shared-owner permission/currentness/Stop/maintenance/backup/purge fences; semantic hashes, accepted history and
+  original receipt bytes stay unchanged. Actual registry/migration/source installation and every canonical reader/writer''s
+  adoption are prerequisites before enabling a source. Unsupported, missing or mixed editions are unavailable; no
+  lazy per-request migration or historical relabeling is allowed. No registry or migration admission is performed
+  here. The whole-path oracle measures actual MessagePack bytes, including the lawful 4,000-scalar multibyte objective,
+  and resolves every over-limit stored part. Shared number-domain and original-edition authentication remain the
+  separately authorized sweep, with no lane-local serializer, integer ceiling or physical-float normalization.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1122
+- SP-287
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```

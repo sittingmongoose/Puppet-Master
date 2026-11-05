@@ -1,0 +1,7981 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json",
+  "$comment": "Newly authored CV-1120/1121/1122. Project-only; no registry/admission or native installation. Original dependencies are whole resources.",
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "owning_run_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "owning_run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        }
+      }
+    },
+    "fence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_epoch",
+        "continuation_epoch",
+        "user_stop_epoch",
+        "manual_stop_latched",
+        "permission",
+        "writer_epoch",
+        "root_generation",
+        "maintenance_epoch",
+        "deletion_epoch",
+        "hold_epoch",
+        "secret_epoch"
+      ],
+      "properties": {
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "manual_stop_latched": {
+          "type": "boolean"
+        },
+        "permission": {
+          "enum": [
+            "write",
+            "deny",
+            "unavailable"
+          ]
+        },
+        "writer_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maintenance_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "deletion_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hold_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "secret_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "todo_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "todo_id",
+        "required",
+        "status",
+        "accepted_skip_ref",
+        "revision"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "in_progress",
+            "completed",
+            "blocked",
+            "skipped"
+          ]
+        },
+        "accepted_skip_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "todo_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "todo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "list_id",
+        "revision",
+        "items",
+        "project_id",
+        "thread_id"
+      ],
+      "properties": {
+        "list_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/todo_item"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        }
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "status"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "settled",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "owner",
+        "list_id",
+        "list_revision",
+        "todo_id",
+        "decision",
+        "actor",
+        "todo_revision"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "list_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "list_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "decision": {
+          "enum": [
+            "accepted",
+            "denied"
+          ]
+        },
+        "actor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "todo_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "todo_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "approval_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "target",
+        "source_ref",
+        "graph_revision",
+        "graph_sha256",
+        "currentness_hash",
+        "risk_refs",
+        "dispositions",
+        "original_provenance"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "graph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "graph_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "currentness_hash": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "risk_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "original_provenance": {
+          "$ref": "#/$defs/approval_provenance"
+        }
+      }
+    },
+    "approval_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "request_sha256",
+        "approver",
+        "status",
+        "risk_refs",
+        "dispositions",
+        "original_provenance"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "request_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "approver": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "approved",
+            "denied",
+            "pending"
+          ]
+        },
+        "risk_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "original_provenance": {
+          "$ref": "#/$defs/approval_provenance"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "approved",
+                  "denied"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "approver": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\r\\n]+$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "approver": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_ref",
+        "target",
+        "graph_revision",
+        "graph_sha256",
+        "required_checks",
+        "checks",
+        "risk_refs",
+        "approval_ref",
+        "certifier",
+        "decision",
+        "truthful_label",
+        "original_certification"
+      ],
+      "properties": {
+        "source_id": {
+          "const": "pm.workflow.approved_verification_exception.v1"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "graph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "graph_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "required_checks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "check_id",
+              "outcome",
+              "evidence_ref",
+              "disposition_ref"
+            ],
+            "properties": {
+              "check_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\r\\n]+$"
+              },
+              "outcome": {
+                "enum": [
+                  "passed",
+                  "failed",
+                  "blocked",
+                  "skipped"
+                ]
+              },
+              "evidence_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\r\\n]+$"
+              },
+              "disposition_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[^\\r\\n]+$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "risk_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "approval_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "certifier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "decision": {
+          "const": "certified_with_approved_exception"
+        },
+        "truthful_label": {
+          "const": "completed_with_approved_verification_exception"
+        },
+        "original_certification": {
+          "$ref": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0#/$defs/certification_semantics"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "const": "application/msgpack"
+        }
+      }
+    },
+    "blocked_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "target",
+        "operation_id",
+        "continuation_id",
+        "next_attempt_ref",
+        "caller_ref",
+        "caller_revision",
+        "origin_kind",
+        "decision",
+        "completion_route",
+        "body_before",
+        "body_after",
+        "control_before",
+        "fence",
+        "evidence_refs",
+        "blocker_ref",
+        "blocker_evidence_before",
+        "blocker_evidence_after",
+        "todo_ref",
+        "work_ref",
+        "plan_ref",
+        "recovery_ref",
+        "internal_predicate_ref",
+        "exception_ref",
+        "caller_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.host.blocked_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "continuation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "next_attempt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "caller_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "caller_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "origin_kind": {
+          "enum": [
+            "user_request",
+            "agent_created_at_user_request",
+            "plan_build",
+            "internal_workflow"
+          ]
+        },
+        "decision": {
+          "const": "blocked"
+        },
+        "completion_route": {
+          "const": "ordinary"
+        },
+        "body_before": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body"
+        },
+        "body_after": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body"
+        },
+        "control_before": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2"
+        },
+        "fence": {
+          "$ref": "#/$defs/fence"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "blocker_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "blocker_evidence_before": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "blocker_evidence_after": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "todo_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "work_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "recovery_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "internal_predicate_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exception_ref": {
+          "type": "null"
+        },
+        "caller_context": {
+          "$ref": "#/$defs/caller_context"
+        }
+      }
+    },
+    "blocked_reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "before_control_sha256",
+        "intent",
+        "reserved_control_sha256"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "before_control_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "intent": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/pending"
+        },
+        "reserved_control_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_pending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "phase",
+        "body_receipt",
+        "event_input",
+        "first_receipt"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "phase": {
+          "enum": [
+            "reserved",
+            "body_committed",
+            "event_pending",
+            "event_committed"
+          ]
+        },
+        "body_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_input": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "blocked_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "status",
+        "body_receipt_sha256",
+        "event_id",
+        "event_value_sha256",
+        "first_receipt_sha256",
+        "truthful_label",
+        "approval_ref",
+        "residual_risk_refs",
+        "approver_ref"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "status": {
+          "enum": [
+            "published",
+            "no_effect",
+            "unknown"
+          ]
+        },
+        "body_receipt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_value_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "truthful_label": {
+          "enum": [
+            "blocked",
+            "unknown",
+            "no_effect"
+          ]
+        },
+        "approval_ref": {
+          "type": "null"
+        },
+        "residual_risk_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "approver_ref": {
+          "type": "null"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "blocked"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "unknown"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "no_effect"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body_receipt_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\r\\n]+$"
+              },
+              "event_value_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "first_receipt_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body_receipt_sha256": {
+                "type": "null"
+              },
+              "event_id": {
+                "type": "null"
+              },
+              "event_value_sha256": {
+                "type": "null"
+              },
+              "first_receipt_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "storage_blocked_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_blocked_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/blocked_source"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_blocked_reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_blocked_reservation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/blocked_reservation"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_blocked_pending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_blocked_pending.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/blocked_pending"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_blocked_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_blocked_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "blocked_capture_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_capture_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocked_reserve_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_reserve_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocked_commit_body_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_commit_body_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocked_freeze_event_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_freeze_event_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocked_append_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_append_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocked_resolve_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_resolve_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocked_publish_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_publish_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "blocked_inspect_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "blocked_inspect_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/blocked_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/blocked_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "target",
+        "operation_id",
+        "continuation_id",
+        "next_attempt_ref",
+        "caller_ref",
+        "caller_revision",
+        "origin_kind",
+        "decision",
+        "completion_route",
+        "body_before",
+        "body_after",
+        "control_before",
+        "fence",
+        "evidence_refs",
+        "blocker_ref",
+        "blocker_evidence_before",
+        "blocker_evidence_after",
+        "todo_ref",
+        "work_ref",
+        "plan_ref",
+        "recovery_ref",
+        "internal_predicate_ref",
+        "exception_ref",
+        "todo_snapshot",
+        "required_todo_ids",
+        "admitted_work_snapshot",
+        "bound_plan_snapshot",
+        "recovery_snapshot",
+        "internal_predicate_snapshot",
+        "caller_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.host.completed_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "continuation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "next_attempt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "caller_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "caller_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "origin_kind": {
+          "enum": [
+            "user_request",
+            "agent_created_at_user_request",
+            "plan_build",
+            "internal_workflow"
+          ]
+        },
+        "decision": {
+          "const": "complete"
+        },
+        "completion_route": {
+          "const": "ordinary"
+        },
+        "body_before": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body"
+        },
+        "body_after": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body"
+        },
+        "control_before": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2"
+        },
+        "fence": {
+          "$ref": "#/$defs/fence"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "blocker_ref": {
+          "type": "null"
+        },
+        "blocker_evidence_before": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "blocker_evidence_after": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "todo_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "work_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "recovery_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "internal_predicate_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exception_ref": {
+          "type": "null"
+        },
+        "todo_snapshot": {
+          "$ref": "#/$defs/todo"
+        },
+        "required_todo_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "admitted_work_snapshot": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/work"
+          },
+          "uniqueItems": true
+        },
+        "bound_plan_snapshot": {
+          "$ref": "#/$defs/bound_plan_observation"
+        },
+        "recovery_snapshot": {
+          "$ref": "#/$defs/recovery_observation"
+        },
+        "internal_predicate_snapshot": {
+          "$ref": "#/$defs/internal_predicate_observation"
+        },
+        "caller_context": {
+          "$ref": "#/$defs/caller_context"
+        }
+      }
+    },
+    "completed_reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "before_control_sha256",
+        "intent",
+        "reserved_control_sha256"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "before_control_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "intent": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/pending"
+        },
+        "reserved_control_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_pending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "phase",
+        "body_receipt",
+        "event_input",
+        "first_receipt"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "phase": {
+          "enum": [
+            "reserved",
+            "body_committed",
+            "event_pending",
+            "event_committed"
+          ]
+        },
+        "body_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_input": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "completed_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "status",
+        "body_receipt_sha256",
+        "event_id",
+        "event_value_sha256",
+        "first_receipt_sha256",
+        "truthful_label",
+        "approval_ref",
+        "residual_risk_refs",
+        "approver_ref"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "status": {
+          "enum": [
+            "published",
+            "no_effect",
+            "unknown"
+          ]
+        },
+        "body_receipt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_value_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "truthful_label": {
+          "enum": [
+            "completed",
+            "unknown",
+            "no_effect"
+          ]
+        },
+        "approval_ref": {
+          "type": "null"
+        },
+        "residual_risk_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "approver_ref": {
+          "type": "null"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "completed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "unknown"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "no_effect"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body_receipt_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\r\\n]+$"
+              },
+              "event_value_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "first_receipt_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body_receipt_sha256": {
+                "type": "null"
+              },
+              "event_id": {
+                "type": "null"
+              },
+              "event_value_sha256": {
+                "type": "null"
+              },
+              "first_receipt_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "storage_completed_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_completed_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/completed_source"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_completed_reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_completed_reservation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/completed_reservation"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_completed_pending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_completed_pending.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/completed_pending"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_completed_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_completed_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "completed_capture_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_capture_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_reserve_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_reserve_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_commit_body_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_commit_body_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_freeze_event_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_freeze_event_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_append_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_append_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_resolve_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_resolve_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_publish_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_publish_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completed_inspect_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "completed_inspect_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/completed_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/completed_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "target",
+        "operation_id",
+        "continuation_id",
+        "next_attempt_ref",
+        "caller_ref",
+        "caller_revision",
+        "origin_kind",
+        "decision",
+        "completion_route",
+        "body_before",
+        "body_after",
+        "control_before",
+        "fence",
+        "evidence_refs",
+        "blocker_ref",
+        "blocker_evidence_before",
+        "blocker_evidence_after",
+        "todo_ref",
+        "work_ref",
+        "plan_ref",
+        "recovery_ref",
+        "internal_predicate_ref",
+        "exception_ref",
+        "todo_snapshot",
+        "required_todo_ids",
+        "admitted_work_snapshot",
+        "bound_plan_snapshot",
+        "recovery_snapshot",
+        "internal_predicate_snapshot",
+        "caller_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.host.exception_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "continuation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "next_attempt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "caller_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "caller_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "origin_kind": {
+          "enum": [
+            "user_request",
+            "agent_created_at_user_request",
+            "plan_build",
+            "internal_workflow"
+          ]
+        },
+        "decision": {
+          "const": "complete"
+        },
+        "completion_route": {
+          "const": "approved_verification_exception"
+        },
+        "body_before": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body"
+        },
+        "body_after": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body"
+        },
+        "control_before": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2"
+        },
+        "fence": {
+          "$ref": "#/$defs/fence"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "blocker_ref": {
+          "type": "null"
+        },
+        "blocker_evidence_before": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "blocker_evidence_after": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "todo_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "work_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "recovery_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "internal_predicate_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exception_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "todo_snapshot": {
+          "$ref": "#/$defs/todo"
+        },
+        "required_todo_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "admitted_work_snapshot": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/work"
+          },
+          "uniqueItems": true
+        },
+        "bound_plan_snapshot": {
+          "$ref": "#/$defs/bound_plan_observation"
+        },
+        "recovery_snapshot": {
+          "$ref": "#/$defs/recovery_observation"
+        },
+        "internal_predicate_snapshot": {
+          "$ref": "#/$defs/internal_predicate_observation"
+        },
+        "caller_context": {
+          "$ref": "#/$defs/caller_context"
+        }
+      }
+    },
+    "exception_reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "before_control_sha256",
+        "intent",
+        "reserved_control_sha256"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "before_control_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "intent": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/pending"
+        },
+        "reserved_control_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_pending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "phase",
+        "body_receipt",
+        "event_input",
+        "first_receipt"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "phase": {
+          "enum": [
+            "reserved",
+            "body_committed",
+            "event_pending",
+            "event_committed"
+          ]
+        },
+        "body_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_input": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "exception_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "operation_id",
+        "target",
+        "status",
+        "body_receipt_sha256",
+        "event_id",
+        "event_value_sha256",
+        "first_receipt_sha256",
+        "truthful_label",
+        "approval_ref",
+        "residual_risk_refs",
+        "approver_ref"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "status": {
+          "enum": [
+            "published",
+            "no_effect",
+            "unknown"
+          ]
+        },
+        "body_receipt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_value_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "truthful_label": {
+          "enum": [
+            "completed_with_approved_verification_exception",
+            "unknown",
+            "no_effect"
+          ]
+        },
+        "approval_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "residual_risk_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "approver_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "completed_with_approved_verification_exception"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "unknown"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "truthful_label": {
+                "const": "no_effect"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body_receipt_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\r\\n]+$"
+              },
+              "event_value_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "first_receipt_sha256": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "approver_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\r\\n]+$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body_receipt_sha256": {
+                "type": "null"
+              },
+              "event_id": {
+                "type": "null"
+              },
+              "event_value_sha256": {
+                "type": "null"
+              },
+              "first_receipt_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "storage_exception_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_exception_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/exception_source"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_exception_reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_exception_reservation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/exception_reservation"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_exception_pending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_exception_pending.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/exception_pending"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_exception_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_lifecycle_exception_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "exception_capture_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_capture_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_reserve_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_reserve_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_commit_body_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_commit_body_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_freeze_event_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_freeze_event_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_append_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_append_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_resolve_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_resolve_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_publish_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_publish_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_inspect_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "source_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "exception_inspect_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "source_ref",
+        "status",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "published",
+            "no_effect",
+            "unknown",
+            "unavailable",
+            "refused"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exception_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "published"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "published"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_effect"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/exception_result"
+                  },
+                  {
+                    "properties": {
+                      "status": {
+                        "const": "no_effect"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unavailable",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exception_workflow_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "graph_revision",
+        "graph_sha256",
+        "required_worknodes",
+        "required_validators",
+        "required_criteria",
+        "child_requirements",
+        "source_control_ref",
+        "rollback_ref",
+        "safe_point_ref",
+        "recovery_ref"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "graph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "graph_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "required_worknodes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "required_validators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "required_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "child_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 0
+        },
+        "source_control_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "rollback_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "safe_point_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "recovery_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        }
+      }
+    },
+    "workflow_exception_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "target",
+        "receipt_id",
+        "original_source",
+        "original_result",
+        "original_approval"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.workflow.approved_verification_exception_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "original_source": {
+          "$ref": "#/$defs/exception_workflow_inputs"
+        },
+        "original_result": {
+          "$ref": "#/$defs/exception"
+        },
+        "original_approval": {
+          "$ref": "#/$defs/approval_resolution"
+        }
+      }
+    },
+    "storage_workflow_exception_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_verification_exception_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/workflow_exception_receipt"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "workflow_exception_issue_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "target",
+        "approval_ref"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "approval_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        }
+      }
+    },
+    "workflow_exception_issue_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "receipt"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "issued",
+            "refused",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/workflow_exception_receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "issued"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "receipt": {
+                "$ref": "#/$defs/workflow_exception_receipt"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "receipt": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "approval_resolve_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "request_sha256"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "request_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "approval_capture_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "request_sha256",
+        "status"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "request_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "refused",
+            "unavailable"
+          ]
+        }
+      }
+    },
+    "bound_plan_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "status"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "absent",
+            "settled",
+            "active",
+            "unknown",
+            "recovery_required"
+          ]
+        }
+      }
+    },
+    "recovery_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "status"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "status": {
+          "enum": [
+            "clear",
+            "unknown",
+            "recovery_required"
+          ]
+        }
+      }
+    },
+    "internal_predicate_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "owner",
+        "revision",
+        "result"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "result": {
+          "enum": [
+            "met",
+            "unmet",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "caller_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requested_account_ref",
+        "effective_account_ref",
+        "causation_event_id",
+        "parent_event_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "correlation_id",
+        "producer_sequence_id",
+        "occurred_at_utc"
+      ],
+      "properties": {
+        "requested_account_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effective_account_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "causation_event_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parent_event_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "producer_sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "approval_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "effective_account_id",
+        "requested_account",
+        "requested_account_id",
+        "lane_identity",
+        "attempt_id",
+        "approver_identity",
+        "execution_role",
+        "permission_posture",
+        "actor_identity",
+        "approval_scope_key"
+      ],
+      "properties": {
+        "effective_account_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested_account": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested_account_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lane_identity": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approver_identity": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_role": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "permission_posture": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "actor_identity": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "approval_scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        }
+      }
+    },
+    "caller_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "revision",
+        "target",
+        "owner",
+        "continuation_id",
+        "goal_revision",
+        "goal_currentness_hash",
+        "next_attempt_ref",
+        "captured_stop_epoch",
+        "captured_continuation_epoch",
+        "captured_owner_epoch",
+        "decision",
+        "completion_route",
+        "evidence_refs",
+        "required_todo_ids",
+        "blocker_ref",
+        "blocker_evidence",
+        "context"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "continuation_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$"
+        },
+        "goal_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "goal_currentness_hash": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "next_attempt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "captured_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "captured_continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "captured_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "decision": {
+          "enum": [
+            "continue",
+            "complete",
+            "pause",
+            "blocked",
+            "cancelled"
+          ]
+        },
+        "completion_route": {
+          "enum": [
+            "ordinary",
+            "approved_verification_exception"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "required_todo_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "blocker_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blocker_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\r\\n]+$"
+          },
+          "uniqueItems": true
+        },
+        "context": {
+          "$ref": "#/$defs/caller_context"
+        }
+      }
+    },
+    "storage_shared_body_msgpack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_record.v1"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_shared_revision_msgpack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_objective_revision.v1"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/revision"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_shared_origin_msgpack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_objective_origin.v1"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_shared_control_msgpack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_control.v2"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "storage_shared_receipt_msgpack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_mutation_receipt.v1"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content_ref"
+              ],
+              "properties": {
+                "content_ref": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

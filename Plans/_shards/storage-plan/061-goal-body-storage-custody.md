@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22352-L22461
+Source lines: L22352-L22498
 
-Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
+Source SHA256: `d9658cbef60c1759d9be2a73df7d7a46e03f81b2b7d57d4a18698133cfb40c49`
 
 ---
 
@@ -73,32 +73,67 @@ plan_unit_id: SP-287
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: |-
-  Store exactly five canonical Goal body/history/origin/control/receipt families as closed schema_id/schema_version/record wrappers with independent physical and semantic byte domains. GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0 acceptance; Storage authenticates physical origin and supplies atomic whole-preimage custody, exact reader admission, coherent mandatory backup and explicit schema/codec migration. Four content families follow DL-047's bound-thread lifetime, immediate deletion hide and 24-hour/30-day purge limits under valid holds. Original content-free receipts remain independently auditable without retaining or rebuilding purged text. Detailed Goal body storage custody governs terminal fences, restore/tombstone replay and activation; sibling events remain separate. SP-304/GRS-073 select current control v2 in the same physical family/key, with independent cancellation_pending and complete retained v1 decoding; the other four wrappers remain exact. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback. SP-351’s app Goal body/start/update/cancel/association operations require genuine original app source and retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation identity; N25 uses linked new birth.
+canonical_text: "Store exactly five canonical Goal body/history/origin/control/receipt families as closed schema_id/schema_version/record\
+  \ wrappers with independent physical and semantic byte domains. GRS-064 owns exact inner meaning and shared owner.goal.body.mutation@1.0.0\
+  \ acceptance; Storage authenticates physical origin and supplies atomic whole-preimage custody, exact reader admission,\
+  \ coherent mandatory backup and explicit schema/codec migration. Four content families follow DL-047's bound-thread\
+  \ lifetime, immediate deletion hide and 24-hour/30-day purge limits under valid holds. Original content-free receipts\
+  \ remain independently auditable without retaining or rebuilding purged text. Detailed Goal body storage custody\
+  \ governs terminal fences, restore/tombstone replay and activation; sibling events remain separate. SP-304/GRS-073\
+  \ select current control v2 in the same physical family/key, with independent cancellation_pending and complete\
+  \ retained v1 decoding; the other four wrappers remain exact. The stated Project key/schema/codec is the preserved\
+  \ Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source\
+  \ graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native\
+  \ SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification,\
+  \ limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.\
+  \ SP-351\u2019s app Goal body/start/update/cancel/association operations require genuine original app source and\
+  \ retain unknown/partial effects, Stop progress and immutable result replay. Body/history/origin/control follow\
+  \ their existing thread-lifetime policy and receipts remain indefinite. Ordinary mutation cannot change Goal/thread/Project/creation\
+  \ identity; N25 uses linked new birth. Explicitly adopt SP-1120 for blocked, SP-1121 for ordinary completion and\
+  \ SP-1122 for approved-exception completion, atomically joining the selected lifecycle pending phase with the\
+  \ sole body/control/receipt transaction.\n\nFor only the newly installed GRS-1120/1121/1122 source editions, explicitly\
+  \ adopt each own SP-1120/1121/1122 whole-wrapper SP-337 transport for over-limit shared body/history/origin/control/receipt\
+  \ values. The complete original logical schemas, canonical key, sole writer, original recipe and deletion/retention\
+  \ meaning stay exact; all shared readers/writers must support that resolver before installation. No existing source\
+  \ edition is silently rewritten."
 gui_related: false
-gui_classification_reason: Defines physical storage, transaction, retention and recovery contracts; Goal presentation is owned by GRS-064.
-depends_on: [SP-231, SP-235, SP-237, SP-239, GRS-064, DL-045, DL-047]
+gui_classification_reason: Defines physical storage, transaction, retention and recovery contracts; Goal presentation
+  is owned by GRS-064.
+depends_on:
+- SP-231
+- SP-235
+- SP-237
+- SP-239
+- GRS-064
+- DL-045
+- DL-047
 unblocks: []
 acceptance_criteria:
-  - Five exact versioned wrappers preserve semantic 11/9/7 records; canonical bytes, selected origin and scope authenticate every route.
-  - All body writers share whole physical and semantic CAS, exact reserved control and final owner/stop/access fences.
-  - Coherent write sets and mandatory backup preserve complete accepted history and original receipts without synthetic reconstruction.
-  - Bound-thread deletion immediately hides content and enforces 24-hour active and 30-day backup purge unless held; holds do not restore visibility.
-  - Receipt-only lawful-purge recovery preserves independent original audit and replays genuine tombstones before any visibility.
-  - Exact schema/codec and writer/reader activation uses supported coordinator graph, protected backup, verify-before-stamp and terminal receipt.
+- Five exact versioned wrappers preserve semantic 11/9/7 records; canonical bytes, selected origin and scope authenticate
+  every route.
+- All body writers share whole physical and semantic CAS, exact reserved control and final owner/stop/access fences.
+- Coherent write sets and mandatory backup preserve complete accepted history and original receipts without synthetic
+  reconstruction.
+- Bound-thread deletion immediately hides content and enforces 24-hour active and 30-day backup purge unless held;
+  holds do not restore visibility.
+- Receipt-only lawful-purge recovery preserves independent original audit and replays genuine tombstones before
+  any visibility.
+- Exact schema/codec and writer/reader activation uses supported coordinator graph, protected backup, verify-before-stamp
+  and terminal receipt.
 validation_surfaces:
-  - Plans/goal_body_custody.schema.json
-  - Plans/goal_body_custody_fixtures.json
-  - Plans/storage_value_registry.json
-  - reports/event-authority-20260911/step-08-goal-body-validation.md
+- Plans/goal_body_custody.schema.json
+- Plans/goal_body_custody_fixtures.json
+- Plans/storage_value_registry.json
+- reports/event-authority-20260911/step-08-goal-body-validation.md
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_body_physical_origin_cas_retention_or_restore_authority_escape
 reasoning_tier: high
 context_scope: shared_goal_body_physical_custody_only
 implementation_surfaces:
-  - Plans/storage-plan.md
-  - Plans/Goal_Runtime_System.md
-  - Plans/goal_body_custody.schema.json
-  - Plans/storage_value_registry.json
+- Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+- Plans/goal_body_custody.schema.json
+- Plans/storage_value_registry.json
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false
@@ -111,8 +146,10 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 negative_constraints:
-  - No sixth family, semantic field/version exception, new lifecycle, generic authority service or receipt-based content reconstruction.
-  - No automatic Goal event adoption/depth, certification exception, native proof, WorkNode, NodeSeed, readiness or governance seal.
+- No sixth family, semantic field/version exception, new lifecycle, generic authority service or receipt-based content
+  reconstruction.
+- No automatic Goal event adoption/depth, certification exception, native proof, WorkNode, NodeSeed, readiness or
+  governance seal.
 ```
 
 The schema/model, physical adapter and independent review evidence is recorded in `reports/event-authority-20260911/step-08-goal-body-validation.md`. Private issued-row/receipt/backup/deletion cells, source observations and transaction captures are bounded fixture adapters, not additional durable families or native authentication. Native concurrency/CAS/fsync, actual global writer adoption, owner/approval/stop enforcement, migration, coherent backup/restore, tombstone replay and 24-hour/30-day purge enforcement remain `NOT_RUN`.

@@ -11100,3 +11100,47 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-353, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020
+
+### PS-1120 - Verification exception approver and final authority
+
+```yaml
+plan_unit_id: PS-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: |-
+  Newly authored exact permission adoption for GRS-1122 and HITL-1120 under DL-081. Resolve the actual Project ownership/principal record and existing HITL request scope; only the user who owns that Project approves the exact nonempty residual-risk and incomplete verification-disposition set at the original source/graph revision. Preserve existing request/account/lane/attempt provenance and authority identity. A generic tool grant, delegated worker, automated mode or current permission boolean is not that human decision.
+
+  Before original exception issue and the Goal metadata effect, independently resolve still-valid approval, current Project owner/target permission, exact source revision, Stop/cancellation and revocation. Every helper and final boundary repeats the relevant current check. Denial, expiry, wrong target/person, changed source/graph, new risk, unknown effect or owner outage is typed refused/unavailable. Verification risk acceptance does not override FileSafe, secrets, root/trust/lease, target permissions, Stop, recovery or original receipt custody. Approved skip disposition remains item/list/revision specific; it is not derived from a risk grant. Retained audit verifies original authority at issue and current disclosure rights, not a fresh action grant. This adds no mode/policy enum, app adoption, permission engine or registry entry. Native execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- DL-081
+- HITL-1120
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Permissions_System.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```

@@ -1,0 +1,1391 @@
+{
+  "schema_id": "pm.goal.lifecycle_host.oracle_vector_catalog.v1",
+  "activation": "TEST_ONLY_PREPARED_WITHOUT_ADMISSION",
+  "runner": "scripts/pm_goal_own_b_oracles.py",
+  "shared_guard_isolation": "NOT_RUN; shared tool independently inventories individual schema/runtime predicates, not these refusal classes",
+  "positives": [
+    "blocked/complete_path",
+    "blocked/independent_receipt_audit_after_content_purge",
+    "blocked/retired_writer_original_resolver",
+    "blocked/postbody_stop_retains_readonly_resolution",
+    "blocked/retained_after_source_withdrawal",
+    "blocked/coherent_backup_restore",
+    "blocked/retained_after_live_change",
+    "blocked/equal_retry",
+    "blocked/prebody_no_effect",
+    "blocked/postbody_terminal_unknown",
+    "blocked/lost_ack_reserve",
+    "blocked/lost_ack_commit_body",
+    "blocked/lost_ack_freeze_event",
+    "blocked/lost_ack_append",
+    "blocked/storage_metadata_excluded",
+    "blocked/large_payload",
+    "blocked/complete_large_reference_path",
+    "blocked/max_multibyte_objective_all_stored_parts",
+    "blocked/pending_without_repeating_body",
+    "completed/complete_path",
+    "completed/independent_receipt_audit_after_content_purge",
+    "completed/retired_writer_original_resolver",
+    "completed/postbody_stop_retains_readonly_resolution",
+    "completed/retained_after_source_withdrawal",
+    "completed/coherent_backup_restore",
+    "completed/retained_after_live_change",
+    "completed/equal_retry",
+    "completed/prebody_no_effect",
+    "completed/postbody_terminal_unknown",
+    "completed/lost_ack_reserve",
+    "completed/lost_ack_commit_body",
+    "completed/lost_ack_freeze_event",
+    "completed/lost_ack_append",
+    "completed/storage_metadata_excluded",
+    "completed/large_payload",
+    "completed/complete_large_reference_path",
+    "completed/max_multibyte_objective_all_stored_parts",
+    "completed/pending_without_repeating_body",
+    "completed/accepted_skip_original",
+    "completed/authentic_absent_plan",
+    "exception/complete_path",
+    "exception/independent_receipt_audit_after_content_purge",
+    "exception/retired_writer_original_resolver",
+    "exception/postbody_stop_retains_readonly_resolution",
+    "exception/retained_after_source_withdrawal",
+    "exception/coherent_backup_restore",
+    "exception/retained_after_live_change",
+    "exception/equal_retry",
+    "exception/prebody_no_effect",
+    "exception/postbody_terminal_unknown",
+    "exception/lost_ack_reserve",
+    "exception/lost_ack_commit_body",
+    "exception/lost_ack_freeze_event",
+    "exception/lost_ack_append",
+    "exception/storage_metadata_excluded",
+    "exception/large_payload",
+    "exception/complete_large_reference_path",
+    "exception/max_multibyte_objective_all_stored_parts",
+    "exception/pending_without_repeating_body",
+    "exception/accepted_skip_original",
+    "exception/authentic_absent_plan",
+    "exception/large_original_workflow_receipt",
+    "exception/workflow_issued_receipt",
+    "exception/workflow_unknown_no_receipt",
+    "exception/approval_genuine_pending_without_approver",
+    "exception/approval_native_resolution_request"
+  ],
+  "guard_refusal_classes": [
+    {
+      "guard": "access/disclosure",
+      "negative_vector_ids": [
+        "blocked/capture_entry_disclosure",
+        "blocked/capture_before_helper_disclosure",
+        "blocked/capture_after_helper_disclosure",
+        "blocked/capture_final_disclosure",
+        "blocked/capture_after_last_helper_disclosure",
+        "blocked/reserve_entry_disclosure",
+        "blocked/reserve_before_helper_disclosure",
+        "blocked/reserve_after_helper_disclosure",
+        "blocked/reserve_final_disclosure",
+        "blocked/reserve_after_last_helper_disclosure",
+        "blocked/commit_body_entry_disclosure",
+        "blocked/commit_body_before_helper_disclosure",
+        "blocked/commit_body_after_helper_disclosure",
+        "blocked/commit_body_final_disclosure",
+        "blocked/commit_body_after_last_helper_disclosure",
+        "blocked/freeze_event_entry_disclosure",
+        "blocked/freeze_event_before_helper_disclosure",
+        "blocked/freeze_event_after_helper_disclosure",
+        "blocked/freeze_event_final_disclosure",
+        "blocked/freeze_event_after_last_helper_disclosure",
+        "blocked/append_entry_disclosure",
+        "blocked/append_before_helper_disclosure",
+        "blocked/append_after_helper_disclosure",
+        "blocked/append_final_disclosure",
+        "blocked/append_after_last_helper_disclosure",
+        "blocked/resolve_entry_disclosure",
+        "blocked/resolve_before_helper_disclosure",
+        "blocked/resolve_after_helper_disclosure",
+        "blocked/resolve_final_disclosure",
+        "blocked/resolve_after_last_helper_disclosure",
+        "blocked/publish_entry_disclosure",
+        "blocked/publish_before_helper_disclosure",
+        "blocked/publish_after_helper_disclosure",
+        "blocked/publish_final_disclosure",
+        "blocked/publish_after_last_helper_disclosure",
+        "blocked/inspect_entry_disclosure",
+        "blocked/inspect_before_helper_disclosure",
+        "blocked/inspect_after_helper_disclosure",
+        "blocked/inspect_final_disclosure",
+        "blocked/inspect_after_last_helper_disclosure",
+        "blocked/disclosure_wrong_type_'false'",
+        "blocked/disclosure_wrong_type_'0'",
+        "blocked/disclosure_wrong_type_1",
+        "blocked/disclosure_wrong_type_[]",
+        "blocked/disclosure_wrong_type_{}",
+        "blocked/disclosure_wrong_type_None",
+        "completed/capture_entry_disclosure",
+        "completed/capture_before_helper_disclosure",
+        "completed/capture_after_helper_disclosure",
+        "completed/capture_final_disclosure",
+        "completed/capture_after_last_helper_disclosure",
+        "completed/reserve_entry_disclosure",
+        "completed/reserve_before_helper_disclosure",
+        "completed/reserve_after_helper_disclosure",
+        "completed/reserve_final_disclosure",
+        "completed/reserve_after_last_helper_disclosure",
+        "completed/commit_body_entry_disclosure",
+        "completed/commit_body_before_helper_disclosure",
+        "completed/commit_body_after_helper_disclosure",
+        "completed/commit_body_final_disclosure",
+        "completed/commit_body_after_last_helper_disclosure",
+        "completed/freeze_event_entry_disclosure",
+        "completed/freeze_event_before_helper_disclosure",
+        "completed/freeze_event_after_helper_disclosure",
+        "completed/freeze_event_final_disclosure",
+        "completed/freeze_event_after_last_helper_disclosure",
+        "completed/append_entry_disclosure",
+        "completed/append_before_helper_disclosure",
+        "completed/append_after_helper_disclosure",
+        "completed/append_final_disclosure",
+        "completed/append_after_last_helper_disclosure",
+        "completed/resolve_entry_disclosure",
+        "completed/resolve_before_helper_disclosure",
+        "completed/resolve_after_helper_disclosure",
+        "completed/resolve_final_disclosure",
+        "completed/resolve_after_last_helper_disclosure",
+        "completed/publish_entry_disclosure",
+        "completed/publish_before_helper_disclosure",
+        "completed/publish_after_helper_disclosure",
+        "completed/publish_final_disclosure",
+        "completed/publish_after_last_helper_disclosure",
+        "completed/inspect_entry_disclosure",
+        "completed/inspect_before_helper_disclosure",
+        "completed/inspect_after_helper_disclosure",
+        "completed/inspect_final_disclosure",
+        "completed/inspect_after_last_helper_disclosure",
+        "completed/disclosure_wrong_type_'false'",
+        "completed/disclosure_wrong_type_'0'",
+        "completed/disclosure_wrong_type_1",
+        "completed/disclosure_wrong_type_[]",
+        "completed/disclosure_wrong_type_{}",
+        "completed/disclosure_wrong_type_None",
+        "exception/capture_entry_disclosure",
+        "exception/capture_before_helper_disclosure",
+        "exception/capture_after_helper_disclosure",
+        "exception/capture_final_disclosure",
+        "exception/capture_after_last_helper_disclosure",
+        "exception/reserve_entry_disclosure",
+        "exception/reserve_before_helper_disclosure",
+        "exception/reserve_after_helper_disclosure",
+        "exception/reserve_final_disclosure",
+        "exception/reserve_after_last_helper_disclosure",
+        "exception/commit_body_entry_disclosure",
+        "exception/commit_body_before_helper_disclosure",
+        "exception/commit_body_after_helper_disclosure",
+        "exception/commit_body_final_disclosure",
+        "exception/commit_body_after_last_helper_disclosure",
+        "exception/freeze_event_entry_disclosure",
+        "exception/freeze_event_before_helper_disclosure",
+        "exception/freeze_event_after_helper_disclosure",
+        "exception/freeze_event_final_disclosure",
+        "exception/freeze_event_after_last_helper_disclosure",
+        "exception/append_entry_disclosure",
+        "exception/append_before_helper_disclosure",
+        "exception/append_after_helper_disclosure",
+        "exception/append_final_disclosure",
+        "exception/append_after_last_helper_disclosure",
+        "exception/resolve_entry_disclosure",
+        "exception/resolve_before_helper_disclosure",
+        "exception/resolve_after_helper_disclosure",
+        "exception/resolve_final_disclosure",
+        "exception/resolve_after_last_helper_disclosure",
+        "exception/publish_entry_disclosure",
+        "exception/publish_before_helper_disclosure",
+        "exception/publish_after_helper_disclosure",
+        "exception/publish_final_disclosure",
+        "exception/publish_after_last_helper_disclosure",
+        "exception/inspect_entry_disclosure",
+        "exception/inspect_before_helper_disclosure",
+        "exception/inspect_after_helper_disclosure",
+        "exception/inspect_final_disclosure",
+        "exception/inspect_after_last_helper_disclosure",
+        "exception/disclosure_wrong_type_'false'",
+        "exception/disclosure_wrong_type_'0'",
+        "exception/disclosure_wrong_type_1",
+        "exception/disclosure_wrong_type_[]",
+        "exception/disclosure_wrong_type_{}",
+        "exception/disclosure_wrong_type_None"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "authority/cancellation",
+      "negative_vector_ids": [
+        "blocked/cancellation_pending",
+        "completed/cancellation_pending",
+        "exception/cancellation_pending"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "authority/generation",
+      "negative_vector_ids": [
+        "blocked/root_cutover",
+        "completed/root_cutover",
+        "exception/root_cutover"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "authority/permission",
+      "negative_vector_ids": [
+        "blocked/original_permission_denied",
+        "completed/original_permission_denied",
+        "exception/original_permission_denied"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "authority/stop",
+      "negative_vector_ids": [
+        "blocked/original_stop_latched",
+        "completed/original_stop_latched",
+        "exception/original_stop_latched"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "blocked/changed",
+      "negative_vector_ids": [
+        "blocked/unchanged_blocker"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "blocked/edge",
+      "negative_vector_ids": [
+        "blocked/source_state_paused",
+        "blocked/source_state_completed"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "blocked/reason",
+      "negative_vector_ids": [
+        "blocked/foreign_blocker"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/accepted_history",
+      "negative_vector_ids": [
+        "blocked/history_changed",
+        "completed/history_changed",
+        "exception/history_changed"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/control",
+      "negative_vector_ids": [
+        "blocked/wrong_control_hash",
+        "completed/wrong_control_hash",
+        "exception/wrong_control_hash"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/currentness",
+      "negative_vector_ids": [
+        "blocked/after_currentness_forged",
+        "completed/after_currentness_forged",
+        "exception/after_currentness_forged"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/identity",
+      "negative_vector_ids": [
+        "blocked/foreign_body_run",
+        "completed/foreign_body_run",
+        "exception/foreign_body_run"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/intent",
+      "negative_vector_ids": [
+        "blocked/intent_hash_forged",
+        "completed/intent_hash_forged",
+        "exception/intent_hash_forged"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/preimage",
+      "negative_vector_ids": [
+        "blocked/stale_body_preimage",
+        "completed/stale_body_preimage",
+        "exception/stale_body_preimage"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/preserve/active_run_ref",
+      "negative_vector_ids": [
+        "blocked/metadata_changed_active_run_ref",
+        "completed/metadata_changed_active_run_ref",
+        "exception/metadata_changed_active_run_ref"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/preserve/created_at",
+      "negative_vector_ids": [
+        "blocked/metadata_changed_created_at",
+        "completed/metadata_changed_created_at",
+        "exception/metadata_changed_created_at"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/preserve/goal_id",
+      "negative_vector_ids": [
+        "blocked/metadata_changed_goal_id",
+        "completed/metadata_changed_goal_id",
+        "exception/metadata_changed_goal_id"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/preserve/objective_text",
+      "negative_vector_ids": [
+        "blocked/objective_changed_by_metadata",
+        "completed/objective_changed_by_metadata",
+        "exception/objective_changed_by_metadata"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/preserve/project_id",
+      "negative_vector_ids": [
+        "blocked/metadata_changed_project_id",
+        "completed/metadata_changed_project_id",
+        "exception/metadata_changed_project_id"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/preserve/thread_id",
+      "negative_vector_ids": [
+        "blocked/metadata_changed_thread_id",
+        "completed/metadata_changed_thread_id",
+        "exception/metadata_changed_thread_id"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/reservation_preimage",
+      "negative_vector_ids": [
+        "blocked/reservation_hash_forged",
+        "completed/reservation_hash_forged",
+        "exception/reservation_hash_forged"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/reserved",
+      "negative_vector_ids": [
+        "blocked/wrong_body_method_phase",
+        "completed/wrong_body_method_phase",
+        "exception/wrong_body_method_phase"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/revision",
+      "negative_vector_ids": [
+        "blocked/revision_step",
+        "completed/revision_step",
+        "exception/revision_step"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "body/unreserved",
+      "negative_vector_ids": [
+        "blocked/foreign_body_reservation",
+        "completed/foreign_body_reservation",
+        "exception/foreign_body_reservation"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/edge",
+      "negative_vector_ids": [
+        "completed/source_state_paused",
+        "completed/source_state_completed",
+        "completed/source_state_blocked",
+        "exception/source_state_paused",
+        "exception/source_state_completed",
+        "exception/source_state_blocked"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/evidence",
+      "negative_vector_ids": [
+        "completed/foreign_completion_evidence",
+        "exception/foreign_completion_evidence"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/exception_evidence",
+      "negative_vector_ids": [
+        "exception/exception_evidence_must_name_receipt"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/internal",
+      "negative_vector_ids": [
+        "completed/unmet_internal_owner",
+        "exception/unmet_internal_owner"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/plan",
+      "negative_vector_ids": [
+        "completed/unsettled_bound_plan",
+        "exception/unsettled_bound_plan"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/recovery",
+      "negative_vector_ids": [
+        "completed/unknown_recovery",
+        "exception/unknown_recovery"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/required_todo_members",
+      "negative_vector_ids": [
+        "completed/required_todo_removed_from_current",
+        "exception/required_todo_removed_from_current"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/required_todo_set",
+      "negative_vector_ids": [
+        "completed/required_todo_set_underclaimed",
+        "exception/required_todo_set_underclaimed"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/skip",
+      "negative_vector_ids": [
+        "completed/accepted_skip_stale_revision",
+        "exception/accepted_skip_stale_revision"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/skip_actor",
+      "negative_vector_ids": [
+        "completed/accepted_skip_actor",
+        "exception/accepted_skip_actor"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/skip_origin",
+      "negative_vector_ids": [
+        "completed/accepted_skip_origin",
+        "exception/accepted_skip_origin"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/skip_scope",
+      "negative_vector_ids": [
+        "completed/accepted_skip_scope",
+        "exception/accepted_skip_scope"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/todo_original",
+      "negative_vector_ids": [
+        "completed/todo_changed_after_last_helper",
+        "completed/todo_omission",
+        "exception/todo_changed_after_last_helper",
+        "exception/todo_omission"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/todo_required_flag",
+      "negative_vector_ids": [
+        "completed/required_todo_flag_underclaimed",
+        "exception/required_todo_flag_underclaimed"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/todo_scope",
+      "negative_vector_ids": [
+        "completed/foreign_todo_thread",
+        "exception/foreign_todo_thread"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/todo_status",
+      "negative_vector_ids": [
+        "completed/open_required_todo",
+        "exception/open_required_todo"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/work_original",
+      "negative_vector_ids": [
+        "completed/work_omission",
+        "exception/work_omission"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "completed/work_settled",
+      "negative_vector_ids": [
+        "completed/new_work",
+        "exception/new_work"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "dispatch/method",
+      "negative_vector_ids": [
+        "blocked/unregistered_method",
+        "completed/unregistered_method",
+        "exception/unregistered_method"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/body_committed",
+      "negative_vector_ids": [
+        "blocked/wrong_freeze_method_phase",
+        "completed/wrong_freeze_method_phase",
+        "exception/wrong_freeze_method_phase"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/pending",
+      "negative_vector_ids": [
+        "blocked/wrong_append_method_phase",
+        "completed/wrong_append_method_phase",
+        "exception/wrong_append_method_phase"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/receipt_digest",
+      "negative_vector_ids": [
+        "blocked/arbitrary_payload_body_receipt_digest",
+        "completed/arbitrary_payload_body_receipt_digest",
+        "exception/arbitrary_payload_body_receipt_digest"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/reference_codec",
+      "negative_vector_ids": [
+        "blocked/wrong_event_payload_reference_media",
+        "completed/wrong_event_payload_reference_media",
+        "exception/wrong_event_payload_reference_media"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/replay_only",
+      "negative_vector_ids": [
+        "blocked/replay_only_append",
+        "completed/replay_only_append",
+        "exception/replay_only_append"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/selector",
+      "negative_vector_ids": [
+        "blocked/actual_envelope_family_dispatch",
+        "blocked/foreign_family_dispatch",
+        "completed/actual_envelope_family_dispatch",
+        "completed/foreign_family_dispatch",
+        "exception/actual_envelope_family_dispatch",
+        "exception/foreign_family_dispatch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/semantic",
+      "negative_vector_ids": [
+        "blocked/changed_semantic_retry",
+        "completed/changed_semantic_retry",
+        "exception/changed_semantic_retry"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "event/size",
+      "negative_vector_ids": [
+        "completed/whole_inline_event_limit",
+        "exception/whole_inline_event_limit"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/approval_origin",
+      "negative_vector_ids": [
+        "exception/exception_arbitrary_request_digest"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/approval_provenance",
+      "negative_vector_ids": [
+        "exception/exception_approval_provenance_forged"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/approved",
+      "negative_vector_ids": [
+        "exception/exception_denied"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/certification_original",
+      "negative_vector_ids": [
+        "exception/exception_original_certificate"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/certification_target",
+      "negative_vector_ids": [
+        "exception/exception_certifier_mismatch",
+        "exception/exception_certificate_foreign_target"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/complete_checks",
+      "negative_vector_ids": [
+        "exception/exception_missing_required_check"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/current_children",
+      "negative_vector_ids": [
+        "exception/exception_child_receipt"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/currentness",
+      "negative_vector_ids": [
+        "exception/exception_stale_graph"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/dispositions",
+      "negative_vector_ids": [
+        "exception/exception_disposition_mismatch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/expired",
+      "negative_vector_ids": [
+        "exception/exception_expired"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/graph_origin",
+      "negative_vector_ids": [
+        "exception/exception_arbitrary_graph_digest"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/original_workflow",
+      "negative_vector_ids": [
+        "exception/exception_original_decision_tampered"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/person",
+      "negative_vector_ids": [
+        "exception/exception_person"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/revoked",
+      "negative_vector_ids": [
+        "exception/exception_revoked"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/risks",
+      "negative_vector_ids": [
+        "exception/exception_new_risk"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/source",
+      "negative_vector_ids": [
+        "exception/exception_wrong_source_ref"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/source_inputs",
+      "negative_vector_ids": [
+        "exception/exception_original_source_hash"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "exception/target",
+      "negative_vector_ids": [
+        "exception/exception_workflow_foreign_target"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/continuation_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_continuation_epoch",
+        "completed/changed_continuation_epoch",
+        "exception/changed_continuation_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/deletion_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_deletion_epoch",
+        "completed/changed_deletion_epoch",
+        "exception/changed_deletion_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/hold_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_hold_epoch",
+        "completed/changed_hold_epoch",
+        "exception/changed_hold_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/maintenance_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_maintenance_epoch",
+        "completed/changed_maintenance_epoch",
+        "exception/changed_maintenance_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/manual_stop_latched",
+      "negative_vector_ids": [
+        "blocked/changed_manual_stop_latched",
+        "completed/changed_manual_stop_latched",
+        "exception/changed_manual_stop_latched"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/owner_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_owner_epoch",
+        "completed/changed_owner_epoch",
+        "exception/changed_owner_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/permission",
+      "negative_vector_ids": [
+        "blocked/changed_permission",
+        "completed/changed_permission",
+        "exception/changed_permission"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/root_generation",
+      "negative_vector_ids": [
+        "blocked/changed_root_generation",
+        "completed/changed_root_generation",
+        "exception/changed_root_generation"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/secret_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_secret_epoch",
+        "completed/changed_secret_epoch",
+        "exception/changed_secret_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/user_stop_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_user_stop_epoch",
+        "completed/changed_user_stop_epoch",
+        "exception/changed_user_stop_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "fence/writer_epoch",
+      "negative_vector_ids": [
+        "blocked/changed_writer_epoch",
+        "completed/changed_writer_epoch",
+        "exception/changed_writer_epoch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "physical/available",
+      "negative_vector_ids": [
+        "blocked/physical_source_missing",
+        "blocked/physical_result_missing",
+        "completed/physical_source_missing",
+        "completed/physical_result_missing",
+        "exception/physical_source_missing",
+        "exception/physical_result_missing"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "physical/bytes",
+      "negative_vector_ids": [
+        "blocked/noncanonical_physical_map_order",
+        "completed/noncanonical_physical_map_order",
+        "exception/noncanonical_physical_map_order"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "physical/key",
+      "negative_vector_ids": [
+        "blocked/physical_key_foreign",
+        "completed/physical_key_foreign",
+        "exception/physical_key_foreign"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "physical/partition",
+      "negative_vector_ids": [
+        "blocked/wrong_partition",
+        "completed/wrong_partition",
+        "exception/wrong_partition"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "physical/read_size",
+      "negative_vector_ids": [
+        "blocked/whole_physical_read_limit",
+        "completed/whole_physical_read_limit",
+        "exception/whole_physical_read_limit"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/body_available",
+      "negative_vector_ids": [
+        "blocked/receipt_missing",
+        "completed/receipt_missing",
+        "exception/receipt_missing"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/body_join",
+      "negative_vector_ids": [
+        "blocked/resolved_body_receipt_foreign_operation",
+        "completed/resolved_body_receipt_foreign_operation",
+        "exception/resolved_body_receipt_foreign_operation"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/body_original",
+      "negative_vector_ids": [
+        "blocked/receipt_digest",
+        "completed/receipt_digest",
+        "exception/receipt_digest"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/event_available",
+      "negative_vector_ids": [
+        "blocked/missing_first_event_receipt",
+        "completed/missing_first_event_receipt",
+        "exception/missing_first_event_receipt"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/event_join",
+      "negative_vector_ids": [
+        "blocked/receipt_foreign_storage",
+        "completed/receipt_foreign_storage",
+        "exception/receipt_foreign_storage"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/event_original",
+      "negative_vector_ids": [
+        "blocked/receipt_metadata",
+        "completed/receipt_metadata",
+        "exception/receipt_metadata"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/full_result",
+      "negative_vector_ids": [
+        "blocked/original_full_result_forged",
+        "completed/original_full_result_forged",
+        "exception/original_full_result_forged"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "receipt/full_value",
+      "negative_vector_ids": [
+        "blocked/receipt_full_value",
+        "completed/receipt_full_value",
+        "exception/receipt_full_value"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "reference/available",
+      "negative_vector_ids": [
+        "blocked/missing_payload",
+        "completed/missing_payload",
+        "exception/missing_payload"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "reference/hash",
+      "negative_vector_ids": [
+        "blocked/corrupt_payload",
+        "completed/corrupt_payload",
+        "exception/corrupt_payload"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "reference/shape",
+      "negative_vector_ids": [
+        "blocked/wrong_payload_reference_scheme",
+        "completed/wrong_payload_reference_scheme",
+        "exception/wrong_payload_reference_scheme"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "reference/size",
+      "negative_vector_ids": [
+        "blocked/wrong_payload_size",
+        "completed/wrong_payload_size",
+        "exception/wrong_payload_size"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "resolver/available",
+      "negative_vector_ids": [
+        "blocked/withdrawn_original_resolver",
+        "completed/withdrawn_original_resolver",
+        "exception/withdrawn_original_resolver"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/available",
+      "negative_vector_ids": [
+        "blocked/wrong_inspect_method_phase",
+        "completed/wrong_inspect_method_phase",
+        "exception/wrong_inspect_method_phase"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/event_committed",
+      "negative_vector_ids": [
+        "blocked/wrong_publish_method_phase",
+        "completed/wrong_publish_method_phase",
+        "exception/wrong_publish_method_phase"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/no_effect_proof",
+      "negative_vector_ids": [
+        "blocked/unavailable_not_no_effect",
+        "completed/unavailable_not_no_effect",
+        "exception/unavailable_not_no_effect"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/origin",
+      "negative_vector_ids": [
+        "blocked/forged_unknown_to_success",
+        "completed/forged_unknown_to_success",
+        "exception/forged_unknown_to_success"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/original_receipts",
+      "negative_vector_ids": [
+        "blocked/issued_result_wrong_receipt",
+        "completed/issued_result_wrong_receipt",
+        "exception/issued_result_wrong_receipt"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/original_source",
+      "negative_vector_ids": [
+        "blocked/issued_result_foreign_operation",
+        "completed/issued_result_foreign_operation",
+        "exception/issued_result_foreign_operation"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/physical",
+      "negative_vector_ids": [
+        "blocked/physical_result_value_mismatch",
+        "completed/physical_result_value_mismatch",
+        "exception/physical_result_value_mismatch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/terminal_immutable",
+      "negative_vector_ids": [
+        "blocked/terminal_unknown_immutable",
+        "completed/terminal_unknown_immutable",
+        "exception/terminal_unknown_immutable"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "result/terminal_kind",
+      "negative_vector_ids": [
+        "blocked/invalid_terminal_kind",
+        "completed/invalid_terminal_kind",
+        "exception/invalid_terminal_kind"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/approval_resolution",
+      "negative_vector_ids": [
+        "exception/approval_pending_fake_approver"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/approval_resolve_request",
+      "negative_vector_ids": [
+        "exception/goal_operation_is_not_approval_identity"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/blocked_capture_request",
+      "negative_vector_ids": [
+        "blocked/caller_admission_flag_refused"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/completed_capture_request",
+      "negative_vector_ids": [
+        "completed/caller_admission_flag_refused"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/completed_source",
+      "negative_vector_ids": [
+        "completed/skip_wrong_type_True",
+        "completed/skip_wrong_type_1",
+        "completed/skip_wrong_type_1.0",
+        "completed/skip_wrong_type_[]",
+        "completed/skip_wrong_type_[False]",
+        "completed/skip_wrong_type_{}",
+        "completed/skip_wrong_type_{'value': False}",
+        "completed/skip_wrong_type_''",
+        "completed/skip_wrong_type_'skip\\n'"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/disposition",
+      "negative_vector_ids": [
+        "completed/skip_wrong_type_None",
+        "completed/skip_wrong_type_'false'",
+        "completed/skip_wrong_type_'0'",
+        "exception/skip_wrong_type_None",
+        "exception/skip_wrong_type_'false'",
+        "exception/skip_wrong_type_'0'"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/exception",
+      "negative_vector_ids": [
+        "exception/exception_ordinary_as_exception"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/exception_capture_request",
+      "negative_vector_ids": [
+        "exception/caller_admission_flag_refused"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/exception_source",
+      "negative_vector_ids": [
+        "exception/skip_wrong_type_True",
+        "exception/skip_wrong_type_1",
+        "exception/skip_wrong_type_1.0",
+        "exception/skip_wrong_type_[]",
+        "exception/skip_wrong_type_[False]",
+        "exception/skip_wrong_type_{}",
+        "exception/skip_wrong_type_{'value': False}",
+        "exception/skip_wrong_type_''",
+        "exception/skip_wrong_type_'skip\\n'"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "schema/workflow_exception_issue_response",
+      "negative_vector_ids": [
+        "exception/workflow_issued_missing_receipt",
+        "exception/workflow_unknown_with_success_receipt"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/available",
+      "negative_vector_ids": [
+        "blocked/composed_inspection_missing_source",
+        "blocked/missing_original_source",
+        "completed/composed_inspection_missing_source",
+        "completed/missing_original_source",
+        "exception/composed_inspection_missing_source",
+        "exception/missing_original_source"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/caller",
+      "negative_vector_ids": [
+        "blocked/foreign_caller",
+        "completed/foreign_caller",
+        "exception/foreign_caller"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/caller_context",
+      "negative_vector_ids": [
+        "blocked/original_caller_account_changed",
+        "completed/original_caller_account_changed",
+        "exception/original_caller_account_changed"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/continuation_cas",
+      "negative_vector_ids": [
+        "blocked/wrong_original_goal_revision",
+        "completed/wrong_original_goal_revision",
+        "exception/wrong_original_goal_revision"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/continuation_tuple",
+      "negative_vector_ids": [
+        "blocked/forged_next_attempt",
+        "completed/forged_next_attempt",
+        "exception/forged_next_attempt"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/decision",
+      "negative_vector_ids": [
+        "blocked/original_host_did_not_complete",
+        "completed/original_host_did_not_complete",
+        "exception/original_host_did_not_complete"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/edition",
+      "negative_vector_ids": [
+        "blocked/wrong_source_edition",
+        "completed/wrong_source_edition",
+        "exception/wrong_source_edition"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/host",
+      "negative_vector_ids": [
+        "blocked/worker_is_not_host",
+        "completed/worker_is_not_host",
+        "exception/worker_is_not_host"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/operation",
+      "negative_vector_ids": [
+        "blocked/foreign_operation",
+        "completed/foreign_operation",
+        "exception/foreign_operation"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/origin",
+      "negative_vector_ids": [
+        "blocked/forged_source_digest",
+        "completed/forged_source_digest",
+        "exception/forged_source_digest"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/original_epochs",
+      "negative_vector_ids": [
+        "blocked/old_decision_epoch_not_refreshed",
+        "completed/old_decision_epoch_not_refreshed",
+        "exception/old_decision_epoch_not_refreshed"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/physical",
+      "negative_vector_ids": [
+        "blocked/physical_source_value_mismatch",
+        "completed/physical_source_value_mismatch",
+        "exception/physical_source_value_mismatch"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "source/target",
+      "negative_vector_ids": [
+        "blocked/foreign_target",
+        "completed/foreign_target",
+        "exception/foreign_target"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    },
+    {
+      "guard": "writer/available",
+      "negative_vector_ids": [
+        "blocked/withdrawn_writer",
+        "blocked/writer_wrong_type_'false'",
+        "blocked/writer_wrong_type_'0'",
+        "blocked/writer_wrong_type_1",
+        "blocked/writer_wrong_type_[]",
+        "blocked/writer_wrong_type_{}",
+        "blocked/writer_wrong_type_None",
+        "completed/withdrawn_writer",
+        "completed/writer_wrong_type_'false'",
+        "completed/writer_wrong_type_'0'",
+        "completed/writer_wrong_type_1",
+        "completed/writer_wrong_type_[]",
+        "completed/writer_wrong_type_{}",
+        "completed/writer_wrong_type_None",
+        "exception/withdrawn_writer",
+        "exception/writer_wrong_type_'false'",
+        "exception/writer_wrong_type_'0'",
+        "exception/writer_wrong_type_1",
+        "exception/writer_wrong_type_[]",
+        "exception/writer_wrong_type_{}",
+        "exception/writer_wrong_type_None"
+      ],
+      "predicate_granularity": "shared tool must split compound peers and independently prove same-invariant duplicates"
+    }
+  ],
+  "remaining_literal_sites": {
+    "physical/size": "bounded physical wrapper construction/verified SP-337 overflow makes this redundant; shared tool must classify, no isolation claim",
+    "resource/hash": "physical unused-branch/hash mutation in external evidence",
+    "resource/method_bank_hash": "physical unused-branch/hash mutation in external evidence",
+    "resource/pointer": "physical unused-branch/hash mutation in external evidence",
+    "source/final_original": "already fixed original request digest and canonical source equality make this redundant; shared tool must classify, no isolation claim",
+    "test/large_workflow_reference": "positive outcome assertion, not an input refusal",
+    "test/not_original_terminal": "positive outcome assertion, not an input refusal",
+    "test/not_pending": "positive outcome assertion, not an input refusal",
+    "test/real_large_reference": "positive outcome assertion, not an input refusal",
+    "test/reference_roundtrip": "positive outcome assertion, not an input refusal",
+    "test/repeated_effect": "positive outcome assertion, not an input refusal",
+    "test/replayed_result": "positive outcome assertion, not an input refusal",
+    "test/shared_objective_roundtrip": "positive outcome assertion, not an input refusal",
+    "test/shared_reference_roundtrip": "positive outcome assertion, not an input refusal",
+    "test/shared_transport_size": "positive outcome assertion, not an input refusal",
+    "test/stored_parts_size": "positive outcome assertion, not an input refusal",
+    "test/workflow_receipt_size": "positive outcome assertion, not an input refusal"
+  },
+  "schema_resources": "resources.json pins whole resources; all $refs resolve eagerly; original schemas are not extracted substitutes",
+  "external_controls": [
+    "resource_hash",
+    "method_bank_hash",
+    "unused_dangling_ref",
+    "unsupported_anchor"
+  ]
+}

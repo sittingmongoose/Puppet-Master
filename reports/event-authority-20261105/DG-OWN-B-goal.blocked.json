@@ -1,0 +1,324 @@
+{
+  "event_type": "goal.blocked",
+  "family_id": "event-family-goal-blocked",
+  "family_revision": "2.0.0",
+  "disposition": "CURRENT_PROJECT_SUCCESSOR_PREPARED_NOT_ADMITTED",
+  "activation": "REFUSED_UNINSTALLED_SOURCE_AND_V3_SELECTOR",
+  "prepared_selector_membership": "ABSENT",
+  "prior_pass_count": 8,
+  "pass_count": 9,
+  "normative_depth_complete": false,
+  "native_execution": "NOT_RUN",
+  "cells": {
+    "membership_version": {
+      "status": "PASS",
+      "representation": "registry_structured",
+      "finding": "Existing family membership/version and both original scope selections remain byte-exact; the prepared v3 selector is ABSENT.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "unit": "#/families/6",
+          "line_start": 410,
+          "line_end": 410,
+          "quote": "\"event_type\": \"goal.blocked\"",
+          "excerpt_sha256": "f99c6b12993505c758e9a3a25c6cf7a8f03e3e1238b4f76c560ee36d3b545275",
+          "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "owner_doc": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "GRS-203 explicitly adopts the exact newly authored source bank without expanding other families or scopes.",
+      "evidence": [
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "unit": "GRS-203",
+          "line_start": 8652,
+          "line_end": 8652,
+          "quote": "Newly authored",
+          "excerpt_sha256": "c0894c88d592ecb2b1102f847addfd69374cc9e5b411b06b21209678eda782e2",
+          "file_sha256": "7f6b1a65bca1628c44e898f2bf5394c06dcd63c9f37aa66b26c81e0075732227",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "producer": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "GRS-1120/CV-1120/SP-1120 author original source, body/receipt/pending atomicity, frozen event, SP-286 first/full-value receipt resolution and final original publication.",
+      "evidence": [
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "unit": "GRS-1120",
+          "line_start": 8940,
+          "line_end": 8940,
+          "quote": "Newly authored owner contract under DL-045",
+          "excerpt_sha256": "d1d3a1a346b2a0ee808e797616d08bb076fc3fa0e84bd39bc012c335240f99ac",
+          "file_sha256": "7f6b1a65bca1628c44e898f2bf5394c06dcd63c9f37aa66b26c81e0075732227",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PARTIAL"
+      },
+      "change": "upgraded",
+      "change_reason": "Original source/result contract and explicit own-family adoptions are newly authored."
+    },
+    "closed_payload_schema": {
+      "status": "PARTIAL",
+      "representation": "exact_normative_owner",
+      "finding": "The closed v3 payload and source bank exist, but the live registry still selects the preserved v2 Project resource. O11 is not performed.",
+      "evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-422",
+          "line_start": 24643,
+          "line_end": 24643,
+          "quote": "This replaces no current registry selector until integration.",
+          "excerpt_sha256": "db632a8d8533810d29916916028ffdf708b59949a957f2b4a70a48cd2b1e00c0",
+          "file_sha256": "e1d2c2b087e8b43b913544a42e942579d52499318be770305fe357fd0def404a",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PARTIAL"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "scope_identity": {
+      "status": "PARTIAL",
+      "representation": "exact_normative_owner",
+      "finding": "The exact Project v3 identity and encoded physical source keys are authored; registry v3 scope/schema selection remains a later integration.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-429",
+          "line_start": 30190,
+          "line_end": 30190,
+          "quote": "Identity and frozen input.",
+          "excerpt_sha256": "3fd2f1a7d1a89cd289e7e057f3a68c7008c9db65225a4c02c56142742ffc4b3a",
+          "file_sha256": "d9658cbef60c1759d9be2a73df7d7a46e03f81b2b7d57d4a18698133cfb40c49",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PARTIAL"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Equal original operations resolve immutable original effects/results, including terminal unknown; post-body recovery never repeats the body mutation.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-1120",
+          "line_start": 30495,
+          "line_end": 30495,
+          "quote": "Recovery queries the same operation.",
+          "excerpt_sha256": "8cdc4acae909900e05873541343c690dd88a83117e58d63694c6cc2c4a6631ea",
+          "file_sha256": "d9658cbef60c1759d9be2a73df7d7a46e03f81b2b7d57d4a18698133cfb40c49",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "retention": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Existing bound-thread content and indefinite content-free authority clocks are adopted explicitly, without a new retention/deletion policy or reference-created hold.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-1120",
+          "line_start": 30504,
+          "line_end": 30504,
+          "quote": "Original source/reservation content follows DL-047",
+          "excerpt_sha256": "9946108515e474b1c822651810049cd2a7c77e3e1a6156db9b540d09fd99655b",
+          "file_sha256": "d9658cbef60c1759d9be2a73df7d7a46e03f81b2b7d57d4a18698133cfb40c49",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "The exact source roles, body/control/receipt, event/full-value/first receipt and payload packs form one coherent restore cut, with independent current disclosure fences.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-1120",
+          "line_start": 30506,
+          "line_end": 30506,
+          "quote": "Backup takes one coherent cut",
+          "excerpt_sha256": "910427df1a0a91b1b1af786ad74bf9486af84d5e49c8f1215fb8a65b8f95e423",
+          "file_sha256": "d9658cbef60c1759d9be2a73df7d7a46e03f81b2b7d57d4a18698133cfb40c49",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "transitions": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Own legal and refused source edges preserve the four-state Goal, Stop/cancellation priority and the sole metadata CAS; no automatic resume is introduced.",
+      "evidence": [
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "unit": "GRS-1120",
+          "line_start": 8964,
+          "line_end": 8964,
+          "quote": "Only active -> blocked",
+          "excerpt_sha256": "a1666edaae048c3becb361211ebd2639995edb304427b76ff651a8ffa99a8ead",
+          "file_sha256": "7f6b1a65bca1628c44e898f2bf5394c06dcd63c9f37aa66b26c81e0075732227",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Canonical body consumers and generic SP-278/SP-339 readers remain explicit; this exact family has no event-built state and its own none_required family checkpoint.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-429",
+          "line_start": 30149,
+          "line_end": 30149,
+          "quote": "none_required",
+          "excerpt_sha256": "624f4751b7f9cff77161cf85e5649630ed6d0d10a4de9d50b7f1b2a5ee93a2c8",
+          "file_sha256": "d9658cbef60c1759d9be2a73df7d7a46e03f81b2b7d57d4a18698133cfb40c49",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "representation": "exact_normative_owner",
+      "finding": "Original schema/recipe bytes are preserved; writer cutoff, exact pending reconciliation, reader withdrawal and source/receipt preservation are explicit.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-1120",
+          "line_start": 30500,
+          "line_end": 30500,
+          "quote": "Reader withdrawal disables",
+          "excerpt_sha256": "e7a433772346ce6846fce23fecfb94535fd96062bc00a6f3b8e7f0f4e016bd77",
+          "file_sha256": "d9658cbef60c1759d9be2a73df7d7a46e03f81b2b7d57d4a18698133cfb40c49",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PASS"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    },
+    "positive_negative_oracles": {
+      "status": "PARTIAL",
+      "representation": "exact_normative_owner",
+      "finding": "Whole protocol positives/negatives and local C3 witnesses are authored and run. Shared isolation/format/number/retained-recipe sweep remains unrun; no native proof is inferred.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "unit": "ATS-1113",
+          "line_start": 7487,
+          "line_end": 7487,
+          "quote": "Shared inventory/compound-cut, number-domain and format sweeps remain open;",
+          "excerpt_sha256": "c79a724f4687110e5e2ef2b4bd9f7aa7784431eaf6933a041f2db36e382f8e34",
+          "file_sha256": "b010931fb63081fbdadbec33c9f74a2483bc74adb38d51067a06fe5100f4253c",
+          "quote_check": "exact"
+        }
+      ],
+      "prior": {
+        "source": "DG-sol/REVIEW-cycle3.md at cfb7e55074",
+        "status": "PARTIAL"
+      },
+      "change": "carried",
+      "change_reason": "Current exact owner text re-read; selector/sweep qualifications preserved."
+    }
+  },
+  "remaining_gaps": [
+    "O11: reviewed exact Project v3 selector integration.",
+    "Shared isolation/format/number/retained-recipe sweep before admission.",
+    "Native execution/installation remains NOT_RUN and is not a grading defect by itself."
+  ],
+  "static_checks_seen": [
+    "scripts/pm_goal_own_b_oracles.py",
+    "scripts/pm_goal_lifecycle_successor_oracles.py"
+  ],
+  "current_owner_units": [
+    "GRS-064",
+    "SP-287",
+    "SP-286",
+    "GRS-203",
+    "SP-429",
+    "CV-422",
+    "GRS-1120",
+    "SP-1120",
+    "CV-1120",
+    "ATS-1113"
+  ],
+  "notes": "Original membership is preserved. Prepared v3 selection and new Storage source/edition migration installation remain ABSENT; no admission is authored.",
+  "disposition_evidence": [
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-203",
+      "line_start": 8652,
+      "line_end": 8652,
+      "quote": "Newly authored",
+      "excerpt_sha256": "c0894c88d592ecb2b1102f847addfd69374cc9e5b411b06b21209678eda782e2",
+      "file_sha256": "7f6b1a65bca1628c44e898f2bf5394c06dcd63c9f37aa66b26c81e0075732227",
+      "quote_check": "exact"
+    }
+  ]
+}

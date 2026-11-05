@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L2682-L2804
+Source lines: L2682-L2874
 
-Source SHA256: `01873d61989908279c600d475affad68d2793cba0a774bb8d20a7af2f249a457`
+Source SHA256: `9f1d60529937d06f730cba35f3626c22e5269126b94edad1e27c2b92992c2dac`
 
 ---
 
@@ -131,3 +131,73 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage-plan.md#SP-353, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020
+
+### HITL-1120 - Exact Project owner verification exception approval
+
+```yaml
+plan_unit_id: HITL-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: 'Newly authored provider capture/resolution binding approval.goal_verification_exception.v1, materializing
+  DL-081 rather than a new approval policy. The existing HITL owner receives a typed request for exact Project/Goal/run/source/graph/currentness,
+  original verification finding IDs and evidence, proposed incomplete-item dispositions and the nonempty exact residual-risk
+  set. Identity is the original request ref plus original revision/digest; same identity with different content
+  conflicts. PS-1120 authenticates the Project-owning user and current target authority. An actual Workflow blocked
+  episode keeps its existing run/node/blocked_sequence and scope; a host-only request uses its actual typed owner
+  request and never fabricates a node or blocked_sequence.
+
+
+  Capture and resolve use CV-1122''s closed approval_request/approval_resolution roots. The existing provider retains
+  original actor, effective/requested account and lane/attempt attribution when present, exact approval scope and
+  immutable resolution. Only approved by that Project owner for every listed risk/disposition allows the exception;
+  denied, pending, expired, revoked, unknown, foreign-target/person, stale graph or added risk refuses. Generic
+  Always, YOLO, model prose, worker approval or a blanket receipt never substitutes for this human decision. This
+  grant waives only the specific verification disposition under the actual original Workflow owner; it cannot waive
+  Stop, permissions, secrets or unknown mutation/receipt/recovery truth.
+
+
+  The actual original request and provider resolution must resolve independently from native custody at capture
+  and after the last helper before exception issue and Goal body/publication. A forged digest cannot supply provider
+  origin. Current approver/target authority and revocation are rechecked where a new effect would occur; retained
+  audit reads original lawful approval under current disclosure permissions without requiring a live Workflow. SP-1122
+  composes existing approval/evidence owner clocks and receipt custody without new policy or a new approval engine.
+  ATS-1115 exercises exact risk and person/currentness joins. The outcome label remains completed_with_approved_verification_exception.
+  Native execution remains NOT_RUN.
+
+
+  CV-1122''s _providers bank supplies the exact capture and resolve request/result roots. Capture returns the existing
+  typed request_ref/request_sha256; resolution takes those exact two fields and independently reads the existing
+  HITL provider''s immutable original resolution, then applies the current PS-1120 authority check. It never accepts
+  an injected resolution or a Goal operation as approval identity.'
+gui_related: true
+gui_classification_reason: Preserves the approved truthful verification-exception label and human approval identity.
+depends_on:
+- DL-081
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```

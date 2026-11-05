@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6265-L6349
+Source lines: L6285-L6383
 
-Source SHA256: `2799727129b753f2c42a03e35fca9d7d03de933a6d3d69a4b8047b8efbfeaa5d`
+Source SHA256: `7f6b1a65bca1628c44e898f2bf5394c06dcd63c9f37aa66b26c81e0075732227`
 
 ---
 
@@ -24,7 +24,7 @@ The original typed receipt retains the exact source/graph/authority hashes and r
 
 ### Standard scope and truthful exceptions
 
-The newly bound route is exactly `certification_tier = standard`, `final_certifier_decision = certified`, truthful label `certified`, no unresolved risks or exception approvals, and passing validators. The existing D-R18 branch `certified_with_approved_exception`, approval/residual-risk evidence and truthful `completed_with_approved_verification_exception` remain semantically preserved in CV-340. They are excluded from this Standard writer. An approved testing restriction or incomplete-item disposition alone supplies neither an original final Workflow decision nor an automated pass. The selected Plans-to-Code source has no exception decision; the exact original exception/waiver owner route remains separately unbound. This prerequisite does not invent it, widen the source enum or revoke D-R18's already specified distinction.
+The newly bound route is exactly `certification_tier = standard`, `final_certifier_decision = certified`, truthful label `certified`, no unresolved risks or exception approvals, and passing validators. The existing D-R18 branch `certified_with_approved_exception`, approval/residual-risk evidence and truthful `completed_with_approved_verification_exception` remain semantically preserved in CV-340. They are excluded from this Standard writer. An approved testing restriction or incomplete-item disposition alone supplies neither an original final Workflow decision nor an automated pass. The selected Plans-to-Code Standard source has no exception decision. GRS-1122 and EP-1120 separately define the newly authored original exception/waiver source and result mapping under DL-081; actual installation remains required. This prerequisite does not widen the Standard source enum or revoke D-R18's distinction.
 
 The broad generic v1 receipt grammar and all original kinds/tiers keep their own meaning. A string `accepted`, a receipt kind, worker success, a body mutation receipt, a projected state or an event observation is not the original Standard receipt. Actual original receipt durability precedes D-R18's eventual `provisional_success|verifying -> certified` GoalRun transition/event; projection follows append. This prerequisite performs neither transition nor event append.
 
@@ -43,53 +43,67 @@ plan_unit_id: GRS-065
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Original Standard certification comes from the actual owning Workflow controller or assigned canonical
-  artifact owner and complete independently resolved source, target authority, workgraph, validator,
-  WorkNode and acceptance evidence, with authentically empty current child-Goal requirements under
-  GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
-  contract preserves its immutable decision and truthful labels through SP-289 custody, keeps existing
-  generic receipts and exception semantics separate, and grants no Goal/body/event action. This exact
-  historical/Project Workflow source edition remains Project-bound and unchanged in its schema, hashes and
-  original predicates. Ordinary application Goal continuation is GRS-086 and cannot synthesize this
-  Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires its own complete
-  admitted sibling rather than casting a null Project into this contract; native proof remains separate.
+canonical_text: Original Standard certification comes from the actual owning Workflow controller or assigned canonical
+  artifact owner and complete independently resolved source, target authority, workgraph, validator, WorkNode and
+  acceptance evidence, with authentically empty current child-Goal requirements under GRS-052/GRS-075 and unchanged
+  historical receipt grammar. The Original Standard certification receipt contract preserves its immutable decision
+  and truthful labels through SP-289 custody, keeps existing generic receipts and exception semantics separate,
+  and grants no Goal/body/event action. This exact historical/Project Workflow source edition remains Project-bound
+  and unchanged in its schema, hashes and original predicates. Ordinary application Goal continuation is GRS-086
+  and cannot synthesize this Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires
+  its own complete admitted sibling rather than casting a null Project into this contract; native proof remains
+  separate. DL-081 exception materialization is separately GRS-1122/EP-1120/HITL-1120/PS-1120/SIR-1120/CV-1122/SP-1122.
+  This Standard writer and its source enums stay clean-only.
 gui_related: false
-gui_classification_reason: Defines internal original certification metadata, custody and owner interfaces; no GUI presentation is specified.
-depends_on: [GRS-042, GRS-064, CV-288, CV-340, DL-045]
+gui_classification_reason: Defines internal original certification metadata, custody and owner interfaces; no GUI
+  presentation is specified.
+depends_on:
+- GRS-042
+- GRS-064
+- CV-288
+- CV-340
+- DL-045
 unblocks: []
 acceptance_criteria:
-  - "The actual original source and certifier/target/scope/revision/time evidence independently establish every required dependency and Standard final decision."
-  - "Original issuer/Storage outputs exactly match actual complete source projection and remain guarded through final current owner/origin checks."
-  - "Generic accepted markers, worker success and body receipts never substitute for original Standard certification."
-  - "Current original child-Goal requirements and both stored child-receipt arrays are authenticated empty; nonempty or unknown input refuses without rewriting it, while retained grammar stays exact."
-  - "D-R18 exception/waiver semantics stay distinct and unavailable through this Standard route; no new policy or source enum is granted."
-  - "Receipt disclosure preserves original metadata after lawful source/body disposal and grants no current action, event proof or Goal/GoalRun transition."
+- The actual original source and certifier/target/scope/revision/time evidence independently establish every required
+  dependency and Standard final decision.
+- Original issuer/Storage outputs exactly match actual complete source projection and remain guarded through final
+  current owner/origin checks.
+- Generic accepted markers, worker success and body receipts never substitute for original Standard certification.
+- Current original child-Goal requirements and both stored child-receipt arrays are authenticated empty; nonempty
+  or unknown input refuses without rewriting it, while retained grammar stays exact.
+- D-R18 exception/waiver semantics stay distinct and unavailable through this Standard route; no new policy or source
+  enum is granted.
+- Receipt disclosure preserves original metadata after lawful source/body disposal and grants no current action,
+  event proof or Goal/GoalRun transition.
 validation_surfaces:
-  - Plans/goal_certification_custody.schema.json
-  - Plans/goal_certification_custody_fixtures.json
-  - Plans/goal_receipt_version_routes.json
-  - reports/event-authority-20260911/step-08-certified-custody-validation.md
+- Plans/goal_certification_custody.schema.json
+- Plans/goal_certification_custody_fixtures.json
+- Plans/goal_receipt_version_routes.json
+- reports/event-authority-20260911/step-08-certified-custody-validation.md
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: false_certification_or_lost_original_decision_authority
 reasoning_tier: high
 context_scope: original_standard_workflow_certification
 implementation_surfaces:
-  - Plans/Goal_Runtime_System.md
-  - Plans/storage_value_registry.json
+- Plans/Goal_Runtime_System.md
+- Plans/storage_value_registry.json
 node_compile_hint:
   mode: original_standard_workflow_certification
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "reports/event-authority-20260911/step-08-certified-custody-checks.json"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- reports/event-authority-20260911/step-08-certified-custody-checks.json
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
 negative_constraints:
-  - Do not infer certification from an accepted marker, worker success, body receipt, event or projection.
-  - Do not claim native installation, event/body publication, exception authority or complete event depth from this prerequisite.
+- Do not infer certification from an accepted marker, worker success, body receipt, event or projection.
+- Do not claim native installation, event/body publication, exception authority or complete event depth from this
+  prerequisite.
 owner_hints:
-  - Plans/Goal_Runtime_System.md
-  - Plans/storage-plan.md
-  - Plans/Contracts_V0.md
+- Plans/Goal_Runtime_System.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L8828-L9181
+Source lines: L8828-L9253
 
-Source SHA256: `b9791ffd5a1fbb0d1329e21e37500f4db8c6a1ee11d4deaf620ebbc628799e59`
+Source SHA256: `8f4a2a5eb0d59d2cbe4f2fcc32df23b7dcc8cba0c159bf39572866473e0fbc1e`
 
 ---
 
@@ -362,3 +362,75 @@ owner_hints:
 **Search (DL-045).** Scope: EP-116..124, EP-132, GRS-026, GRS-027, GRS-071, GRS-075, GRS-079..085, SP-309..317, CV-340, `Plans/Wiring_Matrix.production.json` rows `catalog.orchestrator_pause` and `catalog.runtime_abort_run`, `Plans/workflow_standard_source_contracts/` and the Known-37 matrix rows EA-UND-0016 and EA-UND-0021. Found: both wiring rows expect `goal_run.stopped`; EP-118 refuses unlisted writers; no unit names a stop or block writer, method or entrypoint. These two writer identities are newly authored.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
+
+### EP-1120 - Original approved exception Workflow decision and result mapping
+
+```yaml
+plan_unit_id: EP-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: 'Newly authored original Workflow verification-exception source, pm.workflow.approved_verification_exception.v1,
+  under DL-045 and DL-081. GRS-1122 and CV-1122 bind the exact Project/Goal/run and original workgraph/controller.
+  Original graph/requirements, WorkNode results, validator evidence, acceptance dispositions, existing source-control/safe-point/rollback
+  records and complete residual-risk set are independently resolved. Child-Goal requirements are authentically empty
+  under GRS-052/075. Workers and reviewers cannot issue the final decision. Unknown, extra, missing, duplicate or
+  foreign requirements refuse before custody.
+
+
+  Each actual non-passing verification item is joined to the exact HITL-1120 request and still-valid Project-owner
+  approval; no request-supplied smaller required set is trusted. Original outcome remains failed|blocked|skipped
+  with evidence and explicit disposition, never a fabricated pass. The original controller issues certified_with_approved_exception
+  with truthful completed_with_approved_verification_exception, certifier/approver and full risk/disposition refs.
+  It commits the distinct original exception result/receipt under SP-1122 before Goal completion consumes it. All
+  current permissions, Stop, graph/currentness, recovery and mutation-custody guards survive; an exception is no
+  bypass of an unresolved effect or non-verification safety guard.
+
+
+  This is a new distinct source/result mapping, not a cast into pm.workflow.standard_source, native-v7 all_writers,
+  prepare.v2 or Standard goal_run.certified. Existing Workflow GoalRun status/transition and clean certification
+  schemas stay exact; the exception result does not by itself append an event or invent a new enum. Actual native
+  source installation must explicitly include this result mapping before it is callable. The Goal host consumes
+  the original exception receipt through GRS-1122''s separate method and applies all current completion barriers
+  and shared metadata CAS. Lost acknowledgments resolve the exact original result and never repeat certification
+  or Goal body work. SP-1122 supplies custody/backup/withdrawal and ATS-1115 the route-specific suite. Native execution
+  remains NOT_RUN.
+
+
+  The exact issuer method is owner.workflow.approved_verification_exception.issue.v1@1.0.0 in CV-1122''s provider
+  bank. SP-1122''s separate goal_verification_exception_receipt row commits the original exception source and result
+  before the Goal host consumes its receipt. This is a distinct canonical Workflow receipt, not the Goal lifecycle
+  result or a Standard certification row. Same-key issue/recovery resolves the exact original receipt; unavailable
+  or unknown issue returns no success-shaped receipt.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1122
+- DL-081
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
