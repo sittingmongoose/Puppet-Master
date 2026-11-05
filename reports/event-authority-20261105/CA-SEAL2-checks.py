@@ -472,7 +472,9 @@ def run(repo, output, source_map, apply_cut=None):
                 for field, value in supplied.items():
                     args[code.co_varnames.index(field)] = value
                 old_recount = v.recount_validation
-                v.recount_validation = lambda admitted: ({'complete': complete}, [])
+                v.recount_validation = lambda admitted: (
+                    {'complete': complete}, [] if complete else
+                    [{'error': 'recount_change_receipt_invalid', 'detail': 'fixture receipt invalid'}])
                 try:
                     return dict(zip(fields, seam(*args)))
                 finally:
