@@ -3627,7 +3627,8 @@
         "checkpoint_reuse": "SP-278 projector.storage.event_record_index@1.0.0; event_record_index_checkpoint.v1:<storage_instance_id>",
         "first_receipt_reuse": "SP-286/CV-339 full-value v2; SP-336",
         "scope": "application_or_project",
-        "resolution": "CV-691 pm.persona.selected_resolution.v1 and existing SP-337 complete-value custody"
+        "resolution": "CV-691 pm.persona.selected_resolution.v1 and existing SP-337 complete-value custody",
+        "resolution_physical_schema": "Plans/dg6b_event_contracts.schema.json#/$defs/persona_selected_resolution_storage (round 6, existing owner-result custody and SP-337; no new stored family)"
       },
       "premise_pairs": [
         {
