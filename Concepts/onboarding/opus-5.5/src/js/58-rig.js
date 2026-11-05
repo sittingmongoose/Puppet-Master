@@ -623,39 +623,62 @@
       const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => { const u = (x - 32) * s, v = (y - 31.5) * s; return [u * c - v * n, u * n + v * c]; });
       return [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))];
     }
-    /* how hard an idle swing may push Pip: the room between its head's keep-off box and the nearest resting prop beside it
-       (either side, as the pendulum swings back), as a kick to the swing's speed (a kick of v swings about v / w rad) */
-    swingRoom() {
-      const keep = this.pipKeep, Lay = this.L;
-      if (!keep) return .5;
-      let room = Infinity;
-      this.props.forEach((p) => {
-        if (p.state === 'out' || !p.box || p.op < .5) return;
-        const b = p.box;
-        if (b[3] <= keep[1] || b[1] >= keep[3]) return;
-        room = Math.min(room, b[0] >= keep[2] ? b[0] - keep[2] : b[2] <= keep[0] ? keep[0] - b[2] : 0);
-      });
-      return room === Infinity ? .5 : Math.asin(clamp((room - 2) / Lay.rope, 0, 1)) * this.fam.w;
+    /* how far a damped swing under way (angle x, speed v; x'' = -w2 x - d x', as step() swings Pip and the props) carries
+       before it turns: its next peak, or where it is if that is further, in rad */
+    swingAmp(x, v, w, d) {
+      const sg = d / 2, wd = Math.sqrt(Math.max(1e-6, w * w - sg * sg)), B = (v + sg * x) / wd, R = Math.hypot(x, B);
+      if (R < 1e-5) return 0;
+      const phi = Math.atan2(x, B), q = Math.atan(wd / sg) - phi, t1 = (q - Math.PI * Math.floor(q / Math.PI)) / wd;
+      return Math.max(Math.abs(x), R * Math.exp(-sg * t1) * Math.abs(Math.sin(wd * t1 + phi)));
     }
-    // Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit)
-    pipHead() {
+    /* how hard an idle swing may push Pip (dir: which way): the largest kick to the swing's speed whose swing, with the one
+       already under way, keeps the head's box off every prop that is not leaving, by more than fit()'s margin: where it
+       is drawn, where it will hang at rest (a prop still being lowered in counts at its place) and as far as its own
+       swing carries it. Measured where a prop was drawn at the kick, Glass Light's forge on Online details at 860 was not
+       counted while it was lowered in after the screen changed, or was counted swung away, and swung back under the head
+       as Pip swung to it (48 px2, retro-c3's awake guard) */
+    swingRoom(dir) {
+      const ps = this.ps, F = this.fam, near = [];
+      if (!ps || !this.pipKeep) return .5;
+      this.props.forEach((p) => {
+        if (p.state === 'out' || !p.box) return;
+        const b = p.box, tg = this.propTarget(p), len = Math.max(0, p.len), L = Math.max(0, tg.len);
+        const dx = tg.ax - (p.ax + Math.sin(p.a) * len), dy = tg.len - Math.cos(p.a) * len;
+        const sw = Math.sin(this.swingAmp(p.a, p.av, F.pw * Math.sqrt(170 / Math.max(30, L)), F.pdamp)) * L, m = 5;
+        near.push([Math.min(b[0], b[0] + dx - sw) - m, Math.min(b[1], b[1] + dy) - m, Math.max(b[2], b[2] + dx + sw) + m, Math.max(b[3], b[3] + dy) + m]);
+      });
+      const clear = (k) => { const h = this.pipHead(this.swingAmp(ps.th, ps.thv + dir * k, F.w, F.damp)); return !h || !near.some((o) => h[0] < o[2] && h[2] > o[0] && h[1] < o[3] && h[3] > o[1]); };
+      if (clear(.5)) return .5;
+      if (!clear(0)) return 0;
+      let lo = 0, hi = .5;
+      for (let i = 0; i < 10; i++) { const k = (lo + hi) / 2; if (clear(k)) lo = k; else hi = k; }
+      return lo;
+    }
+    /* Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit);
+       swing: the swing's reach, rad (by default the one under way) */
+    pipHead(swing) {
       const ps = this.ps, Lay = this.L, s = Lay.s;
       if (!ps || !this.pipReach(ps.tiltT)) return null;
-      const box = (cx, cy, ang) => {
+      const box = (cx, cy, ang, th) => {
         const r = this.pipReach(ang);
-        let y = cy + Lay.rope;
+        let y = cy + Math.cos(th || 0) * Lay.rope; const x = cx + Math.sin(th || 0) * Lay.rope;
         if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
         if (y + r[3] > this.vis.y1) y = this.vis.y1 - r[3];
-        return [cx + r[0], y + r[1], cx + r[2], y + r[3]];
+        return [x + r[0], y + r[1], x + r[2], y + r[3]];
       };
+      const join = (a, c) => [Math.min(a[0], c[0]), Math.min(a[1], c[1]), Math.max(a[2], c[2]), Math.max(a[3], c[3])];
       let b = box(ps.Ct.x, ps.Ct.y, ps.tiltT);
       /* (and, while the hand travels to a new spot, as Pip wakes and rises from the floor, the head where it hangs now:
          the box takes its whole way, so a sign beside where it rises to is not under it as it comes. Retro Dark Name 860
          showed 40 px2 painted as Pip woke, sol-review-retro-1's awake guard. Not within the idle drift, so resting props
          do not shift as Pip sways) */
-      if (Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) { const c = box(ps.C.x, ps.C.y, ps.tilt); b = [Math.min(b[0], c[0]), Math.min(b[1], c[1]), Math.max(b[2], c[2]), Math.max(b[3], c[3])]; }
+      if (Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) b = join(b, box(ps.C.x, ps.C.y, ps.tilt + ps.th * .9, ps.th));
       /* (and the room its idle drift takes, awake: a sign beside the resting head was under it as it swayed, Retro Dark 860) */
       const F = this.fam, still = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
+      /* (and the room the swing under way takes, to its next peak either side, the head turned with it as render() turns
+         it: a prop lowered in, or swinging back, beside a swinging Pip keeps off its head, as off the resting one) */
+      const A = still ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
+      if (A > .002) [-1, -.5, .5, 1].forEach((q) => { b = join(b, box(ps.Ct.x, ps.Ct.y, ps.tiltT + A * q * .9, A * q)); });
       const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
       return [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
     }
@@ -1023,9 +1046,9 @@
         else if (pick === 'swing') {
           /* (as far as the room beside the head allows: a swing carried Glass's head .15 rad into the forge beside it on
              Online details at 860, 24 px2 painted, the awake guard of sol-review-retro-1; with no room, a wiggle) */
-          const kick = Math.min(.5, this.swingRoom());
-          if (kick > .08) { ps.thv += (Math.random() > .5 ? 1 : -1) * kick; this.sfx('swing', { x: ps.C.x, intensity: .35 * kick / .5 }); }
-          else ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3;
+          const dir = Math.random() > .5 ? 1 : -1, kick = Math.min(.5, this.swingRoom(dir));
+          if (kick > .08) { ps.thv += dir * kick; this.sfx('swing', { x: ps.C.x, intensity: .35 * kick / .5 }); }
+          else ps.tiltv += dir * 3;
         }
         else if (pick === 'wiggle') ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3;
         else { this.idleLook = [Math.random() > .5 ? 2.2 : -2.2, .3]; this.idleUntil = this.t + 1.1; }
