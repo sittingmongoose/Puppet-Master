@@ -18,7 +18,7 @@ This lane's own review of its timestamp fields is interim only until the shared 
 - **Where:** `Plans/card5_event_contracts/manifest.json:4`.
 - **Why it broke:** the manifest still read `"decision_branch": "plans/ea-cards2-answers-20261105"` after DL-437..443 landed. Nothing read the field, so nothing noticed.
 - **Fix:** the key is now `"decision_source": "Plans/Decision_Log.md"`. No script read the old key.
-- **Guard:** `decision_citation_errors`, `scripts/pm-card5-event-contracts-check.py:119`, called from `main` through `decision_citation_cases` (`:138`). Each of the nine Card 5 families now requires the landed source, no leftover branch key, exactly one `### DL-nnn:` entry for its decision, and its exact option-A text in that entry's `A (recommended)` line.
+- **Guard:** `decision_citation_errors`, `scripts/pm-card5-event-contracts-check.py:113`, called from `main` (`:430`) through `decision_citation_cases` (`:130`). Each of the nine Card 5 families now requires the landed source, no leftover branch key, exactly one `### DL-nnn:` entry for its decision, and its exact option-A text in that entry's `A (recommended)` line.
 - **Negatives:** 7 per family plus 1 control, all in the normal family suite: stale branch source, non-string source, old key kept, unknown decision, foreign decision, changed option text, non-string option text.
 - **Verify:** `python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved`, or the removal table below.
 
