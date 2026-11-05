@@ -8,6 +8,7 @@ export const tests = {
  'SW01 first click in short window': async t => {
   await t.viewport(1024,480);
   for(let i=0;i<Number(t.args.reps||10);i++) {
+   await t.page.mouse.move(0,0);
    const f=await t.app.open();
    await t.emulate({reducedMotion:'no-preference'});
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
@@ -22,8 +23,8 @@ export const tests = {
    });
    const stage=await f.locator('#pmRoot .chat-stage').boundingBox();
    const box=await b.boundingBox();
-   await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
    const clock=await beginActivityFrameClock(t.window);
+   await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
    let input,paint;
    try{
     await t.page.mouse.click(box.x+box.width/2,box.y+box.height/2);
@@ -31,6 +32,7 @@ export const tests = {
     input=await f.evaluate(()=>window.__activityPaintInput);
    }finally{await clock.stop();}
    const dir=join(t.run.dir,'activity-first-paint-'+i);mkdirSync(dir,{recursive:true});
+   writeFileSync(join(dir,'before.png'),clock.beforePng);
    for(let j=0;j<clock.frames.length;j++)writeFileSync(join(dir,String(j).padStart(3,'0')+'.png'),clock.frames[j].png);
    writeFileSync(join(dir,'frames.json'),JSON.stringify({input,stage,frames:clock.frames.map(({png,...frame})=>frame)},null,2));
    try{paint=clock.analyze(input,stage);}catch(error){paint={error:error.message};}

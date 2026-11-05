@@ -5,6 +5,8 @@ import {decodePng,coverTitleClassifier} from './activity-cover-pixels.mjs';
 export async function beginActivityFrameClock(page){
  const client=await page.context().newCDPSession(page);
  const frames=[];
+ const reference=await client.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false});
+ const beforePng=Buffer.from(reference.data,'base64');
  const onFrame=event=>{
   client.send('Page.screencastFrameAck',{sessionId:event.sessionId}).catch(()=>{});
   frames.push({wall:event.metadata.timestamp*1000,metadata:event.metadata,png:Buffer.from(event.data,'base64')});
@@ -12,11 +14,11 @@ export async function beginActivityFrameClock(page){
  client.on('Page.screencastFrame',onFrame);
  await client.send('Page.startScreencast',{format:'png',everyNthFrame:1});
  return {
-  frames,
+  frames,beforePng,
   async stop(){await client.send('Page.stopScreencast');client.off('Page.screencastFrame',onFrame);await client.detach();},
   analyze(input,stage){
    const ordered=frames.filter(f=>Number.isFinite(f.wall)).sort((a,b)=>a.wall-b.wall);
-   const before=ordered.filter(f=>f.wall<input.wall).at(-1);
+   const before={png:beforePng};
    const after=ordered.at(-1);
    if(!before||!after)throw Error('No pre-input and final compositor frames');
    const model=coverTitleClassifier(decodePng(before.png),decodePng(after.png),stage);
