@@ -1,59 +1,58 @@
-# DCW — fix round 6, Event Authority
+# DCW — fix round 7, Event Authority
 
-Branch `plans/ea-w2-chain-wizard-20261104`; implementation `65c1465f9ee495333943ef7881f960fe8f1cb972`; reviewed `2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2`. Worker DCW-FIX6, VM. This is the second and last post-Astra technical round. Report/grade follow-up changes no implementation.
+Branch `plans/ea-w2-chain-wizard-20261104`; implementation `8d043b82e967f6f3e38962e91279fe83f85c3b97`; reviewed `e49ae0c5895909b428883478d1a69aaabbdd643f`. Worker DCW-FIX7, VM. This report-only follow-up changes no implementation.
 
-**0/6 prepared passes before (Sol cycle 6) → 6/6 after; 6/8 assigned.** Each prepared family moves from 8 PASS / 3 PARTIAL / 1 ABSENT to 10 PASS / 1 PARTIAL / 1 ABSENT. Membership remains ABSENT, retention PENDING_RETENTION_DECISION and native execution NOT_RUN. Both Wizard holds remain unanswered.
+**5/6 prepared passes before Astra 2 → 6/6 after.** Membership remains ABSENT, retention PENDING_RETENTION_DECISION and native execution NOT_RUN. Both held Wizard families remain held for Jared.
 
-## Review round 6: findings and responses
+## Review round 7: findings and responses
 
-- **F6-A — fixed (65c1465f9ee495333943ef7881f960fe8f1cb972). Where:** scripts/pm_dcw_event_oracles.py:245/248/251/304/349/472 and exact_equal; envelope/source/receipt integer domains; local predecessor sequence validation. **Why:** mathematical JSON Schema integer and Python numeric equality authenticated integral-float aliases. **Fix:** mandatory pm-uint representation validation, exact nested types plus canonical MessagePack bytes at original/prepared/source/receipt/owner joins; authenticate the supplied compatibility view before resolving the retained original. Retained history, read access/withdrawal and caller Storage-metadata exclusion remain independent. Verify the complete checker, numeric-probes, receipt/type sweep, fixed legacy replay and full guard table.
-- **F6-B — fixed (65c1465f9ee495333943ef7881f960fe8f1cb972). Where:** canonical_json/digest/compact_digest/event_reference, local bundle identity, all six payload schemas and CV-590–595. **Why:** descriptor byte_size and phase_sequence admitted multiple numeric encodings. **Fix:** one integer-only JSON domain before hashing, compact UTF-8 encoding, sorted object keys and exact descriptor text. Decimal/exponent floats refuse, parsed -0 normalizes to integer 0, and 01/-01 fail JSON syntax. Original descriptor/digest/source/commitment observations remain coherent in the negatives. Six independent family recipes bind the same rule. Verify 36/36 integer descriptor paths accept, 36/36 float paths refuse, eight local float identities refuse, expanded spelling controls and the guard matrix.
-- **F6-C — fixed (this report/grade follow-up). Where:** loaded-family Storage evidence under producer, retention, custody, consumers and compatibility in DCW.self-grade.json. **Why:** eight quotations routed to the opened-family heading. **Fix:** exact mappings 30011→30028, 30007→30024, 30013→30030, 30015→30032 and 30017→30034, including repeats. Every exact quote and owning heading is audited; a deliberately restored wrong heading refuses.
+- **F1 — fixed (8d043b82e967f6f3e38962e91279fe83f85c3b97). Where:** scripts/pm_dcw_event_oracles.py:348 and :660 (wizard_source/opened_source_custody); scripts/pm_dcw_opened_custody_cases.py:13. **Why:** loaded validation authenticated only the opened event's receipt and skipped its original owner source. **Fix:** every append, publish, retry, read, rebuild and compatibility read resolves the exact wizard_open_evidence source and runs the complete opened historical validator: closed logical/physical source schema, original request/child/seed/context/result observations, identity and full prepared event, recomputed semantic digest and full-value commitment, exact original receipt and durable group, Storage instance/restore inventory, original read access and reader withdrawal. Missing, forged, foreign and withdrawn originals refuse. Current writer CAS, effects, cutoff and write permission never reach the retained predecessor. Verify the family CLI suite, 24 focused plus 79 broader unchanged Astra counterexamples, and the SHA-bound guard table.
 
-**Item 11 sweep:** exact boolean values, integer types, payload object types and list containers are exercised in all six families. Source/event pack readability and durability, writer cutoff, reader withdrawal, rebuild admission/completion, recovery epochs, CAS, original payloads/receipts, membership/permission/output/group lists all refuse wrong types. String booleans, string numbers, null, arrays, nested objects and integral floats are explicit controls. The local predecessor oracle checks the exact integer type before arithmetic. No production guard is weakened.
+The predecessor's own physical overflow row, payload pack and restore inventory are separate from the loaded source. Synthetic controls now carry both exact reader-family admissions and an explicit opened-reader withdrawal observation; these are fixture inputs, never registry admissions. Read-access loss on a distinct original permission snapshot and missing predecessor source/pack restore inventory each refuse on all six paths. Retained valid history survives live writer eligibility changes.
 
-F5-A remains resolved: four bundle null lists still omit payload_ref, with independent SP-337 routes. F5-B remains resolved: the original 1,544 negatives, coherent secret/policy/child copies, all old case IDs, positives and native obligations are retained. Both original fixture files and the other three owner Markdown documents are byte-identical to the reviewed head. Astra's 183 exact probes and 306 independent byte/reference probes pass.
+Check 11 exposed 32 older loaded negatives whose newly inspected predecessor mirrors were stale. Those same facts now have coherent request/child/seed/result, Storage or restore observations; all original case IDs and expected refusals remain. Only the loaded fixture row changed. Every guard remains enforced in production. Five passing family fixture rows, all owner Markdown, payload/source schemas, registries, the legacy fixture and native obligations are byte-identical to the reviewed head.
 
 ## Family grades before and after
 
-| Family | Before (Sol 6) | After |
+| Family | Before (Astra 2) | After |
 |---|---|---|
-| `bundle.revision_requested` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `bundle.revision_started` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `bundle.revision_completed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `bundle.revision_interrupted` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `bundle.revision_requested` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `bundle.revision_started` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `bundle.revision_completed` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `bundle.revision_interrupted` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
 | `wizard.blocked` | 6 PARTIAL / 6 ABSENT | unchanged; held for Jared |
-| `wizard.deferred_payload.loaded` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `wizard.opened` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `wizard.deferred_payload.loaded` | 7 PASS / 4 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `wizard.opened` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
 | `wizard.unblocked` | 6 PARTIAL / 6 ABSENT | unchanged; held for Jared |
 
-All 96 cells are reassessed. The twelve recovered cells are producer and positive_negative_oracles for the six prepared families. No admission or retention answer follows from these grades.
+All 96 cells are rechecked against unchanged current canon and rerun companion evidence. Loaded producer, redaction_custody and positive_negative_oracles recover PARTIAL → PASS. All other cells retain Astra's grade. 286 current quotations are exact and at most 200 characters; Wizard Storage quotations remain under their exact family headings.
 
-## Eleven standing checks and full guard table
+## Eleven standing checks and guard table
 
-All 66 standing family/check cells pass (1,328 outcomes). Check 2 covers Project-only refusal of application keys, not application writer support. Checks 1–10 retain independent writer-policy admission, encoded partitions, complete canonical bytes and SP-337 transport, LF refusal, semantic-only retry comparison, checkpoint identity, nonzero failure exit, eager references and retained-history/withdrawal behavior.
+All 66 standing family/check cells pass (1,328 outcomes). Project-only application-key refusal is not application writer support. Checks 1–9 retain independent current replay-policy exclusion, exact encoded partitions, both SP-337 source/event routes, LF refusal, caller-semantic-only retry comparison, matching checkpoints, nonzero failure exits and eager references.
 
-Check 11: **132/132 require sites; 2,330/2,330 full-checker negatives (786 new); 1,015 configurations / 394,263 cross-tests; zero unrelated acceptances or unrelated refusal changes.** The 155 changed labels still name the same invariant's duplicate. Legacy: 182/182 negatives, 15 assertions and 8,356 fixed-configuration cross-tests; 21 added local predecessor-type controls. [Complete guard table](DCW.guard-removal.md) names every site and duplicate set, with exact flip/reject complements in the SHA-bound external JSON.
+**Check 10:** the full opened validator is used as a historical read on every loaded operation. Original evidence and current read access/reader withdrawal remain mandatory; current writer CAS/effect/cutoff/write permission do not invalidate valid retained history. Compatibility changes only its passive replay view and authenticates every other original value.
 
-The numeric schema and exact-authentication/descriptor guards intentionally repeat one invariant. Their older original-value, receipt or descriptor witnesses also flip when that named set is removed. The proof now labels those three numeric duplicate groups explicitly. It does not change the input, production guard, mutation result or rejected-ID matrix. No global verify=accept, no-op legacy validator, blanket schema bypass or skipped relational check establishes guard acceptance.
+**Check 11:** 133/133 require sites, 2,838/2,838 negatives, 1,037 configurations and 502,587 cross-tests; zero unrelated acceptances or unrelated refusal changes. Legacy: 182 negatives, 15 assertions and 8,356 fixed-configuration cross-tests. [Complete guard table](DCW.guard-removal.md) records the guard, exact named duplicates, flipping witnesses and complete rejected-ID complements. Family PARTIAL exports express global coverage pending aggregation; the verified aggregate alone claims whole-lane PASS.
 
-## Every recurring Astra defect class
+## All recurring Astra defect classes
 
-| Item | Fresh probe / evidence |
+| Item | Fresh probe / ruling |
 |---|---|
-| 1 Forged/contradictory inputs | Existing identity, digest, original-owner/source joins and repaired full-value witnesses all pass; exact original sequence/payload substitutions are added. Authority maps are synthetic adapters, native issuer authentication NOT_RUN. |
-| 2 Payload-supplied Storage metadata | Integral-float event and receipt sequences refuse; typed receipt/group joins use actual recorded originals. Caller-only Storage fields remain outside semantic comparison. |
-| 3 Historical readers in both directions | Fresh valid retained reads survive cutoff, obsolete CAS, unknown effect and lost current write access; withdrawal refuses. Numeric forged compatibility views refuse before original substitution. |
-| 4 One value read two ways | Exact nested types/canonical bytes and mandatory integer representation format; numeric/string/boolean aliases refuse. |
-| 5 Unvisited dangling refs | All unused local/external source/payload reference CLI probes refuse; preflight-only counterfactual controls pass. |
-| 6 Partial sizes / contradictory prose | 306 independent MessagePack/boundary/reference checks pass. All stored parts are measured independently; the old payload_ref null contradiction stays removed. |
-| 7 Custody / wrong family | Existing six-operation original custody, predecessor, restore inventory, wrong-family dispatch and checkpoint witnesses pass. |
-| 8 Masked negatives | Entire prior pool plus 786 new witnesses flip for only their guard/named duplicate invariant; exact other-negative complements retained. |
-| 9 Inflated grades | Current 96-cell/quote/heading audit rejects missing proof, unsupported PASS, stale quotes and a falsely resolved hold. |
-| 10 Numbers written two ways | Decimal, exponent, extra decimals, exponent sign/case, negative exponent, normalized -0 and invalid 01/-01 controls; no float descriptor or local float identity accepts. |
-| 11 Types confused | 858 independent production-path probes and new isolated whole-checker witnesses; exact booleans, integers, object payloads and list containers. Unsupported payload types remain schema domain controls, not invented accepted EventRecords. |
+| 1 Forged / contradictory inputs | Foreign predecessor request Project, frozen event substitution, semantic digest, full commitment, receipt and missing original result all refuse on six paths. Owner joins are field-by-field and typed. |
+| 2 Payload-supplied Storage metadata | Predecessor sequence aliases and forged receipt sequence refuse; metadata authenticates against retained Storage originals. Caller-only retry metadata remains excluded. |
+| 3 Historical readers | Retained controls survive changed live writer eligibility; predecessor withdrawal and distinct original read-permission loss refuse. Both compatibility and rebuild are included. |
+| 4 One field read two ways | Exact nested-type/canonical-byte joins and schema formats now also reach the prerequisite opened source. Original-result integer/string/boolean aliases refuse. |
+| 5 Unvisited schema refs | Every family's unused local/external source/payload reference probes fail the complete CLI; only the exact preflight control flips them. |
+| 6 Partial sizes / contradictory prose | Original and loaded sources and event packs remain independent, with exact full-value byte boundaries, readable/durable pack controls and separate restore inventories. Canonical prose is unchanged; the earlier payload_ref contradiction stays removed. |
+| 7 Custody on every path | All six operations validate the complete separately owned opened chain. The review's 103 counterexamples now refuse through real Refusal outcomes, with valid controls preserved. |
+| 8 Masked negatives | 32 prior loaded witness mirrors repaired, all old IDs retained; every negative flips for its named guard/set and all other negative complements remain rejected for their own invariant. |
+| 9 Inflated grades | Three loaded cells recover only after complete path, source, history and guard proof. Missing proof/case/family and false PASS artifacts are checked; held/native/admission/retention limits remain explicit. |
+| 10 Two number encodings | Decimal/exponent integral floats in predecessor source/event and original owner observations now refuse. Existing canonical descriptor/digest recipes remain unchanged; parsed -0 equals integer 0, while float and invalid leading-zero spellings refuse. |
+| 11 Types confused | Predecessor source/sequence/result and readable/durable/withdrawal controls include string booleans/numbers, null, arrays, nested objects, booleans and floats. Exact schemas and guards refuse the wrong types. |
 
 ## Questions for Jared — card-ready, no answer applied
+
 
 
 **Q1a — wizard.blocked / current subject and emission predicate.** Under `Plans/Contracts_V0.md:14896` (CV-233) and `Plans/Contracts_V0.md:2686`, which exact existing PlanningRun or topic owner identity must `wizard_id` identify, and which existing blocked/remediation predicate emits this observation, including the current source of `round_count`? PWIZ-002 owns the current aggregate/topic model; shared route_target/blocked identity does not decide that subject or predicate.
@@ -68,54 +67,54 @@ Current supporting evidence: `Plans/assistant-chat-design.md:3524`; `Plans/Plann
 
 
 
+
 ## Scope, authority and IDs
 
-No new PlanUnit, family, product feature, identity domain or owner decision is invented. Existing IDs only: **CV-590–595, SP-575–579, ACD-571–574, PWIZ-097/098** (17). No registry append, admission/exclusion/application record, Decision Log, .gitignore/test-file edit, Spec Lock/governance evidence/auto-decision edit, frozen-validator change, main push or reseal.
+No new PlanUnit, product behavior, retention/deletion choice, identity recipe or owner decision. Existing IDs only: **CV-590–595, SP-575–579, ACD-571–574, PWIZ-097/098** (17); no new IDs used. Both exact Wizard holds are unchanged. DL-045 scope, current PWIZ/UCC intake, ACD targeted revision, SP-278/DL-076 reader tokens and SP-286/CV-339 custody premises remain unchanged in this branch. Canonical owner/schema/registry evidence was compared byte-for-byte and every quoted source rechecked.
 
-The pinned main/review base is c76d1cf756d504a91655a978dcee9f3ead7562d3. During this round origin/main advanced to bc399e19742ddc6afd1a1cb1d77a33845341d565. All twelve applied premise units are byte-identical there (main-premises.json); concurrent UI/onboarding edits stay for integration to reconcile, without rebasing this reviewed fix branch. The four relevant owner documents at the pinned review base remain prefixes of this branch's owner documents. DL-045's scope, ACD-049/050 targeted Deep Plan revision, current PWIZ/UCC real-Project intake with its three canonical seeds, DL-076/SP-278 token model and SP-026/SP-337 byte/overflow premises remain as previously verified. No old retention answer or held predicate is applied; no premise failed. Per-family search lineage: drafts/DCW/base-family-search.json SHA-256 96832ddf6013b0116d2adff5ac939f365bb6928a4b2454d59435a1881d0f605a; drafts/DCW/fix1-wizard-search.json SHA-256 324dffe4d7426126626a8fe31fc4262d501880855d81d357a2c4441e5621180f.
-
-Only CV-590–595 owner prose changes. Shared integer schema annotations and the three source-schema mirrors are consistent; derived changes belong only to contracts_v0, event_record.schema and storage_value_registry, plus the aggregate index. Fifteen copied ignored currentness files matched by SHA-256 before generation. Generated artifacts are regenerated, never hand-edited.
+No registry append, admission, exclusion/application record, Decision Log, test-file/.gitignore, frozen validator, Spec Lock, governance evidence/auto-decision, main push or reseal. No owner Markdown changed in this round, so no shard/index regeneration was needed; existing generated files remain untouched and the shard body/path check passes. The ignored currentness edition's 15 files were copied and hash-matched before index validation. Moving-main index diagnostics are recorded without changing a baseline or any guard; integration owns concurrent-main reconciliation.
 
 ## Commands and exit codes
 
 | Check | Exit | Result |
 |---|---:|---|
-| pm_bundle_revision_events.py | 0 | 2,869 static cases; 2,690 full composition |
-| pm_dcw_event_regressions.py | 0 | 1,328 outcomes; all 66 cells |
-| pm_dcw_event_isolation.py (no author diagnostics) | 0 | Complete matrix above |
-| Fixed legacy-recheck.py / local-phase-types.py | 0 / 0 | 182 negatives, 15 assertions, 8,356 cross-tests / 21 type cases |
-| Reviewer numeric / descriptor / local identity probes | 0 / 0 / 0 | Zero unexpected accepts; integer controls preserved |
-| type-sweep.py | 0 | 858 production-path cases |
-| astra-exact-replay.py / independent-event-bytes.py | 0 / 0 | 183 / 306 exact cases |
-| storage audit / storage recovery self-test | 0 / 0 | Same 41 pre-existing profile errors on branch/main; all nine profile mutants; recovery top-level pass |
-| shard/index generate; shard check | 0 | Only expected owners; parsed top-level pass |
-| index validate, pinned review base / moving main | 0 / 1 | Pinned pass; moving-main DL-302 absence plus 21 unrelated legacy-ledger diagnostics |
-| preservation and final artifact audits; git diff --check | 0 | No fixture/native/hold loss; quotes and headings current |
-
-The index validator hardcodes origin/main. Both unmodified checks are retained: the moving-main run detects DL-302 added after this reviewed branch, then reads 21 malformed pre-existing removal-ledger records; the immutable reviewed-base run passes against the identical worktree using a temporary private Git object view. No shared ref, checker, schema or guard was changed. Integration must reconcile the concurrent main changes.
-
-The old Astra CLI harness replaced a valid positive with a forgery. Its replay now keeps the positive valid and expresses the same forgery as explicit mutations, so newly generated valid-base witnesses are not built from a forged precursor. Early runner setup errors and duplicate-label diagnostics were corrected before final runs; no failing intermediate result supports a PASS claim.
+| pm_bundle_revision_events.py --family, six sequential runs | 0 | 3,225 full / 3,404 total static cases |
+| pm_dcw_event_regressions.py --family, six sequential runs | 0 | 1,328 outcomes; all 66 cells |
+| pm_dcw_event_isolation.py --family and strict --merge | 0 | Every corpus row/site and complement verified; whole-lane PASS |
+| Fixed legacy-recheck.py, four sequential runs | 0 | 182 negatives / 8,356 cross-tests |
+| Unchanged Astra focused and broader reproduction | 0 | 24 + 79 actual Refusal results; six valid controls |
+| pm-shard-plans.py --check | 0 | Parsed top-level pass |
+| pm-plan-index.py validate | 1 | Top-level fail; 22 inherited diagnostics, 0 additional moving-main/infrastructure diagnostics (index-comparison.json) |
+| Preservation / quote / aggregate integrity audits; git diff --check | 0 | Old cases, five family rows, native obligations and both holds preserved |
 
 ## Evidence, resources and cleanup
 
-Evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix6`. Every cited raw result is outside the repository and bound by path plus SHA-256 below. The result includes the final replay programs and complete exact guard matrices. Native issuance/authentication, actual append/CAS/restore/durability and individual admissions remain NOT_RUN. Integration items: the two exact Jared holds, retention, admissions/native evidence, unchanged 41 profile baseline errors and eventual governance reseal.
+Evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix7`. Raw evidence remains outside the repository. All family checkers ran one family at a time with memory sampled before each checker; entry memory/disk were 16 GB / 83 GB and subsequent recorded samples stayed above 6 GB / 50 GB. No subagent, browser or server was started. A read-only mailbox check overlapped the first brief read; after its prohibition was read there was no registration, sent mail or further mailbox use.
 
-Entry resources: 8 GB available RAM / 85 GB disk free. Subsequent samples stayed above the 6/50 GB stop thresholds. A read-only mailbox command overlapped the first brief read; after reading its explicit prohibition there was no registration, coordination, sent mail or further mailbox use. No subagent, browser or server was started. After the final push/copy, remove the literal detached sparse worktree /home/sittingmongoose/pm-worktrees/DCW-fix6. Completion records final remote SHA and removal.
+Push only the assigned branch, copy the report/grade/table to drafts/DCW, then remove the literal detached sparse worktree `/home/sittingmongoose/pm-worktrees/DCW-fix7`. Completion records the final remote head and removal. Native execution and eventual admissions/governance remain separate.
 
 | Evidence file | SHA-256 |
 |---|---|
-| `isolation-final.json` | `454f402a99324cd0bbc7ccce3502689375c9417872a3248002e09a8a3e216882` |
-| `legacy-recheck.json` | `68fc955ec22e752964b20e4aaa5dee7cdcfb53f225595e087862c6630dff12bb` |
-| `standing-final.json` | `aa4d761f695b3d96aa162c229d15ec8c0449531507a808810bb5eb485b4a1bbd` |
-| `numeric-probes.json` | `43f6b3eae469a923d2bf6ec431106b7171766aaa026488bd89f8b2542250c42f` |
-| `reference-numbers.json` | `a4baa0ac21ce67f0190661359cc701aca0b453e6909488b352969c4ef2d27384` |
-| `local-number-identities.json` | `b393376e103d1440312b58b99f6b5b341e7938733c6ad506e0a3176b361b6dee` |
-| `type-sweep.json` | `7e05a9d9796651728c595033654b14698986c8baf852c1781b22182458c67176` |
-| `local-phase-types.json` | `e4dbe16f6b361c2b7b0edbd0e8b10398543567c794fa607c18753c756f09edde` |
-| `astra-exact-replay.json` | `9ef1bb5a494da7ba7a59aece019148a9cb49f893c9a4fa5a3e45b909691df4f9` |
-| `cycle5-event-bytes.json` | `09405ab6d73a9916e5677eabbe195cebeccfb46bcd9111f37766ca639586c60d` |
-| `currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
-| `preservation.json` | `4b6bbd218a7527c30f0316db89415f7e9bd9f42f4dcd3b3410f6b30e6e881192` |
-| `cycle6-storage-regression.json` | `487d6cb10ca00399265fa081f5dd0f6ecde1fdf90831e0b02851251e86e04b5a` |
-| `main-premises.json` | `2fb9446c6863436fbfa15fa7837a1626ad31bed3718965cca61e1e6a865da2d3` |
-| `index-baseline-comparison.json` | `e28b4329b73723ccb755db51288699eb0377b82bbf33b3b0be5c9f72d89c6334` |
+| `isolation-final.json` | `445b33f6e64522be7eb159fb015a2a4e308a4b153ecf00576d05e7a0583e6489` |
+| `family-suite-results.json` | `d5f47c93e04ad679f306c49579ad6dc9c1779c434cb444e598ec1e37aa0d3b18` |
+| `review-focused-replay.json` | `42dca57b795514eff4a1a62bf214d43b1e00eca0b3f67f2e50277cdf7e9d9ad2` |
+| `review-replay.json` | `ea91ae1e36db0faa1c952e77b03b8f122e2d5edc68e74ff8de3437c98cb8947e` |
+| `observation-repairs.json` | `cc3f93ec0051d11452b7bc95e4f8d60eac8a8631396ec7578542ef188b798fcb` |
+| `preservation.json` | `2316cfd018ad13cbda2c631ea51b4aab5151ad69cc23c6772f7de64f2d0b36f3` |
+| `canonical-evidence-audit.json` | `a2f4367452788e15d43508f35211bb32198e2bda3b704f2aa08f2db15c542093` |
+| `currentness-sha256.json` | `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84` |
+| `index-validate.json` | `aa4d1a6c968d75488d688992a1e175641331fe99b71988a26c7c4117f13e014b` |
+| `index-comparison.json` | `c2d60f09280fc11ea9812551a3bccd37a75a6e66688082e9239382c06c64d287` |
+| `shard-check.txt` | `353b434b8f99c23e82801aee68941ecef36e9fc71638a6bce463523cd6b01ade` |
+| `post-suite-results.json` | `3eb98e33acd167fadca0ca26d12446ed7ebc1d2606815b22b16bdf59b4649730` |
+| `wizard_deferred_payload_loaded-standing.json` | `808ab6885920bc55028449ac3ea7a81f616204f4e5054f36ac2d5bc1d181e8d8` |
+| `bundle_revision_requested-standing.json` | `df15ec4d56903403040a9eb6f80ec2013dc207cedeff0c695f41d4f583515ba9` |
+| `bundle_revision_started-standing.json` | `25d9cd5b60bcbf6855dad116091d593799ca7c9485773876e64e2c1ae3d1bb0a` |
+| `bundle_revision_completed-standing.json` | `ea3d6ba71da087ea1289009f5d2fbe289431ecd0452914043bc3f725f49542ad` |
+| `bundle_revision_interrupted-standing.json` | `ec95ca971b88d65a985c3f8ceac39c2ce57c8efaf4359a5fe551c5339b2996d0` |
+| `wizard_opened-standing.json` | `6c360e6eb82bba5d6672f7dd4e8b75e50a5cf01cef629b348a69bd61ece5a84f` |
+| `bundle_revision_requested-legacy.json` | `ee4c50a045808058faa54ebf417813e9eabc7b78eb0152f64b3b928b0ba62dd4` |
+| `bundle_revision_started-legacy.json` | `03299f5b674a59748d9db5fef40a8306e9a7709b132194f85123df070ed63756` |
+| `bundle_revision_completed-legacy.json` | `d2d5d77d1f9ceb1838ecccfa5cdd8ce9ea4dc30a77f090d3a01746d46074e5bb` |
+| `bundle_revision_interrupted-legacy.json` | `3f1125044f0226b4e18cb0c9dbd4ec44dc8f591bb02ef9997bafcae960d99874` |
+| `integrity-controls.json` | `cd47c400ff182d779b2ad7971958953f416a55c0860b00914129d54d4b08fa40` |
