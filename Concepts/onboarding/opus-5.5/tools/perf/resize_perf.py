@@ -6,9 +6,8 @@ the resized element's rendered edge, so lag is measured in pixels on the frames 
 The Left Rail assertion is the regression this file exists for: during a user widen-drag the narrow ladder
 must not cap the slot back to its eased 240px (the width used to oscillate target <-> 240 mid-drag).
 
-GPU: like perf.py this drives real Chrome over CDP, but resize cost is GPU-sensitive, so on the Linux VM it
-keeps the GPU on (DISPLAY/XAUTHORITY + --enable-gpu, per the agent-browser guide) instead of perf.py's
---disable-gpu Linux default. Exits 1 when any assertion fails. Chrome profiles go to ~/pm-scratch."""
+GPU: like perf.py this drives real Chrome over CDP on the Linux GPU desktop (DISPLAY/XAUTHORITY and --enable-gpu).
+Exits 1 when any assertion fails. Chrome profiles go to ~/pm-scratch."""
 import json, os, sys, time
 from cdp import Browser
 
@@ -149,36 +148,33 @@ def q(vals, p):
     return s[min(len(s) - 1, int(p * len(s)))] if s else 0.0
 
 
-def idle_gap95(b, url, fam, mode):
-    """The sampler-on floor: this page animates continuously (chat work rings, shimmer) and the sampler
-    itself forces a frame per vsync, so even an untouched page shows a frame-gap p95 well above 16.7ms
-    in this harness. Drag thresholds are judged against this measured floor, not against 60fps theory."""
-    p = b.new_page(W, H)
-    p.goto(url); time.sleep(2.5)
-    p.eval("localStorage.clear(); window.PM_THEME.setFamily(%s, {persist:false}); window.PM_THEME.setMode(%s, {persist:false}); true" % (json.dumps(fam), json.dumps(mode)))
-    time.sleep(1.5)
-    p.eval(SAMPLER)
-    p.eval("window.__rz.start(document.querySelector('#sidePanelSlot'), 'right', 'x')")
-    time.sleep(2.5)
-    raw = p.eval('window.__rz.stop()')
-    p.close()
-    frames = [f for f in raw['frames'] if f[2] is not None]
-    gaps = [b_[0] - a[0] for a, b_ in zip(frames, frames[1:])]
-    return q(gaps, 0.95)
+def relative_gap_measure(frames, down, up):
+    """Compare the drag to idle samples from the same sampler, without bridging the gesture."""
+    drag = [f for f in frames if down <= f[0] <= up]
+    before = [f for f in frames if f[0] < down - 50]
+    after = [f for f in frames if f[0] > up + 800]  # leave the release transition out of the floor
+    idle_gaps = [b[0] - a[0] for group in (before, after) for a, b in zip(group, group[1:])]
+    if len(idle_gaps) < 30:
+        raise ValueError(f'only {len(idle_gaps)} idle frame gaps')
+    if len(drag) < 8:
+        raise ValueError(f'only {len(drag)} drag frames')
+    floor = q(idle_gaps, 0.95)
+    return floor, max(50.0, floor * 2 + 34), q([b[0] - a[0] for a, b in zip(drag, drag[1:])], 0.95)
 
 
 def main():
+    if os.name == 'nt':
+        raise RuntimeError('Use the browser-check kit on Windows; direct Chrome launches bypass GPU admission')
     b = Browser(port=PORT, width=W, height=H, extra=EXTRA, headless=True)
     failures = []
     try:
+        info = b.send('SystemInfo.getInfo')['gpu']
+        renderer = info.get('auxAttributes', {}).get('glRenderer', '')
+        if not renderer or any(x in renderer.lower() for x in ('swiftshader', 'llvmpipe', 'software')):
+            raise RuntimeError('GPU required; renderer: ' + repr(renderer))
+        print('GPU renderer:', renderer, flush=True)
         url = 'file:///' + page_file.replace('\\', '/') + '?o55=off'
         fam0, mode0 = THEMES[0].split('-')
-        floor = idle_gap95(b, url, fam0, mode0)
-        # p95 gaps land on the vsync grid (16.7ms steps); both the 2.5s floor sample and a single
-        # drag's p95 (over ~70 frames) carry a step of noise each, so the budget allows two grid
-        # steps above twice the floor. The pre-fix build read 133-283ms here, far above either form.
-        gap_budget = max(50.0, floor * 2 + 34)
-        print(f"idle floor gapP95 {floor:.1f}ms -> drag budget {gap_budget:.0f}ms", flush=True)
         for theme in THEMES:
             fam, mode = theme.split('-')
             for surf, dx, dy in SURFACES:
@@ -190,17 +186,24 @@ def main():
                 tgt = p.eval("(%s)(%s)" % (TARGET, json.dumps(surf)))
                 if not tgt:
                     failures.append(f"{theme} {surf}: handle not visible"); p.close(); continue
+                # Sample the same page and sampler immediately before and after this gesture; a single
+                # floor taken at startup cannot represent another theme or changing machine load.
+                time.sleep(2.0)
                 sweep(p, tgt['x'], tgt['y'], dx, dy)
+                time.sleep(1.5)
                 raw = p.eval('window.__rz.stop()')
                 p.close()
                 frames = [f for f in raw['frames'] if f[2] is not None]
                 down = next((m[1] for m in raw['marks'] if m[0] == 'down'), 0)
                 up = next((m[1] for m in raw['marks'] if m[0] == 'up'), float('inf'))
                 drag = [f for f in frames if down <= f[0] <= up]
-                gaps = [b_[0] - a[0] for a, b_ in zip(frames, frames[1:])]
+                try:
+                    floor, gap_budget, gap95 = relative_gap_measure(frames, down, up)
+                except ValueError as exc:
+                    failures.append(f"{theme} {surf}: {exc} — measurement invalid, rerun")
+                    continue
                 span = (frames[-1][0] - frames[0][0]) / 1000 if len(frames) > 1 else 0
                 fps = (len(frames) - 1) / span if span else 0
-                gap95 = q(gaps, 0.95)
                 lags = []
                 if len(drag) > 5:
                     off = drag[0][2] - drag[0][1]
@@ -230,7 +233,7 @@ def main():
                             break
                     if settle_ms is None:
                         settle_ms = after[-1][0] - up
-                print(f"{theme:15s} {surf:8s} fps {fps:5.1f} gapP95 {gap95:6.1f}ms lagP95 {lag95:6.1f}px range {rng:5.0f}px moves/f {mpf:.2f} pickupGap {pickup_gap:5.0f}ms releaseGap {release_gap:5.0f}ms settle {settle_ms if settle_ms is None else round(settle_ms)}ms", flush=True)
+                print(f"{theme:15s} {surf:8s} sampleFps {fps:5.1f} idleP95 {floor:6.1f}ms budget {gap_budget:6.1f}ms dragGapP95 {gap95:6.1f}ms lagP95 {lag95:6.1f}px range {rng:5.0f}px moves/f {mpf:.2f} pickupGap {pickup_gap:5.0f}ms releaseGap {release_gap:5.0f}ms settle {settle_ms if settle_ms is None else round(settle_ms)}ms", flush=True)
                 if drag and mpf < 0.15:
                     failures.append(f"{theme} {surf}: input starved ({mpf:.2f} moves/frame) — measurement invalid, rerun")
                 if settle_ms is not None and settle_ms > 450:
