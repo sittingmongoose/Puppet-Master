@@ -1,7 +1,7 @@
 {
   "method": "B: guard tables",
   "overall": "PARTIAL",
-  "base": "dec0a57dce93238ab33452f6b7ca1c759435b587",
+  "base": "07fefa83bddb397a2d41e132db4203a90e1b414d",
   "criteria": [
     {
       "criterion": "guard_table_api",
@@ -21,7 +21,7 @@
     {
       "criterion": "static_no_hidden_guards",
       "grade": "PARTIAL",
-      "basis": "PARTIAL capability: the outside-predicate scan is an explicit allowlist in which each automatic form has a written totality reason and everything else is an obligation. Exact plumbing reasons and predicate honesty still require independent review."
+      "basis": "PARTIAL capability: the outside-predicate scan is an explicit allowlist in which each automatic form has a written totality reason and everything else is an obligation. Automatic name reads now follow the language scope rules, with the compiler symbol table as a second opinion. Exact plumbing declarations still need review."
     },
     {
       "criterion": "guard_negative_matrix",
@@ -36,17 +36,17 @@
     {
       "criterion": "state_reset",
       "grade": "PARTIAL",
-      "basis": "PARTIAL capability: factory/adapter namespaces, function metadata, closure cells and classes are fingerprinted. Shared writes require exact reviewed reset seams and matching snapshots. Unsupported/lazy/external/native graphs fail closed."
+      "basis": "PARTIAL capability: factory/adapter namespaces, function metadata, closure cells and classes are fingerprinted, and each case build is certified together with them as one graph that keeps identity edges. Shared writes require exact reviewed reset seams. Address-dependent checker logic that changes no graph stays a review obligation."
     },
     {
       "criterion": "schema_inventory_and_cuts",
       "grade": "PARTIAL",
-      "basis": "PARTIAL: five schema segments are text-identical to the reviewed base; schema traps pass. The separate 768-cell campaign was not rerun."
+      "basis": "PARTIAL: schema code is unchanged from the reviewed base; schema traps pass, and the 768-cell inventory replay keeps its 139/530/99 census. These are inventory cells, not full-path proofs."
     },
     {
       "criterion": "corpus",
       "grade": "PASS",
-      "basis": "173/173 expected observations; all 130 prior traps are byte-equal, plus 43 cycle-4 regressions and controls. 1234 evidence assertions pass."
+      "basis": "225/225 expected observations; all 173 prior traps are byte-equal, plus 52 cycle-6 regressions and controls. 1660 evidence assertions pass."
     },
     {
       "criterion": "dg6b_example",
@@ -72,12 +72,12 @@
   "checks": "reports/event-authority-20261104/GUARDTOOL.checks.json",
   "family_grades": "NOT_APPLICABLE",
   "ids_used": [],
-  "evidence": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix3",
+  "evidence": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix4",
   "open_soundness_boundary": [
     "Independent review remains required for predicate honesty, complete paths/consumer bindings, every non-guard reason and duplicate semantic equality.",
     "Unknown imports, state graphs and predicate effects require explicit reviewed supported seams; they receive no automatic credit.",
     "No complete DG6B/lane adoption, event-family grade, independent review clearance or governance reseal is claimed."
   ],
-  "review": "Tool batch 1, recheck cycle 4",
-  "implementation": "45538a7f57dd51e4028302e2c4ffb4185dafa59d"
+  "review": "Tool batch 1, Sol max cycle 6",
+  "implementation": "8a49a8e38ddc094cf26494073401a24935076113"
 }

@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 173,
+  "caught": 225,
   "traps": [
     {
       "id": "table-single-swaps",
@@ -867,6 +867,266 @@
     {
       "id": "C4-constructor-hook-audit",
       "expected": "Only Guard and Invariant have validation hooks; Guard.id and GuardTable.guards are read-only properties that construction never reads; a new hook must change the written argument.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-is-not-method-binding",
+      "expected": "A class binding does not certify a method read: the read stays an obligation with zero credit, and the original raises when visited.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-visited",
+      "expected": "Visiting the same method read raises NameError: refused at runtime as well as statically, with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-enclosing-binding-for-method-control",
+      "expected": "The same method with a genuine enclosing-function binding passes both routes automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-enclosing-binding-with-class-attribute-control",
+      "expected": "A method read resolves past the class attribute to the genuine enclosing binding, automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-module-binding-beats-class-attribute-control",
+      "expected": "A method read resolves past the class attribute to the module binding, automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-nested-def",
+      "expected": "A def inside a method cannot see the class binding either.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-lambda",
+      "expected": "A lambda in a class body cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-list-comprehension-result",
+      "expected": "A comprehension result in a class body cannot see the class binding, inlined or not.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-comprehension-condition",
+      "expected": "A comprehension condition in a class body cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-second-iterable",
+      "expected": "Only the first iterable runs in the class scope; the second cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-generator-result",
+      "expected": "A generator result in a class body cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-outer-class-binding-in-nested-class",
+      "expected": "A nested class body cannot see the outer class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-read-skips-enclosing-function",
+      "expected": "A class-body read of a name the class binds later goes to globals and builtins, never to the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-default-before-class-binding",
+      "expected": "A method default runs in the class body. The class binds the name later, so the read goes to globals and builtins, not the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-first-iterable-control",
+      "expected": "The first iterable runs in the class scope, so an earlier class binding certifies the read.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-body-read-control",
+      "expected": "An earlier class binding certifies a read in the class body itself.",
+      "caught": true
+    },
+    {
+      "id": "C6-method-default-control",
+      "expected": "A method default runs in the class scope, so an earlier class binding certifies it.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-free-read-control",
+      "expected": "A class body reads a name it does not bind from the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-later-target-iterable",
+      "expected": "A later comprehension target makes the name comprehension-local, so the enclosing binding does not certify an earlier iterable.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-later-target-condition",
+      "expected": "A later comprehension target makes the name comprehension-local, so the enclosing binding does not certify an earlier condition.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-target-does-not-leak",
+      "expected": "A comprehension target is not bound in the function after the comprehension.",
+      "caught": true
+    },
+    {
+      "id": "C6-generator-target-does-not-leak",
+      "expected": "A generator target is not bound in the function after the generator.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-result-control",
+      "expected": "A comprehension result reads its own target, automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-first-iterable-control",
+      "expected": "The first iterable reads the enclosing binding, even when the target reuses the name.",
+      "caught": true
+    },
+    {
+      "id": "C6-global-skips-enclosing-function",
+      "expected": "A global declaration makes the read global, so an enclosing binding does not certify it, even with the declaration reviewed.",
+      "caught": true
+    },
+    {
+      "id": "C6-global-module-binding-control",
+      "expected": "A global declaration with a real module binding certifies the read.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-global-skips-enclosing-function",
+      "expected": "A global declaration in a class body reads the module namespace, not the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-global-does-not-reach-method",
+      "expected": "A class-level global declaration does not reach a method: its read is the enclosing cell, which is not yet bound.",
+      "caught": true
+    },
+    {
+      "id": "C6-nonlocal-binding-after-call",
+      "expected": "A nonlocal read needs a binding before the nested function exists.",
+      "caught": true
+    },
+    {
+      "id": "C6-nonlocal-enclosing-control",
+      "expected": "A nonlocal read of a binding made before the def is certified.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-params-keep-class-exclusion",
+      "expected": "A generic method still cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-parameter-read-is-an-obligation",
+      "expected": "A read of a type parameter resolves to its annotation scope, which has no written totality argument.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-bound-read-is-an-obligation",
+      "expected": "A lazily evaluated type-parameter bound is an obligation, even with an enclosing binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-alias-read-is-an-obligation",
+      "expected": "A lazily evaluated type alias value is an obligation, even with an enclosing binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-generic-closure-control",
+      "expected": "A generic function reads a genuine enclosing binding through its type-parameter scope.",
+      "caught": true
+    },
+    {
+      "id": "C6-handler-target-in-closure",
+      "expected": "A closure can outlive the handler, which deletes its target when it ends.",
+      "caught": true
+    },
+    {
+      "id": "C6-nested-handler-deletes-target",
+      "expected": "A nested handler with the same target deletes it before the later read.",
+      "caught": true
+    },
+    {
+      "id": "C6-handler-deletes-loop-target",
+      "expected": "A handler in the loop body deletes the loop target before the later read.",
+      "caught": true
+    },
+    {
+      "id": "C6-handler-own-body-control",
+      "expected": "A read in the handler own body is certified.",
+      "caught": true
+    },
+    {
+      "id": "C6-private-name-in-method",
+      "expected": "The compiler mangles __hidden in a method, so the module binding of that spelling does not certify it.",
+      "caught": true
+    },
+    {
+      "id": "C6-private-name-in-class-body",
+      "expected": "The compiler mangles __hidden in a class body, so the module binding of that spelling does not certify it.",
+      "caught": true
+    },
+    {
+      "id": "C6-private-name-outside-class-control",
+      "expected": "Outside a class a __hidden name is not mangled, so the module binding certifies it.",
+      "caught": true
+    },
+    {
+      "id": "C6-annotation-local-name-is-an-obligation",
+      "expected": "An annotation naming a function-local binding has no written argument: evaluation is deferred or absent, and no scope for it is certified.",
+      "caught": true
+    },
+    {
+      "id": "C6-annotation-builtin-control",
+      "expected": "An annotation naming a builtin no scope in the file rebinds stays automatic.",
+      "caught": true
+    },
+    {
+      "id": "C6-identity-graph-collision-pair",
+      "expected": "Equal inputs and equal context values that differ only in being the stable module object fingerprint differently, and their unchanged checkers differ: refusal versus accept. Fresh identities stay erased.",
+      "caught": true
+    },
+    {
+      "id": "C6-noncausal-flip-context-scalar",
+      "expected": "On the executed cut build alone the context stops being the module token. The unchanged predicate would already accept, so that flip is not caused by the cut: no credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-noncausal-flip-context-container",
+      "expected": "The same schedule with an equal tuple that is not the module tuple: no credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-noncausal-flip-closure-scalar",
+      "expected": "The same schedule through a closure the checker compares with the module token: no credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-stable-shared-identity-control",
+      "expected": "A context that is always the module token proves normally.",
+      "caught": true
+    },
+    {
+      "id": "C6-fresh-equal-context-control",
+      "expected": "A context that is always a fresh equal value proves normally: fresh identities stay erased.",
+      "caught": true
+    },
+    {
+      "id": "C6-fresh-container-holding-shared-value-control",
+      "expected": "A fresh container that always holds the module token proves normally.",
+      "caught": true
+    },
+    {
+      "id": "C6-uncertifiable-case-global-fails-closed",
+      "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit.",
       "caught": true
     }
   ]

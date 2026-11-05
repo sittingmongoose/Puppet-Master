@@ -851,3 +851,100 @@ Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-2
 | `B-cycle2/probes-more.json` | `beb8dc04d21503a0e52200029bd38c71c55ebab7bc83e1c3ed3eefc6c66bc583` |
 | `B-cycle2/probes-purity.json` | `142262367c5ed953eb9f622a5b335f8e20920d0e04b2cbd6d0b5c7e1e8585d8a` |
 | `B-cycle2/probes-adjacent.json` | `cb2bb3591d5c7e118bac3026de4cc12b9085a2f82c20294676b57b6a30858963` |
+
+## Batch 1, Sol max cycle 6: findings and responses
+
+**C6-B1 and C6-B2 are fixed in `8a49a8e38ddc094cf26494073401a24935076113`; neither is disputed.** Base: `07fefa83bddb397a2d41e132db4203a90e1b414d`. This section supersedes earlier claims about automatic name reads and equivalent case state. Capability remains **PARTIAL** pending independent review and complete lane adoption.
+
+| Finding | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **C6-B1 — fixed** | `scripts/pm_guard_isolation.py`, `static_scan`, `total_name`. The read climbed the syntax tree and counted any earlier sibling, so a class body looked like a binding visible to its methods. It now resolves each read by language reference 4.2.2 (`execution_scope`, `binding_scope`) and then requires a binding of that scope to dominate the read (`dominated`). `symtable` is a second opinion: where the compiler has a table for the scope and disagrees, the read is an obligation. | The review's dormant suite fails with `hidden_static_sites`, zero credit, naming only `absent`; the held-out input still raises `NameError`. The visited suite keeps its runtime refusal. The genuine-closure control passes both routes. |
+| **C6-B2 — fixed** | `_certified_snapshot`, `_case_snapshot`, `run`. Case and shared snapshots were separate walks, so the edge between a case value and a shared binding existed in neither. Each build is now one graph: input, anchored shared state, context, checker, table. Addresses are erased; identity edges, including each function's edge to its global namespace, stay. | The review's search finds no non-causal flip. `C6-noncausal-flip-*` schedule the exact cut build deterministically and fail `factory_nondeterministic` with zero credit. `C6-identity-graph-collision-pair` proves the pair apart, while fresh equal values stay equivalent. |
+
+### Name-read audit
+
+Sol's fix asked for an audit of every automatic name read. Beyond the class-versus-method case, it found these automatic reads that raise in real Python, all now obligations. The adoption guide's "Name-read scope audit" names a trap for each.
+
+| Form | Python's rule |
+|---|---|
+| Lambda, comprehension result or condition, later iterable or generator in a class body, with a class binding | A class namespace does not enclose them |
+| A nested class body, with the outer class binding | Class namespaces do not nest |
+| A class-body read or method default of a name the class binds later, with an enclosing binding | `LOAD_NAME` goes to globals and builtins, never the enclosing function |
+| A comprehension iterable or condition reading a later target, with an enclosing binding | The target makes the name comprehension-local |
+| A read under `global`, in a function or a class, with an enclosing binding | `global` skips every enclosing function |
+| A closure over a handler target | The target is deleted when the handler ends |
+| A read after a nested handler with the same target, or a loop target a handler reuses | That handler deletes it |
+| `__private` under a class, with a module binding | The compiler mangles the name |
+| A generic method, with a class binding | The type-parameter scope keeps the class excluded |
+
+Type-parameter bounds, type alias values, type-parameter reads and annotations naming a local binding do not raise on these paths. They are obligations because no written argument covers them. The other automatic name uses (`type`, `bool`, `except` classes, `g`, `table`, `__code__`, `Guard` predicates) refuse any rebinding anywhere in the file and check the live binding, so they did not change.
+
+**Effect on adapters.** An adapter that reads a name through one of these forms must declare it or fix it; all of them raise except the lazy forms and annotations above. A case that depends on state from a module not named in `checker_modules` may now fail closed with `state_shared_across_cases`, so name that module. The DG6B example needed no change.
+
+### Rerun results
+
+Each command ran serially from a scratch copy of the commit, in another project directory, with a 1 GiB address-space cap and a 6 GiB available-memory floor, on CPython 3.14.4/Linux with jsonschema 4.19.2 and referencing 0.36.2. Review drivers were copied unchanged except their hard-coded scratch paths.
+
+| Check | Result |
+|---|---|
+| **Self-test** | **225/225 caught.** All 173 earlier traps are byte-equal in order, source and expectation, and 52 are new. |
+| **`guard-probes.py` (cycle 6)** | `class-binding-is-not-method-binding`: credited PASS at the base, now FAIL for `hidden_static_sites` only. `class-binding-visited-control` keeps its three runtime failures and adds the static one. `outer-closure-binding-control` passes. The other 14 suites keep their results. |
+| **`identity-probes.py` (cycle 6)** | No non-causal flip in 30 suites. `factory_nondeterministic` with zero credit: 27, exactly those where builds of one input disagreed. `wrong_baseline_guard` with zero credit: 1, where builds of each input agreed and the negative was not refused. Passing: 2, where every recorded build kept the canonical relation, so no flip occurred. These counts depend on the allocator and change between runs, as the review noted; the audit checks the property, not the counts. |
+| **`identity-comparison.py` (cycle 6)** | Exit 1: its assertion that the two fingerprints collide now fails, which is the fix. A paired copy that asserts the opposite exits 0: equal inputs, different fingerprints, `GuardRefusal` versus `True`. |
+| **`proof-probes.py`, `schema-replay.py` (cycle 6)** | All 13 suites keep their results. The 768-cell census stays 139 atomic, 530 fail-closed, 99 zero-predicate; its pin label is the driver's literal base value. |
+| **Cycles 2 to 5** | Every suite keeps its status, failure kinds and credit, with unchanged inputs: 22 in cycle 2; 8 and 4 in cycle 3; 3, 13 and 3 in cycle 4; 44, 5 and 4 in cycle 5. Compared with the review's own cycle-5 results. |
+| **DG6B example** | Normal and optimized: **7/7 guards**, 49 matrix cells, 176 evaluations, 353 factory constructions. Results agree apart from process-specific hashes. The example is unchanged. |
+| **Standalone** | Flat copy from another project with program paths denied: exit 0, 225/225. Repository layout with the private scratch denied: exit 0. Explicit `--scratch`: 225/225. |
+| **Worker sweep `scope-sweep.py`** | CPython itself is the oracle: every reader, binding and module combination runs, and a read the scan left automatic must not raise `NameError`. 6994 forms: **0 false passes**, 3146 raising reads refused, 2887 automatic reads that run, 961 valid reads kept as obligations. On the base tool the same sweep has **810 false passes**. |
+| **New corpus on the base tool** | The base tool still catches all 173 earlier traps. 27 new negatives were credited PASSes there, the collision pair needs the new tool and every control passes. |
+| **Evidence audit** | **1660 assertions pass**, covering unchanged inputs, exact sites, zero credit, every reason's presence in the guide and unchanged schema, table and memory code. |
+
+**Limits.**
+- **The sweep is a worker list.** It is evidence for the resolver, not a proof of completeness, and it needs independent review. Only a `NameError` for the probed name counts as a false pass.
+- **Identity certification compares builds; it cannot predict them.** A factory that branches on an address passes only in a run where every build agreed. A checker branch on an address changes no graph at all, so a reviewer must reject a `call_review` declaration for `id()` whose result can reach a case value or a branch. The guide says so.
+- **The resolver alone decides some scopes.** List, set and dict comprehensions have no compiler table of their own from Python 3.12, and generic definitions and same-line twins are not matched to one.
+- **Predicate bodies stay outside this scan.** An exception inside one fails the run if visited.
+- **Only CPython 3.14.4/Linux was exercised.** Traps using type-parameter syntax are recorded as skipped below Python 3.12, which cannot parse them. Lane adoption and governance checks were not run.
+
+**Scope.** Tool, trap runner, corpus, standalone README, adoption guide and compact report companions. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, `main` push, pm-mail or subagent.
+
+Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix4/`.
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `self-test.json` | `18d324881e7a93af2f4365b69b8c72774e38f00c33f9d75cb27b724682c3753c` |
+| `audit-results.json` | `4d19096f4cc86c2e03a0da2e5ea0bf674a0747759961f3bb53f7c80e29e3217b` |
+| `scope-sweep.json` | `c36b1a3de6cf8ca046af7ff47016e1152f3b4dd6eefbafa609d889b70d064888` |
+| `scope-sweep-base-tool.json` | `3ec6e895334f3b7874572cc435cd8f2d48b97e4ee54eec70ca2eefeddfcc4132` |
+| `new-corpus-on-base-tool.json` | `9f6572256c8c7127ff6dbb5830cf5cefd116700bf72f1c50f977ff5d40a53ab3` |
+| `dg6b.json` | `de9d5e1d99b09b865abb3d87bbe8f47f1cccda98951bc568544adea62bb72df4` |
+| `dg6b-optimized.json` | `8d060358c5f361681b6cabc4b0b5e84956d6593c8b7ecd437d13a903be1bbbc3` |
+| `scratch-override-self-test.json` | `5c81d1982ea8be882884147578d946aa0f4ecd3222b33fb40c6293b299b31557` |
+| `standalone-guard.stdout` | `c0b57d1aaaf7b3ae36fe3081c4074208ee5d456ffd1bc646ad965812d0f840f3` |
+| `commands.json` | `7094e9c2a6888ece6afef679586df985ade30aa37d923e6006aa814ad03183e9` |
+| `run-checks.py` | `b7fd5080f4306e269ab9e356842a279d037ac29f8146f9ae7c1881bd8c88a60f` |
+| `audit-fix4.py` | `2a44ed8be77b5b628300733dea5cfc5a078d2954f853956995c9852a484081df` |
+| `scope-sweep.py` | `afa8bb7ace7a51819e2f89c2969ee22460c04137b05b9ec83235bf8c0942b39b` |
+| `make-corpus.py` | `e8492c5b15e73e97c21d5f751385f4f1752efd9486baff5e3f54407eb601b118` |
+| `prepare-report.py` | `cce13a0a1339f8cacec0a0b849473cd144342f56edae904754ff5c53c2af055b` |
+| `cycle6/reviewlib.py` | `501d4c95a55f3d89e995e84ba61584184153b02411051ecd9662f6695ccef8d6` |
+| `cycle6/guard-probes.json` | `04ad6b08f6dd682681d244771f1757fc5670a4bcfe76f16d1c44075b999c8d2c` |
+| `cycle6/identity-probes.json` | `a3502d00f190d74dbe48a9957c9802a1afdd8ae55d4471c308ca8659e5c4967b` |
+| `cycle6/identity-comparison-paired.py` | `75ba510261ff12b7a5b1f0e61afa8cfa54deb58c0f5d4d65d61e71a805dbd871` |
+| `cycle6/identity-comparison-paired.json` | `f3b93920658c2d2336c0be494d5156f0f6db5b9161505b94992320653a57f899` |
+| `cycle6/proof-probes.json` | `e608a6111ad04caee1634af83305a1eeb70ac942a598c8042947f63ab1c56de6` |
+| `cycle6/schema-replay.json` | `92553b804849aecad50fdc6ef5ceac22778f1b9be1b95325741200c92cbb1a79` |
+| `cycle5/allowlist-probes.json` | `7fbd5eda5fd27fad1d47ba66b43d528dc1cde2e99066a7e787fc28fd0acfdb5d` |
+| `cycle5/hostile-bindings.json` | `e68406ad300a7c462105f38959335527d8d49619f683e49cc8717f082f2948e7` |
+| `cycle5/implicit-probes.json` | `c5f9fbb003f2db62dd7743485bad29265f28c114fd793053d6f093d4ccdc9b96` |
+| `cycle5/boundary-hooks.json` | `70d6ee43ac40f215299fdc3f8d4276a66426c1e66dc9a1fe4826238a2391ce89` |
+| `cycle4/total-boundary.json` | `8da01c7b065dbab4644cd573358205936072cc93d5780a304bb045be68f2c117` |
+| `cycle4/adjacent.json` | `7b276a25f2c271f8e3f71663502e89b8f20943867c42331a0aaaaeed0bd36c90` |
+| `cycle4/hidden-operations.json` | `cd313c223fe43e1c87475766b679958d830e02d10bb7300354e0016defd77d97` |
+| `cycle3/probes.json` | `a2073fb85647bf410462eb7cd60da5c41dd830c82c39df3e8b64b17773e58c16` |
+| `cycle3/probes-static.json` | `8064ad3b83e5aae74740f627ccfe456702aa5335ab32f875819d309797ca6cb7` |
+| `cycle3/portability.json` | `ef4b1e03a5ee54d265868dcdbb8e2f929ef7a349dd13d6f5ebf398fc6706a0d9` |
+| `cycle2/probes.json` | `849bb5ee6ee13b36409ef352cd125fe2c4abb1aa47831a5ab841beaf8a2156b6` |
+| `cycle2/probes-more.json` | `79878f259f5d0fd98bb267636330f1032172319a2066115e4b80d2abf66241f4` |
+| `cycle2/probes-purity.json` | `282c1ded5566e3eccdb7d15a7739b929df55c810324e5adf833d87e8269ec66d` |
+| `cycle2/probes-adjacent.json` | `44ac67ef872118b2836e0da32728987ca35b4e5147c6b39e6b7590482d5c7e29` |
