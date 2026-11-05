@@ -204,6 +204,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.bundle_selection_forward_blocked.v1:00000000-0000-4000-8000-000000000001:app",
@@ -243,7 +255,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.bundle_selection_forward_blocked.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_c098fc989ac1de1c02ae30198c938687504253facf758de8a74e98029e5e9a23",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_c098fc989ac1de1c02ae30198c938687504253facf758de8a74e98029e5e9a23",
+          "value.last_event_id": "evt_dch_c098fc989ac1de1c02ae30198c938687504253facf758de8a74e98029e5e9a23",
+          "source.index_row.source_value_sha256": "529b9d6503b8734b6822179f2abf43bfa7f39fe9968352307ae7c2bdaab3205f"
         },
         "expected_valid": false
       },
@@ -1021,6 +1038,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.bundle_selection_sent_to_chat.v1:00000000-0000-4000-8000-000000000001:app",
@@ -1060,7 +1089,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.bundle_selection_sent_to_chat.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_78798ef0dea2bb3575bdded0605ce04f932f2aa4cb11e842d173bcd3c06fca39",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_78798ef0dea2bb3575bdded0605ce04f932f2aa4cb11e842d173bcd3c06fca39",
+          "value.last_event_id": "evt_dch_78798ef0dea2bb3575bdded0605ce04f932f2aa4cb11e842d173bcd3c06fca39",
+          "source.index_row.source_value_sha256": "6ef89e8d2ef79838962af903ad94416ba4d5c4deb67068d8d0df6c0f5044740a"
         },
         "expected_valid": false
       },
@@ -1834,6 +1868,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_message.v1:00000000-0000-4000-8000-000000000001:app",
@@ -1873,7 +1919,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_message.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_d7629a7761cdffd5bbf11a442df2880ad22ab2c6fc84db2d97581b6c1f090777",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_d7629a7761cdffd5bbf11a442df2880ad22ab2c6fc84db2d97581b6c1f090777",
+          "value.last_event_id": "evt_dch_d7629a7761cdffd5bbf11a442df2880ad22ab2c6fc84db2d97581b6c1f090777",
+          "source.index_row.source_value_sha256": "1bebe960588d4b40f804e06d29b6545f8987a97def254e214c6b3ead676c0445"
         },
         "expected_valid": false
       },
@@ -2649,6 +2700,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_archived.v1:00000000-0000-4000-8000-000000000001:app",
@@ -2688,7 +2751,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_archived.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_6355a79e337b612f6e9438df9e05db33900524552f77a5651ae311d250a8ea0f",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_6355a79e337b612f6e9438df9e05db33900524552f77a5651ae311d250a8ea0f",
+          "value.last_event_id": "evt_dch_6355a79e337b612f6e9438df9e05db33900524552f77a5651ae311d250a8ea0f",
+          "source.index_row.source_value_sha256": "a80d5b16a23256e00a3c05518d2ec18ecb1c22f5559b68be9ccf9721b4c074df"
         },
         "expected_valid": false
       },
@@ -3459,6 +3527,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_created.v1:00000000-0000-4000-8000-000000000001:app",
@@ -3498,7 +3578,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_created.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_46b7d2420a11e0b8837f9c1c02f0a0cd5ecda4b5e2d404699bf647d76f5e25cf",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_46b7d2420a11e0b8837f9c1c02f0a0cd5ecda4b5e2d404699bf647d76f5e25cf",
+          "value.last_event_id": "evt_dch_46b7d2420a11e0b8837f9c1c02f0a0cd5ecda4b5e2d404699bf647d76f5e25cf",
+          "source.index_row.source_value_sha256": "9fd2a626ba77a57c3bd7f580228dabf082a2d90a85f87465bd22d6a270f8db4d"
         },
         "expected_valid": false
       },
@@ -4269,6 +4354,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_deleted.v1:00000000-0000-4000-8000-000000000001:app",
@@ -4308,7 +4405,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_deleted.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_ab67b70ae6b56c9396189bb12ec8e3076655641ce265b4f5f4130527c73bf1fb",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_ab67b70ae6b56c9396189bb12ec8e3076655641ce265b4f5f4130527c73bf1fb",
+          "value.last_event_id": "evt_dch_ab67b70ae6b56c9396189bb12ec8e3076655641ce265b4f5f4130527c73bf1fb",
+          "source.index_row.source_value_sha256": "c5132ede85c57e886fbd68dbdc2fcbd0e9daacb90db2d4d369bb2a73b0ff0210"
         },
         "expected_valid": false
       },
@@ -5081,6 +5183,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_bound.v1:00000000-0000-4000-8000-000000000001:app",
@@ -5120,7 +5234,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_bound.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_14fe2508b9cda3dd27d0fcef5fe3652e9aa0c93f20096095fbd0f90e932642e9",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_14fe2508b9cda3dd27d0fcef5fe3652e9aa0c93f20096095fbd0f90e932642e9",
+          "value.last_event_id": "evt_dch_14fe2508b9cda3dd27d0fcef5fe3652e9aa0c93f20096095fbd0f90e932642e9",
+          "source.index_row.source_value_sha256": "7590a762f7d79daed6326c40bc98cfbe1179e4fc1b83d846e1bc5af814583768"
         },
         "expected_valid": false
       },
@@ -5891,6 +6010,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_create_failed.v1:00000000-0000-4000-8000-000000000001:app",
@@ -5930,7 +6061,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_create_failed.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_ab0d78c9667c2ce1aeee62e2474516c1a9fe21bfb68254d67286817e12982b84",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_ab0d78c9667c2ce1aeee62e2474516c1a9fe21bfb68254d67286817e12982b84",
+          "value.last_event_id": "evt_dch_ab0d78c9667c2ce1aeee62e2474516c1a9fe21bfb68254d67286817e12982b84",
+          "source.index_row.source_value_sha256": "0be487a539d5f24e9edbd5d7e2bbcf829759fc0ba60a1e03132f9f3c67f1d457"
         },
         "expected_valid": false
       },
@@ -6705,6 +6841,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_merge_failed.v1:00000000-0000-4000-8000-000000000001:app",
@@ -6744,7 +6892,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_merge_failed.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_5ac14925abd9eaf0cc0c4b40a34055522e6e4655281b000036b609027f4b0d58",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_5ac14925abd9eaf0cc0c4b40a34055522e6e4655281b000036b609027f4b0d58",
+          "value.last_event_id": "evt_dch_5ac14925abd9eaf0cc0c4b40a34055522e6e4655281b000036b609027f4b0d58",
+          "source.index_row.source_value_sha256": "bd1bb1f4d61c006de2a53bcefa136eab9d23e423e08f0681063253476df699f7"
         },
         "expected_valid": false
       },
@@ -7518,6 +7671,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_merged.v1:00000000-0000-4000-8000-000000000001:app",
@@ -7557,7 +7722,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_merged.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_1e6713d32d9f6690995fc2c247f559e3afbea0f0c26647272386633777a1532c",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_1e6713d32d9f6690995fc2c247f559e3afbea0f0c26647272386633777a1532c",
+          "value.last_event_id": "evt_dch_1e6713d32d9f6690995fc2c247f559e3afbea0f0c26647272386633777a1532c",
+          "source.index_row.source_value_sha256": "de925f4230e786edfa39e219f0cb2cfdefc3c51a0ebcd8b4ac2dbdddcf3d8b28"
         },
         "expected_valid": false
       },
@@ -8331,6 +8501,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_pr_created.v1:00000000-0000-4000-8000-000000000001:app",
@@ -8370,7 +8552,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_pr_created.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_a3cea9b4fd915c452f201961ff9d844354cf577aedb6040665093328fa24e879",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_a3cea9b4fd915c452f201961ff9d844354cf577aedb6040665093328fa24e879",
+          "value.last_event_id": "evt_dch_a3cea9b4fd915c452f201961ff9d844354cf577aedb6040665093328fa24e879",
+          "source.index_row.source_value_sha256": "18fae51f50bd3a8610972da4ec560c8f5b5919098f9f479568a47a73e588b7f5"
         },
         "expected_valid": false
       },
@@ -9143,6 +9330,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_pr_failed.v1:00000000-0000-4000-8000-000000000001:app",
@@ -9182,7 +9381,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_pr_failed.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_d270b40bba5d81926a623a27003cadfb835e9b2f862a9951e9d2249e199dda23",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_d270b40bba5d81926a623a27003cadfb835e9b2f862a9951e9d2249e199dda23",
+          "value.last_event_id": "evt_dch_d270b40bba5d81926a623a27003cadfb835e9b2f862a9951e9d2249e199dda23",
+          "source.index_row.source_value_sha256": "e9c2b9f308aab431a71f1e0bdc015aacffd2259804e86f9dd67d5531cb914426"
         },
         "expected_valid": false
       },
@@ -9960,6 +10164,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_failed.v1:00000000-0000-4000-8000-000000000001:app",
@@ -9999,7 +10215,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_failed.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_19597452b780bdce2935da6742bc1d32102da0eefc736f20459e8041bfbbe67c",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_19597452b780bdce2935da6742bc1d32102da0eefc736f20459e8041bfbbe67c",
+          "value.last_event_id": "evt_dch_19597452b780bdce2935da6742bc1d32102da0eefc736f20459e8041bfbbe67c",
+          "source.index_row.source_value_sha256": "3571d4d11eb29b522dab16eac1f84fe5805cf93b6d5030c804418606a3b7c56f"
         },
         "expected_valid": false
       },
@@ -10773,6 +10994,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_passed.v1:00000000-0000-4000-8000-000000000001:app",
@@ -10812,7 +11045,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_passed.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_26e28e1f769c0cdbe72f5f1bfdb9640338c302e73f1fb1c621142f73391d278a",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_26e28e1f769c0cdbe72f5f1bfdb9640338c302e73f1fb1c621142f73391d278a",
+          "value.last_event_id": "evt_dch_26e28e1f769c0cdbe72f5f1bfdb9640338c302e73f1fb1c621142f73391d278a",
+          "source.index_row.source_value_sha256": "55a7ec0c3b4c2a871965fc293890f1820c0f9b0ab50ff77b223cf34b3a4de476"
         },
         "expected_valid": false
       },
@@ -11585,6 +11823,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_started.v1:00000000-0000-4000-8000-000000000001:app",
@@ -11624,7 +11874,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_started.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_08efe031dfe76a7ac5a323c1957e8ece5eafd6a222c034c9197f836d9fca4b26",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_08efe031dfe76a7ac5a323c1957e8ece5eafd6a222c034c9197f836d9fca4b26",
+          "value.last_event_id": "evt_dch_08efe031dfe76a7ac5a323c1957e8ece5eafd6a222c034c9197f836d9fca4b26",
+          "source.index_row.source_value_sha256": "1865ae979a3ec9f8659a89cb617a06436cf0a99c6037c1b701ff1ade0a597ef2"
         },
         "expected_valid": false
       },
@@ -12396,6 +12651,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_renamed.v1:00000000-0000-4000-8000-000000000001:app",
@@ -12435,7 +12702,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_renamed.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_b038084ae6f08633d26124990a1ce27d57eaa3fff67324afe1dc170e3dbfe006",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_b038084ae6f08633d26124990a1ce27d57eaa3fff67324afe1dc170e3dbfe006",
+          "value.last_event_id": "evt_dch_b038084ae6f08633d26124990a1ce27d57eaa3fff67324afe1dc170e3dbfe006",
+          "source.index_row.source_value_sha256": "9e32c636cb0b7b8c18105d0e0ef7009d4be2ed0c539a5beed0a758b45341154c"
         },
         "expected_valid": false
       },
@@ -13206,6 +13478,18 @@
           "named_plan_id": null,
           "server_id": "server1"
         }
+      },
+      "event_access": {
+        "retained": true,
+        "authorized": true,
+        "hold_access_allowed": true,
+        "deleted": false,
+        "event_withdrawn": false,
+        "live_state": {
+          "thread_state": "active",
+          "revision": 1,
+          "worktree_binding": "original"
+        }
       }
     },
     "key": "projector.checkpoint.dch.chat_thread_worktree_unbound.v1:00000000-0000-4000-8000-000000000001:app",
@@ -13245,7 +13529,12 @@
           "source.index_row.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "key": "projector.checkpoint.dch.chat_thread_worktree_unbound.v1:00000000-0000-4000-8000-000000000099:app",
           "source.publication.source_token.checkpoint_key": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099",
-          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "source.publication.source_token.checkpoint_ref": "event_record_index_checkpoint.v1:00000000-0000-4000-8000-000000000099#/generations/eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source.event_record.event_id": "evt_dch_f408849fcdd685856ddbc1da494849d7604e817172819b4280a1f952e69ecd0d",
+          "source.event_record.idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+          "source.index_row.event_id": "evt_dch_f408849fcdd685856ddbc1da494849d7604e817172819b4280a1f952e69ecd0d",
+          "value.last_event_id": "evt_dch_f408849fcdd685856ddbc1da494849d7604e817172819b4280a1f952e69ecd0d",
+          "source.index_row.source_value_sha256": "7187f9bfe49fa662abf2c9e110c8802fff8ba804bd74c1b2b92968e70faaf2eb"
         },
         "expected_valid": false
       },

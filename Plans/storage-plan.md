@@ -29603,6 +29603,8 @@ Adopt SP-337 for this exact event body. The logical body remains the selected cl
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
 
+For bundle.selection_forward_blocked, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
 ```yaml
 plan_unit_id: SP-610
 unit_type: requirement
@@ -29727,7 +29729,28 @@ canonical_text: '### SP-610 — bundle.selection_forward_blocked
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For bundle.selection_forward_blocked, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -29783,6 +29806,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For bundle.selection_sent_to_chat, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-611
@@ -29908,7 +29933,28 @@ canonical_text: '### SP-611 — bundle.selection_sent_to_chat
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For bundle.selection_sent_to_chat, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -29964,6 +30010,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.message, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-612
@@ -30093,7 +30141,27 @@ canonical_text: '### SP-612 — chat.message
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.message, the complete encoded checkpoint includes every retained history entry and projection
+  reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline,
+  16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337;
+  measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type
+  reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold
+  access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event
+  body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked
+  against the original Storage record for the actual instance; no fixture/default instance supplies authority.
+  Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope
+  and Project/application payload edition, verifies their exact original source commitment and current
+  access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals,
+  including projector_replay_only, remain readable after later live-state changes; only a new append/retry
+  uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish.
+  Declared integer and boolean slots require their exact types before comparison or arithmetic; string
+  numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference
+  encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes;
+  no alternate spelling may mint a second identity or digest. These are refinements of this family''s
+  existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -30149,6 +30217,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_created, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-614
@@ -30274,7 +30344,27 @@ canonical_text: '### SP-614 — chat.thread_created
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_created, the complete encoded checkpoint includes every retained history entry and projection
+  reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline,
+  16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337;
+  measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type
+  reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold
+  access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event
+  body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked
+  against the original Storage record for the actual instance; no fixture/default instance supplies authority.
+  Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope
+  and Project/application payload edition, verifies their exact original source commitment and current
+  access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals,
+  including projector_replay_only, remain readable after later live-state changes; only a new append/retry
+  uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish.
+  Declared integer and boolean slots require their exact types before comparison or arithmetic; string
+  numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference
+  encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes;
+  no alternate spelling may mint a second identity or digest. These are refinements of this family''s
+  existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -30330,6 +30420,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_deleted, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-615
@@ -30456,7 +30548,27 @@ canonical_text: '### SP-615 — chat.thread_deleted
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_deleted, the complete encoded checkpoint includes every retained history entry and projection
+  reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline,
+  16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337;
+  measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type
+  reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold
+  access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event
+  body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked
+  against the original Storage record for the actual instance; no fixture/default instance supplies authority.
+  Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope
+  and Project/application payload edition, verifies their exact original source commitment and current
+  access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals,
+  including projector_replay_only, remain readable after later live-state changes; only a new append/retry
+  uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish.
+  Declared integer and boolean slots require their exact types before comparison or arithmetic; string
+  numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference
+  encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes;
+  no alternate spelling may mint a second identity or digest. These are refinements of this family''s
+  existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -30512,6 +30624,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_bound, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-616
@@ -30637,7 +30751,28 @@ canonical_text: '### SP-616 — chat.thread_worktree_bound
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_bound, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -30693,6 +30828,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_create_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-617
@@ -30818,7 +30955,28 @@ canonical_text: '### SP-617 — chat.thread_worktree_create_failed
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_create_failed, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -30874,6 +31032,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_merge_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-618
@@ -30999,7 +31159,28 @@ canonical_text: '### SP-618 — chat.thread_worktree_merge_failed
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_merge_failed, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -31055,6 +31236,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_merged, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-619
@@ -31180,7 +31363,28 @@ canonical_text: '### SP-619 — chat.thread_worktree_merged
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_merged, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -31236,6 +31440,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pr_created, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-620
@@ -31361,7 +31567,28 @@ canonical_text: '### SP-620 — chat.thread_worktree_pr_created
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pr_created, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -31417,6 +31644,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pr_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-621
@@ -31542,7 +31771,28 @@ canonical_text: '### SP-621 — chat.thread_worktree_pr_failed
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pr_failed, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -31598,6 +31848,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pre_merge_test_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-622
@@ -31724,7 +31976,28 @@ canonical_text: '### SP-622 — chat.thread_worktree_pre_merge_test_failed
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pre_merge_test_failed, the complete encoded checkpoint includes every retained
+  history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -31780,6 +32053,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pre_merge_test_passed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-623
@@ -31906,7 +32181,28 @@ canonical_text: '### SP-623 — chat.thread_worktree_pre_merge_test_passed
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pre_merge_test_passed, the complete encoded checkpoint includes every retained
+  history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -31962,6 +32258,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pre_merge_test_started, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-624
@@ -32088,7 +32386,28 @@ canonical_text: '### SP-624 — chat.thread_worktree_pre_merge_test_started
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pre_merge_test_started, the complete encoded checkpoint includes every retained
+  history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -32144,6 +32463,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_renamed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-625
@@ -32269,7 +32590,28 @@ canonical_text: '### SP-625 — chat.thread_worktree_renamed
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_renamed, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -32325,6 +32667,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_unbound, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-626
@@ -32450,7 +32794,28 @@ canonical_text: '### SP-626 — chat.thread_worktree_unbound
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_unbound, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
@@ -32506,6 +32871,8 @@ The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized valu
 Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
 
 Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_archived, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity or digest. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
 
 ```yaml
 plan_unit_id: SP-613
@@ -32632,7 +32999,28 @@ canonical_text: '### SP-613 — chat.thread_archived
   token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
   source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
   Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
-  CRC, source locks or durability.'
+  CRC, source locks or durability.
+
+
+  For chat.thread_archived, the complete encoded checkpoint includes every retained history entry and
+  projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes
+  may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds
+  and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Declared integer and boolean slots require their exact types
+  before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Physical commitment/reference encoding canonicalizes integral numeric aliases
+  and signed zero to the same shortest integer bytes; no alternate spelling may mint a second identity
+  or digest. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:

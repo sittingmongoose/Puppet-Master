@@ -7249,6 +7249,8 @@ Review round 3 requires exact object equality between every materialized DCH che
 
 Review round 4 requires standing check 11 across the complete DCH lane: construct each negative from an accepted case and change exactly one contract fact; keep every observational copy and every unrelated identity, encoded commitment and source/publication witness coherent. Generation-limit negatives contain three schema-valid retired entries beyond the valid two-entry history. Unsupported historical editions carry the independently supplied commitment of those exact retained bytes; forged-byte negatives remain separate. Terminal-test event-identity negatives change the terminal payload started_event_id and preserve the valid started source. For every acceptance guard, remove only that guard in an in-memory test variant, require its own negatives to become accepted, and require all other negatives to remain rejected for their own defects; restore the guard before the next row. The retained guard-removal table identifies the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table fails acceptance. scripts/pm_dch_guard_proofs.py supplies this static proof alongside the complete ordinary checker and regression runner. No production guard may be weakened. Native execution remains NOT_RUN.
 
+Review round 5 requires actual-instance event-ID verification for both payload editions and two independent Storage instances, including inline and referenced historical and checkpoint paths. Checkpoint publication validates supported original envelope/payload editions and current custody under historical-reader policy, accepts retained compatibility originals after live-state changes, and refuses unsupported, withdrawn, forged and foreign originals. Measure the complete encoded checkpoint and every physical inline pointer at 16384/16385 bytes, including two retained generations and maximum legal reference arrays; oversized logical positives require verified SP-337 pack/index/readback custody. All seventeen families exercise numeric aliases 1/1.0/1e0 and -0/0, invalid JSON 01, and wrong-type strings, null, arrays and nested objects; declared integer slots reject non-integer runtime types before joins, while physical encoding normalizes integral aliases to one commitment/reference. Every guard-removal variant preserves every unrelated rule. A missing-generation mutant may substitute only an explicit independent lookup witness and must continue all remaining joins; withdrawn-state, last-event and publication-id containment controls must still refuse in every family. Never return early success to prove a guard. Preserve all earlier round findings and negative fixtures; native execution and Stop remain unchanged.
+
 ```yaml
 plan_unit_id: ATS-305
 unit_type: requirement
@@ -7322,7 +7324,23 @@ canonical_text: '### ATS-305 — DCH
   the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic
   copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table
   fails acceptance. scripts/pm_dch_guard_proofs.py supplies this static proof alongside the complete ordinary
-  checker and regression runner. No production guard may be weakened. Native execution remains NOT_RUN.'
+  checker and regression runner. No production guard may be weakened. Native execution remains NOT_RUN.
+
+
+  Review round 5 requires actual-instance event-ID verification for both payload editions and two independent
+  Storage instances, including inline and referenced historical and checkpoint paths. Checkpoint publication
+  validates supported original envelope/payload editions and current custody under historical-reader policy,
+  accepts retained compatibility originals after live-state changes, and refuses unsupported, withdrawn,
+  forged and foreign originals. Measure the complete encoded checkpoint and every physical inline pointer
+  at 16384/16385 bytes, including two retained generations and maximum legal reference arrays; oversized
+  logical positives require verified SP-337 pack/index/readback custody. All seventeen families exercise
+  numeric aliases 1/1.0/1e0 and -0/0, invalid JSON 01, and wrong-type strings, null, arrays and nested
+  objects; declared integer slots reject non-integer runtime types before joins, while physical encoding
+  normalizes integral aliases to one commitment/reference. Every guard-removal variant preserves every
+  unrelated rule. A missing-generation mutant may substitute only an explicit independent lookup witness
+  and must continue all remaining joins; withdrawn-state, last-event and publication-id containment controls
+  must still refuse in every family. Never return early success to prove a guard. Preserve all earlier
+  round findings and negative fixtures; native execution and Stop remain unchanged.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on: []
@@ -7337,11 +7355,13 @@ acceptance_criteria:
 - 'Standing check 11 passes for every lane guard: one contract defect per negative, coherent copies and
   unrelated commitments, own negatives accepted only when that guard is removed, all others still rejected;
   retain the complete guard-removal table.'
+- Complete checkpoint byte/reference and original-reader boundaries, exact types and actual-instance identity have isolated witnesses; generation lookup mutants preserve all downstream guards.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm_dch_event_regressions.py
 - python3 scripts/pm_dch_guard_proofs.py --out <guard-proof.json>
+- python3 scripts/pm_dch_round5_regressions.py --out <round5-regressions.json>
 risk_class: event_authority_contract
 reasoning_tier: high
 context_scope: event_authority_dch

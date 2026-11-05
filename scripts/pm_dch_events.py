@@ -5,6 +5,7 @@ import base64
 import binascii
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
 import sys
@@ -98,6 +99,8 @@ def historical_read_valid(record, row, witness, envelope, payload_validator):
     The witness models independently read canonical bytes and current access,
     not an admission or a replacement for native source/custody verification.
     """
+    if not input_types_valid({'record': record, 'witness': witness}):
+        return False
     body = resolve_body(record, witness.get('payload_source'), witness['storage_instance_id'])
     if (body is None or not envelope.is_valid(record) or not payload_validator.is_valid(body)
             or not all(witness[k] is True for k in ['retained', 'authorized', 'hold_access_allowed'])
@@ -112,6 +115,12 @@ def historical_read_valid(record, row, witness, envelope, payload_validator):
 def body_bytes(value):
     """SP-236 shortest MessagePack, recursively sorted exact UTF-8 map keys."""
     def ordered(v):
+        # SP-236 shortest numeric representation: integral finite floats and
+        # either signed zero have the same bytes as their integer value.
+        if type(v) is float:
+            if not math.isfinite(v):
+                raise ValueError('non-finite number')
+            return int(v) if v.is_integer() else v
         if isinstance(v, dict):
             return {k: ordered(v[k]) for k in sorted(v, key=lambda k: k.encode('utf-8'))}
         if isinstance(v, list):
@@ -119,12 +128,51 @@ def body_bytes(value):
         return v
     return msgpack.packb(ordered(value), use_bin_type=True, strict_types=True)
 
+def input_types_valid(value):
+    """Exact witness types before truth/equality/arithmetic, including bool/int.
+
+    DCH declares integer slots, no floating point slots. Physical encoding still
+    canonicalizes numeric aliases, so a rejected alternate cannot mint a digest.
+    Schema validation owns field presence, strings, enums and logical bounds.
+    """
+    integers = {'sequence_id', 'producer_sequence_id', 'revision', 'frontier_revision',
+                'last_sequence_id', 'selected_segment_generation', 'manifest_generation',
+                'recovery_epoch', 'expected_thread_revision', 'committed_thread_revision',
+                'expected_revision', 'duration_ms', 'pr_number', 'byte_size'}
+    objects = {'payload', 'body', 'scope', 'source_token', 'source_selection', 'migration', 'record', 'witness', 'source', 'value',
+               'retry', 'pointer', 'pack', 'checkpoint_storage', 'event_record', 'event_access',
+               'checkpoint', 'index_row', 'publication', 'before', 'after', 'request',
+               'started', 'outcome', 'live_state', 'generations'}
+    arrays = {'projection_refs', 'history', 'attachment_refs', 'provenance_refs'}
+    strings = {'operation_id', 'computer_id', 'actor_ref', 'schema_id', 'schema_version',
+               'scope_kind', 'scope_partition', 'server_id', 'event_type'}
+    if type(value) is list:
+        return all(input_types_valid(v) for v in value)
+    if type(value) is not dict:
+        return type(value) in [str, int, bool, type(None)]
+    for key, v in value.items():
+        if type(key) is not str:
+            return False
+        if key in integers and not (type(v) is int or (key == 'producer_sequence_id' and v is None)):
+            return False
+        if key in objects and type(v) is not dict:
+            return False
+        if key in arrays and type(v) is not list:
+            return False
+        if key in strings and type(v) is not str:
+            return False
+        if not input_types_valid(v):
+            return False
+    return True
+
 def payload_reference(body):
     raw = body_bytes(body)
     return f'payload:v1:{blake3.blake3(raw).hexdigest()}:{len(raw)}:application/msgpack'
 
 def resolve_body(record, source=None, storage_instance=STORAGE_INSTANCE):
     """Static SP-337 pack/readback/access fixture; not native durability proof."""
+    if not input_types_valid({'record': record, **({'source': source} if source is not None else {})}):
+        return None
     if record['payload_ref'] is None:
         return record['payload'] if len(body_bytes(record['payload'])) <= INLINE_LIMIT else None
     if record['payload'] != {} or not source:
@@ -181,7 +229,7 @@ def joins(record, event, source=None, storage_instance=STORAGE_INSTANCE):
     p = resolve_body(record, source, storage_instance)
     if p is None or record['replay_policy'] != 'dedupe_by_idempotency_key':
         return False
-    expected = {'event_type': event, 'event_id': identity(event, p),
+    expected = {'event_type': event, 'event_id': identity(event, p, storage_instance),
                 'idempotency_key': idempotency_key(event, p, storage_instance), 'payload_schema_id': p['schema_id'],
                 'scope_kind': p['scope']['scope_kind'], 'project_id': p['scope']['project_id'],
                 'thread_id': p['thread_id'], 'actor_ref': p['actor_ref'], 'occurred_at_utc': p['ts'],
@@ -190,11 +238,13 @@ def joins(record, event, source=None, storage_instance=STORAGE_INSTANCE):
 
 def retry_outcome(original, retry, available=True):
     """Static CV-366 oracle; does not exercise a writer, receipt or real dedupe store."""
+    if not input_types_valid({'record': original, 'retry': retry}) or type(available) is not bool:
+        return 'invalid_input_type'
     if any(r['replay_policy'] == 'projector_replay_only' for r in [original, retry]):
         return 'replay_only_not_appendable'
     if any(r['replay_policy'] != 'dedupe_by_idempotency_key' for r in [original, retry]):
         return 'invalid_append_policy'
-    if not available:
+    if available is False:
         return 'dedupe_unavailable'
     def lifetime(r):
         # Exact scope identities are equivalent to their validated reversible
@@ -212,6 +262,8 @@ def retry_outcome(original, retry, available=True):
 
 def test_joins(payload, source, event):
     """Original started operation and actual terminal outcome, W.9.2/W.9.3."""
+    if not input_types_valid({'payload': payload, 'source': source}):
+        return False
     started, outcome = source['started'], source['outcome']
     p = started['payload']
     schema = json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json').read_text())
@@ -239,13 +291,22 @@ def test_joins(payload, source, event):
 
 def checkpoint_joins(value, source, row, key):
     """Independent synthetic source/root/dataset/publication joins under SP-278."""
+    if not input_types_valid({'value': value, 'source': source}):
+        return False
     token = value['source_token']
     store = source['storage_instance_id']
     generation = token['generation_id']
     root = source['checkpoint']
     node = root['generations'].get(generation)
     event = source['event_record']
-    p = event['payload']
+    envelope = Draft202012Validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()), format_checker=FormatChecker())
+    payload_validator = Draft202012Validator(json.loads((ROOT/row['payload_schema_ref']).read_text()), format_checker=FormatChecker())
+    witness = {**source['event_access'], 'storage_instance_id': store,
+               'source_value_sha256': source['index_row']['source_value_sha256'],
+               'payload_source': source.get('payload_source')}
+    if not historical_read_valid(event, row, witness, envelope, payload_validator):
+        return False
+    p = resolve_body(event, source.get('payload_source'), store)
     generic_key = 'event_record_index_checkpoint.v1:' + store
     if not node:
         return False
@@ -266,7 +327,6 @@ def checkpoint_joins(value, source, row, key):
             and index['sequence_id'] == value['last_sequence_id'] == event['sequence_id']
             and index['scope_partition'] == value['scope_partition'] == p['scope']['scope_partition']
             and index['event_type'] == value['event_type'] == row['event_type'] == event['event_type']
-            and index['source_value_sha256'] == hashlib.sha256(body_bytes(event)).hexdigest()
             and key == row['domain_checkpoint_key'].format(storage_instance_id=store,
                                                           scope_partition=value['scope_partition'])
             and value['consumer_id'] == row['reader'] and value['projector_id'] == row['domain_projector']
@@ -277,16 +337,46 @@ def checkpoint_joins(value, source, row, key):
             and source['publication']['thread_id'] == p['thread_id']
             and source['publication']['computer_id'] == p['computer_id']
             and source['publication']['scope'] == p['scope']
-            and value['state'] == 'current' and joins(event, row['event_type'], storage_instance=store))
+            and value['state'] == 'current'
+            and checkpoint_storage_valid(value, source, row, key))
+
+def checkpoint_storage_valid(value, source, row, key):
+    """Actual inline value, or SP-337 pointer plus independent pack/index read.
+
+    Logical schema validation applies to the resolved complete checkpoint.
+    Every physically inline part, including the pointer, is byte measured.
+    """
+    if not input_types_valid({'value': value, 'source': source}):
+        return False
+    physical = source.get('checkpoint_storage')
+    if physical is None:
+        return len(body_bytes(value)) <= INLINE_LIMIT
+    packed = physical['pack']
+    pointer = physical['pointer']
+    raw = body_bytes(value)
+    return (len(body_bytes(pointer)) <= INLINE_LIMIT
+            and pointer == {'payload_ref': payload_reference(value)}
+            and packed['body'] == value
+            and packed['key'] == 'payload:v1:' + blake3.blake3(raw).hexdigest()
+            and packed['byte_size'] == len(raw)
+            and packed['media_type'] == 'application/msgpack'
+            and packed['storage_instance_id'] == source['storage_instance_id']
+            and packed['domain_key'] == key
+            and packed['scope_partition'] == value['scope_partition']
+            and packed['event_type'] == row['event_type']
+            and all(packed[k] is True for k in ['authorized', 'hold_access_allowed', 'bytes_durable', 'index_durable', 'readback_verified'])
+            and packed['deleted'] is False)
 
 def archive_joins(payload, source):
     """Static original request/commit fixture joins; never an authorization receipt."""
+    if not input_types_valid({'payload': payload, 'source': source}):
+        return False
     before, after, request = source['before'], source['after'], source['request']
     return (payload['archive_origin'] == 'manual' and payload['command_id'] == 'cmd.chat.archive'
             and request['origin'] == 'manual' and request['command_id'] == payload['command_id']
-            and request['permission_allowed'] and request['thread_selected'] and not before['active_run']
+            and request['permission_allowed'] is True and request['thread_selected'] is True and before['active_run'] is False
             and before['state'] in ['active', 'suspended'] and payload['previous_state'] == before['state']
-            and payload['state'] == after['state'] == 'archived' and after['readback_available']
+            and payload['state'] == after['state'] == 'archived' and after['readback_available'] is True
             and payload['expected_thread_revision'] == before['revision'] == request['expected_revision']
             and payload['committed_thread_revision'] == after['revision'] == before['revision'] + 1
             and payload['thread_record_ref'] == after['record_ref']
@@ -596,6 +686,12 @@ def main():
                 combined=changed(combined,tuple(path.split('.')),value)
             check((validator.is_valid(combined['value']) and checkpoint_joins(combined['value'],combined['source'],row,combined['key']))
                   ==oracle['expected_valid'],case['event_type']+': checkpoint join '+oracle['name'])
+    # The same independent acceptance cases feed the guard-removal corpus.
+    from types import SimpleNamespace
+    from pm_dch_round5_oracles import cases as round5_cases, evaluate
+    subject = SimpleNamespace(**globals())
+    for oracle in round5_cases(subject):
+        check(evaluate(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
     return finish()
 
 if __name__=='__main__':

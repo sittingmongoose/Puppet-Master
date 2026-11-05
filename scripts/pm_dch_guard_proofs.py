@@ -166,6 +166,7 @@ def corpus(m):
             v=changed({'value':c['valid'],'source':c['source'],'key':c['key']},o['changes'])
             add(prefix+'join/'+o['name'],'checkpoint',v['value'],v['source'],row,v['key'],schema,expected=o['expected_valid'])
         missing=copy.deepcopy(c['source']);missing['checkpoint']['generations']={}
+        missing['generation_lookup_witness']=copy.deepcopy(next(iter(c['source']['checkpoint']['generations'].values())))
         add(prefix+'missing_generation','checkpoint',c['valid'],missing,row,c['key'],schema)
         for name in ['optional','conditional','history','dynamic']:
             broken=copy.deepcopy(schema)
@@ -188,6 +189,8 @@ def corpus(m):
                     for k in parts[:-1]:target=target[int(k)] if isinstance(target,list) else target[k]
                     last=parts[-1];target[int(last) if isinstance(target,list) else last]=v+'\n'
                     add(prefix+base+'_lf/'+path,'payload',schema,invalid)
+    from pm_dch_round5_oracles import cases as round5_cases
+    cases.extend(round5_cases(m, Case))
     return cases
 
 
@@ -198,6 +201,15 @@ class Proof:
         self.removed=set();self.seen={};self.aliases={};self.schema_paths={};self.validation_cache={}
         self.schemas={};self.adapters={};self.failures=set();self.current_case=None
         self.m._guard=self.guard
+        # Controlled lookup evidence is fixture input, available only to the
+        # missing-generation mutant. It restores lookup context, never success.
+        self.m._generation_witness=lambda source: copy.deepcopy(source['generation_lookup_witness'])
+        original_types=self.m.input_types_valid
+        def exact_types(value):
+            # One recursive type boundary, deliberately called by several
+            # readers. Named duplicates enforce the identical input fact.
+            return self.guard('input: exact witness types',original_types(value),True)
+        self.m.input_types_valid=exact_types
         self.instrument()
         self.m.Draft202012Validator=self.validator
         self.envelope=self.validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()))
@@ -220,6 +232,10 @@ class Proof:
         return accept if key in self.removed else value
     def group(self,key):
         import re
+        if ': not input_types_valid(' in key:return 'input: exact witness types'
+        if key in ["checkpoint_storage_valid: len(body_bytes(pointer)) <= INLINE_LIMIT",
+                   "checkpoint_storage_valid: pointer == {'payload_ref': payload_reference(value)}"]:
+            return 'checkpoint storage: bounded exact SP-337 pointer (named duplicate shape/size)'
         function_groups={
             "archive_joins: payload['archive_origin'] == 'manual'":'archive: manual payload origin',
             "archive_joins: payload['command_id'] == 'cmd.chat.archive'":'archive: original command',
@@ -259,7 +275,7 @@ class Proof:
 
     def instrument(self):
         tree=ast.parse((ROOT/'scripts/pm_dch_events.py').read_text())
-        target={'historical_read_valid','resolve_body','joins','test_joins','checkpoint_joins','archive_joins'}
+        target={'historical_read_valid','resolve_body','joins','test_joins','checkpoint_joins','checkpoint_storage_valid','archive_joins'}
         proof=self
         class Wrap(ast.NodeTransformer):
             def __init__(self,name):self.name=name
@@ -269,22 +285,32 @@ class Proof:
                 # Delegation and materialization null checks duplicate the
                 # underlying boundary, rather than introduce an independent rule.
                 text=ast.unparse(n)
-                if text.startswith(('joins(', 'valid_scope_partition(')) or text in ['body is None','p is None','not node','not source']:
+                if text.startswith(('joins(', 'valid_scope_partition(', 'checkpoint_storage_valid(', 'not historical_read_valid(')) or text in ['body is None','p is None','not node','not source']:
                     return n
                 key=self.name+': '+text
                 return ast.copy_location(ast.Call(ast.Name('_guard',ast.Load()),[ast.Constant(key),n,ast.Constant(accept)],[]),n)
             def visit_If(self,n):
                 if self.name=='checkpoint_joins' and ast.unparse(n.test)=='not node':
-                    n.body=[ast.Return(ast.Call(ast.Name('_guard',ast.Load()),[ast.Constant('checkpoint: source generation exists'),ast.Constant(False),ast.Constant(True)],[]))]
-                    return n
+                    replacement=ast.parse("if not node:\n    if _guard('checkpoint: source generation exists', False, True):\n        node = _generation_witness(source)\n    else:\n        return False").body[0]
+                    return ast.copy_location(replacement,n)
                 if len(n.body)==1 and isinstance(n.body[0],ast.Return) and isinstance(n.body[0].value,ast.Constant) and n.body[0].value.value in [False,None]:
                     n.test=self.atom(n.test,False)
                 n.body=[self.visit(v) for v in n.body];n.orelse=[self.visit(v) for v in n.orelse];return n
             def visit_Return(self,n):
                 if isinstance(n.value,ast.BoolOp) and isinstance(n.value.op,ast.And):n.value=self.atom(n.value,True)
                 elif self.name=='resolve_body' and isinstance(n.value,ast.IfExp):n.value.test=self.atom(n.value.test,True)
+                elif self.name=='checkpoint_storage_valid' and isinstance(n.value,ast.Compare):n.value=self.atom(n.value,True)
                 return n
         for n in tree.body:
+            if isinstance(n,ast.FunctionDef) and n.name=='retry_outcome':
+                class Availability(ast.NodeTransformer):
+                    def visit_Compare(self,relation):
+                        if ast.unparse(relation)=='type(available) is not bool':
+                            return ast.copy_location(ast.Call(ast.Name('_guard',ast.Load()),
+                                [ast.Constant('retry: exact boolean availability'),relation,ast.Constant(False)],[]),relation)
+                        return self.generic_visit(relation)
+                n=Availability().visit(n);ast.fix_missing_locations(n)
+                exec(compile(ast.Module([n],type_ignores=[]),str(ROOT/'scripts/pm_dch_events.py'),'exec'),self.m.__dict__)
             if isinstance(n,ast.FunctionDef) and n.name in target:
                 n=Wrap(n.name).visit(n);ast.fix_missing_locations(n)
                 exec(compile(ast.Module([n],type_ignores=[]),str(ROOT/'scripts/pm_dch_events.py'),'exec'),self.m.__dict__)
@@ -389,6 +415,10 @@ class Proof:
             if not valid:self.failures.add(key)
             return True if key in self.removed else valid
         if s=='payload':return self.validator(a[0]).is_valid(a[1])
+        if s=='types':return m.input_types_valid(*a)
+        if s in ['numeric_bytes','equal_bytes','invalid_lexeme_refused','null_payload_unavailable']:
+            from pm_dch_round5_oracles import evaluate
+            return evaluate(m,c,self.envelope)
         if s=='partition':
             key='scope: exact canonical CV-365 partition'
             self.seen.setdefault(key,{'kind':'function'})
@@ -402,7 +432,7 @@ class Proof:
             policy='retry: current append policy';dedupe='retry: authoritative dedupe available';event_id='retry: original event identity'
             if any(r['replay_policy']!='dedupe_by_idempotency_key' for r in [original,retry]):
                 self.failures.add(policy);self.seen.setdefault(policy,{'kind':'function'})
-            if not available:self.failures.add(dedupe);self.seen.setdefault(dedupe,{'kind':'function'})
+            if available is False:self.failures.add(dedupe);self.seen.setdefault(dedupe,{'kind':'function'})
             if original['event_id']!=retry['event_id']:self.failures.add(event_id);self.seen.setdefault(event_id,{'kind':'function'})
             for field in m.SEMANTIC_FIELDS:
                 key='retry: semantic/'+field
@@ -416,7 +446,7 @@ class Proof:
                     if field=='payload':retry['payload']['actor_ref']=actor
                     if field=='actor_ref' and 'actor_ref' in retry['payload']:retry['payload']['actor_ref']=original['payload']['actor_ref']
             if policy in self.removed:original['replay_policy']=retry['replay_policy']='dedupe_by_idempotency_key'
-            if dedupe in self.removed:available=True
+            if dedupe in self.removed and available is False:available=True
             if event_id in self.removed:retry['event_id']=original['event_id']
             return m.retry_outcome(original,retry,available)
         if s=='history':return m.historical_read_valid(a[0],a[1],a[2],self.envelope,self.validator(a[3]))
@@ -437,7 +467,7 @@ class Proof:
             if c.surface=='payload':schema_blocks[c.name]=self.last_schema_requirements
         if baseline:raise AssertionError(baseline)
         print(json.dumps({'phase':'baseline','cases':len(self.cases),'schema_inventory':self.exploration}),flush=True)
-        keys=list(dict.fromkeys([*self.seen,*sorted(self.declared_inventory)]));rows=[];coverage={c.name:[] for c in self.cases if (c.expected is False or c.expected in ['conflict','dedupe_unavailable','replay_only_not_appendable','invalid_append_policy'])}
+        keys=list(dict.fromkeys([*self.seen,*sorted(self.declared_inventory)]));rows=[];coverage={c.name:[] for c in self.cases if (c.expected is False or c.expected in ['conflict','dedupe_unavailable','replay_only_not_appendable','invalid_append_policy','invalid_input_type'])}
         for key in keys:
             # Only cases that reached this guard can possibly change. Replaying
             # the others yields their cached baseline (all other guards restored).
@@ -446,7 +476,7 @@ class Proof:
             for c in affected:
                 try:
                     actual=self.evaluate(c)
-                    if (c.expected is False and actual is True) or (c.expected in ['conflict','dedupe_unavailable','replay_only_not_appendable','invalid_append_policy'] and actual=='original_result'):flips.append(c.name)
+                    if (c.expected is False and actual is True) or (c.expected in ['conflict','dedupe_unavailable','replay_only_not_appendable','invalid_append_policy','invalid_input_type'] and actual=='original_result'):flips.append(c.name)
                 except Exception as exc:errors.append({'case':c.name,'exception':repr(exc)})
             self.removed=set()
             for name in flips:
@@ -468,13 +498,28 @@ class Proof:
             row['other_negatives_stay_rejected']=len(coverage)-len(row['negatives_that_flip'])
         retained={c.name for c in self.cases if c.name not in self.exploration_names or c.name in selected}
         traces={name:trace for name,trace in traces.items() if name in retained}
-        report={'method':'Direct acceptance corpus; real function AST accepting-value substitutions and exact schema-keyword variants. Equivalent copies of one rule are grouped; unrelated rules remain enforced. Unreached guards reuse the deterministic baseline; every reached failing guard is reevaluated. All guards are restored per row.',
-                'status':'pass' if all(coverage.values()) and all(r['negatives_that_flip'] for r in rows) and not any(r['exceptions'] for r in rows) else 'fail',
+        # A missing lookup cannot short-circuit any subsequent rule. These
+        # two-defect controls test mutant containment, not production negatives.
+        containment=[]
+        self.removed={'checkpoint: source generation exists'}
+        for c in self.cases:
+            if not c.name.endswith('/missing_generation'):continue
+            for field,wrong in [('state','withdrawn'),('last_event_id','evt_dch_'+'c'*64),('publication_id','other')]:
+                value,source,row,key,schema=copy.deepcopy(c.args)
+                value[field]=wrong
+                control=Case(c.name+'/containment/'+field,'checkpoint',(value,source,row,key,schema))
+                try:
+                    accepted=self.evaluate(control)
+                    containment.append({'case':control.name,'rejected':accepted is False})
+                except Exception as exc:containment.append({'case':control.name,'rejected':False,'exception':repr(exc)})
+        self.removed=set()
+        report={'method':'Direct acceptance corpus; real function AST accepting-value substitutions and exact schema-keyword variants. Equivalent copies of one rule are grouped; unrelated rules remain enforced. Unreached guards reuse the deterministic baseline; every reached failing guard is reevaluated. All guards are restored per row. Missing-generation removal supplies only its explicit independent lookup witness, continues all remaining joins, and runs 51 downstream-defect containment controls.',
+                'status':'pass' if all(coverage.values()) and all(r['negatives_that_flip'] for r in rows) and not any(r['exceptions'] for r in rows) and len(containment)==51 and all(c['rejected'] for c in containment) else 'fail',
                 'cases':len(retained),'negative_cases':len(coverage),'guards':len(rows),'schema_inventory':self.exploration,
                 'discarded_exploration_candidates':len(self.exploration_names-selected),
                 'unproved_negatives':[n for n,gs in coverage.items() if not gs],
                 'guards_without_flips':[r['guard'] for r in rows if not r['negatives_that_flip']],
-                'table':rows,'negative_guards':coverage,'baseline_traces':traces}
+                'table':rows,'negative_guards':coverage,'baseline_traces':traces,'mutant_containment':containment}
         out.write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:v for k,v in report.items() if k not in ['table','negative_guards','baseline_traces']},indent=2))
         return report['status']!='pass'
