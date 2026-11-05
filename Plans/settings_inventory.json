@@ -22252,15 +22252,15 @@
     {
       "id": "planning.verification.repair-budget-exhaustion",
       "label": "When fix attempts run out",
-      "desc": "If repair attempts are used up: stop the work entirely, or finish marked 'degraded' so you know it wasn't fully verified.",
+      "desc": "If repair attempts are used up: stop the work, or stop and ask you to approve finishing with a recorded exception, which is never shown as fully verified.",
       "type": "select",
       "options": [
         "block",
-        "degraded"
+        "ask_exception"
       ],
       "option_labels": {
         "block": "Stop the work",
-        "degraded": "Finish, marked not fully checked"
+        "ask_exception": "Stop and ask me to approve an exception"
       },
       "default": "block",
       "scope": [
