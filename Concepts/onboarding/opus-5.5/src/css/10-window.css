@@ -130,7 +130,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   background: transparent; color: var(--text-secondary); cursor: pointer; font: 600 13px/1 var(--body-font); }
 .o55-iconbtn:hover, .o55-sound:hover { background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-primary); }
 .o55-iconbtn:focus-visible, .o55-sound:focus-visible, .o55-btn:focus-visible, .o55-card:focus-visible, .o55-tile:focus-visible, .o55-link:focus-visible, .o55-toggle:focus-visible, .o55-seg button:focus-visible, .o55-detbtn:focus-visible {
-  outline: 2px solid var(--o55-accent); outline-offset: 2px; }
+  --o55-face-outline: 2px solid var(--o55-accent); outline: var(--o55-face-outline); outline-offset: 2px; }
 .o55-sound[aria-pressed="false"] { color: var(--text-muted); }
 .o55-sound[aria-pressed="false"] svg { opacity: 0.7; }
 
@@ -199,9 +199,9 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 /* cards */
 .o55-choices { display: grid; gap: 11px; }
 .o55-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 14px; width: 100%; padding: 14px 16px; text-align: left; border-radius: var(--o55-card-r); cursor: pointer;
-  border: 1px solid var(--o55-line); background: var(--o55-card-bg); color: var(--text-primary); font: inherit; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 200ms ease; }
-.o55-card:hover { border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); transform: translateY(-1px); }
-.o55-card.o55-on { border-color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 11%, var(--o55-card-bg)); box-shadow: inset 0 0 0 1px var(--o55-accent); }
+  --o55-face-border-color: var(--o55-line); border: 1px solid var(--o55-line); --o55-face-background: var(--o55-card-bg); background: var(--o55-face-background); color: var(--text-primary); font: inherit; --o55-face-transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 200ms ease; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, --o55-hover-y 180ms ease, --o55-press-s 180ms ease, box-shadow 200ms ease; }
+.o55-card:hover { --o55-face-border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); border-color: var(--o55-face-border-color); --o55-hover-y: -1px; }
+.o55-card.o55-on { --o55-face-border-color: var(--o55-accent); border-color: var(--o55-face-border-color); --o55-face-background: color-mix(in srgb, var(--o55-accent) 11%, var(--o55-card-bg)); background: var(--o55-face-background); --o55-face-shadow: inset 0 0 0 1px var(--o55-accent); box-shadow: var(--o55-face-shadow); }
 .o55-card[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
 .o55-glyph { display: grid; place-items: center; width: 42px; height: 42px; border-radius: calc(var(--o55-card-r) * 0.8); color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 13%, transparent); flex: none; }
 .o55-cardtext { display: grid; gap: 3px; min-width: 0; }
@@ -239,24 +239,24 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-card > .o55-tag { grid-column: 3; }
 .o55-card > .o55-cardtext:first-child { grid-column: 1 / 3; }
 .o55-on > .o55-check { border-color: var(--o55-accent); background: var(--o55-accent); box-shadow: inset 0 0 0 4px var(--o55-win-bg); }
-#pm-o55-onboarding[data-family="friendly"] .o55-card { border: 2px solid color-mix(in srgb, var(--o55-ink) 55%, transparent); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 12%, transparent); }
-#pm-o55-onboarding[data-family="friendly"] .o55-card.o55-on { border-color: var(--o55-ink); box-shadow: 4px 5px 0 color-mix(in srgb, var(--o55-accent) 70%, transparent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-card { --o55-face-border-color: color-mix(in srgb, var(--o55-ink) 55%, transparent); border: 2px solid color-mix(in srgb, var(--o55-ink) 55%, transparent); --o55-face-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 12%, transparent); box-shadow: var(--o55-face-shadow); }
+#pm-o55-onboarding[data-family="friendly"] .o55-card.o55-on { --o55-face-border-color: var(--o55-ink); border-color: var(--o55-face-border-color); --o55-face-shadow: 4px 5px 0 color-mix(in srgb, var(--o55-accent) 70%, transparent); box-shadow: var(--o55-face-shadow); }
 #pm-o55-onboarding[data-family="friendly"] .o55-glyph { border-radius: 50%; background: color-mix(in srgb, var(--o55-accent) 22%, transparent); color: var(--o55-ink); }
-#pm-o55-onboarding[data-family="glass"] .o55-card { backdrop-filter: none; background: var(--o55-card-bg); border-color: rgba(255, 255, 255, 0.2); }
-#pm-o55-onboarding[data-family="glass"] .o55-card.o55-on { background: color-mix(in srgb, var(--o55-accent) 20%, transparent); box-shadow: inset 0 0 0 1px var(--o55-accent), 0 10px 30px -12px color-mix(in srgb, var(--o55-accent) 80%, transparent); }
-#pm-o55-onboarding[data-family="retro"] .o55-card { border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); }
-#pm-o55-onboarding[data-family="retro"] .o55-card:hover { transform: none; border-color: var(--text-primary); }
-#pm-o55-onboarding[data-family="retro"] .o55-card.o55-on { background: var(--o55-accent); color: var(--o55-on-accent); box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); }
+#pm-o55-onboarding[data-family="glass"] .o55-card { backdrop-filter: none; --o55-face-background: var(--o55-card-bg); background: var(--o55-face-background); --o55-face-border-color: rgba(255, 255, 255, 0.2); border-color: var(--o55-face-border-color); }
+#pm-o55-onboarding[data-family="glass"] .o55-card.o55-on { --o55-face-background: color-mix(in srgb, var(--o55-accent) 20%, transparent); background: var(--o55-face-background); --o55-face-shadow: inset 0 0 0 1px var(--o55-accent), 0 10px 30px -12px color-mix(in srgb, var(--o55-accent) 80%, transparent); box-shadow: var(--o55-face-shadow); }
+#pm-o55-onboarding[data-family="retro"] .o55-card { --o55-face-border-color: color-mix(in srgb, var(--text-primary) 70%, transparent); border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); }
+#pm-o55-onboarding[data-family="retro"] .o55-card:hover { --o55-hover-y: 0px; --o55-face-border-color: var(--text-primary); border-color: var(--o55-face-border-color); }
+#pm-o55-onboarding[data-family="retro"] .o55-card.o55-on { --o55-face-background: var(--o55-accent); background: var(--o55-face-background); color: var(--o55-on-accent); --o55-face-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); box-shadow: var(--o55-face-shadow); }
 #pm-o55-onboarding[data-family="retro"] .o55-card.o55-on .o55-cardsub, #pm-o55-onboarding[data-family="retro"] .o55-card.o55-on .o55-tag, #pm-o55-onboarding[data-family="retro"] .o55-card.o55-on .o55-glyph { color: var(--o55-on-accent); }
 #pm-o55-onboarding[data-family="retro"] .o55-check { border-radius: 0; }
 #pm-o55-onboarding[data-family="retro"] .o55-cardtitle { font-family: var(--display-font); text-transform: uppercase; font-size: 13.5px; letter-spacing: 0.03em; }
 
 /* look tiles */
 .o55-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.o55-tile { position: relative; display: grid; grid-template-rows: auto auto auto; gap: 3px; padding: 8px 8px 12px; border-radius: var(--o55-card-r); border: 1px solid var(--o55-line); background: var(--o55-card-bg);
-  color: var(--text-primary); cursor: pointer; text-align: left; font: inherit; transition: transform 200ms ease, border-color 200ms ease, box-shadow 220ms ease; }
-.o55-tile:hover { transform: translateY(-2px); }
-.o55-tile.o55-on { border-color: var(--o55-accent); box-shadow: inset 0 0 0 1px var(--o55-accent), 0 12px 26px -16px color-mix(in srgb, var(--o55-accent) 90%, transparent); }
+.o55-tile { position: relative; display: grid; grid-template-rows: auto auto auto; gap: 3px; padding: 8px 8px 12px; border-radius: var(--o55-card-r); --o55-face-border-color: var(--o55-line); border: 1px solid var(--o55-line); --o55-face-background: var(--o55-card-bg); background: var(--o55-face-background);
+  color: var(--text-primary); cursor: pointer; text-align: left; font: inherit; --o55-face-transition: transform 200ms ease, border-color 200ms ease, box-shadow 220ms ease; transition: transform 200ms ease, --o55-hover-y 200ms ease, --o55-press-s 200ms ease, border-color 200ms ease, box-shadow 220ms ease; }
+.o55-tile:hover { --o55-hover-y: -2px; }
+.o55-tile.o55-on { --o55-face-border-color: var(--o55-accent); border-color: var(--o55-face-border-color); --o55-face-shadow: inset 0 0 0 1px var(--o55-accent), 0 12px 26px -16px color-mix(in srgb, var(--o55-accent) 90%, transparent); box-shadow: var(--o55-face-shadow); }
 .o55-tileart { position: relative; display: block; height: var(--o55-tileart-h, 100px); border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background); margin-bottom: 6px; }
 .o55-tilename { font: 700 14px/1.2 var(--body-font); padding: 0 4px; }
 /* (each look tile carries its own look's tokens; some looks' secondary ink is a tint that reads under 4.5:1 on a tile in
@@ -495,7 +495,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 #pm-o55-onboarding[data-family="retro"] .o55-card, #pm-o55-onboarding[data-family="retro"] .o55-tile, #pm-o55-onboarding[data-family="retro"] .o55-chip,
 #pm-o55-onboarding[data-family="retro"] .o55-btn, #pm-o55-onboarding[data-family="retro"] .o55-seg button, #pm-o55-onboarding[data-family="retro"] .o55-switch,
 #pm-o55-onboarding[data-family="retro"] .o55-switch span, #pm-o55-onboarding[data-family="retro"] .o55-railnode, #pm-o55-onboarding[data-family="retro"] .o55-railitem,
-#pm-o55-onboarding[data-family="retro"] .o55-check, #pm-o55-onboarding[data-family="retro"] .o55-phmark { transition: none !important; }
+#pm-o55-onboarding[data-family="retro"] .o55-check, #pm-o55-onboarding[data-family="retro"] .o55-phmark { --o55-face-transition: none !important; transition: none !important; }
 
 .o55-lookmode { margin: -6px 0 2px; }
 .o55-keep { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); }
@@ -608,15 +608,72 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] 
 #pm-o55-onboarding[data-family="basic"] .o55-railzip-str { stroke-width: 1; }
 
 /* the choice Pip is previewing (hover intent, 60-ui-core.js): it keeps its hover look while the preview holds */
-#pm-o55-onboarding .o55-card.o55-previewing:not(.o55-on), #pm-o55-onboarding .o55-tile.o55-previewing:not(.o55-on) { border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); }
-#pm-o55-onboarding[data-family="retro"] .o55-card.o55-previewing:not(.o55-on) { border-color: var(--text-primary); }
+#pm-o55-onboarding .o55-card.o55-previewing:not(.o55-on), #pm-o55-onboarding .o55-tile.o55-previewing:not(.o55-on) { --o55-face-border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); border-color: var(--o55-face-border-color); }
+#pm-o55-onboarding[data-family="retro"] .o55-card.o55-previewing:not(.o55-on) { --o55-face-border-color: var(--text-primary); border-color: var(--o55-face-border-color); }
 /* the header's look menu: each look's ?, beside its row (63-look-menu.js) */
 .o55-opt-menu { display: flex; align-items: center; gap: 4px; }
 .o55-opt-menu > .o55-lookopt { flex: 1; min-width: 0; }
 .o55-lookmenu .o55-tipq { width: 18px; height: 18px; font-size: 10px; flex: none; }
+/* FO-75: the row gap is 4px. Keep the 30px help target in its trailing padding,
+   without letting its transparent hit layer cover the preceding option. */
+#pm-o55-onboarding .o55-lookmenu .o55-tipq::before { left: -4px; right: -8px; }
 .o55-lookmenu .o55-explainer { margin-top: 6px; }
 /* the brand's Pip: 22 px, on the text's line */
 .o55-logo-pip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
 .o55-logo-pip > svg { display: block; width: 22px; height: 22px; }
 /* a wait's loader (L6) sits on the line like the mark it replaced */
 .o55-ldwrap { display: inline-flex; align-items: center; flex: none; }
+
+/* FO-49: the native outer material, border and focus ring stay with the button's hit target.
+   Hover lift and press squeeze belong to content inside that boundary; look materials remain native. */
+@property --o55-hover-y { syntax: '<length>'; inherits: true; initial-value: 0px; }
+@property --o55-press-s { syntax: '<number>'; inherits: true; initial-value: 1; }
+:is(.o55-card, .o55-tile) > * { translate: 0 var(--o55-hover-y); scale: var(--o55-press-s); }
+/* A press never moves the button that takes the pointer: the page's Friendly `button:active { scale(.97) }`
+   (base pm6-css-global.css) shrank it under a held pointer, so pointer-up near an edge landed on the parent and
+   the click was lost. Friendly keeps its press as a content squeeze inside the stationary face. */
+#pm-o55-onboarding :is(.o55-card, .o55-tile):active { transform: none; }
+#pm-o55-onboarding[data-family="friendly"] :is(.o55-card, .o55-tile):not([aria-disabled="true"]):active { --o55-press-s: 0.97; }
+html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; --o55-press-s: 1 !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; --o55-press-s: 1 !important; }
+}
+/* The page's NieR reset removes native outlines; choices still need a keyboard ring. */
+#pm-o55-onboarding#pm-o55-onboarding :is(.o55-card, .o55-tile):focus-visible {
+  outline: 2px solid var(--o55-accent) !important; outline-offset: 2px !important;
+}
+
+/* FO-73: button hit bounds never move. Press displacement and squeeze belong to
+   content; the native face keeps its material and shadow compression. */
+#pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px; --o55-button-y: 0px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="friendly"] button:not(.o55-card, .o55-tile):active { --o55-button-s: .97; }
+#pm-o55-onboarding button.o55-btn:active { --o55-button-y: 1px; --o55-button-s: .985; }
+#pm-o55-onboarding[data-family="friendly"] button.o55-btn:active { --o55-button-x: 2px; --o55-button-y: 3px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="retro"] button.o55-btn:active { --o55-button-x: 3px; --o55-button-y: 3px; --o55-button-s: 1; }
+html[data-o55-nier="on"] #pm-o55-onboarding button.o55-btn:active { --o55-button-x: 1px; --o55-button-y: 1px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="glass"] button.o55-btn:not([aria-disabled="true"]):hover:not(:active) { --o55-button-y: -1px; }
+#pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { translate: var(--o55-button-x) var(--o55-button-y); scale: var(--o55-button-s); transition: translate 140ms ease, scale 140ms ease; }
+#pm-o55-onboarding :is(.o55-link, .o55-suggestchip, .o55-railjump) > span,
+#pm-o55-onboarding .o55-lookmodes button > span { display: inline-block; }
+#pm-o55-onboarding#pm-o55-onboarding button:not(.o55-card, .o55-tile) { transform: none !important; }
+html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
+html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
+  #pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { transition: none !important; }
+}
+
+/* The shared switcher magnifies this inner face with independent scale/translate.
+   Keep the look's press transform on a separate CSS layer so both cues compose. */
+#pm-o55-onboarding .o55-segface { display: inline-flex; align-items: center; gap: inherit;
+  translate: none; scale: none; transform: translate(var(--o55-button-x), var(--o55-button-y)) scale(var(--o55-button-s)); transition: transform 140ms ease; }
+
+/* An atomic inline content box does not receive propagated decorations. Keep the
+   link's native underline on its visual layer as well as its words. */
+#pm-o55-onboarding .o55-link > span { text-decoration: inherit; }
+
+/* Keep the native look's timing when feedback moves off the target: Retro cuts
+   states; Glass releases with its original spring curve and presses in 90 ms. */
+#pm-o55-onboarding[data-family="retro"] button:not(.o55-card, .o55-tile) > * { transition: none !important; }
+#pm-o55-onboarding[data-family="glass"] button.o55-btn > * { transition: translate 380ms cubic-bezier(.3, 1.3, .5, 1), scale 380ms cubic-bezier(.3, 1.3, .5, 1); }
+#pm-o55-onboarding[data-family="glass"] button.o55-btn:active > * { transition-duration: 90ms; }

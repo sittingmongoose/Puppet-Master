@@ -123,7 +123,10 @@
     /* Free Models and Backup have a ? beside their name (summary:<row>), the note under the summary */
     const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"${O55.tips.described('summary:' + k)}><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
     let out = '';
-    if (cm.state === 'done') out += row('project', d.project_name + ' · ' + O55.review.whereWork(S), true);
+    /* (files kept on a NAS or another device are named beside where the work happens, as Review's two rows do: the row
+       read "Book club site · This computer" for files on Home NAS, sweep SW-05) */
+    const away = d.project_mode === 'existing_local' ? d.project_transport !== 'local' : d.storage_mode === 'network_location';
+    if (cm.state === 'done') out += row('project', away ? T('ready.projectFiles', { name: d.project_name, where: O55.review.whereWork(S), files: O55.review.filesAt(S) }) : d.project_name + ' · ' + O55.review.whereWork(S), true);
     /* the online copy the commit made or brought in (Opus p74: Ready never named it) */
     if (cm.state === 'done' && d.online_mode !== 'none' && !cm.skipOnline && O55.review.onlineLine(S)) out += row('online', O55.review.onlineLine(S), true);
     /* a usable free route is an AI too: free-only is not "can't plan" (provider-login audit P18) */

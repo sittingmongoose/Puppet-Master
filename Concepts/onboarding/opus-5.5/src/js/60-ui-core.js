@@ -332,7 +332,7 @@
       const back = state === 'done' && live && backTo(ch) >= 0;
       return `<li class="o55-railitem" data-state="${state}" data-chapter="${ch}" data-key="rail-${ch}"${state === 'current' ? ' aria-current="step"' : ''}>`
         + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"${back ? ` data-o55-do="railJump" data-arg="${ch}"` : ''}>${state === 'done' ? tick : ''}</span>`
-        + (back ? `<button type="button" class="o55-raillabel o55-railjump" data-o55-do="railJump" data-arg="${ch}" aria-label="${U.esc(T('pip.stage.rail.back', { name }))}" data-pm-hover-exempt="true">${U.esc(name)}</button>`
+        + (back ? `<button type="button" class="o55-raillabel o55-railjump" data-o55-do="railJump" data-arg="${ch}" aria-label="${U.esc(T('pip.stage.rail.back', { name }))}" data-pm-hover-exempt="true"><span>${U.esc(name)}</span></button>`
           : `<span class="o55-raillabel">${U.esc(name)}</span>`) + '</li>';
     }).join('');
     const zip = O55.pipStage && O55.pipStage.h.kit() ? '<svg class="o55-railzip" aria-hidden="true" data-morph-skip></svg><span class="o55-railpip" aria-hidden="true" data-morph-skip></span>' : '';
