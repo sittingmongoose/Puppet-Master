@@ -79,10 +79,15 @@ def exercise(g, *, scratch=None):
     def no_targets(f):
         f["queue"]["items"][0].pop("target_plan_unit_ids")
 
+    def disposition_entry(token="old spelling", disposition="ledger_retired", **changes):
+        return {"schema_id": "pm.ledger_token_disposition.v1", "queue_id": "q-1", "atom_id": "atom-1", "token": token,
+                "target_plan_unit_ids": ["AA-001"], "disposition": disposition, **changes}
+
     def exempt(f, token="old spelling", disposition="ledger_retired"):
         f["atoms"][0]["exact_tokens"].append(token)
         f["reviews"] = [{"correction_id": "corr-1", "status": "accepted", "linked_atom_ids": ["atom-1"],
-                         "exact_tokens": [token], "correction": "Reviewed disposition of this source token."}]
+                         "exact_tokens": [token], "correction": "Reviewed disposition of this source token.",
+                         "token_dispositions": [disposition_entry(token, disposition)]}]
         f["exemptions"] = [{"schema_id": "pm.ledger_compile_witness_exemption.v1", "exemption_id": "ex-1",
                             "queue_id": "q-1", "atom_id": "atom-1", "token": token,
                             "target_plan_unit_ids": ["AA-001"], "disposition": disposition,
@@ -138,6 +143,75 @@ def exercise(g, *, scratch=None):
                          ("exact_tokens", ["unrelated"]), ("exact_tokens", "old spelling")):
         case("invalid-review-" + field + ("-string" if isinstance(value, str) and field == "exact_tokens" else ""),
              review_field(field, value), status="error", exit_code=1)
+
+    def refused_because(text):
+        return lambda r: text in r["error"]
+
+    def disposition_case(name, reason, entries=None, **fields):
+        def mutate(f):
+            exempt(f)
+            if entries is not None:
+                f["reviews"][0]["token_dispositions"] = entries
+            f["reviews"][0].update(fields)
+        case(name, mutate, status="error", exit_code=1, verify=refused_because(reason))
+
+    # The review's same-token fixture: an accepted record that keeps the exempted token mandatory.
+    exact_scope = "exactly one structured token_dispositions entry"
+    def active_flat_label(f):
+        exempt(f, "required token")
+        f["reviews"][0].pop("token_dispositions")
+        f["reviews"][0].update(disposition="active", correction="This accepted token remains mandatory in AA-001.")
+        f["exemptions"][0]["reason"] = "This accepted token remains mandatory in AA-001."
+    case("same-token-active-label-is-not-a-disposition", active_flat_label, status="error", exit_code=1, verify=refused_because(exact_scope))
+    def active_structured(f):
+        exempt(f, "required token")
+        f["reviews"][0]["token_dispositions"] = [disposition_entry("required token", "active")]
+        f["reviews"][0]["correction"] = "This accepted token remains mandatory in AA-001."
+    case("same-token-active-disposition-refused", active_structured, status="error", exit_code=1, verify=refused_because("keeps this token active"))
+    disposition_case("missing-disposition-refused", exact_scope, entries=[])
+    disposition_case("held-record-cannot-support-retired-exemption", "differs from its accepted record", entries=[disposition_entry(disposition="held")])
+    disposition_case("disposition-for-another-token-refused", exact_scope, entries=[disposition_entry(token="another token")])
+    disposition_case("disposition-for-another-atom-refused", exact_scope, entries=[disposition_entry(atom_id="atom-other")])
+    disposition_case("disposition-for-another-queue-refused", exact_scope, entries=[disposition_entry(queue_id="q-other")])
+    disposition_case("disposition-for-another-scope-refused", exact_scope, entries=[disposition_entry(target_plan_unit_ids=["BB-001"])])
+    disposition_case("disposition-wider-than-exemption-refused", exact_scope, entries=[disposition_entry(target_plan_unit_ids=["AA-001", "BB-001"])])
+    disposition_case("two-entries-for-one-scope-refused", exact_scope, entries=[disposition_entry(), disposition_entry(disposition="active")])
+    disposition_case("unknown-disposition-value-refused", "must be one of", entries=[disposition_entry(disposition="waived")])
+    disposition_case("disposition-without-schema-refused", "need schema_id", entries=[{k: v for k, v in disposition_entry().items() if k != "schema_id"}])
+    disposition_case("disposition-without-targets-refused", "disposition targets", entries=[{k: v for k, v in disposition_entry().items() if k != "target_plan_unit_ids"}])
+    disposition_case("disposition-list-must-be-a-list", "must be a list", entries=disposition_entry())
+
+    def conflict(f, *, status="accepted", disposition="active", path="records/corrections.jsonl", **changes):
+        exempt(f)
+        other = {"correction_id": "corr-2", "status": status, "token_dispositions": [disposition_entry(disposition=disposition, **changes)]}
+        if path == "records/corrections.jsonl":
+            f["reviews"].append(other)
+        else:
+            write(f["ledger"] / path, [other], jsonl=True)
+    conflicting = refused_because("gives this token a different disposition")
+    case("accepted-active-elsewhere-conflicts", conflict, status="error", exit_code=1, verify=conflicting)
+    case("accepted-held-in-another-file-conflicts", lambda f: conflict(f, disposition="held", path="records/decisions.jsonl"), status="error", exit_code=1, verify=conflicting)
+    case("conflict-in-another-queue-item-still-conflicts", lambda f: conflict(f, queue_id="q-other"), status="error", exit_code=1, verify=conflicting)
+    case("overlapping-scope-conflicts", lambda f: conflict(f, target_plan_unit_ids=["AA-001", "BB-001"]), status="error", exit_code=1, verify=conflicting)
+    case("malformed-accepted-record-elsewhere-refused", lambda f: conflict(f, disposition="waived", path="records/decisions.jsonl"), status="error", exit_code=1, verify=refused_because("must be one of"))
+    case("pending-record-is-not-a-conflict-control", lambda f: conflict(f, status="pending"), verify=lambda r: r["summary"]["item_tokens_exempted"] == 1)
+    case("agreeing-accepted-record-control", lambda f: conflict(f, disposition="ledger_retired"), verify=lambda r: r["summary"]["item_tokens_exempted"] == 1)
+    case("other-atom-active-is-not-a-conflict-control", lambda f: conflict(f, atom_id="atom-other"), verify=lambda r: r["summary"]["item_tokens_exempted"] == 1)
+    case("other-token-active-is-not-a-conflict-control", lambda f: conflict(f, token="another token"), verify=lambda r: r["summary"]["item_tokens_exempted"] == 1)
+    def scoped_owner(f):
+        # Retired in AA-001 and active in BB-001: each owner keeps its own result.
+        conflict(f, target_plan_unit_ids=["BB-001"])
+        f["queue"]["items"][0]["target_plan_unit_ids"].append("BB-001")
+        f["owner"] += owner("BB-001", "Required live token. old spelling", ["live token", "old spelling"])
+    case("active-in-another-owner-is-not-a-conflict-control", scoped_owner,
+         verify=lambda r: r["witness_exact_tokens"][1]["required_owner_units"] == ["BB-001"] and not r["witness_exact_tokens"][1]["fires"])
+    def scoped_owner_missing(f):
+        scoped_owner(f)
+        f["owner"] = owner("AA-001", "Required live token.", ["live token"]) + owner("BB-001", "Required live token.", ["live token"])
+    case("retired-in-one-owner-keeps-the-other-owner-required", scoped_owner_missing, status="findings", exit_code=2,
+         verify=lambda r: r["witness_exact_tokens"][1]["required_owner_units"] == ["BB-001"] and r["witness_exact_tokens"][1]["fires"])
+    case("exemption-reports-its-accepted-disposition", exempt,
+         verify=lambda r: r["token_exemptions"][0]["accepted_disposition"]["disposition"] == "ledger_retired")
 
     def overlap(f):
         exempt(f)

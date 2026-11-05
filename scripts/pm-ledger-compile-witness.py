@@ -14,7 +14,8 @@ own text (the registry line itself excluded), for every unit the compile targets
 
 All three witnesses are static text checks; they need no model and make no judgment about meaning.
 An empty owner-target scope is vacuous, never pass. --allow-empty explicitly permits only that empty result.
-Reviewed held/ledger-retired token exemptions live in records/compile_witness_exemptions.jsonl.
+Reviewed held/ledger-retired token exemptions live in records/compile_witness_exemptions.jsonl. Each needs a matching
+structured token_dispositions entry on the accepted ledger record it cites; missing, active or conflicting entries are refused.
 Exit 0 for pass or explicit --allow-empty, 2 for findings/vacuity, 1 for input/read errors.
 """
 from __future__ import annotations
@@ -134,10 +135,48 @@ def contained(root: Path, relative: str) -> Path:
     return path
 
 
+DISPOSITION_SCHEMA = "pm.ledger_token_disposition.v1"
+DISPOSITION_VALUES = ("active", "held", "ledger_retired")
+
+
+def dispositions_in(record, label):
+    """Structured token_dispositions entries of one accepted ledger record."""
+    entries = record.get("token_dispositions", [])
+    if type(entries) is not list:
+        raise ValueError(label + " token_dispositions must be a list")
+    for entry in entries:
+        if type(entry) is not dict or entry.get("schema_id") != DISPOSITION_SCHEMA:
+            raise ValueError(label + " token_dispositions entries need schema_id " + DISPOSITION_SCHEMA)
+        for key in ("queue_id", "atom_id", "token"):
+            if type(entry.get(key)) is not str or not entry[key].strip():
+                raise ValueError(label + " token disposition requires nonempty " + key)
+        if not strings(entry.get("target_plan_unit_ids"), label + " disposition targets", unique=True):
+            raise ValueError(label + " token disposition requires target_plan_unit_ids")
+        if entry.get("disposition") not in DISPOSITION_VALUES:
+            raise ValueError(label + " token disposition must be one of " + ", ".join(DISPOSITION_VALUES))
+    return entries
+
+
+def accepted_dispositions(ledger_dir):
+    """Every accepted disposition in records/, so a conflict in any record is seen."""
+    records = (ledger_dir / "records").resolve()
+    found = []
+    for path in sorted(records.rglob("*.jsonl")):
+        if not path.resolve().is_relative_to(records):
+            raise ValueError("ledger record escapes records/: " + path.name)
+        if path.resolve() == records / "compile_witness_exemptions.jsonl":
+            continue
+        for row in load_jsonl(path):
+            if row.get("status") == "accepted":
+                found.extend(dispositions_in(row, path.name))
+    return found
+
+
 def token_exemptions(ledger_dir, items, atoms, units):
     """Reviewed, per-atom/per-owner exceptions; never a token-wide waiver."""
     rows = load_jsonl(ledger_dir / "records/compile_witness_exemptions.jsonl")
     indexed, ids, reports = {}, set(), []
+    decided = accepted_dispositions(ledger_dir) if rows else []
     for row in rows:
         for key in ("exemption_id", "queue_id", "atom_id", "token", "reason", "reviewed_by", "review_ref"):
             if type(row.get(key)) is not str or not row[key].strip():
@@ -171,12 +210,24 @@ def token_exemptions(ledger_dir, items, atoms, units):
         reviewed_tokens = strings(review.get("exact_tokens", []), "review exact_tokens")
         if review.get("status") != "accepted" or row["atom_id"] not in linked or row["token"] not in reviewed_tokens:
             raise ValueError("review_ref must be accepted and name the exact atom and token: " + row["exemption_id"])
+        same_token = [entry for entry in dispositions_in(review, row["review_ref"]) if entry["atom_id"] == row["atom_id"] and entry["token"] == row["token"]]
+        cited = [entry for entry in same_token if entry["queue_id"] == row["queue_id"] and set(entry["target_plan_unit_ids"]) == set(targets)]
+        if len(cited) != 1:
+            raise ValueError("review_ref needs exactly one structured token_dispositions entry for this queue item, atom, token and exact target scope: " + row["exemption_id"])
+        if cited[0]["disposition"] == "active":
+            raise ValueError("accepted disposition keeps this token active: " + row["exemption_id"])
+        if cited[0]["disposition"] != row["disposition"]:
+            raise ValueError("exemption disposition differs from its accepted record: " + row["exemption_id"])
+        conflicts = [entry for entry in decided if entry["atom_id"] == row["atom_id"] and entry["token"] == row["token"] and
+                     entry["disposition"] != row["disposition"] and set(entry["target_plan_unit_ids"]) & set(targets)]
+        if conflicts:
+            raise ValueError("another accepted record gives this token a different disposition: " + row["exemption_id"])
         for uid in targets:
             key = (row["queue_id"], row["atom_id"], row["token"], uid)
             if key in indexed:
                 raise ValueError("overlapping token exemptions: " + row["exemption_id"])
             indexed[key] = row["exemption_id"]
-        reports.append(dict(row))
+        reports.append({**row, "accepted_disposition": cited[0]})
     return indexed, reports
 
 

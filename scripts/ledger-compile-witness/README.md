@@ -101,6 +101,32 @@ That record must link the exact atom through `linked_atom_ids`,
 The record path must remain inside the ledger's `records/`; it cannot cite
 the exemption file itself.
 
+The accepted record must also carry the decision as structured data, in a
+`token_dispositions` list. A label or sentence elsewhere in the record does not
+count:
+
+```json
+{"correction_id":"corr-1","status":"accepted","linked_atom_ids":["atom-1"],"exact_tokens":["old spelling"],"correction":"Replaces the source spelling.","token_dispositions":[{"schema_id":"pm.ledger_token_disposition.v1","queue_id":"q-1","atom_id":"atom-1","token":"old spelling","target_plan_unit_ids":["AA-001"],"disposition":"ledger_retired"}]}
+```
+
+Each entry's `disposition` is `active`, `held` or `ledger_retired`. An exemption is
+refused unless the cited record has exactly one entry for its queue item, atom,
+token and exact target set, and that entry's value equals the exemption's:
+
+| Case | Result |
+|---|---|
+| No entry for that exact queue item, atom, token and target set | Refused, exit 1 |
+| The entry says `active` | Refused, exit 1 |
+| The entry's value differs from the exemption | Refused, exit 1 |
+| An accepted entry in any `records/**/*.jsonl` gives the same atom and token a different value on an overlapping target | Refused, exit 1 |
+| A malformed entry on any accepted record, or one with an unknown value | Refused, exit 1 |
+
+Only records with `status` `accepted` count. To withdraw a disposition, change
+its record's status; a later record does not silently override an earlier one.
+An active disposition for another owner of the same token is not a conflict:
+that owner keeps its own requirement. Records are read only when an exemption
+exists, and a disposition without an exemption waives nothing.
+
 Exemptions bind the queue item, atom, token and existing mapped owner units.
 Duplicate/overlapping, stale or malformed scopes fail as input errors. An
 exemption for one owner cannot waive another owner's obligation, other tokens
@@ -108,8 +134,9 @@ or another atom. Fully exempt item-token rows remain visible in the report.
 Exemptions never waive registry hygiene or the changed-repair witness: a retired
 token left in a registry without body text still fails.
 
-The checker verifies this structure and the cited record's existence, not a
-reviewer's identity or the meaning/authority of the disposition. Review the
-record, reason and scope before accepting an exemption. A held-token exemption
-does not accept the held product requirement, and `--allow-empty` establishes
-no compilation fidelity evidence.
+The checker verifies this structure, the cited record's existence and that the
+recorded value agrees; it does not verify a reviewer's identity or the meaning or
+authority of the recorded decision. A person must review the record, reason and
+scope before accepting an exemption: anyone who can write the ledger can write an
+accepted disposition. A held-token exemption does not accept the held product
+requirement, and `--allow-empty` establishes no compilation fidelity evidence.
