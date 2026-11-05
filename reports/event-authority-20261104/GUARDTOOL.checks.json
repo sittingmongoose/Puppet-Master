@@ -191,6 +191,234 @@
     "parallel_checker_jobs": 0,
     "total_gib": 19
   },
+  "review_round_1": {
+    "base_sha": "88f7a96a383b6cc8e2137e9a332729ce0956e10f",
+    "checks": [
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm_guard_isolation.py",
+          "--self-test",
+          "--max-rss",
+          "1536",
+          "--pause-when-low",
+          "6",
+          "--resume-at",
+          "7",
+          "--json",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/self-test.json",
+          "--markdown",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/self-test.md"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "name": "self-test",
+        "seconds": 0.689
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm_guard_isolation.py",
+          "--adapter",
+          "scripts/pm_guard_isolation_traps.py:example_suite",
+          "--max-rss",
+          "1536",
+          "--pause-when-low",
+          "6",
+          "--resume-at",
+          "7",
+          "--json",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/adapter-example.json",
+          "--markdown",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/adapter-example.md"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "name": "adapter-example",
+        "seconds": 0.388
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm_guard_isolation.py",
+          "--adapter",
+          "scripts/pm_guard_isolation_traps.py:example_suite",
+          "--max-rss",
+          "1",
+          "--json",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/max-rss.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 1,
+        "expected_exit": 1,
+        "name": "max-rss",
+        "seconds": 0.357
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm_guard_isolation.py",
+          "--adapter",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/absent.py:factory",
+          "--json",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/missing-adapter.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 1,
+        "expected_exit": 1,
+        "name": "missing-adapter",
+        "seconds": 0.273
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/independent-probes.py",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/independent-probes.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 1,
+        "expected_exit": 0,
+        "name": "review-independent",
+        "observation": "Original reviewer diagnostic exits at the newly refused out-of-runner undeclared fragment request. Original log retained; reporting-only wrapper catches this expected refusal and completes all diagnostics.",
+        "seconds": 0.459
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/independent-probes-fix1.py",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/independent-probes.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "name": "review-independent-reporting-wrapper",
+        "seconds": 0.378
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/extra-code-probes.py",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/extra-code-probes.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 1,
+        "expected_exit": 1,
+        "name": "review-extra-code",
+        "seconds": 0.273
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/extra-schema-probes.py",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/extra-schema-probes.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "name": "review-extra-schema",
+        "seconds": 0.276
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix1",
+        "exit_code": 1,
+        "expected_exit": 0,
+        "name": "plan-index",
+        "observation": "Top-level fail: 22 unchanged ledger/PLS-025 baseline-comparison issues, outside the fix paths. No regeneration or governance changes.",
+        "seconds": 41.92
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "docs_checked": 99,
+        "exit_code": 0,
+        "name": "shards",
+        "shards_checked": 3095,
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "scope-invariance",
+        "observation": "Every plan-index failure path unchanged against reviewed base; canonical owner/derived/protected paths unchanged."
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "name": "whitespace"
+      }
+    ],
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/verification-manifest.json",
+      "sha256": "961e47f74a72a9f1a870fba04600c0b9a4f657abc7823b2320b76fc4978f8ff5"
+    },
+    "implementation_commit": "b004369868dafd173faf751695d0da7eca38352e",
+    "real_exercise": [
+      {
+        "evaluations": 3849,
+        "family": "plugin.loaded",
+        "inventory": 10755,
+        "rows": 426,
+        "selected_proved": 7,
+        "status": "FAIL",
+        "undispositioned_code": 230,
+        "unproved": 649
+      },
+      {
+        "evaluations": 3903,
+        "family": "plugin.hook.invoked",
+        "inventory": 10761,
+        "rows": 432,
+        "selected_proved": 7,
+        "status": "FAIL",
+        "undispositioned_code": 230,
+        "unproved": 655
+      },
+      {
+        "evaluations": 4047,
+        "family": "auth.github.authenticated",
+        "inventory": 10779,
+        "rows": 448,
+        "selected_proved": 7,
+        "status": "FAIL",
+        "undispositioned_code": 230,
+        "unproved": 671
+      }
+    ],
+    "setup_note": "python3 -m pip was unavailable (exit 1). Required rfc8785 0.1.4, blake3 1.0.11 and msgpack 1.2.4 were already installed in the VM interpreter; no installation or provider change was needed.",
+    "traps": {
+      "caught": 79,
+      "total": 79
+    }
+  },
   "self_test": {
     "status": "PASS",
     "traps": 49

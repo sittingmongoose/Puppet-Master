@@ -1,7 +1,13 @@
 {
-  "caught": 49,
+  "caught": 79,
+  "evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/self-test.json",
+    "sha256": "13cbdf52587f90f9d4ff2162d2e93210ea4b398279e2604e09273f613537b785"
+  },
+  "implementation_commit": "b004369868dafd173faf751695d0da7eca38352e",
+  "meaning": "caught is the expected observation, including deliberate engine FAIL or inventory-only probes; not 79 complete matrices PASS",
   "status": "PASS",
-  "trap_count": 49,
+  "trap_count": 79,
   "traps": [
     {
       "caught": true,
@@ -10,6 +16,9 @@
       "expected": "distinct invariant duplicate declaration refused",
       "id": "merged-predicates",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "infrastructure_or_declaration"
       ],
@@ -22,6 +31,9 @@
       "expected": "cut x alone preserves required y",
       "id": "whole-required-list",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "unproved_guards"
       ],
@@ -34,6 +46,9 @@
       "expected": "unwitnessed minLength/maxLength/pattern reported",
       "id": "non-type-inventory",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "unproved_guards"
       ],
@@ -46,6 +61,9 @@
       "expected": "target remains rejected: minimum on y",
       "id": "two-defect-negative",
       "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "guard_isolation_failed",
         "unproved_guards"
@@ -59,6 +77,9 @@
       "expected": "wrong type flips, well-typed foreign enum stays rejected",
       "id": "type-cut-enum-membership",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -69,6 +90,9 @@
       "expected": "one then clause cut preserves peer and null path",
       "id": "conditional-string-null",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "unproved_guards"
       ],
@@ -81,6 +105,7 @@
       "expected": "eager closure fails before cases",
       "id": "unresolved-unused-reference",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -91,6 +116,9 @@
       "expected": "maximum has no flipping negative: unproved",
       "id": "unexposed-construction",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "unproved_guards"
       ],
@@ -103,6 +131,9 @@
       "expected": "individual x/y clause cuts, same refusal code, no merging",
       "id": "shared-code-not-duplicates",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -113,6 +144,9 @@
       "expected": "each site alone retains same defect; all sites cut accepts",
       "id": "true-duplicates",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -123,6 +157,9 @@
       "expected": "masking records bad_y, not just a boolean failure",
       "id": "changed-refusal-mask",
       "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "guard_isolation_failed",
         "unproved_guards"
@@ -136,6 +173,9 @@
       "expected": "cut one dependency member preserves the other",
       "id": "required-dependency-member",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "unproved_guards"
       ],
@@ -148,6 +188,9 @@
       "expected": "resolved minimum cut preserves sibling maximum",
       "id": "reference-with-sibling",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "unproved_guards"
       ],
@@ -160,6 +203,9 @@
       "expected": "minimum match cut preserves maximum match guard",
       "id": "contains-count-clause",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "unproved_guards"
       ],
@@ -172,6 +218,9 @@
       "expected": "exclusivity cut preserves zero-match rejection",
       "id": "oneof-overlap-clause",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "cut_breaks_control",
         "unproved_guards"
@@ -185,6 +234,9 @@
       "expected": "negative-polarity atom cut accepts forbidden integer",
       "id": "negated-branch",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -195,6 +247,7 @@
       "expected": "cyclic reference resolves without recursion expansion",
       "id": "reference-cycle",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -205,6 +258,7 @@
       "expected": "all cardinality, closure, item and positional assertions visible",
       "id": "array-object-assertions",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -215,6 +269,7 @@
       "expected": "all numeric assertions and format visible; format enforced",
       "id": "bounds-multiples-format",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -225,10 +280,14 @@
       "expected": "unregistered AST refusal site is reported",
       "id": "unused-code-site",
       "masked_count": 0,
-      "observed_failure_kinds": [
-        "uninventoried_code_site"
+      "observed_engine_statuses": [
+        "FAIL"
       ],
-      "unproved_count": 0
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
     },
     {
       "caught": true,
@@ -237,6 +296,9 @@
       "expected": "checker exception is infrastructure, never a refusal pass",
       "id": "runner-crash",
       "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "declared_root_not_consumed",
         "guard_isolation_failed",
@@ -253,6 +315,9 @@
       "expected": "accepted negative fails baseline",
       "id": "false-success-oracle",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "declared_root_not_consumed",
         "guard_isolation_failed",
@@ -269,6 +334,9 @@
       "expected": "same display ID twice is a declaration failure",
       "id": "duplicate-labels",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "infrastructure_or_declaration"
       ],
@@ -281,6 +349,7 @@
       "expected": "pause below 6, wait at 6, resume at 7",
       "id": "memory-resume",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -291,6 +360,7 @@
       "expected": "continuous low memory terminates with partial progress",
       "id": "memory-timeout",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -301,6 +371,9 @@
       "expected": "return a and b cuts one acceptance predicate at a time",
       "id": "predicate-helper-return",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -311,6 +384,9 @@
       "expected": "remove one errors.append site; preserve other error",
       "id": "accumulated-refusal",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -321,6 +397,9 @@
       "expected": "require(a and b) retains peer condition and helper",
       "id": "require-predicate",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -331,6 +410,9 @@
       "expected": "assert a and b retains peer assertion",
       "id": "assert-predicate",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -341,6 +423,7 @@
       "expected": "referenced if type is selector, not silently an acceptance guard",
       "id": "selector-through-ref",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -351,6 +434,9 @@
       "expected": "false references use resource pointers, not interned boolean identity",
       "id": "boolean-ref-target",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -361,6 +447,9 @@
       "expected": "negative polarity propagates through a reference",
       "id": "negation-through-ref",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -371,6 +460,9 @@
       "expected": "nested resource id and anchor resolved and mutated without flattening",
       "id": "nested-id-anchor",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -381,6 +473,7 @@
       "expected": "unvisited anyOf reference fails closure",
       "id": "unused-anyof-branch-ref",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -391,6 +484,7 @@
       "expected": "all conditional and disjunction branches inventoried before fixtures",
       "id": "unvisited-clause-inventory",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -401,6 +495,7 @@
       "expected": "not true is a rejecting assertion; not false is redundant",
       "id": "negated-boolean-inventory",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -411,6 +506,7 @@
       "expected": "same physical site receives distinct positive-ref and negative-inline occurrence identities",
       "id": "mixed-reference-polarity",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -421,10 +517,14 @@
       "expected": "unadapted class refusal is visible and fails inventory",
       "id": "class-guard-inventory",
       "masked_count": 0,
-      "observed_failure_kinds": [
-        "uninventoried_code_site"
+      "observed_engine_statuses": [
+        "FAIL"
       ],
-      "unproved_count": 0
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
     },
     {
       "caught": true,
@@ -433,6 +533,9 @@
       "expected": "declared root never used by callback fails proof",
       "id": "schema-never-consumed",
       "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "declared_root_not_consumed",
         "guard_isolation_failed",
@@ -447,6 +550,7 @@
       "expected": "unused dynamic reference fails eager closure",
       "id": "dangling-dynamic-reference",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -457,6 +561,7 @@
       "expected": "fragment validator retains owning draft-07 tuple semantics",
       "id": "fragment-dialect",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -467,6 +572,7 @@
       "expected": "diagnostic hashes distinguish bool/int/float/signed-zero/bytes/container/key types",
       "id": "typed-evidence-fingerprints",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -477,6 +583,7 @@
       "expected": "integer truthiness is not an accepted boolean outcome",
       "id": "outcome-exact-types",
       "masked_count": 0,
+      "observed_engine_statuses": [],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -487,6 +594,9 @@
       "expected": "shared target has distinct a/b cuts; each peer stays enabled",
       "id": "shared-reference-fields",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -497,6 +607,9 @@
       "expected": "same-field duplicate occurrences prove each site independently and together",
       "id": "shared-reference-duplicates",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -507,6 +620,9 @@
       "expected": "inline cut leaves referenced copy; reference cut leaves inline copy",
       "id": "inline-reference-duplicates",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -517,6 +633,9 @@
       "expected": "positive and negative occurrences have independent field cuts",
       "id": "mixed-reference-fields",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -527,6 +646,143 @@
       "expected": "Python shared schema dictionaries cannot merge independent field cuts",
       "id": "native-schema-container-alias",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "compound negated clauses remain unproved before unsafe cuts",
+      "id": "negated-compound-shortcut",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "unclassified_assertion",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 13,
+      "expected": "DG6B C8-B2: independent clauses pass; different-field overlap union fails",
+      "id": "review-DG6B-C8B2",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS",
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "infrastructure_or_declaration"
+      ],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 5,
+      "expected": "DG C3-F1: consumed minimum and maxLength remain unproved without witnesses",
+      "id": "review-DG-C3F1",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 13,
+      "expected": "DG C3-F3: each required member flips only its own negative",
+      "id": "review-DG-C3F3",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 9,
+      "expected": "DCH C8-B1: pointer-size cut stays masked by exact-reference predicate",
+      "id": "review-DCH-C8B1",
+      "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "guard_isolation_failed",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 9,
+      "expected": "DM C8C-B1: family cut retains independent schema-id refusal",
+      "id": "review-DM-C8CB1",
+      "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "guard_isolation_failed",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 1,
+      "evaluations": 25,
+      "expected": "DFM Astra-2: genuine duplicate minimum proves with maximum peer retained",
+      "id": "review-DFM-group",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 9,
+      "expected": "DG6B C8-B1: value-domain cut retains exact masking code copy",
+      "id": "review-stale-copy",
+      "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "guard_isolation_failed",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 13,
+      "expected": "two negated raise atoms cut independently, retaining their peer",
+      "id": "F1-negated-raise",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
       "observed_failure_kinds": [],
       "unproved_count": 0
     },
@@ -534,11 +790,336 @@
       "caught": true,
       "duplicate_sets_proved": 0,
       "evaluations": 13,
-      "expected": "a negated compound shortcut flips unrelated targets and fails the proof",
-      "id": "negated-compound-shortcut",
+      "expected": "two negated return atoms cut independently, retaining their peer",
+      "id": "F1-negated-return",
       "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "held-out y remains rejected under x cut; missing y inventory prevents PASS",
+      "id": "F1-single-negative",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 13,
+      "expected": "nested odd/even negations preserve two independent atoms",
+      "id": "F1-nested-not",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "class require rejection stays visible, unsupported and unproved",
+      "id": "F2-class-require",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "self-contained class append rejection stays visible, unsupported and unproved",
+      "id": "F2-class-append",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "module predicate call stays visible and unproved",
+      "id": "F2-module-require",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "nested function append stays visible and unproved",
+      "id": "F2-nested-append",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "primary root consumed; undeclared fragment minimum becomes unproved, never unreachable",
+      "id": "F3-consumed-fragment",
+      "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "consumed_entry_not_declared",
+        "control_refused",
+        "cut_breaks_control",
+        "guard_isolation_failed",
+        "restoration_failed",
+        "restored_control_refused",
+        "unproved_guards",
+        "wrong_baseline_refusal"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "mutant-only consumption of undeclared fragment prevents PASS",
+      "id": "F3-mutant-fragment",
+      "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "consumed_entry_not_declared",
+        "cut_breaks_control",
+        "guard_isolation_failed",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "approved URI alias consumes its declared root",
+      "id": "F3-entry-alias",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 13,
+      "expected": "declared pointer root and equivalent anchor yield complete independent proof",
+      "id": "F3-declared-fragment",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "compound negative schema context is unproved before any misleading atomic cut",
+      "id": "F4-negated-conjunction",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "unclassified_assertion",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "dynamic target assertions validate and remain context-bound unproved, never unreachable",
+      "id": "F5-dynamic-target",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "unclassified_assertion",
+        "unproved_guards"
+      ],
+      "unproved_count": 3
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "draft-07 ignores ref sibling with explicit dialect evidence; no witness obligation",
+      "id": "F5-draft7-sibling",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 13,
+      "expected": "type cut preserves correctly typed const membership",
+      "id": "review-type-const",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 42,
+      "expected": "all four then/else bound cuts retain their peers and null control",
+      "id": "review-conditional-four-peers",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 49,
+      "expected": "unwitnessed implied maximum fails; explicit pigeonhole evidence gives PARTIAL",
+      "id": "review-W3B-implied-maxItems",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL",
+        "PARTIAL"
+      ],
+      "observed_failure_kinds": [
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "test AssertionError is a checker error, never an accepted refusal",
+      "id": "review-test-assertion",
+      "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
       "observed_failure_kinds": [
         "guard_isolation_failed",
+        "restoration_failed",
+        "unproved_guards",
+        "wrong_baseline_refusal"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "integer exit zero is a checker error, never acceptance",
+      "id": "review-success-exit-zero",
+      "masked_count": 1,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "guard_isolation_failed",
+        "restoration_failed",
+        "unproved_guards",
+        "wrong_baseline_refusal"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 0,
+      "expected": "low-memory timeout resets at threshold without early resume",
+      "id": "review-memory-timeout-reset",
+      "masked_count": 0,
+      "observed_engine_statuses": [],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "recursive target assertions remain context-bound unproved",
+      "id": "F5-recursive-context",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "unclassified_assertion",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "allOf inside negation has no unsupported broad atomic cut",
+      "id": "F4-negated-allof",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "unclassified_assertion",
         "unproved_guards"
       ],
       "unproved_count": 2

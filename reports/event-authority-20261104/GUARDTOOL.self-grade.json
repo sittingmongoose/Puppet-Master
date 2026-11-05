@@ -7,17 +7,17 @@
       "grade": "PASS"
     },
     {
-      "basis": "Complete declared graph, atomic/routing classifications and eager reference failures exercised.",
+      "basis": "F3/F5 fixed with declared-entry enforcement, visible consumed-fragment obligations, dialect rules and dynamic target context. Recursive/dynamic proof isolation remains unsupported and unproved.",
       "criterion": "schema_inventory",
-      "grade": "PASS"
+      "grade": "PARTIAL"
     },
     {
-      "basis": "Required/dependency members, type membership, conditional peers, counts, negation, exclusivity and isolated reference occurrences exercised.",
+      "basis": "F1 exposes negated Python atoms independently. F4 refuses compound negative schema contexts before unsafe cuts; supported positive/single-negative cuts pass bounded regressions.",
       "criterion": "predicate_cuts",
-      "grade": "PASS"
+      "grade": "PARTIAL"
     },
     {
-      "basis": "Exact top-level Python sites, Boolean leaves, predicate calls and unsupported-context inventory exercised.",
+      "basis": "F1/F2 negated raise/return, nested negations, single-negative held-out peer, class/nested/module predicate-call and append inventory regressions caught. Bounded Python interface only.",
       "criterion": "code_sites",
       "grade": "PASS"
     },
@@ -42,7 +42,7 @@
       "grade": "PASS"
     },
     {
-      "basis": "49/49 synthetic traps caught, including independent shared-reference occurrences and duplicate-site restoration.",
+      "basis": "79/79 caught: original 49 plus all reviewer real-finding additions and F1\u2013F5/supplementary controls. Caught does not mean every matrix PASS.",
       "criterion": "corpus",
       "grade": "PASS"
     },
@@ -58,19 +58,34 @@
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/verification-manifest.json",
-    "sha256": "6ba9204c901609206090aa2838b1420e0da0916a281225393c446f12666abf14"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/verification-manifest.json",
+    "sha256": "961e47f74a72a9f1a870fba04600c0b9a4f657abc7823b2320b76fc4978f8ff5"
   },
   "families": [],
   "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
   "ids_used": [],
   "limitations": [
-    "Adapter declarations of input-field identity, selectors and opaque predicate boundaries still require review.",
-    "No complete real lane matrix executed or family grade upgraded.",
-    "Class/closure/native internals and recursive/dynamic schema contexts require explicit atomic adapter seams.",
-    "Default date-time checker unavailable in this interpreter; tool fails closed until supplied.",
-    "RSS is sampled at boundaries, not an allocation sandbox."
+    "Adapter declarations of input-field identity, selectors and opaque predicate boundaries require review.",
+    "Only the reviewer's bounded three-family DG6B retained-history exercise ran: 21 selected runtime guards proved, overall FAIL for uncovered obligations. No complete lane matrix or family grade upgrade.",
+    "Compound negative schemas, class/closure/native internals and recursive/dynamic schema contexts need sound atomic adapter seams; they remain unproved.",
+    "Format capability is interpreter-specific and missing checkers fail closed; no new product grammar or number-domain policy is created.",
+    "Plan-index validate reports 22 failures in unchanged paths against the current origin/main comparison. Shards pass; no governance or derived refresh performed.",
+    "RSS is sampled at callback boundaries, not an allocation sandbox."
   ],
-  "self_assessment": "PASS for delivered synthetic machinery; lane adoption and native evidence NOT_RUN",
+  "review_round_1": {
+    "after": {
+      "code_sites": "PASS",
+      "predicate_cuts": "PARTIAL",
+      "schema_inventory": "PARTIAL"
+    },
+    "family_grade_changes": "not applicable; no families prepared or admitted",
+    "implementation_commit": "b004369868dafd173faf751695d0da7eca38352e",
+    "reviewed_grades": {
+      "code_sites": "FAIL",
+      "predicate_cuts": "PARTIAL",
+      "schema_inventory": "PARTIAL"
+    }
+  },
+  "self_assessment": "PARTIAL overall for deliberately unsupported schema contexts; supported machinery and 79 expected trap observations verified. Complete lane adoption remains incomplete.",
   "subject": "shared check-11 guard-isolation tool"
 }
