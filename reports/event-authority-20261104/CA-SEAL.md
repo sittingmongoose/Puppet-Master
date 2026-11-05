@@ -1,12 +1,49 @@
 # CA-SEAL branch report: the DL-412 seal-check change, 2026-11-04
 
-**Current status, CA-SEAL-FIX6: STOPPED / NOT_READY.** C6-01 remains blocking. Investigation and eighteen actual CLI runs establish that the existing receipt chain has no independent protected anchor to reuse. This round changes only this report and the change record, including both procedural seal exclusions. The final round-6 section contains the stop question and evidence; earlier verification counts remain historical.
+**Current status, CA-SEAL-FIX7: C6-01 repaired in `5c44eaf593704fce8bf6a213b8e64ddbb32297eb`; verification is recorded below.** Landing still requires the final lander receipt and the exact DL-412-only Spec Lock entry from claude-projects-refresh in the same landing. FIX6’s stop and earlier results below are historical.
 
-Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. Fix round 2 was by CA-SEAL-FIX2 (Codex). Fix round 3 was by CA-SEAL-FIX3 (Codex). Fix round 4 was by CA-SEAL-FIX4 (Codex). Fix round 5 is by CA-SEAL-FIX5 (Codex). Fix round 6 investigation and stop are by CA-SEAL-FIX6 (Codex). The stream lead `claude-opus-5.5:pm-ea-lead`, session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, made `616345d688`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
+Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. Fix round 2 was by CA-SEAL-FIX2 (Codex). Fix round 3 was by CA-SEAL-FIX3 (Codex). Fix round 4 was by CA-SEAL-FIX4 (Codex). Fix round 5 is by CA-SEAL-FIX5 (Codex). Fix round 6 investigation and stop are by CA-SEAL-FIX6 (Codex). Fix round 7 is by CA-SEAL-FIX7 (Codex). The stream lead `claude-opus-5.5:pm-ea-lead`, session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, made `616345d688`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
+
+## Current FIX7 ruling and landing contract
+
+CA-SEAL-FIX7 implements pm7-build's 2026-11-05 ruling, mail `1105012742-e2fc`, within the approved card 4c B / DL-412 change. It supersedes FIX6's stopped proposal, including the proposed DL-077 anchor. **Only the DL-412 receipt gets a new Spec Lock entry.** DL-077 keeps its existing admission-record pins and gets no new anchor.
+
+The August trust model anchors the DL-077 receipt only through existing record pins. The new DL-412 receipt has none until the DL-300 step records land. The reseal therefore supplies its byte anchor in `Plans/Spec_Lock.json`, `canonical_ssot_hashes.files`, at the same landing as this change. This worker does not edit that file.
+
+Outside DL-077's unchanged predicate, the bridge presents the trusted DL-077 after-hash only when all three byte conditions hold:
+
+1. The live validator SHA-256 equals DL-412's `validator_after_sha256`.
+2. Exactly one Spec Lock entry has path `reports/event-authority-20261104/seal-check-multifamily-step-receipt.json`, and its `sha256` equals SHA-256 of that receipt's complete bytes. Missing, wrong-hash, duplicate and elsewhere-path entries fail closed.
+3. DL-412's `validator_before_sha256` equals DL-077's `validator_after_sha256`.
+
+Otherwise the original predicate receives the live hash, emits its original mismatch diagnostic and returns its original null old receipt pin. Legacy admission and holding both fail closed. DL-412's full authority/identity/lander/prior-byte semantic predicate remains separate and affects only the new pin and step records. A fixture with a matching trusted anchor can therefore isolate an unrelated semantic fault without changing C4's old judgments. Changing receipt bytes under an unchanged anchor is an integrity fault even if those bytes are semantically valid. A non-null new semantic pin alone does not authorize legacy admission or holding.
+
+**Preserved history:** no August list, August fingerprint, freeze digest, earlier receipt or existing record moved. The sole new-receipt edit is its `validator_after_sha256`; every other field, pin, null lander, author/list and false flag stays byte-for-byte as before. The old receipt predicate, its diagnostic order and its return pin remain unchanged. The existing receipt's FIX5 descriptive wording is supplemented by this explicit anchor requirement; it is not rewritten.
+
+**Detection boundary:** with trusted Spec Lock bytes and this enforcing code intact, the bridge detects modified executable/receipt bytes, invented matching receipt links, absent/ambiguous anchors and broken before-links. It does not authenticate Git history, independently prove historical registry states or inspect same-step edits of existing rows. It cannot detect an actor rewriting both the trusted anchor and the receipt/executable together, or removing the enforcing code. Git history and independent procedural review remain necessary.
+
+**Landing order, assembled as one landing with no unanchored interval on main:**
+
+1. DL-412 is on main; DL-413's named test allowance must also be present before the fixture patch is committed.
+2. The actual lander runs `python3 -I write_multifamily_receipt.py <landing-tree> --lander <actual-lander-task>`. This fills `lander_task` and its matching checked list and pins the actual validator and DL-412 section on that tree.
+3. The reseal worker, **claude-projects-refresh**, adds exactly the entry below for SHA-256 of the final receipt bytes from step 2, in the same landing that lands this change. It adds no DL-077 entry.
+4. Apply the supplied fixture patch as its own commit in that same landing. Its synthetic trees include a matching fixture Spec Lock; deliberate anchor/forgery controls retain or corrupt that fixture anchor explicitly.
+5. Land the validator, final receipt, exact reseal entry and separate fixture commit together, with the required Sol/Astra reviews before and after. **Until that entry exists, legacy admission and holding fail closed on this tree; this is why they must land together.** No seal, admission or landing is performed by this worker.
+
+Exact entry template for `canonical_ssot_hashes.files` (the reseal computes the SHA from the final receipt at landing; the pending receipt digest is not a substitute):
+
+```json
+{
+  "path": "reports/event-authority-20261104/seal-check-multifamily-step-receipt.json",
+  "sha256": "<SHA-256 of final receipt bytes after write_multifamily_receipt.py fills lander_task>"
+}
+```
+
+Any later receipt rewrite needs its exact Spec Lock entry refreshed through the authorized reseal and any observing step-record pins refreshed. The procedural seal-applier exclusion includes **CA-SEAL-FIX7 (Codex)** in addition to the author, actual lander, FIX1–FIX6, the named stream lead/session and every other fix worker. The checked receipt list remains exactly author and lander.
 
 ## What this branch does
 
-It implements E-CARDS-1 item 4c, option B (DL-412): an admission record can describe a truthful registry step that added several families at once, provided every family has its own complete record naming that step. FIX5 checks two live-validator byte links for legacy admission and holding. C6-01 demonstrates that a forged receipt can satisfy those links for altered executable bytes. The approved integrity property is therefore not met. The FIX6 stop below preserves Jared's compatibility boundary rather than claiming that attack is repaired.
+It implements E-CARDS-1 item 4c, option B (DL-412): an admission record can describe a truthful registry step that added several families at once, provided every family has its own complete record naming that step. FIX7 adds the approved exact DL-412 receipt anchor to FIX5's live byte-link bridge, repairing C6-01 without moving the separate semantic predicate into DL-077. The current ruling and landing contract above supersede the historical FIX6 stop.
 
 | Commit | What |
 |---|---|
@@ -133,11 +170,11 @@ All runs used scratch trees; no checkout's tracked output receipt was written.
 
 ## Open items
 
-1. **The lander fills `lander_task`.** Do this at landing by running the receipt writer with `--lander` on the tree that carries DL-412 (command in the change record). Until then multi-family step records fail closed on the new receipt; legacy admission and holding retain their original judgment while both validator byte links remain intact. Missing or broken byte-chain inputs fail closed with the original DL-077 message.
+1. **The lander fills `lander_task`.** Do this at landing by running the receipt writer with `--lander` on the tree that carries DL-412 (command in the change record). Until then multi-family step records fail closed on the new receipt; legacy admission and holding retain their original judgment only on a tree with the exact matching Spec Lock anchor and both validator byte links intact. Missing or broken anchors or byte-chain inputs fail closed with the original DL-077 message.
 2. **Landing order.** The branch lands after `plans/ea-cards1-answers-20261104` (DL-412).
 3. **The test patch.** It lands as a separate commit in the same landing as the validator, after DL-413's `.gitignore` line (`66af5d0d67`) is on `main`. Without it the holding-bucket test fails 41 entries instead of today's 2.
 4. **The DL-300 records.** The record writer chooses and documents the truthful step. The commit that appended the three rows is `102a7e99e8`, and that step also changed eleven Goal rows.
-5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), CA-SEAL-FIX6 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal.
+5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), CA-SEAL-FIX6 (Codex), CA-SEAL-FIX7 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal.
 6. **The seal exclusion is procedural.** The receipt's checked `seal_applier_forbidden_tasks` remains exactly the author and lander. Its validator guard is unchanged. The seal applier must separately enforce the full participant exclusion above.
 
 ## Historical review round 2: findings and responses
@@ -649,3 +686,166 @@ The current check detects unrepinned byte changes and inconsistent links, but no
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix6/`. Anchor inventory SHA-256 `5bb76c4f051379f720571cfc53828bb910c0cdf00418a0ff90c2f81239e2cb01`; forged recorder result `6275381bf0dbb25480a06cc4d774d6335fd7820ada02d3abc07179d501684232`; old-anchor isolation result `e8ebbee3c8a11172b74a3349bc2b08ee321340f288abc94023014705e5209f35`; exact proposed reviewed-head anchor entries `0d0fa20c4a7e24be3ac0da316712026717c5d2eb8c78d07b80988468f1466678`. Scripts, fresh CLI outputs, stop question and report copies are retained with `SHA256SUMS`.
 
 **Family grades before → after:** N/A → N/A; no self-grade JSON applies. **Ids used:** none minted; DL-412 is existing authority. **Bindings:** none. **Open:** C6-01, common-anchor/compatibility ruling and all previous landing prerequisites. No admission, seal, main push, protected edit, pm-mail or subagent occurred. Scratch and `/home/sittingmongoose/pm-worktrees/ca-seal-fix6` are removed after the documentation-only result is pushed and copied.
+
+## Review round 7: findings and responses (CA-SEAL-FIX7)
+
+**C6-01 — fixed in `5c44eaf593704fce8bf6a213b8e64ddbb32297eb`.** No finding is disputed or stopped for Jared. This implements the DL-412-only anchor ruling (`pm7-build`, 2026-11-05, mail `1105012742-e2fc`), not FIX6's historical two-receipt proposal. The branch awaits independent review and its coordinated landing dependencies; this is no admission, seal or main landing.
+
+**Where:** `post_august_validator_pin`, validator lines 238–264; the audit spec's DL-412 paragraph; this report and the change record's current landing contract. **Cause:** two editable hash fields let a fabricated new receipt bridge altered executable bytes to the historical DL-077 pin. **Fix:** require the complete new receipt bytes to match exactly one exact-path Spec Lock entry before either legacy caller can receive the trusted old hash. Live executable and before-link checks remain. All byte conditions are outside DL-077's unchanged predicate. Its semantics, ordering, error messages and returned receipt pin stay intact; the separate new receipt semantic observer is unchanged.
+
+Only that bridge function changes AST from `4e3765ab003c9d2802b7b6a3277c6d1e444e3d55`. All 2,010 validator lines retain CRLF. Only `validator_after_sha256` changes in the new receipt; its other bytes and every old receipt/record pin stay fixed. The audit spec gains the exact anchor condition. The two reports document the ruling and evidence. No top-level owner source or generated artifact changes; no regeneration or governance refresh is performed. Scope audit checks 268 protected files byte-for-byte and the exact five-path fix allowlist. Spec Lock remains unedited.
+
+### Differential on the anchored tree
+
+**17,480 pairs: 17,457 exact; 23 intended integrity rejections; zero unexpected differences.** All 125 admission/holding calls and all twelve C4 controls are exact, including their previously recorded old returned values. Each original 34-method trace retains the same two inherited failures and no errors. The twelve controls are a subset of the 125.
+
+The old side uses the frozen DL-077 validator (`190a86f2...`) and unchanged old receipts. The new side supplies the DL-412 receipt and its synthetic exact Spec Lock anchor. Named semantic mutations refresh their observing fixture anchor so they isolate semantics. The actual forgery and anchor-negative controls hold their trusted baseline anchor fixed. This fixture authority is explicit: none of these synthetic entries changes repository Spec Lock or authorizes a real receipt.
+
+The comparison checks ordered diagnostics, returned old pins, admitted sets, CLI stdout and exits. Only temporary roots, CLI generation time and the single added `multi_family_step_receipt_sha256` output field are normalized/omitted. Coexistence comparisons select no-field judgments; separate positive/negative controls cover step admission.
+
+| Group | Pairs | Exact | Intended rejections |
+|---|---:|---:|---:|
+| `astra2_existing_records_helper` | 1,732 | 1,732 | 0 |
+| `astra2_existing_records_admission` | 1,732 | 1,732 | 0 |
+| `astra2_existing_records_with_steps` | 1,732 | 1,732 | 0 |
+| `raw_existing_records_with_and_without_steps` | 472 | 472 | 0 |
+| `original_125_paired_admission_holding_calls` | 125 | 125 | 0 |
+| `legacy_only_full_cli_pairs` | 108 | 85 | 23 |
+| `sol_original_legacy_mutations` | 112 | 112 | 0 |
+| `sol_extended_existing_records` | 5,880 | 5,880 | 0 |
+| `astra_original_existing_records` | 3,936 | 3,936 | 0 |
+| `astra_original_fixture_helpers` | 283 | 283 | 0 |
+| `cycle3_raw_legacy` | 1,112 | 1,112 | 0 |
+| `numeric_legacy_with_steps` | 256 | 256 | 0 |
+| **Total** | **17,480** | **17,457** | **23** |
+
+The 108 paired CLI cases execute 216 real validators. All 23 differences are individually retained in `integrity-rejections.json`: missing/unreadable receipt, six wrong values for each before/after link, eight scalar/container roots and the over-recursive root. Every complete new output equals the original validator's actual altered-executable rejection after the permitted normalization. Admission is empty, holding invalid and the old pin null. Exactly the original mismatch messages occur; no unrelated rejection is substituted. The other 85 pairs remain exact, including semantic-only faults under a matching fixture anchor and notes-only/repinned old receipt controls.
+
+### C6 forged-receipt and anchor controls
+
+The unchanged cycle-6 attack construction was rerun through fourteen actual CLIs, seven cases per validator. Each case asserts unchanged DL-077 receipt and all four existing record bytes. A trusted baseline new receipt is anchored once before the sequence; that anchor never changes during an attack. Baseline and restore admit coordination and validate holding. Comment-only and all three combined attacks now admit nothing, fail holding and return a null old pin with the exact old mismatch diagnostics.
+
+| Altered executable control | Old validator | FIX7 anchored validator |
+|---|---|---|
+| Inert comment only | rejects | rejects |
+| Comment + entire two-field forged receipt | rejects | rejects |
+| Comment + full-shaped forged schema/authority/author/prior receipt | rejects | rejects |
+| Comment + otherwise intact full receipt with its after-pin repinned | rejects | rejects |
+
+The last attack may still obtain a non-null **new semantic pin** because its semantic fields and live after-link agree. That pin alone grants no legacy eligibility: the unchanged trusted anchor rejects its modified receipt bytes. The pristine-executable/two-field receipt also fails FIX7's unchanged baseline anchor. These supplemental controls are outside the 17,480 original pairs.
+
+Twenty further actual CLI controls cover baseline/restore, missing file/entry, wrong hash, duplicate entry, entry pointing elsewhere, casing/LF/type faults, malformed and wrongly shaped lock inputs, a receipt byte edit, and three explicitly anchored unrelated semantic faults. All expected outcomes pass. Forty-one additional path/hash/root type and numeric controls reject; each same-module restore exactly reproduces its baseline. An unrelated Spec Lock entry alongside the single exact receipt entry is accepted.
+
+The updated external fixture patch passes **82 methods**, exit 0, with no replay helper imported. Its three new FIX7 methods yield **13 failures** against the prior validator with its scratch after-pin refreshed, proving sensitivity. Patch dry-run/application and full-file equality pass. The patch is not committed to the currently unallowed test path; it remains its own required commit in the same landing, after DL-413's allowance.
+
+### Check 11
+
+**50 variants × 113 isolated negatives = 5,650 passing cells**, plus all baseline negatives corroborated through `main()`. Every variant has its exact expected flip set, and every other negative retains at least one exact baseline rejection reason. Receipt, assessment and synthetic Spec Lock observational copies are refreshed for semantic cases. Anchor-integrity cases deliberately preserve the trusted anchor; their only failing byte condition is that anchor observation.
+
+Existing named duplicate pairs remain: bridge/full-step before-link and live-after-link comparisons, root/state object rules, and canonical-member checks. `anchor-required` removes the single anchor observation's lookup/shape/cardinality/hash-access defenses together for absence/malformed-source controls; removing cardinality alone would merely stop at the same absent entry's hash access. The narrower exact-path, uniqueness and receipt-byte hash variants independently prove those new guards. The broad `bridge-all-links` case removes the entire byte bridge and its named step-link duplicates. No production guard is left weakened.
+
+| Guard weakened in scratch | Negatives that flip | All other negatives retain a baseline reason |
+|---|---|---:|
+| `foreign` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `deep-uninspectable-claim`, `duplicate-foreign`, `duplicate-member`, `foreign-Known37`, `foreign-malformed`, `foreign-newline`, `foreign-numeric-claimant`, `foreign-numeric-rejected`, `foreign-ordinary`, `foreign-rejected`, `foreign-upper`, `mention-exact-number-.0`, `mention-exact-number-.0e-0`, `mention-exact-number-.5`, `mention-exact-number-E+0`, `mention-exact-number-e0`, `mention-exact-number-e9999`, `mention-key-registry_after`, `mention-key-registry_before`, `mention-nested-registry_after`, `mention-nested-registry_before`, `mention-numeric-registry_after`, `mention-numeric-registry_before`, `mention-quoted-number-.0`, `mention-quoted-number-.0e-0`, `mention-quoted-number-.5`, `mention-quoted-number-E+0`, `mention-quoted-number-e0`, `mention-quoted-number-e9999`, `mention-space-registry_after`, `mention-space-registry_before`, `mention-unicode-registry_after`, `mention-unicode-registry_before`, `mention-upper-registry_after`, `mention-upper-registry_before`, `mention-value-registry_after`, `mention-value-registry_before`, `nested-noncanonical-side`, `non-json-constant`, `non-json-file`, `outer-array`, `unreadable-json`, `unreadable-utf8` | 64 of 113 |
+| `missing` | `missing-member` | 112 of 113 |
+| `states` | `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 108 of 113 |
+| `same-description` | `same-list-and-states`, `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 107 of 113 |
+| `count` | `count-padded`, `count-short` | 111 of 113 |
+| `different-hashes` | `equal-hashes` | 112 of 113 |
+| `sorted-unique` | `shape-duplicate`, `shape-unsorted` | 111 of 113 |
+| `all-or-none` | `member-incomplete` | 112 of 113 |
+| `step-pin` | `step-receipt-pin` | 112 of 113 |
+| `decision-DL412` | `decision-DL412` | 112 of 113 |
+| `receipt-schema_id` | `receipt-schema_id` | 112 of 113 |
+| `receipt-authority_ref` | `receipt-authority_ref` | 112 of 113 |
+| `receipt-authority_section_sha256` | `receipt-authority_section_sha256` | 112 of 113 |
+| `receipt-validator_before_sha256` | `legacy-byte-before`, `receipt-validator_before_sha256` | 111 of 113 |
+| `receipt-validator_after_sha256` | `legacy-byte-after`, `live-byte-appended-bytes`, `live-byte-comment`, `live-byte-crlf`, `live-byte-one-byte`, `receipt-validator_after_sha256` | 107 of 113 |
+| `receipt-record_dir` | `receipt-record_dir` | 112 of 113 |
+| `receipt-record_schema_id` | `receipt-record_schema_id` | 112 of 113 |
+| `receipt-author_task` | `receipt-author_task` | 112 of 113 |
+| `receipt-seal_authorized` | `receipt-seal_authorized` | 112 of 113 |
+| `receipt-admission_authorized` | `receipt-admission_authorized` | 112 of 113 |
+| `receipt-contract_depth_complete` | `receipt-contract_depth_complete` | 112 of 113 |
+| `receipt-prior-path` | `receipt-prior-path` | 112 of 113 |
+| `receipt-prior-sha256` | `receipt-prior-sha256` | 112 of 113 |
+| `receipt-lander-and-list` | `receipt-forbidden`, `receipt-lander-''`, `receipt-lander-None` | 110 of 113 |
+| `authority-tokens` | `authority-token-0`, `authority-token-1`, `authority-token-2`, `authority-token-3` | 109 of 113 |
+| `duplicates` | `duplicate-foreign`, `duplicate-member` | 111 of 113 |
+| `constants` | `non-json-constant` | 112 of 113 |
+| `root-shape` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `outer-array` | 106 of 113 |
+| `canonical-scan` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace` | 107 of 113 |
+| `uncertainty` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `duplicate-foreign`, `duplicate-member`, `foreign-malformed`, `foreign-newline`, `foreign-numeric-claimant`, `foreign-numeric-rejected`, `foreign-upper`, `nested-noncanonical-side`, `non-json-constant`, `outer-array`, `unreadable-json`, `unreadable-utf8` | 95 of 113 |
+| `recursive-claims` | `deep-uninspectable-claim`, `foreign-Known37`, `foreign-ordinary`, `foreign-rejected`, `mention-exact-number-.0`, `mention-exact-number-.0e-0`, `mention-exact-number-.5`, `mention-exact-number-E+0`, `mention-exact-number-e0`, `mention-exact-number-e9999`, `mention-key-registry_after`, `mention-key-registry_before`, `mention-nested-registry_after`, `mention-nested-registry_before`, `mention-numeric-registry_after`, `mention-numeric-registry_before`, `mention-quoted-number-.0`, `mention-quoted-number-.0e-0`, `mention-quoted-number-.5`, `mention-quoted-number-E+0`, `mention-quoted-number-e0`, `mention-quoted-number-e9999`, `mention-space-registry_after`, `mention-space-registry_before`, `mention-unicode-registry_after`, `mention-unicode-registry_before`, `mention-upper-registry_after`, `mention-upper-registry_before`, `mention-value-registry_after`, `mention-value-registry_before`, `non-json-file` | 82 of 113 |
+| `all-files` | `non-json-file` | 112 of 113 |
+| `canonical-members-paired` | `canonical-member`, `canonical-number` | 111 of 113 |
+| `claim-object-keys` | `mention-key-registry_after`, `mention-key-registry_before` | 111 of 113 |
+| `claim-list-values` | `deep-uninspectable-claim`, `mention-nested-registry_after`, `mention-nested-registry_before` | 110 of 113 |
+| `claim-case` | `mention-upper-registry_after`, `mention-upper-registry_before` | 111 of 113 |
+| `claim-whitespace` | `mention-space-registry_after`, `mention-space-registry_before` | 111 of 113 |
+| `claim-unicode-decimal` | `mention-unicode-registry_after`, `mention-unicode-registry_before` | 111 of 113 |
+| `deep-claim` | `deep-uninspectable-claim` | 112 of 113 |
+| `nested-canonical` | `nested-noncanonical-side` | 112 of 113 |
+| `exact-number-tokens` | `mention-exact-number-.0`, `mention-exact-number-.0e-0`, `mention-exact-number-.5`, `mention-exact-number-E+0`, `mention-exact-number-e0`, `mention-exact-number-e9999` | 107 of 113 |
+| `step-receipt-application` | `authority-token-0`, `authority-token-1`, `authority-token-2`, `authority-token-3`, `receipt-admission_authorized`, `receipt-author_task`, `receipt-authority_ref`, `receipt-authority_section_sha256`, `receipt-contract_depth_complete`, `receipt-forbidden`, `receipt-lander-''`, `receipt-lander-None`, `receipt-prior-path`, `receipt-prior-sha256`, `receipt-record_dir`, `receipt-record_schema_id`, `receipt-schema_id`, `receipt-seal_authorized` | 95 of 113 |
+| `legacy-frozen-validator-pin` | `legacy-frozen-validator-pin` | 112 of 113 |
+| `bridge-live-hash` | `legacy-byte-after`, `live-byte-appended-bytes`, `live-byte-comment`, `live-byte-crlf`, `live-byte-one-byte`, `receipt-validator_after_sha256` | 107 of 113 |
+| `bridge-before-hash` | `legacy-byte-before`, `receipt-validator_before_sha256` | 111 of 113 |
+| `bridge-all-links` | `anchor-duplicate`, `anchor-elsewhere`, `anchor-entry`, `anchor-files`, `anchor-forged-full`, `anchor-malformed`, `anchor-missing-entry`, `anchor-missing-file`, `anchor-repinned-full`, `anchor-root`, `anchor-ssot`, `anchor-stale-bytes`, `anchor-two-field`, `anchor-wrong-hash`, `legacy-byte-after`, `legacy-byte-before`, `legacy-byte-receipt-array`, `legacy-byte-receipt-boolean`, `legacy-byte-receipt-missing`, `legacy-byte-receipt-null`, `legacy-byte-receipt-number`, `legacy-byte-receipt-string`, `legacy-byte-receipt-unreadable`, `live-byte-appended-bytes`, `live-byte-comment`, `live-byte-crlf`, `live-byte-one-byte`, `receipt-validator_after_sha256`, `receipt-validator_before_sha256` | 84 of 113 |
+| `anchor-exact-path` | `anchor-elsewhere` | 112 of 113 |
+| `anchor-unique` | `anchor-duplicate` | 112 of 113 |
+| `anchor-receipt-hash` | `anchor-forged-full`, `anchor-repinned-full`, `anchor-stale-bytes`, `anchor-two-field`, `anchor-wrong-hash` | 108 of 113 |
+| `anchor-required` | `anchor-duplicate`, `anchor-elsewhere`, `anchor-entry`, `anchor-files`, `anchor-forged-full`, `anchor-malformed`, `anchor-missing-entry`, `anchor-missing-file`, `anchor-repinned-full`, `anchor-root`, `anchor-ssot`, `anchor-stale-bytes`, `anchor-two-field`, `anchor-wrong-hash` | 99 of 113 |
+
+### Recurring-defect sweep and remaining checks
+
+| Item | Current evidence / limit |
+|---|---|
+| 1. Forged/contradictory inputs | All cycle-6 combined attacks reject under the unchanged trusted anchor; original state/list/row/depth/decision mutations rerun. The checker still does not prove historical registry truth. |
+| 2. Storage metadata | No runtime Storage-assigned fields are added or changed. |
+| 3. Historical reader behavior | Anchored intact-chain differential, all 125 calls and all twelve C4 controls are exact. |
+| 4. Multiple interpretations | Exact path/hash equality with no coercion; upper-case, whitespace/LF, numeric and container controls reject. Existing strict member and recursive claim interpretations rerun. |
+| 5. Schema refs | No schema or `$ref` is added or changed. |
+| 6. Size limits | No event payload, stored-body size or externalization policy changes. |
+| 7. Custody paths | Both legacy admission and holding call the anchored live bridge. Actual CLI, module, baseline/restore and step controls cover these paths. |
+| 8. Masked negatives | Full 5,650-cell matrix, named duplicate groups, observed-pin refreshes and retained baseline reasons. |
+| 9. Grade evidence | N/A → N/A; no family, runtime implementation or seal is graded. |
+| 10. Numeric forms | `.0`, `e0`, fractional, overflow, signed exponent and quoted foreign claims rerun; raw `1`, `1.0`, `1e0`, `-0` and invalid `01` lock roots reject. No numeric hash/path is coerced into a string. |
+| 11. Types | Null, booleans, string booleans/numbers, numeric types, arrays, objects, malformed/nested lock shapes and missing/duplicated entries are covered. |
+
+Standing runtime checks 1–4, 6–7 and 10 concern family contracts outside this narrow checker change. Check 5 retains full-match and trailing-LF refusals; check 8 asserts admitted sets/holding/errors/pins rather than accepting an unrelated seal exit 1; check 9 adds no refs; check 11 is proved above.
+
+| Verification | Result |
+|---|---|
+| Original Sol replay | Scenarios, all 26 claimant negatives, writer/sensitivity/numeric and legacy probes complete. Extended 5,880 comparisons exact; 880 malformed + 296 foreign/rejected step claimants refuse the step. The five superseded pair-only positive expectations still yield their original nonzero aggregate result. |
+| New receipt classification | All 74 full new-predicate negatives reject; ten byte-link faults reject the old predicate, 64 unrelated semantic faults under matching fixture anchors preserve it; four extra chain/current-byte checks and writer byte identity pass. The two historical aggregate coupling assertions remain intentionally nonzero. |
+| Astra and representation replay | 112 step scenarios (one complete true step accepted, all 111 mutations reject), ten parser scenarios, 122 representation cases, 1,112 raw legacy comparisons and 256 numeric coexistence comparisons complete. Original numeric/notes/current-byte actual CLIs rerun. |
+| Repository shards | Exit 0: 99 sources, 3,092 shards, no failures. |
+| PlanUnit index validation | Exit 1, top-level `status: fail`, 23 failures: 21 inherited ledger-shape errors, main-only DL-302, and readiness staleness from the absent ignored currentness edition. Every named input equals the requested pre-fix head; none names a changed path. This is not reported as a pass. |
+| Syntax/scope/line endings | Only the bridge changes AST; five fix-round paths; all 2,010 lines CRLF; only the new receipt's after-pin changes; 268 protected files byte-identical; whitespace check passes. |
+
+Replay setup issues are retained openly: the first original trace lacked an anchor because its temporary roots were outside the synthetic fixture helper's scratch root; the corrected fresh trace is 125/125 exact. An in-process replay's automatic fixture anchoring interfered with four new tests that intentionally preserve a stale anchor; standalone 82-method execution passes, and the three affected methods pass in a separate isolated invocation. One raw replay initially stopped on a fixture copy-order collision; deferring synthetic anchoring until copy completion corrected the harness and the full 1,112 comparisons then completed. These were fixture preparation fixes; production validator bytes never changed after `5c44eaf593`. No partial run supplies a compatibility count.
+
+No full run-gates, governance audit, migration/landing check or reseal is claimed. Initial resources were 83 GB free disk and 15 GB available RAM; later checks remained above the 50 GB/6 GB stop thresholds. No pm-mail, subagent, admission record, Decision Log entry, registry append, main push, protected-file change or governance refresh occurred. The scratch trees and requested sparse worktree are removed after the pushed handoff and evidence copy.
+
+### Pins and evidence
+
+Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix7`. The manifest pins replay sources, exact outputs, fixture patch/full file and check logs.
+
+| Artifact | SHA-256 |
+|---|---|
+| `fix7-summary.json` | `20a297626a333c017820e7906011882c553d1740e13d3adbe726782def54226c` |
+| `differential-summary.json` | `04953363e1415d694131d63a54b4bb19c245f2e5151d30f7ee781abb7457884d` |
+| `twelve-controls.json` | `99bc7286cff8579964fecd0e5ff5b17f9dede01b2a8dca87e75d43b37d9a3822` |
+| `integrity-rejections.json` | `19dd8f5e7226b59404ce4dc0f622ae68a7dcc48b7a39b18c9d7aca500fcdf09b` |
+| `forged-receipt-results.json` | `d8704276dd9a4a15cbb2eb550096cfc2d815bcd68e70850c25454539c535441d` |
+| `anchor-cli-results.json` | `fb2b221408e54922f8d396b64a6cd31684b44e78f09716d725e7511eab5bcd3c` |
+| `anchor-types-results.json` | `fe780d363e8f05010a7910d416cbcdd31b9af9e6cc61a460de1d22e34357be56` |
+| `guards/results/guard-matrix.json` | `e09c85393e8851a52410e4234d42f9d077ae8829af6d5367d67208157b6aee4a` |
+| `scope-audit.json` | `a718e61907a2d7c5fca70dc072e7facfe91a0e2511d63dfd2d337bc98e583c1c` |
+| `repository-checks.json` | `386306c7bc3cc20f905c3b955bab0c00012d71caed35fb083e34569088e68aee` |
+| `test-patch/test_event_authority_holding_bucket.dl412.patch` | `c502e0b27a253f0aeab55ed1d94fdbfe3d18b0cbb18117fc2c9ab0646ddbba11` |
+
+**New validator SHA-256:** `743ca664bf8bff3482185c76c01345b6b4d30178b5c9574978868592da5f3dc6`. **Pending new receipt SHA-256:** `713ae2743ebb3a02d7500cd23c136e914d1ae0adc5f9cb5ebd8ef6d110c7d855`. The latter is not the landing Spec Lock value: `lander_task` is still null, and the reseal hashes the final receipt after the lander writer runs. Only the DL-412 entry template in the current landing contract is authorized; no DL-077 anchor is added.
+
+**Family grades before → after:** N/A → N/A. **Ids used:** none minted; existing DL-412 authority only; DL-998/DL-999 remain fixtures. **Bindings:** none. **Open integration:** independent Sol/Astra review before/after landing, DL-412 and DL-413 prerequisites, actual lander/writer, claude-projects-refresh's exact final receipt anchor and the fixture patch as a separate commit in the same landing. Until the entry exists, legacy admission and holding fail closed on this tree. CA-SEAL-FIX7 is procedurally barred from applying the seal in both documents; the checked author/lander list remains unchanged.
