@@ -454,7 +454,7 @@ review.artifact_finalized
 
 These names require central EventRecord registration and payload schema adjudication before any emission. Until that registration closes, emission remains disabled and no surface may treat a rendered state change as an emitted event. Event envelopes carry project, thread, collaboration, run, and participant identity where applicable, definition revision, actor, correlation and causation IDs, idempotency key, currentness, and redacted source refs. A failed or replayed command emits no duplicate event.
 
-`collaboration.failed` is the recorded ending of a run that fails, with its reason, beside `collaboration.completed` and `collaboration.cancelled` (DL-091, 2026-09-25); `failed` is already a closed run state (section 2.1). DL-090 and DL-091 select all 18 names above for registration, each through its own Storage admission landing, one family per landing, and DL-092, superseded in part by DL-292, keeps their recorded history as long as the run's chat exists, in an application chat as in a Project chat. Each name's contract is in the Collaborative Event Authority Addendum at the end of this document: CW-100 for the shared rules and CW-101 to CW-118, one per name, with their closed payloads (`Plans/Contracts_V0.md` CV-460 to CV-478), persistence (`Plans/storage-plan.md` SP-460 to SP-478) and oracles (`Plans/Automated_Testing_System.md` ATS-230 to ATS-248). They are prepared without admission: the rule above stays in force for each name until its own admission landing.
+`collaboration.failed` is the recorded ending of a run that fails, with its reason, beside `collaboration.completed` and `collaboration.cancelled` (DL-091, 2026-09-25); `failed` is already a closed run state (section 2.1). DL-090 and DL-091 select all 18 names above for registration, each through its own Storage admission landing, one family per landing, and DL-092, superseded in part by DL-292, keeps their recorded history as long as the run's chat exists, in an application chat as in a Project chat. Each name's contract is in the Collaborative Event Authority Addendum at the end of this document: CWR-105 for the shared rules and CWR-106 to CWR-123, one per name, with their closed payloads (`Plans/Contracts_V0.md` CV-460 to CV-478), persistence (`Plans/storage-plan.md` SP-460 to SP-478) and oracles (`Plans/Automated_Testing_System.md` ATS-230 to ATS-248). They are prepared without admission: the rule above stays in force for each name until its own admission landing.
 
 The participant activity projection (CWR-030) is derived on read from these events, the run and attempt records, `tool.execution_*` events and the assistant-turn presentation stream of EP-128; it adds no event name and is never emitted (2026-09-27). A message in progress (CWR-040, EP-129) adds no event name either: `collaboration.message_added` is emitted once for a participant's or coordinator's message, when it is written, and never for a streamed frame or for a message in progress that is never written (EP-130, EP-131, DL-137).
 
@@ -3756,30 +3756,31 @@ This addendum is a **newly authored owner contract under DL-090** (and DL-091 fo
 
 Nothing here admits a family. Each of the 18 is **prepared without admission**: it stays absent from `Plans/event_family_registry.json`, quarantined before append or projection, and section 13's rule holds for it, so emission stays disabled, until its own Storage admission landing, one family per landing, after its own blind form-driven review (DL-090). The prepared registry rows are in `Plans/collaboration_event_admission.json`.
 
-Each family has its own contract in each owner: its semantics and producer here (CW-101 to CW-118), its closed payload in `Plans/Contracts_V0.md` (CV-461 to CV-478), its persistence, identity, transitions, consumers, custody and withdrawal in `Plans/storage-plan.md` (SP-461 to SP-478) and its oracles in `Plans/Automated_Testing_System.md` (ATS-231 to ATS-248). The shared rules below (CW-100, with CV-460, SP-460 and ATS-230) are mechanisms each family adopts by name in its own units; no family's binding is inferred from a sibling.
+Each family has its own contract in each owner: its semantics and producer here (CWR-106 to CWR-123), its closed payload in `Plans/Contracts_V0.md` (CV-461 to CV-478), its persistence, identity, transitions, consumers, custody and withdrawal in `Plans/storage-plan.md` (SP-461 to SP-478) and its oracles in `Plans/Automated_Testing_System.md` (ATS-231 to ATS-248). The shared rules below (CWR-105, with CV-460, SP-460 and ATS-230) are mechanisms each family adopts by name in its own units; no family's binding is inferred from a sibling.
 
 ### Premise checks of the 2026-09-25 answers
 
 The answers were re-read against today's text before they were applied:
 - **DL-090.** Its 17 names are the 17 names section 13 lists today, unchanged since `1e5d9b097b`: no rename, addition or removal. The four kinds, their shared run, transcript, participants and artifacts are still one runtime (section 2.1, CWR-001). CWR-045 and DL-292 since added application scope (`project_id` null) to all four kinds; that extends where the families occur, not which names exist, and DL-300 admitted none of them. The premise holds.
 - **DL-091.** `failed` is still one of the closed run states (section 2.1, section 12), and a limit stop is still `cancelled`, never `failed` (CWR-029). No event exists for a failed run, and `collaboration.failed` is added to section 13 below. The premise holds.
-- **DL-092.** "Every collaborative run belongs to a chat" still holds: the definition carries the thread (section 2.1, section 12, CWR-032), in an application chat as in a Project chat (CWR-045). DL-292 supersedes DL-092 in part: collaboration history also belongs to admitted application chats, and "the chat-lifetime/deletion/hold policy is unchanged and conversion cannot erase independently retained custody". No chat auto-archives (DL-287). The lifetime therefore applies as decided. The policy object is the open part: DL-092 names `RP-GOAL-THREAD-LIFETIME` subject to the Storage owner's reuse check, and that check, which materializes the Chat content class as `RP-CHAT-THREAD-LIFETIME@1.0.0` and assigns the 18 families to it, is on the unlanded branch `plans/ea-storage-retention-20261104`, not on `main`. Each family's contract names that object, and its retention stays blocked until that Storage landing; nothing here decides the count rule for a very busy chat or a lifetime for the run, message, proposal or finding records.
+- **DL-092.** "Every collaborative run belongs to a chat" still holds: the definition carries the thread (section 2.1, section 12, CWR-032), in an application chat as in a Project chat (CWR-045). DL-292 supersedes DL-092 in part: collaboration history also belongs to admitted application chats, and "the chat-lifetime/deletion/hold policy is unchanged and conversion cannot erase independently retained custody". No chat auto-archives (DL-287). The lifetime therefore applies as decided. The policy object is the open part: DL-092 names `RP-GOAL-THREAD-LIFETIME` subject to the Storage owner's reuse check, and that check, which materializes the Chat content class as `RP-CHAT-THREAD-LIFETIME@1.0.0` and assigns the 18 families to it, is on the unlanded branch `plans/ea-storage-retention-20261104`, not on `main`. Each family's contract names that object, and its retention stays blocked until that Storage landing; the separately recorded E-CARDS-1 item 1c option A (DL-404 on the answers branch) now supplies chat lifetime for run, participant, transcript, proposal and finding records in both scopes.
 
-### CW-100 - Shared rules of the collaborative workflow event families
+### CWR-105 - Shared rules of the collaborative workflow event families
 
 - **Producer.** `CollaborationRuntime`, newly named here, is the collaborative runtime of section 2.1 and the only producer of the 18 families. Each family's unit names its entry point. Tools (Plans/Tools.md section 15.9), provider adapters (section 16), the orchestrator's child-run lifecycle, whose `subagent.*` history DL-084 keeps, and the crew message board (DL-085) never emit them.
 - **One fact, after its owner commit.** An event records exactly one owner fact that has already been committed: a definition revision, a run transition, an attempt or slot outcome, a written message, an attached artifact, or a BrainStorm or Review record. The order is the owner commit, then the append through Storage's collaboration append admission (SP-460), then the first AppendReceipt (SP-286/CV-339 `storage.first_append_receipt.resolve.v2`), then the typed result or the next protocol step. This adopts by name CV-366's ordered roles `owner_commit`, `event_append_if_admitted`, `first_receipt_custody` and `immutable_terminal_result` for both scopes. No result is reported committed, no card or Activity entry appears and no participant work is dispatched for that fact before its first receipt.
-- **Prepared event.** The owner commit persists, in the same owner transaction as its record, the prepared event: its `event_id`, `idempotency_key`, `recovery_epoch`, family timestamp, `currentness_hash` and producer semantic digest (SP-460). Recovery appends exactly that prepared identity and never mints a new one. A record family that cannot hold its prepared event cannot be the source of an admitted family: each family is natively active only once the record it commits is a registered Storage family in its scope (DL-090: the run, message, proposal and finding records still need their own schemas).
+- **Prepared event.** The owner commit persists, in the same owner transaction as its record, the prepared event: its `event_id`, `idempotency_key`, `recovery_epoch`, family timestamp, `currentness_hash` and producer semantic digest (SP-460). Recovery appends exactly that prepared identity and never mints a new one. SP-460 now registers the immutable typed source holder and its family-specific schemas, without altering existing owner codecs. The source and prepared semantic request commit atomically; the source digest, required-slot snapshot, original Storage instance/epoch and recovery joins must validate before an admitted append. Native producer/install/transaction proof remains NOT_RUN.
 - **Fences.** An uncertain append fences its run: no later event of that run is appended until Storage resolves the original identity. A definition event fences its `collaboration_id` the same way.
-- **Scope.** Every family has two closed payload editions: project scope (`scope_kind` `project`, a real `project_id`) and application scope (`scope_kind` `application`, `project_id` null, the actual `server_id`) for the application chats of CWR-045 and DL-292. The scope is fixed when the run is admitted. An application edition keeps `producer_admission` `requires_owner_adoption` until this owner adopts the CV-366 application source graph for the families; until then no application payload is appended. Conversion (CWR-045's N25, CV-367) never re-scopes, moves or rewrites an event: a linked destination run records its own events, and the source run's events stay with the source chat.
+- **Scope.** Every family has two closed payload editions: project scope (`scope_kind` `project`, a real `project_id`) and application scope (`scope_kind` `application`, `project_id` null, the actual `server_id`) for the application chats of CWR-045 and DL-292. The scope is fixed when the run is admitted. This owner now explicitly adopts CV-366's application source graph for all 18 named families: the actual CollaborationRuntime commits the unchanged SP-351 typed owner and SP-460 prepared holder in one canonical transaction, appends only an admitted edition, resolves the original receipt and publishes the immutable result. Exact read/checkpoint/backup/restore/retention roles are SP-460, SP-278, SP-286 and BRS-033; application roots and Server joins are never inferred from Project context. Prepared payload versions retain the conservative `requires_owner_adoption` marker until their later admission validates this adoption; no event append is enabled here. Conversion (CWR-045's N25, CV-367) never re-scopes, moves or rewrites an event: a linked destination run records its own events, and the source run's events stay with the source chat.
 - **No text in events.** No event carries user or participant text: no definition name or purpose, message body, proposal, vote, finding, dissent, waiver reason, Plan text, provider error text or tool output. Events carry identities, closed codes, counts, hashes and references (section 13's "redacted source refs"). The text stays in the record that the event's reference names, under that record's own owner and lifetime.
 - **Envelope.** Section 13's envelope list maps as follows: project and thread to the EventRecord's `project_id` and `thread_id`; collaboration, run and participant identity, definition revision and currentness to the payload; the run also to the envelope's `run_id`, and a participant attempt to `attempt_id`; the actor to `actor_ref`, which names the command's actor for an event a command caused and `component:collaboration_runtime` otherwise; correlation and causation to `correlation_id` and `causation_event_id`; and the idempotency key to both (CV-460).
+- **Record lifetime answer.** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded on the answers branch as DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
 - **Retention.** Each family's records are kept as long as the run's chat exists (DL-092, with DL-292): the chat is the payload's `thread_id`, and deleting it removes the family's history under the chat deletion rule. The structured reference is `RP-CHAT-THREAD-LIFETIME@1.0.0`, pending the Storage retention landing (SP-460).
 - **Compatibility.** No family has an alias. The six Crew lifecycle families retired by DL-087 are never aliased, mapped or back-filled into these families. Migration (section 17, MIG-021) appends no event for converted, synthesized or unrecoverable state, and a run that ran before its families were admitted has no recorded history; none is synthesized afterwards.
-- **Precedence.** For the 18 names, CW-101 to CW-118 govern over earlier general text that names them (section 13's envelope sentence and the candidate inventory of Plans/Commands_System.md). They add no command, run state, run kind, setting or presentation.
+- **Precedence.** For the 18 names, CWR-106 to CWR-123 govern over earlier general text that names them (section 13's envelope sentence and the candidate inventory of Plans/Commands_System.md). They add no command, run state, run kind, setting or presentation.
 
 ```yaml
-plan_unit_id: CW-100
+plan_unit_id: CWR-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -3790,8 +3791,8 @@ canonical_text: >-
   commit: owner commit with the prepared event, append through storage.collaboration_append.v1, first
   AppendReceipt through storage.first_append_receipt.resolve.v2, then the typed result, adopting CV-366's
   ordered roles. Recovery appends only the prepared identity. An uncertain append fences its run. Each family
-  has a project edition and an application edition; the application edition requires owner adoption of the
-  CV-366 application source graph before any append, and conversion never moves or rewrites events. Events
+  has a project edition and an application edition; the application source graph is
+  adopted explicitly here under CV-366 with SP-460 source custody; conversion never moves or rewrites events. Events
   carry no user or participant text. Records are kept as long as the run's chat exists under DL-092 and
   DL-292, with RP-CHAT-THREAD-LIFETIME@1.0.0 pending its Storage landing. No alias, no back-fill of the
   retired crew families and no event for migrated state.
@@ -3853,7 +3854,9 @@ owner_hints:
 ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decision_Log.md#DL-091, ContractName:Plans/Decision_Log.md#DL-092, ContractName:Plans/Decision_Log.md#DL-292, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/Contracts_V0.md#CV-366
 
 <a id="collaboration-event-collaboration-created"></a>
-### CW-101 - The collaboration.created event contract
+**Settled record custody:** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded on the answers branch as DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
+
+### CWR-106 - The collaboration.created event contract
 
 **Records.** `collaboration.created` records the first committed revision of a `Collaboration` definition, `pm.collaboration.definition.v1` (or its application edition `pm.collaboration.definition.application.v1`), at revision 1. Authority: DL-090; semantic sources: section 1 (Collaboration is the durable configuration identity); section 3 (committing writes or bumps the definition revision); MODAL-001..002, MODAL-003..005 (opening, configuring and cancelling write nothing; Start commits); CWR-018 (the close path emits no domain event); CWR-021, CWR-023, CWR-045 (admission sources and app scope).
 
@@ -3861,7 +3864,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decis
 
 **Never emitted.** Never for a configuration preview, a draft (`pm.collaboration.launch_draft.v1`), a team preset choice (CWR-039), a Settings default or `Save as Default` (MODAL-006..008), a Crew Auto rule save (CWR-038), or a Start that reuses or bumps an existing `collaboration_id` (that bump is `collaboration.configuration_changed`).
 
-**Producer and order.** The entry point is `CollaborationRuntime.admit_run(StartAdmission)`, newly named here under DL-090. In the Start admission the owner commits the definition record at revision 1 and the run record together, with the prepared events of both, then appends `collaboration.created` and, after its first receipt, `collaboration.started`. The Start command's result is returned committed only after `collaboration.started` has its first receipt. In Build With Crew the Plan owner's one transaction commits first; the runtime appends both events after that commit and never inside it. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-461.
+**Producer and order.** The entry point is `CollaborationRuntime.admit_run(StartAdmission)`, newly named here under DL-090. In the Start admission the owner commits the definition record at revision 1 and the run record together, with the prepared events of both, then appends `collaboration.created` and, after its first receipt, `collaboration.started`. The Start command's result is returned committed only after `collaboration.started` has its first receipt. In Build With Crew the Plan owner's one transaction commits first; the runtime appends both events after that commit and never inside it. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-461.
 
 **Text and custody.** The definition's `name` and `purpose` are user text and stay in the definition record; the event carries the identity, the admission source, the slot IDs and the coordinator kind only.
 
@@ -3870,7 +3873,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decis
 **Bindings.** Payload CV-461: `pm.collaboration_event.collaboration_created.v1` and `pm.collaboration_event.collaboration_created.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-461. Oracles ATS-231. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.created`.
 
 ```yaml
-plan_unit_id: CW-101
+plan_unit_id: CWR-106
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -3898,7 +3901,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-018, CWR-021, CWR-023]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-018, CWR-021, CWR-023]
 unblocks: []
 acceptance_criteria:
   - "collaboration.created is appended only by CollaborationRuntime through CollaborationRuntime.admit_run(StartAdmission), after the owner commit of the fact it records."
@@ -3948,10 +3951,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-461, ContractName:Plans/storage-plan.md#SP-461, ContractName:Plans/Automated_Testing_System.md#ATS-231, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-461, ContractName:Plans/storage-plan.md#SP-461, ContractName:Plans/Automated_Testing_System.md#ATS-231, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-started"></a>
-### CW-102 - The collaboration.started event contract
+### CWR-107 - The collaboration.started event contract
 
 **Records.** `collaboration.started` records the admission of one `CollaborativeRun` (`pm.collaboration.run.v1` or `pm.collaboration.run.application.v1`) with its frozen roster. Authority: DL-090; semantic sources: section 2.1 (closed run states); section 2.6 (every asynchronous start is idempotent); section 10 `cmd.collaboration.start` and `cmd.review.run_again`; MODAL-013..014, MODAL-015..018 (Build With Crew atomicity, repeated Start returns the original run); CWR-021, CWR-022, CWR-023 (admission_source, crew_auto_revision, Plan binding); section 7.2 and MODAL-009..010 (Review freezes its target pack at Start).
 
@@ -3959,7 +3962,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a Crew Auto evaluation that declines (CWR-021: nothing is created), a Start refused for an unavailable chosen model (CWR-034), a refused Build With Crew transaction (CWR-022, CWR-023), or a repeated Start with the same command idempotency binding, which returns the original run and its original receipt (section 2.6, MODAL-015..018).
 
-**Producer and order.** The entry point is `CollaborationRuntime.admit_run(StartAdmission)`, newly named here under DL-090. The owner commits the run record with its prepared event, appends `collaboration.started` (after `collaboration.created` or `collaboration.configuration_changed` when the same admission committed a definition revision), and returns `CollaborationStartResult` committed only after the first receipt. A run is never reported started, carded or shown in Activity before that receipt returns (MODAL-006..008: a card appears only after one run is durably admitted). It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-462.
+**Producer and order.** The entry point is `CollaborationRuntime.admit_run(StartAdmission)`, newly named here under DL-090. The owner commits the run record with its prepared event, appends `collaboration.started` (after `collaboration.created` or `collaboration.configuration_changed` when the same admission committed a definition revision), and returns `CollaborationStartResult` committed only after the first receipt. A run is never reported started, carded or shown in Activity before that receipt returns (MODAL-006..008: a card appears only after one run is durably admitted). It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-462.
 
 **Text and custody.** The run's job text, topic and purpose are user text and stay in the definition and run records; the event carries identities, enums, refs and hashes only.
 
@@ -3968,7 +3971,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-462: `pm.collaboration_event.collaboration_started.v1` and `pm.collaboration_event.collaboration_started.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-462. Oracles ATS-232. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.started`.
 
 ```yaml
-plan_unit_id: CW-102
+plan_unit_id: CWR-107
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -3992,7 +3995,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-002, CWR-021, CWR-023]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-002, CWR-021, CWR-023]
 unblocks: []
 acceptance_criteria:
   - "collaboration.started is appended only by CollaborationRuntime through CollaborationRuntime.admit_run(StartAdmission), after the owner commit of the fact it records."
@@ -4042,10 +4045,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-462, ContractName:Plans/storage-plan.md#SP-462, ContractName:Plans/Automated_Testing_System.md#ATS-232, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-462, ContractName:Plans/storage-plan.md#SP-462, ContractName:Plans/Automated_Testing_System.md#ATS-232, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-paused"></a>
-### CW-103 - The collaboration.paused event contract
+### CWR-108 - The collaboration.paused event contract
 
 **Records.** `collaboration.paused` records the run reaching the `paused` state at a safe boundary after a user's `cmd.collaboration.pause`. Authority: DL-090; semantic sources: section 2.6 (Pause reaches a safe boundary); section 10 `cmd.collaboration.pause`; section 6.3 and CWR-044 (Chat Room Pause holds the room at the next safe turn boundary; `pause_between_rounds` waits are `waiting`, not paused); section 15 (manual Stop, Pause and Cancel outrank automatic continuation).
 
@@ -4053,7 +4056,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a `waiting` state (a quota wait, a permission decision, a scheduled window, a Chat Room between rounds with `pause_between_rounds` on, or a room that used all its rounds), for `blocked`, for application automation Pause (DL-292: operational state with its own epoch) or for a pause request that has not reached its boundary. DL-091 adds no event for waiting or blocked.
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_paused(PauseReached)`, newly named here under DL-090. `cmd.collaboration.pause` is accepted, the runtime reaches the safe boundary, the owner commits the run record in `paused` with the prepared event, the event is appended, and `CollaborationPauseResult` reports the exact paused state only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-463.
+**Producer and order.** The entry point is `CollaborationRuntime.record_paused(PauseReached)`, newly named here under DL-090. `cmd.collaboration.pause` is accepted, the runtime reaches the safe boundary, the owner commits the run record in `paused` with the prepared event, the event is appended, and `CollaborationPauseResult` reports the exact paused state only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-463.
 
 **Text and custody.** The event carries no message, inbox or composer text; what the pause preserves stays in its own records.
 
@@ -4062,7 +4065,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-463: `pm.collaboration_event.collaboration_paused.v1` and `pm.collaboration_event.collaboration_paused.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-463. Oracles ATS-233. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.paused`.
 
 ```yaml
-plan_unit_id: CW-103
+plan_unit_id: CWR-108
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4085,7 +4088,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-044]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-044]
 unblocks: []
 acceptance_criteria:
   - "collaboration.paused is appended only by CollaborationRuntime through CollaborationRuntime.record_paused(PauseReached), after the owner commit of the fact it records."
@@ -4135,10 +4138,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-463, ContractName:Plans/storage-plan.md#SP-463, ContractName:Plans/Automated_Testing_System.md#ATS-233, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-463, ContractName:Plans/storage-plan.md#SP-463, ContractName:Plans/Automated_Testing_System.md#ATS-233, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-resumed"></a>
-### CW-104 - The collaboration.resumed event contract
+### CWR-109 - The collaboration.resumed event contract
 
 **Records.** `collaboration.resumed` records a paused run continuing as the same run after a user's `cmd.collaboration.resume`. Authority: DL-090; semantic sources: section 2.6 (Resume continues the same run and never duplicates delivered work); section 10 `cmd.collaboration.resume` (fails closed while an owner condition still blocks); section 15 (a stopped run does not resume on a quota reset or a window opening); CWR-044 (Resume continues the round in progress).
 
@@ -4146,7 +4149,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a quota reset, a scheduling window opening or any automatic continuation (section 15: manual Pause outranks them), for a Chat Room starting its next round by itself (CWR-044: the room's own progression dispatches no command and changes no lifecycle state), or for `cmd.chat_room.next_round`.
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_resumed(ResumeAdmitted)`, newly named here under DL-090. `cmd.collaboration.resume` passes the owner checks, the owner commits the run record out of `paused` with the prepared event, the event is appended, and `CollaborationResumeResult` is committed only after the first receipt. No participant work is redelivered. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-464.
+**Producer and order.** The entry point is `CollaborationRuntime.record_resumed(ResumeAdmitted)`, newly named here under DL-090. `cmd.collaboration.resume` passes the owner checks, the owner commits the run record out of `paused` with the prepared event, the event is appended, and `CollaborationResumeResult` is committed only after the first receipt. No participant work is redelivered. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-464.
 
 **Text and custody.** Identities, enums and refs only.
 
@@ -4155,7 +4158,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-464: `pm.collaboration_event.collaboration_resumed.v1` and `pm.collaboration_event.collaboration_resumed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-464. Oracles ATS-234. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.resumed`.
 
 ```yaml
-plan_unit_id: CW-104
+plan_unit_id: CWR-109
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4175,7 +4178,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-044]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-044]
 unblocks: []
 acceptance_criteria:
   - "collaboration.resumed is appended only by CollaborationRuntime through CollaborationRuntime.record_resumed(ResumeAdmitted), after the owner commit of the fact it records."
@@ -4225,10 +4228,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-464, ContractName:Plans/storage-plan.md#SP-464, ContractName:Plans/Automated_Testing_System.md#ATS-234, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-464, ContractName:Plans/storage-plan.md#SP-464, ContractName:Plans/Automated_Testing_System.md#ATS-234, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-cancelled"></a>
-### CW-105 - The collaboration.cancelled event contract
+### CWR-110 - The collaboration.cancelled event contract
 
 **Records.** `collaboration.cancelled` records a run ending `cancelled`: by the user's `cmd.collaboration.cancel` (`stop_reason` `user_cancel`) or by reaching its own time, cost or token limit (`limit_time`, `limit_cost`, `limit_tokens`, CWR-029, DL-131). Authority: DL-090; semantic sources: section 2.1 and CWR-029 (a run stopped at its own limit settles cancelled with stop_reason); section 2.6 (Cancel stops new admissions and records a cancellation receipt); section 10 `cmd.collaboration.cancel`; PART-016..020 (Cancel fences every attempt and synthesis callback); CWR-019 (after cancel the card's face never changes again).
 
@@ -4236,7 +4239,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a failure (that is `collaboration.failed`), for `cmd.chat_room.end` (that settles `completed`), for closing the client, switching threads or projects (section 15: these do not cancel), or for cancelling a configuration sheet (no run exists).
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_cancelled(CancelSettled)`, newly named here under DL-090. Fence, then one `collaboration.participant_completed` (`canceled`) per fenced open attempt in slot order, then the run record commit and `collaboration.cancelled`; `CollaborationCancelResult` and its cancellation receipt are returned only after the first receipt. Late results after the fence are retained by their owners as rejected or stale evidence and append nothing. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-465.
+**Producer and order.** The entry point is `CollaborationRuntime.record_cancelled(CancelSettled)`, newly named here under DL-090. Fence, then one `collaboration.participant_completed` (`canceled`) per fenced open attempt in slot order, then the run record commit and `collaboration.cancelled`; `CollaborationCancelResult` and its cancellation receipt are returned only after the first receipt. Late results after the fence are retained by their owners as rejected or stale evidence and append nothing. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-465.
 
 **Text and custody.** Identities, enums, counts and refs only; the card, transcript, participants and artifacts are kept by their owners.
 
@@ -4245,7 +4248,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-465: `pm.collaboration_event.collaboration_cancelled.v1` and `pm.collaboration_event.collaboration_cancelled.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-465. Oracles ATS-235. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.cancelled`.
 
 ```yaml
-plan_unit_id: CW-105
+plan_unit_id: CWR-110
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4268,7 +4271,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-029]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-029]
 unblocks: []
 acceptance_criteria:
   - "collaboration.cancelled is appended only by CollaborationRuntime through CollaborationRuntime.record_cancelled(CancelSettled), after the owner commit of the fact it records."
@@ -4318,18 +4321,18 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-465, ContractName:Plans/storage-plan.md#SP-465, ContractName:Plans/Automated_Testing_System.md#ATS-235, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-465, ContractName:Plans/storage-plan.md#SP-465, ContractName:Plans/Automated_Testing_System.md#ATS-235, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-completed"></a>
-### CW-106 - The collaboration.completed event contract
+### CWR-111 - The collaboration.completed event contract
 
 **Records.** `collaboration.completed` records a run ending `completed`. Authority: DL-090; semantic sources: PART-016..020 (a run completes only when its predicate, required dispositions, output and artifact finalisation and pending decisions are resolved); CWR-029 (clean_completion); section 10 `cmd.chat_room.end` and CWR-024 (End discussion settles completed); section 8.7 and 7.6 (BrainStorm ends in one Plan; Review in one artifact); Plans/Contracts_V0.md effect dispositions (never the normal completed event while required slots or outputs are unresolved).
 
 **Emitted when.** The owner has settled the run record `completed`: the kind's completion predicate, the required participant dispositions, output and artifact finalisation and every pending user decision are resolved, or, for a Chat Room only, the user ended the discussion with `cmd.chat_room.end`.
 
-**Never emitted.** Never because a provider turn finished or the last message arrived (PART-016..020: the last message is not lifecycle truth), never while a required slot is unresolved or an output is missing, and never for a partial Review that was not accepted (PART-007..010).
+**Never emitted.** Never because a provider turn finished or the last message arrived (PART-016..020: the last message is not lifecycle truth), never for ordinary clean completion while a required slot is unresolved or an output is missing (CWR-031's explicit Chat Room End is its stated exception), and never for a partial Review that was not accepted (PART-007..010).
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_completed(CompletionSettled)`, newly named here under DL-090. Every attempt is closed with its outcome first; then the owner commits the run record `completed` with the prepared event, the event is appended, and the completion result (or `ChatRoomEndResult`) is returned only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-466.
+**Producer and order.** The entry point is `CollaborationRuntime.record_completed(CompletionSettled)`, newly named here under DL-090. Every attempt is closed with its outcome first; then the owner commits the run record `completed` with the prepared event, the event is appended, and the completion result (or `ChatRoomEndResult`) is returned only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-466.
 
 **Text and custody.** Identities, enums and refs only; result text stays in its artifact or Plan.
 
@@ -4338,7 +4341,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-466: `pm.collaboration_event.collaboration_completed.v1` and `pm.collaboration_event.collaboration_completed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-466. Oracles ATS-236. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.completed`.
 
 ```yaml
-plan_unit_id: CW-106
+plan_unit_id: CWR-111
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4348,7 +4351,7 @@ canonical_text: >-
   kind's completion predicate, the required participant dispositions, output and artifact finalisation and
   every pending user decision are resolved, or, for a Chat Room only, the user ended the discussion with
   cmd.chat_room.end. Never because a provider turn finished or the last message arrived (PART-016..020: the
-  last message is not lifecycle truth), never while a required slot is unresolved or an output is missing, and
+  last message is not lifecycle truth), never for ordinary clean completion while a required slot is unresolved or an output is missing (CWR-031's explicit Chat Room End is its stated exception), and
   never for a partial Review that was not accepted (PART-007..010). The producer is CollaborationRuntime
   through CollaborationRuntime.record_completed(CompletionSettled). Every attempt is closed with its outcome
   first; then the owner commits the run record completed with the prepared event, the event is appended, and
@@ -4358,7 +4361,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-024, CWR-029]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-024, CWR-029]
 unblocks: []
 acceptance_criteria:
   - "collaboration.completed is appended only by CollaborationRuntime through CollaborationRuntime.record_completed(CompletionSettled), after the owner commit of the fact it records."
@@ -4408,10 +4411,12 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-466, ContractName:Plans/storage-plan.md#SP-466, ContractName:Plans/Automated_Testing_System.md#ATS-236, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-466, ContractName:Plans/storage-plan.md#SP-466, ContractName:Plans/Automated_Testing_System.md#ATS-236, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-failed"></a>
-### CW-107 - The collaboration.failed event contract
+The required-slot set is retained from the definition/source snapshot committed by created/configuration_changed and frozen at Start; completion's exact set must match (`required_slot_set_mismatch`), and `waived_slot_ids` must equal actual current dispositions (`waived_slot_set_mismatch`). A shortened list never bypasses a failed required slot. Ordinary kind-specific outputs still apply; CWR-031's explicit Chat Room End settles without an invented waiver interaction.
+
+### CWR-112 - The collaboration.failed event contract
 
 **Records.** `collaboration.failed` records a run ending in the closed run state `failed`, with its reason (DL-091). Authority: DL-091 (with DL-090's permission); semantic sources: DL-091 (the recorded ending of a run that fails, with its reason); section 2.1 (`failed` is a closed run state); section 11 (the closed typed error enumeration of this owner); CWR-019 (a run in the failed state shows its failure sentence); CWR-029 (a limit stop is cancelled, never failed).
 
@@ -4419,7 +4424,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a participant failure (that is `collaboration.participant_completed` with its outcome, DL-091), a coordinator failure that leaves the run in attention (PART-016..020, CWR-029: `coordinator_failed` is an attention reason, not a run state), a waiting or blocked state (DL-091 adds no event for them), a limit stop (CWR-029: cancelled, never failed) or a cancel.
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_failed(FailureSettled)`, newly named here under DL-090. Every attempt is closed with its outcome by its executing owner first; then the owner commits the run record `failed` with its reason and the prepared event, and the event is appended. Nothing reports the run failed before the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-467.
+**Producer and order.** The entry point is `CollaborationRuntime.record_failed(FailureSettled)`, newly named here under DL-090. Every attempt is closed with its outcome by its executing owner first; then the owner commits the run record `failed` with its reason and the prepared event, and the event is appended. Nothing reports the run failed before the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-467.
 
 **Text and custody.** The reason is a closed code; no provider error text, prompt or output is carried. Any failure sentence is presentation of the code.
 
@@ -4428,7 +4433,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-467: `pm.collaboration_event.collaboration_failed.v1` and `pm.collaboration_event.collaboration_failed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-467. Oracles ATS-237. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.failed`.
 
 ```yaml
-plan_unit_id: CW-107
+plan_unit_id: CWR-112
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4449,7 +4454,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-091, DL-090, DL-092, DL-292, CWR-019, CWR-029]
+depends_on: [CWR-105, DL-091, DL-090, DL-092, DL-292, CWR-019, CWR-029]
 unblocks: []
 acceptance_criteria:
   - "collaboration.failed is appended only by CollaborationRuntime through CollaborationRuntime.record_failed(FailureSettled), after the owner commit of the fact it records."
@@ -4499,10 +4504,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-467, ContractName:Plans/storage-plan.md#SP-467, ContractName:Plans/Automated_Testing_System.md#ATS-237, ContractName:Plans/Decision_Log.md#DL-091
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-467, ContractName:Plans/storage-plan.md#SP-467, ContractName:Plans/Automated_Testing_System.md#ATS-237, ContractName:Plans/Decision_Log.md#DL-091
 
 <a id="collaboration-event-collaboration-participant-started"></a>
-### CW-108 - The collaboration.participant_started event contract
+### CWR-113 - The collaboration.participant_started event contract
 
 **Records.** `collaboration.participant_started` records the admission of one participant attempt for one slot of a started run. Authority: DL-090; semantic sources: section 2.2 (each slot gets a distinct participant identity, attempt identity and isolated session; requested and effective are stored apart); PART-001..006 (retries create new attempt identities; replacement creates a new assignment revision); PART-021..024 (configuration alone never creates a runtime participant); Plans/Tools.md section 15.9 (Tools must not emit collaboration semantic events).
 
@@ -4510,7 +4515,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never by Tools or a tool receipt (Tools section 15.9), by a provider adapter's own session (section 16: provider-native constructs are never the canonical run), for the coordinator when it is not a participant slot (CWR-030), for Grill Me (never a participant, DL-218), or for a configuration row before Start (PART-021..024).
 
-**Producer and order.** The entry point is `CollaborationRuntime.admit_attempt(AttemptAdmission)`, newly named here under DL-090. The owner commits the attempt's assignment record with the prepared event, appends the event, and dispatches the participant's work only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-468.
+**Producer and order.** The entry point is `CollaborationRuntime.admit_attempt(AttemptAdmission)`, newly named here under DL-090. The owner commits the attempt's assignment record with the prepared event, appends the event, and dispatches the participant's work only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-468.
 
 **Text and custody.** Identities and refs only; the attempt's prompt, context slice and private working slice are never carried.
 
@@ -4519,7 +4524,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-468: `pm.collaboration_event.collaboration_participant_started.v1` and `pm.collaboration_event.collaboration_participant_started.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-468. Oracles ATS-238. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.participant_started`.
 
 ```yaml
-plan_unit_id: CW-108
+plan_unit_id: CWR-113
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4541,7 +4546,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-009, CWR-034]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-009, CWR-034]
 unblocks: []
 acceptance_criteria:
   - "collaboration.participant_started is appended only by CollaborationRuntime through CollaborationRuntime.admit_attempt(AttemptAdmission), after the owner commit of the fact it records."
@@ -4591,10 +4596,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-468, ContractName:Plans/storage-plan.md#SP-468, ContractName:Plans/Automated_Testing_System.md#ATS-238, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-468, ContractName:Plans/storage-plan.md#SP-468, ContractName:Plans/Automated_Testing_System.md#ATS-238, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-participant-completed"></a>
-### CW-109 - The collaboration.participant_completed event contract
+### CWR-114 - The collaboration.participant_completed event contract
 
 **Records.** `collaboration.participant_completed` records one terminal outcome: of one attempt (`completed`, `failed`, `timed_out`, `canceled`, or `explicitly_waived` of a started attempt), or of a slot with no attempt under its assignment revision (`unavailable`, or `explicitly_waived` before any attempt). Authority: DL-090; semantic sources: PART-001..006 (exactly one explicit terminal outcome; a missing callback is not completed; waivers identify actor, reason and currentness); section 15 (the executing owner reports an in-flight attempt; exactly one terminal result per attempt; replay idempotent on attempt identity); DL-091 (a participant that fails is recorded by its participant-completed event); PART-016..020 (Cancel fences every attempt); CWR-024, CWR-026 (Continue without and accept_partial are explicit waivers).
 
@@ -4602,7 +4607,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a missing callback (it is not `completed`), a provider turn alone, a late result after a cancel fence or from a superseded attempt (retained as rejected or stale evidence), or by Tools (Tools section 15.9). A participant failure never also emits a run event (DL-091).
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_outcome(ParticipantOutcome)`, newly named here under DL-090. The owner commits the disposition record with the prepared event and appends the event; the completion projection reads the outcome only after the first receipt. In a cancel these events precede `collaboration.cancelled`. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-469.
+**Producer and order.** The entry point is `CollaborationRuntime.record_outcome(ParticipantOutcome)`, newly named here under DL-090. The owner commits the disposition record with the prepared event and appends the event; the completion projection reads the outcome only after the first receipt. In a cancel these events precede `collaboration.cancelled`. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-469.
 
 **Text and custody.** A waiver's reason is user text and stays in the disposition record; the event carries the waiver's actor and currentness only. No output, error text or transcript is carried.
 
@@ -4611,7 +4616,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-469: `pm.collaboration_event.collaboration_participant_completed.v1` and `pm.collaboration_event.collaboration_participant_completed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-469. Oracles ATS-239. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.participant_completed`.
 
 ```yaml
-plan_unit_id: CW-109
+plan_unit_id: CWR-114
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4635,7 +4640,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-009, CWR-024, CWR-026]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-009, CWR-024, CWR-026]
 unblocks: []
 acceptance_criteria:
   - "collaboration.participant_completed is appended only by CollaborationRuntime through CollaborationRuntime.record_outcome(ParticipantOutcome), after the owner commit of the fact it records."
@@ -4685,10 +4690,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-469, ContractName:Plans/storage-plan.md#SP-469, ContractName:Plans/Automated_Testing_System.md#ATS-239, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-469, ContractName:Plans/storage-plan.md#SP-469, ContractName:Plans/Automated_Testing_System.md#ATS-239, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-message-added"></a>
-### CW-110 - The collaboration.message_added event contract
+### CWR-115 - The collaboration.message_added event contract
 
 **Records.** `collaboration.message_added` records one `CollaborationMessage` written to a run's transcript, with its `sequence`. Authority: DL-090; semantic sources: section 2.3 (one durable transcript record; a user message is written once and referenced twice); section 13 (emitted once per written message, never for a streamed frame); EP-129, EP-130, EP-131 (a helper message becomes durable exactly once; sequence assigned at that write; idempotent on the allocated id; an unwritten id leaves no gap); section 10 `cmd.collaboration.message` and `cmd.collaboration.reconfigure` (a system transcript entry); CWR-013 (blind-phase protection at read time).
 
@@ -4696,7 +4701,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a streamed frame, a `partial_delta` or a message in progress that is never written (EP-131), a duplicate presentation of a user message in the main thread (written once, referenced twice), a refused `cmd.collaboration.message` (for example `lead_admission_closed`, whose `collaboration_message_id` is null), or the crew message board (Plans/orchestrator-subagent-integration.md owns it, DL-085).
 
-**Producer and order.** The entry point is `CollaborationRuntime.write_message(MessageWrite)`, newly named here under DL-090. The owner writes the message record with its `sequence` and the prepared event, appends the event, and delivers the message to its recipients and returns `CollaborationMessageResult` only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-470.
+**Producer and order.** The entry point is `CollaborationRuntime.write_message(MessageWrite)`, newly named here under DL-090. The owner writes the message record with its `sequence` and the prepared event, appends the event, and delivers the message to its recipients and returns `CollaborationMessageResult` only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-470.
 
 **Text and custody.** The message text is never in the event: it stays in the message record's body, which `body_ref` names. Readers apply the blind-phase rules of CWR-013 at read time, so the event's existence is never disclosed to a participant the protocol has not released it to.
 
@@ -4705,7 +4710,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-470: `pm.collaboration_event.collaboration_message_added.v1` and `pm.collaboration_event.collaboration_message_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-470. Oracles ATS-240. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.message_added`.
 
 ```yaml
-plan_unit_id: CW-110
+plan_unit_id: CWR-115
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4729,7 +4734,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-013, CWR-040, EP-129, EP-130, EP-131]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-013, CWR-040, EP-129, EP-130, EP-131]
 unblocks: []
 acceptance_criteria:
   - "collaboration.message_added is appended only by CollaborationRuntime through CollaborationRuntime.write_message(MessageWrite), after the owner commit of the fact it records."
@@ -4779,10 +4784,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-470, ContractName:Plans/storage-plan.md#SP-470, ContractName:Plans/Automated_Testing_System.md#ATS-240, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-470, ContractName:Plans/storage-plan.md#SP-470, ContractName:Plans/Automated_Testing_System.md#ATS-240, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-artifact-added"></a>
-### CW-111 - The collaboration.artifact_added event contract
+### CWR-116 - The collaboration.artifact_added event contract
 
 **Records.** `collaboration.artifact_added` records a run's `artifact_refs` gaining one version of an ordinary Puppet Master artifact that the artifact owner created. Authority: DL-090; semantic sources: section 2.4 (collaborative artifacts are ordinary artifacts created through the artifact owners; deleting a card or message cannot purge a shared artifact); section 7.6 (the Review artifact); section 9.2 (a Wonderer pass is one artifact); section 10 `cmd.chat_room.summarize` (a synthesis artifact through the artifact owner); section 6.4 (promotion of an output to an artifact).
 
@@ -4790,7 +4795,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for an export (`cmd.collaboration.export` exports an existing version and creates no run artifact), a draft or local preview, or an artifact the artifact owner has not created.
 
-**Producer and order.** The entry point is `CollaborationRuntime.attach_artifact(ArtifactAttached)`, newly named here under DL-090. The artifact owner creates the version first; the runtime commits the reference with the prepared event and appends the event. The referencing message or result is returned after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-471.
+**Producer and order.** The entry point is `CollaborationRuntime.attach_artifact(ArtifactAttached)`, newly named here under DL-090. The artifact owner creates the version first; the runtime commits the reference with the prepared event and appends the event. The referencing message or result is returned after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-471.
 
 **Text and custody.** The artifact's bytes, versions and retention stay with the artifact owner; the event holds references only, so deleting the chat removes the event and never purges a shared artifact (section 2.4).
 
@@ -4799,7 +4804,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-471: `pm.collaboration_event.collaboration_artifact_added.v1` and `pm.collaboration_event.collaboration_artifact_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-471. Oracles ATS-241. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.artifact_added`.
 
 ```yaml
-plan_unit_id: CW-111
+plan_unit_id: CWR-116
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4819,7 +4824,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-041]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-041]
 unblocks: []
 acceptance_criteria:
   - "collaboration.artifact_added is appended only by CollaborationRuntime through CollaborationRuntime.attach_artifact(ArtifactAttached), after the owner commit of the fact it records."
@@ -4869,10 +4874,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-471, ContractName:Plans/storage-plan.md#SP-471, ContractName:Plans/Automated_Testing_System.md#ATS-241, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-471, ContractName:Plans/storage-plan.md#SP-471, ContractName:Plans/Automated_Testing_System.md#ATS-241, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-collaboration-configuration-changed"></a>
-### CW-112 - The collaboration.configuration_changed event contract
+### CWR-117 - The collaboration.configuration_changed event contract
 
 **Records.** `collaboration.configuration_changed` records a committed definition revision after the first: a mid-run `cmd.collaboration.reconfigure` (`change_source` `reconfigure`) or a Start that commits a bumped revision of an existing `collaboration_id` (`start_commit`). Authority: DL-090; semantic sources: section 3 (committing writes or bumps the definition revision); section 10 `cmd.collaboration.reconfigure` (bumps the revision under an expected-revision check, records a system transcript entry, never rewrites attribution or widens the ceiling); CWR-031 (the change kinds, accept_stale_target, available only while waiting, running, blocked or paused); PART-001..006 (retry, replacement and waiver go through reconfigure); CWR-044 (set_pause_between_rounds bumps the revision).
 
@@ -4880,7 +4885,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a Settings default change (it never alters a committed definition, section 14), a team preset or draft edit, a preview, a Start that reuses an unchanged committed revision, a refused reconfigure (for example a terminal run, CWR-031) or a stale expected revision.
 
-**Producer and order.** The entry point is `CollaborationRuntime.commit_revision(RevisionCommit)`, newly named here under DL-090. The owner commits the definition revision with the prepared event and appends the event; for a reconfigure the system message and its `collaboration.message_added` follow, and `CollaborationReconfigureResult` is returned only after both first receipts. For `start_commit` the run's `collaboration.started` follows in the same admission. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-472.
+**Producer and order.** The entry point is `CollaborationRuntime.commit_revision(RevisionCommit)`, newly named here under DL-090. The owner commits the definition revision with the prepared event and appends the event; for a reconfigure the system message and its `collaboration.message_added` follow, and `CollaborationReconfigureResult` is returned only after both first receipts. For `start_commit` the run's `collaboration.started` follows in the same admission. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-472.
 
 **Text and custody.** A waiver's reason, a replacement's Persona text and any job text stay in the definition record; the event carries change kinds, slot IDs and refs only.
 
@@ -4889,7 +4894,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-472: `pm.collaboration_event.collaboration_configuration_changed.v1` and `pm.collaboration_event.collaboration_configuration_changed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-472. Oracles ATS-242. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.configuration_changed`.
 
 ```yaml
-plan_unit_id: CW-112
+plan_unit_id: CWR-117
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -4913,7 +4918,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-024, CWR-031, CWR-044]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-024, CWR-031, CWR-044]
 unblocks: []
 acceptance_criteria:
   - "collaboration.configuration_changed is appended only by CollaborationRuntime through CollaborationRuntime.commit_revision(RevisionCommit), after the owner commit of the fact it records."
@@ -4963,10 +4968,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-472, ContractName:Plans/storage-plan.md#SP-472, ContractName:Plans/Automated_Testing_System.md#ATS-242, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-472, ContractName:Plans/storage-plan.md#SP-472, ContractName:Plans/Automated_Testing_System.md#ATS-242, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-brainstorm-proposal-added"></a>
-### CW-113 - The brainstorm.proposal_added event contract
+### CWR-118 - The brainstorm.proposal_added event contract
 
 **Records.** `brainstorm.proposal_added` records one normalized `BrainstormProposal` record committed in a BrainStorm run. Authority: DL-090; semantic sources: section 8.5 phases 2 and 3 (blind proposals in fresh contexts; normalization into the proposal record); section 12 `pm.brainstorm.proposal.v1`; CWR-013 (blind-phase protection: no content or existence metadata leaks); section 9.2 (the Wonderer never proposes); DL-090 (proposals carry their own text; their contracts say how it is protected and deleted).
 
@@ -4974,16 +4979,16 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a submission still inside the blind phase, a Wonderer pass or lead (those are messages and artifacts), a vote, or migration of the retired hidden overlay (section 17: it never fabricates a proposal).
 
-**Producer and order.** The entry point is `CollaborationRuntime.release_proposal(ProposalNormalized)`, newly named here under DL-090. The owner commits the normalized proposal record with the prepared event and appends the event; the proposal reaches other participants and the coordinator only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-473.
+**Producer and order.** The entry point is `CollaborationRuntime.release_proposal(ProposalNormalized)`, newly named here under DL-090. The owner commits the normalized proposal record with the prepared event and appends the event; the proposal reaches other participants and the coordinator only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-473.
 
-**Text and custody.** Text protection (DL-090). The event carries no proposal text: no approach, assumptions, benefits, costs, risks, migrations, cross-system effects, validation, rollback or evidence. That text stays in the proposal record, which `proposal_record_ref` names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set, and the event neither holds nor extends it. Readers disclose a proposal row only after the protocol releases it (CWR-013).
+**Text and custody.** Text protection (DL-090). The event carries no proposal text: no approach, assumptions, benefits, costs, risks, migrations, cross-system effects, validation, rollback or evidence. That text stays in the proposal record, which `proposal_record_ref` names. Deleting the chat deletes the event under the chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A; independently retained artifacts and receipts remain independent. Readers disclose a proposal row only after the protocol releases it (CWR-013).
 
 **Withdrawal.** While it is withdrawn new BrainStorm runs are refused; an active BrainStorm cannot normalize proposals and waits, never inferring a proposal. SP-473 states the fences.
 
 **Bindings.** Payload CV-473: `pm.collaboration_event.brainstorm_proposal_added.v1` and `pm.collaboration_event.brainstorm_proposal_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-473. Oracles ATS-243. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.proposal_added`.
 
 ```yaml
-plan_unit_id: CW-113
+plan_unit_id: CWR-118
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -5001,14 +5006,14 @@ canonical_text: >-
   only after the first receipt. Text protection (DL-090). The event carries no proposal text: no approach,
   assumptions, benefits, costs, risks, migrations, cross-system effects, validation, rollback or evidence.
   That text stays in the proposal record, which proposal_record_ref names. Deleting the chat deletes the event
-  under the chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set,
+  under the chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A,
   and the event neither holds nor extends it. Readers disclose a proposal row only after the protocol releases
   it (CWR-013). Payload CV-473, persistence SP-473, oracles ATS-243; kept as long as the run's chat exists,
   RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-007, CWR-013]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-007, CWR-013]
 unblocks: []
 acceptance_criteria:
   - "brainstorm.proposal_added is appended only by CollaborationRuntime through CollaborationRuntime.release_proposal(ProposalNormalized), after the owner commit of the fact it records."
@@ -5058,10 +5063,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-473, ContractName:Plans/storage-plan.md#SP-473, ContractName:Plans/Automated_Testing_System.md#ATS-243, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-473, ContractName:Plans/storage-plan.md#SP-473, ContractName:Plans/Automated_Testing_System.md#ATS-243, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-brainstorm-vote-added"></a>
-### CW-114 - The brainstorm.vote_added event contract
+### CWR-119 - The brainstorm.vote_added event contract
 
 **Records.** `brainstorm.vote_added` records one `BrainstormVote` record committed in the Vote phase. Authority: DL-090; semantic sources: section 8.5 phase 6 (each participant records position, confidence, reason, evidence and hard-constraint conflicts); section 8.6 and CWR-027 (hard constraints by id; voting informs synthesis); PART-011..015, WONV-003..006 (an active Wonderer never votes; only a reconfigured role's current attempt may vote); section 12 `pm.brainstorm.vote.v1`.
 
@@ -5069,7 +5074,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for the Wonderer (it abstains and is excluded from the denominators without a vote record), Grill Me (a switch with no vote), a superseded attempt, a Review reviewer vote (Review votes live in the finding record) or a display of `Abstained`.
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_vote(VoteCast)`, newly named here under DL-090. The owner commits the vote record with the prepared event and appends the event; tallies count it only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-474.
+**Producer and order.** The entry point is `CollaborationRuntime.record_vote(VoteCast)`, newly named here under DL-090. The owner commits the vote record with the prepared event and appends the event; tallies count it only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-474.
 
 **Text and custody.** The vote's reason and evidence are text and stay in the vote record; the event carries the position, confidence and constraint IDs only.
 
@@ -5078,7 +5083,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-474: `pm.collaboration_event.brainstorm_vote_added.v1` and `pm.collaboration_event.brainstorm_vote_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-474. Oracles ATS-244. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.vote_added`.
 
 ```yaml
-plan_unit_id: CW-114
+plan_unit_id: CWR-119
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -5096,7 +5101,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-007, CWR-027]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-007, CWR-027]
 unblocks: []
 acceptance_criteria:
   - "brainstorm.vote_added is appended only by CollaborationRuntime through CollaborationRuntime.record_vote(VoteCast), after the owner commit of the fact it records."
@@ -5146,10 +5151,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-474, ContractName:Plans/storage-plan.md#SP-474, ContractName:Plans/Automated_Testing_System.md#ATS-244, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-474, ContractName:Plans/storage-plan.md#SP-474, ContractName:Plans/Automated_Testing_System.md#ATS-244, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-brainstorm-plan-synthesized"></a>
-### CW-115 - The brainstorm.plan_synthesized event contract
+### CWR-120 - The brainstorm.plan_synthesized event contract
 
 **Records.** `brainstorm.plan_synthesized` records the one Deep Plan a BrainStorm run produced, as the Plan owner created it. Authority: DL-090; semantic sources: section 8.1 (BrainStorm always ends in exactly one Deep Plan document); section 8.7 (synthesis requests Plan creation through `cmd.brainstorm.synthesize_plan`, which returns the Plan owner's create result); section 9.2 and CWR-041 (synthesis waits for passes, dispositions and lead research, and closes lead admission); PART-011..015 and CWR-027 (ties resolved by the coordinator; dissent preserved).
 
@@ -5157,7 +5162,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a synthesis request the Plan owner refused, a request unavailable while a pass, undecided lead or lead research remains, a second Plan for the same run, or a Chat Room promotion to a Plan (`cmd.chat_room.promote_to_plan` is a Chat Room promotion, not a BrainStorm synthesis).
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_synthesis(PlanCreated)`, newly named here under DL-090. The Plan owner commits the Plan; the runtime then commits its synthesis binding with the prepared event and appends the event. The BrainStorm card keeps its place (section 8.7). It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-475.
+**Producer and order.** The entry point is `CollaborationRuntime.record_synthesis(PlanCreated)`, newly named here under DL-090. The Plan owner commits the Plan; the runtime then commits its synthesis binding with the prepared event and appends the event. The BrainStorm card keeps its place (section 8.7). It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-475.
 
 **Text and custody.** The Plan's text belongs to the Plan owner; dissent and alternatives are counted, never quoted.
 
@@ -5166,7 +5171,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-475: `pm.collaboration_event.brainstorm_plan_synthesized.v1` and `pm.collaboration_event.brainstorm_plan_synthesized.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-475. Oracles ATS-245. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.plan_synthesized`.
 
 ```yaml
-plan_unit_id: CW-115
+plan_unit_id: CWR-120
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -5186,7 +5191,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-007, CWR-027, CWR-041]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-007, CWR-027, CWR-041]
 unblocks: []
 acceptance_criteria:
   - "brainstorm.plan_synthesized is appended only by CollaborationRuntime through CollaborationRuntime.record_synthesis(PlanCreated), after the owner commit of the fact it records."
@@ -5236,10 +5241,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-475, ContractName:Plans/storage-plan.md#SP-475, ContractName:Plans/Automated_Testing_System.md#ATS-245, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-475, ContractName:Plans/storage-plan.md#SP-475, ContractName:Plans/Automated_Testing_System.md#ATS-245, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-review-finding-added"></a>
-### CW-116 - The review.finding_added event contract
+### CWR-121 - The review.finding_added event contract
 
 **Records.** `review.finding_added` records one normalized `ReviewFinding` record committed in a Review run. Authority: DL-090; semantic sources: section 7.4 (initial passes run blind and concurrently); section 7.5 (normalization under finding_key keeps every originating reviewer and evidence ref); section 7.2 and 15 (findings from differing target hashes never merge); section 12 `pm.review.finding.v1`; CWR-013 (independent reviewer notes stay inaccessible until released); DL-090 (findings carry their own text).
 
@@ -5247,16 +5252,16 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a reviewer's raw pass output, a candidate before normalization, a pass run against a different frozen pack (excluded from corroboration, section 15), a re-run comparison (CWR-026: display-only, never persisted as a finding) or a taught-rule check (AMS-053).
 
-**Producer and order.** The entry point is `CollaborationRuntime.release_finding(FindingNormalized)`, newly named here under DL-090. The owner commits the normalized finding record with the prepared event and appends the event; reviewers receive the normalized candidates for corroboration only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-476.
+**Producer and order.** The entry point is `CollaborationRuntime.release_finding(FindingNormalized)`, newly named here under DL-090. The owner commits the normalized finding record with the prepared event and appends the event; reviewers receive the normalized candidates for corroboration only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-476.
 
-**Text and custody.** Text protection (DL-090). The event carries no finding text: no claim, category, evidence, dissent or proposed remediation. That text stays in the finding record, which `finding_record_ref` names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set. Readers disclose a finding only after normalization releases it (CWR-013).
+**Text and custody.** Text protection (DL-090). The event carries no finding text: no claim, category, evidence, dissent or proposed remediation. That text stays in the finding record, which `finding_record_ref` names. Deleting the chat deletes the event under the chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A. Readers disclose a finding only after normalization releases it (CWR-013).
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot normalize findings and cannot finalize. SP-476 states the fences.
 
 **Bindings.** Payload CV-476: `pm.collaboration_event.review_finding_added.v1` and `pm.collaboration_event.review_finding_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-476. Oracles ATS-246. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.finding_added`.
 
 ```yaml
-plan_unit_id: CW-116
+plan_unit_id: CWR-121
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -5272,13 +5277,13 @@ canonical_text: >-
   the normalized candidates for corroboration only after the first receipt. Text protection (DL-090). The
   event carries no finding text: no claim, category, evidence, dissent or proposed remediation. That text
   stays in the finding record, which finding_record_ref names. Deleting the chat deletes the event under the
-  chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set. Readers
+  chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A. Readers
   disclose a finding only after normalization releases it (CWR-013). Payload CV-476, persistence SP-476,
   oracles ATS-246; kept as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-006, CWR-013]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-006, CWR-013]
 unblocks: []
 acceptance_criteria:
   - "review.finding_added is appended only by CollaborationRuntime through CollaborationRuntime.release_finding(FindingNormalized), after the owner commit of the fact it records."
@@ -5328,10 +5333,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-476, ContractName:Plans/storage-plan.md#SP-476, ContractName:Plans/Automated_Testing_System.md#ATS-246, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-476, ContractName:Plans/storage-plan.md#SP-476, ContractName:Plans/Automated_Testing_System.md#ATS-246, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-review-finding-dispositioned"></a>
-### CW-117 - The review.finding_dispositioned event contract
+### CWR-122 - The review.finding_dispositioned event contract
 
 **Records.** `review.finding_dispositioned` records the coordinator's or adjudicator's final disposition of one finding. Authority: DL-090; semantic sources: section 7.5 (the coordinator or adjudicator produces the final disposition per finding and preserves dissent; severity is a separate axis); PART-007..010 (only admitted, current, completed attempts corroborate; lack of quorum never renders as consensus); CWR-026 (follow-on selection reads confirmed findings).
 
@@ -5339,16 +5344,16 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a reviewer's corroboration vote (votes live in the finding record's `reviewer_votes`), for a vote from a failed, timed-out, unavailable, canceled, stale or waived attempt, or for a disposition the adjudicator has not finalized.
 
-**Producer and order.** The entry point is `CollaborationRuntime.record_adjudication(FindingAdjudicated)`, newly named here under DL-090. The owner commits the final disposition with the prepared event and appends the event; follow-on actions read it only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-477.
+**Producer and order.** The entry point is `CollaborationRuntime.record_adjudication(FindingAdjudicated)`, newly named here under DL-090. The owner commits the final disposition with the prepared event and appends the event; follow-on actions read it only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-477.
 
-**Text and custody.** Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record's text keeps its own owner's lifetime.
+**Text and custody.** Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record and its text follow the chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A.
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot record dispositions and cannot finalize. SP-477 states the fences.
 
 **Bindings.** Payload CV-477: `pm.collaboration_event.review_finding_dispositioned.v1` and `pm.collaboration_event.review_finding_dispositioned.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-477. Oracles ATS-247. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.finding_dispositioned`.
 
 ```yaml
-plan_unit_id: CW-117
+plan_unit_id: CWR-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -5363,12 +5368,12 @@ canonical_text: >-
   the prepared event and appends the event; follow-on actions read it only after the first receipt. Text
   protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the
   event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record's
-  text keeps its own owner's lifetime. Payload CV-477, persistence SP-477, oracles ATS-247; kept as long as
+  text follows the chat lifetime, holds and deadlines under E-CARDS-1 1c A. Payload CV-477, persistence SP-477, oracles ATS-247; kept as long as
   the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-006, CWR-026]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-006, CWR-026]
 unblocks: []
 acceptance_criteria:
   - "review.finding_dispositioned is appended only by CollaborationRuntime through CollaborationRuntime.record_adjudication(FindingAdjudicated), after the owner commit of the fact it records."
@@ -5418,10 +5423,10 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-477, ContractName:Plans/storage-plan.md#SP-477, ContractName:Plans/Automated_Testing_System.md#ATS-247, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-477, ContractName:Plans/storage-plan.md#SP-477, ContractName:Plans/Automated_Testing_System.md#ATS-247, ContractName:Plans/Decision_Log.md#DL-090
 
 <a id="collaboration-event-review-artifact-finalized"></a>
-### CW-118 - The review.artifact_finalized event contract
+### CWR-123 - The review.artifact_finalized event contract
 
 **Records.** `review.artifact_finalized` records the publication of a Review run's one versioned, read-only Review artifact. Authority: DL-090; semantic sources: section 7.6 (one versioned, read-only Review artifact with target identity and hash, reviewers, findings by disposition and dissent); PART-007..010 (one reviewer is a single-pass result; partial coverage stays attention-required until accepted; the artifact identifies partial coverage); section 7.2, CWR-026, CWR-031 (finish_stale with accept_stale_target and an explicit staleness disclosure).
 
@@ -5429,7 +5434,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 
 **Never emitted.** Never for a partial review that was not accepted, a stale target that was not explicitly accepted, a second artifact for the same run (Run Another Review is a new run), an export, or a re-run comparison.
 
-**Producer and order.** The entry point is `CollaborationRuntime.finalize_review(ReviewArtifactFinalized)`, newly named here under DL-090. The artifact owner creates the version, `collaboration.artifact_added` records it, the runtime commits the finalization with the prepared event and appends this event; the thread summary links the artifact only after the first receipt. It follows CW-100's order and prepared-event rule; its admission checks and transitions are SP-478.
+**Producer and order.** The entry point is `CollaborationRuntime.finalize_review(ReviewArtifactFinalized)`, newly named here under DL-090. The artifact owner creates the version, `collaboration.artifact_added` records it, the runtime commits the finalization with the prepared event and appends this event; the thread summary links the artifact only after the first receipt. It follows CWR-105's order and prepared-event rule; its admission checks and transitions are SP-478.
 
 **Text and custody.** The artifact's text stays with the artifact owner; the event carries refs, hashes, counts and flags only.
 
@@ -5438,7 +5443,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:
 **Bindings.** Payload CV-478: `pm.collaboration_event.review_artifact_finalized.v1` and `pm.collaboration_event.review_artifact_finalized.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-478. Oracles ATS-248. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.artifact_finalized`.
 
 ```yaml
-plan_unit_id: CW-118
+plan_unit_id: CWR-123
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
@@ -5458,7 +5463,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CW-100, DL-090, DL-092, DL-292, CWR-006, CWR-026]
+depends_on: [CWR-105, DL-090, DL-092, DL-292, CWR-006, CWR-026]
 unblocks: []
 acceptance_criteria:
   - "review.artifact_finalized is appended only by CollaborationRuntime through CollaborationRuntime.finalize_review(ReviewArtifactFinalized), after the owner commit of the fact it records."
@@ -5508,5 +5513,5 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-478, ContractName:Plans/storage-plan.md#SP-478, ContractName:Plans/Automated_Testing_System.md#ATS-248, ContractName:Plans/Decision_Log.md#DL-090
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-478, ContractName:Plans/storage-plan.md#SP-478, ContractName:Plans/Automated_Testing_System.md#ATS-248, ContractName:Plans/Decision_Log.md#DL-090
 

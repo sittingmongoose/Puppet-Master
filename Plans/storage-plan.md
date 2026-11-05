@@ -29318,6 +29318,9 @@ canonical_text: |-
   The attached rows are app siblings in the existing canonical/derived engines, not a second Goal store, coordination database or message board. GRS-086/CWR-045/OSI-440 own semantics and CV-366 freezes exact logical/source/method/hash selections. Preserve every Project family/key/source resource and original semantic/physical byte domain unchanged. App bodies retain exactly eleven fields with project_id required null; scope and Server/Host/roots are in the wrapper/context. Objective revision/origin/control/receipt remain separately typed and keep original exact scalar/text bounds and independent content/audit lifetimes. New app Goal currentness uses the CV-366 goal_body_currentness domain, never a Project hash with app substituted for project_id.
   Original Goal start joins independently accepted app intent, original source, canonical body/origin/control and content-free command custody, actual append/first receipt and SIR original terminal result. Update joins original direct Save or approved complete agent proposal, shared app body reservation/commit, progress, event/receipt and immutable terminal audit; Cancel latches real host Stop first, retains source/Stop/partial effects and hidden control, then its actual content-free fact and original result. Each family’s role/current versus retained reader follows CV-366, never event-derived objective or late recapture. Every live writer/read/cancel/backup/restore/retention edge adopts its app graph together or is unavailable. Historical-only and Project Workflow/certified graphs remain closed; ordinary app dispatch never invents WorkNode evidence. A canonical completion receipt is non-rebuildable and cannot be reconstructed from events or a disposable projection.
   Crew definition/config/team/run/participant/transcript/messages/questions/artifacts and exact requested/effective snapshots use the existing four protocols and parent ceilings. App Crew Auto is a real thread configuration with revision1, separate from Project commit or thread override-only check. Application coordination uses one sole coordinator/appender, seven actual agent families only when admitted, exact AgentMessage app definition at both canonical producer/consumer sites, 16 KiB inline and BLAKE3 refs. Agent/file/operation/snapshot/board/checkpoint keys preserve actual Server/thread/crew/run/root/Host. Read tokens/checkpoints are from their full original source and current publication, never copied authority or JSON files. Same path on another Host/root/crew does not alias.
+  E-CARDS-1 item 1c A replaces the app collaborative run, participant and transcript one-year rule with
+  chat lifetime, chat holds and the chat active/backup deletion deadlines; proposal and finding custody
+  follows the same rule in both scopes. Shared artifacts and original receipts keep independent custody.
   App Goal bodies/history/origin/control keep RP-GOAL-THREAD-LIFETIME; immutable command/update/cancel/association/permission/receipt audit keeps RP-AUTHORITY-INDEFINITE, matching original rows. Coordination events keep RP-COORDINATION-180D and derived views/checkpoints RP-PROJECTION-3GEN with complete source holds/coverage. The app bound is one Server counterpart bucket, not one per chat. No new numeric Goal/Crew cap is invented; existing explicit none plus disk budget/refuse policy remains. Full Server Backup captures canonical body/control/accepted source/Stop/receipt/association/coordination parent records and referenced payloads coherently under BRS-033, with actual app source/native replay obligations; derived projections rebuild from genuine sources only. Restore never clears a newer Stop or revives a source fenced by conversion. Linked destination records and fresh admission follow CV-367/SP-350; ordinary mutation cannot change immutable bindings or run scope. Canonical source/receipt/held payload lifetime does not end with chat Undo.
 gui_related: false
 gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
@@ -29589,7 +29592,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 <a id="collaboration-event-persistence-binding-dl-090-2026-11-04"></a>
 ## Collaborative workflow event persistence binding (DL-090, 2026-11-04)
 
-This is a **newly authored Storage owner contract under DL-090** (DL-091 for `collaboration.failed`) for exactly the 18 collaborative workflow families: `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.failed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`. The per-family search that DL-090 requires is `reports/event-authority-20261104/DC-binding-search.md`. It found no append admission, projector, reader, checkpoint key or value, identity recipe, transition rule, first-receipt adoption or retention assignment for any of them on `main`; the only retention assignment is on the unlanded branch `plans/ea-storage-retention-20261104`. Their semantic owner is `Plans/Collaborative_Workflows.md` (CW-100 to CW-118) and their payloads are `Plans/Contracts_V0.md` CV-460 to CV-478.
+This is a **newly authored Storage owner contract under DL-090** (DL-091 for `collaboration.failed`) for exactly the 18 collaborative workflow families: `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.failed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`. The per-family search that DL-090 requires is `reports/event-authority-20261104/DC-binding-search.md`. It found no append admission, projector, reader, checkpoint key or value, identity recipe, transition rule, first-receipt adoption or retention assignment for any of them on `main`; the only retention assignment is on the unlanded branch `plans/ea-storage-retention-20261104`. Their semantic owner is `Plans/Collaborative_Workflows.md` (CWR-105 to CWR-123) and their payloads are `Plans/Contracts_V0.md` CV-460 to CV-478.
 
 This contract reuses existing bindings by name, each in the role, version and scope its owner defines: SP-278's generic EventRecord index checkpoint and reader with DL-076's nine-field durable read token, SP-286/CV-339's `storage.first_append_receipt.resolve.v2`, SP-336's commit-group durability, Storage's `scope_partition` rule and dedupe identity, CV-366's application idempotency key form, `RP-PROJECTION-3GEN@1.0.0` and, once its Storage landing records it, `RP-CHAT-THREAD-LIFETIME@1.0.0`. It borrows no sibling binding: the coordination append path, projector and checkpoint of SP-320, and the `app.coordination_append.v1` path of SP-351, are not reused, because they bind the agent coordination families, not these.
 
@@ -29598,7 +29601,7 @@ Nothing here admits a family. Each of the 18 stays quarantined before append or 
 ### SP-460 - Shared persistence mechanisms of the collaborative workflow families
 
 **Identities**, each newly defined here:
-- `storage.collaboration_append.v1@1.0.0` is the collaboration append admission, the only path that appends the 18 families. `CollaborationRuntime` (CW-100) is its only caller.
+- `storage.collaboration_append.v1@1.0.0` is the collaboration append admission, the only path that appends the 18 families. `CollaborationRuntime` (CWR-105) is its only caller.
 - `storage.collaboration_projector.v1@1.0.0` is the only direct consumer of the 18 families' events and the only writer of the seven projection key shapes and of the checkpoint.
 - Six readers, each reading projections only, never events, and never writing:
   - `storage.collaboration_reader.run_view.v1@1.0.0` for transcript cards (CWR-019), the run view (CWR-020) and the four Activity domains (section 4.4, CWR-036);
@@ -29630,7 +29633,7 @@ Nothing here admits a family. Each of the 18 stays quarantined before append or 
 
 **Admission order.** `storage.collaboration_append.v1@1.0.0` admits one event at a time under the existing Storage append-writer lock: (1) **exact retry**: the dedupe identity `(scope_partition, event_type, idempotency_key)` with the same producer semantic digest returns the original event and result, its receipt only through `storage.first_append_receipt.resolve.v2`; the same identity with another digest is `idempotency_conflict` and appends nothing; (2) **family admission**: a type the registry does not admit, or an application edition still marked `requires_owner_adoption`, is quarantined before append and advances no checkpoint; (3) **payload**: the edition's CV-460 to CV-478 definition and the EventRecord joins; (4) **current projection**: the projector first brings the checkpoint up to the verified tail of the scope partition under the same lock, or the call returns `collaboration_projection_unavailable` and appends nothing; (5) **transition**: the family's own unit checks the event against the current rows and returns `collaboration_conflict` with one `conflict_kind` on refusal; (6) **append** through the ordinary EventRecord path with SP-336's single data sync for the group, then first-receipt custody. A refused event appends nothing and changes no row.
 
-**Common run checks.** For every family except `collaboration.created`, `collaboration.started` and `collaboration.configuration_changed`, step (5) first applies, in order: the run has a `collaboration.started` event in this scope partition (`run_not_started`); the payload's `thread_id`, `kind` and `collaboration_id` equal the run's (`lineage_mismatch`); the run is not terminal (`already_terminal`); the payload's `definition_revision` equals the run's current revision (`stale_definition_revision`). The family's unit lists its further checks in order. `conflict_kind` is closed to: `lineage_mismatch`, `stale_definition_revision`, `stale_assignment_revision`, `already_created`, `definition_not_recorded`, `already_started`, `run_not_started`, `stale_lifecycle_seq`, `already_terminal`, `run_state_invalid`, `slot_not_in_roster`, `attempt_already_started`, `unknown_attempt`, `attempt_already_closed`, `open_attempts`, `unresolved_required_slots`, `waiver_not_recorded`, `sequence_gap`, `message_already_written`, `artifact_already_added`, `not_core_participant`, `unknown_proposal`, `proposal_already_added`, `vote_already_added`, `wonderer_cannot_vote`, `attempt_not_current`, `already_synthesized`, `target_hash_mismatch`, `unknown_finding`, `finding_already_added`, `already_dispositioned`, `findings_not_dispositioned`, `artifact_not_added`, `already_finalized`, `partial_not_accepted`, `stale_not_accepted`, `missing_output`.
+**Common run checks.** For every family except `collaboration.created`, `collaboration.started` and `collaboration.configuration_changed`, step (5) first applies, in order: the run has a `collaboration.started` event in this scope partition (`run_not_started`); the payload's `thread_id`, `kind` and `collaboration_id` equal the run's (`lineage_mismatch`); the run is not terminal (`already_terminal`); the payload's `definition_revision` equals the run's current revision (`stale_definition_revision`). The family's unit lists its further checks in order. `conflict_kind` is closed to: `lineage_mismatch`, `stale_definition_revision`, `stale_assignment_revision`, `already_created`, `definition_not_recorded`, `already_started`, `run_not_started`, `stale_lifecycle_seq`, `already_terminal`, `run_state_invalid`, `slot_not_in_roster`, `attempt_already_started`, `unknown_attempt`, `attempt_already_closed`, `open_attempts`, `unresolved_required_slots`, `required_slot_set_mismatch`, `waived_slot_set_mismatch`, `waiver_not_recorded`, `sequence_gap`, `message_already_written`, `artifact_already_added`, `not_core_participant`, `unknown_proposal`, `proposal_already_added`, `vote_already_added`, `wonderer_cannot_vote`, `attempt_not_current`, `already_synthesized`, `target_hash_mismatch`, `unknown_finding`, `finding_already_added`, `already_dispositioned`, `findings_not_dispositioned`, `artifact_not_added`, `already_finalized`, `partial_not_accepted`, `stale_not_accepted`, `missing_output`, `output_refs_mismatch`.
 
 **Identity recipe.** Newly defined here, for both scopes:
 - `owner_operation_id` is `collabop_` followed by the lowercase hex SHA-256 of the RFC 8785 JSON array `[event_type, scope_partition, subject..., recovery_epoch]`, where the subject is the family's ordered identity components (each family's unit), integers in base 10, an absent `attempt_id` as JSON null, and `recovery_epoch` in base 10.
@@ -29638,13 +29641,29 @@ Nothing here admits a family. Each of the 18 stays quarantined before append or 
 - `event_id` is `evt_collaboration_` followed by the lowercase hex SHA-256 of the RFC 8785 array `[storage_instance_id, recovery_epoch, scope_partition, event_type, subject...]`.
 - `storage_instance_id` and `recovery_epoch` are Storage's actual values (Case L-2) when the owner commit prepares the event, and the prepared event keeps them for every retry. After a verified older restore a newly prepared event never reuses the scoped identity or event ID of an event lost with the post-backup writes. No clock, retry count or checkpoint generation enters either recipe. Within one epoch the scoped identity makes a second event for the same subject an exact retry or an `idempotency_conflict`; each family's `already_*` conflict refuses the same subject under a later epoch.
 
-**Prepared events and recovery.** The owner commit stores the prepared event with its record (CW-100). On restart the runtime resolves each committed record's prepared event through `storage.first_append_receipt.resolve.v2`; if Storage's own reconciliation establishes that no original event exists, only that prepared identity is retried through the unchanged idempotency route with the same input, which is not a first mint. A run whose append is uncertain stays fenced until Storage resolves it. A verified older restore brings back only the records it restores, with their prepared events; lost work is never renamed or reaccepted as new.
+**Numeric and type interpretation.** The new semantic-body and typed-snapshot SHA-256 domains use sorted-key, compact UTF-8 JSON (DL-077), with one representation of each admitted mathematical number: integral finite binary64 values serialize as the exact base-10 integer, including negative zero as `0`; other finite binary64 values use the unique shortest round-trip decimal; arbitrary exact integers retain all digits. Thus `1`, `1.0` and `1e0` have identical commitments, and `-0` and `0` agree. Leading-zero JSON, duplicate keys, nonfinite numbers and wrong native field types are refused; strings are never coerced to numbers or booleans. Identity subjects and recovery epochs use that canonical base-10 integer string. Existing native codecs and owner-issued currentness domains remain unchanged. SP-337 reference bytes must equal this entire canonical encoding.
+
+**Durable prepared-source physical binding (B1; newly authored owner contract under DL-090).** `collaboration_prepared_source` is a canonical, non-rebuildable registered Storage value. Its key is `collaboration_prepared_source.v1:{hex(storage_instance_id)}:{recovery_epoch}:{scope_partition}:{hex(event_type)}:{hex(owner_operation_id)}` in the canonical redb file's `collaboration_prepared_sources` table. Canonical MessagePack stores `Plans/collaboration_prepared_sources.schema.json` without a 16 KiB redb value cap (SP-337 limits only EventRecord inline payloads): one closed project/application holder per family, exact legacy typed `owner_record`, its reference and SHA-256, the frozen definition's `slot_requirements` (one boolean requiredness per slot, PART-001..006), original Storage instance/epoch, full caller semantic body, its SHA-256, original operation identity and event ID. The digest covers only canonical UTF-8 JSON of that semantic body, excluding every assigned sequence, locator, receipt, token, sync group and observed/persisted timestamp. `currentness_hash` is the original owner-issued currentness, verified against the independent original-source capture; its existing hash domain is preserved. The separate owner_record_sha256 checks the typed snapshot bytes and is never substituted for owner currentness. Only CollaborationRuntime writes holders; the append path reads them and cannot fabricate one from EventRecord/projection state.
+
+For each family's exact owner fact its existing typed owner body and this immutable source snapshot commit in one canonical redb write transaction, before append. Project records use the holder's typed owner body as durable version custody; application records additionally write the existing SP-351 physical wrapper/key in the same canonical database transaction. Existing logical/physical schema IDs, codecs, keys and reader editions are preserved; no field is injected into an old wrapper. The holder pins the exact definition/run/participant/transcript/proposal/vote/finding/disposition and payload references the fact needs. A missing original record, holder, reference, source hash or whole-value CAS join fences append/recovery; an owner snapshot cannot be reconstructed from a later event, digest or mutable current row. All eighteen family-specific holder definitions select their own closed payload edition and source owner type; a sibling is never a source substitute.
+
+A coherent Project Backup or BRS-033 application Server Backup includes the canonical typed records, all prepared-source holders, referenced payload packs, original event/first-receipt custody and Storage controls together. Restore validates instance, original epoch, source/body hashes, scope, owner and event identities before resolving the original receipt through SP-286/CV-339 resolve.v2. A genuinely absent append may retry only that prepared semantic request; unresolved original custody keeps the run/definition fenced. A verified older restore retains restored holders unchanged; fresh work uses the new recovery epoch, without renaming lost or older work. Chat lifetime and holds govern the holders and chat-owned source records under E-CARDS-1 1c A; independently retained source/receipt/artifact custody keeps its own deadline. No native transaction, provenance or restore proof is claimed.
+
+Review Start stores the full existing typed ReviewTargetPack inside the canonical holder, so recovery never relies on an unmaterialized pack reference. Proposal and vote holders retain the actual participant_id-to-slot mapping from the frozen run roster; they never equate the two identifier namespaces. Independent source capture joins kind, family, subject, scope, thread, definition revision, original currentness and these exact roster/pack values. Existing owner fields and codecs remain unchanged. The original caller-owned envelope metadata (actor, correlation, causation/parent and requested/effective account refs) is durably frozen in envelope_metadata before append. A proposed EventRecord resolves its payload and must match that exact semantic body and metadata; changing only Storage-assigned sequence, observed/persisted time or receipt/locator data never changes the producer digest. Exact retry still returns the original event metadata and first receipt. The source context is an ephemeral, independently authenticated read result of storage.collaboration_append.v1@1.0.0, never a caller-submitted request field: original resolved owner-record reference and typed-record digest, binding/subject, owner-issued currentness, actual frozen roster and required-slot set, waiver/pack and settled output facts come from actual original owner controls. The holder’s required booleans and roster join that independent definition capture on every family path; changing both a prepared body’s list and its header cannot change requiredness. Static fixture contexts do not prove native authentication. The physical key is read independently, not recomputed as proof of a stored locator. The holder joins the actual Storage instance and its independently captured original write epoch; a newer live restore epoch never replaces that original epoch. An unavailable capture or mismatched key is refusal. `source_record_ref` is the payload's definition_record_ref for created, `collaboration_definition:{collaboration_id}:{definition_revision}` for configuration changes, run_record_ref or `collaboration_run:{collaboration_run_id}` for run facts, `collaboration_participant:{collaboration_run_id}:{participant_slot_id}:{attempt_id}` for participant admission, disposition_record_ref for participant outcome, `collaboration_message:{collaboration_message_id}` for transcript writes, and the family's proposal_record_ref, vote_record_ref or finding_record_ref for those owner records. These are scoped by the physical holder key; body/Plan/artifact/failure/receipt refs keep their actual independent owner custody. Every captured application_context joins the same real Storage instance and Server as the semantic body.
+
+**Authoritative requiredness in projections.** definition_projection and run_projection both require required_slot_ids. Created records the independently frozen definition set; configuration_changed updates the definition and any active run’s retained set in the same advance; started copies its selected definition’s set into the run. Completion compares its list to this persisted run set, never a caller-supplied substitute. Native original-definition capture is a mandatory producer join; the header cannot authenticate itself.
+
+**Physical projection composition (B2).** Section 2.3.1's keyed composition applies here by the same rule: the eight independent registry entries are `collaboration_projector_checkpoint` and `collaboration_{definition,run,participant,artifact,proposal,vote,finding}_projection`. `x-pm-keyed-composition` lists their exact key/schema pairs; it is never a stored header. Every registry row fixes canonical MessagePack, the sole projector writer, its own closed schema, RP-PROJECTION-3GEN and derived-file rebuild without backup. Rows and checkpoint share one derived redb transaction. The canonical source holder is a separate ninth registration with mandatory coherent backup; it grants no event membership. The readiness census rises from 344 to 353; stale pre-existing test census pins are integration items, never a reason to weaken a guard.
+
+**Checkpoint semantic joins (B6).** In addition to shape, every read/advance compares outer, token and source-selection Storage identities, decodes and re-encodes the exact Project partition, compares all nine token fields with the independently captured SP-278 frontier, the exact sorted admitted set and complete examined bounds, and joins the inclusive cursor's generation, sequence, event identity and frame offsets to the verified source frame. The cursor equals the captured last frame; the event's scope/Project, payload edition, identity and recorded write epoch also join. A proven empty range has null bounds/cursor; absence or mismatch is unavailable, never empty. The static context is synthetic; native CURRENT selection, token authentication, legal gaps, CAS and frame hashing remain NOT_RUN.
+
+**Prepared events and recovery.** The owner commit stores the prepared event with its record (CWR-105). On restart the runtime resolves each committed record's prepared event through `storage.first_append_receipt.resolve.v2`; if Storage's own reconciliation establishes that no original event exists, only that prepared identity is retried through the unchanged idempotency route with the same input, which is not a first mint. A run whose append is uncertain stays fenced until Storage resolves it. A verified older restore brings back only the records it restores, with their prepared events; lost work is never renamed or reaccepted as new.
 
 **First-receipt custody.** For every append of the 18 families, the append admission and its caller adopt SP-286/CV-339's `storage.first_append_receipt.resolve.v2` by name: the request is the original admitted EventRecord identity and semantic request in the same Storage instance; the returned eleven-field AppendReceipt and the four-field `original_append_result` must join the original event and sequence; the durability class is the synced commit group (SP-336, SP-347). A newer locator, timestamp, supplied digest or dedupe result alone never satisfies it. At the final publication boundary the runtime rechecks that the resolved receipt still joins the original request. Resolution is passive and appends nothing. This owner does not rely on `storage.first_append_receipt.resolve_full_value.v1`.
 
-**Custody and redaction.** The 18 families' EventRecords in seglog are their only history: canonical, included in the canonical backup (BRS-033's application custody for application scope), never rebuilt from projections. First receipts live in SP-286's `event_append_receipt_custody`. Projections and the checkpoint are derived, not backed up, and rebuilt from restored seglog. Stored values hold no user or participant text, credential, account identifier, prompt, output or local path. Opaque references, IDs, hashes and cursors confer no access; readers check permission, tombstones and blind phases at read.
+**Custody and redaction.** The 18 families' EventRecords in seglog are their only history: canonical, included in the canonical backup (BRS-033's application custody for application scope), never rebuilt from projections. First receipts live in SP-286's `event_append_receipt_custody`. Projections and the checkpoint are derived, not backed up, and rebuilt from restored seglog. EventRecords and derived projection/checkpoint values hold no user or participant text, credential, account identifier, prompt, output or local path. Canonical prepared-source holders preserve the existing typed owner data and text references, under that source record’s visibility, chat lifetime and holds; they never add credentials. Opaque references, IDs, hashes and cursors confer no access; readers check permission, tombstones and blind phases at read.
 
-**Retention.** Events: kept as long as the run's chat exists (DL-092, DL-292). The chat is the payload's `thread_id`. The structured reference in every prepared row is `{registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-CHAT-THREAD-LIFETIME, policy_version: 1.0.0}`, the Chat content class that the Storage owner's DL-045 reuse check materializes for DL-092 on `plans/ea-storage-retention-20261104`. That object is not on `main` today: until its Storage landing records it, every family's retention stays blocked and no family can be admitted. Deleting the chat follows the chat deletion rule that object carries: the content-free tombstone is persisted at once, unheld active copies are purged within 24 hours and deleted backup bytes within 30 days, and a hold delays physical purge but never restores visibility; the projector removes the rows of that chat's runs at its next advance, and readers hide them at once through the tombstone. The per-thread count and successor rule belong to that object; this contract decides no count rule. Projections and the checkpoint use `RP-PROJECTION-3GEN@1.0.0`: at most three generations per key, the checkpoint keeping its current core and at most two retired cores, each with its own `publication_id`, first publication time, holds and first withdrawal time. Referenced records (definition, run, message, proposal, vote, finding, disposition records and artifacts) keep their own owners' lifetimes; an event never holds or extends them.
+**Retention.** Events: kept as long as the run's chat exists (DL-092, DL-292). The chat is the payload's `thread_id`. The structured reference in every prepared row is `{registry_schema_id: pm.storage_value_registry.v2, policy_id: RP-CHAT-THREAD-LIFETIME, policy_version: 1.0.0}`, the Chat content class that the Storage owner's DL-045 reuse check materializes for DL-092 on `plans/ea-storage-retention-20261104`. That object is not on `main` today: until its Storage landing records it, every family's retention stays blocked and no family can be admitted. Deleting the chat follows the chat deletion rule that object carries: the content-free tombstone is persisted at once, unheld active copies are purged within 24 hours and deleted backup bytes within 30 days, and a hold delays physical purge but never restores visibility; the projector removes the rows of that chat's runs at its next advance, and readers hide them at once through the tombstone. The per-thread count and successor rule belong to that object; this contract decides no count rule. Projections and the checkpoint use `RP-PROJECTION-3GEN@1.0.0`: at most three generations per key, the checkpoint keeping its current core and at most two retired cores, each with its own `publication_id`, first publication time, holds and first withdrawal time. Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded on the answers branch as DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
 
 **Replay, rebuild and withdrawal.** Replay runs in canonical seglog order from the checkpoint's inclusive cursor and only rebuilds projection rows: no message delivery, dispatch, card, notification, command or append follows from replay. Missing, malformed or inconsistent rows or checkpoint enter the existing Q-DERIVED quarantine and StorageMigrationCoordinator rebuilds them from verified CURRENT-selected source through the adopted SP-278 token; readers get unavailable meanwhile. `admitted_event_types` grows only through a governed rebuild: the current core is withdrawn, the projector rebuilds over the complete range with the new set and a new core is published; admitting a family never back-fills, aliases or re-reads a sibling. Withdrawal of one family: first the writer is cut off (the append admission refuses it, and the runtime refuses whatever its unit says depends on it); then the current core is withdrawn with `withdrawn_at_utc` set once, the projector stops ordinary advance and readers return unavailable; last, every original event and its dedupe and receipt custody are kept, the owner-approved successor is identified, and StorageMigrationCoordinator rebuilds with the new admitted set before a new core is published. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion follows. A run that cannot reach an admitted terminal event stays non-terminal in the projection and is never inferred terminal.
 
@@ -29674,10 +29693,16 @@ canonical_text: >-
   RP-CHAT-THREAD-LIFETIME@1.0.0 once its Storage landing records it, projections RP-PROJECTION-3GEN.
   Withdrawal cuts off the writer, fences readers and rebuilds without deleting source; a kind activates
   natively only when every family it needs is admitted.
+  The registered canonical collaboration_prepared_source holder commits exact unchanged typed source, frozen
+  caller body/envelope and original identities atomically, with independently authenticated original-source
+  joins and coherent backup/restore; existing app wrappers join that same transaction. All eight independent
+  derived physical families and their keyed composition are registered. Checkpoints join real instance,
+  frontier, coverage and original frame. Canonical numeric commitments equate admitted equivalent forms;
+  source/currentness domains and native codecs remain distinct.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [DL-090, DL-076, SP-278, SP-286, CV-339, SP-336, CV-366, CW-100, CV-460]
+depends_on: [DL-090, DL-076, SP-278, SP-286, CV-339, SP-336, CV-366, CWR-105, CV-460]
 unblocks: []
 acceptance_criteria:
   - "Only storage.collaboration_append.v1 appends the 18 families and only storage.collaboration_projector.v1 consumes their events."
@@ -29734,7 +29759,9 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decision_Log.md#DL-076, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/Contracts_V0.md#CV-460
+ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decision_Log.md#DL-076, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/Contracts_V0.md#CV-460
+
+**Settled record custody:** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded on the answers branch as DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
 
 ### SP-461 - Persistence of collaboration.created
 
@@ -29744,11 +29771,15 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decis
 
 **Consumers and checkpoint.** `storage.collaboration_projector.v1@1.0.0` applies it to the definition row (collaboration_definition_projection.v1): creates the definition row (latest recorded revision 1, the created event ID), and advances the scope partition's checkpoint in the same transaction (SP-460, SP-278 by name). Its readers are `storage.collaboration_reader.run_view.v1@1.0.0`, `storage.collaboration_reader.inspection.v1@1.0.0`.
 
+**Requiredness projection.** Created retains the original definition required_slot_ids in definition_projection.
+
 **Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.admit_run(StartAdmission)` after the owner commit that holds the prepared event, and adopts `storage.first_append_receipt.resolve.v2` for it (SP-460). A lost acknowledgement returns the original receipt and appends nothing new.
 
 **Custody and retention.** The definition's name and purpose are user text and stay in the definition record; the event carries the identity, the admission source, the slot IDs and the coordinator kind only. Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
 
 **Withdrawal.** New Start admissions that would create a definition are refused while it is withdrawn; runs of existing definitions are unaffected. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
+
+**Prepared source for `collaboration.created`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_created` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeDefinition` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-461
@@ -29756,6 +29787,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_created prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.created. Its subject is
   collaboration_id, definition_revision, and its identity follows SP-460. Admission checks in order: the
   collaboration_id has no collaboration.created event (already_created; within one recovery epoch a repeat is
@@ -29767,10 +29800,11 @@ canonical_text: >-
   storage.first_append_receipt.resolve.v2. Records keep RP-CHAT-THREAD-LIFETIME@1.0.0 once recorded and leave
   with their chat; projections keep RP-PROJECTION-3GEN. New Start admissions that would create a definition
   are refused while it is withdrawn; runs of existing definitions are unaffected.
+  Created retains the original definition required_slot_ids in definition_projection.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-101, CV-461, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-106, CV-461, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.created is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -29817,7 +29851,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-101, ContractName:Plans/Contracts_V0.md#CV-461, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-106, ContractName:Plans/Contracts_V0.md#CV-461, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-462 - Persistence of collaboration.started
 
@@ -29827,11 +29861,15 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Consumers and checkpoint.** `storage.collaboration_projector.v1@1.0.0` applies it to the run row (collaboration_run_projection.v1): creates the run row: kind, thread, definition revision, admission source, frozen roster, Review target hashes, lifecycle status `active`, `lifecycle_seq` 1; the participant row (collaboration_participant_projection.v1): creates one slot row per roster slot, with no attempt, and advances the scope partition's checkpoint in the same transaction (SP-460, SP-278 by name). Its readers are `storage.collaboration_reader.run_view.v1@1.0.0`, `storage.collaboration_reader.completion.v1@1.0.0`, `storage.collaboration_reader.participant_activity.v1@1.0.0`, `storage.collaboration_reader.composer_destination.v1@1.0.0`, `storage.collaboration_reader.inspection.v1@1.0.0`.
 
+**Requiredness projection.** Started copies required_slot_ids from the selected definition projection into run_projection.
+
 **Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.admit_run(StartAdmission)` after the owner commit that holds the prepared event, and adopts `storage.first_append_receipt.resolve.v2` for it (SP-460). A lost acknowledgement returns the original run, event and receipt; the Start result is never committed from anything else.
 
 **Custody and retention.** The run's job text, topic and purpose are user text and stay in the definition and run records; the event carries identities, enums, refs and hashes only. Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
 
 **Withdrawal.** While it is withdrawn no run of any kind can be admitted, because every other run family needs a started run; existing runs keep their recorded history and continue only through the families still admitted. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
+
+**Prepared source for `collaboration.started`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_started` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-462
@@ -29839,6 +29877,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_started prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.started. Its subject is
   collaboration_run_id, lifecycle_seq, and its identity follows SP-460. Admission checks in order: the run has
   no event (already_started); the payload's definition_revision has a recorded collaboration.created or
@@ -29853,10 +29893,11 @@ canonical_text: >-
   RP-CHAT-THREAD-LIFETIME@1.0.0 once recorded and leave with their chat; projections keep RP-PROJECTION-3GEN.
   While it is withdrawn no run of any kind can be admitted, because every other run family needs a started
   run; existing runs keep their recorded history and continue only through the families still admitted.
+  Started copies required_slot_ids from the selected definition projection into run_projection.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-102, CV-462, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-107, CV-462, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.started is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -29905,7 +29946,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-102, ContractName:Plans/Contracts_V0.md#CV-462, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-107, ContractName:Plans/Contracts_V0.md#CV-462, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-463 - Persistence of collaboration.paused
 
@@ -29921,12 +29962,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn the runtime cannot record a pause, so `cmd.collaboration.pause` is unavailable with `owner_unavailable`; runs keep running. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.paused`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_paused` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-463
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_paused prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.paused. Its subject is
   collaboration_run_id, lifecycle_seq, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks; the run's status is active (run_state_invalid); lifecycle_seq is one more than the run's
@@ -29941,7 +29986,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-103, CV-463, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-108, CV-463, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.paused is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -29989,7 +30034,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-103, ContractName:Plans/Contracts_V0.md#CV-463, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-108, ContractName:Plans/Contracts_V0.md#CV-463, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-464 - Persistence of collaboration.resumed
 
@@ -30005,12 +30050,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn a paused run cannot be resumed (`cmd.collaboration.resume` unavailable with `owner_unavailable`); it can still be cancelled. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.resumed`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_resumed` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-464
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_resumed prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.resumed. Its subject is
   collaboration_run_id, lifecycle_seq, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks; the run's status is paused (run_state_invalid); lifecycle_seq is one more than the run's
@@ -30025,7 +30074,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-104, CV-464, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-109, CV-464, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.resumed is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30073,7 +30122,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-104, ContractName:Plans/Contracts_V0.md#CV-464, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-109, ContractName:Plans/Contracts_V0.md#CV-464, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-465 - Persistence of collaboration.cancelled
 
@@ -30089,12 +30138,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn no run can be cancelled through the runtime, so new run admissions are refused (a run must be able to reach every ending); runs already active continue and can still complete or fail. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.cancelled`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_cancelled` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-465
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_cancelled prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.cancelled. Its subject is
   collaboration_run_id, lifecycle_seq, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks; status active or paused (run_state_invalid); lifecycle_seq one more
@@ -30111,7 +30164,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-105, CV-465, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-110, CV-465, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.cancelled is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30160,13 +30213,13 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-105, ContractName:Plans/Contracts_V0.md#CV-465, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-110, ContractName:Plans/Contracts_V0.md#CV-465, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-466 - Persistence of collaboration.completed
 
 **Identity.** The subject is `collaboration_run_id`, `lifecycle_seq`; `owner_operation_id`, `idempotency_key` and `event_id` follow SP-460's recipe with it. Its `lifecycle_seq` is the run's last; it races the other terminal families on the same sequence as `collaboration.cancelled` does.
 
-**Admission checks, in order.** SP-460's common run checks; status `active`, or `paused` with `chat_room_end` (`run_state_invalid`); `lifecycle_seq` one more (`stale_lifecycle_seq`); no attempt open (`open_attempts`); every slot in `required_slot_ids` has a latest outcome `completed` or `explicitly_waived` (`unresolved_required_slots`); a BrainStorm run has its `brainstorm.plan_synthesized` and a Review run its `review.artifact_finalized` (`missing_output`). It makes the run terminal.
+**Admission checks, in order.** SP-460's common run checks; status `active`, or `paused` with `chat_room_end` (`run_state_invalid`); `lifecycle_seq` one more (`stale_lifecycle_seq`); no attempt open (`open_attempts`); the supplied required set equals the retained definition set (`required_slot_set_mismatch`), the waived set equals actual dispositions (`waived_slot_set_mismatch`), and outside explicit Chat Room End every retained required slot has latest outcome `completed` or `explicitly_waived` (`unresolved_required_slots`); a BrainStorm run has its `brainstorm.plan_synthesized` and a Review run its `review.artifact_finalized` (`missing_output`); BrainStorm output_refs equals the singleton `assistant_plan:{assistant_plan_id}` from that run’s recorded synthesis (including its exact retained Plan version), and Review output_refs equals the singleton finalized artifact_version_ref (`output_refs_mismatch`). Crew/Chat Room retain their existing owner-settled output rules. It makes the run terminal.
 
 **Consumers and checkpoint.** `storage.collaboration_projector.v1@1.0.0` applies it to the run row (collaboration_run_projection.v1): lifecycle status `completed` (terminal), `completion_trigger`, the completion time, and advances the scope partition's checkpoint in the same transaction (SP-460, SP-278 by name). Its readers are `storage.collaboration_reader.run_view.v1@1.0.0`, `storage.collaboration_reader.completion.v1@1.0.0`, `storage.collaboration_reader.composer_destination.v1@1.0.0`, `storage.collaboration_reader.review_followon.v1@1.0.0`, `storage.collaboration_reader.inspection.v1@1.0.0`.
 
@@ -30176,18 +30229,25 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn no run can complete through the runtime, so new run admissions are refused; active runs can still be cancelled or fail, and none is ever inferred complete. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.completed`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_completed` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-466
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_completed prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.completed. Its subject is
   collaboration_run_id, lifecycle_seq, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks; status active, or paused with chat_room_end (run_state_invalid); lifecycle_seq one more
-  (stale_lifecycle_seq); no attempt open (open_attempts); every slot in required_slot_ids has a latest outcome
-  completed or explicitly_waived (unresolved_required_slots); a BrainStorm run has its
-  brainstorm.plan_synthesized and a Review run its review.artifact_finalized (missing_output). It makes the
+  (stale_lifecycle_seq); no attempt open (open_attempts); required_slot_ids equals the persisted original
+  definition set (required_slot_set_mismatch), waived_slot_ids equals actual dispositions
+  (waived_slot_set_mismatch), and outside explicit Chat Room End each retained required slot completes or
+  is explicitly waived (unresolved_required_slots). BrainStorm/Review require their recorded synthesis/
+  finalization (missing_output), and output_refs matches the exact recorded Plan or finalized artifact
+  identity (output_refs_mismatch). Explicit Chat Room End preserves CWR-031 without a new waiver step. It makes the
   run terminal. storage.collaboration_projector.v1@1.0.0 applies it to the run rows and advances the
   checkpoint with SP-278's durable token; readers: storage.collaboration_reader.run_view.v1,
   storage.collaboration_reader.completion.v1, storage.collaboration_reader.composer_destination.v1,
@@ -30200,7 +30260,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-106, CV-466, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-111, CV-466, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.completed is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30250,7 +30310,9 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-106, ContractName:Plans/Contracts_V0.md#CV-466, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-111, ContractName:Plans/Contracts_V0.md#CV-466, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+The required-slot set is retained from the definition/source snapshot committed by created/configuration_changed and frozen at Start; completion's exact set must match (`required_slot_set_mismatch`), and `waived_slot_ids` must equal actual current dispositions (`waived_slot_set_mismatch`). A shortened list never bypasses a failed required slot. BrainStorm output_refs names the exact recorded assistant_plan:{assistant_plan_id}; the captured synthesized Plan version is retained and never replaced by latest. Review output_refs names the exact finalized artifact_version_ref. Other kinds retain their existing completion predicate and owner-settled output facts from immutable source capture. Ordinary kind-specific outputs still apply; CWR-031's explicit Chat Room End settles without an invented waiver interaction.
 
 ### SP-467 - Persistence of collaboration.failed
 
@@ -30266,12 +30328,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn no run can be recorded failed, so new run admissions are refused; an active run that cannot reach an admitted ending stays non-terminal in the projection and is never inferred failed. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.failed`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_failed` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-467
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_failed prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-091 for collaboration.failed. Its subject is
   collaboration_run_id, lifecycle_seq, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks; status active or paused (run_state_invalid); lifecycle_seq one more
@@ -30288,7 +30354,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-107, CV-467, DL-091, SP-278, SP-286]
+depends_on: [SP-460, CWR-112, CV-467, DL-091, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.failed is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30337,7 +30403,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-107, ContractName:Plans/Contracts_V0.md#CV-467, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-112, ContractName:Plans/Contracts_V0.md#CV-467, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-468 - Persistence of collaboration.participant_started
 
@@ -30353,12 +30419,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn no attempt can be admitted, so new run admissions are refused; open attempts can still close. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.participant_started`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_participant_started` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ParticipantSpec` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationParticipantApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-468
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_participant_started prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.participant_started. Its subject is
   collaboration_run_id, participant_slot_id, assignment_revision, attempt_id, and its identity follows SP-460.
   Admission checks in order: SP-460's common run checks; status active (run_state_invalid); the slot is in the
@@ -30376,7 +30446,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-108, CV-468, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-113, CV-468, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.participant_started is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30426,7 +30496,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-108, ContractName:Plans/Contracts_V0.md#CV-468, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-113, ContractName:Plans/Contracts_V0.md#CV-468, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-469 - Persistence of collaboration.participant_completed
 
@@ -30442,12 +30512,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn no outcome can be recorded, so new attempts and new runs are refused; an open attempt stays open in the projection and is never inferred finished. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.participant_completed`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_participant_completed` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ParticipantDisposition` (Project) and `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ParticipantDisposition` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-469
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_participant_completed prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.participant_completed. Its subject is
   collaboration_run_id, participant_slot_id, assignment_revision, attempt_id, and its identity follows SP-460.
   Admission checks in order: SP-460's common run checks (a terminal run is already_terminal); with an
@@ -30467,7 +30541,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-109, CV-469, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-114, CV-469, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.participant_completed is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30517,7 +30591,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-109, ContractName:Plans/Contracts_V0.md#CV-469, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-114, ContractName:Plans/Contracts_V0.md#CV-469, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-470 - Persistence of collaboration.message_added
 
@@ -30533,12 +30607,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn no message can be written through the runtime, so `cmd.collaboration.message` is unavailable and new runs are refused. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.message_added`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_message_added` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessage` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationMessageApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-470
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_message_added prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.message_added. Its subject is
   collaboration_run_id, collaboration_message_id, and its identity follows SP-460. Admission checks in order:
   SP-460's common run checks; the collaboration_message_id has no event under an earlier epoch
@@ -30555,7 +30633,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-110, CV-470, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-115, CV-470, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.message_added is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30605,7 +30683,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-110, ContractName:Plans/Contracts_V0.md#CV-470, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-115, ContractName:Plans/Contracts_V0.md#CV-470, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-471 - Persistence of collaboration.artifact_added
 
@@ -30621,12 +30699,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn no artifact can be attached, so new Review runs are refused (they must finalize an artifact) and other kinds continue without attaching. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `collaboration.artifact_added`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_artifact_added` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-471
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_artifact_added prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.artifact_added. Its subject is
   collaboration_run_id, artifact_version_ref, and its identity follows SP-460. Admission checks in order:
   SP-460's common run checks; the artifact_version_ref has no event in the run under an earlier epoch
@@ -30640,7 +30722,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-111, CV-471, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-116, CV-471, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.artifact_added is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30687,7 +30769,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-111, ContractName:Plans/Contracts_V0.md#CV-471, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-116, ContractName:Plans/Contracts_V0.md#CV-471, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-472 - Persistence of collaboration.configuration_changed
 
@@ -30697,11 +30779,15 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Consumers and checkpoint.** `storage.collaboration_projector.v1@1.0.0` applies it to the definition row (collaboration_definition_projection.v1): the latest recorded revision; the run row (collaboration_run_projection.v1): for reconfigure: the run's current definition revision, roster additions and recorded waivers, and advances the scope partition's checkpoint in the same transaction (SP-460, SP-278 by name). Its readers are `storage.collaboration_reader.run_view.v1@1.0.0`, `storage.collaboration_reader.completion.v1@1.0.0`, `storage.collaboration_reader.participant_activity.v1@1.0.0`, `storage.collaboration_reader.review_followon.v1@1.0.0`, `storage.collaboration_reader.inspection.v1@1.0.0`.
 
+**Requiredness projection.** Configuration change updates the definition and any active run required_slot_ids from the new independently frozen definition set.
+
 **Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.commit_revision(RevisionCommit)` after the owner commit that holds the prepared event, and adopts `storage.first_append_receipt.resolve.v2` for it (SP-460). A lost acknowledgement returns the original receipt and appends nothing new.
 
 **Custody and retention.** A waiver's reason, a replacement's Persona text and any job text stay in the definition record; the event carries change kinds, slot IDs and refs only. Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
 
 **Withdrawal.** While it is withdrawn no revision after the first can be committed, so `cmd.collaboration.reconfigure` is unavailable (retry, replacement, waiver, added rounds and Grill Me mid-run with it) and re-running an existing collaboration is refused; new collaborations can still start. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
+
+**Prepared source for `collaboration.configuration_changed`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_configuration_changed` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeDefinition` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-472
@@ -30709,6 +30795,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own collaboration_configuration_changed prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for collaboration.configuration_changed. Its subject is
   collaboration_id, definition_revision, and its identity follows SP-460. Admission checks in order: the
   collaboration_id has a recorded definition (definition_not_recorded) whose kind and thread equal the
@@ -30729,10 +30817,11 @@ canonical_text: >-
   While it is withdrawn no revision after the first can be committed, so cmd.collaboration.reconfigure is
   unavailable (retry, replacement, waiver, added rounds and Grill Me mid-run with it) and re-running an
   existing collaboration is refused; new collaborations can still start.
+  Configuration change updates the definition and any active run required_slot_ids from the new independently frozen definition set.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-112, CV-472, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-117, CV-472, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "collaboration.configuration_changed is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30782,7 +30871,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-112, ContractName:Plans/Contracts_V0.md#CV-472, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-117, ContractName:Plans/Contracts_V0.md#CV-472, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-473 - Persistence of brainstorm.proposal_added
 
@@ -30794,9 +30883,11 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.release_proposal(ProposalNormalized)` after the owner commit that holds the prepared event, and adopts `storage.first_append_receipt.resolve.v2` for it (SP-460). A lost acknowledgement returns the original receipt and appends nothing new.
 
-**Custody and retention.** Text protection (DL-090). The event carries no proposal text: no approach, assumptions, benefits, costs, risks, migrations, cross-system effects, validation, rollback or evidence. That text stays in the proposal record, which proposal_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set, and the event neither holds nor extends it. Readers disclose a proposal row only after the protocol releases it (CWR-013). Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
+**Custody and retention.** Text protection (DL-090). The event carries no proposal text: no approach, assumptions, benefits, costs, risks, migrations, cross-system effects, validation, rollback or evidence. That text stays in the proposal record, which proposal_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A; independently retained artifacts and receipts remain independent. Readers disclose a proposal row only after the protocol releases it (CWR-013). Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
 
 **Withdrawal.** While it is withdrawn new BrainStorm runs are refused; an active BrainStorm cannot normalize proposals and waits, never inferring a proposal. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
+
+**Prepared source for `brainstorm.proposal_added`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/brainstorm_proposal_added` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormProposal` (Project) and `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormProposal` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-473
@@ -30804,6 +30895,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own brainstorm_proposal_added prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for brainstorm.proposal_added. Its subject is
   collaboration_run_id, proposal_id, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks (a payload naming a non-BrainStorm run fails lineage_mismatch); status active
@@ -30819,7 +30912,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-113, CV-473, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-118, CV-473, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "brainstorm.proposal_added is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30869,7 +30962,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-113, ContractName:Plans/Contracts_V0.md#CV-473, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-118, ContractName:Plans/Contracts_V0.md#CV-473, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-474 - Persistence of brainstorm.vote_added
 
@@ -30885,12 +30978,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn new BrainStorm runs are refused; an active BrainStorm cannot record votes and never infers one. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `brainstorm.vote_added`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/brainstorm_vote_added` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormVote` (Project) and `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormVote` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-474
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own brainstorm_vote_added prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for brainstorm.vote_added. Its subject is
   collaboration_run_id, vote_id, and its identity follows SP-460. Admission checks in order: SP-460's common
   run checks; status active (run_state_invalid); the proposal has a brainstorm.proposal_added event
@@ -30908,7 +31005,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-114, CV-474, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-119, CV-474, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "brainstorm.vote_added is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -30958,7 +31055,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-114, ContractName:Plans/Contracts_V0.md#CV-474, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-119, ContractName:Plans/Contracts_V0.md#CV-474, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-475 - Persistence of brainstorm.plan_synthesized
 
@@ -30974,12 +31071,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn new BrainStorm runs are refused; an active BrainStorm cannot record its Plan and cannot complete. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `brainstorm.plan_synthesized`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/brainstorm_plan_synthesized` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-475
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own brainstorm_plan_synthesized prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for brainstorm.plan_synthesized. Its subject is
   collaboration_run_id, and its identity follows SP-460. Admission checks in order: SP-460's common run
   checks; status active (run_state_invalid); the run has no synthesis event under an earlier epoch
@@ -30993,7 +31094,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-115, CV-475, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-120, CV-475, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "brainstorm.plan_synthesized is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -31041,7 +31142,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-115, ContractName:Plans/Contracts_V0.md#CV-475, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-120, ContractName:Plans/Contracts_V0.md#CV-475, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-476 - Persistence of review.finding_added
 
@@ -31053,9 +31154,11 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.release_finding(FindingNormalized)` after the owner commit that holds the prepared event, and adopts `storage.first_append_receipt.resolve.v2` for it (SP-460). A lost acknowledgement returns the original receipt and appends nothing new.
 
-**Custody and retention.** Text protection (DL-090). The event carries no finding text: no claim, category, evidence, dissent or proposed remediation. That text stays in the finding record, which finding_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set. Readers disclose a finding only after normalization releases it (CWR-013). Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
+**Custody and retention.** Text protection (DL-090). The event carries no finding text: no claim, category, evidence, dissent or proposed remediation. That text stays in the finding record, which finding_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A. Readers disclose a finding only after normalization releases it (CWR-013). Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot normalize findings and cannot finalize. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
+
+**Prepared source for `review.finding_added`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/review_finding_added` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding` (Project) and `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-476
@@ -31063,6 +31166,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own review_finding_added prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for review.finding_added. Its subject is
   collaboration_run_id, finding_id, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks (a payload naming a non-Review run fails lineage_mismatch); status active
@@ -31079,7 +31184,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-116, CV-476, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-121, CV-476, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "review.finding_added is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -31129,7 +31234,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-116, ContractName:Plans/Contracts_V0.md#CV-476, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-121, ContractName:Plans/Contracts_V0.md#CV-476, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-477 - Persistence of review.finding_dispositioned
 
@@ -31141,9 +31246,11 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.record_adjudication(FindingAdjudicated)` after the owner commit that holds the prepared event, and adopts `storage.first_append_receipt.resolve.v2` for it (SP-460). A lost acknowledgement returns the original receipt and appends nothing new.
 
-**Custody and retention.** Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record's text keeps its own owner's lifetime. Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
+**Custody and retention.** Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record and its text follow the chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A. Its records are kept as long as the chat named by `thread_id` exists, under `RP-CHAT-THREAD-LIFETIME@1.0.0` once its Storage landing records it; its projection rows use `RP-PROJECTION-3GEN@1.0.0`.
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot record dispositions and cannot finalize. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
+
+**Prepared source for `review.finding_dispositioned`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/review_finding_dispositioned` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding` (Project) and `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-477
@@ -31151,6 +31258,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own review_finding_dispositioned prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for review.finding_dispositioned. Its subject is
   collaboration_run_id, finding_id, and its identity follows SP-460. Admission checks in order: SP-460's
   common run checks; status active (run_state_invalid); the finding has a review.finding_added event
@@ -31166,7 +31275,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-117, CV-477, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-122, CV-477, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "review.finding_dispositioned is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -31216,7 +31325,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-117, ContractName:Plans/Contracts_V0.md#CV-477, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-122, ContractName:Plans/Contracts_V0.md#CV-477, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 ### SP-478 - Persistence of review.artifact_finalized
 
@@ -31232,12 +31341,16 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Colla
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot finalize and cannot complete. The writer is cut off first, then the checkpoint core is withdrawn and readers fenced, then a governed rebuild keeps every original event (SP-460).
 
+**Prepared source for `review.artifact_finalized`.** This family uses the registered `collaboration_prepared_source` key and canonical transaction of SP-460, its own `Plans/collaboration_prepared_sources.schema.json#/$defs/review_artifact_finalized` project/application holder pair, and the exact typed owners `https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun` (Project) and `https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1` (application). The owner reference recipe is source_record_ref in SP-460; its physical key, actual Storage instance, captured write epoch, owner hash, full semantic body and original operation/event identities must all join. Coherent backup/restore carries this exact snapshot and its referenced originals; no sibling source substitutes and no append before this family's admission. Newly authored owner contract under DL-090; native source provenance, transaction and restore remain NOT_RUN.
+
 ```yaml
 plan_unit_id: SP-478
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
+  This family explicitly adopts its own review_artifact_finalized prepared-source holder under SP-460,
+  preserving its selected typed owner editions, atomic source custody and exact recovery identity joins.
   Newly authored Storage owner contract under DL-090 for review.artifact_finalized. Its subject is
   collaboration_run_id, and its identity follows SP-460. Admission checks in order: SP-460's common run
   checks; status active (run_state_invalid); no finalization exists (already_finalized); every added finding
@@ -31256,7 +31369,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [SP-460, CW-118, CV-478, DL-090, SP-278, SP-286]
+depends_on: [SP-460, CWR-123, CV-478, DL-090, SP-278, SP-286]
 unblocks: []
 acceptance_criteria:
   - "review.artifact_finalized is admitted only after the checks this unit lists, in order, and a refusal appends nothing."
@@ -31306,5 +31419,5 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CW-118, ContractName:Plans/Contracts_V0.md#CV-478, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Collaborative_Workflows.md#CWR-123, ContractName:Plans/Contracts_V0.md#CV-478, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 

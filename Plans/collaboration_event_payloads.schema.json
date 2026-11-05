@@ -2,31 +2,33 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json",
   "title": "Closed collaborative workflow event payloads",
-  "description": "Newly authored owner contract under DL-090 (DL-091 for collaboration.failed): CV-460 to CV-478 in Plans/Contracts_V0.md, backed by the per-family search reports/event-authority-20261104/DC-binding-search.md. One closed definition per family and scope edition, each with its own schema ID: pm.collaboration_event.<token>.v1 for project scope and pm.collaboration_event.<token>.application.v1 for application scope. The semantic owner is Plans/Collaborative_Workflows.md (CW-100 to CW-118); Storage persistence, identity and transitions are SP-460 to SP-478. Closed enumerations owned by CW section 12 are referenced from Plans/collaborative_workflows_contracts.schema.json. Nothing here admits a family: each stays quarantined before append or projection until its own Storage admission landing, one family per landing.",
+  "description": "Newly authored owner contract under DL-090 (DL-091 for collaboration.failed): CV-460 to CV-478 in Plans/Contracts_V0.md, backed by the per-family search reports/event-authority-20261104/DC-binding-search.md. One closed definition per family and scope edition, each with its own schema ID: pm.collaboration_event.<token>.v1 for project scope and pm.collaboration_event.<token>.application.v1 for application scope. The semantic owner is Plans/Collaborative_Workflows.md (CWR-105 to CWR-123); Storage persistence, identity and transitions are SP-460 to SP-478. Closed enumerations owned by CW section 12 are referenced from Plans/collaborative_workflows_contracts.schema.json. Nothing here admits a family: each stays quarantined before append or projection until its own Storage admission landing, one family per landing.",
   "$defs": {
     "identifier": {
       "description": "CV-460: a bounded identifier, 1 to 256 characters, no whitespace.",
       "type": "string",
       "minLength": 1,
       "maxLength": 256,
-      "pattern": "^\\S+$"
+      "pattern": "^\\S+$(?![\\s\\S])"
     },
     "non_secret_ref": {
       "description": "CV-460 adopts CV-353 rule 6's reference form by name: kind:value, lowercase kind, at most 256 characters, no whitespace; it names an object, grants no access and holds no credential, account identifier, local absolute path or content.",
       "type": "string",
       "minLength": 3,
       "maxLength": 256,
-      "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$"
+      "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$(?![\\s\\S])"
     },
     "utc_timestamp": {
       "description": "CV-460: RFC 3339 UTC ending in Z; calendar validity is the checker's valid_utc_datetime rule.",
       "type": "string",
-      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$(?![\\s\\S])"
     },
     "sha256_hex": {
       "description": "Lowercase hex SHA-256.",
       "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+      "minLength": 64,
+      "maxLength": 64
     },
     "reconfigure_change_kind": {
       "description": "CV-460: the change_kind constants of the CW section 10 / CWR-031 reconfigure_change union in Plans/collaborative_workflows_contracts.schema.json, listed by value; the checker compares the two sets.",
@@ -45,7 +47,7 @@
     "collaboration_created": {
       "$id": "pm.collaboration_event.collaboration_created.v1",
       "title": "collaboration.created payload, project scope",
-      "description": "CV-461: closed payload of collaboration.created in project scope. Records the first committed revision of a `Collaboration` definition, `pm.collaboration.definition.v1` (or its application edition `pm.collaboration.definition.application.v1`), at revision 1. Semantic owner CW-101, Storage binding SP-461, oracles ATS-231. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-461: closed payload of collaboration.created in project scope. Records the first committed revision of a `Collaboration` definition, `pm.collaboration.definition.v1` (or its application edition `pm.collaboration.definition.application.v1`), at revision 1. Semantic owner CWR-106, Storage binding SP-461, oracles ATS-231. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -63,7 +65,8 @@
         "admission_source",
         "participant_slot_ids",
         "coordinator_kind",
-        "definition_record_ref"
+        "definition_record_ref",
+        "required_slot_ids"
       ],
       "properties": {
         "schema_version": {
@@ -96,7 +99,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "created_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -123,13 +126,23 @@
         "definition_record_ref": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
           "description": "the committed definition record, kind collaboration_definition"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "Exact required slots from the committed definition snapshot (PART-001..006), never caller optionality."
         }
       }
     },
     "collaboration_created_application": {
       "$id": "pm.collaboration_event.collaboration_created.application.v1",
       "title": "collaboration.created payload, application scope",
-      "description": "CV-461: closed payload of collaboration.created in application scope. Records the first committed revision of a `Collaboration` definition, `pm.collaboration.definition.v1` (or its application edition `pm.collaboration.definition.application.v1`), at revision 1. Semantic owner CW-101, Storage binding SP-461, oracles ATS-231. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-461: closed payload of collaboration.created in application scope. Records the first committed revision of a `Collaboration` definition, `pm.collaboration.definition.v1` (or its application edition `pm.collaboration.definition.application.v1`), at revision 1. Semantic owner CWR-106, Storage binding SP-461, oracles ATS-231. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -148,7 +161,8 @@
         "admission_source",
         "participant_slot_ids",
         "coordinator_kind",
-        "definition_record_ref"
+        "definition_record_ref",
+        "required_slot_ids"
       ],
       "properties": {
         "schema_version": {
@@ -184,7 +198,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "created_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -211,13 +225,23 @@
         "definition_record_ref": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/non_secret_ref",
           "description": "the committed definition record, kind collaboration_definition"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "Exact required slots from the committed definition snapshot (PART-001..006), never caller optionality."
         }
       }
     },
     "collaboration_started": {
       "$id": "pm.collaboration_event.collaboration_started.v1",
       "title": "collaboration.started payload, project scope",
-      "description": "CV-462: closed payload of collaboration.started in project scope. Records the admission of one `CollaborativeRun` (`pm.collaboration.run.v1` or `pm.collaboration.run.application.v1`) with its frozen roster. Semantic owner CW-102, Storage binding SP-462, oracles ATS-232. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-462: closed payload of collaboration.started in project scope. Records the admission of one `CollaborativeRun` (`pm.collaboration.run.v1` or `pm.collaboration.run.application.v1`) with its frozen roster. Semantic owner CWR-107, Storage binding SP-462, oracles ATS-232. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -270,7 +294,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "const": 1,
@@ -362,17 +386,6 @@
             "required": [
               "crew_auto_revision"
             ]
-          },
-          "else": {
-            "not": {
-              "anyOf": [
-                {
-                  "required": [
-                    "crew_auto_revision"
-                  ]
-                }
-              ]
-            }
           }
         },
         {
@@ -436,8 +449,85 @@
               "target_pack_ref",
               "target_hashes"
             ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "admission_source": {
+                    "enum": [
+                      "user",
+                      "crew_auto",
+                      "build_with_crew",
+                      "scheduled_build"
+                    ]
+                  }
+                },
+                "required": [
+                  "admission_source"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "admission_source": {
+                      "const": "crew_auto"
+                    }
+                  },
+                  "required": [
+                    "admission_source"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "crew_auto_revision"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "crew",
+                      "brainstorm",
+                      "review",
+                      "chat_room"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "kind": {
+                      "const": "review"
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
             "not": {
               "anyOf": [
                 {
@@ -459,7 +549,7 @@
     "collaboration_started_application": {
       "$id": "pm.collaboration_event.collaboration_started.application.v1",
       "title": "collaboration.started payload, application scope",
-      "description": "CV-462: closed payload of collaboration.started in application scope. Records the admission of one `CollaborativeRun` (`pm.collaboration.run.v1` or `pm.collaboration.run.application.v1`) with its frozen roster. Semantic owner CW-102, Storage binding SP-462, oracles ATS-232. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-462: closed payload of collaboration.started in application scope. Records the admission of one `CollaborativeRun` (`pm.collaboration.run.v1` or `pm.collaboration.run.application.v1`) with its frozen roster. Semantic owner CWR-107, Storage binding SP-462, oracles ATS-232. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -516,7 +606,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "const": 1,
@@ -608,17 +698,6 @@
             "required": [
               "crew_auto_revision"
             ]
-          },
-          "else": {
-            "not": {
-              "anyOf": [
-                {
-                  "required": [
-                    "crew_auto_revision"
-                  ]
-                }
-              ]
-            }
           }
         },
         {
@@ -682,8 +761,85 @@
               "target_pack_ref",
               "target_hashes"
             ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "admission_source": {
+                    "enum": [
+                      "user",
+                      "crew_auto",
+                      "build_with_crew",
+                      "scheduled_build"
+                    ]
+                  }
+                },
+                "required": [
+                  "admission_source"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "admission_source": {
+                      "const": "crew_auto"
+                    }
+                  },
+                  "required": [
+                    "admission_source"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "crew_auto_revision"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "crew",
+                      "brainstorm",
+                      "review",
+                      "chat_room"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "kind": {
+                      "const": "review"
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
             "not": {
               "anyOf": [
                 {
@@ -705,7 +861,7 @@
     "collaboration_paused": {
       "$id": "pm.collaboration_event.collaboration_paused.v1",
       "title": "collaboration.paused payload, project scope",
-      "description": "CV-463: closed payload of collaboration.paused in project scope. Records the run reaching the `paused` state at a safe boundary after a user's `cmd.collaboration.pause`. Semantic owner CW-103, Storage binding SP-463, oracles ATS-233. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-463: closed payload of collaboration.paused in project scope. Records the run reaching the `paused` state at a safe boundary after a user's `cmd.collaboration.pause`. Semantic owner CWR-108, Storage binding SP-463, oracles ATS-233. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -755,7 +911,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -783,7 +939,7 @@
     "collaboration_paused_application": {
       "$id": "pm.collaboration_event.collaboration_paused.application.v1",
       "title": "collaboration.paused payload, application scope",
-      "description": "CV-463: closed payload of collaboration.paused in application scope. Records the run reaching the `paused` state at a safe boundary after a user's `cmd.collaboration.pause`. Semantic owner CW-103, Storage binding SP-463, oracles ATS-233. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-463: closed payload of collaboration.paused in application scope. Records the run reaching the `paused` state at a safe boundary after a user's `cmd.collaboration.pause`. Semantic owner CWR-108, Storage binding SP-463, oracles ATS-233. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -837,7 +993,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -865,7 +1021,7 @@
     "collaboration_resumed": {
       "$id": "pm.collaboration_event.collaboration_resumed.v1",
       "title": "collaboration.resumed payload, project scope",
-      "description": "CV-464: closed payload of collaboration.resumed in project scope. Records a paused run continuing as the same run after a user's `cmd.collaboration.resume`. Semantic owner CW-104, Storage binding SP-464, oracles ATS-234. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-464: closed payload of collaboration.resumed in project scope. Records a paused run continuing as the same run after a user's `cmd.collaboration.resume`. Semantic owner CWR-109, Storage binding SP-464, oracles ATS-234. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -915,7 +1071,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -943,7 +1099,7 @@
     "collaboration_resumed_application": {
       "$id": "pm.collaboration_event.collaboration_resumed.application.v1",
       "title": "collaboration.resumed payload, application scope",
-      "description": "CV-464: closed payload of collaboration.resumed in application scope. Records a paused run continuing as the same run after a user's `cmd.collaboration.resume`. Semantic owner CW-104, Storage binding SP-464, oracles ATS-234. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-464: closed payload of collaboration.resumed in application scope. Records a paused run continuing as the same run after a user's `cmd.collaboration.resume`. Semantic owner CWR-109, Storage binding SP-464, oracles ATS-234. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -997,7 +1153,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -1025,7 +1181,7 @@
     "collaboration_cancelled": {
       "$id": "pm.collaboration_event.collaboration_cancelled.v1",
       "title": "collaboration.cancelled payload, project scope",
-      "description": "CV-465: closed payload of collaboration.cancelled in project scope. Records a run ending `cancelled`: by the user's `cmd.collaboration.cancel` (`stop_reason` `user_cancel`) or by reaching its own time, cost or token limit (`limit_time`, `limit_cost`, `limit_tokens`, CWR-029, DL-131). Semantic owner CW-105, Storage binding SP-465, oracles ATS-235. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-465: closed payload of collaboration.cancelled in project scope. Records a run ending `cancelled`: by the user's `cmd.collaboration.cancel` (`stop_reason` `user_cancel`) or by reaching its own time, cost or token limit (`limit_time`, `limit_cost`, `limit_tokens`, CWR-029, DL-131). Semantic owner CWR-110, Storage binding SP-465, oracles ATS-235. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1077,7 +1233,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -1131,8 +1287,41 @@
             "required": [
               "command_instance_ref"
             ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "stop_reason": {
+                    "enum": [
+                      "user_cancel",
+                      "limit_time",
+                      "limit_cost",
+                      "limit_tokens"
+                    ]
+                  }
+                },
+                "required": [
+                  "stop_reason"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "stop_reason": {
+                      "const": "user_cancel"
+                    }
+                  },
+                  "required": [
+                    "stop_reason"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
             "not": {
               "anyOf": [
                 {
@@ -1149,7 +1338,7 @@
     "collaboration_cancelled_application": {
       "$id": "pm.collaboration_event.collaboration_cancelled.application.v1",
       "title": "collaboration.cancelled payload, application scope",
-      "description": "CV-465: closed payload of collaboration.cancelled in application scope. Records a run ending `cancelled`: by the user's `cmd.collaboration.cancel` (`stop_reason` `user_cancel`) or by reaching its own time, cost or token limit (`limit_time`, `limit_cost`, `limit_tokens`, CWR-029, DL-131). Semantic owner CW-105, Storage binding SP-465, oracles ATS-235. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-465: closed payload of collaboration.cancelled in application scope. Records a run ending `cancelled`: by the user's `cmd.collaboration.cancel` (`stop_reason` `user_cancel`) or by reaching its own time, cost or token limit (`limit_time`, `limit_cost`, `limit_tokens`, CWR-029, DL-131). Semantic owner CWR-110, Storage binding SP-465, oracles ATS-235. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1205,7 +1394,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -1259,8 +1448,41 @@
             "required": [
               "command_instance_ref"
             ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "stop_reason": {
+                    "enum": [
+                      "user_cancel",
+                      "limit_time",
+                      "limit_cost",
+                      "limit_tokens"
+                    ]
+                  }
+                },
+                "required": [
+                  "stop_reason"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "stop_reason": {
+                      "const": "user_cancel"
+                    }
+                  },
+                  "required": [
+                    "stop_reason"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
             "not": {
               "anyOf": [
                 {
@@ -1277,7 +1499,7 @@
     "collaboration_completed": {
       "$id": "pm.collaboration_event.collaboration_completed.v1",
       "title": "collaboration.completed payload, project scope",
-      "description": "CV-466: closed payload of collaboration.completed in project scope. Records a run ending `completed`. Semantic owner CW-106, Storage binding SP-466, oracles ATS-236. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-466: closed payload of collaboration.completed in project scope. Records a run ending `completed`. Semantic owner CWR-111, Storage binding SP-466, oracles ATS-236. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1330,7 +1552,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -1413,8 +1635,39 @@
                 "const": "chat_room"
               }
             }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "completion_trigger": {
+                    "enum": [
+                      "predicate_met",
+                      "chat_room_end"
+                    ]
+                  }
+                },
+                "required": [
+                  "completion_trigger"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "completion_trigger": {
+                      "const": "chat_room_end"
+                    }
+                  },
+                  "required": [
+                    "completion_trigger"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
             "allOf": [
               {
                 "not": {
@@ -1446,7 +1699,7 @@
     "collaboration_completed_application": {
       "$id": "pm.collaboration_event.collaboration_completed.application.v1",
       "title": "collaboration.completed payload, application scope",
-      "description": "CV-466: closed payload of collaboration.completed in application scope. Records a run ending `completed`. Semantic owner CW-106, Storage binding SP-466, oracles ATS-236. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-466: closed payload of collaboration.completed in application scope. Records a run ending `completed`. Semantic owner CWR-111, Storage binding SP-466, oracles ATS-236. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1503,7 +1756,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -1586,8 +1839,39 @@
                 "const": "chat_room"
               }
             }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "completion_trigger": {
+                    "enum": [
+                      "predicate_met",
+                      "chat_room_end"
+                    ]
+                  }
+                },
+                "required": [
+                  "completion_trigger"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "completion_trigger": {
+                      "const": "chat_room_end"
+                    }
+                  },
+                  "required": [
+                    "completion_trigger"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
             "allOf": [
               {
                 "not": {
@@ -1619,7 +1903,7 @@
     "collaboration_failed": {
       "$id": "pm.collaboration_event.collaboration_failed.v1",
       "title": "collaboration.failed payload, project scope",
-      "description": "CV-467: closed payload of collaboration.failed in project scope. Records a run ending in the closed run state `failed`, with its reason (DL-091). Semantic owner CW-107, Storage binding SP-467, oracles ATS-237. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-467: closed payload of collaboration.failed in project scope. Records a run ending in the closed run state `failed`, with its reason (DL-091). Semantic owner CWR-112, Storage binding SP-467, oracles ATS-237. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1669,7 +1953,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -1732,7 +2016,7 @@
     "collaboration_failed_application": {
       "$id": "pm.collaboration_event.collaboration_failed.application.v1",
       "title": "collaboration.failed payload, application scope",
-      "description": "CV-467: closed payload of collaboration.failed in application scope. Records a run ending in the closed run state `failed`, with its reason (DL-091). Semantic owner CW-107, Storage binding SP-467, oracles ATS-237. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-467: closed payload of collaboration.failed in application scope. Records a run ending in the closed run state `failed`, with its reason (DL-091). Semantic owner CWR-112, Storage binding SP-467, oracles ATS-237. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1786,7 +2070,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "lifecycle_seq": {
           "type": "integer",
@@ -1849,7 +2133,7 @@
     "collaboration_participant_started": {
       "$id": "pm.collaboration_event.collaboration_participant_started.v1",
       "title": "collaboration.participant_started payload, project scope",
-      "description": "CV-468: closed payload of collaboration.participant_started in project scope. Records the admission of one participant attempt for one slot of a started run. Semantic owner CW-108, Storage binding SP-468, oracles ATS-238. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-468: closed payload of collaboration.participant_started in project scope. Records the admission of one participant attempt for one slot of a started run. Semantic owner CWR-113, Storage binding SP-468, oracles ATS-238. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1903,7 +2187,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "started_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -1951,7 +2235,7 @@
     "collaboration_participant_started_application": {
       "$id": "pm.collaboration_event.collaboration_participant_started.application.v1",
       "title": "collaboration.participant_started payload, application scope",
-      "description": "CV-468: closed payload of collaboration.participant_started in application scope. Records the admission of one participant attempt for one slot of a started run. Semantic owner CW-108, Storage binding SP-468, oracles ATS-238. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-468: closed payload of collaboration.participant_started in application scope. Records the admission of one participant attempt for one slot of a started run. Semantic owner CWR-113, Storage binding SP-468, oracles ATS-238. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2009,7 +2293,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "started_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -2057,7 +2341,7 @@
     "collaboration_participant_completed": {
       "$id": "pm.collaboration_event.collaboration_participant_completed.v1",
       "title": "collaboration.participant_completed payload, project scope",
-      "description": "CV-469: closed payload of collaboration.participant_completed in project scope. Records one terminal outcome: of one attempt (`completed`, `failed`, `timed_out`, `canceled`, or `explicitly_waived` of a started attempt), or of a slot with no attempt under its assignment revision (`unavailable`, or `explicitly_waived` before any attempt). Semantic owner CW-109, Storage binding SP-469, oracles ATS-239. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-469: closed payload of collaboration.participant_completed in project scope. Records one terminal outcome: of one attempt (`completed`, `failed`, `timed_out`, `canceled`, or `explicitly_waived` of a started attempt), or of a slot with no attempt under its assignment revision (`unavailable`, or `explicitly_waived` before any attempt). Semantic owner CWR-114, Storage binding SP-469, oracles ATS-239. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2109,7 +2393,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "finished_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -2249,22 +2533,6 @@
               "waiver_actor_ref",
               "waiver_currentness_hash"
             ]
-          },
-          "else": {
-            "not": {
-              "anyOf": [
-                {
-                  "required": [
-                    "waiver_actor_ref"
-                  ]
-                },
-                {
-                  "required": [
-                    "waiver_currentness_hash"
-                  ]
-                }
-              ]
-            }
           }
         },
         {
@@ -2286,8 +2554,98 @@
             "required": [
               "outcome_reason"
             ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "completed",
+                      "failed",
+                      "timed_out",
+                      "unavailable",
+                      "canceled",
+                      "explicitly_waived"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "outcome": {
+                      "const": "explicitly_waived"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "waiver_actor_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "waiver_currentness_hash"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "completed",
+                      "failed",
+                      "timed_out",
+                      "unavailable",
+                      "canceled",
+                      "explicitly_waived"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "failed",
+                        "timed_out",
+                        "unavailable"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
             "not": {
               "anyOf": [
                 {
@@ -2304,7 +2662,7 @@
     "collaboration_participant_completed_application": {
       "$id": "pm.collaboration_event.collaboration_participant_completed.application.v1",
       "title": "collaboration.participant_completed payload, application scope",
-      "description": "CV-469: closed payload of collaboration.participant_completed in application scope. Records one terminal outcome: of one attempt (`completed`, `failed`, `timed_out`, `canceled`, or `explicitly_waived` of a started attempt), or of a slot with no attempt under its assignment revision (`unavailable`, or `explicitly_waived` before any attempt). Semantic owner CW-109, Storage binding SP-469, oracles ATS-239. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-469: closed payload of collaboration.participant_completed in application scope. Records one terminal outcome: of one attempt (`completed`, `failed`, `timed_out`, `canceled`, or `explicitly_waived` of a started attempt), or of a slot with no attempt under its assignment revision (`unavailable`, or `explicitly_waived` before any attempt). Semantic owner CWR-114, Storage binding SP-469, oracles ATS-239. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2360,7 +2718,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "finished_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -2500,22 +2858,6 @@
               "waiver_actor_ref",
               "waiver_currentness_hash"
             ]
-          },
-          "else": {
-            "not": {
-              "anyOf": [
-                {
-                  "required": [
-                    "waiver_actor_ref"
-                  ]
-                },
-                {
-                  "required": [
-                    "waiver_currentness_hash"
-                  ]
-                }
-              ]
-            }
           }
         },
         {
@@ -2537,8 +2879,98 @@
             "required": [
               "outcome_reason"
             ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "completed",
+                      "failed",
+                      "timed_out",
+                      "unavailable",
+                      "canceled",
+                      "explicitly_waived"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "outcome": {
+                      "const": "explicitly_waived"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "waiver_actor_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "waiver_currentness_hash"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "outcome": {
+                    "enum": [
+                      "completed",
+                      "failed",
+                      "timed_out",
+                      "unavailable",
+                      "canceled",
+                      "explicitly_waived"
+                    ]
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "failed",
+                        "timed_out",
+                        "unavailable"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
             "not": {
               "anyOf": [
                 {
@@ -2555,7 +2987,7 @@
     "collaboration_message_added": {
       "$id": "pm.collaboration_event.collaboration_message_added.v1",
       "title": "collaboration.message_added payload, project scope",
-      "description": "CV-470: closed payload of collaboration.message_added in project scope. Records one `CollaborationMessage` written to a run's transcript, with its `sequence`. Semantic owner CW-110, Storage binding SP-470, oracles ATS-240. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-470: closed payload of collaboration.message_added in project scope. Records one `CollaborationMessage` written to a run's transcript, with its `sequence`. Semantic owner CWR-115, Storage binding SP-470, oracles ATS-240. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2610,7 +3042,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "written_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -2702,7 +3134,7 @@
     "collaboration_message_added_application": {
       "$id": "pm.collaboration_event.collaboration_message_added.application.v1",
       "title": "collaboration.message_added payload, application scope",
-      "description": "CV-470: closed payload of collaboration.message_added in application scope. Records one `CollaborationMessage` written to a run's transcript, with its `sequence`. Semantic owner CW-110, Storage binding SP-470, oracles ATS-240. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-470: closed payload of collaboration.message_added in application scope. Records one `CollaborationMessage` written to a run's transcript, with its `sequence`. Semantic owner CWR-115, Storage binding SP-470, oracles ATS-240. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2761,7 +3193,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "written_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -2853,7 +3285,7 @@
     "collaboration_artifact_added": {
       "$id": "pm.collaboration_event.collaboration_artifact_added.v1",
       "title": "collaboration.artifact_added payload, project scope",
-      "description": "CV-471: closed payload of collaboration.artifact_added in project scope. Records a run's `artifact_refs` gaining one version of an ordinary Puppet Master artifact that the artifact owner created. Semantic owner CW-111, Storage binding SP-471, oracles ATS-241. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-471: closed payload of collaboration.artifact_added in project scope. Records a run's `artifact_refs` gaining one version of an ordinary Puppet Master artifact that the artifact owner created. Semantic owner CWR-116, Storage binding SP-471, oracles ATS-241. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2904,7 +3336,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "added_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -2935,7 +3367,7 @@
     "collaboration_artifact_added_application": {
       "$id": "pm.collaboration_event.collaboration_artifact_added.application.v1",
       "title": "collaboration.artifact_added payload, application scope",
-      "description": "CV-471: closed payload of collaboration.artifact_added in application scope. Records a run's `artifact_refs` gaining one version of an ordinary Puppet Master artifact that the artifact owner created. Semantic owner CW-111, Storage binding SP-471, oracles ATS-241. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-471: closed payload of collaboration.artifact_added in application scope. Records a run's `artifact_refs` gaining one version of an ordinary Puppet Master artifact that the artifact owner created. Semantic owner CWR-116, Storage binding SP-471, oracles ATS-241. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2990,7 +3422,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "added_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -3021,7 +3453,7 @@
     "collaboration_configuration_changed": {
       "$id": "pm.collaboration_event.collaboration_configuration_changed.v1",
       "title": "collaboration.configuration_changed payload, project scope",
-      "description": "CV-472: closed payload of collaboration.configuration_changed in project scope. Records a committed definition revision after the first: a mid-run `cmd.collaboration.reconfigure` (`change_source` `reconfigure`) or a Start that commits a bumped revision of an existing `collaboration_id` (`start_commit`). Semantic owner CW-112, Storage binding SP-472, oracles ATS-242. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-472: closed payload of collaboration.configuration_changed in project scope. Records a committed definition revision after the first: a mid-run `cmd.collaboration.reconfigure` (`change_source` `reconfigure`) or a Start that commits a bumped revision of an existing `collaboration_id` (`start_commit`). Semantic owner CWR-117, Storage binding SP-472, oracles ATS-242. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3041,7 +3473,8 @@
         "change_kinds",
         "affected_slot_ids",
         "accept_stale_target",
-        "command_instance_ref"
+        "command_instance_ref",
+        "required_slot_ids"
       ],
       "properties": {
         "schema_version": {
@@ -3075,7 +3508,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "previous_definition_revision": {
           "type": "integer",
@@ -3123,6 +3556,16 @@
         "system_message_id": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
           "description": "reconfigure: the system transcript entry's message ID"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "Exact required slots from the committed definition snapshot (PART-001..006), never caller optionality."
         }
       },
       "allOf": [
@@ -3164,11 +3607,6 @@
                 }
               }
             ]
-          },
-          "else": {
-            "required": [
-              "system_message_id"
-            ]
           }
         },
         {
@@ -3193,13 +3631,49 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "change_source": {
+                    "enum": [
+                      "reconfigure",
+                      "start_commit"
+                    ]
+                  }
+                },
+                "required": [
+                  "change_source"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "change_source": {
+                      "const": "start_commit"
+                    }
+                  },
+                  "required": [
+                    "change_source"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "system_message_id"
+            ]
+          }
         }
       ]
     },
     "collaboration_configuration_changed_application": {
       "$id": "pm.collaboration_event.collaboration_configuration_changed.application.v1",
       "title": "collaboration.configuration_changed payload, application scope",
-      "description": "CV-472: closed payload of collaboration.configuration_changed in application scope. Records a committed definition revision after the first: a mid-run `cmd.collaboration.reconfigure` (`change_source` `reconfigure`) or a Start that commits a bumped revision of an existing `collaboration_id` (`start_commit`). Semantic owner CW-112, Storage binding SP-472, oracles ATS-242. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-472: closed payload of collaboration.configuration_changed in application scope. Records a committed definition revision after the first: a mid-run `cmd.collaboration.reconfigure` (`change_source` `reconfigure`) or a Start that commits a bumped revision of an existing `collaboration_id` (`start_commit`). Semantic owner CWR-117, Storage binding SP-472, oracles ATS-242. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3220,7 +3694,8 @@
         "change_kinds",
         "affected_slot_ids",
         "accept_stale_target",
-        "command_instance_ref"
+        "command_instance_ref",
+        "required_slot_ids"
       ],
       "properties": {
         "schema_version": {
@@ -3257,7 +3732,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "previous_definition_revision": {
           "type": "integer",
@@ -3305,6 +3780,16 @@
         "system_message_id": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier",
           "description": "reconfigure: the system transcript entry's message ID"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 256,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/identifier"
+          },
+          "description": "Exact required slots from the committed definition snapshot (PART-001..006), never caller optionality."
         }
       },
       "allOf": [
@@ -3346,11 +3831,6 @@
                 }
               }
             ]
-          },
-          "else": {
-            "required": [
-              "system_message_id"
-            ]
           }
         },
         {
@@ -3375,13 +3855,49 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "change_source": {
+                    "enum": [
+                      "reconfigure",
+                      "start_commit"
+                    ]
+                  }
+                },
+                "required": [
+                  "change_source"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "change_source": {
+                      "const": "start_commit"
+                    }
+                  },
+                  "required": [
+                    "change_source"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "system_message_id"
+            ]
+          }
         }
       ]
     },
     "brainstorm_proposal_added": {
       "$id": "pm.collaboration_event.brainstorm_proposal_added.v1",
       "title": "brainstorm.proposal_added payload, project scope",
-      "description": "CV-473: closed payload of brainstorm.proposal_added in project scope. Records one normalized `BrainstormProposal` record committed in a BrainStorm run. Semantic owner CW-113, Storage binding SP-473, oracles ATS-243. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-473: closed payload of brainstorm.proposal_added in project scope. Records one normalized `BrainstormProposal` record committed in a BrainStorm run. Semantic owner CWR-118, Storage binding SP-473, oracles ATS-243. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3434,7 +3950,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "added_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -3470,7 +3986,7 @@
     "brainstorm_proposal_added_application": {
       "$id": "pm.collaboration_event.brainstorm_proposal_added.application.v1",
       "title": "brainstorm.proposal_added payload, application scope",
-      "description": "CV-473: closed payload of brainstorm.proposal_added in application scope. Records one normalized `BrainstormProposal` record committed in a BrainStorm run. Semantic owner CW-113, Storage binding SP-473, oracles ATS-243. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-473: closed payload of brainstorm.proposal_added in application scope. Records one normalized `BrainstormProposal` record committed in a BrainStorm run. Semantic owner CWR-118, Storage binding SP-473, oracles ATS-243. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3527,7 +4043,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "added_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -3563,7 +4079,7 @@
     "brainstorm_vote_added": {
       "$id": "pm.collaboration_event.brainstorm_vote_added.v1",
       "title": "brainstorm.vote_added payload, project scope",
-      "description": "CV-474: closed payload of brainstorm.vote_added in project scope. Records one `BrainstormVote` record committed in the Vote phase. Semantic owner CW-114, Storage binding SP-474, oracles ATS-244. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-474: closed payload of brainstorm.vote_added in project scope. Records one `BrainstormVote` record committed in the Vote phase. Semantic owner CWR-119, Storage binding SP-474, oracles ATS-244. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3618,7 +4134,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "cast_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -3669,7 +4185,7 @@
     "brainstorm_vote_added_application": {
       "$id": "pm.collaboration_event.brainstorm_vote_added.application.v1",
       "title": "brainstorm.vote_added payload, application scope",
-      "description": "CV-474: closed payload of brainstorm.vote_added in application scope. Records one `BrainstormVote` record committed in the Vote phase. Semantic owner CW-114, Storage binding SP-474, oracles ATS-244. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-474: closed payload of brainstorm.vote_added in application scope. Records one `BrainstormVote` record committed in the Vote phase. Semantic owner CWR-119, Storage binding SP-474, oracles ATS-244. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3728,7 +4244,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "cast_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -3779,7 +4295,7 @@
     "brainstorm_plan_synthesized": {
       "$id": "pm.collaboration_event.brainstorm_plan_synthesized.v1",
       "title": "brainstorm.plan_synthesized payload, project scope",
-      "description": "CV-475: closed payload of brainstorm.plan_synthesized in project scope. Records the one Deep Plan a BrainStorm run produced, as the Plan owner created it. Semantic owner CW-115, Storage binding SP-475, oracles ATS-245. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-475: closed payload of brainstorm.plan_synthesized in project scope. Records the one Deep Plan a BrainStorm run produced, as the Plan owner created it. Semantic owner CWR-120, Storage binding SP-475, oracles ATS-245. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3833,7 +4349,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "synthesized_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -3882,7 +4398,7 @@
     "brainstorm_plan_synthesized_application": {
       "$id": "pm.collaboration_event.brainstorm_plan_synthesized.application.v1",
       "title": "brainstorm.plan_synthesized payload, application scope",
-      "description": "CV-475: closed payload of brainstorm.plan_synthesized in application scope. Records the one Deep Plan a BrainStorm run produced, as the Plan owner created it. Semantic owner CW-115, Storage binding SP-475, oracles ATS-245. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-475: closed payload of brainstorm.plan_synthesized in application scope. Records the one Deep Plan a BrainStorm run produced, as the Plan owner created it. Semantic owner CWR-120, Storage binding SP-475, oracles ATS-245. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -3940,7 +4456,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "synthesized_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -3989,7 +4505,7 @@
     "review_finding_added": {
       "$id": "pm.collaboration_event.review_finding_added.v1",
       "title": "review.finding_added payload, project scope",
-      "description": "CV-476: closed payload of review.finding_added in project scope. Records one normalized `ReviewFinding` record committed in a Review run. Semantic owner CW-116, Storage binding SP-476, oracles ATS-246. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-476: closed payload of review.finding_added in project scope. Records one normalized `ReviewFinding` record committed in a Review run. Semantic owner CWR-121, Storage binding SP-476, oracles ATS-246. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -4042,7 +4558,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "added_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -4088,7 +4604,7 @@
     "review_finding_added_application": {
       "$id": "pm.collaboration_event.review_finding_added.application.v1",
       "title": "review.finding_added payload, application scope",
-      "description": "CV-476: closed payload of review.finding_added in application scope. Records one normalized `ReviewFinding` record committed in a Review run. Semantic owner CW-116, Storage binding SP-476, oracles ATS-246. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-476: closed payload of review.finding_added in application scope. Records one normalized `ReviewFinding` record committed in a Review run. Semantic owner CWR-121, Storage binding SP-476, oracles ATS-246. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -4145,7 +4661,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "added_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -4191,7 +4707,7 @@
     "review_finding_dispositioned": {
       "$id": "pm.collaboration_event.review_finding_dispositioned.v1",
       "title": "review.finding_dispositioned payload, project scope",
-      "description": "CV-477: closed payload of review.finding_dispositioned in project scope. Records the coordinator's or adjudicator's final disposition of one finding. Semantic owner CW-117, Storage binding SP-477, oracles ATS-247. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-477: closed payload of review.finding_dispositioned in project scope. Records the coordinator's or adjudicator's final disposition of one finding. Semantic owner CWR-122, Storage binding SP-477, oracles ATS-247. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -4247,7 +4763,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "dispositioned_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -4303,7 +4819,7 @@
     "review_finding_dispositioned_application": {
       "$id": "pm.collaboration_event.review_finding_dispositioned.application.v1",
       "title": "review.finding_dispositioned payload, application scope",
-      "description": "CV-477: closed payload of review.finding_dispositioned in application scope. Records the coordinator's or adjudicator's final disposition of one finding. Semantic owner CW-117, Storage binding SP-477, oracles ATS-247. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-477: closed payload of review.finding_dispositioned in application scope. Records the coordinator's or adjudicator's final disposition of one finding. Semantic owner CWR-122, Storage binding SP-477, oracles ATS-247. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -4363,7 +4879,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "dispositioned_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -4419,7 +4935,7 @@
     "review_artifact_finalized": {
       "$id": "pm.collaboration_event.review_artifact_finalized.v1",
       "title": "review.artifact_finalized payload, project scope",
-      "description": "CV-478: closed payload of review.artifact_finalized in project scope. Records the publication of a Review run's one versioned, read-only Review artifact. Semantic owner CW-118, Storage binding SP-478, oracles ATS-248. Optional fields are omitted, never null. No text the record owns is carried.",
+      "description": "CV-478: closed payload of review.artifact_finalized in project scope. Records the publication of a Review run's one versioned, read-only Review artifact. Semantic owner CWR-123, Storage binding SP-478, oracles ATS-248. Optional fields are omitted, never null. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -4480,7 +4996,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$"
+          "pattern": "^collaboration@1:collabop_[0-9a-f]{64}$(?![\\s\\S])"
         },
         "finalized_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -4573,8 +5089,39 @@
                 "const": 1
               }
             }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "single_reviewer": {
+                    "enum": [
+                      true,
+                      false
+                    ]
+                  }
+                },
+                "required": [
+                  "single_reviewer"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "single_reviewer": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "single_reviewer"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
             "properties": {
               "requested_reviewer_count": {
                 "minimum": 2
@@ -4587,7 +5134,7 @@
     "review_artifact_finalized_application": {
       "$id": "pm.collaboration_event.review_artifact_finalized.application.v1",
       "title": "review.artifact_finalized payload, application scope",
-      "description": "CV-478: closed payload of review.artifact_finalized in application scope. Records the publication of a Review run's one versioned, read-only Review artifact. Semantic owner CW-118, Storage binding SP-478, oracles ATS-248. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
+      "description": "CV-478: closed payload of review.artifact_finalized in application scope. Records the publication of a Review run's one versioned, read-only Review artifact. Semantic owner CWR-123, Storage binding SP-478, oracles ATS-248. Optional fields are omitted, never null; project_id is the required null of application scope. No text the record owns is carried.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -4652,7 +5199,7 @@
         },
         "idempotency_key": {
           "type": "string",
-          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$"
+          "pattern": "^application@1:(?:[0-9a-f]{2})+:636f6c6c61626f705f(?:3[0-9]|6[1-6]){64}$(?![\\s\\S])"
         },
         "finalized_at_utc": {
           "$ref": "https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json#/$defs/utc_timestamp",
@@ -4745,8 +5292,39 @@
                 "const": 1
               }
             }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "single_reviewer": {
+                    "enum": [
+                      true,
+                      false
+                    ]
+                  }
+                },
+                "required": [
+                  "single_reviewer"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "single_reviewer": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "single_reviewer"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
             "properties": {
               "requested_reviewer_count": {
                 "minimum": 2

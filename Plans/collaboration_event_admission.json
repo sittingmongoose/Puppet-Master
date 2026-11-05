@@ -22,12 +22,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-101",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-106",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-461",
       "storage_owner_unit": "Plans/storage-plan.md#SP-461",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-231",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -38,7 +38,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.created",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-101",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-106",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-461",
         "payload_schema_id": "pm.collaboration_event.collaboration_created.v1",
         "payload_schema_ref": {
@@ -69,8 +69,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/0",
-          "Plans/Collaborative_Workflows.md#CW-101",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-106",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-461",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_created",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_created_application",
@@ -101,7 +101,7 @@
               "json_pointer": "#/$defs/collaboration_created",
               "schema_id": "pm.collaboration_event.collaboration_created.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-101",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-106",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-461",
             "read_owner_ref": "Plans/storage-plan.md#SP-461",
@@ -134,7 +134,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "8c93ea258fef25ca820a44cf1f20356895e761124dbd5355b8622dbdc32edc34",
+      "registry_row_sha256": "d9d72c06bbfddd1c42626d7fc3d6bcf79a1a43862249cf55e1b8c6fef1872682",
       "validation_case_ids": [
         "created_project",
         "created_application",
@@ -208,12 +208,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-102",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-107",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-462",
       "storage_owner_unit": "Plans/storage-plan.md#SP-462",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-232",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -224,7 +224,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.started",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-102",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-107",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-462",
         "payload_schema_id": "pm.collaboration_event.collaboration_started.v1",
         "payload_schema_ref": {
@@ -255,8 +255,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/1",
-          "Plans/Collaborative_Workflows.md#CW-102",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-107",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-462",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_started",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_started_application",
@@ -287,7 +287,7 @@
               "json_pointer": "#/$defs/collaboration_started",
               "schema_id": "pm.collaboration_event.collaboration_started.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-102",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-107",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-462",
             "read_owner_ref": "Plans/storage-plan.md#SP-462",
@@ -320,7 +320,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "f9939b73ccfa899eaed40b0141c5161a63033cbb13047698d45d1d51f2d93460",
+      "registry_row_sha256": "4ad22f2974f6ef35969d07512af53d3280cce86e8649ddee55f1a5e5a071cb2c",
       "validation_case_ids": [
         "started_project",
         "started_application",
@@ -411,12 +411,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-103",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-108",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-463",
       "storage_owner_unit": "Plans/storage-plan.md#SP-463",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-233",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -427,7 +427,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.paused",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-103",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-108",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-463",
         "payload_schema_id": "pm.collaboration_event.collaboration_paused.v1",
         "payload_schema_ref": {
@@ -458,8 +458,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/2",
-          "Plans/Collaborative_Workflows.md#CW-103",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-108",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-463",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_paused",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_paused_application",
@@ -490,7 +490,7 @@
               "json_pointer": "#/$defs/collaboration_paused",
               "schema_id": "pm.collaboration_event.collaboration_paused.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-103",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-108",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-463",
             "read_owner_ref": "Plans/storage-plan.md#SP-463",
@@ -523,7 +523,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "b22932919b497a8fd54c366e41a4d7de52bc3bedc015cab4ed371c0fd6a24132",
+      "registry_row_sha256": "3f467c0b2a315808e0efca741c92662fcc7f5c4ac4b432a7b698ed95414fffb6",
       "validation_case_ids": [
         "paused_project",
         "paused_application",
@@ -586,12 +586,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-104",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-109",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-464",
       "storage_owner_unit": "Plans/storage-plan.md#SP-464",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-234",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -602,7 +602,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.resumed",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-104",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-109",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-464",
         "payload_schema_id": "pm.collaboration_event.collaboration_resumed.v1",
         "payload_schema_ref": {
@@ -633,8 +633,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/3",
-          "Plans/Collaborative_Workflows.md#CW-104",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-109",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-464",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_resumed",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_resumed_application",
@@ -665,7 +665,7 @@
               "json_pointer": "#/$defs/collaboration_resumed",
               "schema_id": "pm.collaboration_event.collaboration_resumed.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-104",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-109",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-464",
             "read_owner_ref": "Plans/storage-plan.md#SP-464",
@@ -698,7 +698,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "6a471dda00e760a495eca8717648183e0aa6d3e60f629f08bf54290377dd57bc",
+      "registry_row_sha256": "2b99e2a35729f736fece5e532bb246b5927f163e9e9f798b2e942fc8181a7244",
       "validation_case_ids": [
         "resumed_project",
         "resumed_application",
@@ -758,12 +758,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-105",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-110",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-465",
       "storage_owner_unit": "Plans/storage-plan.md#SP-465",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-235",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -774,7 +774,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.cancelled",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-105",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-110",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-465",
         "payload_schema_id": "pm.collaboration_event.collaboration_cancelled.v1",
         "payload_schema_ref": {
@@ -805,8 +805,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/4",
-          "Plans/Collaborative_Workflows.md#CW-105",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-110",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-465",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_cancelled",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_cancelled_application",
@@ -837,7 +837,7 @@
               "json_pointer": "#/$defs/collaboration_cancelled",
               "schema_id": "pm.collaboration_event.collaboration_cancelled.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-105",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-110",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-465",
             "read_owner_ref": "Plans/storage-plan.md#SP-465",
@@ -870,7 +870,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "405225850cae121dbb3b4964fc9397b23625a3961ee2448f1f9c555745544001",
+      "registry_row_sha256": "a20f2f01589c1e51eeceda7866ab32b211748236e1f5f209600e2bc9199ff152",
       "validation_case_ids": [
         "cancelled_project",
         "cancelled_application",
@@ -934,12 +934,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-106",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-111",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-466",
       "storage_owner_unit": "Plans/storage-plan.md#SP-466",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-236",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -950,7 +950,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.completed",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-106",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-111",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-466",
         "payload_schema_id": "pm.collaboration_event.collaboration_completed.v1",
         "payload_schema_ref": {
@@ -981,8 +981,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/5",
-          "Plans/Collaborative_Workflows.md#CW-106",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-111",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-466",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_completed",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_completed_application",
@@ -1013,7 +1013,7 @@
               "json_pointer": "#/$defs/collaboration_completed",
               "schema_id": "pm.collaboration_event.collaboration_completed.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-106",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-111",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-466",
             "read_owner_ref": "Plans/storage-plan.md#SP-466",
@@ -1046,7 +1046,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "51502865fb146d13b05c0e8ec9845bb14159a97e417b3c2db4cf13581e8ef347",
+      "registry_row_sha256": "2cb13a7c5669dfce273179868ba30dc5ed1adf7fad0e392e9007027ecb1247fd",
       "validation_case_ids": [
         "completed_project",
         "completed_application",
@@ -1114,12 +1114,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-107",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-112",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-467",
       "storage_owner_unit": "Plans/storage-plan.md#SP-467",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-237",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -1130,7 +1130,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.failed",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-107",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-112",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-467",
         "payload_schema_id": "pm.collaboration_event.collaboration_failed.v1",
         "payload_schema_ref": {
@@ -1161,8 +1161,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/6",
-          "Plans/Collaborative_Workflows.md#CW-107",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-112",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-467",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_failed",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_failed_application",
@@ -1194,7 +1194,7 @@
               "json_pointer": "#/$defs/collaboration_failed",
               "schema_id": "pm.collaboration_event.collaboration_failed.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-107",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-112",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-467",
             "read_owner_ref": "Plans/storage-plan.md#SP-467",
@@ -1227,7 +1227,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "503491931b05d58ecef1314ae6a1141394ab73ac2a86fc65e0e929360320e450",
+      "registry_row_sha256": "f1189e6e489a564913e4a4bc316149f8fe0605a2a06dbb99a6d6bb4068722d35",
       "validation_case_ids": [
         "failed_project",
         "failed_project_required_only",
@@ -1289,12 +1289,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-108",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-113",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-468",
       "storage_owner_unit": "Plans/storage-plan.md#SP-468",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-238",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -1305,7 +1305,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.participant_started",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-108",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-113",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-468",
         "payload_schema_id": "pm.collaboration_event.collaboration_participant_started.v1",
         "payload_schema_ref": {
@@ -1336,8 +1336,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/7",
-          "Plans/Collaborative_Workflows.md#CW-108",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-113",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-468",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_started",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_started_application",
@@ -1368,7 +1368,7 @@
               "json_pointer": "#/$defs/collaboration_participant_started",
               "schema_id": "pm.collaboration_event.collaboration_participant_started.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-108",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-113",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-468",
             "read_owner_ref": "Plans/storage-plan.md#SP-468",
@@ -1401,7 +1401,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "3f700067c3acf27f225e7a6fa3c232db5bebfca9758a9b48bb0816d64312a6af",
+      "registry_row_sha256": "73775ca36919e4309e924e9e8b3f9103f462e1e2ecc4708be449ad617902c520",
       "validation_case_ids": [
         "participant_started_project",
         "participant_started_project_required_only",
@@ -1471,12 +1471,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-109",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-114",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-469",
       "storage_owner_unit": "Plans/storage-plan.md#SP-469",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-239",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -1487,7 +1487,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.participant_completed",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-109",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-114",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-469",
         "payload_schema_id": "pm.collaboration_event.collaboration_participant_completed.v1",
         "payload_schema_ref": {
@@ -1518,8 +1518,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/8",
-          "Plans/Collaborative_Workflows.md#CW-109",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-114",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-469",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_completed",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_participant_completed_application",
@@ -1550,7 +1550,7 @@
               "json_pointer": "#/$defs/collaboration_participant_completed",
               "schema_id": "pm.collaboration_event.collaboration_participant_completed.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-109",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-114",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-469",
             "read_owner_ref": "Plans/storage-plan.md#SP-469",
@@ -1583,7 +1583,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "078a2120482dbba1fe09a2ae818e3dda67caf679c8eb747e187ec2d230d9ea1a",
+      "registry_row_sha256": "029c65f7c3dc6b0c5434afde727bead04a5de07009b4b20602f85ff2ed9180e0",
       "validation_case_ids": [
         "participant_completed_project",
         "participant_completed_application",
@@ -1657,12 +1657,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-110",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-115",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-470",
       "storage_owner_unit": "Plans/storage-plan.md#SP-470",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-240",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -1673,7 +1673,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.message_added",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-110",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-115",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-470",
         "payload_schema_id": "pm.collaboration_event.collaboration_message_added.v1",
         "payload_schema_ref": {
@@ -1704,8 +1704,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/9",
-          "Plans/Collaborative_Workflows.md#CW-110",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-115",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-470",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_message_added",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_message_added_application",
@@ -1736,7 +1736,7 @@
               "json_pointer": "#/$defs/collaboration_message_added",
               "schema_id": "pm.collaboration_event.collaboration_message_added.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-110",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-115",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-470",
             "read_owner_ref": "Plans/storage-plan.md#SP-470",
@@ -1769,7 +1769,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "eaf997f0d1c44ba02caa2def29e835770bf2edaf2471f54d05744379eea909de",
+      "registry_row_sha256": "d8986b00c4a377f02663de17a7f8bc073a0cf3918e63eaa8bdd5e22e1dfe79c5",
       "validation_case_ids": [
         "message_added_project",
         "message_added_project_required_only",
@@ -1838,12 +1838,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-111",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-116",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-471",
       "storage_owner_unit": "Plans/storage-plan.md#SP-471",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-241",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -1854,7 +1854,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.artifact_added",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-111",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-116",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-471",
         "payload_schema_id": "pm.collaboration_event.collaboration_artifact_added.v1",
         "payload_schema_ref": {
@@ -1885,8 +1885,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/10",
-          "Plans/Collaborative_Workflows.md#CW-111",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-116",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-471",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_artifact_added",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_artifact_added_application",
@@ -1917,7 +1917,7 @@
               "json_pointer": "#/$defs/collaboration_artifact_added",
               "schema_id": "pm.collaboration_event.collaboration_artifact_added.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-111",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-116",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-471",
             "read_owner_ref": "Plans/storage-plan.md#SP-471",
@@ -1950,7 +1950,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "cf44333fe22fa9265b92502974fc6c17fe83408ad581d3c9e000daa21617e310",
+      "registry_row_sha256": "83ff7042108bee2be1a4f85377d1c9162e1938e4fd7e8c2bee2e2a2c291d3b33",
       "validation_case_ids": [
         "artifact_added_project",
         "artifact_added_project_required_only",
@@ -2012,12 +2012,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-112",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-117",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-472",
       "storage_owner_unit": "Plans/storage-plan.md#SP-472",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-242",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -2028,7 +2028,7 @@
         "family_revision": "1.0.0",
         "event_type": "collaboration.configuration_changed",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-112",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-117",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-472",
         "payload_schema_id": "pm.collaboration_event.collaboration_configuration_changed.v1",
         "payload_schema_ref": {
@@ -2059,8 +2059,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/11",
-          "Plans/Collaborative_Workflows.md#CW-112",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-117",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-472",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_configuration_changed",
           "Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_configuration_changed_application",
@@ -2091,7 +2091,7 @@
               "json_pointer": "#/$defs/collaboration_configuration_changed",
               "schema_id": "pm.collaboration_event.collaboration_configuration_changed.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-112",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-117",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-472",
             "read_owner_ref": "Plans/storage-plan.md#SP-472",
@@ -2124,7 +2124,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "ae250e7e5775814a10f37df9568046dc22f2146c96e8a38540aaabc9bab48839",
+      "registry_row_sha256": "13681a3632c7e15f69b4fe7e97c0b8a1649e75703ec44c61d1815957a06a8e96",
       "validation_case_ids": [
         "configuration_changed_project",
         "configuration_changed_application",
@@ -2192,12 +2192,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-113",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-118",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-473",
       "storage_owner_unit": "Plans/storage-plan.md#SP-473",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-243",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -2208,7 +2208,7 @@
         "family_revision": "1.0.0",
         "event_type": "brainstorm.proposal_added",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-113",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-118",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-473",
         "payload_schema_id": "pm.collaboration_event.brainstorm_proposal_added.v1",
         "payload_schema_ref": {
@@ -2239,8 +2239,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/12",
-          "Plans/Collaborative_Workflows.md#CW-113",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-118",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-473",
           "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_proposal_added",
           "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_proposal_added_application",
@@ -2271,7 +2271,7 @@
               "json_pointer": "#/$defs/brainstorm_proposal_added",
               "schema_id": "pm.collaboration_event.brainstorm_proposal_added.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-113",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-118",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-473",
             "read_owner_ref": "Plans/storage-plan.md#SP-473",
@@ -2304,7 +2304,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "4bf41b1517b3439c569e2db6a845bf6c4c081abdedcb95139744310cc17a53f5",
+      "registry_row_sha256": "563c4ee6c10133e7e6d7e7801d8744e4495fec8b53525463e6a9a45f78b26ae4",
       "validation_case_ids": [
         "proposal_added_project",
         "proposal_added_application",
@@ -2365,12 +2365,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-114",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-119",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-474",
       "storage_owner_unit": "Plans/storage-plan.md#SP-474",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-244",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -2381,7 +2381,7 @@
         "family_revision": "1.0.0",
         "event_type": "brainstorm.vote_added",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-114",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-119",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-474",
         "payload_schema_id": "pm.collaboration_event.brainstorm_vote_added.v1",
         "payload_schema_ref": {
@@ -2412,8 +2412,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/13",
-          "Plans/Collaborative_Workflows.md#CW-114",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-119",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-474",
           "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_vote_added",
           "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_vote_added_application",
@@ -2444,7 +2444,7 @@
               "json_pointer": "#/$defs/brainstorm_vote_added",
               "schema_id": "pm.collaboration_event.brainstorm_vote_added.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-114",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-119",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-474",
             "read_owner_ref": "Plans/storage-plan.md#SP-474",
@@ -2477,7 +2477,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "74aec55c5a08261eb1a50cc3baba24714579ce94e05b7814eaf90071e0794aed",
+      "registry_row_sha256": "6319e92c8ecb7754eaef52b9b2c938f6b6de99cbee4676dc6ffddc27b408cee3",
       "validation_case_ids": [
         "vote_added_project",
         "vote_added_application",
@@ -2537,12 +2537,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-115",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-120",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-475",
       "storage_owner_unit": "Plans/storage-plan.md#SP-475",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-245",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -2553,7 +2553,7 @@
         "family_revision": "1.0.0",
         "event_type": "brainstorm.plan_synthesized",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-115",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-120",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-475",
         "payload_schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.v1",
         "payload_schema_ref": {
@@ -2584,8 +2584,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/14",
-          "Plans/Collaborative_Workflows.md#CW-115",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-120",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-475",
           "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_plan_synthesized",
           "Plans/collaboration_event_payloads.schema.json#/$defs/brainstorm_plan_synthesized_application",
@@ -2616,7 +2616,7 @@
               "json_pointer": "#/$defs/brainstorm_plan_synthesized",
               "schema_id": "pm.collaboration_event.brainstorm_plan_synthesized.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-115",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-120",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-475",
             "read_owner_ref": "Plans/storage-plan.md#SP-475",
@@ -2649,7 +2649,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "32dbd246dde89c0d93da8ee3bffb26d7b9a6f27eabd266d0e2b9464c82d92c92",
+      "registry_row_sha256": "bc45dbc74a2dfd4a104829c608eb9136b4da167dfc9ef37811b8c4d5d571e0c9",
       "validation_case_ids": [
         "plan_synthesized_project",
         "plan_synthesized_project_required_only",
@@ -2710,12 +2710,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-116",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-121",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-476",
       "storage_owner_unit": "Plans/storage-plan.md#SP-476",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-246",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -2726,7 +2726,7 @@
         "family_revision": "1.0.0",
         "event_type": "review.finding_added",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-116",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-121",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-476",
         "payload_schema_id": "pm.collaboration_event.review_finding_added.v1",
         "payload_schema_ref": {
@@ -2757,8 +2757,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/15",
-          "Plans/Collaborative_Workflows.md#CW-116",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-121",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-476",
           "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_added",
           "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_added_application",
@@ -2789,7 +2789,7 @@
               "json_pointer": "#/$defs/review_finding_added",
               "schema_id": "pm.collaboration_event.review_finding_added.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-116",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-121",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-476",
             "read_owner_ref": "Plans/storage-plan.md#SP-476",
@@ -2822,7 +2822,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "43cb9d225f9272eb581ccb8f5df2061ec34f3fe6999e58f4f15be42d6a764196",
+      "registry_row_sha256": "46c92aa969999810d903d4f66ebf33e8d4278cfee500ff4eee9b84e3cb62e278",
       "validation_case_ids": [
         "finding_added_project",
         "finding_added_application",
@@ -2885,12 +2885,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-117",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-122",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-477",
       "storage_owner_unit": "Plans/storage-plan.md#SP-477",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-247",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -2901,7 +2901,7 @@
         "family_revision": "1.0.0",
         "event_type": "review.finding_dispositioned",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-117",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-122",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-477",
         "payload_schema_id": "pm.collaboration_event.review_finding_dispositioned.v1",
         "payload_schema_ref": {
@@ -2932,8 +2932,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/16",
-          "Plans/Collaborative_Workflows.md#CW-117",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-122",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-477",
           "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_dispositioned",
           "Plans/collaboration_event_payloads.schema.json#/$defs/review_finding_dispositioned_application",
@@ -2964,7 +2964,7 @@
               "json_pointer": "#/$defs/review_finding_dispositioned",
               "schema_id": "pm.collaboration_event.review_finding_dispositioned.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-117",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-122",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-477",
             "read_owner_ref": "Plans/storage-plan.md#SP-477",
@@ -2997,7 +2997,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "13a830e1f8a017a84399b7e84c18636ccd30d9a6bd47bf3d47dd1991f2167c1e",
+      "registry_row_sha256": "36d7d261229988f8b096e61e79b23871781197da47d8638e4b3448bbcff5a00e",
       "validation_case_ids": [
         "finding_dispositioned_project",
         "finding_dispositioned_application",
@@ -3057,12 +3057,12 @@
         "Plans/Decision_Log.md#DL-092",
         "Plans/Decision_Log.md#DL-292"
       ],
-      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CW-118",
+      "semantic_owner_unit": "Plans/Collaborative_Workflows.md#CWR-123",
       "payload_owner_unit": "Plans/Contracts_V0.md#CV-478",
       "storage_owner_unit": "Plans/storage-plan.md#SP-478",
       "oracle_unit": "Plans/Automated_Testing_System.md#ATS-248",
       "shared_units": [
-        "Plans/Collaborative_Workflows.md#CW-100",
+        "Plans/Collaborative_Workflows.md#CWR-105",
         "Plans/Contracts_V0.md#CV-460",
         "Plans/storage-plan.md#SP-460",
         "Plans/Automated_Testing_System.md#ATS-230"
@@ -3073,7 +3073,7 @@
         "family_revision": "1.0.0",
         "event_type": "review.artifact_finalized",
         "scope_policy": "application_or_project",
-        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CW-118",
+        "semantic_owner_doc": "Plans/Collaborative_Workflows.md#CWR-123",
         "payload_owner_doc": "Plans/Contracts_V0.md#CV-478",
         "payload_schema_id": "pm.collaboration_event.review_artifact_finalized.v1",
         "payload_schema_ref": {
@@ -3104,8 +3104,8 @@
         },
         "source_refs": [
           "Plans/collaboration_event_admission.json#/rows/17",
-          "Plans/Collaborative_Workflows.md#CW-118",
-          "Plans/Collaborative_Workflows.md#CW-100",
+          "Plans/Collaborative_Workflows.md#CWR-123",
+          "Plans/Collaborative_Workflows.md#CWR-105",
           "Plans/Contracts_V0.md#CV-478",
           "Plans/collaboration_event_payloads.schema.json#/$defs/review_artifact_finalized",
           "Plans/collaboration_event_payloads.schema.json#/$defs/review_artifact_finalized_application",
@@ -3136,7 +3136,7 @@
               "json_pointer": "#/$defs/review_artifact_finalized",
               "schema_id": "pm.collaboration_event.review_artifact_finalized.v1"
             },
-            "source_graph_ref": "Plans/Collaborative_Workflows.md#CW-118",
+            "source_graph_ref": "Plans/Collaborative_Workflows.md#CWR-123",
             "producer_admission": "existing_project_policy",
             "append_owner_ref": "Plans/storage-plan.md#SP-478",
             "read_owner_ref": "Plans/storage-plan.md#SP-478",
@@ -3169,7 +3169,7 @@
         ],
         "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
       },
-      "registry_row_sha256": "463e18e9cd5e06cf715674d03d711bd5a03ddda96fa7dff329ad1a68383e7748",
+      "registry_row_sha256": "87952be49876fdb54bd56d9d43d48253c05d2a1139e1404bd766d552daa24cc7",
       "validation_case_ids": [
         "artifact_finalized_project",
         "artifact_finalized_application",

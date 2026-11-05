@@ -790,18 +790,19 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # DL-092): the Storage owner's reuse check did not reuse RP-GOAL-THREAD-LIFETIME and materialized the Chat content
 # class as RP-CHAT-THREAD-LIFETIME@1.0.0, so the retention-policy count moves from 27 to 28. The family, status
 # and tier counts are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
+# DC: eight derived collaboration keys and the canonical prepared-source holder (SP-460).
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 353
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 35
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 320,
+    "materialized": 329,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 61,
-    "later_gui_or_feature_projection": 273,
+    "later_gui_or_feature_projection": 282,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
@@ -2289,6 +2290,41 @@ def storage_value_durable_read_token_schema() -> dict[str, Any] | None:
     return durable
 
 
+def storage_value_collaboration_durable_read_token_schema() -> dict[str, Any] | None:
+    """Exactly SP-460's strengthened nine-field token, never an arbitrary token exemption.
+
+    Its stored language is a subset of the existing SP-278 durable token: only the
+    explicit true-end lexical/length constraints below are added. Every other field,
+    closure, type, enum and constraint remains byte-for-byte in the same schema.
+    """
+    token = storage_value_durable_read_token_schema()
+    if token is None:
+        return None
+    def harden(node: Any, field: str = "") -> Any:
+        if isinstance(node, dict):
+            if "pattern" in node and node["pattern"].endswith("$"):
+                node["pattern"] += r"(?![\s\S])"
+            if field.endswith("sha256"):
+                node.update(minLength=64, maxLength=64)
+            if field == "generation_id":
+                node.update(minLength=68, maxLength=68)
+            if field == "storage_instance_id":
+                node.update(pattern=r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$(?![\s\S])", minLength=36, maxLength=36)
+            if field in ("checkpoint_key", "index_dataset_name", "checkpoint_ref"):
+                node["pattern"] = r"^\S+$(?![\s\S])"
+            for key, value in list(node.items()):
+                if key == "properties":
+                    node[key] = {name: harden(child, name) for name, child in value.items()}
+                elif isinstance(value, (dict, list)):
+                    node[key] = harden(value)
+        elif isinstance(node, list):
+            node = [harden(child) for child in node]
+        return node
+    token = harden(token)
+    token["description"] = "SP-278's nine-field durable read token (DL-076), copied by value from Plans/coordination_projection_contracts.schema.json#/$defs/durable_read_token, which projects Plans/event_record_index_checkpoint.schema.json#/$defs/read_token without redb_snapshot_id; the checker compares the copy."
+    return token
+
+
 def storage_value_read_token_name(name: str) -> bool:
     return name == "read_token" or name.endswith("_read_token")
 
@@ -2316,7 +2352,7 @@ def storage_value_is_canonical_read_token(name: str, schema: Any, root: Any) -> 
             target = resolve_local_schema_ref(root, ref)
         except (KeyError, ValueError):
             return False
-    return target == canonical or target == storage_value_durable_read_token_schema()
+    return target == canonical or target == storage_value_durable_read_token_schema() or target == storage_value_collaboration_durable_read_token_schema()
 
 
 _STORAGE_VALUE_SUBSCHEMA_KEYWORDS = (

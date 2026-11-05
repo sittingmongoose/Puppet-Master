@@ -24484,7 +24484,7 @@ The selected app request union accepts only an authenticated user actor. A malfo
 <a id="closed-collaboration-payload-schema-dl-090-2026-11-04"></a>
 ## Closed collaborative workflow event payloads (DL-090, DL-091, 2026-11-04)
 
-This is a **newly authored owner contract under DL-090** (DL-091 for `collaboration.failed`) for the closed payloads of the 18 collaborative workflow families: `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.failed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`. It is backed by the per-family search `reports/event-authority-20261104/DC-binding-search.md`, which found no payload schema for any of them: `Plans/collaborative_workflows_contracts.schema.json` closes the records and commands only and "admits no writer, storage key, EventRecord or handler" (Collaborative Workflows section 12). The closed form is `Plans/collaboration_event_payloads.schema.json`, schema ID `https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json`. The semantic owner is `Plans/Collaborative_Workflows.md` (CW-100 to CW-118); persistence, identity and transitions are `Plans/storage-plan.md` SP-460 to SP-478. Nothing here admits a family.
+This is a **newly authored owner contract under DL-090** (DL-091 for `collaboration.failed`) for the closed payloads of the 18 collaborative workflow families: `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.failed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`. It is backed by the per-family search `reports/event-authority-20261104/DC-binding-search.md`, which found no payload schema for any of them: `Plans/collaborative_workflows_contracts.schema.json` closes the records and commands only and "admits no writer, storage key, EventRecord or handler" (Collaborative Workflows section 12). The closed form is `Plans/collaboration_event_payloads.schema.json`, schema ID `https://puppetmaster.local/schemas/collaboration_event_payloads/1.0.0/collaboration_event_payloads.schema.json`. The semantic owner is `Plans/Collaborative_Workflows.md` (CWR-105 to CWR-123); persistence, identity and transitions are `Plans/storage-plan.md` SP-460 to SP-478. Nothing here admits a family.
 
 ### CV-460 - Shared rules of the collaborative workflow event payloads
 
@@ -24492,9 +24492,9 @@ This is a **newly authored owner contract under DL-090** (DL-091 for `collaborat
 2. **Common fields.** Every payload requires `schema_version` (`1.0.0`), `scope_kind`, `project_id` (a real Project in project scope, the required null of application scope), `thread_id` (the run's chat), `collaboration_id`, `collaboration_run_id`, `kind`, `definition_revision` (the run's current revision; the new revision for a definition event), `currentness_hash` (the SHA-256 currentness of the owner record after the commit the event records, section 11) and `idempotency_key`. Application payloads also require `server_id`, the actual Server whose application data root holds the run. A BrainStorm family fixes `kind` to `brainstorm` and a Review family to `review`.
 3. **No nulls.** An optional field without a value is omitted, so each value has one encoding and a retry reproduces the same producer semantic digest. The only null is application scope's `project_id`.
 4. **Closed sets.** `kind`, `admission_source`, `coordinator_kind`, `stop_reason`, `participant_outcome`, `additive_role_kind`, `sender_kind`, `message_type`, `vote_position`, `review_severity` and `review_disposition` are referenced from the closed enumerations Collaborative Workflows section 12 owns in `Plans/collaborative_workflows_contracts.schema.json`. `reconfigure_change_kind` lists the `change_kind` constants of that file's `reconfigure_change` union. A reason code (`failure_reason`, `outcome_reason`) is a section 11 typed error other than `cancelled`. State fields take subsets of the closed run states.
-5. **References and bounds.** Identifiers are 1 to 256 characters without whitespace. References use CV-353 rule 6's `non_secret_ref` form, adopted here by name: `kind:value`, no whitespace, no credential, account identifier, local absolute path or content. Timestamps are RFC 3339 UTC ending in `Z` and real calendar values.
-6. **No text.** No payload carries a definition name or purpose, message body, proposal or vote text, finding claim, dissent, waiver reason, Plan text, error text or tool output (CW-100). Each closed definition admits only its listed fields, so such a field fails validation.
-7. **EventRecord joins.** A collaborative EventRecord has `scope_kind` equal to the payload's; `project_id`, `thread_id` and `idempotency_key` equal to the payload's; `run_id` equal to `collaboration_run_id`; `node_id` null; `attempt_id` equal to the payload's `attempt_id` for the two participant families and null otherwise; `payload_schema_id` equal to the edition's schema ID; `payload_ref` null; `redaction_profile` `no_secrets`; `replay_policy` `dedupe_by_idempotency_key`; `occurred_at_utc` equal to the family timestamp; and `event_id` and `idempotency_key` from SP-460's recipe. `actor_ref`, `correlation_id` and `causation_event_id` follow CW-100.
+5. **References and bounds.** Identifiers are 1 to 256 characters without whitespace. References use CV-353 rule 6's `non_secret_ref` form, adopted here by name: `kind:value`, no whitespace, no credential, account identifier, local absolute path or content. Timestamps are RFC 3339 UTC ending in `Z` and real calendar values. Every identifier, reference, hash, token and timestamp uses a true end-of-string guard (including trailing-LF refusal); fixed-format values also have exact lengths.
+6. **No text.** No payload carries a definition name or purpose, message body, proposal or vote text, finding claim, dissent, waiver reason, Plan text, error text or tool output (CWR-105). Each closed definition admits only its listed fields, so such a field fails validation.
+7. **EventRecord joins.** A collaborative EventRecord has `scope_kind` equal to the payload's; `project_id`, `thread_id` and `idempotency_key` equal to the payload's; `run_id` equal to `collaboration_run_id`; `node_id` null; `attempt_id` equal to the payload's `attempt_id` for the two participant families and null otherwise; `payload_schema_id` equal to the edition's schema ID; `event_type` exactly the selected family; `payload` inline only when canonical UTF-8 JSON is at most 16,384 bytes, otherwise `payload` `{}` and `payload_ref` `payload:blake3:{64_lowercase_hex}:{byte_size}:application/json`; `redaction_profile` `no_secrets`; `replay_policy` `dedupe_by_idempotency_key`; `occurred_at_utc` equal to the family timestamp; and `event_id` and `idempotency_key` from SP-460's recipe. `actor_ref`, `correlation_id` and `causation_event_id` follow CWR-105.
 
 ```yaml
 plan_unit_id: CV-460
@@ -24512,10 +24512,13 @@ canonical_text: >-
   reasons are section 11 codes other than cancelled. References use CV-353's non_secret_ref form. No payload
   carries user or participant text. The EventRecord joins fix scope, identity, run, attempt, schema,
   redaction, replay, occurrence time and the SP-460 identity recipe. Nothing is admitted.
+  SP-337 externalizes bodies above 16384 canonical UTF-8 bytes and verifies complete resolved bytes and
+  identical payload joins. Identifiers and hashes use true-end lexical guards. Family/envelope equality is
+  mandatory; SP-460 defines canonical numeric serialization and frozen caller-envelope/source custody.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [DL-090, DL-091, CV-353, CV-366, CW-100]
+depends_on: [DL-090, DL-091, CV-353, CV-366, CWR-105]
 unblocks: []
 acceptance_criteria:
   - "Each family has exactly one closed project definition and one closed application definition, each resolving to its own schema ID."
@@ -24565,7 +24568,13 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Collaborative_Workflows.md#CW-100, ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Contracts_V0.md#CV-353, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/collaboration_event_payloads.schema.json
+ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Contracts_V0.md#CV-353, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/collaboration_event_payloads.schema.json
+
+**Numeric interpretation.** SP-460 defines one canonical numeric serialization for the new semantic/snapshot commitments and base-10 identity subjects; no string/boolean coercion or native-codec change is permitted.
+
+**SP-337 adoption.** The payload-reference string encodes BLAKE3 of the exact canonical UTF-8 JSON bytes, byte size and media type. Resolution verifies durable bytes, exact size/hash/type, canonical JSON and the same closed payload/identity/scope/timestamp rules as inline form; missing/wrong refs, inline plus reference and over-limit inline reject. Storage acknowledges references only after pack-byte durability. The reference form is allowed for smaller separately governed bodies too. No roster, recipient, target or constraint bound is reduced to fit inline. Reference resolution, pack ingest/GC and crash durability remain native NOT_RUN.
+
+**Authoritative completion observation.** Created/configuration payloads require `required_slot_ids`, exactly the committed definition's immutable required-slot snapshot in SP-460, never a caller-selected completion predicate. Completion must report that retained set and the actual waived set. Ordinary Crew/BrainStorm/Review clean completion requires resolved required slots plus their kind's outputs. CWR-031's explicit `cmd.chat_room.end` settles Chat Room completed after closing open attempts and stops further rounds/messages; it does not introduce a waiver command. Native completion remains NOT_RUN.
 
 ### CV-461 - The closed collaboration.created payload
 
@@ -24599,7 +24608,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-101]
+depends_on: [CV-460, DL-090, CWR-106]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_created.v1 and pm.collaboration_event.collaboration_created.application.v1 are closed and differ only in CV-460's scope fields."
@@ -24646,7 +24655,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-101, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-461
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-106, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-461
 
 ### CV-462 - The closed collaboration.started payload
 
@@ -24691,7 +24700,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-102]
+depends_on: [CV-460, DL-090, CWR-107]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_started.v1 and pm.collaboration_event.collaboration_started.application.v1 are closed and differ only in CV-460's scope fields."
@@ -24738,7 +24747,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-102, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-462
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-107, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-462
 
 ### CV-463 - The closed collaboration.paused payload
 
@@ -24769,7 +24778,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-103]
+depends_on: [CV-460, DL-090, CWR-108]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_paused.v1 and pm.collaboration_event.collaboration_paused.application.v1 are closed and differ only in CV-460's scope fields."
@@ -24816,7 +24825,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-103, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-463
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-108, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-463
 
 ### CV-464 - The closed collaboration.resumed payload
 
@@ -24847,7 +24856,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-104]
+depends_on: [CV-460, DL-090, CWR-109]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_resumed.v1 and pm.collaboration_event.collaboration_resumed.application.v1 are closed and differ only in CV-460's scope fields."
@@ -24894,7 +24903,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-104, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-464
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-109, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-464
 
 ### CV-465 - The closed collaboration.cancelled payload
 
@@ -24929,7 +24938,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-105]
+depends_on: [CV-460, DL-090, CWR-110]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_cancelled.v1 and pm.collaboration_event.collaboration_cancelled.application.v1 are closed and differ only in CV-460's scope fields."
@@ -24976,7 +24985,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-105, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-465
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-110, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-465
 
 ### CV-466 - The closed collaboration.completed payload
 
@@ -25013,7 +25022,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-106]
+depends_on: [CV-460, DL-090, CWR-111]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_completed.v1 and pm.collaboration_event.collaboration_completed.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25060,7 +25069,9 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-106, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-466
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-111, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-466
+
+The required-slot set is retained from the definition/source snapshot committed by created/configuration_changed and frozen at Start; completion's exact set must match (`required_slot_set_mismatch`), and `waived_slot_ids` must equal actual current dispositions (`waived_slot_set_mismatch`). A shortened list never bypasses a failed required slot. Ordinary kind-specific outputs still apply; CWR-031's explicit Chat Room End settles without an invented waiver interaction.
 
 ### CV-467 - The closed collaboration.failed payload
 
@@ -25092,7 +25103,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-091, CW-107]
+depends_on: [CV-460, DL-091, CWR-112]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_failed.v1 and pm.collaboration_event.collaboration_failed.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25139,7 +25150,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-107, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-467
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-112, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-467
 
 ### CV-468 - The closed collaboration.participant_started payload
 
@@ -25178,7 +25189,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-108]
+depends_on: [CV-460, DL-090, CWR-113]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_participant_started.v1 and pm.collaboration_event.collaboration_participant_started.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25225,7 +25236,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-108, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-468
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-113, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-468
 
 ### CV-469 - The closed collaboration.participant_completed payload
 
@@ -25267,7 +25278,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-109]
+depends_on: [CV-460, DL-090, CWR-114]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_participant_completed.v1 and pm.collaboration_event.collaboration_participant_completed.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25314,7 +25325,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-109, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-469
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-114, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-469
 
 ### CV-470 - The closed collaboration.message_added payload
 
@@ -25353,7 +25364,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-110]
+depends_on: [CV-460, DL-090, CWR-115]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_message_added.v1 and pm.collaboration_event.collaboration_message_added.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25400,7 +25411,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-110, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-470
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-115, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-470
 
 ### CV-471 - The closed collaboration.artifact_added payload
 
@@ -25434,7 +25445,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-111]
+depends_on: [CV-460, DL-090, CWR-116]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_artifact_added.v1 and pm.collaboration_event.collaboration_artifact_added.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25481,7 +25492,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-111, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-471
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-116, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-471
 
 ### CV-472 - The closed collaboration.configuration_changed payload
 
@@ -25521,7 +25532,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-112]
+depends_on: [CV-460, DL-090, CWR-117]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.collaboration_configuration_changed.v1 and pm.collaboration_event.collaboration_configuration_changed.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25568,7 +25579,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-112, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-472
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-117, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-472
 
 ### CV-473 - The closed brainstorm.proposal_added payload
 
@@ -25584,7 +25595,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-112, ContractName:
 | `blind_round` | yes | boolean | true for a blind-phase proposal |
 | `proposal_record_ref` | yes | `non_secret_ref` | the normalized proposal record |
 
-**Rules.** `kind` is `brainstorm`; `proposal_round` starts at 1. The family timestamp is `added_at_utc`, which the EventRecord's `occurred_at_utc` equals. Its idempotency key and event ID follow SP-460 with the subject `collaboration_run_id, proposal_id` (SP-473). Text protection (DL-090). The event carries no proposal text: no approach, assumptions, benefits, costs, risks, migrations, cross-system effects, validation, rollback or evidence. That text stays in the proposal record, which proposal_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set, and the event neither holds nor extends it. Readers disclose a proposal row only after the protocol releases it (CWR-013).
+**Rules.** `kind` is `brainstorm`; `proposal_round` starts at 1. The family timestamp is `added_at_utc`, which the EventRecord's `occurred_at_utc` equals. Its idempotency key and event ID follow SP-460 with the subject `collaboration_run_id, proposal_id` (SP-473). Text protection (DL-090). The event carries no proposal text: no approach, assumptions, benefits, costs, risks, migrations, cross-system effects, validation, rollback or evidence. That text stays in the proposal record, which proposal_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text follows the chat lifetime, holds and deadlines under E-CARDS-1 1c A, which DL-092 does not set, and the event neither holds nor extends it. Readers disclose a proposal row only after the protocol releases it (CWR-013).
 
 ```yaml
 plan_unit_id: CV-473
@@ -25603,7 +25614,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-113]
+depends_on: [CV-460, DL-090, CWR-118]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.brainstorm_proposal_added.v1 and pm.collaboration_event.brainstorm_proposal_added.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25650,7 +25661,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-113, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-473
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-118, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-473
 
 ### CV-474 - The closed brainstorm.vote_added payload
 
@@ -25687,7 +25698,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-114]
+depends_on: [CV-460, DL-090, CWR-119]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.brainstorm_vote_added.v1 and pm.collaboration_event.brainstorm_vote_added.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25734,7 +25745,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-114, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-474
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-119, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-474
 
 ### CV-475 - The closed brainstorm.plan_synthesized payload
 
@@ -25771,7 +25782,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-115]
+depends_on: [CV-460, DL-090, CWR-120]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.brainstorm_plan_synthesized.v1 and pm.collaboration_event.brainstorm_plan_synthesized.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25818,7 +25829,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-115, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-475
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-120, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-475
 
 ### CV-476 - The closed review.finding_added payload
 
@@ -25834,7 +25845,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-115, ContractName:
 | `target_hashes` | yes | SHA-256 hex list, at least 1 | the run's frozen pack hashes |
 | `finding_record_ref` | yes | `non_secret_ref` | the finding record |
 
-**Rules.** `kind` is `review`; `originating_reviewer_ids` has at least one reviewer; `target_hashes` are lowercase hex. The family timestamp is `added_at_utc`, which the EventRecord's `occurred_at_utc` equals. Its idempotency key and event ID follow SP-460 with the subject `collaboration_run_id, finding_id` (SP-476). Text protection (DL-090). The event carries no finding text: no claim, category, evidence, dissent or proposed remediation. That text stays in the finding record, which finding_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text keeps its own owner's lifetime, which DL-092 does not set. Readers disclose a finding only after normalization releases it (CWR-013).
+**Rules.** `kind` is `review`; `originating_reviewer_ids` has at least one reviewer; `target_hashes` are lowercase hex. The family timestamp is `added_at_utc`, which the EventRecord's `occurred_at_utc` equals. Its idempotency key and event ID follow SP-460 with the subject `collaboration_run_id, finding_id` (SP-476). Text protection (DL-090). The event carries no finding text: no claim, category, evidence, dissent or proposed remediation. That text stays in the finding record, which finding_record_ref names. Deleting the chat deletes the event under the chat-lifetime policy; the record's text follows the chat lifetime, holds and deadlines under E-CARDS-1 1c A, which DL-092 does not set. Readers disclose a finding only after normalization releases it (CWR-013).
 
 ```yaml
 plan_unit_id: CV-476
@@ -25853,7 +25864,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-116]
+depends_on: [CV-460, DL-090, CWR-121]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.review_finding_added.v1 and pm.collaboration_event.review_finding_added.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25900,7 +25911,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-116, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-476
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-121, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-476
 
 ### CV-477 - The closed review.finding_dispositioned payload
 
@@ -25919,7 +25930,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-116, ContractName:
 | `adjudicator_ref` | yes | `non_secret_ref` | the coordinator or adjudicator |
 | `finding_record_ref` | yes | `non_secret_ref` | the finding record |
 
-**Rules.** `kind` is `review`; `confidence` is 0 to 1. The family timestamp is `dispositioned_at_utc`, which the EventRecord's `occurred_at_utc` equals. Its idempotency key and event ID follow SP-460 with the subject `collaboration_run_id, finding_id` (SP-477). Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record's text keeps its own owner's lifetime.
+**Rules.** `kind` is `review`; `confidence` is 0 to 1. The family timestamp is `dispositioned_at_utc`, which the EventRecord's `occurred_at_utc` equals. Its idempotency key and event ID follow SP-460 with the subject `collaboration_run_id, finding_id` (SP-477). Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record's text follows the chat lifetime, holds and deadlines under E-CARDS-1 1c A.
 
 ```yaml
 plan_unit_id: CV-477
@@ -25938,7 +25949,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-117]
+depends_on: [CV-460, DL-090, CWR-122]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.review_finding_dispositioned.v1 and pm.collaboration_event.review_finding_dispositioned.application.v1 are closed and differ only in CV-460's scope fields."
@@ -25985,7 +25996,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-117, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-477
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-122, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-477
 
 ### CV-478 - The closed review.artifact_finalized payload
 
@@ -26031,7 +26042,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [CV-460, DL-090, CW-118]
+depends_on: [CV-460, DL-090, CWR-123]
 unblocks: []
 acceptance_criteria:
   - "pm.collaboration_event.review_artifact_finalized.v1 and pm.collaboration_event.review_artifact_finalized.application.v1 are closed and differ only in CV-460's scope fields."
@@ -26078,5 +26089,5 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-ContractRef: ContractName:Plans/Collaborative_Workflows.md#CW-118, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-478
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-123, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-478
 

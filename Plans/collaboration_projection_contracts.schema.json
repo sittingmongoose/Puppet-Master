@@ -7,31 +7,36 @@
     "id": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 256
+      "maxLength": 256,
+      "pattern": "^\\S+$(?![\\s\\S])"
     },
     "timestamp": {
       "type": "string",
-      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$(?![\\s\\S])"
     },
     "event_id": {
       "type": "string",
-      "pattern": "^evt_collaboration_[0-9a-f]{64}$"
+      "pattern": "^evt_collaboration_[0-9a-f]{64}$(?![\\s\\S])",
+      "minLength": 82,
+      "maxLength": 82
     },
     "non_secret_ref": {
       "description": "CV-353 rule 6: a reference of the form kind:value. The kind is lowercase letters, digits and underscores, starting with a letter; the whole reference has at most 256 characters and no whitespace. It names an object, grants no access and holds no credential, account identifier, local absolute path or content.",
       "type": "string",
       "minLength": 3,
       "maxLength": 256,
-      "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$"
+      "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$(?![\\s\\S])"
     },
     "sha256_hex": {
       "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+      "minLength": 64,
+      "maxLength": 64
     },
     "scope_partition": {
       "description": "Storage's scope_partition: exactly app for application scope, project~{base64url_no_pad(UTF8(project_id))} for project scope.",
       "type": "string",
-      "pattern": "^(?:app|project~[A-Za-z0-9_-]+)$"
+      "pattern": "^(?:app|project~[A-Za-z0-9_-]+)$(?![\\s\\S])"
     },
     "durable_read_token": {
       "type": "object",
@@ -50,23 +55,32 @@
       "properties": {
         "storage_instance_id": {
           "type": "string",
-          "format": "uuid"
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$(?![\\s\\S])",
+          "minLength": 36,
+          "maxLength": 36
         },
         "checkpoint_key": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "pattern": "^\\S+$(?![\\s\\S])"
         },
         "checkpoint_ref": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "pattern": "^\\S+$(?![\\s\\S])"
         },
         "generation_id": {
           "type": "string",
-          "pattern": "^eig_[0-9a-f]{64}$"
+          "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])",
+          "minLength": 68,
+          "maxLength": 68
         },
         "generation_anchor_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+          "minLength": 64,
+          "maxLength": 64
         },
         "frontier_revision": {
           "type": "integer",
@@ -75,11 +89,14 @@
         },
         "frontier_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+          "minLength": 64,
+          "maxLength": 64
         },
         "index_dataset_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "pattern": "^\\S+$(?![\\s\\S])"
         },
         "source_selection": {
           "type": "object",
@@ -102,14 +119,19 @@
           "properties": {
             "storage_instance_id": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$(?![\\s\\S])",
+              "minLength": 36,
+              "maxLength": 36
             },
             "current_ref": {
               "const": "storage/seglog/CURRENT"
             },
             "current_bytes_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+              "minLength": 64,
+              "maxLength": 64
             },
             "selected_segment_generation": {
               "type": "integer",
@@ -121,7 +143,9 @@
             },
             "manifest_bytes_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+              "minLength": 64,
+              "maxLength": 64
             },
             "manifest_generation": {
               "type": "integer",
@@ -135,23 +159,33 @@
             },
             "manifest_survivor_prefix_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+              "minLength": 64,
+              "maxLength": 64
             },
             "retained_inventory_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+              "minLength": 64,
+              "maxLength": 64
             },
             "durable_watermarks_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+              "minLength": 64,
+              "maxLength": 64
             },
             "excluded_ranges_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+              "minLength": 64,
+              "maxLength": 64
             },
             "retired_inputs_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+              "minLength": 64,
+              "maxLength": 64
             }
           }
         }
@@ -197,7 +231,10 @@
         },
         "storage_instance_id": {
           "type": "string",
-          "format": "uuid"
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$(?![\\s\\S])",
+          "minLength": 36,
+          "maxLength": 36
         },
         "scope_kind": {
           "enum": [
@@ -206,18 +243,9 @@
           ]
         },
         "scope_partition": {
-          "$ref": "#/$defs/scope_partition"
+          "type": "string"
         },
-        "project_id": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/id"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
+        "project_id": {},
         "projector_id": {
           "const": "storage.collaboration_projector.v1"
         },
@@ -270,7 +298,7 @@
           "minimum": 0
         },
         "source_cursor": {
-          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+          "$ref": "#/$defs/generic_source_cursor"
         },
         "filter_complete": {
           "type": "boolean"
@@ -292,7 +320,7 @@
           "$ref": "#/$defs/timestamp"
         },
         "withdrawn_at_utc": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/timestamp"
             },
@@ -331,16 +359,6 @@
               },
               "project_id": {
                 "type": "null"
-              }
-            }
-          },
-          "else": {
-            "properties": {
-              "scope_partition": {
-                "pattern": "^project~[A-Za-z0-9_-]+$"
-              },
-              "project_id": {
-                "$ref": "#/$defs/id"
               }
             }
           }
@@ -431,8 +449,124 @@
                 "type": "null"
               }
             }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  }
+                },
+                "required": [
+                  "scope_kind"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
+            "properties": {
+              "scope_partition": {
+                "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "source_cursor": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "segment_generation",
+                          "segment_name",
+                          "byte_offset",
+                          "frame_end_offset",
+                          "last_sequence_id",
+                          "last_event_id"
+                        ],
+                        "properties": {
+                          "segment_generation": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "segment_name": {
+                            "type": "string",
+                            "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$(?![\\s\\S])"
+                          },
+                          "byte_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "frame_end_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_sequence_id": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_event_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "^\\S+$(?![\\s\\S])"
+                          }
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "source_cursor"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "source_cursor": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "source_cursor"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
             "properties": {
               "first_retained_sequence_id": {
                 "type": "integer"
@@ -512,7 +646,10 @@
         },
         "storage_instance_id": {
           "type": "string",
-          "format": "uuid"
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$(?![\\s\\S])",
+          "minLength": 36,
+          "maxLength": 36
         },
         "scope_kind": {
           "enum": [
@@ -521,18 +658,9 @@
           ]
         },
         "scope_partition": {
-          "$ref": "#/$defs/scope_partition"
+          "type": "string"
         },
-        "project_id": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/id"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
+        "project_id": {},
         "projector_id": {
           "const": "storage.collaboration_projector.v1"
         },
@@ -585,7 +713,7 @@
           "minimum": 0
         },
         "source_cursor": {
-          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+          "$ref": "#/$defs/generic_source_cursor"
         },
         "filter_complete": {
           "type": "boolean"
@@ -607,7 +735,7 @@
           "$ref": "#/$defs/timestamp"
         },
         "withdrawn_at_utc": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/timestamp"
             },
@@ -653,16 +781,6 @@
               },
               "project_id": {
                 "type": "null"
-              }
-            }
-          },
-          "else": {
-            "properties": {
-              "scope_partition": {
-                "pattern": "^project~[A-Za-z0-9_-]+$"
-              },
-              "project_id": {
-                "$ref": "#/$defs/id"
               }
             }
           }
@@ -753,8 +871,124 @@
                 "type": "null"
               }
             }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  }
+                },
+                "required": [
+                  "scope_kind"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                }
+              }
+            ]
           },
-          "else": {
+          "then": {
+            "properties": {
+              "scope_partition": {
+                "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "source_cursor": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "segment_generation",
+                          "segment_name",
+                          "byte_offset",
+                          "frame_end_offset",
+                          "last_sequence_id",
+                          "last_event_id"
+                        ],
+                        "properties": {
+                          "segment_generation": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "segment_name": {
+                            "type": "string",
+                            "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$(?![\\s\\S])"
+                          },
+                          "byte_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "frame_end_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_sequence_id": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_event_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "^\\S+$(?![\\s\\S])"
+                          }
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "source_cursor"
+                ]
+              },
+              {
+                "not": {
+                  "properties": {
+                    "source_cursor": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "source_cursor"
+                  ]
+                }
+              }
+            ]
+          },
+          "then": {
             "properties": {
               "first_retained_sequence_id": {
                 "type": "integer"
@@ -789,7 +1023,7 @@
           "$ref": "#/$defs/event_id"
         },
         "outcome": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/participant_outcome"
             },
@@ -799,7 +1033,7 @@
           ]
         },
         "outcome_event_id": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/event_id"
             },
@@ -836,7 +1070,7 @@
           "$ref": "#/$defs/timestamp"
         },
         "stop_reason": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/stop_reason"
             },
@@ -846,7 +1080,7 @@
           ]
         },
         "failure_reason": {
-          "oneOf": [
+          "anyOf": [
             {
               "enum": [
                 "invalid_request",
@@ -886,7 +1120,7 @@
           ]
         },
         "completion_trigger": {
-          "oneOf": [
+          "anyOf": [
             {
               "enum": [
                 "predicate_met",
@@ -939,7 +1173,8 @@
         "thread_id",
         "latest_definition_revision",
         "created_event_id",
-        "last_applied_event_id"
+        "last_applied_event_id",
+        "required_slot_ids"
       ],
       "properties": {
         "schema_id": {
@@ -972,6 +1207,14 @@
         },
         "last_applied_event_id": {
           "$ref": "#/$defs/event_id"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "description": "Authoritative frozen definition requiredness; created/configuration_changed retain it and started copies it into the run. The completion caller cannot replace it."
         }
       }
     },
@@ -1001,7 +1244,8 @@
         "synthesized_plan",
         "waived_slot_ids",
         "stale_target_accepted",
-        "last_applied_event_id"
+        "last_applied_event_id",
+        "required_slot_ids"
       ],
       "properties": {
         "schema_id": {
@@ -1063,7 +1307,7 @@
           "minimum": 1
         },
         "terminal": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/terminal"
             },
@@ -1081,7 +1325,7 @@
           "minimum": 0
         },
         "finalized_artifact_version_ref": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/non_secret_ref"
             },
@@ -1091,7 +1335,7 @@
           ]
         },
         "synthesized_plan": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/synthesized_plan"
             },
@@ -1112,6 +1356,14 @@
         },
         "last_applied_event_id": {
           "$ref": "#/$defs/event_id"
+        },
+        "required_slot_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "description": "Authoritative frozen definition requiredness; created/configuration_changed retain it and started copies it into the run. The completion caller cannot replace it."
         }
       }
     },
@@ -1154,7 +1406,7 @@
           "$ref": "#/$defs/id"
         },
         "additive_role_kind": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/additive_role_kind"
             },
@@ -1180,7 +1432,7 @@
           }
         },
         "slot_outcome": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/participant_outcome"
             },
@@ -1190,7 +1442,7 @@
           ]
         },
         "last_message_id": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/id"
             },
@@ -1436,7 +1688,7 @@
           }
         },
         "disposition": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/review_disposition"
             },
@@ -1464,7 +1716,7 @@
           "$ref": "#/$defs/event_id"
         },
         "dispositioned_event_id": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/$defs/event_id"
             },
@@ -1474,6 +1726,56 @@
           ]
         }
       }
+    },
+    "generic_source_cursor": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "segment_generation",
+            "segment_name",
+            "byte_offset",
+            "frame_end_offset",
+            "last_sequence_id",
+            "last_event_id"
+          ],
+          "properties": {
+            "segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "segment_name": {
+              "type": "string",
+              "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$(?![\\s\\S])"
+            },
+            "byte_offset": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "frame_end_offset": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "last_sequence_id": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "last_event_id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^\\S+$(?![\\s\\S])"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "x-pm-event-authority-binding": {
@@ -1487,25 +1789,25 @@
     "newly_authored_under": "DL-090",
     "search_report": "reports/event-authority-20261104/DC-binding-search.md",
     "semantic_owner_units": [
-      "CW-100",
-      "CW-101",
-      "CW-102",
-      "CW-103",
-      "CW-104",
-      "CW-105",
-      "CW-106",
-      "CW-107",
-      "CW-108",
-      "CW-109",
-      "CW-110",
-      "CW-111",
-      "CW-112",
-      "CW-113",
-      "CW-114",
-      "CW-115",
-      "CW-116",
-      "CW-117",
-      "CW-118"
+      "CWR-105",
+      "CWR-106",
+      "CWR-107",
+      "CWR-108",
+      "CWR-109",
+      "CWR-110",
+      "CWR-111",
+      "CWR-112",
+      "CWR-113",
+      "CWR-114",
+      "CWR-115",
+      "CWR-116",
+      "CWR-117",
+      "CWR-118",
+      "CWR-119",
+      "CWR-120",
+      "CWR-121",
+      "CWR-122",
+      "CWR-123"
     ],
     "payload_owner_units": [
       "CV-460",
@@ -1644,10 +1946,16 @@
           "run_view",
           "inspection"
         ],
-        "semantic_unit": "CW-101",
+        "semantic_unit": "CWR-106",
         "payload_unit": "CV-461",
         "storage_unit": "SP-461",
-        "oracle_unit": "ATS-231"
+        "oracle_unit": "ATS-231",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_created",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeDefinition",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.started",
@@ -1665,10 +1973,16 @@
           "composer_destination",
           "inspection"
         ],
-        "semantic_unit": "CW-102",
+        "semantic_unit": "CWR-107",
         "payload_unit": "CV-462",
         "storage_unit": "SP-462",
-        "oracle_unit": "ATS-232"
+        "oracle_unit": "ATS-232",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_started",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.paused",
@@ -1684,10 +1998,16 @@
           "composer_destination",
           "inspection"
         ],
-        "semantic_unit": "CW-103",
+        "semantic_unit": "CWR-108",
         "payload_unit": "CV-463",
         "storage_unit": "SP-463",
-        "oracle_unit": "ATS-233"
+        "oracle_unit": "ATS-233",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_paused",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.resumed",
@@ -1703,10 +2023,16 @@
           "composer_destination",
           "inspection"
         ],
-        "semantic_unit": "CW-104",
+        "semantic_unit": "CWR-109",
         "payload_unit": "CV-464",
         "storage_unit": "SP-464",
-        "oracle_unit": "ATS-234"
+        "oracle_unit": "ATS-234",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_resumed",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.cancelled",
@@ -1723,10 +2049,16 @@
           "review_followon",
           "inspection"
         ],
-        "semantic_unit": "CW-105",
+        "semantic_unit": "CWR-110",
         "payload_unit": "CV-465",
         "storage_unit": "SP-465",
-        "oracle_unit": "ATS-235"
+        "oracle_unit": "ATS-235",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_cancelled",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.completed",
@@ -1743,10 +2075,16 @@
           "review_followon",
           "inspection"
         ],
-        "semantic_unit": "CW-106",
+        "semantic_unit": "CWR-111",
         "payload_unit": "CV-466",
         "storage_unit": "SP-466",
-        "oracle_unit": "ATS-236"
+        "oracle_unit": "ATS-236",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_completed",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.failed",
@@ -1763,10 +2101,16 @@
           "review_followon",
           "inspection"
         ],
-        "semantic_unit": "CW-107",
+        "semantic_unit": "CWR-112",
         "payload_unit": "CV-467",
         "storage_unit": "SP-467",
-        "oracle_unit": "ATS-237"
+        "oracle_unit": "ATS-237",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_failed",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.participant_started",
@@ -1782,10 +2126,16 @@
           "run_view",
           "inspection"
         ],
-        "semantic_unit": "CW-108",
+        "semantic_unit": "CWR-113",
         "payload_unit": "CV-468",
         "storage_unit": "SP-468",
-        "oracle_unit": "ATS-238"
+        "oracle_unit": "ATS-238",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_participant_started",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ParticipantSpec",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationParticipantApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.participant_completed",
@@ -1801,10 +2151,16 @@
           "run_view",
           "inspection"
         ],
-        "semantic_unit": "CW-109",
+        "semantic_unit": "CWR-114",
         "payload_unit": "CV-469",
         "storage_unit": "SP-469",
-        "oracle_unit": "ATS-239"
+        "oracle_unit": "ATS-239",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_participant_completed",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ParticipantDisposition",
+          "application": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ParticipantDisposition"
+        }
       },
       {
         "event_type": "collaboration.message_added",
@@ -1820,10 +2176,16 @@
           "run_view",
           "inspection"
         ],
-        "semantic_unit": "CW-110",
+        "semantic_unit": "CWR-115",
         "payload_unit": "CV-470",
         "storage_unit": "SP-470",
-        "oracle_unit": "ATS-240"
+        "oracle_unit": "ATS-240",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_message_added",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessage",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationMessageApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.artifact_added",
@@ -1838,10 +2200,16 @@
           "run_view",
           "inspection"
         ],
-        "semantic_unit": "CW-111",
+        "semantic_unit": "CWR-116",
         "payload_unit": "CV-471",
         "storage_unit": "SP-471",
-        "oracle_unit": "ATS-241"
+        "oracle_unit": "ATS-241",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_artifact_added",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "collaboration.configuration_changed",
@@ -1859,10 +2227,16 @@
           "review_followon",
           "inspection"
         ],
-        "semantic_unit": "CW-112",
+        "semantic_unit": "CWR-117",
         "payload_unit": "CV-472",
         "storage_unit": "SP-472",
-        "oracle_unit": "ATS-242"
+        "oracle_unit": "ATS-242",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/collaboration_configuration_changed",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeDefinition",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1"
+        }
       },
       {
         "event_type": "brainstorm.proposal_added",
@@ -1876,10 +2250,16 @@
           "run_view",
           "inspection"
         ],
-        "semantic_unit": "CW-113",
+        "semantic_unit": "CWR-118",
         "payload_unit": "CV-473",
         "storage_unit": "SP-473",
-        "oracle_unit": "ATS-243"
+        "oracle_unit": "ATS-243",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/brainstorm_proposal_added",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormProposal",
+          "application": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormProposal"
+        }
       },
       {
         "event_type": "brainstorm.vote_added",
@@ -1894,10 +2274,16 @@
           "run_view",
           "inspection"
         ],
-        "semantic_unit": "CW-114",
+        "semantic_unit": "CWR-119",
         "payload_unit": "CV-474",
         "storage_unit": "SP-474",
-        "oracle_unit": "ATS-244"
+        "oracle_unit": "ATS-244",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/brainstorm_vote_added",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormVote",
+          "application": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/BrainstormVote"
+        }
       },
       {
         "event_type": "brainstorm.plan_synthesized",
@@ -1912,10 +2298,16 @@
           "completion",
           "inspection"
         ],
-        "semantic_unit": "CW-115",
+        "semantic_unit": "CWR-120",
         "payload_unit": "CV-475",
         "storage_unit": "SP-475",
-        "oracle_unit": "ATS-245"
+        "oracle_unit": "ATS-245",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/brainstorm_plan_synthesized",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
       },
       {
         "event_type": "review.finding_added",
@@ -1930,10 +2322,16 @@
           "review_followon",
           "inspection"
         ],
-        "semantic_unit": "CW-116",
+        "semantic_unit": "CWR-121",
         "payload_unit": "CV-476",
         "storage_unit": "SP-476",
-        "oracle_unit": "ATS-246"
+        "oracle_unit": "ATS-246",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/review_finding_added",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding",
+          "application": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding"
+        }
       },
       {
         "event_type": "review.finding_dispositioned",
@@ -1948,10 +2346,16 @@
           "review_followon",
           "inspection"
         ],
-        "semantic_unit": "CW-117",
+        "semantic_unit": "CWR-122",
         "payload_unit": "CV-477",
         "storage_unit": "SP-477",
-        "oracle_unit": "ATS-247"
+        "oracle_unit": "ATS-247",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/review_finding_dispositioned",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding",
+          "application": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/ReviewFinding"
+        }
       },
       {
         "event_type": "review.artifact_finalized",
@@ -1967,10 +2371,61 @@
           "review_followon",
           "inspection"
         ],
-        "semantic_unit": "CW-118",
+        "semantic_unit": "CWR-123",
         "payload_unit": "CV-478",
         "storage_unit": "SP-478",
-        "oracle_unit": "ATS-248"
+        "oracle_unit": "ATS-248",
+        "prepared_source_family_id": "collaboration_prepared_source",
+        "prepared_source_schema_ref": "Plans/collaboration_prepared_sources.schema.json#/$defs/review_artifact_finalized",
+        "source_owner_schemas": {
+          "project": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json#/$defs/CollaborativeRun",
+          "application": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+        }
+      }
+    ]
+  },
+  "x-pm-keyed-composition": {
+    "stored": false,
+    "members": [
+      {
+        "family_id": "collaboration_projector_checkpoint",
+        "key_shape": "projector.checkpoint.collaboration:{scope_partition}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/checkpoint"
+      },
+      {
+        "family_id": "collaboration_definition_projection",
+        "key_shape": "collaboration_definition_projection.v1:{scope_partition}:{hex(collaboration_id)}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/definition_projection"
+      },
+      {
+        "family_id": "collaboration_run_projection",
+        "key_shape": "collaboration_run_projection.v1:{scope_partition}:{hex(collaboration_run_id)}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/run_projection"
+      },
+      {
+        "family_id": "collaboration_participant_projection",
+        "key_shape": "collaboration_participant_projection.v1:{scope_partition}:{hex(collaboration_run_id)}:{hex(participant_slot_id)}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/participant_projection"
+      },
+      {
+        "family_id": "collaboration_artifact_projection",
+        "key_shape": "collaboration_artifact_projection.v1:{scope_partition}:{hex(collaboration_run_id)}:{hex(artifact_version_ref)}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/artifact_projection"
+      },
+      {
+        "family_id": "collaboration_proposal_projection",
+        "key_shape": "collaboration_proposal_projection.v1:{scope_partition}:{hex(collaboration_run_id)}:{hex(proposal_id)}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/proposal_projection"
+      },
+      {
+        "family_id": "collaboration_vote_projection",
+        "key_shape": "collaboration_vote_projection.v1:{scope_partition}:{hex(collaboration_run_id)}:{hex(vote_id)}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/vote_projection"
+      },
+      {
+        "family_id": "collaboration_finding_projection",
+        "key_shape": "collaboration_finding_projection.v1:{scope_partition}:{hex(collaboration_run_id)}:{hex(finding_id)}",
+        "value_schema_ref": "Plans/collaboration_projection_contracts.schema.json#/$defs/finding_projection"
       }
     ]
   }
