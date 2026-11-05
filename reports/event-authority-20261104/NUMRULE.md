@@ -698,3 +698,56 @@ The source-only probe uses the real jsonschema keyword implementations and refer
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/preservation-audit.json` | `078faafd00c6e4b64cd3a88e2f2089ecbcc5bfa97ece5cf68cc8595a52a501bd` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/restoration.json` | `34c913db85b2ff60e6a37045b91f4a2676149d041f8475b026dbad7930efe2fb` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/shards.run.json` | `72695d6c41375614b94c17323bc7cebb5a6845a3b98def725983af8f66289cce` |
+
+## Review round 12: findings and responses
+
+**B5 — sibling-dependent acceptance:** singleton map rejection no longer establishes timestamp refusal when the same object has `required`, `dependentRequired`, `dependentSchemas`, legacy `dependencies`, cardinality, `unevaluatedProperties`, object `const`/`enum`, or same-instance combinators. The checker follows references and applicators at object scope. These maps require a separately pinned explicit role review, even if every singleton sample fails. Source projection produces `wildcard_review_required` until that review exists; validation fails `wildcard_role_review_required` independently of a refreshed inventory checksum. Existing object-valued permission records retain their exact source constraints and receive five explicit non-timestamp reviews.
+
+**Sibling contexts:** the battery also runs with source-derived sibling hints and reviewer-supplied `sibling_contexts`. Every candidate is checked as a complete map instance by the shared validator. An accepted context triggers review and is recorded with its acceptance counts. The required and conditional `kind: "timestamp"` regressions retain the valid timestamp witness and corresponding resource-string refusal. Explicit timestamp reviews cite the exact selected value constraint; a generic source projection never supplies such a review.
+
+**B6 — value-bound role evidence:** offline graph discovery remains broad enough to preload the production resolver, while role authority follows only the actual per-field value selector and its same-instance references/applicators. Evidence records the complete source JSON-pointer route. A citation must be the exact terminal value constraint for every inventoried field, with its exact current content; merely appearing among collected subresources is insufficient. Key-only, sibling-only, nested-value, unused/foreign and one-field-only definitions cannot authorize another value. The existing browser string review now cites its `additionalProperties` string constraint. The graph payload review records the containing map's implicit unrestricted additional values; this exception does not apply when an explicit value constraint exists.
+
+**Classification:** 233 unchanged row keys and structural fields = 133 Storage + 79 other-owner + 7 automatic non-timestamp + 14 explicit non-timestamp roles. Five rows moved to explicit review, all permission-state object maps carrying `minProperties`. The prior nine independent schema-graph pins remain unchanged. No timestamp profile is assigned to these non-timestamp values.
+
+**Scope:** number recipes, all 13,372 corpus cases, date-time predicates, owner prose, pinned product schemas, registry, Decision Log, Spec Lock, generated shards/index, governance evidence and `.gitignore` remain unchanged. This is a finite shared-helper repair. Native authority remains NOT_RUN; existing aggregate isolation/adoption limits stand. No family re-grading, WorkNode, registry admission, governance reseal, main push, pm-mail or subagent is performed.
+
+**Final targeted replay:** 48/48 expected outcomes. Both sibling-dependent variants fail `wildcard_role_review_required`; their source-derived projections cannot claim automatic refusal. Each real sibling context accepts 500 battery samples at each inventoried key. With an explicit timestamp review installed only for the witness, production `datetime_validator` rejects the singleton, accepts the timestamp plus `kind: "timestamp"`, and rejects `resource-id` plus that sibling. The reviewed witness does not authorize the original unreviewed gate input.
+
+The key-only foreign same-name definition and the ordinary unrelated foreign citation both fail `wildcard_role_evidence_changed`. The foreign-key production witness, after a temporary exact timestamp review, accepts the timestamp value and rejects the ordinary resource string. All 14 changed-map controls and all seven changed referenced-target controls fail `wildcard_role_schema_changed`. The four equivalent-pattern negative/positive pairs, exactly-one-timestamp, timestamp-or-empty, `not`, `if`/`then`/`else`, dynamic reference and reviewed map-level `dependentSchemas` controls retain the required behavior. The original unreviewed `dependentSchemas` projection is now an additional refusal control. Battery tampering fails inventory evidence and runtime admission.
+
+**Implementation commit:** `263a9970a8c6783c571d83ce38f68f436a87672f`, pushed with `git push origin HEAD:refs/heads/plans/ea-numrule-20261105` to both configured origin push destinations. Main is untouched.
+
+**Complete self-test:** exit 0, 13,372/13,372 cases and 227/227 integration checks; the 27 new B5/B6 integration checks all pass alongside the existing 200 checks. Full Git-backed inventory: 233 nodes, 133 Storage + 79 other-owner + 7 automatic non-timestamp + 14 reviewed roles, zero failures/unclassified. Both coherent full-gate reproductions fail on their exact guard: sibling acceptance fails `wildcard_role_review_required`, and foreign key evidence fails `wildcard_role_evidence_changed`. Both original cycle-11 standalone attack inputs also fail. The baseline exclusion pin is recomputed from the source projection (`940367386de9c9a42455f77dc94b3de51ef4cd8d333fbdc4ee799335384f16eb`), rather than formatted inventory bytes; the complete passing run follows that correction.
+
+**Preservation:** unchanged Git blobs include 3,774 owner Markdown files, 517 pinned product schemas, 3,299 generated shard/index files, six number implementation/corpus/registry inputs, the date-time runtime and committed battery, and 35 governance/registry inputs. Scope counts overlap. All 233 row structures and all nine prior independent role pins are unchanged. No source runtime predicate or corpus case changes were required.
+
+
+| Round-12 preservation/control replay | Result |
+|---|---|
+| Original runtime | 133/133 valid preloaded routes; 133 on-demand construction refusals; zero retrieval callbacks and zero forbidden acceptance. |
+| Original scanner / inventory attacks | All 20 injections and five inventory mutations exit 1; restored baseline exits 0. |
+| Extended scanner / inventory attacks | All 16 injections exit 1; seven gate/self-test mutation pairs exit 1/1. |
+| Source/evidence attacks | 27/27 expected outcomes, including four coherent equivalent-pattern negatives and four corrected timestamp positives. |
+| Existing name maps | 21/21 source citations; all 252 value controls match their local validators, plus 21 unsupported construction refusals. |
+| Full wildcard omission gate | Exactly four injected unreadable containers fail against all 8,968 committed Plans blobs; no unrelated failure. |
+| Graph/runtime controls | 23 controls, zero forbidden acceptance; prior recursive, mixed-dialect, alias and construction protections remain. |
+| Full baseline repeat after mutations | 13,372/13,372 cases and 227/227 checks pass; inventory remains 233 nodes with zero failures/unclassified. |
+| Coherent source projection | Timestamp positives match their source-derived pins; wrong wildcard classifications differ. Role review pins remain independently authored. |
+
+**Execution and cleanup:** checkers ran serially from fresh copies of the cycle-11 and earlier control drivers. Full-tree checks used the retained Git Path adapter (I/O only), the complete exclusion list and all committed Plans blobs; finite replays used the six applicable exclusions. Disposable Python dependencies match the review versions. One preflight stopped below 6 GiB before starting a case; 20 completed evidence records were checkpointed, exact core input hashes were verified, and the final seven cases ran after memory recovered. The pause and resumed results are retained separately. No product failure is attributed to that infrastructure pause. The implementation worktree and disposable scratch are removed after the final branch push; the evidence bundle remains at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/`.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/results.json` | `28df2113a814df19bd19d6f20364bb7eb8216cd60fcce31b125c1f36a82fac76` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/tested-implementation.json` | `8665b766169084c66e67ec07556b3b933455d3d0c2e5c6a9feb3dc296d8df605` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/preservation.json` | `e76b56e737cc548561eead19a9a8cbf4d1630933502abd07fc7662ce888e1e41` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/targeted-checks.json` | `ac9ba903aabd71001379b5b1584d3e97b6f88531daf34b4202a1d6b82894950e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/sibling-full-gate.json` | `d9f5982b32bb4556cce31d2d6c07ad4a017f39364ca58b7f2229595150f3adf6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/foreign-key-full-gate.json` | `54875fafd30598479ffebd07c813a52c3c3e8133c4a6d95b6a18bb78b442b2de` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/full-selftest.json` | `06e0e454455fcb789dcba456af51ae459bab5850deaa909f98218bb0d76cd7ad` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/full-selftest.json` | `06e0e454455fcb789dcba456af51ae459bab5850deaa909f98218bb0d76cd7ad` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/evidence-attacks.json` | `eefd9c1cf985617ffd22b3750a285b4d8202c6e8e4e5607804591f4b06bf80fb` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/extended-gate-integrity.json` | `69055f37001612b59e7351d3a3a3efc8417281a59cb98810ca79c67ec15300ad` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/memory-pause.json` | `0554d69e8b32eca55378568be48aebcd0755d9e904f049eed379f8fc98ea8acc` |

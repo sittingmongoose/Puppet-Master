@@ -76,7 +76,7 @@
     "negatives": 6536,
     "labelled_negatives": 6536,
     "passed": 13372,
-    "owner_integration_checks": 165,
+    "owner_integration_checks": 227,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
@@ -106,8 +106,8 @@
     "Integration/governance work belongs to the lead, outside this drafting task",
     "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8."
   ],
-  "reviewed_head": "76916b4542b4eb013d43dd6ae72ff765675b92d6",
-  "review_round": 11,
+  "reviewed_head": "99d3427562f1af739e1014305af762e888527469",
+  "review_round": 12,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -123,7 +123,7 @@
     "CV-1101.round10": "Round-9 B3 blocked -> source-bound field/value evidence and coherent mutation controls PASS in the stated finite scope; native/lane integration NOT_RUN.",
     "CV-1101.round11": "Cycle-10 B4 BLOCKED -> 4/4 equivalent-pattern negatives and 4/4 corrected positives PASS; source-bound pinned roles and 35 battery controls PASS. Native/lane integration remains NOT_RUN."
   },
-  "implementation_commit": "0f0e31fe781b1507a255a844f89100e66b746774",
+  "implementation_commit": "263a9970a8c6783c571d83ce38f68f436a87672f",
   "round1_validation": {
     "index_status": "pass",
     "plan_units": 7426,
@@ -165,7 +165,9 @@
     "B1a_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
     "B1b_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
     "B2_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
-    "B3_round10": "82e29fe59bebe69fbb8104fa551c183e750356a9"
+    "B3_round10": "82e29fe59bebe69fbb8104fa551c183e750356a9",
+    "B5_round12": "263a9970a8c6783c571d83ce38f68f436a87672f",
+    "B6_round12": "263a9970a8c6783c571d83ce38f68f436a87672f"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -1229,5 +1231,157 @@
     "index_and_governance": "NOT_RERUN; owner/index inputs unchanged; no seal or main landing.",
     "role_rule": "Timestamp battery acceptance triggers explicit source-bound role review. All-refused is automatic; accepting maps require timestamp classification or an independently pinned non-timestamp role. No arbitrary-string classifier."
   },
-  "round11_authority_refinement": "Timestamp battery acceptance triggers explicit source-bound role review. All-refused is automatic; accepting maps require timestamp classification or an independently pinned non-timestamp role. No arbitrary-string classifier."
+  "round11_authority_refinement": "Timestamp battery acceptance triggers explicit source-bound role review. All-refused is automatic; accepting maps require timestamp classification or an independently pinned non-timestamp role. No arbitrary-string classifier.",
+  "round12_validation": {
+    "round": 12,
+    "source_base": "99d3427562f1af739e1014305af762e888527469",
+    "B5": "fixed; sibling-dependent probes require an independent explicit role review",
+    "B6": "fixed; exact terminal value-constraint citation required for every inventoried key",
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 79,
+      "wildcard_non_timestamp_nodes": 7,
+      "wildcard_non_timestamp_role_nodes": 14,
+      "unclassified_nodes": 0,
+      "failures": []
+    },
+    "rows_moved_to_explicit_review": 5,
+    "selftest": {
+      "status": "pass",
+      "cases": 13372,
+      "case_passes": 13372,
+      "integration_checks": 227,
+      "passed_checks": 227
+    },
+    "targeted_probes": 48,
+    "coherent_full_negatives": 2,
+    "original_full_negatives": 2,
+    "runtime": {
+      "valid_preloaded": 133,
+      "on_demand_refused": 133,
+      "callback_calls": 0,
+      "escapes": 0
+    },
+    "earlier_gate_controls": {
+      "injections_refused": 36,
+      "inventory_mutations_refused": 5,
+      "extended_mutation_gate_selftest_pairs_refused": 7,
+      "evidence_attacks": 27,
+      "name_maps": 21,
+      "name_map_value_matches": 252
+    },
+    "graph_controls": 23,
+    "battery": {
+      "samples": 653,
+      "sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3"
+    },
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12",
+    "implementation_commit": "263a9970a8c6783c571d83ce38f68f436a87672f",
+    "preservation": {
+      "owner_prose": {
+        "checked": 3774,
+        "changed": []
+      },
+      "pinned_product_schemas": {
+        "checked": 517,
+        "changed": []
+      },
+      "generated_shards_and_index": {
+        "checked": 3299,
+        "changed": []
+      },
+      "number_implementation_corpus_registry": {
+        "checked": 6,
+        "changed": []
+      },
+      "date_time_runtime_and_battery": {
+        "checked": 2,
+        "changed": []
+      },
+      "governance_and_registry": {
+        "checked": 35,
+        "changed": []
+      },
+      "rows": {
+        "status": "pass",
+        "row_count": 233,
+        "structural_changes": [],
+        "moves": [
+          {
+            "node": [
+              "Plans/shared_runtime_contracts.schema.json",
+              "json",
+              "/$defs/permission_snapshot_record/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/storage_value_registry.json",
+              "json",
+              "/families/62/value_schema/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+              "json",
+              "/$defs/permission_snapshot_record/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+              "json",
+              "/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+              "json",
+              "/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          }
+        ],
+        "prior_independent_role_pins_unchanged": 9,
+        "roles_before": 9,
+        "roles_after": 14
+      },
+      "source_base": "99d3427562f1af739e1014305af762e888527469",
+      "head": "263a9970a8c6783c571d83ce38f68f436a87672f",
+      "changed_paths": [
+        "Plans/event_datetime_inventory.json",
+        "scripts/pm_event_datetime_admission_checks.py",
+        "scripts/pm_event_datetime_exclusions.json",
+        "scripts/pm_event_datetime_inventory.py",
+        "scripts/pm_event_datetime_inventory.schema.json",
+        "scripts/pm_event_datetime_roles.json",
+        "scripts/pm_event_datetime_value_probe.py"
+      ],
+      "status": "pass"
+    },
+    "infrastructure_memory_pause": {
+      "reason": "LOW_MEMORY_PAUSE",
+      "available_bytes": 6028156928,
+      "required_bytes": 6442450944,
+      "completed_evidence_cases": 20,
+      "status": "resumed; all 27 evidence cases completed with expected outcomes"
+    },
+    "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change."
+  }
 }
