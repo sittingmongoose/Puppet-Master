@@ -250,9 +250,8 @@ async function surface(t, sandbox) {
 	t.log(`witness: ${w.recs.length} frames, ${vis.length} visible, cost p95 ${(p95 / 1000).toFixed(2)} ms, ${w.cals.filter((c) => c.ok).length} calibrations, log ${file}`);
 	for (const r of evaluateWitness(w)) await t.check(r.name, r.ok, r.detail);
 	for (const p of ['welcome', 'tiles', 'begin', 'smb'].filter((x) => phases.includes(x))) for (const r of evaluateWitness(w, { phase: p }).slice(1, 3)) await t.check(r.name, r.ok, r.detail);
-	/* about 0.6 ms a frame on the RTX 3090 host, 1.7 ms on the P1000 VM (a document.getAnimations() a frame is most of
-	   it: Web Animations started by script fire no events, so nothing cheaper sees them all). The film's coverage shows
-	   whether the page still drew every frame */
+	/* the witness runs in every frame: kept small so it does not change what the page draws (the film's coverage shows
+	   whether the page still drew its frames) */
 	await t.check(`the witness costs under 4 ms a frame (p95 ${(p95 / 1000).toFixed(2)} ms)`, p95 < 4000, 'a heavy witness could change what the page paints');
 	const shown = [...new Set(vis.map((r) => S(r[w.F.look])))];
 	await t.check(`every requested look was shown (${looks.join(', ')})`, looks.every((l) => shown.includes(l)), `shown: ${shown.join(', ')}`);
