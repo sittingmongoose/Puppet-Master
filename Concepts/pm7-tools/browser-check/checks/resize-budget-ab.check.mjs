@@ -43,8 +43,9 @@ export default async function(t){
     const idle=[...gaps(raw.frames.filter(x=>x[0]<down-50)),...gaps(raw.frames.filter(x=>x[0]>up+800))];
     const floor=kind==='A'?startup:q(idle),gap=q(gaps(kind==='A'?raw.frames:drag)),budget=Math.max(50,floor*2+34);
     const edges=drag.map(x=>x[2]).filter(x=>x!==null), range=Math.max(...edges)-Math.min(...edges);
-    const row={range,surface,i,kind,startup,floor,gap,budget,pass:gap<=budget,frames:drag.length,idle:idle.length,moves:raw.moves.length};rows.push(row);t.log(JSON.stringify(row));
-    await t.check(surface+' '+kind+i+' measurement valid',drag.length>=8&&(kind==='A'||idle.length>=30)&&raw.moves.length>=30&&range>=50,JSON.stringify(row));
+    const movesPerFrame=raw.moves.length/drag.length;
+    const row={movesPerFrame,range,surface,i,kind,startup,floor,gap,budget,pass:gap<=budget,frames:drag.length,idle:idle.length,moves:raw.moves.length};rows.push(row);t.log(JSON.stringify(row));
+    await t.check(surface+' '+kind+i+' measurement valid',drag.length>=8&&(kind==='A'||idle.length>=30)&&movesPerFrame>=.15&&range>=50,JSON.stringify(row));
   }
   await t.check(surface+' interleaved budget verdicts agree',new Set(rows.filter(x=>x.surface===surface).map(x=>x.pass)).size===1,JSON.stringify(rows.filter(x=>x.surface===surface)));
   }
