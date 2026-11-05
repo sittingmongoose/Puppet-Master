@@ -3176,11 +3176,15 @@ def classify_legacy_format_errors(
     def demote(kind: str, message: str) -> None:
         demoted.setdefault(kind, []).append(message)
 
+    # An absent newer artifact is a historical-format fact only while everything the run read is
+    # historical: once a new report or source artifact appears, the directory holds new audit
+    # content, and the newer artifacts are required of it.
+    inputs_frozen = not context.get("unfrozen_inputs")
     for message, m in parsed:
         kind = None
-        if message == f"missing {prefix}{SCOPE_MANIFEST}" and prefix + SCOPE_MANIFEST not in frozen:
+        if message == f"missing {prefix}{SCOPE_MANIFEST}" and prefix + SCOPE_MANIFEST not in frozen and inputs_frozen:
             kind = "artifact_predates_schema"
-        elif message == f"missing required {prefix}{IMPACT_MATRIX}" and prefix + IMPACT_MATRIX not in frozen:
+        elif message == f"missing required {prefix}{IMPACT_MATRIX}" and prefix + IMPACT_MATRIX not in frozen and inputs_frozen:
             kind = "artifact_predates_schema"
         elif m:
             file, label, body = m.group("file"), m.group("file") + (m.group("loc") or ""), m.group("body")
@@ -3212,7 +3216,7 @@ def classify_legacy_format_errors(
                 if file != matrix_file or label in identity_agrees:
                     kind = "finding_key_predates_algorithm"
             elif file == prefix + SCOPE_MANIFEST and body.startswith("missing required check_family coverage "):
-                if not context.get("scope_manifest_exists") and file not in frozen:
+                if not context.get("scope_manifest_exists") and file not in frozen and inputs_frozen:
                     kind = "artifact_predates_schema"
             elif file == report_file and file in frozen and re.fullmatch(r"repair_required_count None does not match computed \d+", body):
                 kind = "report_field_predates_schema"
@@ -3292,6 +3296,10 @@ def validate_audit_dir(
         "legacy_state": legacy_state,
         "historical_matrix_lines": (legacy_state or {}).get("historical_matrix_lines"),
         "frozen_files": (legacy_state or {}).get("frozen_files") or [],
+        "unfrozen_inputs": sorted(
+            name for name in [*requested_artifacts, "audit_report.json"]
+            if (audit_dir / name).exists() and name not in set((legacy_state or {}).get("frozen_files") or [])
+        ),
         "matrix_identity_agrees": set(),
         "source_artifacts": list(requested_artifacts),
         "report_has_status": isinstance(audit_report, dict) and "status" in audit_report,
@@ -5055,6 +5063,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             lp = rel(legacy_dir) + "/"
             ctx = {"legacy_state": {"historical_matrix_lines": 10}, "historical_matrix_lines": 10,
                    "frozen_files": ["audit_report.json", "semantic_risks.jsonl", "validator_results.json", "repair_closure_matrix.jsonl"],
+                   "unfrozen_inputs": [],
                    "matrix_identity_agrees": {lp + "repair_closure_matrix.jsonl:7"},
                    "source_artifacts": ["semantic_risks.jsonl", "validator_results.json"], "report_has_status": False,
                    "scope_manifest_exists": False, "extra_coverage_all_inferred": True}
@@ -5192,6 +5201,9 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             (third / "audit_report.json").write_text("{}", encoding="utf-8")
             third_report = validate_audit_dir(third, require_matrix=True, require_effective_status=False,
                                               source_artifacts=["semantic_risks.jsonl"], registry_path=legacy_registry)
+            check("legacy_rule_new_input_requires_newer_artifacts",
+                  any(e.endswith("audit_scope_manifest.jsonl") and e.startswith("missing ") for e in third_report["errors"])
+                  and any("missing required check_family coverage" in e for e in third_report["errors"]), third_report["errors"])
             check("legacy_rule_new_report_gets_full_rules", legacy_audit_state(third) is not None
                   and any("audit_report.json: baseline_ref must be a non-empty string" in e for e in third_report["errors"])
                   and any("audit_report.json: repair_required_count None does not match" in e for e in third_report["errors"]), third_report["errors"])
