@@ -74,6 +74,7 @@ export default async function (t) {
     }, null, {timeout:6000});
     const actual = await drawer.evaluate(e => e.getBoundingClientRect().width);
     await t.check(`${w} History width is 320px`, Math.abs(actual - 320) <= 1, String(actual), { hard: true });
+    if(t.args.traceHistory) t.log(JSON.stringify(await f.evaluate(()=>window.__historyTrace)));
     if (t.args.setupOnly) continue; // Repeat driver only; never used for full clearance certification.
     await f.evaluate(() => PM56_DEMO.setVariant(1, 5));
     const collapsed = f.locator('.history-flyout .history-section[data-collapsed="true"] .section-head');
