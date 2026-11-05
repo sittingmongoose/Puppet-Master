@@ -30,6 +30,7 @@ export const tests = Object.fromEntries(['onboarding','tour','settings'].map(rou
     }
     else await t.app.look(look);
     await f.waitForFunction(() => !window.PM_LOOK_COVERED?.() && !window.PM_THEME_TRANSITION?.busy());
+    await f.waitForFunction(([r,l]) => r === 'onboarding' ? `${O55.theme().chosen}-${O55.theme().mode}` === l : PMLogo.look() === l,[route,look]);
     for (const [w,h] of SIZES) {
       await t.viewport(w,h);
       const trigger = route === 'settings' ? f.locator('select[data-setting="general.visual.theme"]').locator('..').locator('.pm51-dd-trigger') : f.locator(`[${route === 'tour' ? 'data-o55t' : 'data-o55-do'}="lookMenu"]`);
