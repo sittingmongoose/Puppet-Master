@@ -243,7 +243,10 @@ function judge() {
 			if (h.none) { judged = true; miss.push({ part, collapsed: true, why: 'box collapsed with no whole box in the 30 page frames before' }); continue; }
 			if (h.tiny) { bump(unevaluable, `${k} ${part}: box under 6 px`); continue; }
 			/* (a collapsed box's own clip and overlay shares say nothing: it is judged whole where Pip last was) */
-			const vis = h.collapsed ? 1 : part === 'head' ? (r[F.clipFrac] / 1000) * (1 - r[F.occl] / 1000) : 1 - (r[F.occlCtl] || 0) / 1000, rel = Math.min(1, vis / Math.max(0.05, R.calVis || 1));
+			/* a missing Pip (its record holds the last box it had, and no clip or overlay share of its own) is judged whole
+			   where it was, as is a collapsed box: neither may be excused as covered */
+			const whole = h.collapsed || (F.gone !== undefined && r[F.gone]);
+			const vis = whole ? 1 : part === 'head' ? (r[F.clipFrac] / 1000) * (1 - r[F.occl] / 1000) : 1 - (r[F.occlCtl] || 0) / 1000, rel = Math.min(1, vis / Math.max(0.05, R.calVis || 1));
 			if (rel < 0.5) { bump(covered, `${part} under half visible (product overlay or clip)`); st.coveredByProduct++; continue; }
 			const thr = rel >= 0.9 ? R.thr : R.am + 0.4 * (R.pm * rel - R.am), s = score(R.D, h);
 			judged = true; line += `${part}=${s.toFixed(4)}/${thr.toFixed(4)} `;

@@ -36,6 +36,10 @@ try {
 	const colL = await makeFixture(root, 'collapseLong', { collapseLong: true });
 	r = scan(colL.film, colL.log);
 	assert.equal(r.status, 1); assert.equal(r.j.dips.length, 1); assert.equal(r.j.dips[0].len, 40); checks++;
+	/* a Pip missing from the open stage (detached: its record holds its last box, no clip share) is judged whole there */
+	const gone = await makeFixture(root, 'goneB', { goneB: true });
+	r = scan(gone.film, gone.log);
+	assert.equal(r.status, 1, JSON.stringify(r.j)); assert.equal(r.j.dips.length, 1); assert.deepEqual(r.j.dips[0].seqs, [gone.v.dropAt]); assert.equal(r.j.dips[0].frames[0].part, 'head'); checks++;
 	const uncal = await makeFixture(root, 'uncalB', { uncalB: true });
 	r = scan(uncal.film, uncal.log);
 	assert.equal(r.status, 2); assert.equal(r.j.verdict, 'cannot-evaluate'); assert.match(r.j.cannotEvaluate.join(' '), /look-b: no calibration on film/); checks++;
@@ -82,5 +86,5 @@ try {
 		fs.writeFileSync(path.join(bin, 'ffmpeg'), `#!${process.execPath}\nprocess.stdout.write(Buffer.alloc(${bytes}), () => process.exit(${exit}));\n`, { mode: 0o755 });
 		r = scan(clean.film, clean.log, { ...process.env, PATH: bin }); assert.equal(r.status, 2); checks++;
 	}
-	console.log(`PASS ${checks}: clean (cover untagged, overlay, repeated frame), look B dropout judged by B's own reference, controller dropout, collapsed box (one frame, and past 30 frames), look without calibration, inseparable look, untagged visible frames, low coverage (and its threshold), backwards tags, incomplete log, film past its log, page lost, invalid and missing film, film of another log, no decoder, failed decoder, partial frame`);
+	console.log(`PASS ${checks}: clean (cover untagged, overlay, repeated frame), look B dropout judged by B's own reference, controller dropout, collapsed box (one frame, and past 30 frames), Pip missing from the stage, look without calibration, inseparable look, untagged visible frames, low coverage (and its threshold), backwards tags, incomplete log, film past its log, page lost, invalid and missing film, film of another log, no decoder, failed decoder, partial frame`);
 } finally { fs.rmSync(root, { recursive: true, force: true }); }
