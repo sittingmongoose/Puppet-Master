@@ -23,7 +23,7 @@
     {
       "path": "Plans/shared_integration_runtime.schema.json",
       "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
-      "sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008"
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
     },
     {
       "path": "Plans/event_record.schema.json",
@@ -139,7 +139,7 @@
   "retention_policy_ref": "PENDING_RETENTION_DECISION",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "c0e061e62d697e835eb1f1f919f842db0ea0a774881e08a0c3c1ab5329633ed5",
+  "graph_sha256": "eb5a970b91158ab67819ef79a451c0c19600f78e7c9801415e675cccd4ba4c02",
   "retention_policy_by_scope": {
     "project": "RP-OPERATIONAL-2555D",
     "application": "PENDING_RETENTION_DECISION"

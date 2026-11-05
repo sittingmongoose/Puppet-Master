@@ -1,0 +1,121 @@
+{
+  "schema_id": "pm.filesafe.date_time_fixtures.v1",
+  "authority": "Static date-time format controls; no native execution or admission.",
+  "cases": [
+    {
+      "id": "date_time.utc",
+      "value": "2026-02-01T10:00:00Z",
+      "accepted": true
+    },
+    {
+      "id": "date_time.fraction",
+      "value": "2026-02-01T10:00:00.123456789Z",
+      "accepted": true
+    },
+    {
+      "id": "date_time.long_fraction",
+      "value": "2026-02-01T10:00:00.123456789123456789Z",
+      "accepted": true
+    },
+    {
+      "id": "date_time.offset",
+      "value": "2026-02-01T11:00:00+01:00",
+      "accepted": true
+    },
+    {
+      "id": "date_time.lowercase",
+      "value": "2026-02-01t10:00:00z",
+      "accepted": true
+    },
+    {
+      "id": "date_time.leap_day",
+      "value": "2024-02-29T10:00:00Z",
+      "accepted": true
+    },
+    {
+      "id": "date_time.missing_zone",
+      "value": "2026-02-01T10:00:00",
+      "accepted": false
+    },
+    {
+      "id": "date_time.space_separator",
+      "value": "2026-02-01 10:00:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.wrong_separator",
+      "value": "2026/02/01T10:00:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.invalid_month",
+      "value": "2026-13-01T10:00:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.invalid_day",
+      "value": "2026-02-30T10:00:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.non_leap_day",
+      "value": "2025-02-29T10:00:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.hour_24",
+      "value": "2026-02-01T24:00:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.invalid_minute",
+      "value": "2026-02-01T10:60:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.leap_second",
+      "value": "2026-06-30T23:59:60Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.empty_fraction",
+      "value": "2026-02-01T10:00:00.Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.comma_fraction",
+      "value": "2026-02-01T10:00:00,1Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.invalid_offset_hour",
+      "value": "2026-02-01T10:00:00+24:00",
+      "accepted": false
+    },
+    {
+      "id": "date_time.invalid_offset_minute",
+      "value": "2026-02-01T10:00:00+01:60",
+      "accepted": false
+    },
+    {
+      "id": "date_time.trailing_lf",
+      "value": "2026-02-01T10:00:00Z\n",
+      "accepted": false
+    },
+    {
+      "id": "date_time.leading_space",
+      "value": " 2026-02-01T10:00:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.missing_seconds",
+      "value": "2026-02-01T10:00Z",
+      "accepted": false
+    },
+    {
+      "id": "date_time.unicode_digits",
+      "value": "\uff12\uff10\uff12\uff16-02-01T10:00:00Z",
+      "accepted": false
+    }
+  ]
+}

@@ -6,7 +6,7 @@ import copy
 import hashlib
 from datetime import datetime
 import json
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
 import pm_filesafe_schema_graph as schema_graph
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -67,7 +67,7 @@ def semantic(payload, *, inline=True):
         return False
     for name in ('requested_scope', 'authorized_scope'):
         if name in payload and not override_scope_semantic(payload[name],payload): return False
-    if 'issued_at' in payload and datetime.fromisoformat(payload['expires_at'].replace('Z','+00:00')) <= datetime.fromisoformat(payload['issued_at'].replace('Z','+00:00')):
+    if 'issued_at' in payload and datetime.fromisoformat(payload['expires_at'].upper().replace('Z','+00:00')) <= datetime.fromisoformat(payload['issued_at'].upper().replace('Z','+00:00')):
         return False
     if 'restore_outcome' in payload:
         outcome = payload['restore_outcome']
@@ -82,7 +82,7 @@ def semantic(payload, *, inline=True):
 
 def main(families=None):
     fixture = json.loads((ROOT/'Plans/filesafe_event_contract_fixtures.json').read_text())
-    failures, counts = [], {}
+    failures, counts = schema_graph.format_case_failures(), {}
     for row in fixture['families']:
         if families is not None and row['event_type'] not in families: continue
         f = row['event_type']
@@ -95,7 +95,7 @@ def main(families=None):
         failures.extend(schema_graph.negative_case_failures(f, graph, documents))
         if ref_errors:
             continue
-        validator = Draft202012Validator(schema, registry=registry, format_checker=FormatChecker())
+        validator = Draft202012Validator(schema, registry=registry, format_checker=schema_graph.format_checker())
         for p in row['positive_payloads']:
             errs = list(validator.iter_errors(p))
             if errs or not semantic(p): failures.append(f+': positive '+str(errs[:1]))

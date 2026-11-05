@@ -23,7 +23,7 @@
     {
       "path": "Plans/shared_integration_runtime.schema.json",
       "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
-      "sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008"
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
     },
     {
       "path": "Plans/event_record.schema.json",
@@ -134,5 +134,5 @@
   "retention_policy_ref": "RP-OPERATIONAL-2555D",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "59df513959755a784c9d299c2e8076b3502e981405be8930382c79f82db21b26"
+  "graph_sha256": "42f13ce2aa3958d096cc58f1f7e3c7a5900ef34f9e77a7c3664b35c4e83e5fc1"
 }

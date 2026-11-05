@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18919,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22129,
+    "node_count": 7510,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T13:57:36Z",
+  "generated_at_utc": "2026-11-05T16:44:21Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -41967,10 +41967,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7487,
+  "plan_unit_count": 7510,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2806,
+      "high": 2829,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -43177,6 +43177,7 @@
       "eval_policy_escape_or_false_proof": 1,
       "evalsession_owner_boundary_drift": 1,
       "event_alias_precedence_drift": 1,
+      "event_authority": 23,
       "event_authority_admission_decision_entry_drift": 1,
       "event_authority_admission_decision_entry_scope_drift": 1,
       "event_authority_and_false_completion": 1,
@@ -46116,7 +46117,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7291,
       "retired": 196,
       "superseded": 23
     },
@@ -46186,7 +46187,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5622,
+      "requirement": 5645,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46313,7 +46314,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "4d554bfae6e00808f20418e0e5dc0f5f8efaa49226ebd0c95d97237c9c274493",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46361,6 +46362,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/00-plans-index.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

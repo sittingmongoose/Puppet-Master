@@ -14,7 +14,7 @@ import blake3
 from functools import lru_cache
 from pathlib import Path
 from datetime import datetime
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
 from referencing import Resource
 from referencing.jsonschema import DRAFT202012
 import pm_filesafe_event_contracts as payload_owner
@@ -109,7 +109,7 @@ def context(family):
     graph,docs,registry=schema_graph.context(family)
     schema=docs[f'Plans/filesafe_event_sources/{slug}.schema.json']
     def validator(root):
-        return Draft202012Validator({'$ref':schema['$id']+'#/$defs/'+root},registry=registry,format_checker=FormatChecker())
+        return Draft202012Validator({'$ref':schema['$id']+'#/$defs/'+root},registry=registry,format_checker=schema_graph.format_checker())
     return graph,validator
 
 def graph_failures(family):
@@ -148,6 +148,8 @@ def retention_binding_failures(family, policy):
     expected_retention = {
         'filesafe.destructive_override_granted': 'RP-AUTHORITY-INDEFINITE',
         'filesafe.policy_degraded': 'RP-OPERATIONAL-2555D',
+        'safe_point.created': 'RP-RUNTIME-365D',
+        'safe_point.restored': 'RP-RUNTIME-365D',
     }.get(family, 'PENDING_RETENTION_DECISION')
     return ['retention_changed'] if policy != expected_retention else []
 
@@ -155,7 +157,7 @@ def real_admission(family):
     return 'missing_event_registration' if not any(r['event_type']==family for r in load('Plans/event_family_registry.json')['families']) else 'registered_requires_independent_depth'
 
 def instant(value):
-    return datetime.fromisoformat(value.replace('Z','+00:00'))
+    return datetime.fromisoformat(value.upper().replace('Z','+00:00'))
 
 def decode_original(raw, codec):
     """Strict decoder for the closed integer/string/bool application record domain."""
@@ -244,7 +246,7 @@ def application_original_failures(family, candidate, bank):
         try:
             value=decode_original(bank['bodies'][member['ref']],graph['application_body_codecs'][role])
             selected=Draft202012Validator({'$ref':schema['$id']+fragment},
-                registry=validator('materialization')._registry,format_checker=FormatChecker())
+                registry=validator('materialization')._registry,format_checker=schema_graph.format_checker())
             if role.endswith('request'):
                 # Addressing fields are outside the original request-byte preimage.
                 expected={k:v for k,v in req.items() if k not in ('original_input_ref','original_input_sha256')}
@@ -466,7 +468,7 @@ def issued_failures(family, value, expected, bank):
     # Validate the two exact imported roots, without requiring an original command/grant.
     for key in ('event', 'custody'):
         selected = Draft202012Validator(schema['$defs']['materialization']['properties'][key],
-            registry=validator('materialization')._registry, format_checker=FormatChecker())
+            registry=validator('materialization')._registry, format_checker=schema_graph.format_checker())
         if list(selected.iter_errors(value[key])): return ['issued_schema']
     payload, payload_errors = event_payload(family, event, bank)
     if payload_errors: return payload_errors
@@ -630,7 +632,7 @@ def mutate(document,path,value,remove=False):
     else:node[key]=copy.deepcopy(value)
 
 def check(families=FAMILIES):
-    pack=load('Plans/filesafe_event_authority_fixtures.json');failures=[];counts={}
+    pack=load('Plans/filesafe_event_authority_fixtures.json');failures=schema_graph.format_case_failures();counts={}
     if tuple(r['event_type'] for r in pack['families'])!=FAMILIES:failures.append('fixture_family_census')
     for row in pack['families']:
         if row['event_type'] not in families: continue
@@ -640,7 +642,7 @@ def check(families=FAMILIES):
         if any(f.startswith('unresolved_schema_ref:') for f in graph_errors):
             continue
         graph,_=context(family)
-        for policy in ('PENDING_RETENTION_DECISION','RP-AUTHORITY-INDEFINITE','RP-OPERATIONAL-2555D'):
+        for policy in ('PENDING_RETENTION_DECISION','RP-AUTHORITY-INDEFINITE','RP-OPERATIONAL-2555D','RP-RUNTIME-365D'):
             if policy!=graph['retention_policy_ref'] and not retention_binding_failures(family,policy):
                 failures.append(family+':wrong_retention_assignment_accepted')
         if real_admission(family)!='missing_event_registration':failures.append(family+':membership_changed')

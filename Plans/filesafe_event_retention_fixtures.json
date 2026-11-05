@@ -352,6 +352,58 @@
           "expired_unprotected_available": false,
           "project_delete_authorized": false,
           "expected": "pending_retention_decision"
+        },
+        {
+          "id": "filesafe.command_denied.sweep1.project_count_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.command_denied.sweep1.project_count_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
+        },
+        {
+          "id": "filesafe.command_denied.sweep1.disk_full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.command_denied.sweep1.disk_full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
         }
       ]
     },
@@ -1411,6 +1463,58 @@
           "expired_unprotected_available": false,
           "project_delete_authorized": false,
           "expected": "pending_retention_decision"
+        },
+        {
+          "id": "filesafe.guard_init_failed.sweep1.project_count_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.guard_init_failed.sweep1.project_count_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
+        },
+        {
+          "id": "filesafe.guard_init_failed.sweep1.disk_full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.guard_init_failed.sweep1.disk_full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
         }
       ]
     },
@@ -1764,6 +1868,1012 @@
           "expired_unprotected_available": false,
           "project_delete_authorized": false,
           "expected": "pending_retention_decision"
+        },
+        {
+          "id": "filesafe.path_denied.sweep1.project_count_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.path_denied.sweep1.project_count_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
+        },
+        {
+          "id": "filesafe.path_denied.sweep1.disk_full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.path_denied.sweep1.disk_full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.created",
+      "decision_ref": "DL-401",
+      "project_policy_ref": "RP-RUNTIME-365D",
+      "cases": [
+        {
+          "id": "safe_point.created.g28.project.before_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2025-12-31T23:59:59Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.exact_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired"
+        },
+        {
+          "id": "safe_point.created.g28.project.running",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": null,
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_investigation",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "investigation"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_active_reference",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "active_reference"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_recovery",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recovery"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_backup",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "backup"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_legal_hold",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_recent_run",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recent_run"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_rollback",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "rollback"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.protected_maintenance",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "maintenance"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.project.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.created.g28.project.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.created.g28.project.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.created.g28.project.available_append",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "append"
+        },
+        {
+          "id": "safe_point.created.g28.project.run_count",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 1000000,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "linked_successor"
+        },
+        {
+          "id": "safe_point.created.g28.project.missing_run",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": null,
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "missing_real_run"
+        },
+        {
+          "id": "safe_point.created.g28.application.before_expiry",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2025-12-31T23:59:59Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.exact_expiry",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired"
+        },
+        {
+          "id": "safe_point.created.g28.application.running",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": null,
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_investigation",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "investigation"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_active_reference",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "active_reference"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_recovery",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recovery"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_backup",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "backup"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_legal_hold",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_recent_run",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recent_run"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_rollback",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "rollback"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.protected_maintenance",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "maintenance"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.created.g28.application.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.created.g28.application.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.created.g28.application.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.created.g28.application.available_append",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "append"
+        },
+        {
+          "id": "safe_point.created.g28.application.run_count",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 1000000,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "linked_successor"
+        },
+        {
+          "id": "safe_point.created.g28.application.missing_run",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": null,
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "missing_real_run"
+        },
+        {
+          "id": "safe_point.created.g28.project.project_count",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 5000000,
+          "protection_refs": [],
+          "expected": "linked_successor"
+        },
+        {
+          "id": "safe_point.created.g28.application.no_invented_project_count",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 5000000,
+          "protection_refs": [],
+          "expected": "append"
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.restored",
+      "decision_ref": "DL-401",
+      "project_policy_ref": "RP-RUNTIME-365D",
+      "cases": [
+        {
+          "id": "safe_point.restored.g28.project.before_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2025-12-31T23:59:59Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.exact_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired"
+        },
+        {
+          "id": "safe_point.restored.g28.project.running",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": null,
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_investigation",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "investigation"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_active_reference",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "active_reference"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_recovery",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recovery"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_backup",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "backup"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_legal_hold",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_recent_run",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recent_run"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_rollback",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "rollback"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.protected_maintenance",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "maintenance"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.project.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.restored.g28.project.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.restored.g28.project.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.restored.g28.project.available_append",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "append"
+        },
+        {
+          "id": "safe_point.restored.g28.project.run_count",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 1000000,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "linked_successor"
+        },
+        {
+          "id": "safe_point.restored.g28.project.missing_run",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": null,
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "missing_real_run"
+        },
+        {
+          "id": "safe_point.restored.g28.application.before_expiry",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2025-12-31T23:59:59Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.exact_expiry",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired"
+        },
+        {
+          "id": "safe_point.restored.g28.application.running",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": null,
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_investigation",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "investigation"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_active_reference",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "active_reference"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_recovery",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recovery"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_backup",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "backup"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_legal_hold",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_recent_run",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "recent_run"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_rollback",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "rollback"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.protected_maintenance",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [
+            "maintenance"
+          ],
+          "expected": "retain"
+        },
+        {
+          "id": "safe_point.restored.g28.application.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.restored.g28.application.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.restored.g28.application.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "application",
+          "action": "compact",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "compact_expired",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "safe_point.restored.g28.application.available_append",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "append"
+        },
+        {
+          "id": "safe_point.restored.g28.application.run_count",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 1000000,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "linked_successor"
+        },
+        {
+          "id": "safe_point.restored.g28.application.missing_run",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": null,
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 4999999,
+          "protection_refs": [],
+          "expected": "missing_real_run"
+        },
+        {
+          "id": "safe_point.restored.g28.project.project_count",
+          "scope_kind": "project",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 5000000,
+          "protection_refs": [],
+          "expected": "linked_successor"
+        },
+        {
+          "id": "safe_point.restored.g28.application.no_invented_project_count",
+          "scope_kind": "application",
+          "action": "append",
+          "run_id": "run-original",
+          "run_completed_at_utc": "2025-01-01T00:00:00Z",
+          "now_utc": "2026-01-01T00:00:00Z",
+          "run_record_count": 999999,
+          "project_record_count": 5000000,
+          "protection_refs": [],
+          "expected": "append"
         }
       ]
     }

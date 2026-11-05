@@ -23,7 +23,7 @@
     {
       "path": "Plans/shared_integration_runtime.schema.json",
       "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
-      "sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008"
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
     },
     {
       "path": "Plans/event_record.schema.json",
@@ -139,12 +139,12 @@
     {
       "ordinal": 9,
       "role": "retention_release",
-      "barrier": "PENDING_RETENTION_DECISION; this graph selects no deletion or lifetime policy"
+      "barrier": "DL-401 G28 Run year: real run completion + 365 days, 1,000,000 per run / applicable 5,000,000 per Project, linked successor, existing holds/protections. Original snapshots, bodies and journals retain their own lifetimes."
     }
   ],
   "consumer_id": "storage.safe_point_restored_history_read.v1@1.0.0",
   "family_checkpoint": "none_required",
-  "retention_policy_ref": "PENDING_RETENTION_DECISION",
+  "retention_policy_ref": "RP-RUNTIME-365D",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [
     {
@@ -178,7 +178,7 @@
     "recovered_after_restart",
     "conflict_reason_code"
   ],
-  "graph_sha256": "8f64d2dcf99a88c30fa8f06fcbcf3ab6de84b7a08251f78c0d7d1fdb83455b29",
+  "graph_sha256": "37a76b386ab20b3de8d50591827cf4689d34454b2b23ffe618ed34a38bddfe4c",
   "application_body_roots": {
     "restore_request": "#/$defs/application_request",
     "safe_point_record": "#/$defs/application_records/properties/safe_point_record",
@@ -209,5 +209,6 @@
     "post_restore_manifest",
     "restore_transaction",
     "equality_result"
-  ]
+  ],
+  "retention_decision_ref": "DL-401"
 }

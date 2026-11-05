@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import copy
 import json
+import re
+from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urljoin
@@ -10,8 +12,47 @@ from urllib.parse import urljoin
 from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
+from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def date_time(value):
+    """Enforce the selected date-time format even without optional packages.
+
+    Keep fractional precision and offset spellings intact. Calendar validation
+    uses integral fields only; no timestamp is normalized or reserialized.
+    Like the existing datetime consumers, seconds are 00..59 (no leap second).
+    """
+    if not isinstance(value, str):
+        return True  # JSON Schema's type keyword owns non-string inputs.
+    match = re.fullmatch(
+        r'([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]'
+        r'([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?'
+        r'(?:[Zz]|([+-])([0-9]{2}):([0-9]{2}))', value)
+    if match is None:
+        return False
+    year, month, day, hour, minute, second = map(int, match.groups()[:6])
+    try:
+        datetime(year, month, day, hour, minute, second)
+    except ValueError:
+        return False
+    return (match[7] is None or (int(match[8]) <= 23 and int(match[9]) <= 59))
+
+
+def format_checker():
+    checker = FormatChecker()
+    # Register per instance: do not depend on, or mutate, global optional handlers.
+    checker.checks('date-time')(date_time)
+    return checker
+
+
+def format_case_failures():
+    pack = json.loads((ROOT / 'Plans/filesafe_event_format_fixtures.json').read_text())
+    validator = Draft202012Validator({'type': 'string', 'format': 'date-time'},
+                                    format_checker=format_checker())
+    return [case['id'] + ':date_time_outcome' for case in pack['cases']
+            if (not list(validator.iter_errors(case['value']))) != case['accepted']]
 
 
 def registry_for(graph, documents):
