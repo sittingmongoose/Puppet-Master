@@ -28787,3 +28787,51 @@ preserved_exact_tokens:
 owner_hints:
   - Plans/Plan_Document_System.md
 ```
+
+### DL-340 - The June Legacy Rule Reads Four Older Words As Passed
+
+Jared approved stream C's question Q-A on 2026-11-05 ("i approve all of it", option 1): in the 55 June audit directories only, the compatibility inference reads four older words as passed. This record lists the words, the limit and the counts.
+
+```yaml
+plan_unit_id: DL-340
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-340 records Jared's answer of 2026-11-05 ("i approve all of it", 2026-11-05T04:33:13Z) to stream C's question Q-A, option 1, confirmed by the coordinator pm7-build on 2026-11-05 (mail 1105170615-ec65) after DL-334 landed. In the 55 June directories of the legacy format rule (PLS-026), and only for a file that still has its frozen bytes and is read through no symlink, the compatibility inference of scripts/pm-audit-closure.py reads four older words as passed: the claim statuses pass, supported_by_source_atoms and previously_closed, and a validator result with status expected_fail whose command is one of five governance commands (pm-plans-verify.py run-gates, verify-spec-lock, validate-evidence and validate-plan-graph, and pm-shard-plans.py --check). Those five failed in June only on stale generated files, which a governance seal refreshes. Every other field of such a row keeps its meaning (an issue list, an overclaim list or a failing status still makes the row actionable), and any other expected_fail result stays actionable. Directories from July 2026 on, files added after the freeze, and edited or symlinked files get the full rules.
+  Counts on the 2026-11-05 tree: 151 source rows carry one of the words and were actionable by inference, and 150 of them no longer are. 29 pass rows of audit-20260616-005 and 61 supported_by_source_atoms rows of audit-20260618-006 were uncovered. 5 expected_fail results each in audit-20260617-013 and audit-20260617-014 were uncovered. 50 pass rows of audit-20260618-007 already had historical closure rows, so their closures now count as over-coverage there. The one previously_closed row (audit-20260619-001, planunit_source_claims.jsonl line 31) stays actionable, because it lists extra source atoms. The per-audit errors of the 55 directories go from 12,764 to 12,759, and passing directories from 19 to 21 (17 to 19 when effective_status.json is required). The effective_status.json projections of audit-20260616-005 (repair_required_count 33 to 4, still BLOCKED), audit-20260617-013, audit-20260617-014 and audit-20260618-006 (now PASS_WITH_WARNINGS) are regenerated. No other directory and no registry result changes.
+gui_related: false
+gui_classification_reason: Records a governance decision about historical audit validation; no GUI contract changes.
+split_recommended: false
+depends_on: [DL-334, PLS-026]
+unblocks: []
+acceptance_criteria:
+  - Only the 55 listed June directories, frozen files read through no symlink, read the four words as passed.
+  - An expected_fail result counts as passed only for the five named governance commands.
+  - A row with an issue list, an overclaim list or a failing status stays actionable whatever its claim status.
+  - The audit directories outside the list and the registry report are unchanged.
+validation_surfaces:
+  - python3 scripts/pm-audit-closure.py self-test
+  - python3 scripts/pm-plan-index.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Ledger_System.md
+  - scripts/pm-audit-closure.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z: Jared's answer \"i approve all of it\" to stream C's questions Q-A and Q-C"
+  - "pm-mail 1105170615-ec65 (coordinator pm7-build, 2026-11-05): build Q-A; the 55 June directories only; the change record lists the words and the counts"
+preserved_exact_tokens:
+  - "DL-340"
+  - "supported_by_source_atoms"
+  - "previously_closed"
+  - "expected_fail"
+owner_hints:
+  - Plans/Planning_Ledger_System.md
+```
