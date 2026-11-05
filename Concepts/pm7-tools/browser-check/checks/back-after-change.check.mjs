@@ -569,14 +569,28 @@ const KEEP = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas || 
   return { mode: d.project_mode, name: d.project_name, src: d.project_source_ref, transport: d.project_transport, loc: d.local_location, online: d.online_mode, forge: d.forge, repo: d.repository_ref,
     backup: d.backup_source_ref, btransport: d.backup_transport, storage: d.storage_mode, preflight: d.preflight_result_refs, auth: d.source_access_authorization_refs,
     folder: S.sess.folder ? S.sess.folder.path : null, nas: [n.device || null, n.method || null, n.at || null, n.share || null, n.volume || null, !!n.installed],
-    restore: [r.source || null, r.kit || null, r.pick || null], commit: !!c && !c.disabled && c.getAttribute('aria-disabled') !== 'true' }; };
+    restore: [r.source || null, r.kit || null, r.pick || null], commitState: JSON.stringify(S.sess.commit || null), confirmed: !!d.review_confirmed, commit: !!c && !c.disabled && c.getAttribute('aria-disabled') !== 'true' }; };
+// FO-61: Review's entrance is not its readiness. Its revision recheck runs asynchronously; compare only
+// once that operation and its rendered footer agree. Never wait a fixed duration or hide a disabled result.
+const settledKeep = async (A, legacy = false) => {
+  if (!legacy) await A.waitFor(() => {
+    const S = O55.S, d = S.sess.drafts.main, st = O55.flow.state(S, 'recheck:' + d.project_draft_revision);
+    const c = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="commit"]');
+    return S.sess.screen === 'review' && st && st.state === 'done' && c
+      && (!c.disabled && c.getAttribute('aria-disabled') !== 'true') === !O55.draft.missing(d).length;
+  });
+  return A.frame().evaluate(KEEP);
+};
 async function keptUnchanged(t, label, establish, later = false) {
   await flow(t, label, async (A, bad) => {
-    await establish(A, bad); await A.screen('review'); const before = await A.frame().evaluate(KEEP);
+    await establish(A, bad); await A.screen('review');
+    const before = await settledKeep(A, t.args.selftest === 'earlyreview');
+    t.log('FO-61 Review snapshot ' + JSON.stringify({ snapshot:before, state:await A.frame().evaluate(() => { const s=O55.S.sess, d=s.drafts.main; return { recheck:s.ops['recheck:'+d.project_draft_revision], operation:s.commit || null }; }) }));
+    if (label.startsWith('FO-61')) await A.frame().evaluate(() => O55.motion.setTimeScale(1));
     if (await A.has('edit', 'begin')) await editBeginTo(A); else { for (let i = 0; i < 6 && (await A.snap()).screen !== 'begin'; i++) await pressBack(A); await A.screen('begin'); }
     if (later) await A.click('later'); else { await A.waitEnabled('next'); await A.click('next'); } await A.sleep(1000);
     await goOnToReview(A);
-    const after = await A.frame().evaluate(KEEP);
+    const after = await settledKeep(A, t.args.selftest === 'earlyreview');
     const lost = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k])).map((k) => k + ' ' + JSON.stringify(before[k]).slice(0, 60) + ' > ' + JSON.stringify(after[k]).slice(0, 60));
     if (lost.length) bad.push(`${label}: kept unchanged, yet ${lost.join('; ')}`);
   });
@@ -587,6 +601,18 @@ const keepAttempt = async (A) => { await A.click('reviewAgain', undefined, 'revi
   await A.waitFor(() => ['failed', 'recovery', 'unknown'].includes(O55.S.sess.commit.state), null, 25000); await A.sleep(600); };
 
 export const tests = {
+  async 'FO-61 · Later unchanged compares settled Review readiness, never a transient recheck'(t) {
+    await t.emulate({ reducedMotion: 'reduce' });
+    for (let i = 0; i < Number(t.args.repeat || 1); i++)
+      await keptUnchanged(t, `FO-61 Later kept ${i + 1}`, async (A) => {
+        // The public concept clock delays the first recheck; normal speed resumes after its snapshot.
+        await A.frame().evaluate(k => O55.motion.setTimeScale(Number(k)), t.args.clock || 0.35);
+        await A.click('pick', 'this'); await A.click('next', undefined, 'begin');
+        await A.click('later'); await onToReview(A);
+      }, true);
+    await t.emulate({ reducedMotion: 'no-preference' });
+  },
+
   /* Focused SW-41 regression. Run with --grep 'SW-41' and --set selftest=nopick to require failure on
      every eligible screen, or nopick:begin to require failure after other screens really were picked. */
   /* (online new copy by default; --set rich filters as in rows 20 and 21, richOf, and a filter matching nothing fails) */
