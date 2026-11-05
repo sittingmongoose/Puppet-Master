@@ -626,6 +626,7 @@ acceptance_criteria:
   - Repair closure matrix rows fail validation when source_artifact, source_row, finding_key, closure_status, closure_evidence, closure_reason, or registry_closure_id linkage is missing.
   - Reopened registry rows fail validation unless they reference a prior closed finding_key and prove changed source/PlanUnit/owner/closure hashes.
   - Duplicate open finding_keys fail validation while historical closed rows can remain durable evidence.
+  - For the 55 June 2026 audit directories that PLS-026 names, the legacy format rule reports the format and schema-evolution errors PLS-026 lists as warnings; every other check above still fails them, and no missing closure row is excused.
 validation_surfaces:
   - python3 scripts/pm-audit-closure.py validate
   - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
@@ -1358,9 +1359,9 @@ acceptance_criteria:
 - Failed bundle creates no partial To-Dos or units; regular Plan has no bundle.
 - Compiler accepts the Assistant-profile distinction while refusing product compilation and global-index admission.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

@@ -553,6 +553,134 @@
       "hold_eligible": true,
       "expiry_action": "delete_sidecar",
       "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-CHAT-THREAD-LIFETIME",
+      "retention_mode": "indefinite",
+      "anchor_kind": "explicit_delete",
+      "retain_indefinitely": true,
+      "ttl_seconds": null,
+      "source_policy_ref": null,
+      "max_cardinality": 250000,
+      "cardinality_scope": "thread",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "roll_successor",
+      "hold_eligible": true,
+      "expiry_action": "tombstone_then_compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-TELEMETRY-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "project",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-DEBUG-APPLICATION-2555D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "terminal_transition",
+      "retain_indefinitely": false,
+      "ttl_seconds": 220752000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "terminal_transition",
+      "retain_indefinitely": false,
+      "ttl_seconds": 220752000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "terminal_transition",
+      "retain_indefinitely": false,
+      "ttl_seconds": 220752000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-MODEL-CATALOG-APPLICATION-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-PREVIEW-APPLICATION-90D",
+      "retention_mode": "fixed_ttl",
+      "anchor_kind": "creation",
+      "retain_indefinitely": false,
+      "ttl_seconds": 7776000,
+      "source_policy_ref": null,
+      "max_cardinality": 2000000,
+      "cardinality_scope": "instance",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
     }
   ],
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
@@ -14533,10 +14661,12 @@
         "free_models_owner_result_refs"
       ],
       "optional_fields": [
+        "app_auth_binding_ref",
         "look_choice"
       ],
       "nullable_fields": [
         "active_branch",
+        "app_auth_binding_ref",
         "approved_setup_plan_sha256",
         "automatic_preparation_currentness_ref",
         "forge_provider_selection",
@@ -14821,6 +14951,10 @@
             "items": {
               "$ref": "#/$defs/onboarding__safe_ref"
             }
+          },
+          "app_auth_binding_ref": {
+            "$ref": "#/$defs/onboarding__nullable_safe_ref",
+            "description": "Optional for historical Project records. Required for active/ready N15 app AI and resolves to the actual Multi-Account AppFirstTimeAuthBindingV1 on the named Computer; a reference alone grants no authority."
           }
         },
         "allOf": [
@@ -14963,6 +15097,50 @@
               "properties": {
                 "setup_draft": {
                   "$ref": "#/$defs/onboarding__onboarding_setup_plan"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "project_disposition": {
+                  "const": "deferred"
+                },
+                "stage": {
+                  "enum": [
+                    "provider_setup",
+                    "free_models_setup",
+                    "ready"
+                  ]
+                }
+              },
+              "required": [
+                "project_disposition",
+                "stage"
+              ]
+            },
+            "then": {
+              "properties": {
+                "return_context": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/onboarding__onboarding_return_context"
+                    },
+                    {
+                      "properties": {
+                        "server_id": {
+                          "$ref": "#/$defs/onboarding__safe_ref"
+                        },
+                        "execution_host_id": {
+                          "$ref": "#/$defs/onboarding__safe_ref"
+                        },
+                        "execution_environment_id": {
+                          "$ref": "#/$defs/onboarding__safe_ref"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -15287,10 +15465,10 @@
             "then": {
               "properties": {
                 "project_disposition": {
-                  "const": "committed"
-                },
-                "project_commit_binding": {
-                  "$ref": "#/$defs/project__project_setup_commit_binding"
+                  "enum": [
+                    "committed",
+                    "deferred"
+                  ]
                 },
                 "path_kind": {
                   "const": "guided_setup"
@@ -15378,7 +15556,10 @@
                   "const": "ready"
                 },
                 "project_disposition": {
-                  "const": "committed"
+                  "enum": [
+                    "committed",
+                    "deferred"
+                  ]
                 }
               },
               "required": [
@@ -15416,11 +15597,14 @@
             },
             "then": {
               "properties": {
-                "provider_phase_status": {
-                  "const": "deferred"
+                "path_kind": {
+                  "const": "guided_setup"
                 },
-                "free_models_phase_status": {
-                  "const": "deferred"
+                "project_id": {
+                  "type": "null"
+                },
+                "project_commit_binding": {
+                  "type": "null"
                 }
               }
             }
@@ -15535,7 +15719,10 @@
             "then": {
               "properties": {
                 "project_disposition": {
-                  "const": "committed"
+                  "enum": [
+                    "committed",
+                    "deferred"
+                  ]
                 }
               }
             }
@@ -15577,7 +15764,10 @@
             "then": {
               "properties": {
                 "project_disposition": {
-                  "const": "committed"
+                  "enum": [
+                    "committed",
+                    "deferred"
+                  ]
                 }
               }
             }
@@ -15690,6 +15880,149 @@
                 },
                 "review_confirmation": {
                   "const": "person_confirmed_reviewed_plan"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "active_branch": {
+                  "type": "object",
+                  "properties": {
+                    "owner_phase": {
+                      "const": "application_provider"
+                    }
+                  },
+                  "required": [
+                    "owner_phase"
+                  ]
+                }
+              },
+              "required": [
+                "active_branch"
+              ]
+            },
+            "then": {
+              "required": [
+                "app_auth_binding_ref"
+              ],
+              "properties": {
+                "stage": {
+                  "const": "provider_setup"
+                },
+                "project_disposition": {
+                  "const": "deferred"
+                },
+                "project_commit_binding": {
+                  "type": "null"
+                },
+                "app_auth_binding_ref": {
+                  "$ref": "#/$defs/onboarding__safe_ref"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "active_branch": {
+                  "type": "object",
+                  "properties": {
+                    "owner_phase": {
+                      "const": "application_free_models"
+                    }
+                  },
+                  "required": [
+                    "owner_phase"
+                  ]
+                }
+              },
+              "required": [
+                "active_branch"
+              ]
+            },
+            "then": {
+              "required": [
+                "app_auth_binding_ref"
+              ],
+              "properties": {
+                "stage": {
+                  "const": "free_models_setup"
+                },
+                "project_disposition": {
+                  "const": "deferred"
+                },
+                "project_commit_binding": {
+                  "type": "null"
+                },
+                "app_auth_binding_ref": {
+                  "$ref": "#/$defs/onboarding__safe_ref"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "project_disposition": {
+                  "const": "deferred"
+                }
+              },
+              "required": [
+                "project_disposition"
+              ]
+            },
+            "then": {
+              "allOf": [
+                {
+                  "if": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "provider_phase_status": {
+                            "enum": [
+                              "active",
+                              "ready"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "provider_phase_status"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "free_models_phase_status": {
+                            "enum": [
+                              "active",
+                              "ready"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "free_models_phase_status"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "app_auth_binding_ref"
+                    ],
+                    "properties": {
+                      "app_auth_binding_ref": {
+                        "$ref": "#/$defs/onboarding__safe_ref"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "else": {
+              "properties": {
+                "app_auth_binding_ref": {
+                  "type": "null"
                 }
               }
             }
@@ -15854,8 +16187,54 @@
               },
               "project_commit_ref": {
                 "$ref": "#/$defs/onboarding__nullable_safe_ref"
+              },
+              "app_auth_binding_ref": {
+                "$ref": "#/$defs/onboarding__nullable_safe_ref"
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "owner_phase": {
+                      "enum": [
+                        "application_provider",
+                        "application_free_models"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "owner_phase"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "app_auth_binding_ref"
+                  ],
+                  "properties": {
+                    "app_auth_binding_ref": {
+                      "$ref": "#/$defs/onboarding__safe_ref"
+                    },
+                    "project_commit_ref": {
+                      "type": "null"
+                    },
+                    "precommit_authorization_ref": {
+                      "type": "null"
+                    },
+                    "owner_branch_ref": {
+                      "$ref": "#/$defs/onboarding__safe_ref"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "app_auth_binding_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "onboarding__onboarding_durable_setup_state_fields": {
             "type": "object",
@@ -15989,6 +16368,10 @@
                 "items": {
                   "$ref": "#/$defs/onboarding__safe_ref"
                 }
+              },
+              "app_auth_binding_ref": {
+                "$ref": "#/$defs/onboarding__nullable_safe_ref",
+                "description": "Optional for historical Project records. Required for active/ready N15 app AI and resolves to the actual Multi-Account AppFirstTimeAuthBindingV1 on the named Computer; a reference alone grants no authority."
               }
             },
             "allOf": [
@@ -16312,10 +16695,10 @@
                 "then": {
                   "properties": {
                     "project_disposition": {
-                      "const": "committed"
-                    },
-                    "project_commit_binding": {
-                      "$ref": "#/$defs/project__project_setup_commit_binding"
+                      "enum": [
+                        "committed",
+                        "deferred"
+                      ]
                     },
                     "path_kind": {
                       "const": "guided_setup"
@@ -16403,7 +16786,10 @@
                       "const": "ready"
                     },
                     "project_disposition": {
-                      "const": "committed"
+                      "enum": [
+                        "committed",
+                        "deferred"
+                      ]
                     }
                   },
                   "required": [
@@ -16441,11 +16827,14 @@
                 },
                 "then": {
                   "properties": {
-                    "provider_phase_status": {
-                      "const": "deferred"
+                    "path_kind": {
+                      "const": "guided_setup"
                     },
-                    "free_models_phase_status": {
-                      "const": "deferred"
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "project_commit_binding": {
+                      "type": "null"
                     }
                   }
                 }
@@ -16560,7 +16949,10 @@
                 "then": {
                   "properties": {
                     "project_disposition": {
-                      "const": "committed"
+                      "enum": [
+                        "committed",
+                        "deferred"
+                      ]
                     }
                   }
                 }
@@ -16602,7 +16994,10 @@
                 "then": {
                   "properties": {
                     "project_disposition": {
-                      "const": "committed"
+                      "enum": [
+                        "committed",
+                        "deferred"
+                      ]
                     }
                   }
                 }
@@ -16718,12 +17113,156 @@
                     }
                   }
                 }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "active_branch": {
+                      "type": "object",
+                      "properties": {
+                        "owner_phase": {
+                          "const": "application_provider"
+                        }
+                      },
+                      "required": [
+                        "owner_phase"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "active_branch"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "app_auth_binding_ref"
+                  ],
+                  "properties": {
+                    "stage": {
+                      "const": "provider_setup"
+                    },
+                    "project_disposition": {
+                      "const": "deferred"
+                    },
+                    "project_commit_binding": {
+                      "type": "null"
+                    },
+                    "app_auth_binding_ref": {
+                      "$ref": "#/$defs/onboarding__safe_ref"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "active_branch": {
+                      "type": "object",
+                      "properties": {
+                        "owner_phase": {
+                          "const": "application_free_models"
+                        }
+                      },
+                      "required": [
+                        "owner_phase"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "active_branch"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "app_auth_binding_ref"
+                  ],
+                  "properties": {
+                    "stage": {
+                      "const": "free_models_setup"
+                    },
+                    "project_disposition": {
+                      "const": "deferred"
+                    },
+                    "project_commit_binding": {
+                      "type": "null"
+                    },
+                    "app_auth_binding_ref": {
+                      "$ref": "#/$defs/onboarding__safe_ref"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "project_disposition": {
+                      "const": "deferred"
+                    }
+                  },
+                  "required": [
+                    "project_disposition"
+                  ]
+                },
+                "then": {
+                  "allOf": [
+                    {
+                      "if": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "provider_phase_status": {
+                                "enum": [
+                                  "active",
+                                  "ready"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "provider_phase_status"
+                            ]
+                          },
+                          {
+                            "properties": {
+                              "free_models_phase_status": {
+                                "enum": [
+                                  "active",
+                                  "ready"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "free_models_phase_status"
+                            ]
+                          }
+                        ]
+                      },
+                      "then": {
+                        "required": [
+                          "app_auth_binding_ref"
+                        ],
+                        "properties": {
+                          "app_auth_binding_ref": {
+                            "$ref": "#/$defs/onboarding__safe_ref"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "else": {
+                  "properties": {
+                    "app_auth_binding_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
               }
             ],
             "x-puppet-master-assertions": [
               "person_confirmed_reviewed_plan requires reviewed_setup_plan_revision == queued_setup_plan_revision; consumers must reject a mismatch because standard JSON Schema cannot express equality between sibling instance values",
               "approved_setup_plan_sha256 is the SHA-256 of the exact reviewed queued plan revision and is never a hash of display copy, mutable owner state, credentials, secrets, or protected browser content",
-              "automatic_preparation_currentness_ref resolves to currentness evidence fenced by the same queued/reviewed revision and approved SHA-256"
+              "automatic_preparation_currentness_ref resolves to currentness evidence fenced by the same queued/reviewed revision and approved SHA-256",
+              "N15 Later retains null Project/commit identity and the actual Server/Host/Environment in its return context. application_provider/application_free_models are distinct closed phases; app_auth_binding_ref resolves to the actual Multi-Account AppFirstTimeAuthBindingV1, with exact scope, Computer, initiating active Client, provider, operation, protected broker evidence and return. Native owner lookup/currentness/permission remains mandatory; skipping AI needs no sign-in or ready claim."
             ]
           },
           "onboarding__onboarding_forge_instance_profile": {
@@ -18655,6 +19194,30 @@
                     }
                   }
                 }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "project_mode": {
+                      "enum": [
+                        "new",
+                        "existing_local",
+                        "existing_online",
+                        "restore"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "project_mode"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "local_history": {
+                      "const": true
+                    }
+                  }
+                }
               }
             ],
             "x-puppet-master-assertions": [
@@ -18670,9 +19233,10 @@
               "remote_endpoint is a non-secret manual discovery fallback or Puppet Master Remote Link reference; it never contains raw pairing, enrollment, credential, or authentication material",
               "repository_visibility=internal requires a current provider capability projection before dispatch; GitLab hosted means GitLab.com and rejects internal, self_managed GitLab remains capability-probed, Azure DevOps visibility belongs to its project and stays null",
               "Forgejo and Gitea each require a matching distinct onboarding_forge_instance_profile; forge_instance_url equals that profile's web_base_url and the profile's cached refs cannot be treated as live/current owner proof",
-              "before Project commit confirmation only bounded read-only validation and individually consented selected-source account authentication may run; repository creation, clone, history initialization, settings apply, folder mutation, broad provider setup and Project registration remain forbidden",
+              "before current Review confirmation only bounded read-only validation and individually consented selected-source account authentication may run; repository creation, clone, history initialization, settings apply, folder mutation, broad provider setup and Project registration remain forbidden",
               "after confirmation, account connection/authentication, Forge repository list/create/bind, backend-native clone/publish, optional AutomationBinding setup, and Project registration dispatch only through their canonical owners with currentness, permission, FileSafe, idempotency, ObservableWork, and typed terminal returns",
-              "AutomationBinding is independent from RepositoryForgeBinding and may name a different provider, instance, account, or host; absence of automation_binding_ref never disables ordinary Git or Jujutsu"
+              "AutomationBinding is independent from RepositoryForgeBinding and may name a different provider, instance, account, or host; absence of automation_binding_ref never disables ordinary Git or Jujutsu",
+              "DL-297/PJCT-009: every Project setup chooses Git or Jujutsu with local_history=true; only the Later/connect-existing path can omit Project-local history, never a no-history New Project choice"
             ]
           },
           "onboarding__owner_phase": {
@@ -18681,7 +19245,9 @@
               "selected_source_auth",
               "project_commit",
               "postcommit_provider",
-              "postcommit_free_models"
+              "postcommit_free_models",
+              "application_provider",
+              "application_free_models"
             ]
           },
           "onboarding__safe_ref": {
@@ -24484,7 +25050,10 @@
         "observed_at_utc",
         "redaction_profile"
       ],
-      "optional_fields": [],
+      "optional_fields": [
+        "process_facts_refs",
+        "server_resource_sample_refs"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Quarantine invalid bytes and rebuild only from the named canonical owner records under a currentness fence; never treat this projection as authority.",
       "migration": "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted.",
@@ -24590,6 +25159,24 @@
           },
           "redaction_profile": {
             "$ref": "#/$defs/non_empty_string"
+          },
+          "process_facts_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "PM7 G4/G7, SIR-054: subordinate full_thread_runtime_contracts owner records; no embedded process facts on non-process work."
+          },
+          "server_resource_sample_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "PM7 G4/G7, SIR-054: subordinate full_thread_runtime_contracts owner records; no embedded process facts on non-process work."
           }
         },
         "$defs": {
@@ -70477,7 +71064,7 @@
           "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
         ]
       },
-      "retention_compaction": "Unsettled controls remain protected until actual original resolution. Settled/no-obligation terminal transition uses unchanged RP-OPERATIONAL-2555D@1.0.0 plus stronger refs/holds. Existing 2000000/project cardinality is not a new application-root bucket; the application aggregate policy-owner adapter remains unproved and fails closed. No policy value is changed.",
+      "retention_compaction": "Unsettled controls remain protected until actual original resolution. Settled/no-obligation terminal transition uses unchanged RP-OPERATIONAL-2555D@1.0.0 plus stronger refs/holds. Settled/no-obligation controls count in the application-wide bucket app:storage_operational together with the storage.boot_recovery, storage.recovery_applied and storage.compaction_lifecycle_changed records (DL-083; Plans/storage-plan.md, Application-wide count buckets under the operational policy): at most 2000000 records, fail-closed overflow, no invented project. No policy value is changed.",
       "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "Closed non-secret identity, hash, original receipt, typed result and source references only; no raw recovery/source bytes, credentials, machine path, log/error text or copied source body.",
       "legacy_canonical_crosswalk_status": "NEW first-native Boot custody under SP-291/SP-292. Existing event/payload readers and all previous families/policies remain unchanged. No reconstructive legacy backfill or fixture production migration edge.",
@@ -119481,7 +120068,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -119561,7 +120148,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "collaboration_participant_application",
@@ -119592,7 +120179,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -119672,7 +120259,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "collaboration_transcript_application",
@@ -119703,7 +120290,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -119783,7 +120370,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "crew_auto_application",

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6148-L6424
+Source lines: L6156-L6461
 
-Source SHA256: `e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca`
+Source SHA256: `9c0410e167ba897b0a47edc1b957d464d777bde6a57087844b2bb7387b2eec9a`
 
 ---
 
@@ -176,12 +176,17 @@ owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor repair loops preserve failure_signature records with kind, normalized_key, attempt_count, last_safe_point_id, last_repair_worknode_id, overseer_reviewed, auditor_reviewed, repeated_failure_policy, escalation_lane, user_escalation_allowed, and last evidence refs. Repeated failures escalate internally through normal repair, Auditor classification, Overseer graph/work/model/source-control/test-harness repair, High-Effort/Auditor deep repair, and only then critical user escalation unless explicit HITL policy requires earlier intervention. If Plans change during execution, PlanChangeDetected pauses affected lanes, a PlanDiffImpactReport classifies nodes as unaffected, needs_recompile, invalidated, or already_safe, and Executor resumes only after graph patching/replan work and currentness gates. The ledger phrase create replan WorkNodes is disposed for this phase as future runtime-enabled replan work only; current Plans-to-code contracts do not create replan WorkNodes.
   Failure signatures expose failure_signature.kind, and external-effect preflights preserve network_access_policy, secret_access_policy, and destructive_command_policy before risky repair or execution continues. Overseer review and High-Effort Worker escalation remain internal repair routes before critical user escalation.
+  The configurable repeated_failure_policy default is a repair-loop policy keyed to the same target and normalized defect signature: when the same defect signature appears in two consecutive failed verification cycles, Executor must adjust the repair strategy before another repair. failure_signature.attempt_count still counts repair attempts; the verification threshold counts failed cycles for the same target and signature, so multiple attempts within one cycle cannot satisfy it. If the repeated defect signature persists into the third failed cycle, Executor escalates to a high-end adjudicator or a root-cause replan before further repair. Both are internal ladder steps: the high-end adjudicator is the High-Effort/Auditor deep-repair step, and a root-cause replan is Overseer graph/work repair. Neither is critical user escalation unless an authority policy requires earlier user intervention.
+  The repair_strategy value set, in the order Settings supplies through planning.verification.repair-strategies, is patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability, assign_specialists, manual, authority_blocked. Settings orders the enabled strategies; Executor consumes that order subject to write authority, verification requirements and the internal escalation ladder. Settings order never moves manual ahead of the internal ladder or the verification gates: manual hands the decision to the user only for a true product blocker, or where explicit HITL policy requires earlier intervention.
 gui_related: false
 gui_classification_reason: Loop-breaker and PlanChangeDetected policy is runtime orchestration behavior.
 depends_on: [EP-099, EP-100, EP-101, GRS-029, PS-116]
 unblocks: [GRS-030, POA-048]
 acceptance_criteria:
   - Failure signatures are normalized and counted across repair attempts.
+  - The repeated_failure_policy default requires strategy adjustment after two consecutive failed verification cycles with the same defect signature for one target, and high-end adjudication or root-cause replan on the third failed cycle.
+  - Settings supplies the ordered ten-value repair_strategy set; failure_signature.attempt_count does not substitute for the failed-cycle threshold.
+  - manual is used only for a true product blocker or where explicit HITL policy requires earlier intervention; Settings order does not bypass the internal escalation ladder or verification gates.
   - Repeated failures route internally before user escalation in default mode.
   - Plan changes pause affected lanes and require impact classification before resume.
 validation_surfaces:
@@ -193,6 +198,10 @@ context_scope: executor_repair_loop_breakers
 implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Permissions_System.md, Plans/Project_Output_Artifacts.md]
 node_compile_hint: {mode: executor_loop_breaker_policy, create_worknodes: false}
 source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0044
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0045
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0046
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0100
   - pldg-20260617-001-plans-to-code-handoff:atom-0046
   - pldg-20260617-001-plans-to-code-handoff:atom-0047
   - pldg-20260617-001-plans-to-code-handoff:atom-0048
@@ -200,6 +209,22 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0021
   - pldg-20260617-001-plans-to-code-handoff:corr-0009
 preserved_exact_tokens:
+  - "repair-loop policy"
+  - "same defect signature"
+  - "two consecutive failed verification cycles"
+  - "repeated defect signature"
+  - "third failed cycle"
+  - "high-end adjudicator"
+  - "patch"
+  - "replan"
+  - "split_node"
+  - "merge_node"
+  - "widen_context"
+  - "rollback"
+  - "escalate_capability"
+  - "assign_specialists"
+  - "manual"
+  - "authority_blocked"
   - "failure_signature"
   - "normalized_key"
   - "attempt_count"
@@ -233,6 +258,7 @@ owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor contributes the execution side of the Plans-to-Code Handoff Matrix. A complete WorkNode execution flow emits worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt when needed, merge_or_promotion_receipt when applicable, worknode_completion_receipt, and finalization evidence. Each transition records source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, and user escalation condition. Worker claims are never enough to certify code complete.
   The receipt chain preserves source_artifact, destination_artifact, retry_route, rollback_route, all WorkNodes terminal, all automated tests passed or dispositioned, and artifact-backed handoff evidence before code completion is certified. The source-control chain must preserve the same repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, rollback_available, rollback_ref, and restore_command_or_action through preflight, safe point creation, mutation/change, optional promotion, finalization, and completion certification.
+  A run is certified complete only after every required verification, receipt, authority, and finalization gate clears. Unresolved validator failure, verifier unavailability, or an exhausted repair budget never yields certified complete; existing owner policy determines the resulting disposition.
 gui_related: false
 gui_classification_reason: Execution receipts and certification handoffs are runtime/evidence contracts.
 depends_on: [EP-099, EP-100, EP-101, EP-102, PNC-014]
@@ -241,6 +267,7 @@ acceptance_criteria:
   - Every Executor handoff has artifact, owner, validator, receipt, retry, rollback, and escalation fields.
   - WorkNode execution receipts distinguish dispatch, preflight, safe point, change, test, audit, repair, promotion, and completion.
   - Code completion is certified from receipts, tests, source-control state, Auditor result, blockers, and final evidence, not worker prose.
+  - A run with unresolved validator failure, verifier unavailability, or exhausted repair budget cannot be certified complete.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
@@ -250,6 +277,7 @@ context_scope: plans_to_code_execution_receipts
 implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/plans_to_code_handoff.schema.json]
 node_compile_hint: {mode: execution_receipt_chain, create_worknodes: false}
 source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0049
   - pldg-20260617-001-plans-to-code-handoff:atom-0039
   - pldg-20260617-001-plans-to-code-handoff:atom-0040
   - pldg-20260617-001-plans-to-code-handoff:atom-0041
@@ -258,6 +286,7 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0017
   - pldg-20260617-001-plans-to-code-handoff:dec-0018
 preserved_exact_tokens:
+  - "certified complete"
   - "worknode_dispatch_receipt"
   - "source_control_preflight_receipt"
   - "safe_point_receipt"

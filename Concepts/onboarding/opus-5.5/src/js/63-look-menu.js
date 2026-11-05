@@ -53,9 +53,17 @@
     },
     /* after setup (the tour): the look is saved straight away */
     save(family, mode) {
-      try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); } catch (_) {}
       const tome = window.PM7_SETTINGS_TOME;
-      try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(family); tome.setChromeThemeMode(mode); } } catch (_) {}
+      // A family pick carries no mode: the owner retains Light/Dark/Auto independently of paint.
+      try {
+        if (tome && tome.setChromeThemeFamily && tome.setChromeThemeMode) {
+          if (family) tome.setChromeThemeFamily(family);
+          if (mode) tome.setChromeThemeMode(mode);
+        } else {
+          if (family) window.PM_THEME.setFamily(family, { persist: false });
+          if (mode) window.PM_THEME.setMode(mode, { persist: false });
+        }
+      } catch (_) {}
       O55.sound.play('select');
     }
   };

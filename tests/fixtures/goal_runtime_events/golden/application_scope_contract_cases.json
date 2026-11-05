@@ -46,6 +46,870 @@
         "goal.child_status_changed"
       ],
       "expected": "no_active_app_writer"
+    },
+    {
+      "case_id": "sweep-l3-goal-direct-save",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null,
+        "change_source": "user_direct"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-update-null-goal_id",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": null,
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null,
+        "change_source": "user_direct"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-update-null-expected_revision",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": null,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null,
+        "change_source": "user_direct"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-update-null-expected_currentness_hash",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": null,
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null,
+        "change_source": "user_direct"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-update-null-objective_text",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": null,
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null,
+        "change_source": "user_direct"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-update-missing-source",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-direct-no-approval_id",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": null,
+        "approval_id": "fabricated-a",
+        "original_operation_ref": null,
+        "change_source": "user_direct"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-direct-no-source_message_id",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": "fabricated-a",
+        "approval_id": null,
+        "original_operation_ref": null,
+        "change_source": "user_direct"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-approved-proposal",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": "message-a",
+        "approval_id": "approval-a",
+        "original_operation_ref": null,
+        "change_source": "agent_proposed_user_approved"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-proposal-null-approval_id",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": "message-a",
+        "approval_id": null,
+        "original_operation_ref": null,
+        "change_source": "agent_proposed_user_approved"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-proposal-null-source_message_id",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": "goal-a",
+        "expected_revision": 1,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objective_text": "Use this exact approved objective.",
+        "source_message_id": null,
+        "approval_id": "approval-a",
+        "original_operation_ref": null,
+        "change_source": "agent_proposed_user_approved"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-start-before-identity",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.goal.start",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": null,
+        "expected_revision": null,
+        "expected_currentness_hash": null,
+        "objective_text": null,
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-update-historical-reader",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationLegacyV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": null,
+        "expected_revision": null,
+        "expected_currentness_hash": null,
+        "objective_text": null,
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-goal-legacy-update-not-current",
+      "schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/GoalCommandRequestApplicationV1",
+      "record": {
+        "schema_id": "pm.goal.command_request.application.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat.goal.update",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "key-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 0,
+          "task_stop_epoch": 0,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "goal_id": null,
+        "expected_revision": null,
+        "expected_currentness_hash": null,
+        "objective_text": null,
+        "source_message_id": null,
+        "approval_id": null,
+        "original_operation_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
     }
   ]
 }

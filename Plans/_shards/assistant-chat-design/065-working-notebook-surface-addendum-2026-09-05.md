@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25168-L25301
+Source lines: L25151-L25284
 
-Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -96,7 +96,7 @@ canonical_text: >-
   transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and
   target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and
   model change never silently rebind a notebook to a different target; provider-hidden content is never
-  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes B's app scratch scope and
+  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes WN-021 app scratch scope and
   actual thread/Computer. Model changes/recovery retain the same canonical roots and evidence; conversion
   explicitly re-homes through PSB-007 without a fabricated Vault before cutover.
 gui_related: true
@@ -109,7 +109,7 @@ acceptance_criteria:
 - Old debug notes never reactivate revoked evidence or imply cleanup occurred.
 - Thread recovery rehydrates notebook access without rebinding to a different target.
 validation_surfaces:
-- python3 scripts/pm-plans-verify.py run-gates
+- scripts/pm-plans-verify.py
 risk_class: evidence_staleness
 reasoning_tier: high
 context_scope: assistant_chat

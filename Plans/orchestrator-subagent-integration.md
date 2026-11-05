@@ -30741,7 +30741,7 @@ compatibility_only_notes:
 - Draft fallback applies only before graph lock.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Chain wizard, interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
+- Planning Wizard (legacy Chain Wizard compatibility), interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs:
@@ -31398,6 +31398,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. SubagentPolicy governs fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory-subagent rules with default limits of 4 parallel children, 8 children per wave, 3 waves per GoalRun, 2000000 microusd per wave, 16000 estimated tokens per wave, 900000 wall-clock ms per child, 2 retry attempts per child, 1 retry attempt per wave, and 30000 ms retry backoff for provider_transient, rate_limit, tool_timeout, or coordination_conflict only.
+  SubagentPolicy cost controls may reduce exploratory fanout, but cannot disable required verification, receipts, or certification gates.
 gui_related: false
 gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
@@ -31410,6 +31411,7 @@ acceptance_criteria:
   - SubagentPolicy receipts record evaluated thresholds, selected child count, parallelism cap, cost ceiling, retry budget, capability lanes, write policy, and compatibility aliases consumed.
   - Default limits are measurable in children, waves, microusd, estimated tokens, bytes, refs, write targets, wall-clock ms, and tool rounds; hard-limit exceedance blocks the wave rather than silently widening scope.
   - SubagentPolicy limits cannot exceed the parent Run_Modes run-envelope budget or remaining budget.
+  - Cost limits may reduce exploratory fanout while preserving required verification, receipts, and certification gates.
   - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
   - Parent synthesis and high-end certification remain required for meaningful completion.
   - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
@@ -31440,9 +31442,13 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0088
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0092
   - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
   - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0003
 preserved_exact_tokens:
+  - "cost controls"
+  - "exploratory fanout"
+  - "certification gates"
   - "subagents are used extensively"
   - "bounded"
   - "cost per wave"
@@ -31993,9 +31999,9 @@ acceptance_criteria:
 - Off/Regular Ask me/YOLO matrices and three-round-trip exhaustion behave consistently after restart.
 - Moved target, late reply, unreachable Server and expiry never fabricate delivery or mutate a stopped thread.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -32061,9 +32067,9 @@ acceptance_criteria:
 - Registration/claim/board/restart/snapshot/cutover races preserve one current owner and bounded payload custody.
 - Unknown app source/checkpoint edition refuses; Project codecs/retention and source permissions remain exact.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -32111,7 +32117,7 @@ canonical_text: A real Planning Wizard/Orchestrator Project build consumes the P
   action/resource/target, permission generation and Stop/revocation epochs; a child may narrow but never mint, expand
   or transfer the grant. Verified created-resource manifest identity is required before grant-covered cleanup; a
   same name or named pre-existing resource gives no deletion authority. Shared History/ObservableWork shows each
-  remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows D's mode-aware
+  remote action/target/result and Stop, with Undo only where supported. Ordinary YOLO push/publish follows Plans/Permissions_System.md's mode-aware
   admission without a second generic yes. A no-project Goal, Crew, Assistant Plan or scheduled task has ordinary
   app authority and cannot issue or inherit another Project build grant through a message, conversion, receipt or
   parent label. Protected trust/auth/secrets, paid signup, currentness, capabilities, FileSafe and retained Y1 boundaries
@@ -32127,9 +32133,9 @@ acceptance_criteria:
 - Created-resource cleanup proves stable grant-created ownership, including namespace child operations.
 - App requests cannot adopt Project grants; one remote effect has one truthful authority source/result.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

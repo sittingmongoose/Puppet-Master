@@ -44,6 +44,35 @@ export function onboardingApp(t) {
       },
       /* the page loaded again as the person would (no fresh start): a session closed before is offered with Resume */
       async reopen(t) { f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox, settleMs: 1500 }); await sleep(800); },
+      /* back into a closed session the way a person gets back in: the Resume chip while it shows; once it has tucked into
+         the bell (19-notify.js tuckPin: PIN_READ_MS after it arrives, or at the first press, key or wheel elsewhere: final-
+         onb's K16 timing, where a loaded machine reached the chip after it had tucked), the bell's "Finish setting up" entry
+         and its Continue. via 'bell' waits for the chip to tuck by itself and goes in by the bell; 'chip' fails if the chip
+         is not shown. Returns the way it went in ('chip' or 'bell') once the window is open again. */
+      async resume(t, { via = 'auto', timeout = 15000 } = {}) {
+        await f.waitForFunction(() => !!document.querySelector('#o55-resume [data-o55-chip="resume"]'), null, { timeout });
+        const tucked = () => f.evaluate(() => { const c = document.getElementById('o55-resume'); return !c || c.classList.contains('pmn-pin-tucked') || !c.getClientRects().length; });
+        let way = null;
+        if (via !== 'bell' && !(await tucked())) {
+          /* (it may tuck between this look and the press: then the bell) */
+          way = await f.locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 3000 }).then(() => 'chip', () => null);
+        }
+        if (!way && via === 'chip') throw new Error('the Resume chip was not shown: it had tucked into the bell');
+        if (!way) {
+          await f.waitForFunction(() => { const c = document.getElementById('o55-resume'); return !c || c.classList.contains('pmn-pin-tucked') || !c.getClientRects().length; }, null, { timeout });
+          await f.waitForFunction(() => { const s = document.getElementById('pmnStack'); return !!s && s.getClientRects().length > 0; }, null, { timeout });
+          const row = f.locator('#pmnPanel .pmn-item[data-id="pin-o55-resume"]');
+          if (!(await f.evaluate(() => { const p = document.getElementById('pmnPanel'); return !!p && !p.hidden; }))) await f.locator('#pmnStack').click({ timeout: 10000 });
+          await row.first().waitFor({ state: 'visible', timeout: 10000 });
+          /* (a folded group shows its first entry as a stand-in: opening it lists the entry with its own buttons) */
+          if (await row.first().getAttribute('data-under') !== null) { await row.first().click(); await sleep(400); }
+          await row.first().locator('[data-aid="resume_pin"]').click({ timeout: 10000 });
+          way = 'bell';
+        }
+        await f.waitForFunction(() => !!(window.O55 && O55.S && O55.S.open && document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer[data-screen]')), null, { timeout });
+        await sleep(1400);
+        return way;
+      },
       sandboxed: () => sandbox,
       click, fill, type, snap: () => snap(), screen: (t, id) => screen(id), sleep: (t, ms) => sleep(ms),
       frame: () => f,

@@ -2741,8 +2741,8 @@ Handoff rules:
 ### 29.5 Wizard launch behavior from chat handoff
 
 Launch behavior depends on available project context:
-- if the current thread already has an active project/path, open the Planning Wizard in the preloaded `EnhanceRewriteAdd` flow with imported context ready for requirements/interview review
-- if the current thread lacks required project context, open the Planning Wizard with the imported context preserved and land on the project-setup review path first
+- if the current thread already has a real active Project and admitted path, open the Planning Wizard in the preloaded `EnhanceRewriteAdd` flow with imported context ready for requirements/interview review
+- from No project, preserve the imported context and first offer **Make a project from this chat** and **Move this chat into a project** as equal choices with neither preselected, or select a real Project under F3-325/ACD-510. Complete any conversion and actual Project registration/listing before opening the preloaded `EnhanceRewriteAdd` flow. The Wizard says **Needs a project** and cannot start intake while the handoff is unbound
 
 The interviewer must not start cold:
 - imported context is available before the first interview question
@@ -4029,8 +4029,8 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Assistant workflow identity stays ask, agent, debug, plan and deep_plan; only runtime posture normalizes
   to the run-envelope mode. ACD-508 and AI-069 admit genuine app chat, Goal, Crew, Plan/Deep Plan and
-  scheduled-message/task workflows. Requires a project is a workflow gate only for Planning Wizard, PRD
-  Builder and Orchestrator. Other actions validate their actual permitted
+  scheduled-message/task workflows. The stored token Requires a project is rendered Needs a project and gates only Planning
+  Wizard, PRD Builder and Orchestrator. Other actions validate their actual permitted
   folder/file/history/connection/target and capability, never infer a Project from focus.
 gui_related: true
 gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
@@ -4038,11 +4038,11 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - "Debug and deep_plan mint no extra runtime mode."
-  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Requires a project."
+  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Needs a project."
   - "Missing actual resource/authority remains a typed refusal without automatic conversion."
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: runtime_mode_drift
 reasoning_tier: standard
 context_scope: assistant_chat_window_001
@@ -6641,7 +6641,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Automatic retrieval is local: current Project chat/code/log sources for a Project thread, or the app
   thread's own messages and permitted chat-folder/working-root sources for No project. Explicit projects.*
-  reads use T-185/ACD-509 and D's source/time/provider grants, never ambient index or private-memory
+  reads use T-185/ACD-509 and PS-145 source/time/provider grants, never ambient index or private-memory
   merge. After the recorded grant or task-scoped YOLO admission, an explicit question about my projects or
   my tasks may request all permitted Projects; every empty/partial result states coverage. An unspecified
   cross-Project scope never silently falls back to current Project.
@@ -6653,8 +6653,8 @@ acceptance_criteria:
   - "Auto-retrieval stays within the owning Project or app thread/roots; explicit cross-Project T-185 reads require recorded scope/authority and coverage."
   - "External or cross-project retrieval requires explicit user request."
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: retrieval_scope
 reasoning_tier: high
 context_scope: auto_retrieval
@@ -18176,19 +18176,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Wizard launch opens preloaded `EnhanceRewriteAdd` when project/path context
-  exists, or preserves imported context and lands on project-setup review first
-  when required project context is missing.
+  Wizard launch opens preloaded `EnhanceRewriteAdd` only with a real active Project and admitted path. A
+  No project handoff preserves imported context and first offers Make a project from this chat and Move this
+  chat into a project as equal choices with neither preselected, or selects a real Project through F3-325/ACD-510.
+  Conversion and actual Project registration/listing complete before Wizard launch or intake; the unbound
+  handoff shows Needs a project and never starts the Wizard's own setup as a bypass.
 gui_related: true
-gui_classification_reason: Wizard launch path and project-setup review landing are visible workflow UI.
+gui_classification_reason: Wizard launch and the prerequisite Project conversion or selection are visible workflow UI.
 depends_on: [ACD-309]
 unblocks: [ACD-313, ACD-314]
 acceptance_criteria:
-  - Threads with active project/path open the preloaded `EnhanceRewriteAdd` flow.
-  - Threads missing required project context preserve imported context and land on project-setup review first.
+  - Threads with a real active Project and admitted path open the preloaded `EnhanceRewriteAdd` flow.
+  - No project handoffs preserve imported context, offer both conversion choices or real Project selection, and enter the Wizard only after actual Project admission.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: wizard_launch
 reasoning_tier: standard
 context_scope: gui
@@ -18203,7 +18205,10 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0142
 preserved_exact_tokens:
   - "EnhanceRewriteAdd"
-  - "project-setup review path"
+  - "No project"
+  - "Make a project from this chat"
+  - "Move this chat into a project"
+  - "Needs a project"
 negative_constraints: []
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -24622,30 +24627,8 @@ plan_unit_id: ACD-439
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector
-  popouts, the header chrome menus, and the context status module - share one corner-origin
-  sprout motion contract: each popout sprouts from and collapses into the corner or edge
-  nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform
-  closed scale and closing in roughly 220ms with opacity held until late followed by a short
-  fade. Search-driven size changes in the model and persona popouts spring the height with
-  overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent,
-  Debug, Plan, and Deep Plan options with no search field, while model and persona popouts
-  keep search. Under reduced motion, open and close render as instant show/hide. The
-  single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single sprout
-  implementation for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it. This build
-  removes their former duplicates while retaining this unit’s visible motion/focus contract. L8 B, PM7 Step4,
-  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
-  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
-  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
-  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
-  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
-  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
-  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
-  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
-  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
-  flight. DR-079 also owns the shared origin/shown/instant/fade inputs and Home's morph geometry adapter;
-  chat does not recreate those operations. Shared presentation APIs create no new product command or saved key.
+canonical_text: |-
+  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
@@ -24658,8 +24641,8 @@ acceptance_criteria:
   - "At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-  - "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: chat_header_contract_drift
 reasoning_tier: standard
 context_scope: assistant_chat_header
@@ -24672,6 +24655,7 @@ source_lineage:
   - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
   - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
   - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PM7 used window.PM6_SPROUT, pm7-sprout.js/css, pm7-sprout-js/css, open/close/isOpen/aim/resize/morph/bounce/keep/reduced, --pm6-sprout-* inputs and the menu adapters listed in DR-079. These source spellings do not define product APIs."
 preserved_exact_tokens:
   - "corner-origin"
   - "sprout"
@@ -25050,7 +25034,7 @@ canonical_text: >-
   effective window/tokens, cache hit, and source composition; its click menu is local and
   offers Compact Now plus More Details. Compact Now alone dispatches
   cmd.chat.compact_context and updates ring/detail projections coherently, while More
-  Details reuses the existing open/focus/close thread Context Detail Pane commands and
+  Details reuses cmd.chat.open_thread_context_details and the existing focus/close commands and
   Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
   Assistant clone, app-wide Usage substitute, second detail drawer, or second context
   store is permitted.
@@ -25074,8 +25058,8 @@ acceptance_criteria:
   - No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plans-verify.py
+  - scripts/pm-plan-index.py
 risk_class: shared_assistant_identity_or_context_projection_drift
 reasoning_tier: high
 context_scope: pm7_commands_wiring_dry_assistant
@@ -25094,6 +25078,7 @@ source_lineage:
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
+  - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -25101,8 +25086,6 @@ preserved_exact_tokens:
   - Raw
   - cmd.chat.compact_context
   - cmd.chat.open_thread_context_details
-  - chatPanel
-  - chatResizer
 negative_constraints:
   - Do not clone or fork Assistant state when changing pages or hosts.
   - Do not dispatch compaction from hover or menu disclosure.
@@ -25253,7 +25236,7 @@ canonical_text: >-
   transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and
   target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and
   model change never silently rebind a notebook to a different target; provider-hidden content is never
-  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes B's app scratch scope and
+  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes WN-021 app scratch scope and
   actual thread/Computer. Model changes/recovery retain the same canonical roots and evidence; conversion
   explicitly re-homes through PSB-007 without a fabricated Vault before cutover.
 gui_related: true
@@ -25266,7 +25249,7 @@ acceptance_criteria:
 - Old debug notes never reactivate revoked evidence or imply cleanup occurred.
 - Thread recovery rehydrates notebook access without rebinding to a different target.
 validation_surfaces:
-- python3 scripts/pm-plans-verify.py run-gates
+- scripts/pm-plans-verify.py
 risk_class: evidence_staleness
 reasoning_tier: high
 context_scope: assistant_chat
@@ -25321,7 +25304,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 15. **Plan Tab Editor Navigation and Deduplication (`APR-036`, `APR-037`, `APR-038`)**: Clicking a plan title, Details, Expand, or Open Plan in transcript opens the exact plan revision in the left editor/document tab system. The legacy artifact alias and plan identity reuse one unified tab, preventing duplicate open tabs. The plan tab exposes owner-backed controls (Rich Text/Markdown, Build, Revise, More, Build With Crew, Build At, Send to Planning Wizard, Export). Under narrow viewport widths (e.g. 390px, 768px), the editor displays full width with tab controls above content and a persistent "Return to chat" affordance, temporarily occluding History without mutating saved preferences. The same editor-document rules apply to the collaboration run views (Crew, Chat Room, BrainStorm, Review): Open Panel opens the run's view as one editor document per run identity in that tab system, focusing an open tab instead of duplicating it, with the same narrow-width full-width presentation and "Return to chat" affordance (ACD-480).
 16. **Typed Work Records and Diff Counts (`APR-039`, `APR-040`, `APR-041`, `APR-055`)**: Agent work items render with explicit semantic kinds: File change, File inspection, Activity, Plan, Artifact, or Work note. Change records display genuine file identity, line numbers, and hunks with green (+) additions and red (-) deletions. Obsolete editorial migration comments (e.g. "0043 supersedes 0039...") are excised. Inline code and emphasis format safely; unlinked content remains a Work note.
 17. **Internal Work-Note Boundary (`APR-056`)**: Internal work notes (scratch notes, reasoning fragments, diagnostic traces) are behind-the-scenes diagnostic state. They must never appear as ordinary transcript message cards or standalone user artifacts. Concise user-facing progress summaries are distinct, typed projections.
-18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: All 30 fixture threads in History are inventoried and aligned to current specifications. Everyday threads predominantly show running, completed, or successful work. Failure, blocked, or recovery states are segregated into an intentional, clearly labeled recovery minority (`recovery-scheduling`, `recovery-attachments`, `recovery-collaboration`). Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review fixtures demonstrate inspection and findings without mutating workspace files.
+18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: History shows each thread's actual owner-backed state. Failure, blocked or recovery states appear on the threads where they actually occur. Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review shows inspection and findings without mutating workspace files.
 19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
 20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including full-size Activity Detail until closed (G1/G2), floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
@@ -25650,17 +25633,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  History threads and components are fully inventoried to reflect current behavior. Ordinary everyday threads predominantly show running, completed, or successful workflows; unfinished work is not marked Needs attention unless an active fault exists. Recovery and failure examples are clearly partitioned into an intentional, labeled recovery minority. Read-only review fixtures demonstrate findings and inspection without source mutation. The responsive editor/chat split enforces min-size rules so chat is never crushed into the resize handle.
+  History shows each thread's actual owner-backed state; unfinished work is not marked Needs attention unless an active fault exists, and failure and recovery states appear on the threads where they actually occur. Read-only review shows inspection and findings without source mutation. The responsive editor/chat split enforces min-size rules so chat is never crushed into the resize handle.
   Amended 2026-10-09 (DL-180): Home has no editor/chat split: the chat is a fixed column whose width and limits are
   Plans/FinalGUISpec.md#F3-637's, and the centre's panels never take its room (F3-636), so the chat is never crushed.
 gui_related: true
-gui_classification_reason: History thread currentness, normal workflow proportion, and responsive split behavior.
+gui_classification_reason: History thread state truthfulness and responsive split behavior.
 depends_on: [ACD-452, ACD-457, DL-180, F3-637, ACD-500]
 unblocks: []
 acceptance_criteria:
-  - Every History thread has an inventoried disposition and before/after component mapping.
-  - Ordinary workflows show running/completed/successful work without false Needs attention labels.
-  - Failures and recoveries are confined to explicit labeled recovery threads.
+  - History rows reflect their actual owner-backed state.
+  - Unfinished work is not labelled Needs attention without an actual fault or block.
+  - Failure and recovery states appear on the threads where they actually occur.
   - Read-only review shows findings, not file mutation.
   - "Resizing the chat column stays within F3-637's limits, so the chat is never crushed (DL-180)."
 validation_surfaces:
@@ -25682,8 +25665,6 @@ source_lineage:
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-066
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-067
 preserved_exact_tokens:
-  - "predominantly running/completed/successful"
-  - "labeled recovery minority"
   - "inspection and findings"
 negative_constraints:
   - Do not mark unfinished work as Needs attention without an actual error or block.
@@ -25868,7 +25849,7 @@ The following contract establishes the previously missing bindings under Jared's
 
 **Membership and producer.** `event-family-context-compaction-completed@1.0.0` has the sole exact event type `context.compaction.completed` and closed payload `pm.context_compaction_completed.schema.v1`, version `1.0.0`, in `Plans/event_payload_context_compaction_completed.schema.json`. Define producer binding ID `assistant_chat.compaction_commit.v1` for the existing bounded compaction transaction's commit step. Manual `cmd.chat.compact_context` reaches it through `handlers::chat::compact_context`; automatic and eligible micro-compaction reach the same commit step under PP-078. UI click, helper return, local progress and command-result rendering are not independent emitters.
 
-**Identity and scope.** `context.compaction.completed` has explicit original Project and newly admitted application editions. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec. An app thread binds null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer; Worktree-unbound Project is a different case, not a prohibition of genuine app completion. Both outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit; generic app work cannot emit Chat completion. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses; replay/checkpoint uses the explicitly adopted app sibling without changing original Project history.
+**Identity and scope.** `context.compaction.completed` remains `project_only` in `Plans/event_family_registry.json`; DL-300 admits no application edition of this family. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec; a worktree-unbound Project remains a Project form. Outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses. Application compaction keeps null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer in its owner operation/result receipts; those receipts do not become EventRecords or enter the Project event replay/checkpoint. App event emission remains `missing_event_registration` and non-emitting until a separate Event Authority admission and complete payload/source/append/read/checkpoint/retention adoption. Missing owner receipt/source custody leaves that app operation unavailable; no synthetic Project or app completion event is permitted.
 
 **Commit and state meaning.** A completion means a candidate passed every PP-078 fence and useful-gain predicate and the Storage commit marker durably committed. Input/output context revisions are monotonic integers; `output_context_revision > input_context_revision`, `input_tokens - output_tokens = reclaimed_tokens > 0`, and configured `min_reclaim_tokens` must also be met. The detailed CompactionReceipt records branch/head, retained obligations, redaction, hashes, artifacts, fences and policy proof; its opaque reference must resolve to this exact operation/thread/revision pair at commit. The permanent EventRecord is a bounded audit projection of that receipt, containing no transcript, summary, prompt, tool output, content-derived hash, title or arbitrary message. Required token/byte counts are measurements, not billed Usage. No-op, soft-defer, cancellation, stale/late result, policy denial, helper failure and precommit interruption emit no completion. `context.compaction.started` and `context.compaction.failed` remain unregistered, independently visible through existing result/receipt state.
 
@@ -25885,14 +25866,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Successful committed compaction produces one content-free context.compaction.completed EventRecord under
-  the explicit owner contract above. The focused-thread detail consumer uses the existing replay path;
-  retained transcript search and thread-deletion behavior remain unchanged. The app completion sibling
-  uses explicit application scope/null Project and the same content-free commit/result, original
-  operation, thread/deletion/head/generation fence, complete replay/checkpoint and unavailable-input
-  rules. The original Project Event/codec remains exact. Worktree-unbound Project completion and genuine
-  app completion are separately admitted forms; neither authorizes arbitrary generic app operations to
-  emit Chat completion.
+  Successful committed Project compaction produces one content-free context.compaction.completed EventRecord
+  under the explicit owner contract above. The focused-thread detail consumer uses the existing Project
+  replay path; retained transcript search and thread-deletion behavior remain unchanged. The registry keeps
+  this family project_only and DL-300 admits no application payload. Application compaction uses its owner
+  operation/result receipts with explicit null Project, actual thread/Computer/writer and original
+  operation/currentness/deletion fences, without emitting this EventRecord or advancing its Project
+  event checkpoint. Missing receipt/source custody is unavailable. App event emission remains
+  missing_event_registration/non-emitting until separate Event Authority admission and complete owner
+  adoption. The original Project Event/codec and worktree-unbound Project form remain exact.
 gui_related: true
 gui_classification_reason: This unit binds the visible focused-thread completion history to durable authority.
 depends_on: []
@@ -25900,7 +25882,7 @@ unblocks: []
 acceptance_criteria:
   - "ACD-461 binds the exact producer, consumer, projector, project/thread identity, closed payload, commit-only transition and compatibility/withdrawal behavior."
   - "SP-259 and SIR-038 provide append durability, idempotency, concrete checkpoint key/version, replay fencing and indefinite content-free retention."
-  - "Started, failed, cancelled, no-op, stale and deferred operations have no completion EventRecord; schema and semantic negatives reject invalid identity, gains, payloads and commit claims."
+  - "Started, failed, cancelled, no-op, stale and deferred operations have no completion EventRecord; application operations remain non-emitting without separate family admission. Schema and semantic negatives reject invalid identity, gains, payloads and commit claims."
   - "Replaying a completion cannot resurrect a deleted thread or change transcript/search authority."
 validation_surfaces:
   - Plans/context_compaction_completion_contract_fixtures.json
@@ -26845,8 +26827,7 @@ canonical_text: 'Chat motion has one voice per theme family (DL-106): Basic, Fri
   answer says whether a look''s cover hides the page; a surface it hides draws nothing new until the cover lifts, and
   a selection chip waits only for a real cover, never for a merely busy page. A move begun in a frame that was drawn
   late starts from its beginning once frames come on time again, at most six frames later or until a page-change hold
-  ends, so no move is spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
-  PM_START_ON_SHOWN. Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
+  ends, so no move is spent before it is seen. One shared presentation owner supplies busy/idle, look-cover and on-time entrance gates to all consumers. Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
   its first screen. The leaving page stays, with the click''s motion still running, until the arrival is ready or about
   1.5 s from the click''s own frame, whichever is first; then the entrance plays from the start, and the exit takes over
   from the opacity the click''s fade has reached (F3-464; amended 2026-10-17, review r1). That hold is the covering transition
@@ -26877,9 +26858,7 @@ canonical_text: 'Chat motion has one voice per theme family (DL-106): Basic, Fri
   pauses hidden/offscreen/during drags. Loader uses family periods and reduced-motion breath/blink exception of F3-662,
   no travel. App chirps use the one master player and existing chat mute, default off as a Pip part. Main-button pointer/keyboard
   acknowledgement is within 100 ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
-  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared PM_BUSY signal also names drag, after cover
-  reasons so a cover retains priority. PM_BUSY.drag() reads the five shared body drag classes; PM_BUSY.idle(fn, timeout)
-  defers a request made during a drag and rechecks a callback that lands in one, resubmitting after pm-idle. No idle
+  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared busy signal also names drag, after cover reasons so a cover retains priority. The shared idle-work owner defers requests made during a drag, rechecks callbacks that arrive during a drag and resubmits them after the drag gate clears. No idle
   job runs inside a held drag. This helper does not make a hidden tab busy by itself or waive caller visibility, other
   busy/cover, interaction and animation gates. No new command, binding, setting or event family is introduced. QA round
   2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
@@ -26931,8 +26910,8 @@ acceptance_criteria:
   value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never
   fabricates a saved value or authorizes a write.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: chat_motion_and_sound_drift
 reasoning_tier: high
 context_scope: chat_motion_sound
@@ -26978,6 +26957,7 @@ source_lineage:
   source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-p1000-speed/IDLE-WARM-RULE.md, SHA-256 9a79df01751fbd98f1b4d597d40e520e662b5d584e97ef9094c27dd8aa55736d
   (Jared, 2026-10-17 10:27Z, no platform-specific acceptance; source lineage)
+- "DL-260 source lineage only (no product API or implementation obligation): PM_BUSY/PM_BUSY.drag()/PM_BUSY.idle(fn, timeout), pm-idle, PM_LOOK_COVERED, PM_START_ON_SHOWN and the shared body drag classes were concept motion helpers."
 preserved_exact_tokens:
 - DL-138
 - Basic
@@ -27039,16 +27019,15 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   per-reply files row replace the stream footer pill''s helpers and files chips (ACD-482, DL-129). Amended 2026-10-29
   (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views
   of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped
-  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): activity-panel.js registers
-  one PM56_PMX.dock.provide(workDock) provider over the selected thread’s PM_WORK process/agent/scheduled items. needsYou
-  items are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
+  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): One shared work dock provider reads the selected thread’s owner-projected process, agent and scheduled items. Items requiring input or review
+  are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
   run is comingup. These items have no transcript card to wait offscreen for; existing transcript-backed providers retain
-  their visibility rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled
+  their visibility rules. Visible work times update through the shared tick owner. Review/Show for a process or scheduled
   item reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents Activity
   Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop action. D7: Native
   owner-row selection must bind signed owner identity, thread and generation as CS-106 requires; the concept is not evidence
   that this stronger guard exists. Process/scheduled Review already passes the item ID. QA round 2, Jared 2026-10-30;
-  DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run
+  DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run
   a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
   identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
   occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain
@@ -27072,10 +27051,10 @@ acceptance_criteria:
   - "Every dock sentence is the producing owner's sentence; the dock holds no copy of owner state."
   - "The dock reserves its own space and never covers transcript content."
   - "A Chat Room's pacing, exhaustion or stop-condition wait, manual pause and every Grill Me session's current Confirm use yourmove (CWR-044); questions, approvals and failures use needs. Between automatic rounds it shows as live only when no existing user gate or manual pause requires attention."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: attention_surface_duplicates_owner_state
 reasoning_tier: high
 context_scope: chat_composer_stack
@@ -27092,6 +27071,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C14-C15, 4.5 G-10, 7.4, 7.8"
   - "IMPACT-REGISTER B-ACD-10, B-ACD-08 (reference only)"
   - "Plans/Decision_Log.md DL-231 (a finished Chat Room round is no longer the user's move, 2026-10-21)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
+  - "DL-260 source lineage only (no product API or implementation obligation): activity-panel.js registered PM56_PMX.dock.provide(workDock) over PM_WORK and patched [data-work-time]; these were concept provider/DOM spellings."
+  - "DL-260 source lineage only (no product API or implementation obligation): needsYou was a concept work predicate; the owner AttentionItem projection supplies the product needs tone."
 preserved_exact_tokens:
   - "dock"
   - "AttentionItem"
@@ -27664,15 +27646,15 @@ split_recommended: false
 depends_on: [ACD-010, DL-126, F3-572]
 unblocks: [F3-581, ATS-065]
 acceptance_criteria:
-  - "A chat with an override uses it; a chat without one uses the project default; a project without one uses the app default."
+  - "Resolution follows This chat → Project → Computer → Everywhere → factory; an app chat skips Project and each missing override falls through to the next applicable level."
   - "After a switch, every earlier reply keeps its text and no reply is re-sent, regenerated or rewritten."
   - "A reply streaming during a switch finishes in the style it started with."
   - "Explain this reply simply adds exactly one reply, leaves the explained reply unchanged and changes no ELI5 setting."
   - "cmd.chat.eli5.explain_reply is refused for a reply that is still streaming."
   - "No helper line under a control has an Expert and an ELI5 variant."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: eli5_second_response_or_rewrite
 reasoning_tier: high
 context_scope: chat_eli5
@@ -27696,7 +27678,7 @@ source_lineage:
   - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "DL-138"
-  - "the chat override, otherwise the project default, otherwise the app default"
+  - "This chat → Project → Computer → Everywhere → factory"
   - "general.interaction.chat-eli5"
   - "general.interaction.eli5-default"
   - "Explain Terms Everywhere"
@@ -27718,7 +27700,7 @@ negative_constraints:
   - "Do not let ELI5 change code, plans, files or generated documents."
   - "Do not define the Settings project scope here; Settings owns it."
 stale_retired_dispositions:
-  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by the three-level resolution in this unit (DL-126)."
+  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by this unit's Settings-owned layered resolution (DL-281); DL-126's forward-only reply behavior remains."
   - "FinalGUISpec 2026-09-03 section 14's 'ELI5 is a wand check' is superseded by the ELI5 sheet and the quick dot (FinalGUISpec F3-581)."
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -28584,14 +28566,11 @@ canonical_text: >-
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
   plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
   All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
-  acceptance surfaces. G9/C5, PM7 Step4 final-source reconciliation, 2026-10-30: the activity lane report and
-  pm7-port/css/20-controls.css resolve PM7-C5-CONTEXT-RING. The conic background tiled into a 1 px faint
-  border (Friendly 6 percent, Glass 9 percent alpha), exposing slivers; Glass’s clear --surface middle disc
-  exposed the meter as a pie. The hosted Basic/Friendly/Glass owner now draws the meter on its own ::before
-  layer, cut to an approximately 3 px ring with a radial mask; the
-  middle is the header’s ground and no gradient tiles into the border. Retro/NieR retain their own drawings.
-  This records the reported concept cause/drawing rule; native continuous antialiased rendering at actual
-  widths/DPR/Reduced Motion remains acceptance, not certification by this source note. G1 B (Jared
+  acceptance surfaces. G9/C5: the shared presentation owner draws the Basic/Friendly/Glass context meter as
+  a continuous antialiased ring approximately 3 px thick. Its middle matches the header ground, with no
+  tiled gradient slivers at the border or meter fill leaking into the middle. Retro/NieR retain their own
+  drawings. Actual widths, device pixel ratios and Reduced Motion remain native acceptance surfaces;
+  concept diagnosis or a static drawing is not certification. G1 B (Jared
   2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
   (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and
   reprojects the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only:
@@ -28618,11 +28597,11 @@ acceptance_criteria:
 - Glass Activity/History/attachment plates use the same menu token, and C5 remains an explicit measured acceptance/investigation
   until the GUI report records its fix.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
-- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
-- python3 scripts/pm7-build-check.py
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
+  - Concepts/background-activity/opus-5.5/HANDOFF.md
+  - future 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+  - scripts/pm7-build-check.py
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -28636,6 +28615,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- "DL-260 source lineage only (no product stylesheet, selector or implementation obligation): the activity lane report and pm7-port/css/20-controls.css resolved PM7-C5-CONTEXT-RING; a conic background tiled into a faint 1 px border (Friendly 6 percent, Glass 9 percent alpha), while a clear --surface disc exposed the meter as a pie. The concept repair used an isolated ::before layer and radial mask; native rendering must satisfy the shared visual invariant."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -28770,7 +28750,7 @@ canonical_text: 'No project is a first-class chat place with project_id=null, sc
   rung. Selected account_resolution uses MA-074 on the exact work Computer. No Basic Dark flash or no-project Settings
   write ban. N15 Set up a project later still performs protected AI setup on that Computer in app scope, then lands
   in No project chat; Guided Tour Finish/Skip returns to that exact app chat/layout without a practice Project or
-  claiming an unexecuted Project step completed. Computer use consumes T-186/D policy: named Computer, task-allowed
+  claiming an unexecuted Project step completed. Computer use consumes T-186/PS-145 policy: named Computer, task-allowed
   apps, separate provider screen disclosure and protected-auth exclusion, with a visible session-bound strip/Stop
   and existing double-Esc stop; it is no root grant or hidden desktop access. Delivery stages are chat/Goals/Crew/Plan/Deep
   Plan/schedules/conversion, then cross-project reads/requests, then computer use/continue elsewhere/cross-computer
@@ -28795,9 +28775,9 @@ acceptance_criteria:
 - Empty/filtered Here lists state coverage and offer All chats; narrow labels remain text, with the shared container-width
   rules.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -28844,18 +28824,18 @@ canonical_text: Every chat may explicitly read permitted Projects and request wo
   list/status exposes only information the person may open and honors source-project Off; content reads use a named
   set or all, source-Computer checks on every read and provider exposure/secret scrub. Regular offers This time
   / For this chat / Always on this computer / No; a named reference grants only its explicit subject. YOLO uses
-  D's explicit task-scoped mode authority and invents no human consent or Always rule. Every read appears in Activity.
+  Plans/Permissions_System.md's explicit task-scoped mode authority and invents no human consent or Always rule. Every read appears in Activity.
   One coverage formatter records requested, looked_in, not_looked_in with reasons and partial with missing ranges;
   empty/partial replies and empty/filtered UI always disclose coverage, with a quiet expandable line. Archived Projects
   are skipped unless named. Notebooks, private memory, credentials, safe copies and denied files remain excluded.
-  An outgoing request shows exact target, task text and effect before Regular Send or D-admitted YOLO dispatch.
+  An outgoing request shows exact target, task text and effect before Regular Send or YOLO dispatch under PS-145.
   Sender authority never changes receiver mode; Off refuses, and unseen Regular Ask me requests remain read/answer-only
   until accepted. A person-reviewed send may satisfy that message's receiving choice, but is never fabricated for
   YOLO. Delivery is ordered at a safe turn boundary, distinct from the person's two-slot composer queue; request
   results/replies are idempotent and route by stable thread after conversion. From another chat uses chat_message_in,
   names sender and recipient, and never impersonates user input. At most three automatic round trips occur; extending
   that budget requires the person. Offline delivery waits and expires after one day with a truthful result. The
-  has-read provenance mark survives; N19 outward actions use D's mode-aware disclosure/actual-effect rules, including
+  has-read provenance mark survives; N19 outward actions use Plans/Permissions_System.md's mode-aware disclosure/actual-effect rules, including
   ordinary YOLO publication, and never hide coverage. CV-365 freezes preview as ui.thread.request.preview or ui.thread.spawn.preview,
   a typed local redacted draft projection without persistence, outbox commit, EventRecord or authority. Send uses
   the existing cmd.thread.request and cmd.thread.spawn sole handlers with the explicit ThreadRequestFacadeRequestV2/ResultV2
@@ -28877,9 +28857,9 @@ acceptance_criteria:
 - Reply after conversion follows thread identity with current destination checks; repeated delivery produces no
   duplicate turn or billing.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -28958,9 +28938,9 @@ acceptance_criteria:
   effect.
 - Regular person and YOLO guarded route share one owner transaction; YOLO never defaults to main or publication.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -29042,9 +29022,9 @@ acceptance_criteria:
 - Expiry purges only eligible source-chat content, retaining separately required canonical task/audit bodies and
   references.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

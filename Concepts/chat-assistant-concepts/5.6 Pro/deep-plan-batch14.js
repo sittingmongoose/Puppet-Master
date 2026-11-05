@@ -153,7 +153,7 @@
  E.slot('composerBelow',c=>guide(c));
  // The observer supplies the first document row for discovery, sources and the Plan alike.
  E.slot('afterRender',(c,info)=>{if((info?.phase||c.phase)!=='app')return;const html=guide(c,true),host=document.querySelector('.editor-body'),old=host?.querySelector(':scope > .deep14-guide');if(!html){old?.remove();return;}if(old)old.outerHTML=html;else host?.insertAdjacentHTML('afterbegin',html);});
- E.action('b14-start',(c,b)=>{const gallery=!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(sessions.get(c.state.selectedThread));return true;});
+ E.action('b14-start',(c,b)=>{const gallery=!!c.demo||!!b.closest?.('.demo-dialog .demo-trigger');stop();seed(c,b.dataset.flow);if(gallery)playback(sessions.get(c.state.selectedThread));return true;});
  E.action('b14-replay',c=>{const flow=sessions.get(c.thread.id)?.flow;stop();seed(c,flow);playback(sessions.get(c.state.selectedThread));return true;});
  E.action('b14-hide-guide',c=>{const s=sessions.get(c.thread.id);if(s)s.guide=false;stop();refresh();return true;});
  const withRun=(a,fn)=>E.action(a,(c,b)=>{const r=engine.get(b.dataset.run);if(r)fn(c,r,b);return true;});

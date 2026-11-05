@@ -1651,14 +1651,31 @@ def('x1', 'fresh', 'Run Onboarding Again starts over: a clean world, no finished
   await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys tested', 5000);
   A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="k-pm"]') && !!document.querySelector('.o55-card.o55-on[data-arg="new"]')), 'the key made in the last run is gone');
 });
+/* The creation is held open on the page's own motion clock (10-motion.js setTimeScale: an owner operation's phases wait on
+   it, as slow-motion filming stretches them, and 0 holds them) from just before Create until Run Onboarding Again has
+   shown it, so the case always meets a creation that is still running, however slow the machine: it failed once under
+   Nas1 load, when the creation finished during Close and settle and Run Onboarding Again rightly started over. The
+   window's own close and open are real-time animations and still play. Then the clock runs again and the same creation
+   finishes. */
 def('x2', 'fresh', 'Run Onboarding Again while a Project is being created waits for it', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary(); await d.primary();
-  await readyPrimary(d); await d.primary(); A.eq(await d.screen(), 'creating', 'creating');
-  const originalKey = await d.state(() => window.O55.S.sess.commit.original.key);
-  await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
-  await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.untilScreen('creating');
-  A.eq(await d.screen(), 'creating', 'the window shows the creation instead of starting over');
-  A.ok(await d.state(() => /still being created/.test(document.body.textContent)), 'it says the Project is still being created');
+  await readyPrimary(d);
+  await d.state(() => window.O55.motion.setTimeScale(0));
+  let originalKey = null;
+  try {
+    await d.primary(); A.eq(await d.screen(), 'creating', 'creating');
+    A.eq(await d.state(() => window.O55.S.sess.commit.state), 'running', 'the creation is running (held on the motion clock)');
+    originalKey = await d.state(() => window.O55.S.sess.commit.original.key);
+    await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
+    A.eq(await d.state(() => window.O55.S.sess.commit.state), 'running', 'still running after Close and settle');
+    await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.untilScreen('creating');
+    A.eq(await d.screen(), 'creating', 'the window shows the creation instead of starting over');
+    A.eq(await d.state(() => window.O55.S.sess.commit.original.key), originalKey, 'Run Onboarding Again keeps the attempt under way');
+    await d.state(() => window.O55.motion.setTimeScale(1));
+    /* (the note is a toast on the motion clock, 700 ms after the window opens: 60-ui-core.js waitNote) */
+    await until(d, "/still being created/.test(document.body.textContent)", 'the still-being-created note', 8000).catch(() => {});
+    A.ok(await d.state(() => /still being created/.test(document.body.textContent)), 'it says the Project is still being created');
+  } finally { await d.state(() => window.O55.motion.setTimeScale(1)).catch(() => {}); }
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'creation finishes', 25000);
   await assertPublishedProject(d, A);
   A.eq(await d.state(() => window.O55.S.sess.commit.original.key), originalKey, 'reopening Creating retains the same attempt');

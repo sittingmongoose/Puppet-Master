@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L15183-L15320
+Source lines: L15185-L15325
 
-Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
+Source SHA256: `fec2705a0c4f5bcab7856d62a8ca80b2456552237d014f2d1f305ba481929b1b`
 
 ---
 
@@ -49,8 +49,12 @@ canonical_text: 'One Settings resolver supplies the existing FileSafe switch and
   cwd, visible Project or guessed main root. Root, integrity, storage-writer and recovery holds remain independent
   of permission approval. The application DestructiveOverrideScope is a discriminated union requiring null
   project_id, thread/run, owning Computer/Host/Environment and exact recorded roots/paths; the original Project
-  variant still requires its real Project and applicable run/worktree. Both require authenticated operator/reason/expiry
-  and security event/receipt. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is only a request signal and is never sufficient
+  variant still requires its real Project and applicable run/worktree. Both require authenticated operator/reason/expiry.
+  The original Project variant retains its historical security event/receipt contract and exact payloads;
+  the application variant requires a durable scope-bound owner override receipt. No filesafe.* application
+  EventRecord edition is registered or selected by CV-366; app emission stays
+  missing_event_registration/non-emitting until separate Event Authority admission and complete owner
+  adoption. Missing durable receipt custody blocks the override before effect. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is only a request signal and is never sufficient
   authority.
 
 
@@ -69,7 +73,7 @@ canonical_text: 'One Settings resolver supplies the existing FileSafe switch and
   under its owner policy. No new FileSafe switch, event authority or restore engine is introduced.
 
 
-  B/C app root admission retains normalized identity, symlink/reparse and nearest-existing-parent checks before
+  ACD-508/510 app root admission retains normalized identity, symlink/reparse and nearest-existing-parent checks before
   reads, mutations or restoration; listed FileSafe-on home reads are never a write grant. Actual Project writes
   use their authorized chat/conversion or a separately admitted real FileSafe/attachment owner target, never
   an outside-chat raw write or an external-directory yes. Clean workspace requires one exact admitted directory
@@ -100,9 +104,8 @@ acceptance_criteria:
   Hosts.
 - Conversion/Undo never transplants overrides or clears root/integrity/recovery holds.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

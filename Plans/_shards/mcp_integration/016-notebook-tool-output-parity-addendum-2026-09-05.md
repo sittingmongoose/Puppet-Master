@@ -4,7 +4,7 @@ Source: `Plans/MCP_Integration.md`
 
 Source lines: L2827-L2970
 
-Source SHA256: `0a52a091b49079c0b61bdf412f30e374054b3af1276ea66acf479067b9c236b5`
+Source SHA256: `8828c2151d68074096ab61a89e2b2a83e705b3dbcacbc10fb1e0dafaa221b6aa`
 
 ---
 
@@ -100,8 +100,8 @@ acceptance_criteria:
 - Preview/readback/rollback includes whole copies, exact switches and reach additions; partial failures
   cannot claim all Computers changed.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope

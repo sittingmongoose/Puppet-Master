@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/final_gui_interaction_contracts.schema.json",
   "title": "Final GUI reconciled interaction presentation contracts",
-  "description": "Strict static presentation contracts for K3 Settings/Doctor, Product Onboarding, Guided Tour, PMHoverTag, reusable reference-only security controls, post-integration DRY reconciliation, and evidence separation. Validation is not runtime or native Slint proof.",
+  "description": "Strict static presentation contracts for K3 Settings/Doctor, Product Onboarding, Guided Tour, shared hover-help overlay, reusable reference-only security controls, post-integration DRY reconciliation, and evidence separation. Validation is not runtime or native Slint proof.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -356,6 +356,17 @@
       }
     },
     "onboarding_motion": {
+      "description": "Closed historical/current presentation-policy editions; no user-selectable scope control.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/onboarding_motion_project_v1"
+        },
+        {
+          "$ref": "#/$defs/onboarding_motion_v2"
+        }
+      ]
+    },
+    "onboarding_motion_project_v1": {
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -858,9 +869,20 @@
           "const": false
         },
         "deferred_project_stages": {
-          "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/deferred_project_stage_order"
+          "const": [
+            "welcome",
+            "simple_path",
+            "first_project",
+            "source_control_setup",
+            "server_storage_client",
+            "remote_access_setup",
+            "review_setup_plan",
+            "automatic_preparation",
+            "ready"
+          ]
         }
-      }
+      },
+      "description": "Historical Project-bound presentation descriptor. Its original shape remains readable; the versioned current descriptor carries N15 application setup. Neither descriptor is a user control or native authority."
     },
     "guided_tour": {
       "type": "object",
@@ -1348,10 +1370,10 @@
           "const": "F3-523"
         },
         "component": {
-          "const": "PMHoverTag"
+          "const": "shared hover-help overlay"
         },
         "controller": {
-          "const": "HoverTagController"
+          "const": "shared hover-help controller"
         },
         "min_height_px": {
           "const": 24
@@ -4644,6 +4666,277 @@
           "const": false
         }
       }
+    },
+    "onboarding_motion_v2": {
+      "description": "Current presentation policy derived from the actual onboarding target scope. provider_setup_scope is resolved owner context, never a visible picker, demo switch or synthetic backend.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_kind",
+        "plan_unit_ref",
+        "setup_model",
+        "stage_count",
+        "stages",
+        "journey_mode",
+        "connect_existing_stage_count",
+        "connect_existing_stages",
+        "connect_existing_skips",
+        "reverse_back_contract",
+        "navigation_before_apply",
+        "selection_effect",
+        "first_choice_stage",
+        "first_choice_options",
+        "independent_roles",
+        "roles_visible",
+        "role_choice_stage",
+        "theme_choice_stage",
+        "theme_choice_timing",
+        "theme_picker",
+        "safe_history",
+        "remote_access",
+        "choice_help",
+        "review_apply",
+        "owner_action_identity",
+        "owner_projection_only",
+        "private_owner_mutations",
+        "synthetic_onboarding_commands",
+        "max_prominent_choices",
+        "dominant_primary_actions",
+        "hero_ms",
+        "step_transition_ms",
+        "stagger_ms",
+        "microinteraction_ms",
+        "success_ms",
+        "interruptible",
+        "input_blocking",
+        "reduced_motion",
+        "contract_revision",
+        "project_choices_effect",
+        "settings_choice_owner",
+        "copy_settings_explicit_opt_in",
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind",
+        "precommit_access_owner",
+        "precommit_mutations_except_necessary_selected_source_auth",
+        "project_commit_owner",
+        "paid_provider_stage",
+        "free_models_stage",
+        "provider_setup_requires_actual_project_commit",
+        "free_models_after_paid_ready_or_explicit_skip",
+        "free_models_underlying_provider_owner_setup",
+        "project_later_supported",
+        "close_retains_existing_project_and_exact_phase",
+        "back_replays_commit_or_returns_to_uncreated_draft",
+        "deferred_project_stages",
+        "first_project_prominent_choice_exception",
+        "provider_setup_scope"
+      ],
+      "properties": {
+        "contract_kind": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/contract_kind"
+        },
+        "plan_unit_ref": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/plan_unit_ref"
+        },
+        "setup_model": {
+          "const": "draft_then_reviewed_project_or_application_setup"
+        },
+        "stage_count": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/stage_count"
+        },
+        "stages": {
+          "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/main_stage_order"
+        },
+        "journey_mode": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/journey_mode"
+        },
+        "connect_existing_stage_count": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/connect_existing_stage_count"
+        },
+        "connect_existing_stages": {
+          "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/connect_existing_stage_order"
+        },
+        "connect_existing_skips": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/connect_existing_skips"
+        },
+        "reverse_back_contract": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/reverse_back_contract"
+        },
+        "navigation_before_apply": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/navigation_before_apply"
+        },
+        "selection_effect": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/selection_effect"
+        },
+        "first_choice_stage": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/first_choice_stage"
+        },
+        "first_choice_options": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/first_choice_options"
+        },
+        "independent_roles": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/independent_roles"
+        },
+        "roles_visible": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/roles_visible"
+        },
+        "role_choice_stage": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/role_choice_stage"
+        },
+        "theme_choice_stage": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/theme_choice_stage"
+        },
+        "theme_choice_timing": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/theme_choice_timing"
+        },
+        "theme_picker": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/theme_picker"
+        },
+        "safe_history": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/safe_history"
+        },
+        "remote_access": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/remote_access"
+        },
+        "choice_help": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/choice_help"
+        },
+        "review_apply": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/review_apply"
+        },
+        "owner_action_identity": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/owner_action_identity"
+        },
+        "owner_projection_only": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/owner_projection_only"
+        },
+        "private_owner_mutations": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/private_owner_mutations"
+        },
+        "synthetic_onboarding_commands": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/synthetic_onboarding_commands"
+        },
+        "max_prominent_choices": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/max_prominent_choices"
+        },
+        "first_project_prominent_choice_exception": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/first_project_prominent_choice_exception"
+        },
+        "dominant_primary_actions": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/dominant_primary_actions"
+        },
+        "hero_ms": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/hero_ms"
+        },
+        "step_transition_ms": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/step_transition_ms"
+        },
+        "stagger_ms": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/stagger_ms"
+        },
+        "microinteraction_ms": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/microinteraction_ms"
+        },
+        "success_ms": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/success_ms"
+        },
+        "interruptible": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/interruptible"
+        },
+        "input_blocking": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/input_blocking"
+        },
+        "reduced_motion": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/reduced_motion"
+        },
+        "contract_revision": {
+          "const": "draft-review-project-or-app-ai-2026-11-04"
+        },
+        "project_choices_effect": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/project_choices_effect"
+        },
+        "settings_choice_owner": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/settings_choice_owner"
+        },
+        "copy_settings_explicit_opt_in": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/copy_settings_explicit_opt_in"
+        },
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/copy_settings_requires_precommit_preview_and_postcommit_rebind"
+        },
+        "precommit_access_owner": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/precommit_access_owner"
+        },
+        "precommit_mutations_except_necessary_selected_source_auth": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/precommit_mutations_except_necessary_selected_source_auth"
+        },
+        "project_commit_owner": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/project_commit_owner"
+        },
+        "paid_provider_stage": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/paid_provider_stage"
+        },
+        "free_models_stage": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/free_models_stage"
+        },
+        "provider_setup_requires_actual_project_commit": {
+          "type": "boolean"
+        },
+        "free_models_after_paid_ready_or_explicit_skip": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/free_models_after_paid_ready_or_explicit_skip"
+        },
+        "free_models_underlying_provider_owner_setup": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/free_models_underlying_provider_owner_setup"
+        },
+        "project_later_supported": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/project_later_supported"
+        },
+        "close_retains_existing_project_and_exact_phase": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/close_retains_existing_project_and_exact_phase"
+        },
+        "back_replays_commit_or_returns_to_uncreated_draft": {
+          "$ref": "#/$defs/onboarding_motion_project_v1/properties/back_replays_commit_or_returns_to_uncreated_draft"
+        },
+        "deferred_project_stages": {
+          "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/deferred_project_stage_order"
+        },
+        "provider_setup_scope": {
+          "enum": [
+            "project_after_commit",
+            "application_on_named_computer"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider_setup_scope": {
+                "const": "project_after_commit"
+              }
+            },
+            "required": [
+              "provider_setup_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider_setup_requires_actual_project_commit": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "provider_setup_requires_actual_project_commit": {
+                "const": false
+              },
+              "project_later_supported": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

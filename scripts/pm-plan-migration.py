@@ -850,6 +850,34 @@ def current_snapshot_plan_units() -> tuple[dict[str, list[str]], list[dict[str, 
     return by_doc, units, failures
 
 
+# The historical run the aggregate gates validate (scripts/pm-plans-verify.py
+# DEFAULT_PLAN_MIGRATION_RUN). Its frozen inventory holds the 72 documents of
+# 2026-07-03, so its validator compares it with the live Plans/*.md set and turns
+# doc_count_mismatch / inventory_doc_set_mismatch into historical-scope warnings
+# only when a complete in-repo run declares that it supersedes run 002 and the
+# terminal current snapshot passes full live validation (historical_scope_exemption).
+# Run 003 made that declaration on 2026-08-28; it left the repository with runs
+# 004-016 on 2026-09-10, which stranded run 002. Every current snapshot inventories
+# every live document, so it can truthfully repeat the declaration. snapshot-current
+# therefore adds it by default (Jared, 2026-11-04, governance residuals question 2),
+# so the lineage survives however many older snapshots move out later.
+AGGREGATE_HISTORICAL_RUN_ID = "pds-20260611-002-atomize-planunits"
+
+
+def snapshot_supersedes_run_ids(run_id: str, requested: list[str]) -> list[str]:
+    """Return the requested predecessors plus run 002 when it is present and complete."""
+    supersedes = list(requested)
+    if run_id == AGGREGATE_HISTORICAL_RUN_ID or AGGREGATE_HISTORICAL_RUN_ID in supersedes:
+        return supersedes
+    summary_path = MIGRATIONS / AGGREGATE_HISTORICAL_RUN_ID / "final_validation_summary.json"
+    if not summary_path.is_file():
+        return supersedes
+    summary = read_json(summary_path)
+    if summary.get("run_id") == AGGREGATE_HISTORICAL_RUN_ID and is_complete_status(summary.get("status")):
+        supersedes.append(AGGREGATE_HISTORICAL_RUN_ID)
+    return supersedes
+
+
 def validate_supersedes_lineage(run_id: str, supersedes_run_ids: list[str]) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     if not supersedes_run_ids:
@@ -1338,7 +1366,8 @@ def cmd_snapshot_current(args: argparse.Namespace) -> dict[str, Any]:
                 }
             ],
         }
-    preflight_failures = validate_supersedes_lineage(args.run_id, args.supersedes_run_id)
+    supersedes_run_ids = snapshot_supersedes_run_ids(args.run_id, args.supersedes_run_id)
+    preflight_failures = validate_supersedes_lineage(args.run_id, supersedes_run_ids)
     if args.batch_size < 1:
         preflight_failures.append({"error": "current_snapshot_batch_size_must_be_positive", "actual": args.batch_size})
     if args.pilot_doc is not None and args.pilot_doc not in {rel(path) for path in live_docs}:
@@ -1353,7 +1382,7 @@ def cmd_snapshot_current(args: argparse.Namespace) -> dict[str, Any]:
     bundle, failures = build_current_snapshot_bundle(
         args.run_id,
         args.expected_doc_count,
-        args.supersedes_run_id,
+        supersedes_run_ids,
         args.pilot_doc,
         args.batch_size,
     )
@@ -1377,6 +1406,7 @@ def cmd_snapshot_current(args: argparse.Namespace) -> dict[str, Any]:
                 "coverage_rows": len(bundle["coverage"]),
                 "batch_size": bundle["inventory"]["batch_size"],
                 "batch_count": len(bundle["batches"]),
+                "supersedes_run_ids": bundle["inventory"]["supersedes_run_ids"],
                 "conversion_performed": False,
             },
         }
@@ -1449,6 +1479,7 @@ def cmd_snapshot_current(args: argparse.Namespace) -> dict[str, Any]:
             **validation["checks"],
             "current_run_pointer": rel(CURRENT_RUN_POINTER),
             "plans_manifest_sha256": bundle["inventory"]["plans_manifest_sha256"],
+            "supersedes_run_ids": bundle["inventory"]["supersedes_run_ids"],
             "conversion_performed": False,
         },
     }
@@ -2755,7 +2786,13 @@ def main() -> int:
     )
     snapshot.add_argument("--run-id", required=True)
     snapshot.add_argument("--expected-doc-count", required=True, type=int)
-    snapshot.add_argument("--supersedes-run-id", required=True, action="append")
+    snapshot.add_argument(
+        "--supersedes-run-id",
+        required=True,
+        action="append",
+        help=f"a predecessor run this snapshot supersedes; repeatable. {AGGREGATE_HISTORICAL_RUN_ID} is added "
+        "automatically when it is present and complete",
+    )
     snapshot.add_argument("--pilot-doc")
     snapshot.add_argument("--batch-size", type=int, default=10)
     snapshot.add_argument(

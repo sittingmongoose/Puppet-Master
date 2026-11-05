@@ -67,6 +67,11 @@
     S.save();
   }
 
+  const canPairInstead = (S) => {
+    const n = N(S), d = n.manual ? S.env.devices.find((x) => sameHost(x.address, n.addr)) : picked(S);
+    return (n.method || 'ssh') === 'ssh' && n.useSsh && !!d && d.pm && d.id === n.device;
+  };
+
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {
     chapter: 'project', stage: 'server_storage_client',
@@ -135,7 +140,9 @@
         else if (!d) reason = T('nas.find.choose');
       }
       else if (m === 'mounted') ok = !!n.volume && volumes(S).includes(n.volume); else { ok = !!shareOf(S); reason = n.shareManual ? T('nas.find.shareBad.' + m) : T('missing.storage'); }
-      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !ok, reason } };
+      return { secondary: canPairInstead(S)
+        ? [{ label: T('nas.pmpair.pairInstead'), do: 'pairInstead' }] : [],
+        primary: { label: T('chrome.continue'), do: 'next', disabled: !ok, reason } };
     },
     do: {
       /* another way of reaching the files drops a share of the old way (FF-18) */
@@ -163,6 +170,13 @@
       /* (another volume picked keeps the check of the one before: each check is the volume's own, and an un-continued pick
          changes nothing it cannot take back, lead's ruling 1103040758) */
       volume(S, v) { const n = N(S); n.volume = v; S.save(); O55.ui.refresh(); },
+      /* The mirror of Use SSH instead changes only the way into this committed NAS. A pending different device
+         must never redirect pairing or discard the SSH facts and pairing choice already held for this one. */
+      pairInstead(S) {
+        const n = N(S);
+        if (!canPairInstead(S)) return;
+        n.useSsh = false; S.save(); O55.ui.go('nas-pmpair');
+      },
       manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       next(S) {
         const n = N(S), m = n.method || 'ssh';

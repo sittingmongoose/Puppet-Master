@@ -325,7 +325,9 @@
     {
       "id": "general.visual.theme",
       "label": "Theme",
-      "desc": "Pick a look: Basic, Friendly, Glass, Retro or NieR. Each has a light and dark version.",
+      "desc": "Pick one of five looks: Basic, Friendly, Retro, Glass or NieR. Light or dark is the only scheme control, offering Light, Dark and Auto. Changing the look preserves the chosen scheme, including Auto.",
+      "presentation_options": ["Basic", "Friendly", "Retro", "Glass", "NieR"],
+      "presentation_contract": "Show only the five family names in Theme. The options below are retained composite storage values for compatibility, not additional visible choices. Map a family pick to its resolved composite value while preserving general.visual.theme-mode; commit the pair atomically. Existing per-Project selections remain intact; no data migration.",
       "type": "select",
       "options": [
         "Basic Dark",
@@ -380,7 +382,7 @@
     {
       "id": "general.visual.theme-mode",
       "label": "Light or dark",
-      "desc": "Switches the chosen theme between light and dark. Match my computer follows your computer, and Theme shows the version you see.",
+      "desc": "The single scheme control for every theme: Light, Dark or Auto (Match my computer). Auto follows your computer while Theme continues to show the chosen family.",
       "type": "select",
       "options": [
         "Light",
@@ -501,7 +503,7 @@
     {
       "id": "general.visual.basic-color-scheme",
       "label": "Light Or Dark (Basic Theme)",
-      "desc": "Picks light, dark, or follow-your-computer coloring when the Basic Modern theme is active. Switches live, no restart. (Superseded by general.visual.theme-mode)",
+      "desc": "Retired visible control by Jared on 2026-11-04 (SW-04): never offer a second scheme menu, including in advanced Basic settings. Retain saved values for compatibility; general.visual.theme-mode is the single Light / Dark / Auto choice for every family. (Superseded by general.visual.theme-mode)",
       "type": "select",
       "options": [
         "Light",
@@ -2535,9 +2537,9 @@
     {
       "id": "general.interaction.scope-labels",
       "label": "Show where each setting comes from",
-      "desc": "Labels each setting with its scope (Global, Project, Persona…) and which layer won, so overrides aren't a mystery.",
+      "desc": "Shows where each setting comes from: Everywhere, a named computer or project, or its owner. Open that word for Details.",
       "type": "toggle",
-      "default": true,
+      "default": false,
       "scope": [
         "global"
       ],
@@ -8833,18 +8835,20 @@
     {
       "id": "safety.rules.scope-selector",
       "label": "Editing rules for",
-      "desc": "Narrower layers win over wider ones.",
+      "desc": "Choose whose rules to edit: this project, this computer or Everywhere. Project-only choices need a project. Always approvals ask you to choose again.",
       "type": "radio",
       "options": [
-        "global",
         "project",
+        "computer",
+        "global",
         "package",
         "seam",
         "lane"
       ],
       "option_labels": {
-        "global": "Everywhere",
         "project": "This project",
+        "computer": "This computer",
+        "global": "Everywhere",
         "package": "A package",
         "seam": "A seam",
         "lane": "A lane"
@@ -14699,7 +14703,7 @@
     {
       "id": "code.editing.lsp-max-memory",
       "label": "Memory each server may use",
-      "desc": "Maximum memory each language server may use before being reined in. Protects the rest of your machine.",
+      "desc": "Maximum memory each language server may use before being reined in. Protects the rest of your computer.",
       "type": "number",
       "default": 512,
       "scope": [
@@ -15172,8 +15176,6 @@
       "desc": "The Docker Hub repository your images go to.",
       "type": "select",
       "options": [
-        "puppet-master",
-        "pm-runner",
         "custom…"
       ],
       "option_labels": {
@@ -15453,7 +15455,7 @@
     {
       "id": "code.execution.container-runtime",
       "label": "Container engine",
-      "desc": "Which container engine Puppet Master talks to on this machine.",
+      "desc": "Which container engine Puppet Master talks to on this computer.",
       "type": "select",
       "options": [
         "Docker",
@@ -25773,7 +25775,7 @@
     {
       "id": "branching.subagents.parallel-subagents",
       "label": "Let helpers work side by side",
-      "desc": "Lets helpers work side by side in separate workspaces instead of taking turns. Faster, but heavier on your machine and budget.",
+      "desc": "Lets helpers work side by side in separate workspaces instead of taking turns. Faster, but heavier on your computer and budget.",
       "type": "toggle",
       "default": false,
       "scope": [
@@ -30179,7 +30181,7 @@
     {
       "id": "personas.library.custom-scope",
       "label": "Save new personas for",
-      "desc": "Save new characters just for this project or for every project. Project-local personas override global ones with the same job.",
+      "desc": "Save new characters for this project or Every project, including No project. A whole version for this project replaces its library version by the same job.",
       "type": "radio",
       "options": [
         "project",
@@ -30187,7 +30189,7 @@
       ],
       "option_labels": {
         "project": "This project",
-        "global": "All my projects"
+        "global": "Every project"
       },
       "default": "project",
       "scope": [
@@ -34016,7 +34018,7 @@
     {
       "id": "system.mcp.server-scope",
       "label": "Where a server can be used",
-      "desc": "Whether a server is available everywhere, in one project, for one profile, or managed by another app (External). Each server has exactly one.",
+      "desc": "Choose Every project (including No project) or Only these projects. Profile and External entries show the availability held by their owner.",
       "type": "select",
       "options": [
         "Everywhere",
@@ -34050,6 +34052,12 @@
           "device": "set_inside_a_thing",
           "project": "set_inside_a_thing"
         }
+      },
+      "option_labels": {
+        "Everywhere": "Every project",
+        "This project": "Only these projects",
+        "One profile": "One profile",
+        "External": "External"
       }
     },
     {

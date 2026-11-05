@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14670-L15929
+Source lines: L14672-L15931
 
-Source SHA256: `c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121`
+Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
 
 ---
 
@@ -16,7 +16,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 
 | Surface | What it is | Rows it produces |
 |---|---|---|
-| `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, PM_WORK items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
+| `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, owner-projected Work items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
 | `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume`, `cmd.collaboration.research_lead` (DL-218) |
 | `questionnaire_card` | The existing questionnaire host's question and What we agreed cards; this surface ID is newly registered by UCC-206 under DL-218. | `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.grill_me.wrap_up`, `cmd.questionnaire.grill_me.confirm`, `cmd.questionnaire.grill_me.keep_going` |
 | `memory_proposal_line` | The one in-chat line that proposes a memory for review (AMS-047). | `cmd.chat.teach.open_memory` |

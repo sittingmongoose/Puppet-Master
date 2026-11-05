@@ -1933,7 +1933,8 @@ acceptance_criteria:
 - Existing widget hostability, 64 KB snapshot bound, Project migrations and read-only/service/retention evidence boundaries
   remain.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: app_board_scope_or_hostability_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

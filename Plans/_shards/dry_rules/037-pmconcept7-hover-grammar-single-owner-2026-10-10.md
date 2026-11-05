@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3501-L3581
+Source lines: L3507-L3587
 
-Source SHA256: `dd347352cddb25f2be08d51b81df50cec81d13a55f6543ff71176a198f390d58`
+Source SHA256: `ec31e72135a20b97f0cf6eb893d2b7ddfedd51dcbc640599df316eb2a454ab3e`
 
 ---
 
@@ -20,42 +20,43 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  PMConcept7's hover grammar has exactly one owner, FinalGUISpec F3-465: the magnet, the pointer light, the
+  The shared hover grammar has exactly one owner, FinalGUISpec F3-465: the magnet, the pointer light, the
   emitted glow, the continuous field with its neighbours, the Retro form Raise, the NieR form Lock-on, the
-  Reduced Motion and software-rendered forms, and the boundary. It has one engine, the PMH engine (18-hover.js
-  in the concept), riding the one merged document pointer-move handler F3-446 owns, and one token set
-  (22-hover.css in the concept), with family, kind and family-by-kind rows. There are card, row, tile, icon and
-  small-control kinds; the control marker is the same grammar's bounded extension. A surface opts in, with its
-  class in the engine's lists or `data-pmh` naming a kind on its markup, and opts out with `data-pmh="off"` or
-  by sitting inside `[data-pm-hover-exempt]`; it never restates the effect: no surface keeps its own hover lift,
-  glow, pointer sheen, magnet, pointer-move listener or animation loop, and a page's own `:hover` lift or ring
-  on a target is cancelled rather than layered under the grammar. A surface that needs a different strength sets
-  a token for its kind and never forks a layer. The boundary is part of the grammar: editor and terminal text
-  surfaces never receive card effects; small controls use F3-465's shared marker without card magnet, Glass uses
-  F3-652's optical marker, and dividers use F3-657's one resize grammar. Tab silhouettes stay with their tab
-  owners (F3-505, F3-466), and parallax stays with F3-446. Amended 2026-10-29 (O2, PC1; PM7): Pip gaze/watch
-  dwell subscribe to the shared pointer/hover owner, with one bounded kit rig clock for illustration, not a
-  per-surface pointer listener or hover effect. It pauses hidden/offscreen/during drags and keeps the last
-  pointer position. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH
-  shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows.
-  Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is
-  at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain
-  panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain
-  their non-soft-light forms and existing Reduced Motion, software and gesture holds.
+  Reduced Motion and software-rendered forms, and the boundary. It has one shared hover engine riding the
+  one merged pointer-move owner F3-446 and one token set with family, kind and family-by-kind rows. The card,
+  row, tile and icon kinds and the bounded small-control extension use the same owner. A surface enrolls with
+  its target kind through that owner; explicit target opt-out and containing-region exemptions exclude it.
+  Surfaces never restate the effect: no surface keeps its own hover lift, glow, pointer sheen, magnet,
+  pointer-move listener or animation loop, and any independent hover lift or ring on a target is suppressed
+  rather than layered under the grammar. A surface that needs a different strength sets a token for its kind
+  and never forks a layer. The boundary is part of the grammar: editor and terminal text surfaces never
+  receive card effects; small controls use F3-465's shared marker without card magnet, Glass uses F3-652's
+  optical marker, and dividers use F3-657's one resize grammar. Tab silhouettes stay with their tab owners
+  (F3-505, F3-466), and parallax stays with F3-446. Target selection, outermost-target and occlusion rules,
+  settling, and Reduced Motion, software-rendering and gesture gates remain F3-465's shared policy.
+  Amended 2026-10-29 (O2, PC1; PM7): Pip gaze/watch dwell subscribe to the shared pointer/hover owner, with
+  one bounded kit rig clock for illustration, not a per-surface pointer listener or hover effect. It pauses
+  hidden/offscreen/during drags and keeps the last pointer position. QA round 2, Jared 2026-10-30; DL-258;
+  GUI 7d586bad18: Q20: Glass has only the F3-465 shared hover light on registered edge-glow objects, including
+  Usage/Home widgets, cards, tiles and rows. No independent sheet-wide sheen, light or pointer listener
+  remains. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5
+  percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the
+  pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion,
+  software and gesture holds.
 gui_related: true
-gui_classification_reason: "Fixes one owner for PMConcept7's hover grammar."
+gui_classification_reason: "Fixes one owner for the shared product hover grammar."
 split_recommended: false
 depends_on: [F3-465, F3-446, DL-171]
 unblocks: []
 acceptance_criteria:
-  - "Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own pointer-move listener or its own hover animation loop."
-  - "Every hover target is a card, row, tile, icon or small control, opted in by class or `data-pmh` and opted out by `data-pmh=\"off\"` or `[data-pm-hover-exempt]`."
+  - "Exactly one shared product hover engine and one hover token set exist; no surface keeps a second engine, its own pointer-move listener or its own hover animation loop."
+  - "Every hover target is a card, row, tile, icon or small control enrolled with its kind through F3-465; explicit target opt-out and containing-region exemptions prevent the effect."
   - "No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not a forked layer."
   - "Tab/header controls use F3-465's small-control marker; editor/terminal text never gets a card magnet, and resize bars consume F3-657."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465 shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. No independent sheet-wide sheen, light or pointer listener remains. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: duplicate_presentation_authority
 reasoning_tier: high
 context_scope: pm7_hover_grammar
@@ -73,10 +74,9 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
   (approved campaign source lineage; not native implementation evidence)
+- "DL-260 source lineage only (no product API or implementation obligation): PMH, 18-hover.js, 22-hover.css, class lists, data-pmh, data-pmh=off and data-pm-hover-exempt were concept hover enrollment implementations; lg-shine/light and data-lg-lit were the retired sheet-wide light spellings."
 preserved_exact_tokens:
   - "F3-465"
-  - "data-pmh"
-  - "data-pm-hover-exempt"
   - "card, row, tile and icon"
 negative_constraints:
 - Do not restate the hover effect in a surface owner or give a surface its own hover lift, glow, pointer sheen, magnet

@@ -3667,6 +3667,7 @@
         "saved_configuration_label",
         "starter_route_label",
         "notifications_copy_label",
+        "settings_copy_kind_labels",
         "one_assistant_node",
         "handler_status"
       ],
@@ -3703,6 +3704,21 @@
         },
         "notifications_copy_label": {
           "const": "Notifications & limits"
+        },
+        "settings_copy_kind_labels": {
+          "const": {
+            "appearance_workspace": "Look and layout",
+            "assistant_chat": "Assistant and chat",
+            "providers_accounts_models_routing": "AI accounts and models",
+            "planning_goal": "Planning and Goals",
+            "orchestrator_automation": "Automation",
+            "tools_integrations": "Tools and connections",
+            "testing_browser_devices": "Testing, browser and devices",
+            "permissions_security": "Permissions and safety",
+            "memory_retention_history": "Memory and history",
+            "notifications_usage_budgets": "Notifications & limits",
+            "project_only_rows": "About its own files"
+          }
         },
         "one_assistant_node": {
           "const": true

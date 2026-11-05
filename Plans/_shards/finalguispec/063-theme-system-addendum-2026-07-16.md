@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30420-L31513
+Source lines: L30242-L31346
 
-Source SHA256: `5219317d3f6de37616de475f8713f24e8d655c778fdc8df3544ad7e22bd18a4d`
+Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
 
 ---
 
@@ -115,16 +115,12 @@ node_compile_hint:
   mode: per_family_theme_token_contract
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): --pm6-rb-shadow-hard was the concept CSS alias for the Retro hard offset shadow in the Theme Token Tables. The per-variant shadow values remain spec data, with no CSS-property-name obligation."
 - "Plans/FinalGUISpec.md:978"
 - "Plans/FinalGUISpec.md:7491"
 - "Plans/FinalGUISpec.md:7699"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens:
-- "--accent-primary"
-- "--accent-primary-rgb"
-- "--graph-pending"
-- "--diff-added-bg"
-- "--ease-default"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not derive theme token values at runtime; per-variant tables carry precomputed constants."
 compatibility_only_notes:
@@ -282,7 +278,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass themes expose a user-facing transparency control bound to --glass-alpha. Defaults are
+  Glass themes expose a user-facing transparency control bound to the shared Glass transparency scalar. Defaults are
   .60 for glass-dark and .55 for glass-light. Values clamp per theme: .35 through .85 for
   glass-dark and .45 through .88 for glass-light. Changes apply live to every alpha-driven
   glass fill and persist at glass_alpha:v1. The slider is a glass-only setting and renders
@@ -298,14 +294,14 @@ split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
 acceptance_criteria:
-- "The --glass-alpha control defaults to .60 on glass-dark and .55 on glass-light."
+- "The Glass transparency control defaults to .60 on glass-dark and .55 on glass-light."
 - "Values clamp to .35 through .85 on glass-dark and .45 through .88 on glass-light."
 - "Slider changes apply live to alpha-driven glass fills and persist at glass_alpha:v1."
 - "The slider is glass-only."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -315,11 +311,11 @@ node_compile_hint:
   mode: glass_alpha_transparency_slider
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - "Plans/FinalGUISpec.md:964"
 - "Plans/FinalGUISpec.md:2292"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "--glass-alpha"
 - ".60"
 - ".55"
 - ".35"
@@ -417,6 +413,7 @@ node_compile_hint:
   mode: friendly_family_ingredients_and_font_rules
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): The former Friendly cozy CSS hooks were --pm6-cozy-mint, --pm6-cozy-sky, --pm6-cozy-coral, --pm6-cozy-lav, --pm6-cozy-butter, --pm6-cozy-card-base, --pm6-cozy-mix, --pm6-cozy-border-mix, --pm6-cozy-chrome, --pm6-cozy-chrome-border, --pm6-cozy-field, --pm6-cozy-dot, --pm6-cozy-glow-mint, --pm6-cozy-glow-lav, --pm6-cozy-glow-sky. Their colors, surface/border mix ratios, dot geometry and static corner glows remain product design values; these browser aliases and color-mix/gradient implementations are not product API or custom-property obligations."
 - Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
 - Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)
 - 'Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)'
@@ -537,6 +534,12 @@ Settings appearance overrides (2026-09-27): the per-variant tables below are wha
 
 ### Theme Token Tables (F3-426 spec data)
 
+The shared theme owner retains the token roles and literal design values below. CSS selectors, source-part
+labels, root/local cascade descriptions and browser paint-expression syntax in these tables are
+**source_lineage only (DL-260/DL-280)**, with no product DOM, CSS or exact-token obligation. Product renderers
+resolve the corresponding roles and values through F3-426/F3-431 and the current presentation owners; later
+Glass, Wallpaper, tab and editor amendments remain authoritative.
+
 Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431. Since 2026-10-08 the retro-dark and retro-light tables carry PMConcept7's retro values instead (DL-151; see the dated note after F3-426).
 
 #### Root fallback contract (`:root`, 02-css-tokens.part.html:28-66)
@@ -610,7 +613,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-dark, `Concepts/PMConcept7.
 | Graph | `--graph-planning` | `#9db4d0` |
 | Graph | `--graph-gating` | `#d8b93c` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(107,118,84,.55)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(107,118,84,.55)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(74,83,58,.68)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(107,118,84,.56)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(107,118,84,.5)` |
@@ -666,7 +669,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 | Graph | `--graph-planning` | `#42A5F5` |
 | Graph | `--graph-gating` | `#AB47BC` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(26,26,26,.30)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(26,26,26,.30)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(26,26,26,.22)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(26,26,26,.30)` |
@@ -1008,7 +1011,11 @@ The concept shows seven diff-tint custom properties per variant for six variants
 
 Companion editor treatments carried in the same span (04-css-glass-b.part.html:144-196), for completeness of the :138-196 extraction:
 
-| Family scope | Rule | Value |
+This is a concept selector/declaration inventory. The shared appearance owner retains the matching minimap,
+change-mark, viewport-indicator and current-line design values; the selector and CSS declaration spellings are
+source lineage only. F3-505/F3-631/F3-639/F3-647 govern current tab and editor presentation.
+
+| Family scope | Source selector (lineage only) | Design value / source declaration |
 |---|---|---|
 | glass-dark | `.editor-minimap` | `background: rgba(16,10,32,0.5); border-left: 1px solid rgba(255,255,255,0.04);` |
 | glass-dark | `.minimap-heat-strip` | `box-shadow: none;` |
@@ -1060,7 +1067,11 @@ Lineage (amended 2026-10-17, DL-228): this table records the 2026-07 PM6 parts. 
 
 #### Backdrop-filter budget (F3-431 enumeration)
 
-| Scope | Surface | Filter | Concept source |
+Concept selectors and filter syntax in this inventory are source lineage for F3-431's renderer remediation,
+not required product markup or paint APIs. The stated surface/material values and native popup capability
+boundary remain with F3-431/F3-582 and the later F3-652 Glass owner.
+
+| Scope | Surface / concept selector (lineage only) | Material value / source filter | Source or product owner |
 |---|---|---|---|
 | Glass themes | `.app-shell` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:71-72 |
 | Glass themes | `.floating-chat` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:148-149 |
@@ -1081,24 +1092,24 @@ Mesh/Depth/Minimal, including the former mesh default below, are historical sour
 | `depth` | Container carries the base sky plus blur; two parallax wrappers `.pm6-par-far` and `.pm6-par-near` (inset `-8%`); far wrapper `::before` billow layer; six cloud puffs `.pm6-gbg-shape` (three far, three near) | `blur(14px) saturate(1.15)` dark, `blur(14px) saturate(1.12)` light (on the container) | Far billow drift `pm-sky-drift 160s`; puff float `pm-float` with per-shape `--float-dur` of `100s`, `84s`, `72s` (far) and `68s`, `76s`, `64s` (near); pointer parallax `translate3d(calc(var(--par-x, 0) * 4px), calc(var(--par-y, 0) * 2px), 0)` far and `translate3d(calc(var(--par-x, 0) * 10px), calc(var(--par-y, 0) * 6px), 0)` near; all killed under reduced motion | Base sky, far billow layer, and near puff layer baked as separate pre-blurred bitmaps so `--par-x`/`--par-y` offsets still apply per layer |
 | `minimal` | Base gradient sky only (`.pm6-gbg-minimal`), no billow layers | none (static gradients, no filter) | none (static) | One flat gradient bitmap per variant |
 
-#### Friendly cozy pastel hooks (02-css-tokens.part.html:477-492, 536-551)
+#### Friendly category palette and material values (F3-426/F3-430)
 
-| Token | friendly-dark | friendly-light |
+| Presentation role | friendly-dark | friendly-light |
 |---|---|---|
-| `--pm6-cozy-mint` | `#6FDABC` | `#5FD0B0` |
-| `--pm6-cozy-sky` | `#6FC6E8` | `#5AB9E0` |
-| `--pm6-cozy-coral` | `#FFAD93` | `#FF9E80` |
-| `--pm6-cozy-lav` | `#C3B1E4` | `#B39DDB` |
-| `--pm6-cozy-butter` | `#FFD97F` | `#FFD166` |
-| `--pm6-cozy-card-base` | `#2A2731` | `#FFFFFF` |
-| `--pm6-cozy-mix` | `14%` | `11%` |
-| `--pm6-cozy-border-mix` | `34%` | `30%` |
-| `--pm6-cozy-chrome` | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
-| `--pm6-cozy-chrome-border` | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
-| `--pm6-cozy-field` | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
-| `--pm6-cozy-dot` | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
-| `--pm6-cozy-glow-mint` | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
-| `--pm6-cozy-glow-lav` | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
-| `--pm6-cozy-glow-sky` | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
+| Mint category pastel | `#6FDABC` | `#5FD0B0` |
+| Sky category pastel | `#6FC6E8` | `#5AB9E0` |
+| Coral category pastel | `#FFAD93` | `#FF9E80` |
+| Lavender category pastel | `#C3B1E4` | `#B39DDB` |
+| Butter category pastel | `#FFD97F` | `#FFD166` |
+| Category surface base | `#2A2731` | `#FFFFFF` |
+| Category surface mix | `14%` | `11%` |
+| Category border mix | `34%` | `30%` |
+| Frosted chrome fill | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
+| Frosted chrome border | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
+| Field fill | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
+| Dot-grid ink | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
+| Mint corner glow | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
+| Lavender corner glow | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
+| Sky corner glow | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
 
-The friendly ground (10x-pm6-css-global.part.html:139-147) composes the dot grid as `radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px` over three pastel corner glows and `var(--background)`; the dot-grid tile size `18px` is the F3-430 preserved token. Category pastels are consumed via `color-mix()` against `--pm6-cozy-card-base` with `--pm6-cozy-mix` and `--pm6-cozy-border-mix` ratios (runtime-derived in concept; precompute per F3-431).
+The Friendly ground has 1 px ink dots fading to transparent by 1.5 px, repeated on an 18px by 18px grid over three static pastel corner glows and the background. The dot-grid tile size `18px` remains F3-430's preserved token. Category surfaces and borders combine the category pastel with the surface base using the table's surface and border mix percentages. All resulting per-variant colors are precomputed through F3-431; the native theme owner chooses its implementation tokens.

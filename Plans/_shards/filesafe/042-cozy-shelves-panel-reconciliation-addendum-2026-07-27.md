@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L14737-L14919
+Source lines: L14737-L14921
 
-Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
+Source SHA256: `fec2705a0c4f5bcab7856d62a8ca80b2456552237d014f2d1f305ba481929b1b`
 
 ---
 
@@ -136,8 +136,10 @@ owner_doc: Plans/FileSafe.md
 canonical_text: The two preserved mitigation bullets reading Allow override via environment variable remain
   retired source-lineage under the P0 resolution. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is only a request signal.
   Operator overrides require auth realm/operator/reason/scope/expiry plus exact Project/run/worktree binding
-  or the explicit application thread/run/Computer/recorded-root union in F2-213, with a security event and
-  receipt. A verified PS-147 build-grant action uses its separate exact grant/ownership evidence, never an
+  or the explicit application thread/run/Computer/recorded-root union in F2-213, with the historical security event/receipt contract and exact payloads for Project overrides,
+  and a durable scope-bound owner receipt for application overrides. App filesafe.* EventRecords have no
+  registered edition and remain missing_event_registration/non-emitting until separate Event Authority
+  admission and complete owner adoption. Missing durable receipt custody fails closed. A verified PS-147 build-grant action uses its separate exact grant/ownership evidence, never an
   environment-variable override. Historical override payloads remain immutable.
 gui_related: false
 gui_classification_reason: This unit dispositions stale mitigation prose; it defines no visible behavior.
@@ -152,8 +154,8 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
   this PlanUnit.
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+- scripts/pm-plan-index.py
+- scripts/pm-plans-verify.py
 risk_class: filesafe_fail_open_regression
 reasoning_tier: standard
 context_scope: filesafe_stale_override_disposition

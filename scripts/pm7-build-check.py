@@ -397,7 +397,8 @@ process.stdout.write(JSON.stringify(context.window.PM_PIP_PARTS.PRESETS));"""
     period = re.search(r"function periodOf\([^)]*\)\s*\{(.*?)\n  \}", kit, re.S)
     require(bool(period) and "tier" not in period[1] and "fam.dur * .78" in period[1]
             and "fam.dur * 1.15" in period[1], "L-1 motion ratios differ by tier or from the accepted values")
-    require(fixtures["loader_contract"]["family_token_owner"] == "PMLogo.MOTION"
+    # 2026-11-04 (DL-260 cleanup): the product owner of the family motion tokens is F3-662, not the concept's PMLogo.MOTION.
+    require(fixtures["loader_contract"]["family_token_owner"] == "Plans/FinalGUISpec.md#F3-662 shared family motion tokens"
             and fixtures["loader_contract"]["ratios"] == {"swing": 1, "think": 1.15, "hop": .78},
             "Loader motion owner/fixture ratios differ")
     basic_export = re.search(r"'basic-dark':\s*\{(.*?)(?=\n    'basic-light':)", kit, re.S)

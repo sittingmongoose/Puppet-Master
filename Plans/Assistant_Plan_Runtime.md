@@ -2114,9 +2114,9 @@ acceptance_criteria:
 - Ordinary revise rejects Project/thread changes and approved-byte mutation; no two current Plans across conversion.
 - No-project Wizard/PRD/Orchestrator remains unavailable while Plan/Deep Plan and scheduling are positive cases.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -2191,9 +2191,9 @@ acceptance_criteria:
 - Wizard handoff before Project choice refuses cleanly; successful conversion uses exact carried revision and new
   intake.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

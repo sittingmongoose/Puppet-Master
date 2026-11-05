@@ -25,6 +25,9 @@ function tagged(label, detail) { return ' data-pm-hover-label="' + esc(label) + 
 function reducedNow() { return PMW.reduced ? PMW.reduced() : false; }
 function sheetBusy() {
   if (document.hidden) return true;
+  // An unrelated hidden editor build must not block the inbox's opening, reading or closing frames.
+  var inbox = document.getElementById('pmnPanel');
+  if (inbox && !inbox.hidden) return true;
   if (typeof window.PM_BUSY === 'function') return !!window.PM_BUSY();
   var de = document.documentElement;
   var nier = window.PM_NIER;

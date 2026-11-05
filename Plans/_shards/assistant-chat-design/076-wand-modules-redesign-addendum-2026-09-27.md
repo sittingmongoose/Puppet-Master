@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27008-L27731
+Source lines: L26988-L27713
 
-Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -42,16 +42,15 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   per-reply files row replace the stream footer pill''s helpers and files chips (ACD-482, DL-129). Amended 2026-10-29
   (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views
   of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped
-  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): activity-panel.js registers
-  one PM56_PMX.dock.provide(workDock) provider over the selected thread’s PM_WORK process/agent/scheduled items. needsYou
-  items are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
+  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): One shared work dock provider reads the selected thread’s owner-projected process, agent and scheduled items. Items requiring input or review
+  are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
   run is comingup. These items have no transcript card to wait offscreen for; existing transcript-backed providers retain
-  their visibility rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled
+  their visibility rules. Visible work times update through the shared tick owner. Review/Show for a process or scheduled
   item reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents Activity
   Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop action. D7: Native
   owner-row selection must bind signed owner identity, thread and generation as CS-106 requires; the concept is not evidence
   that this stronger guard exists. Process/scheduled Review already passes the item ID. QA round 2, Jared 2026-10-30;
-  DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run
+  DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run
   a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
   identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
   occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain
@@ -75,10 +74,10 @@ acceptance_criteria:
   - "Every dock sentence is the producing owner's sentence; the dock holds no copy of owner state."
   - "The dock reserves its own space and never covers transcript content."
   - "A Chat Room's pacing, exhaustion or stop-condition wait, manual pause and every Grill Me session's current Confirm use yourmove (CWR-044); questions, approvals and failures use needs. Between automatic rounds it shows as live only when no existing user gate or manual pause requires attention."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: attention_surface_duplicates_owner_state
 reasoning_tier: high
 context_scope: chat_composer_stack
@@ -95,6 +94,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C14-C15, 4.5 G-10, 7.4, 7.8"
   - "IMPACT-REGISTER B-ACD-10, B-ACD-08 (reference only)"
   - "Plans/Decision_Log.md DL-231 (a finished Chat Room round is no longer the user's move, 2026-10-21)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
+  - "DL-260 source lineage only (no product API or implementation obligation): activity-panel.js registered PM56_PMX.dock.provide(workDock) over PM_WORK and patched [data-work-time]; these were concept provider/DOM spellings."
+  - "DL-260 source lineage only (no product API or implementation obligation): needsYou was a concept work predicate; the owner AttentionItem projection supplies the product needs tone."
 preserved_exact_tokens:
   - "dock"
   - "AttentionItem"
@@ -667,15 +669,15 @@ split_recommended: false
 depends_on: [ACD-010, DL-126, F3-572]
 unblocks: [F3-581, ATS-065]
 acceptance_criteria:
-  - "A chat with an override uses it; a chat without one uses the project default; a project without one uses the app default."
+  - "Resolution follows This chat → Project → Computer → Everywhere → factory; an app chat skips Project and each missing override falls through to the next applicable level."
   - "After a switch, every earlier reply keeps its text and no reply is re-sent, regenerated or rewritten."
   - "A reply streaming during a switch finishes in the style it started with."
   - "Explain this reply simply adds exactly one reply, leaves the explained reply unchanged and changes no ELI5 setting."
   - "cmd.chat.eli5.explain_reply is refused for a reply that is still streaming."
   - "No helper line under a control has an Expert and an ELI5 variant."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: eli5_second_response_or_rewrite
 reasoning_tier: high
 context_scope: chat_eli5
@@ -699,7 +701,7 @@ source_lineage:
   - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "DL-138"
-  - "the chat override, otherwise the project default, otherwise the app default"
+  - "This chat → Project → Computer → Everywhere → factory"
   - "general.interaction.chat-eli5"
   - "general.interaction.eli5-default"
   - "Explain Terms Everywhere"
@@ -721,7 +723,7 @@ negative_constraints:
   - "Do not let ELI5 change code, plans, files or generated documents."
   - "Do not define the Settings project scope here; Settings owns it."
 stale_retired_dispositions:
-  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by the three-level resolution in this unit (DL-126)."
+  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by this unit's Settings-owned layered resolution (DL-281); DL-126's forward-only reply behavior remains."
   - "FinalGUISpec 2026-09-03 section 14's 'ELI5 is a wand check' is superseded by the ELI5 sheet and the quick dot (FinalGUISpec F3-581)."
 owner_hints:
   - Plans/assistant-chat-design.md
