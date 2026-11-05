@@ -18,12 +18,13 @@ import sys
 from pathlib import Path
 from urllib.parse import urljoin
 
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
 Draft202012Validator = body_route.StrictValidator
 CONTRACT_PATH = "Plans/browser_workspace_reset_contracts.schema.json"
@@ -363,9 +364,7 @@ def checkpoint_core_failures(value):
             return errors + ["checkpoint_timestamp"]
         times = {name: parse_time(value[name])
                  for name in ("updated_at_utc", "withdrawn_at_utc", "published_at_utc") if value[name] is not None}
-        if any(t.tzinfo is None for t in times.values()):
-            errors.append("checkpoint_timestamp")
-        elif "withdrawn_at_utc" in times and times["withdrawn_at_utc"] > times["updated_at_utc"]:
+        if "withdrawn_at_utc" in times and times["withdrawn_at_utc"] > times["updated_at_utc"]:
             errors.append("withdrawal_after_observation")
         if times["published_at_utc"] > times["updated_at_utc"] or (
                 "withdrawn_at_utc" in times and times["published_at_utc"] > times["withdrawn_at_utc"]):

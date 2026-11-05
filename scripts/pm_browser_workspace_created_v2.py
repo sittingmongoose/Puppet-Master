@@ -18,11 +18,12 @@ from functools import lru_cache
 import sys
 from pathlib import Path
 
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
 Draft202012Validator = body_route.StrictValidator
 SCHEMA = 'Plans/browser_workspace_created_checkpoint_v2.schema.json'

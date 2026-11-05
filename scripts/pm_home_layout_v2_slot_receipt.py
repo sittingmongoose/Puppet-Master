@@ -34,7 +34,8 @@ import sys
 from pathlib import Path
 from typing import Any, Iterator
 
-from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
+from jsonschema import Draft202012Validator, ValidationError, validators
+from pm_contract_formats import FormatChecker
 from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
@@ -525,14 +526,52 @@ def value_limit_check(err: list[str], definition: str, value: dict[str, Any], li
                    "it is stored only by reference")
 
 
-def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d: str, store: PayloadStore = EMPTY_STORE) -> dict[str, Any]:
+def layout_history_context_errors(ev: Any, source: Any, custody: Any) -> list[str]:
+    """Check the retained adapter observation; caller metadata selects no recipe.
+
+    Original bytes/recipe and their commitment belong to the verified reader and
+    checkpoint adapter, like its source/access flags. This synthetic oracle does
+    not authenticate a native Storage frame or receipt.
+    """
+    flags = ('source_verified', 'access_allowed', 'deletion_allows_audit', 'checkpoint_read_token_valid')
+    if not isinstance(custody, dict) or any(custody.get(k) is not True for k in flags):
+        return ['layout_historical_custody']
+    if not isinstance(source, dict) or set(source) != {'event_bytes', 'payload_validation_recipe'}:
+        return ['layout_historical_source_missing']
+    if type(source['event_bytes']) is not bytes or source['payload_validation_recipe'] not in (
+            'workspace-layout-v2/original-json-schema', 'workspace-layout-v2/typed-integer'):
+        return ['layout_historical_recipe']
+    if custody.get('retained_source_sha256') != sha(canonical_msgpack(source)):
+        return ['layout_historical_source_commitment']
+    if source['event_bytes'] != canonical_msgpack(ev):
+        return ['layout_historical_source_mismatch']
+    return []
+
+
+def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d: str,
+                 store: PayloadStore = EMPTY_STORE, *, historical: bool = False,
+                 historical_source: Any = None, custody: Any = None) -> dict[str, Any]:
     import pm_event_payload_route as body_route
-    payload, route_errors = body_route.resolved_body(ev, store.objects, historical=ev.get("schema_version") == "2.0.0")
+    if type(historical) is not bool:
+        err.append('historical_context_type')
+        return {}
+    if historical:
+        history_errors = layout_history_context_errors(ev, historical_source, custody)
+        if history_errors:
+            err.extend(history_errors)
+            return {}
+    # Home4 stored values also carry the explicitly retained 2.0.0 event form.
+    # This chooses its physical decoder only; it never relaxes payload typing.
+    payload, route_errors = body_route.resolved_body(ev, store.objects,
+        historical=historical or ev.get('schema_version') == '2.0.0')
     err.extend("I12 " + e for e in route_errors)
     if payload is None:
         return {}
     schema = load(Path(__file__).resolve().parents[1], "Plans/event_payloads/workspace_layout_changed_v2.schema.json")
-    if not body_route.validator(schema).is_valid(payload):
+    selected = body_route.validator(schema)
+    if historical and historical_source['payload_validation_recipe'] == 'workspace-layout-v2/original-json-schema':
+        selected = RetainedBodyValidator(schema, registry=selected._registry, format_checker=FormatChecker())
+    if not selected.is_valid(payload):
         err.append("I12 resolved event body fails workspace layout payload schema")
         return {}
     if payload["command_id"] != binding["command_id"]:
@@ -561,6 +600,17 @@ def binding_checks(err: list[str], binding: dict[str, Any]) -> str:
     return d
 
 
+def same_typed_value(left: Any, right: Any) -> bool:
+    """Exact decoded JSON domain, including Boolean/integer/float distinctions."""
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        return left.keys() == right.keys() and all(same_typed_value(left[k], right[k]) for k in left)
+    if isinstance(left, list):
+        return len(left) == len(right) and all(same_typed_value(a, b) for a, b in zip(left, right))
+    return left == right
+
+
 def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout: Any, layout_sha: Any,
                        store: PayloadStore) -> None:
     src = holder[name]
@@ -586,7 +636,10 @@ def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout
             decoded = json.loads(data.decode("utf-8"))
         except (UnicodeDecodeError, json.JSONDecodeError):
             decoded = None
-    if decoded != layout:
+    # The expected layout already passed the exact Home4 schema. Type-first
+    # complete equality checks the source in that same domain, without rewriting
+    # either original bytes or their physical hashes.
+    if not same_typed_value(decoded, layout):
         err.append(f"I6 {name} does not decode to the decoded layout (synthetic adapter)")
 
 

@@ -4,9 +4,12 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from functools import lru_cache
 from pathlib import Path
+from unittest.mock import patch
 import pm_event_authority_ds_round2 as boundary
 import pm_event_authority_ds_round3 as round3
+import pm_event_authority_ds_round4 as round4
 
 # These names refer to the exact same predicates, not unrelated guards.
 SHARED = {
@@ -19,7 +22,7 @@ SHARED = {
 
 def build():
     combined = boundary.Suite()
-    for suite in (boundary.build(), round3.build()):
+    for suite in (boundary.build(), round3.build(), round4.build()):
         combined.positives.extend(suite.positives)
         combined.negatives.extend((name, SHARED.get(guard, guard), fn) for name, guard, fn in suite.negatives)
         for guard, weakener in suite.weakeners.items():
@@ -32,7 +35,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', required=True, type=Path)
     args = parser.parse_args()
-    result = build().run()
+    import pm_home_layout_v2_slot_receipt as home
+    import pm_event_payload_route as route
+    from pm_ds_guard_cases import validated_schema_documents, static_browser_contexts
+    # Memoize only exact byte -> hash and successful schema-definition checks.
+    # Every input and guard still executes; no event/value result is cached.
+    cached = lru_cache(maxsize=128)(home.blake3_hex)
+    import pm_browser_workspace_created as created
+    import pm_browser_workspace_reset as reset
+    gate,_=created.candidate_gate(boundary.ROOT)
+    other=reset.sibling('pm-browser-event-admission',boundary.ROOT)
+    with validated_schema_documents(), patch.object(home, 'blake3_hex', cached), patch.object(route, 'blake3_hex', cached), \
+            static_browser_contexts((gate.contract_context,other.contract_context)):
+        result = build().run()
     result['schema_id'] = 'pm.ds.combined_targeted_guard_matrix.v1'
     result['shared_source_predicates'] = SHARED
     result['composition_source_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()

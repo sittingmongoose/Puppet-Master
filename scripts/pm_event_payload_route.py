@@ -5,7 +5,8 @@ import json
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urljoin
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
+from pm_contract_formats import FormatChecker
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 from pm_home_layout_v2_slot_receipt import (

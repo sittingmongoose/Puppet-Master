@@ -187,10 +187,16 @@ def build():
         suite.negative('layout:omitted_join_'+field,group,lambda e=bad:not ds.layout_event_errors(e,binding=slot['binding']))
         suite.weakeners[group]=lambda targets=targets:remove(*targets)
     custody={k:True for k in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid')}
-    suite.positive('layout:retained_custody',lambda e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,custody=custody))
-    for flag in custody:
-        suite.negative('layout:history_'+flag,'layout_history_custody',lambda f=flag,e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,custody={**custody,f:False}))
-    suite.weakeners['layout_history_custody']=lambda:remove((ds,'layout_event_errors','historical and'))
+    observation=ds.layout_history_observation(event)
+    custody=observation['custody']
+    suite.positive('layout:retained_custody',lambda e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,**observation))
+    for flag in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid'):
+        suite.negative('layout:history_'+flag,'layout_history_custody',lambda f=flag,e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,historical_source=observation['historical_source'],custody={**custody,f:False}))
+    suite.weakeners['layout_history_custody']=lambda:remove((home,'layout_history_context_errors','not isinstance(custody'))
+    suite.negative('layout:history_forged_source_commitment','layout_history_source_commitment',
+        lambda e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,
+            historical_source=observation['historical_source'],custody={**custody,'retained_source_sha256':'f'*64}))
+    suite.weakeners['layout_history_source_commitment']=lambda:remove((home,'layout_history_context_errors',"custody.get('retained_source_sha256')"))
     suite.weakeners['current_writer_producer_sequence']=lambda:remove(*[(g,'candidate_failures',"not historical and (event.get('producer_sequence_id')") for g in (gate,reset.sibling('pm-browser-event-admission',ROOT))])
     for token in ('1.0','1e0','-0.0'):
         event=copy.deepcopy(values[0][1]['event']);event['producer_sequence_id']=json.loads(token)
@@ -249,7 +255,7 @@ def type_sweep():
         results.append({'family':'workspace.layout_changed','location':'body','value':value,'refused':bool(ds.layout_event_errors(e,binding=slot['binding']))})
         custody={k:True for k in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid')}
         for flag in custody:
-            results.append({'family':'workspace.layout_changed','location':flag,'value':value,'refused':bool(ds.layout_event_errors(event,binding=slot['binding'],historical=True,custody={**custody,flag:value}))})
+            results.append({'family':'workspace.layout_changed','location':flag,'value':value,'refused':bool(ds.layout_event_errors(event,binding=slot['binding'],historical=True,historical_source=ds.layout_history_observation(event)['historical_source'],custody={**ds.layout_history_observation(event)['custody'],flag:value}))})
         results.append({'family':'context.compaction.completed','location':'verified','value':value,'refused':ds.compaction_history(comp,verified=value,withdrawn=False,deleted=False,live_revision=999)=='unavailable'})
         results.append({'family':'terminal.workgroup_moved','location':'retained_schema_boolean','value':value,'refused':all(not route.StrictValidator(s).is_valid(value) for s in bools)})
     return {'status':'pass' if all(r['refused'] for r in results) else 'fail','cases':results,'terminal_runtime':'NOT_RUN; held owner question unchanged'}

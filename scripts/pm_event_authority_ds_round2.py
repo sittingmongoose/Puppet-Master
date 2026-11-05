@@ -11,13 +11,16 @@ import inspect
 import json
 import re
 import textwrap
+import types
+from functools import update_wrapper
 from datetime import datetime
 import subprocess
 import sys
 from contextlib import contextmanager, ExitStack, nullcontext
 from pathlib import Path
 from unittest.mock import patch
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
+from pm_contract_formats import FormatChecker
 from jsonschema._keywords import pattern as python_pattern
 import pm_event_payload_route as route
 import pm_home_layout_v2_slot_receipt as home
@@ -32,7 +35,9 @@ def load(path):
 
 def source_without_guard(fn, text):
     """Weaken actual production condition(s), in memory only; never filter returned errors."""
-    tree = ast.parse(textwrap.dedent(inspect.getsource(fn)))
+    original=inspect.unwrap(fn)
+    tree = ast.parse(textwrap.dedent(inspect.getsource(original)))
+    tree.body[0].decorator_list=[]
     matched = []
     class Weaken(ast.NodeTransformer):
         def visit_If(self, node):
@@ -43,9 +48,13 @@ def source_without_guard(fn, text):
     changed = ast.fix_missing_locations(Weaken().visit(tree))
     if len(matched) != 1:
         raise ValueError(f'{fn.__qualname__}: expected one guard matching {text!r}, found {matched}')
-    namespace = dict(fn.__globals__)
+    namespace = dict(original.__globals__)
     exec(compile(changed, inspect.getsourcefile(fn), 'exec'), namespace)
-    return namespace[fn.__name__]
+    compiled=namespace[fn.__name__]
+    changed=types.FunctionType(compiled.__code__,original.__globals__,fn.__name__,compiled.__defaults__,compiled.__closure__)
+    changed.__kwdefaults__=compiled.__kwdefaults__
+    update_wrapper(changed,original)
+    return contextmanager(changed) if fn is not original and inspect.isgeneratorfunction(original) else changed
 
 def padded(body, target, field):
     """Keep valid identifier refs; solve the *encoded* map boundary, including str headers."""
@@ -88,8 +97,6 @@ def compaction_event_errors(event, *, historical=False):
     if errors:
         return errors
     payload = event['payload']
-    if not route.validator(load('Plans/event_record.schema.json')).is_valid(event):
-        errors.append('envelope_schema')
     if event['scope_kind'] != 'project' or event['project_id'] is None:
         errors.append('project_only')
     if event['scope_kind'] == 'project' and any(event[k] != payload[k] for k in ('project_id', 'thread_id')):
@@ -316,7 +323,17 @@ def build():
     suite.negative('compaction:invalid_calendar','compaction_calendar_validation',lambda:not compaction_payload_errors(invalid_date))
     leap_day=copy.deepcopy(comp['valid_event']['payload']);leap_day['committed_at_utc']='2028-02-29T16:00:00Z'
     suite.positive('compaction:valid_leap_day',lambda:not compaction_payload_errors(leap_day))
-    suite.weakeners['compaction_calendar_validation']=lambda:patch(__name__+'.compaction_payload_errors',source_without_guard(compaction_payload_errors,'not compaction_timestamp_valid'))
+    @contextmanager
+    def calendar_duplicate():
+        # The same calendar fact is checked by the schema format and the
+        # original compaction timestamp parser. Remove that named pair only.
+        import pm_contract_formats as formats
+        selected=route.validator(load('Plans/event_payload_context_compaction_completed.schema.json'))
+        changed=source_without_guard(formats.date_time,'not calendar_valid')
+        with patch.dict(selected.format_checker.checkers,{'date-time':(changed,())}), \
+                patch(__name__+'.compaction_payload_errors',source_without_guard(compaction_payload_errors,'not compaction_timestamp_valid')):
+            yield
+    suite.weakeners['compaction_calendar_validation']=calendar_duplicate
     for field in ('project_id','thread_id','operation_id','context_epoch_id'):
         bad=copy.deepcopy(comp['valid_event']['payload']);bad[field]+='\n'
         suite.negative('compaction:'+field+'_LF','identifier_end_of_input',lambda b=bad:not compaction_payload_errors(b))
@@ -349,10 +366,14 @@ def build():
     return suite
 
 
-def layout_event_errors(event, store=None, *, binding=None, historical=False, custody=None):
+def layout_event_errors(event, store=None, *, binding=None, historical=False, custody=None, historical_source=None):
     errors=[]
-    if historical and (not isinstance(custody,dict) or any(custody.get(k) is not True for k in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid'))):
-        return ['layout_historical_custody']
+    if type(historical) is not bool:
+        return ['historical_context_type']
+    if historical:
+        errors=home.layout_history_context_errors(event,historical_source,custody)
+        if errors:
+            return errors
     binding_schema=load(home.SCHEMA)
     binding_schema['$ref']='#/$defs/operation_binding'
     if not route.validator(binding_schema).is_valid(binding):
@@ -371,12 +392,24 @@ def layout_event_errors(event, store=None, *, binding=None, historical=False, cu
     errors.extend(physical)
     if body is None:
         return errors
-    if not route.validator(load('Plans/event_payloads/workspace_layout_changed_v2.schema.json')).is_valid(body):
+    payload_schema=load('Plans/event_payloads/workspace_layout_changed_v2.schema.json')
+    selected=route.validator(payload_schema)
+    if historical and historical_source['payload_validation_recipe']=='workspace-layout-v2/original-json-schema':
+        selected=home.RetainedBodyValidator(payload_schema,registry=selected._registry,format_checker=FormatChecker())
+    if not selected.is_valid(body):
         return errors+['layout_payload_schema']
-    home.event_checks(errors,event,binding,d,home.PayloadStore(store or {}))
+    home.event_checks(errors,event,binding,d,home.PayloadStore(store or {}),historical=historical,
+                      historical_source=historical_source,custody=custody)
     if event['replay_policy'] != 'dedupe_by_idempotency_key' and not historical:
         errors.append('layout_replay_only_not_appendable')
     return errors
+
+def layout_history_observation(event, recipe='workspace-layout-v2/original-json-schema'):
+    """Synthetic authenticated-source observation; never native custody proof."""
+    source={'event_bytes':home.canonical_msgpack(event),'payload_validation_recipe':recipe}
+    custody={k:True for k in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid')}
+    custody['retained_source_sha256']=home.sha(home.canonical_msgpack(source))
+    return {'historical_source':source,'custody':custody}
 
 def add_layout_cases(suite):
     fixtures=load('Plans/home_layout_v2_slot_receipt_fixtures.json')
@@ -426,8 +459,8 @@ def add_layout_cases(suite):
     suite.weakeners['governed_envelope_successor']=lambda:patch.object(route,'resolved_body',source_without_guard(route.resolved_body,"event.get('event_type') in ADOPTED"))
     suite.weakeners['layout_writer_replay_policy']=lambda:patch(__name__+'.layout_event_errors',source_without_guard(layout_event_errors,"event['replay_policy']"))
     old=copy.deepcopy(event);old['schema_version']='2.0.0'
-    suite.positive('layout:historical_exact_2_reader',lambda:not layout_event_errors(old,historical=True,binding=binding,custody=custody))
-    suite.positive('layout:historical_reference_newer_live_layout',lambda:not layout_event_errors(large,objects,historical=True,binding=binding,custody=custody))
+    suite.positive('layout:historical_exact_2_reader',lambda:not layout_event_errors(old,historical=True,binding=binding,**layout_history_observation(old)))
+    suite.positive('layout:historical_reference_newer_live_layout',lambda:not layout_event_errors(large,objects,historical=True,binding=binding,**layout_history_observation(large)))
     suite.negative('layout:old_envelope_not_a_new_writer','governed_envelope_successor',lambda:not layout_event_errors(old,binding=binding))
 
 def main():
