@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-FIX4-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX5-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -53,25 +53,37 @@
       "retained_envelope_composition_fixtures": "PASS",
       "embedded_v2_envelope_oracles": "PASS",
       "reviewed_embedded_schema_nodes": 13,
-      "pinned_schema_bytes": "PRESERVED"
+      "pinned_schema_bytes": "PRESERVED",
+      "classified_timestamp_inventory": "PASS",
+      "inventory_nodes": 212,
+      "storage_classified_nodes": 133,
+      "other_owner_nodes": 79,
+      "unclassified_nodes": 0,
+      "storage_resource_path_oracles": "PASS",
+      "completeness_gate": "PASS",
+      "native_schema_custody": "NOT_RUN"
     }
   ],
   "corpus": {
-    "cases": 2788,
-    "positives": 1748,
-    "negatives": 1040,
-    "labelled_negatives": 1040,
-    "passed": 2788,
-    "owner_integration_checks": 69,
+    "cases": 13372,
+    "positives": 6836,
+    "negatives": 6536,
+    "labelled_negatives": 6536,
+    "passed": 13372,
+    "owner_integration_checks": 70,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
     "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof.",
-    "labelled_cases": 2788,
+    "labelled_cases": 13372,
     "targeted_review_predicate_removals": 6,
     "round2_reviewed_fixture_replay": 370,
     "round4_reviewed_case_records_preserved": 1176,
-    "round4_added_cases": 1612
+    "round4_added_cases": 1612,
+    "round5_reviewed_case_records_preserved": 2788,
+    "round5_added_cases": 10584,
+    "round5_one_defect_negatives": 5496,
+    "round5_bounded_cut_rows": 12
   },
   "failed_premise_checks": [],
   "owner_questions": [],
@@ -86,10 +98,11 @@
     "Native original-owner custody/recipe installation and resource authentication",
     "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
     "Integration/governance work belongs to the lead, outside this drafting task",
-    "Index validation before integration: PLS-025 from newer main plus 21 unchanged legacy ledger-shape errors; no affected file was edited in this fix round."
+    "Index validation before integration: PLS-025 from newer main plus 21 unchanged legacy ledger-shape errors; no affected file was edited in this fix round.",
+    "Live origin/main adds six unchanged-owner retention comparisons (DL-330/331/332, DP-064/066, PWIZ-038); original 22 index failure records match the reviewed comparison exactly."
   ],
-  "reviewed_head": "e85116fbe13600d3b90c6fe58118decb7c5cbe56",
-  "review_round": 4,
+  "reviewed_head": "bb74b97e6be675d786537daa143b997deefb8cb8",
+  "review_round": 5,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -98,9 +111,10 @@
     "corpus": "author PASS -> review PARTIAL -> finite cases PASS, guard proof SWEEP_PENDING",
     "CV-1101.owner_specification": "cycle-2 review PARTIAL -> finite reference owner binding PASS; native/lane integration NOT_RUN",
     "CV-1101.enforced_format_oracles": "Astra PARTIAL -> bounded direct/reference/nested/retained composition oracles PASS; complete lane/native integration NOT_RUN",
-    "CV-1101.embedded_v2_envelope_oracles": "cycle-4 B1 BLOCKED -> finite cases/probes PASS; native/lane integration NOT_RUN"
+    "CV-1101.embedded_v2_envelope_oracles": "cycle-4 B1 BLOCKED -> finite cases/probes PASS; native/lane integration NOT_RUN",
+    "CV-1101.complete_storage_schema_boundary": "cycle-5 B1 BLOCKED -> complete classified inventory and finite current/frozen schema-path oracles PASS; native/lane installation NOT_RUN"
   },
-  "implementation_commit": "493e2974c885609d2b64e1ec8f863f234a6da38f",
+  "implementation_commit": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
   "round1_validation": {
     "index_status": "pass",
     "plan_units": 7426,
@@ -129,10 +143,12 @@
     "shards_status": "pass"
   },
   "implementation_commits": {
-    "B1": "493e2974c885609d2b64e1ec8f863f234a6da38f",
+    "B1": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
     "B2": "67d459eda1c7d9d71a6de098c37af0ca501a224f",
     "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda",
-    "B1_round3": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3"
+    "B1_round3": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3",
+    "B1_round5": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
+    "B1_round4": "493e2974c885609d2b64e1ec8f863f234a6da38f"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -182,5 +198,62 @@
     "exception_outcome": "exception",
     "scope_audit_status": "pass",
     "initial_regression_run": "Final scope comparison used the source clone; corrected to the fix4 worktree and reran."
-  }
+  },
+  "ids_minted_round5": [],
+  "round5_validation": {
+    "corpus_status": "pass",
+    "inventory_nodes": 212,
+    "storage_nodes": 133,
+    "other_owner_nodes": 79,
+    "unclassified_nodes": 0,
+    "prior_cases_unchanged": 2788,
+    "prior_original_byte_strings_unchanged": 1206,
+    "prior_frozen_selections_unchanged": 1176,
+    "bounded_predicate_cut_rows": 12,
+    "complete_guard_isolation": "SWEEP_PENDING",
+    "pinned_schemas_and_owner_prose": "PRESERVED",
+    "owner_text_changed": false,
+    "derived_regeneration": "NOT_NEEDED",
+    "native_authority": "NOT_RUN",
+    "index_expected_failure_records": 22,
+    "self_test_status": "pass",
+    "owner_integration_checks": 70,
+    "gate_mutation_checks": 20,
+    "scanner_encoding_injections": 7,
+    "legacy_reference_composition_routes": 29,
+    "injected_gate_exit": 1,
+    "injected_self_test_exit": 1,
+    "index_status": "fail",
+    "index_failure_count": 28,
+    "original_22_failure_records_preserved": true,
+    "index_pinned_failure_count": 22,
+    "existing_unit_tests": 30,
+    "shards_status": "pass",
+    "coverage_rerun": {
+      "categories": {
+        "EventRecord": 98,
+        "event_record_index": 27,
+        "original_storage_fields": 6,
+        "Storage issued original fields": 2
+      },
+      "baseline_failures": 0,
+      "escaping_nodes": 0,
+      "escaped_fields": 0,
+      "unexpected_refusals": 0,
+      "other_owner_source_nodes": 79
+    },
+    "full_boundary_rerun": {
+      "full_root_tested_paths": 3,
+      "invalid_acceptances": 0,
+      "uppercase_Z_acceptances": 4,
+      "invalid_refusals": 8,
+      "unavailable_nodes": 0
+    },
+    "other_owner_field_controls": 702,
+    "scalar_profile_comparisons": 36,
+    "bounded_fixture_assertions": 21616,
+    "scope_audit_status": "pass",
+    "failure_exit": 1
+  },
+  "scanner_hardening_commit": "c4e2beaeb3419a9339f5f28043a7c22f6fce37f5"
 }

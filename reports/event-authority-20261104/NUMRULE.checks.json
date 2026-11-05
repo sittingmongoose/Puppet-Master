@@ -1,110 +1,12 @@
 {
-  "schema_id": "pm.event_authority.numrule_checks.v1",
-  "branch": "plans/ea-numrule-20261105",
-  "reviewed_head": "e85116fbe13600d3b90c6fe58118decb7c5cbe56",
-  "implementation_commits": {
-    "B1": "493e2974c885609d2b64e1ec8f863f234a6da38f",
-    "B2": "67d459eda1c7d9d71a6de098c37af0ca501a224f",
-    "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda",
-    "B1_round3": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3"
-  },
-  "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
-  "status": "partial",
-  "scope": "B1 finite embedded-v2 cases, full bounded recheck, unit tests and shards pass; index retains the same 22 integration failures; full guard isolation SWEEP_PENDING and native authority NOT_RUN.",
+  "round": 5,
+  "implementation_commit": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
+  "scope": "Shared static helper, classified inventory and finite fixtures; native authority NOT_RUN. All checker processes ran sequentially with >=6 GiB available memory at preflight.",
   "commands": [
-    {
-      "name": "self-test",
-      "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-        "scripts/pm_event_numbers.py",
-        "--self-test"
-      ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 14.429447174072266,
-      "started_utc": "2026-11-05T08:30:17.702395+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:30:29.742669+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/self-test.stdout",
-        "sha256": "d0a754a1a360550949dec9191ae0b9ea50035bd360efce14e3a2a4f9c382b622"
-      },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/self-test.stderr",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/self-test.run.json",
-      "run_record_sha256": "616676f8d7fa6f59bbf75c289daff8cdc125d75783bddd667a7eef4ac9a5ba1c"
-    },
-    {
-      "name": "corpus",
-      "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/direct_corpus.py"
-      ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 15.71834945678711,
-      "started_utc": "2026-11-05T08:31:19.337189+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:31:30.467619+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/corpus.stdout",
-        "sha256": "6885ac7e1621a2a2702d9dc458a1ea533346d64a1bbddbb214b89cef2adc7b3d"
-      },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/corpus.stderr",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/corpus.run.json",
-      "run_record_sha256": "ba85a7942ebfaead25d51aa1fab4ace2686c58ed59afcd4fb2072190bef43016"
-    },
-    {
-      "name": "regressions",
-      "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/regressions.py"
-      ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 17.25973892211914,
-      "started_utc": "2026-11-05T08:35:05.091951+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:36:41.699238+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/regressions.stdout",
-        "sha256": "b12b6a1aa1dd8587ce6a5785d6b445dbc1b6ad31114ff45030bfa5f499549892"
-      },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/regressions.stderr",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/regressions.run.json",
-      "run_record_sha256": "6a30602aaefb54446656bdcfa92037c4f65b51ce9477bd4cbdd859deaa30f691"
-    },
-    {
-      "name": "scope-audit",
-      "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/scope_audit.py"
-      ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 16.48697280883789,
-      "started_utc": "2026-11-05T08:37:26.964787+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:37:27.528054+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/scope-audit.stdout",
-        "sha256": "f3e5f11ba16340f604c39bda8a97a68f92a345014bbdf904efd1ba4decd1e9e3"
-      },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/scope-audit.stderr",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/scope-audit.run.json",
-      "run_record_sha256": "1f7a8166b2c1ce6c1e3da43ec9e15dd02cba48066fc0ce0148a299b0ca462e65"
-    },
     {
       "name": "binding-tests",
       "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
         "-m",
         "unittest",
         "discover",
@@ -113,26 +15,351 @@
         "-p",
         "test_pm_event_index_binding.py"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 15.59921646118164,
-      "started_utc": "2026-11-05T08:37:43.756635+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:37:44.388063+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/binding-tests.stdout",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:55:43.042171+00:00",
+      "end": "2026-11-05T09:55:43.901554+00:00",
+      "exit": 0,
+      "seconds": 0.859,
+      "memory_before": 17871618048,
+      "memory_after": 17700950016,
+      "outputs": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "cc57f3bf2819732f17e08c3e8c940e1f278551a410f247fc095fae4f87f832ce"
       },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/binding-tests.stderr",
-        "sha256": "a08161f95e47a35877dbd9c4756a2b37ebc4892597815fd7dc263569d0c24bb2"
+      "run_record_sha256": "256babe4be4bee7e4f43c18e02d394e13a8230a38b545dc6a7d4185f6b9d1987"
+    },
+    {
+      "name": "corpus",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/standalone_corpus.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:54:46.832190+00:00",
+      "end": "2026-11-05T09:55:42.951956+00:00",
+      "exit": 0,
+      "seconds": 56.12,
+      "memory_before": 20943216640,
+      "memory_after": 17863401472,
+      "outputs": {
+        "stdout": "580ceb83caccbcba12dd9e17bffadb5bfe2b29c1b2322dbe7e0e8f474315850c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/binding-tests.run.json",
-      "run_record_sha256": "e198208b812c88cac0ca8bd8e493cac56b80b5290386d5362e730b710c9de3d7"
+      "run_record_sha256": "a5ac3a70c1fb8e8f34d939801da97dc6a81e79fa9a6851bd451607a06581c940"
+    },
+    {
+      "name": "coverage-storage-fix-head",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/coverage_probes.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:03:42.275413+00:00",
+      "end": "2026-11-05T10:04:08.702525+00:00",
+      "exit": 0,
+      "seconds": 26.427,
+      "memory_before": 16406917120,
+      "memory_after": 20301844480,
+      "outputs": {
+        "stdout": "afe1282e8e0cba448419a1a429bc1c559d3e08c97e2a3aefa722c276ac3f4215",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "f20e3e6f2fbe0f6fccc32a68f3cef078cf6761fef82a809b5c348d72fd70594a"
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/coverage_probes.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:12:33.693003+00:00",
+      "end": "2026-11-05T10:12:59.692320+00:00",
+      "exit": 0,
+      "seconds": 25.999,
+      "memory_before": 20226498560,
+      "memory_after": 21998718976,
+      "outputs": {
+        "stdout": "afe1282e8e0cba448419a1a429bc1c559d3e08c97e2a3aefa722c276ac3f4215",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "6381b5e8a4d8cbaf3f1dbb0dc57696fe4ca0f4d0211c26db08201c22a1f287e3"
+    },
+    {
+      "name": "failure-oracle",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/failure_oracle.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:57:09.870139+00:00",
+      "end": "2026-11-05T09:57:24.752710+00:00",
+      "exit": 0,
+      "seconds": 14.883,
+      "memory_before": 16452386816,
+      "memory_after": 16601165824,
+      "outputs": {
+        "stdout": "5aeae12dd50cfdfa668e6ded6e4eb2e134f01de651ab8c3143e0a5b5127406df",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "394dd46d1f40c893d57473b77229ebedf41b0e130d9715cee12d9a1492a2dd91"
+    },
+    {
+      "name": "full-boundary-storage-fix-head",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/full_boundary_probes.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:04:08.756687+00:00",
+      "end": "2026-11-05T10:05:51.010682+00:00",
+      "exit": 0,
+      "seconds": 102.254,
+      "memory_before": 20284715008,
+      "memory_after": 20553830400,
+      "outputs": {
+        "stdout": "9251b737b48fdea25af22c6c56878b91d6497bb335d89f2bef4df1d49ff50502",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "c1a0c0cb412b6e55644531d757662a8fbb15aa1a54169590572d6e91931aa351"
+    },
+    {
+      "name": "full-boundary",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/full_boundary_probes.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:12:59.769022+00:00",
+      "end": "2026-11-05T10:14:47.583413+00:00",
+      "exit": 0,
+      "seconds": 107.814,
+      "memory_before": 22013374464,
+      "memory_after": 17971531776,
+      "outputs": {
+        "stdout": "9251b737b48fdea25af22c6c56878b91d6497bb335d89f2bef4df1d49ff50502",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "5affabb8482cb2b9eb4ea9497671f01a09b61fbe71406e4c791ccb901ccff387"
+    },
+    {
+      "name": "gate-probes",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/gate_probes.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:49:32.542207+00:00",
+      "end": "2026-11-05T09:53:47.149442+00:00",
+      "exit": 0,
+      "seconds": 254.607,
+      "memory_before": 18421391360,
+      "memory_after": 22423818240,
+      "outputs": {
+        "stdout": "d2085c186cb688606fddb3017fdf1f832119915f91fad735c1758a750c4d6709",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "51ee35ea52da3d5ed49af452ce913f898132d60b7fc673eef97d57b97912aa89"
+    },
+    {
+      "name": "index-pinned",
+      "command": [
+        "env",
+        "GIT_DIR=/home/sittingmongoose/PM-Experiments/numrule-fix5/index-git",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:01:44.648256+00:00",
+      "end": "2026-11-05T10:02:29.775454+00:00",
+      "exit": 1,
+      "seconds": 45.127,
+      "memory_before": 16539582464,
+      "memory_after": 16501932032,
+      "outputs": {
+        "stdout": "bf6c2198b6ec6c7c74308a786e73d023c0cd6b5efb2e214bbe554629890f164d",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "cc2176b37a9cbcf64c0bf14d096cbdde714e73ab77c8b44d265006ab52bf61a4"
+    },
+    {
+      "name": "index-validate-initial",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:56:20.288249+00:00",
+      "end": "2026-11-05T09:57:09.796239+00:00",
+      "exit": 1,
+      "seconds": 49.508,
+      "memory_before": 16516939776,
+      "memory_after": 16438345728,
+      "outputs": {
+        "stdout": "10b71e284eadc49796069a4ff55319615410dedfe8625dbdd7abdf1df954cb26",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "d87452f6dbb9ede6f1890b95742def61ae6065279d805fe0d97fa9fb7bb55526"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:00:38.005568+00:00",
+      "end": "2026-11-05T10:01:24.064579+00:00",
+      "exit": 1,
+      "seconds": 46.059,
+      "memory_before": 16862318592,
+      "memory_after": 17131737088,
+      "outputs": {
+        "stdout": "3e5a8bb5f68acf97dd3737ec956518de0f8d051bfacfe3b3188112cc30722e79",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "d72fa8f1eaed673e26333420f9ffe66a9068af4c35b61a081ab8fdd49bc5e80d"
+    },
+    {
+      "name": "inventory-gate",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm_event_datetime_inventory.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:06:13.637343+00:00",
+      "end": "2026-11-05T10:08:07.168410+00:00",
+      "exit": 0,
+      "seconds": 113.531,
+      "memory_before": 20029485056,
+      "memory_after": 20809310208,
+      "outputs": {
+        "stdout": "4151e7a0dce806f80a78257a493835c49f0e006677e133539ff9ffb781feff03",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "3894f3805a91b3371540bd4d0186555462711f311883189e8f9dfa98f5b5aace"
+    },
+    {
+      "name": "profile-probes",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/profile_probes.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:54:45.632909+00:00",
+      "end": "2026-11-05T09:54:46.750185+00:00",
+      "exit": 0,
+      "seconds": 1.117,
+      "memory_before": 20615708672,
+      "memory_after": 20967452672,
+      "outputs": {
+        "stdout": "79ce5dc1e3cce439ac01292725f56664b1b3fbb39e9c02f03e979bc6afb336bf",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "aca98563dbac2e662e8d6ceb0d2a69e177e2311824302d50c872663d9de96334"
+    },
+    {
+      "name": "regressions-duplicate-proof-initial",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/regressions.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:39:36.826001+00:00",
+      "end": "2026-11-05T09:41:08.517963+00:00",
+      "exit": 1,
+      "seconds": 91.692,
+      "memory_before": 19522580480,
+      "memory_after": 16806809600,
+      "outputs": {
+        "stdout": "b32466eed5257133b6ba65e7ee4fba1f8145d379cfd2aa2c71f45c75d2bab764",
+        "stderr": "266c255b65eda2f7ebdb50faced680df46d3b03f0497330963e4536dd1fbd8bc"
+      },
+      "run_record_sha256": "63a0b9db987e0ac16d1e67b8a5114d62b27a1f2051cb6763e2c3c011d26ead0a"
+    },
+    {
+      "name": "regressions-initial",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/regressions.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:33:57.976472+00:00",
+      "end": "2026-11-05T09:35:00.832225+00:00",
+      "exit": 1,
+      "seconds": 62.856,
+      "memory_before": 18232586240,
+      "memory_after": 17933529088,
+      "outputs": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "368ec32430d4fa3b1c4a61fa6b5eaaef1ff6754c007b13df2f9316cd2a11ce17"
+      },
+      "run_record_sha256": "1b37ff82c1561d8952b50fe865158e1f11565182612324b68431de564bbbc39c"
+    },
+    {
+      "name": "regressions",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/regressions.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:42:08.788211+00:00",
+      "end": "2026-11-05T09:49:15.401449+00:00",
+      "exit": 0,
+      "seconds": 426.613,
+      "memory_before": 16412221440,
+      "memory_after": 18186485760,
+      "outputs": {
+        "stdout": "6214a1c949f11c54066bd52f9501b48b013c3a3ca7b68c2bc509f809fcfd8b6c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "0a12a49ea238f0209a38deb2cbbf33ecf15ce6429bc2b18942333e37b00feb51"
+    },
+    {
+      "name": "review-inventory",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/inventory.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:02:52.049177+00:00",
+      "end": "2026-11-05T10:03:42.191882+00:00",
+      "exit": 0,
+      "seconds": 50.143,
+      "memory_before": 16738582528,
+      "memory_after": 16420999168,
+      "outputs": {
+        "stdout": "e8e6c469f9e98e9d0ee6dc43271ed09175337c5ce18f7e12ab2b765c08ae2b2e",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "1356762c68c6080d7d5cab123754efeda3c4e980d2b4575826cdefd4c309b483"
+    },
+    {
+      "name": "route-probes",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/route_probes.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:05:51.089258+00:00",
+      "end": "2026-11-05T10:05:53.814638+00:00",
+      "exit": 0,
+      "seconds": 2.725,
+      "memory_before": 20563779584,
+      "memory_after": 20490907648,
+      "outputs": {
+        "stdout": "635c7423cb09a64de240d2fde3bac7ca9d58963e5a1baf9e62546f3184a556ca",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "df9d593e32468d3edc529a3edc06530429d58a288ff9908eb479c8c973a62f4e"
     },
     {
       "name": "runtime-storage-tests",
       "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
         "-m",
         "unittest",
         "discover",
@@ -141,135 +368,177 @@
         "-p",
         "test_shared_runtime_storage_contracts.py"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 15.583564758300781,
-      "started_utc": "2026-11-05T08:37:44.565732+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:38:01.097749+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/runtime-storage-tests.stdout",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:55:44.000159+00:00",
+      "end": "2026-11-05T09:56:00.540121+00:00",
+      "exit": 0,
+      "seconds": 16.54,
+      "memory_before": 17694326784,
+      "memory_after": 18764234752,
+      "outputs": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "72ff3ad36fd447e1d8f10a76506ede2b7d27ced21184c37c301dd3fe0ac1f9d5"
       },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/runtime-storage-tests.stderr",
-        "sha256": "3cfe2137124b0b93a6ba8b5df56f7d52bc3d2f510d15b1b525377a2eb7a25b01"
-      },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/runtime-storage-tests.run.json",
-      "run_record_sha256": "05267ced72d4817e57c9efadbde285f9d596a55bc8f70b2dec700eee805ad5b2"
+      "run_record_sha256": "10e1462d78b62909b35eb76f3e5df2cc2ad086945c802b5bc7f6a815a86befd8"
     },
     {
-      "name": "failure-oracle",
+      "name": "scan-encoding-probes",
       "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/failure_oracle.py"
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/scan_encoding_probes.py"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 19.415447235107422,
-      "started_utc": "2026-11-05T08:38:31.246667+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:38:41.268549+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/failure-oracle.stdout",
-        "sha256": "720ce07d4f7e1b345a1f4fbaeb328a1761b756ab4f25759f6ee4eb7850cd7bee"
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:09:18.538328+00:00",
+      "end": "2026-11-05T10:09:52.359834+00:00",
+      "exit": 0,
+      "seconds": 33.822,
+      "memory_before": 20618424320,
+      "memory_after": 19619979264,
+      "outputs": {
+        "stdout": "56d7860515bb105fb0dc7da0111ca0a9604577175f73099b7fbb2c3dd7c4a8a4",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/failure-oracle.stderr",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "run_record_sha256": "2884adc77effd847c0f3250254549cfeb96c1bfe8868d26db4bf0c4fea1a14a0"
+    },
+    {
+      "name": "scope-audit-initial",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/scope_audit.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:57:24.819126+00:00",
+      "end": "2026-11-05T09:57:42.360194+00:00",
+      "exit": 1,
+      "seconds": 17.541,
+      "memory_before": 16592830464,
+      "memory_after": 17783758848,
+      "outputs": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "32343ba441fda73655e723b90168f646707875cfa7be22e5bb9bf7a0d108bf0a"
       },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/failure-oracle.run.json",
-      "run_record_sha256": "b54dda07e6075e8ba8fada59151db7d550140f067c8acd47732ffa7eb69a75cf"
+      "run_record_sha256": "41a1c55c7be10e7fb56e6a7f8dec92ef12e7b5a7ca509bac45fe5eb42194544b"
+    },
+    {
+      "name": "scope-audit",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/scope_audit.py"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:05:53.875569+00:00",
+      "end": "2026-11-05T10:06:13.561069+00:00",
+      "exit": 0,
+      "seconds": 19.685,
+      "memory_before": 20491988992,
+      "memory_after": 19924430848,
+      "outputs": {
+        "stdout": "3d3f6564e743497eb974c54a3e45cce72e6220280ce08d7598fdc4f550c3b2a9",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "bbf977c6ccdf312f924fadff91f4121b16cb4e2f7c851b494be29375b9618537"
+    },
+    {
+      "name": "self-test-before-scanner-hardening",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm_event_numbers.py",
+        "--self-test"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:38:21.994575+00:00",
+      "end": "2026-11-05T09:39:14.129164+00:00",
+      "exit": 0,
+      "seconds": 52.135,
+      "memory_before": 17229762560,
+      "memory_after": 19557543936,
+      "outputs": {
+        "stdout": "580ceb83caccbcba12dd9e17bffadb5bfe2b29c1b2322dbe7e0e8f474315850c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "f2c728bccfe7f4f58666096bca09f5dc02e31ff88d448c076e66fe7b3412d0ab"
+    },
+    {
+      "name": "self-test-initial",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm_event_numbers.py",
+        "--self-test"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:30:52.471532+00:00",
+      "end": "2026-11-05T09:32:08.037787+00:00",
+      "exit": 0,
+      "seconds": 75.566,
+      "memory_before": 14130286592,
+      "memory_after": 16901689344,
+      "outputs": {
+        "stdout": "3e675ecb5cf1a09df9b7bbe616b21fcc91e7855d8e8b9da527ffd250f5b3d366",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "a86045da7eaff57d9339dc81fc5e626ac0683f9ad0bc36f213345709139464cb"
+    },
+    {
+      "name": "self-test-oracle-labels",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm_event_numbers.py",
+        "--self-test"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:35:50.306172+00:00",
+      "end": "2026-11-05T09:37:10.488122+00:00",
+      "exit": 1,
+      "seconds": 80.182,
+      "memory_before": 14817144832,
+      "memory_after": 15536201728,
+      "outputs": {
+        "stdout": "eb7ff33d7ac5d4f6822817f0b88b685318b511637c6a47dea693f11aa4ea9772",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "cf3918598e69181560632f7a9aa33c7c77f55af02c2b7c1cbd1833411ae892cd"
+    },
+    {
+      "name": "self-test",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
+        "scripts/pm_event_numbers.py",
+        "--self-test"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T10:10:52.455068+00:00",
+      "end": "2026-11-05T10:12:03.879777+00:00",
+      "exit": 0,
+      "seconds": 71.425,
+      "memory_before": 21797883904,
+      "memory_after": 21496156160,
+      "outputs": {
+        "stdout": "580ceb83caccbcba12dd9e17bffadb5bfe2b29c1b2322dbe7e0e8f474315850c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "run_record_sha256": "de4f341f2d6c89c44b9520217ae81a1ce098bd29b6e99d32f795cad64979666f"
     },
     {
       "name": "shards-check",
       "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
+        "/home/sittingmongoose/PM-Experiments/numrule-fix5/venv/bin/python",
         "scripts/pm-shard-plans.py",
         "--check",
         "--config",
         "Plans/sharding_config.json"
       ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 16.79096221923828,
-      "started_utc": "2026-11-05T08:39:16.239735+00:00",
-      "exit_code": 0,
-      "finished_utc": "2026-11-05T08:39:38.804493+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/shards-check.stdout",
-        "sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc"
+      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix5",
+      "start": "2026-11-05T09:56:00.624334+00:00",
+      "end": "2026-11-05T09:56:20.208135+00:00",
+      "exit": 0,
+      "seconds": 19.584,
+      "memory_before": 18745241600,
+      "memory_after": 16535040000,
+      "outputs": {
+        "stdout": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/shards-check.stderr",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/shards-check.run.json",
-      "run_record_sha256": "c74fafa3b2dc3e1a6f3f1417e4da6cb16b5e6c3dc2298f822fc2616904739b49"
-    },
-    {
-      "name": "index-validate",
-      "command": [
-        "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
-      "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-      "available_gb": 18.073829650878906,
-      "started_utc": "2026-11-05T08:40:51.080744+00:00",
-      "exit_code": 1,
-      "finished_utc": "2026-11-05T08:41:34.675018+00:00",
-      "stdout": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/index-validate.stdout",
-        "sha256": "552741a89f54734a525e17e7208585aa51081190a72d53e08d2259289cf87a53"
-      },
-      "stderr": {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/index-validate.stderr",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "run_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/index-validate.run.json",
-      "run_record_sha256": "1f0e31366671b8f94f9a57bbf193f0284abda054302315f5bc3b9e993745318d"
+      "run_record_sha256": "130471803fa9473d3912067864d6a555adc444cd247a5f9784b70d0592a9bd31"
     }
-  ],
-  "pre_fix_expected_failure": {
-    "name": "pre-fix-corpus",
-    "command": [
-      "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/direct_corpus.py"
-    ],
-    "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-    "available_gb": 14.374282836914062,
-    "started_utc": "2026-11-05T08:29:43.599305+00:00",
-    "exit_code": 1,
-    "finished_utc": "2026-11-05T08:29:54.622072+00:00",
-    "stdout": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/pre-fix-corpus.stdout",
-      "sha256": "72ffc91eed5ea14ef4942f75ee385f4b331b1f7f0b78865833a608123e037368"
-    },
-    "stderr": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/pre-fix-corpus.stderr",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    }
-  },
-  "initial_regression_attempt": {
-    "name": "regressions-initial",
-    "command": [
-      "/home/sittingmongoose/pm-worktrees/numrule-fix4-env/bin/python",
-      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/regressions.py"
-    ],
-    "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix4",
-    "available_gb": 20.281578063964844,
-    "started_utc": "2026-11-05T08:32:24.828156+00:00",
-    "exit_code": 1,
-    "finished_utc": "2026-11-05T08:34:35.612682+00:00",
-    "stdout": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/regressions-initial.stdout",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "stderr": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/regressions-initial.stderr",
-      "sha256": "90aa5573f6585cd7481fcc14bfa41455369424a8edfb7c2128a25ed977bdad4d"
-    },
-    "resolution": "The adapted probe used the source clone for its final working-tree scope comparison; changed REPO to the isolated fix4 worktree and reran sequentially."
-  },
-  "native_authority": "NOT_RUN",
-  "guard_isolation": "SWEEP_PENDING",
-  "index_baseline_proof": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix4/index-baseline-proof.json"
+  ]
 }

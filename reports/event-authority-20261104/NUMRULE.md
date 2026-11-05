@@ -49,7 +49,7 @@ Admission evaluation returns acceptance/refusal/exception separately. Retained s
 
 ## Verification
 
-Latest round-4 commands, exit codes and artifact SHA-256 values are recorded in `NUMRULE.checks.json` and the external `fix4/*.run.json` files. Round-3 results remain in the external `fix3/` bundle. Round-2 results remain in the external `fix2/` bundle. Round-1 results below are historical and remain in the external `fix1/` bundle. Shard regeneration/check and top-level index generation/validation passed (7426 PlanUnits, 29960 acceptance units, readiness blocked_runtime_certification_incomplete). The 370-case corpus, 65 targeted regressions and all 30 existing binding/runtime-storage unit tests passed. The deliberate failure returned exit 1 and retained an exception as its own outcome. Derived scope is confined to Contracts/Storage (157 shard files, their PlanUnit/acceptance rows and two document cards). Generators and checkers run one at a time with a memory preflight; under 6 GB pauses at two-minute rechecks, resumes at 7 GB, and stops only after 45 minutes continuously below 6 GB. Initial Nas1 disk: 462 GB available; memory: 11 GB available. An automatic pause before index validation observed 5 and 6 GB available; validation resumed at 8 GB. The 45-minute stop threshold was not reached.
+Latest round-5 commands, exit codes and artifact SHA-256 values are recorded in `NUMRULE.checks.json` and the external `fix5/*.run.json` files. Round-4 results remain in `fix4/`. Round-3 results remain in the external `fix3/` bundle. Round-2 results remain in the external `fix2/` bundle. Round-1 results below are historical and remain in the external `fix1/` bundle. Shard regeneration/check and top-level index generation/validation passed (7426 PlanUnits, 29960 acceptance units, readiness blocked_runtime_certification_incomplete). The 370-case corpus, 65 targeted regressions and all 30 existing binding/runtime-storage unit tests passed. The deliberate failure returned exit 1 and retained an exception as its own outcome. Derived scope is confined to Contracts/Storage (157 shard files, their PlanUnit/acceptance rows and two document cards). Generators and checkers run one at a time with a memory preflight; under 6 GB pauses at two-minute rechecks, resumes at 7 GB, and stops only after 45 minutes continuously below 6 GB. Initial Nas1 disk: 462 GB available; memory: 11 GB available. An automatic pause before index validation observed 5 and 6 GB available; validation resumed at 8 GB. The 45-minute stop threshold was not reached.
 
 The specified machine-memory files are absent at their exact paths and no relocated copies were found under local Claude/T3/Codex roots. The all-origin canonical Contracts owner-ID scan covers 548 refs and 45 unique blobs, including main; CV-1101 is absent in all of them. The ignored currentness edition was copied before index generation and all 15 files matched SHA-256 at copy time; its pinned copy and manifest are retained externally. No governance reseal is performed.
 
@@ -297,3 +297,108 @@ All artifacts below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority
 | `shards-check.stdout` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
 | `index-validate.stdout` | `552741a89f54734a525e17e7208585aa51081190a72d53e08d2259289cf87a53` |
 | `index-baseline-proof.json` | `61388540cfda783d720d652f8c80f6006fe89b0807d5d5a030fd0462e0a9b76f` |
+
+
+## Review round 5: findings and responses
+
+Reviewed head: `bb74b97e6be675d786537daa143b997deefb8cb8`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-cycle5.md`. **B1 fixed in `a06d87b6b616605c6e67ca01af40d6047e9fadd5`.** Scanner decoding/fence hardening is in `c4e2beaeb3419a9339f5f28043a7c22f6fce37f5`. No finding is disputed and no owner decision is required.
+
+**Where:** `scripts/pm_event_datetime.py:111`, `scripts/pm_event_datetime_inventory.py:75`, `:131`, `:182`, `:195`; inventory `Plans/event_datetime_inventory.json:1`; current/frozen corpus routes `scripts/pm_event_numbers_corpus.py:154`, `:184`, `:342`; self-test registration `:423`.
+
+**Why:** envelope discriminators omitted Storage metadata in string-only EventRecord/frozen-input declarations, index rows and issued originals. Path-by-path envelope additions did not establish completeness.
+
+**Fix:** commit every UTC-field schema node with its path, origin, JSON pointer, fields, profile, resource/node fingerprints and exact owner-schema/prose citation. Install CV-253/CV-1101 using the reviewed resource fingerprint and field path, including nested/ref/frozen resources. The selector retains actual schema objects through dialect changes; it never assigns ownership from an instance field name or an envelope discriminator. Fingerprints are checker-only sorted compact ASCII-JSON hashes, separate from existing raw-byte pins and every product hash recipe. Native authenticated installation remains SP-1101's responsibility. No schema object, raw schema byte, original pin, owner prose or product recipe changes.
+
+### Complete inventory
+
+The working-tree scan reproduces the review's **212 nodes exactly**, with **0 parse failures**. It decodes literal/escaped JSON keys and scans Plans JSON/JSONL and backtick/tilde Markdown schema fences (including indented and unclosed final fences), including source-lineage/predecessor/frozen copies and registry-embedded schemas. The independent Git-object inventory at the implementation head also scans all **517 named schema resources**. The UTC nodes comprise **186 named-schema nodes, 25 registry-embedded nodes and 1 source-lineage patch node**. No Markdown fence declares another UTC-field node at this head.
+
+| Classification | Nodes |
+|---|---:|
+| Storage EventRecord / frozen append input | 98 |
+| Storage event_record_index | 27 |
+| Explicit original_storage_fields | 6 |
+| Storage issued original fields | 2 |
+| **Storage total** | **133** |
+| Other-owner runtime observations, retaining their exact local schema profile | 78 |
+| Source-lineage schema patch, with no runtime installation | 1 |
+| **Other-owner / lineage total** | **79** |
+| **Unclassified** | **0** |
+
+The Storage nodes declare **106 observed and 106 persisted field paths**. Other-owner entries cite their existing local field schema and owner/resource description where present; frozen copies cite their own edition. The lineage patch cites its source schema assignment. These classifications introduce no new owner profile. **702 other-owner scalar controls** across all 78 runtime nodes and **36 before/after scalar-profile comparisons** match the reviewed behavior. Broad source/family timestamps retain offsets/case/precision/leap behavior; coordination and legacy normalization retain their existing local restrictions. A separate unrelated source schema with both UTC field names remains broad.
+
+### Corpus and predicate isolation
+
+Final self-test and standalone corpus pass **13,372/13,372: 6,836 positives, 6,536 labelled negatives, all 13,372 cases labelled; 70/70 integration checks**. The original **2,788 case records, 1,206 original byte strings and 1,176 frozen resource selections** are unchanged. Additions: **10,584 cases**, including **5,496 one-defect negatives**.
+
+All **133** Storage-classified nodes receive current and sealed-frozen controls through root `$ref` and object/array nesting. Each field has separate positive/negative nonzero offsets, `+00:00`, `-00:00`, lowercase `z` and lowercase `t`/`z` negatives. Valid controls include UTC uppercase `Z`, lowercase `t` with uppercase `Z`, short and 300-digit fractions, a legitimate UTC leap second and year 0000. Each retained original equals its single-field mutation and selects the matching sealed resource/route. Repairing only that field admits the case.
+
+Inspection additionally found **34 Storage field paths declared only as strings**. The installed profile composes enforced date-time as well as type/terminal-Z checks there. **408 added syntax, calendar-day and leap-second negatives** keep terminal uppercase `Z`, isolating their format defect. Existing schemas with their own format/pattern still retain those predicates.
+
+The bounded replay passes **21,616 assertions**. Each table row evaluates the entire corpus; all **6,836 positives**, return postconditions and every non-flipping negative preserve their expected outcomes. Six `original_storage_fields` nodes duplicate the same field's terminal-Z invariant in their original `Z$` schema pattern. Per field, removing that schema site alone flips 0; removing the shared site alone flips 2,812 and leaves the 144 duplicate-protected negatives refused; removing both named sites flips precisely all 2,956 of that field's negatives. Peer-field predicates remain enabled throughout.
+
+| Predicate/site removed | Negatives admitted | Other negatives retaining exact refusal |
+|---|---:|---:|
+| observed_at_utc.schema_duplicate_only | 0 | 6536 |
+| observed_at_utc.overlay_only | 2812 | 3724 |
+| observed_at_utc.terminal_Z_both_named_sites | 2956 | 3580 |
+| persisted_at_utc.schema_duplicate_only | 0 | 6536 |
+| persisted_at_utc.overlay_only | 2812 | 3724 |
+| persisted_at_utc.terminal_Z_both_named_sites | 2956 | 3580 |
+| observed_at_utc.broad_format | 144 | 6392 |
+| persisted_at_utc.broad_format | 264 | 6272 |
+| record_bytes.exact_type | 1 | 6535 |
+| binding.scope_kind | 1 | 6535 |
+| binding.project_id | 1 | 6535 |
+| verifier.exact_true | 3 | 6533 |
+
+The two broad-format rows are field-specific enforcement-site diagnostics; they do not claim isolation of every grammar clause. The six existing bounded predicates and their named duplicate sites retain B2/B3 closure. Complete lane predicate inventory and grammar-clause/duplicate proof remain **S1 / SWEEP_PENDING** for `scripts/pm_guard_isolation.py`; no new general lane proof tool was committed.
+
+### Completeness gate demonstration
+
+`python3 scripts/pm_event_datetime_inventory.py` rescans the working tree, including untracked additions. Missing classifications, stale/removed nodes, changed resource/node/field records, duplicate entries, contradictory resource-field profiles, missing other-owner declarations and changed citations fail. `pm_event_numbers.py --self-test` registers the same gate as `datetime_inventory_complete_and_classified` and fails its CLI when it fails.
+
+A disposable hardlinked copy, with independently replaced inventory files before mutation, passes **13/13 gate checks**. An injected untracked `Plans/round5-unclassified.schema.json` declares `observed_at_utc`: the gate reports **213 nodes / 1 unclassified** and exits **1**. The full shared self-test over that scratch copy also exits **1**, with exactly the inventory integration check failing. New registry-embedded JSON, JSONL-lineage and Markdown-fence nodes also fail until classified. Removed/duplicate/unclassified entries, resource drift, contradictory assignments and a false owner citation fail; restoring the copy passes. A further **7/7 decoding/fence probes** fail on escaped schema/JSONL keys, embedded JSON, tilde/indented/unclosed Markdown fences and duplicate JSON keys; their restored full-tree baseline still reports 212 classified nodes. The scratch trees are removed. See `gate-probes.json`, `gate-injected.stdout` and `gate-injected-self-test.stdout`.
+
+### Independent coverage reruns and compatibility
+
+The reviewer's `inventory.py`, `coverage_probes.py` and `full_boundary_probes.py` ran from scratch copies against the implementation head, using unchanged schema/fixture bytes. Path/head/output substitutions are recorded in the retained scripts. The outer-boundary script keeps its original three paths/four fields and reverses only the old escape assertion to require refusal; it no longer skips a repaired path.
+
+- **Coverage:** all **133** Storage nodes have valid baselines; **0 escaping nodes, 0 escaped fields, 0 unexpected refusals**. Its 6,656 boundary controls, including 1,568 broad source controls, complete.
+- **Full outer boundary:** the two real positive fixtures remain valid; all **8/8 forbidden mutations refuse**, **4/4 uppercase-Z controls pass**, both canonical-envelope negative controls refuse; **0 invalid acceptances**, no unavailable selected node. All **29** earlier composition/reference/dialect routes also pass **958** checks with unchanged resource objects.
+- **Existing tests:** all **30** binding/runtime-storage unit tests pass. The deliberate bad expectation exits **1**; an unexpected exception remains a distinct outcome.
+- **Shards:** read-only verification passes. No owner Markdown changed, so no shard/index regeneration is required or performed.
+- **Index:** top-level **fail**, exit **1**, with the **original 22 failure records preserved exactly**: 21 legacy ledger-shape errors and PLS-025 integration. With the unchanged validator and a private scratch Git ref at the round-4 comparison main `071a7e21a9243ea1a011b024b85c2c9f30bf5b5e`, the complete output failure array equals round 4. The real `origin/main` advanced during this task: live validation reports **28 failures**, adding only DL-330/331/332, DP-064/066 and PWIZ-038 retention comparisons against newer main units. None of their owner docs or index inputs changed on this branch. Both live and pinned runs remain failing; no real ref, validator or baseline artifact was changed. Full failure-array SHA-256 is `f3b79719ab932bdbd1eea5ded1a4e9858a22f8ade8caf0dc599a9dbfbe0dad7e`. All named inputs and the index/checker remain unchanged. No index/governance PASS is claimed.
+- **Scope:** all **8,966 other existing Plans paths**, including **3,774 Markdown paths** and all **517 schema files**, remain byte-identical to the reviewed head. Only the corpus and new classified inventory change Plans. The production number helper is unchanged.
+
+How to verify: check out the pushed branch; run `python3 scripts/pm_event_datetime_inventory.py`, `python scripts/pm_event_numbers.py --self-test` with the recorded dependencies, the standalone `pm_event_numbers_corpus.run_corpus`, and the retained scratch-copy review probes. Use `gate_probes.py` for the disposable injection demonstration and `regressions.py` for the bounded field/site cuts. Check commands, exits, clocks, memory and output hashes in `NUMRULE.checks.json` and the external run records.
+
+CV-1101's complete classified static boundary is **cycle-5 BLOCKED -> finite inventory/path/gate PASS**. CV-1100/SP-1100/SP-1101 aggregate grades retain their earlier limits. Native original authority and complete 19-lane installation stay **NOT_RUN**; aggregate integration stays **PARTIAL**, guard isolation **SWEEP_PENDING**. Family grades are **N/A**, membership **ABSENT**. Existing IDs used: CV-1100, CV-1101, SP-1100, SP-1101; no new ID, owner decision, registry/admission/Decision Log edit, governance reseal or main push.
+
+Initial VM preflight: 103 GB disk free / 13 GB RAM available. All checker processes ran one at a time and every preflight met 6 GiB available memory. The disposable msgpack 1.1.2 environment is removed after push. Initial external proof setup runs caught incomplete expected-ID/duplicate handling and an over-broad field cut; final clause-specific reruns pass. One initial corpus run used wrong expected names for the new syntax/day refusal codes; the added oracle labels were corrected to the existing codes, with no predicate weakened. Those initial outputs remain retained; final results above supersede them. Initial index validation also lacked the ignored currentness edition and reported one readiness mismatch plus the six newer-main comparisons. Copying the exact 15-file round-4 edition removed only that input-induced mismatch; its file hashes match. Live validation retains all 28 actual failures. The separate pinned comparison reproduces the original 22 without changing any shared ref or relaxing a check. No pm-mail or subagent was used.
+
+### Round-5 retained evidence
+
+Artifacts below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix5/`. The final report, self-grade, check ledger and adapted scripts are copied there. `pushed-head.json` records the final pushed report head; its code/Plans tree is the tested implementation tree.
+
+| Artifact | SHA-256 |
+|---|---|
+| `inventory.json` | `378776cd509e75bd73ad69c31b52359ee7bec466aaa6e84df67dcfa4311ddb04` |
+| `coverage-probes.json` | `fb3df8bdb8db2fab356c346b887b67f694788e43a615ed5da8c6a2e5ae959b42` |
+| `full-boundary-probes.json` | `096c744f36409a7bc1de0021426a9a3e593bbed3af76fb5cc20bfd40b6206945` |
+| `regressions.json` | `ead045d33e65b306b728811d08eae9e22ceb15d6bf064b685ef0a83a84157be8` |
+| `gate-probes.json` | `6dd09263563b1d931baf6c58ce7b8eb728b1cb44b84e71be67e1a4c325bb4b7a` |
+| `gate-injected.stdout` | `1937e0dbd3ba05fff0c30c4392d18dbc6b8aa0c455e3cae89ee4fb568de32087` |
+| `gate-injected-self-test.stdout` | `9281d9c7133b7fd79fa2ec91cba2ad19245dfcc3d76531ff87830fd5ed37ece6` |
+| `profile-probes.json` | `38ede68f36df496afcf68e81562c6fc41f07a5c3137c8470fc00aa6c2cb1d966` |
+| `corpus.stdout` | `580ceb83caccbcba12dd9e17bffadb5bfe2b29c1b2322dbe7e0e8f474315850c` |
+| `self-test.stdout` | `580ceb83caccbcba12dd9e17bffadb5bfe2b29c1b2322dbe7e0e8f474315850c` |
+| `scope-audit.json` | `be42b91092b577ddf8038a9b95f9ec44721598a7d4af6cbb1a3d8cb740ed64a9` |
+| `scan-encoding-probes.json` | `80fcb47fbbb275647d1005807747bf4788526d0b53492e70643be350aea382b2` |
+| `route-probes.json` | `395d0c20579bc781deec38a5178dc9f3ffa7f36f1c33544517916ee31c1dc764` |
+| `index-validate.stdout` | `3e5a8bb5f68acf97dd3737ec956518de0f8d051bfacfe3b3188112cc30722e79` |
+| `shards-check.stdout` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
+| `failure-oracle.stdout` | `5aeae12dd50cfdfa668e6ded6e4eb2e134f01de651ab8c3143e0a5b5127406df` |
+| `index-pinned.stdout` | `bf6c2198b6ec6c7c74308a786e73d023c0cd6b5efb2e214bbe554629890f164d` |
+| `currentness-copy.json` | `fae54dc550049395c0fd345173357ee0ba22eea51ea761130f11485e7f42c930` |
+| `dependencies.json` | `6c1a0a100cd72b69c2554e8bc82e667ddb1a1e3266ea7a56c0635c86463d170c` |
