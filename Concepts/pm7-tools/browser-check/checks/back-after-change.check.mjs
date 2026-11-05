@@ -1224,6 +1224,8 @@ export const tests = {
         const start = await A.frame().evaluate(SNAP20), w = await pickBackWalk(A, bad, `21 ${kind}`);
         if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`21 ${kind}: the Back run from Review stopped on ${w.seq[w.seq.length - 1]} (${w.seq.join(' > ')})`);
         t.log(`21 ${kind} Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
+        // Forward comparison requires Welcome; report the navigation assertion before trying an invalid route.
+        if (w.seq[w.seq.length - 1] !== 'welcome') return;
         const back = await keepOn(A); if (back[back.length - 1] !== 'review') { bad.push(`21 ${kind}: on again from Welcome never reached Review: ${back.join(' > ')}`); return; }
         const end = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, start.draft, end.draft)).filter((k) => JSON.stringify(start.draft[k]) !== JSON.stringify(end.draft[k]));
         if (dk.length) bad.push(`21 ${kind}: after the picks taken back, on to Review again, the draft changed: ${dk.map((k) => k + ' ' + JSON.stringify(start.draft[k]).slice(0, 60) + ' > ' + JSON.stringify(end.draft[k]).slice(0, 60)).join('; ')}`);
