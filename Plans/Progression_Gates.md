@@ -431,7 +431,7 @@ ContractRef: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-pl
 - For this gate, “advance to the next plan node” means any transition from requirements-generation/validation into execution of executable plan-graph nodes, and any later attempt to resume execution after a prior `BLOCKED` result.
 - Puppet Master MUST NOT start or resume executable plan-node progression while GATE-012 is `BLOCKED` or `FAIL`.
 
-ContractRef: Gate:GATE-012, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence
+ContractRef: Gate:GATE-012, ContractName:Plans/Decision_Policy.md#DP-066, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence
 
 **Pass conditions (ALL must hold):**
 1. `.puppet-master/project/traceability/requirements_quality_report.json` exists.
@@ -2258,7 +2258,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Puppet Master MUST NOT start or resume executable plan-node progression while GATE-012 is BLOCKED or FAIL."
 preserved_contractrefs:
-  - "ContractRef: Gate:GATE-012, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence"
+  - "ContractRef: Gate:GATE-012, ContractName:Plans/Decision_Policy.md#DP-066, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence"
   - "ContractRef: Gate:GATE-012, SchemaID:pm.requirements_quality_report.schema.v1"
 owner_hints:
   - Plans/Progression_Gates.md

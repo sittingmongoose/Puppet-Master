@@ -4,7 +4,7 @@ Source: `Plans/Progression_Gates.md`
 
 Source lines: L427-L481
 
-Source SHA256: `28b32843c89be43a1e730dae715652ef22f99c911144c83f89b42fd938ba22b9`
+Source SHA256: `cab7a281fc9dcf122b17aae5fca87691bfb7c1709166166bec3afc024e7f3dca`
 
 ---
 
@@ -15,7 +15,7 @@ Source SHA256: `28b32843c89be43a1e730dae715652ef22f99c911144c83f89b42fd938ba22b9
 - For this gate, “advance to the next plan node” means any transition from requirements-generation/validation into execution of executable plan-graph nodes, and any later attempt to resume execution after a prior `BLOCKED` result.
 - Puppet Master MUST NOT start or resume executable plan-node progression while GATE-012 is `BLOCKED` or `FAIL`.
 
-ContractRef: Gate:GATE-012, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence
+ContractRef: Gate:GATE-012, ContractName:Plans/Decision_Policy.md#DP-066, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence
 
 **Pass conditions (ALL must hold):**
 1. `.puppet-master/project/traceability/requirements_quality_report.json` exists.
