@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX1-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -19,8 +19,10 @@
     {
       "plan_unit_id": "CV-1100",
       "owner_specification": "PASS",
-      "bounded_adapter_oracles": "PASS",
-      "native_route_qualification": "NOT_RUN"
+      "bounded_adapter_oracles": "PARTIAL",
+      "native_route_qualification": "NOT_RUN",
+      "finite_fraction_and_endpoint_oracles": "PASS",
+      "guard_isolation": "SWEEP_PENDING"
     },
     {
       "plan_unit_id": "SP-1100",
@@ -31,28 +33,65 @@
     {
       "plan_unit_id": "SP-1101",
       "owner_specification": "PASS",
-      "bounded_selector_oracles": "PASS",
+      "bounded_selector_oracles": "PARTIAL",
       "native_original_authentication": "NOT_RUN",
+      "integration_status": "PARTIAL",
+      "finite_selector_and_forged_output_oracles": "PASS",
+      "guard_isolation": "SWEEP_PENDING"
+    },
+    {
+      "plan_unit_id": "CV-1101",
+      "owner_specification": "PASS",
+      "enforced_format_oracles": "PASS",
+      "retained_profile_fixtures": "PASS",
+      "lane_and_native_profile_integration": "NOT_RUN",
       "integration_status": "PARTIAL"
     }
   ],
   "corpus": {
-    "cases": 289,
-    "passed": 289,
-    "guard_removal_groups": 25,
-    "owner_integration_checks": 57,
-    "result": "PASS"
+    "cases": 370,
+    "positives": 193,
+    "negatives": 177,
+    "labelled_negatives": 177,
+    "passed": 370,
+    "owner_integration_checks": 69,
+    "finite_case_oracles": "PASS",
+    "targeted_review_regressions": 65,
+    "guard_isolation": "SWEEP_PENDING",
+    "result": "PARTIAL",
+    "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof."
   },
   "failed_premise_checks": [],
   "owner_questions": [],
   "ids_used": [
     "CV-1100",
     "SP-1100",
-    "SP-1101"
+    "SP-1101",
+    "CV-1101"
   ],
   "open_items": [
+    "Shared guard-isolation adoption for every labelled negative; specifically binary64/decimal, kind/sign, catalog/verification, replay-only/replay-policy and syntax/digest",
     "Native original-owner custody/recipe installation and resource authentication",
     "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
     "Integration/governance work belongs to the lead, outside this drafting task"
-  ]
+  ],
+  "reviewed_head": "e20fa723c14a3e514005381c9c18cff7470c0bad",
+  "review_round": 1,
+  "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
+  "grade_changes": {
+    "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
+    "SP-1100.frozen_byte_vector_oracles": "PASS -> PASS",
+    "SP-1101.bounded_selector_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
+    "corpus": "author PASS -> review PARTIAL -> finite cases PASS, guard proof SWEEP_PENDING"
+  },
+  "implementation_commit": "64778f641bcc32f9532ae03bbea80d4e2b772b38",
+  "round1_validation": {
+    "index_status": "pass",
+    "plan_units": 7426,
+    "acceptance_units": 29960,
+    "case_oracles": "PASS",
+    "guard_isolation": "SWEEP_PENDING",
+    "existing_unit_tests": 30,
+    "failure_exit": 1
+  }
 }
