@@ -7,7 +7,8 @@
     ],
     "value_schema_sha256": "576e670da07b7e67716bedb1fe93ba80cc5106f56bca2cb30f635be57ae05746",
     "role": "schema_resource_string",
-    "reason": "result_schema_resources maps resource identifiers to nonempty original schema-resource strings, rather than declaring timestamp fields.",
+    "reason": "result_schema_resources maps resource identifiers to nonempty original schema-resource strings. The cited value schema accepts all 653 battery timestamps and 15 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/section15_browser_program_contracts.schema.json",
       "pointer": "/$defs/browser_program_result_validation/properties/result_schema_resources/additionalProperties",
@@ -25,7 +26,8 @@
     ],
     "value_schema_sha256": "ff3d2790b5791382e7fb667cf2cdbe669db5f194a96d8474322b2ff1dba6e0bd",
     "role": "arbitrary_graph_payload",
-    "reason": "common_node.properties.payload is the graph node payload object; its values are arbitrary payload values subject to the existing forbidden-name rule.",
+    "reason": "common_node.properties.payload is the graph node payload object; its values are arbitrary payload values subject to the existing forbidden-name rule. The cited value constraint is the map's implicit true additionalProperties, which accepts every string, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
       "pointer": "/$defs/common_node/properties/payload",
@@ -47,7 +49,8 @@
     ],
     "value_schema_sha256": "eb835cf9e07061402fa4cb831482cf58540ff46f2b8fcf4a5adcea867f6deeb1",
     "role": "setting_value",
-    "reason": "The referenced setting_value definition is the recursive union of null, boolean, number, string, array and object settings values; its map values have no timestamp role.",
+    "reason": "The object branch of setting_value maps keys to the recursive setting_value union of null, boolean, number, string, array and object settings values. The union's string branch accepts all 653 battery timestamps and all 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/settings_system_contracts.schema.json",
       "pointer": "/$defs/setting_value",
@@ -97,7 +100,8 @@
     ],
     "value_schema_sha256": "c43929b80e75ed1123cad7a43a328b6fcb9370eccfbcd2ffbda2829ad7bb3c46",
     "role": "SafeRef",
-    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "pointer": "/$defs/SafeRef",
@@ -117,7 +121,8 @@
     ],
     "value_schema_sha256": "70e86e1fe47cacc39dce21f12440980d47babcdaddc01545e52fab99173907c6",
     "role": "safe_parameter_value",
-    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The SafeRef branch alone is no longer role evidence because the other three branches do not carry it, so this review covers the complete value schema. It declares no timestamp role.",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "pointer": "/$defs/SafeParameters/additionalProperties",
@@ -147,7 +152,8 @@
     ],
     "value_schema_sha256": "d3af1edbb7bb85a81127dde1a2de33c9822d570de9b6c55f412066963be0aa30",
     "role": "SafeRef",
-    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "pointer": "/$defs/SafeRef",
@@ -167,7 +173,8 @@
     ],
     "value_schema_sha256": "4088171f66c50421b82a808a91c54504c5e6282a671d84c1993196655412de6a",
     "role": "safe_parameter_value",
-    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The SafeRef branch alone is no longer role evidence because the other three branches do not carry it, so this review covers the complete value schema. It declares no timestamp role.",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "pointer": "/$defs/SafeParameters/additionalProperties",
@@ -197,7 +204,8 @@
     ],
     "value_schema_sha256": "9758b750369e038772a90428412ecf8ba2705dd7a68369c75cd95614aebf4952",
     "role": "SafeRef",
-    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "pointer": "/$defs/SafeRef",
@@ -217,7 +225,8 @@
     ],
     "value_schema_sha256": "a4d279bb8746f5ac89bf1732ed559c30920982d26a3377e61ae3bb2a7c5cb459",
     "role": "safe_parameter_value",
-    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The SafeRef branch alone is no longer role evidence because the other three branches do not carry it, so this review covers the complete value schema. It declares no timestamp role.",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "pointer": "/$defs/SafeParameters/additionalProperties",
@@ -1691,7 +1700,8 @@
     ],
     "value_schema_sha256": "215cd1e21474bc36c0adbe075dfa85a5930e87b7b02dcc786b2d1b7027bc19f4",
     "role": "setting_value",
-    "reason": "values_by_setting_id maps setting IDs to the generic setting_value union. Its setting_id key grammar refuses both timestamp field names. The array and object members of setting_value earn no automatic credit, so this row is explicitly reviewed. No timestamp role is declared.",
+    "reason": "values_by_setting_id maps setting IDs to the generic setting_value union. Its setting_id key grammar refuses both timestamp field names, so no battery sample is accepted at either field. setting_value itself accepts all 653 battery timestamps and all 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role, and its array and object members withhold automatic credit. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
     "citation": {
       "path": "Plans/settings_system_contracts.schema.json",
       "pointer": "/$defs/setting_value",

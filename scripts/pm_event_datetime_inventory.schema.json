@@ -206,6 +206,7 @@
               "value_constraint_paths",
               "role_authority",
               "timestamp_only_nodes",
+              "deciding_nodes",
               "automatic_credit"
             ],
             "properties": {
@@ -467,6 +468,25 @@
                 }
               },
               "timestamp_only_nodes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "pointer"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "pointer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "deciding_nodes": {
                 "type": "array",
                 "items": {
                   "type": "object",

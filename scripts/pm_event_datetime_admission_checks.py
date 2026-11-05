@@ -304,14 +304,23 @@ def wildcard_battery_checks(root, inventory):
     import pm_event_datetime_inventory as inv
     from pm_event_datetime_value_probe import BATTERY, ROLES
     checks = {}
+    # The 21 name maps: 3 automatic, 8 non-timestamp roles whose cited
+    # definitions decide the string, and 10 explicit timestamp reviews whose
+    # cited definitions do not (FIX14 N1).
     maps = [r for r in inventory["nodes"] if r["classification"] in (
-        "wildcard_non_timestamp", "wildcard_non_timestamp_role")]
+        "wildcard_non_timestamp", "wildcard_non_timestamp_role") or (
+        r["classification"] == "other_owner_observation" and
+        (r.get("value_evidence") or {}).get("reviewed_role") is not None)]
     checks["datetime_battery_21_name_maps"] = (len(maps) == 21 and
         sum(r["classification"] == "wildcard_non_timestamp" for r in maps) == 3 and
-        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 18 and
+        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 8 and
+        sum(r["classification"] == "other_owner_observation" for r in maps) == 10 and
         all(r["value_evidence"]["automatic_credit"]
             if r["classification"] == "wildcard_non_timestamp" else
-            r["value_evidence"]["reviewed_role"] is not None for r in maps))
+            r["value_evidence"]["reviewed_role"] is not None for r in maps) and
+        all({k: r["value_evidence"]["reviewed_role"]["citation"][k] for k in ("path", "pointer")} in
+            r["value_evidence"]["deciding_nodes"]
+            for r in maps if r["classification"] == "wildcard_non_timestamp_role"))
     original = next(r for r in maps if r["path"] == "Plans/section15_browser_program_contracts.schema.json"
                     and r["pointer"].endswith("/result_schema_dependencies"))
     canonical = r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?Z$"
@@ -481,7 +490,8 @@ def wildcard_context_checks(root, inventory):
                 any(e["error"] == "wildcard_role_review_required" for e in inv.validate_inventory(projected, scratch)))
         # The exact same definition is valid evidence only when reached as a
         # value constraint, not as a key, sibling, nested value or unused $def.
-        safe = {"type": "string", "minLength": 1}
+        # It decides the string (FIX14 N1), so only the route decides here.
+        safe = {"type": "string", "minLength": 1, "pattern": "^ref:[a-z]+$"}
         for route in ("key", "sibling", "nested", "unused", "one_field_only",
                       "value_ref", "value_allOf", "value_anyOf"):
             node = {**basic, "additionalProperties": copy.deepcopy(stamp)}
@@ -529,12 +539,27 @@ def wildcard_authority_checks(root, inventory):
     value_pointer = node_pointer + "/additionalProperties"
     stamp = {"type": "string", "pattern":
         r"^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?(?:Z)$"}
-    # SafeRef refuses every timestamp, as in the reviewed attack. Generic accepts
-    # them, so a citation of it reaches the checks on timestamp-accepting values.
-    safe = {"type": "string", "minLength": 1, "pattern": "^[a-z]+$", "description": "Named reference values."}
+    # A timestamp shape that also accepts one fixed control, evading the
+    # timestamp-only guard.
+    stamp_a = {"type": "string", "pattern":
+        r"^(?:[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?(?:Z)|a)$"}
+    # SafeRef decides the string: on its own it refuses every battery timestamp
+    # and every fixed control (FIX14 N1). A route refusal citing it therefore
+    # comes from the path rule alone. Generic accepts timestamps, so a citation
+    # of it reaches the checks on timestamp-accepting values. Lower refuses every
+    # timestamp but accepts the control "a"; SafeDoc and SafeRefMap constrain no
+    # string at all (the cycle-13 pre-check's N1 witnesses).
+    safe = {"type": "string", "minLength": 1, "pattern": "^ref:[a-z]+$", "description": "Named reference values."}
     generic = {"type": "string", "minLength": 1, "description": "Generic reference string."}
-    anchored = {"$dynamicAnchor": "generic_anchor", **generic}
-    definitions = {"SafeRef": safe, "Generic": generic, "Anchored": anchored}
+    lower = {"type": "string", "minLength": 1, "pattern": "^[a-z]+$", "description": "Lowercase names."}
+    anchored = {"$dynamicAnchor": "generic_anchor", **safe}
+    record_object = {"type": "object", "additionalProperties": False, "required": ["kind"],
+                     "properties": {"kind": {"$ref": "#/$defs/Generic"}}}
+    definitions = {"SafeRef": safe, "Generic": generic, "Anchored": anchored, "Lower": lower,
+                   "LowerAnchored": {"$dynamicAnchor": "lower_anchor", **lower},
+                   "SafeDoc": {"description": "Named SafeRef reference values."},
+                   "SafeRefMap": {"description": "Map of SafeRef values.", "additionalProperties": {"$ref": "#/$defs/SafeRef"}},
+                   "Record": record_object}
     ref = {"$ref": "#/$defs/SafeRef"}
     good = {"$ref": "#/$defs/Generic"}
     basic = {"type": "object", "propertyNames": {"type": "string"}}
@@ -631,38 +656,75 @@ def wildcard_authority_checks(root, inventory):
                 "$schema": draft7, "$id": "urn:pm:authority:draft7dyn", "definitions": {"g": {**generic, "$id": "#g"}},
                 "$dynamicRef": "#g"}}, value_pointer + "/definitions/g"),
             "recursiveRef": ({**basic, "additionalProperties": {"$recursiveRef": "#/$defs/Generic", "type": "string"}}, value_pointer),
+            # FIX14 N2: $dynamicRef is not a positive path. The anchored target
+            # decides the string, so the dynamic reference is the only reason.
+            "dynamicRef": ({**basic, "additionalProperties": {"$dynamicRef": "#generic_anchor"}}, "/$defs/Anchored"),
         }
+        # FIX14 N1: each citation is a positive endpoint for every field, so the
+        # path rule alone would accept it. It does not decide the string.
+        undecided = {
+            "doc_only_conjunct": ({**basic, "additionalProperties": {
+                "allOf": [stamp_a, {"$ref": "#/$defs/SafeDoc"}]}}, "/$defs/SafeDoc"),
+            "doc_only_conjunct_bare_stamp": ({**basic, "additionalProperties": {
+                "allOf": [stamp, {"$ref": "#/$defs/SafeDoc"}]}}, "/$defs/SafeDoc"),
+            "member_only_conjunct": ({**basic, "additionalProperties": {
+                "allOf": [stamp_a, {"$ref": "#/$defs/SafeRefMap"}]}}, "/$defs/SafeRefMap"),
+            "dependentSchemas_conjunct": ({**basic, "additionalProperties": {
+                "allOf": [stamp_a, {"dependentSchemas": {"x": ref}}]}}, value_pointer + "/allOf/1"),
+            "whole_value_stamp_a": ({**basic, "additionalProperties": stamp_a}, value_pointer),
+            "implicit_true": ({**basic}, node_pointer),
+            # The map is a value node for one field and its implicit true value
+            # for the other. It refuses every string, but not as that value.
+            "implicit_shadowed_by_value_node": ({**basic, "allOf": [{"patternProperties": {
+                "^persisted_at_utc$": {"$ref": "#" + node_pointer}}}]}, node_pointer),
+            "generic_ref": ({**basic, "additionalProperties": good}, generic_pointer),
+            "generic_whole_union": ({**basic, "additionalProperties": {"oneOf": [good, {"type": "integer"}]}}, value_pointer),
+            "setting_value_shape": ({**basic, "additionalProperties": {"oneOf": [
+                {"type": "string"}, {"type": "array", "items": {"$ref": "#/$defs/Generic"}}]}}, value_pointer),
+            "accepts_one_control": ({**basic, "additionalProperties": {"$ref": "#/$defs/Lower"}}, "/$defs/Lower"),
+        }
+        def refused_cleanly(row, errors):
+            return (review in errors and row["classification"] == "wildcard_review_required" and
+                    row["value_evidence"]["reviewed_role"] is None and
+                    "wildcard_role_schema_changed" not in errors and
+                    "wildcard_value_evidence_changed" not in errors)
+
         for name, (node, cited) in refused.items():
             row, errors = run(node, cited)
-            checks["datetime_role_authority_refuses_" + name] = (
-                review in errors and row["classification"] == "wildcard_review_required" and
-                row["value_evidence"]["reviewed_role"] is None and
-                "wildcard_role_schema_changed" not in errors and
-                "wildcard_value_evidence_changed" not in errors)
+            checks["datetime_role_authority_refuses_" + name] = refused_cleanly(row, errors)
+        for name, (node, cited) in undecided.items():
+            row, errors = run(node, cited)
+            evidence, target = row["value_evidence"], {"path": original["path"], "pointer": cited}
+            checks["datetime_role_authority_refuses_undecided_" + name] = (
+                refused_cleanly(row, errors) and
+                all(target in a["endpoints"] for a in evidence["role_authority"]) and
+                target not in evidence["deciding_nodes"])
+        # Every legitimate route still carries a citation that decides the string.
         accepted = {
-            "direct": ({**basic, "additionalProperties": copy.deepcopy(generic)}, value_pointer),
-            "ref": ({**basic, "additionalProperties": good}, generic_pointer),
-            "dynamicRef": ({**basic, "additionalProperties": {"$dynamicRef": "#generic_anchor"}}, "/$defs/Anchored"),
-            "allOf": ({**basic, "additionalProperties": {"allOf": [good, {"maxLength": 99}]}}, generic_pointer),
-            "ref_sibling_bound": ({**basic, "additionalProperties": {**good, "maxLength": 99}}, generic_pointer),
+            "direct": ({**basic, "additionalProperties": copy.deepcopy(safe)}, value_pointer),
+            "ref": ({**basic, "additionalProperties": ref}, safe_pointer),
+            "allOf": ({**basic, "additionalProperties": {"allOf": [ref, {"maxLength": 99}]}}, safe_pointer),
+            "ref_sibling_bound": ({**basic, "additionalProperties": {**ref, "maxLength": 99}}, safe_pointer),
             "anyOf_every_branch": ({**basic, "additionalProperties": {"anyOf": [
-                good, {"allOf": [good, {"maxLength": 9}]}]}}, generic_pointer),
+                ref, {"allOf": [ref, {"maxLength": 9}]}]}}, safe_pointer),
             "oneOf_every_branch": ({**basic, "additionalProperties": {"oneOf": [
-                {"allOf": [good, {"maxLength": 5}]}, {"allOf": [good, {"minLength": 6}]}]}}, generic_pointer),
-            "whole_union": ({**basic, "additionalProperties": {"oneOf": [good, {"type": "integer"}]}}, value_pointer),
-            "map_allOf": ({**basic, "allOf": [{"additionalProperties": good}]}, generic_pointer),
-            "map_anyOf_every_branch": ({**basic, "anyOf": [{"additionalProperties": good},
-                                                           {"additionalProperties": good}]}, generic_pointer),
-            "implicit_true": ({**basic}, node_pointer),
+                {"allOf": [ref, {"maxLength": 5}]}, {"allOf": [ref, {"minLength": 6}]}]}}, safe_pointer),
+            "whole_union": ({**basic, "additionalProperties": {"oneOf": [ref, {"type": "integer"}]}}, value_pointer),
+            "map_allOf": ({**basic, "allOf": [{"additionalProperties": ref}]}, safe_pointer),
+            "map_anyOf_every_branch": ({**basic, "anyOf": [{"additionalProperties": ref},
+                                                           {"additionalProperties": ref}]}, safe_pointer),
+            "object_record": ({**basic, "additionalProperties": {"$ref": "#/$defs/Record"}}, "/$defs/Record"),
         }
         for name, (node, cited) in accepted.items():
             row, errors = run(node, cited)
             checks["datetime_role_authority_accepts_" + name] = (
-                not errors and row["classification"] == "wildcard_non_timestamp_role")
-        # Member keywords inside a cited definition are not routes, and they do
-        # not decide a string value's acceptance. This is the setting_value shape.
+                not errors and row["classification"] == "wildcard_non_timestamp_role" and
+                {"path": original["path"], "pointer": cited} in row["value_evidence"]["deciding_nodes"])
+        # Member keywords inside a cited definition are not routes. They do not
+        # stop a definition that refuses every string from deciding it.
         row, errors = run({**basic, "additionalProperties": {"oneOf": [
-            {"type": "string"}, {"type": "array", "items": {"$ref": "#/$defs/Generic"}}]}}, value_pointer)
+            {"type": "object", "additionalProperties": {"$ref": "#/$defs/Generic"}},
+            {"type": "array", "items": {"$ref": "#/$defs/Generic"}}]}}, value_pointer)
         checks["datetime_role_authority_member_keywords_in_cited_definition"] = not errors
         # A value refusing every timestamp has no trigger, so a cited definition
         # may contain conditions. The citation itself must still be positive.
@@ -685,7 +747,9 @@ def wildcard_authority_checks(root, inventory):
                             ("object_members", {"type": "object", "properties": {"a": {}}}),
                             ("array_items", {"type": "array", "items": {}}),
                             ("unknown", {"type": "integer", "x-note": 1}),
-                            ("recursiveRef", {"type": "integer", "$recursiveRef": "#/$defs/Generic"})):
+                            ("recursiveRef", {"type": "integer", "$recursiveRef": "#/$defs/Generic"}),
+                            # FIX14 N2: the pre-check's witness earned automatic credit.
+                            ("dynamicRef", {"$dynamicRef": "#lower_anchor"})):
             row, errors = run({**basic, "additionalProperties": value}, None)
             checks["datetime_automatic_credit_withheld_" + name] = (
                 review in errors and row["classification"] == "wildcard_review_required" and
