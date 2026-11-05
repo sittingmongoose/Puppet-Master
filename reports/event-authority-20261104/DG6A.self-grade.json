@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DG6A-FIX6-20261105",
+  "assessment_id": "DG6A-FIX7-20261105",
   "assessment_kind": "self_grade_preparation",
   "source_base": "be4766513ff71776346fc73b84f2542990f955af",
   "rubric": {
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
           "status": "PASS",
@@ -84,11 +84,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
           "status": "PASS",
@@ -111,11 +111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -145,11 +145,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
           "status": "PASS",
@@ -172,11 +172,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -206,11 +206,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
           "status": "PARTIAL",
@@ -226,11 +226,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -254,24 +254,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_acknowledged.fixtures.json",
               "unit": "append_cases",
-              "line_start": 13731,
-              "line_end": 13731,
+              "line_start": 13924,
+              "line_end": 13924,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
           "status": "PASS",
@@ -287,11 +287,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -321,11 +321,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -348,16 +348,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
+          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -376,29 +376,29 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 435,
-              "line_end": 435,
+              "line_start": 521,
+              "line_end": 521,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 278,
+              "line_end": 278,
               "quote": "def duplicate_proofs("
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_acknowledged.fixtures.json",
               "unit": "append_cases",
-              "line_start": 13731,
-              "line_end": 13731,
+              "line_start": 13924,
+              "line_end": 13924,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -407,14 +407,28 @@
               "line_start": 105,
               "line_end": 105,
               "quote": "def executed_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "validator",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "kwargs['format_checker'] = FORMATS"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain-check.py",
+              "unit": "run",
+              "line_start": 96,
+              "line_end": 96,
+              "quote": "def run(kind, m, family, fixture):"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
         }
       },
       "remaining_gaps": [
@@ -464,11 +478,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
           "status": "PASS",
@@ -485,17 +499,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-681",
-              "line_start": 24514,
-              "line_end": 24514,
+              "line_start": 24522,
+              "line_end": 24522,
               "quote": "alert.dismissed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
           "status": "PASS",
@@ -518,11 +532,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -546,17 +560,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-681",
-              "line_start": 24514,
-              "line_end": 24514,
+              "line_start": 24522,
+              "line_end": 24522,
               "quote": "alert.dismissed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
           "status": "PASS",
@@ -579,11 +593,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -613,11 +627,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
           "status": "PARTIAL",
@@ -633,11 +647,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -661,24 +675,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_dismissed.fixtures.json",
               "unit": "append_cases",
-              "line_start": 13936,
-              "line_end": 13936,
+              "line_start": 14134,
+              "line_end": 14134,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
           "status": "PASS",
@@ -694,11 +708,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -728,11 +742,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -755,16 +769,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
+          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -783,29 +797,29 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 435,
-              "line_end": 435,
+              "line_start": 521,
+              "line_end": 521,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 278,
+              "line_end": 278,
               "quote": "def duplicate_proofs("
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_dismissed.fixtures.json",
               "unit": "append_cases",
-              "line_start": 13936,
-              "line_end": 13936,
+              "line_start": 14134,
+              "line_end": 14134,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -814,14 +828,28 @@
               "line_start": 105,
               "line_end": 105,
               "quote": "def executed_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "validator",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "kwargs['format_checker'] = FORMATS"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain-check.py",
+              "unit": "run",
+              "line_start": 96,
+              "line_end": 96,
+              "quote": "def run(kind, m, family, fixture):"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
         }
       },
       "remaining_gaps": [
@@ -871,11 +899,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
           "status": "PASS",
@@ -892,17 +920,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-682",
-              "line_start": 24556,
-              "line_end": 24556,
+              "line_start": 24572,
+              "line_end": 24572,
               "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
           "status": "PASS",
@@ -925,11 +953,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -953,17 +981,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-682",
-              "line_start": 24556,
-              "line_end": 24556,
+              "line_start": 24572,
+              "line_end": 24572,
               "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
           "status": "PASS",
@@ -986,11 +1014,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1020,11 +1048,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1040,11 +1068,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1068,24 +1096,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_rule_muted.fixtures.json",
               "unit": "append_cases",
-              "line_start": 13914,
-              "line_end": 13914,
+              "line_start": 14115,
+              "line_end": 14115,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
           "status": "PASS",
@@ -1101,11 +1129,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1135,11 +1163,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1162,16 +1190,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
+          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1190,29 +1218,29 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 435,
-              "line_end": 435,
+              "line_start": 521,
+              "line_end": 521,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 278,
+              "line_end": 278,
               "quote": "def duplicate_proofs("
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_rule_muted.fixtures.json",
               "unit": "append_cases",
-              "line_start": 13914,
-              "line_end": 13914,
+              "line_start": 14115,
+              "line_end": 14115,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -1221,14 +1249,28 @@
               "line_start": 105,
               "line_end": 105,
               "quote": "def executed_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "validator",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "kwargs['format_checker'] = FORMATS"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain-check.py",
+              "unit": "run",
+              "line_start": 96,
+              "line_end": 96,
+              "quote": "def run(kind, m, family, fixture):"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
         }
       },
       "remaining_gaps": [
@@ -1278,11 +1320,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1299,17 +1341,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-683",
-              "line_start": 24598,
-              "line_end": 24598,
+              "line_start": 24622,
+              "line_end": 24622,
               "quote": "alert.snoozed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
           "status": "PASS",
@@ -1332,11 +1374,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1360,17 +1402,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-683",
-              "line_start": 24598,
-              "line_end": 24598,
+              "line_start": 24622,
+              "line_end": 24622,
               "quote": "alert.snoozed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1393,11 +1435,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1427,11 +1469,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1447,11 +1489,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1475,24 +1517,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_snoozed.fixtures.json",
               "unit": "append_cases",
-              "line_start": 14714,
-              "line_end": 14714,
+              "line_start": 14917,
+              "line_end": 14917,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
           "status": "PASS",
@@ -1508,11 +1550,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1542,11 +1584,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1569,16 +1611,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
+          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1597,29 +1639,29 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 435,
-              "line_end": 435,
+              "line_start": 521,
+              "line_end": 521,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 278,
+              "line_end": 278,
               "quote": "def duplicate_proofs("
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/alert_event_contracts/alert_snoozed.fixtures.json",
               "unit": "append_cases",
-              "line_start": 14714,
-              "line_end": 14714,
+              "line_start": 14917,
+              "line_end": 14917,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -1628,14 +1670,28 @@
               "line_start": 105,
               "line_end": 105,
               "quote": "def executed_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "validator",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "kwargs['format_checker'] = FORMATS"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain-check.py",
+              "unit": "run",
+              "line_start": 96,
+              "line_end": 96,
+              "quote": "def run(kind, m, family, fixture):"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
         }
       },
       "remaining_gaps": [
@@ -3517,11 +3573,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3538,17 +3594,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-686",
-              "line_start": 24736,
-              "line_end": 24736,
+              "line_start": 24784,
+              "line_end": 24784,
               "quote": "concern.created closed current payload and authority route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
           "status": "PASS",
@@ -3571,11 +3627,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3599,17 +3655,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-686",
-              "line_start": 24736,
-              "line_end": 24736,
+              "line_start": 24784,
+              "line_end": 24784,
               "quote": "concern.created closed current payload and authority route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3632,11 +3688,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3667,17 +3723,17 @@
             {
               "path": "scripts/pm-concern-created-contracts-check.py",
               "unit": "caller_body",
-              "line_start": 30,
-              "line_end": 30,
+              "line_start": 31,
+              "line_end": 31,
               "quote": "def caller_body"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3693,11 +3749,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3721,24 +3777,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
               "unit": "append_cases",
-              "line_start": 26378,
-              "line_end": 26378,
+              "line_start": 26620,
+              "line_end": 26620,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
           "status": "PASS",
@@ -3754,11 +3810,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3788,11 +3844,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3815,16 +3871,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
+          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3843,29 +3899,29 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 435,
-              "line_end": 435,
+              "line_start": 521,
+              "line_end": 521,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 278,
+              "line_end": 278,
               "quote": "def duplicate_proofs("
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
               "unit": "append_cases",
-              "line_start": 26378,
-              "line_end": 26378,
+              "line_start": 26620,
+              "line_end": 26620,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -3874,14 +3930,28 @@
               "line_start": 105,
               "line_end": 105,
               "quote": "def executed_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "validator",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "kwargs['format_checker'] = FORMATS"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain-check.py",
+              "unit": "run",
+              "line_start": 96,
+              "line_end": 96,
+              "quote": "def run(kind, m, family, fixture):"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
         }
       },
       "remaining_gaps": [
@@ -6211,11 +6281,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6232,17 +6302,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-684",
-              "line_start": 24640,
-              "line_end": 24640,
+              "line_start": 24672,
+              "line_end": 24672,
               "quote": "panel.redocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
           "status": "PASS",
@@ -6265,11 +6335,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6293,17 +6363,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-684",
-              "line_start": 24640,
-              "line_end": 24640,
+              "line_start": 24672,
+              "line_end": 24672,
               "quote": "panel.redocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6326,11 +6396,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6360,11 +6430,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6380,11 +6450,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6408,24 +6478,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/panel_event_contracts/panel_redocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15333,
-              "line_end": 15333,
+              "line_start": 15567,
+              "line_end": 15567,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
           "status": "PASS",
@@ -6441,11 +6511,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6475,11 +6545,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6502,16 +6572,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
+          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6530,29 +6600,29 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 435,
-              "line_end": 435,
+              "line_start": 521,
+              "line_end": 521,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 278,
+              "line_end": 278,
               "quote": "def duplicate_proofs("
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/panel_event_contracts/panel_redocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15333,
-              "line_end": 15333,
+              "line_start": 15567,
+              "line_end": 15567,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -6561,14 +6631,28 @@
               "line_start": 105,
               "line_end": 105,
               "quote": "def executed_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "validator",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "kwargs['format_checker'] = FORMATS"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain-check.py",
+              "unit": "run",
+              "line_start": 96,
+              "line_end": 96,
+              "quote": "def run(kind, m, family, fixture):"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
         }
       },
       "remaining_gaps": [
@@ -6618,11 +6702,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6639,17 +6723,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-685",
-              "line_start": 24688,
-              "line_end": 24688,
+              "line_start": 24728,
+              "line_end": 24728,
               "quote": "panel.undocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
           "status": "PASS",
@@ -6672,11 +6756,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6700,17 +6784,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-685",
-              "line_start": 24688,
-              "line_end": 24688,
+              "line_start": 24728,
+              "line_end": 24728,
               "quote": "panel.undocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6733,11 +6817,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6767,11 +6851,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6787,11 +6871,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6815,24 +6899,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/panel_event_contracts/panel_undocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15329,
-              "line_end": 15329,
+              "line_start": 15563,
+              "line_end": 15563,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
           "status": "PASS",
@@ -6848,11 +6932,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6882,11 +6966,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6909,16 +6993,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change": "unchanged",
+          "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
+          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6937,29 +7021,29 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 435,
-              "line_end": 435,
+              "line_start": 521,
+              "line_end": 521,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 278,
+              "line_end": 278,
               "quote": "def duplicate_proofs("
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 159,
-              "line_end": 159,
+              "line_start": 200,
+              "line_end": 200,
               "quote": "def append_result_errors"
             },
             {
               "path": "Plans/panel_event_contracts/panel_undocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15329,
-              "line_end": 15329,
+              "line_start": 15563,
+              "line_end": 15563,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -6968,14 +7052,28 @@
               "line_start": 105,
               "line_end": 105,
               "quote": "def executed_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "validator",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "kwargs['format_checker'] = FORMATS"
+            },
+            {
+              "path": "scripts/pm-dg6a-domain-check.py",
+              "unit": "run",
+              "line_start": 96,
+              "line_end": 96,
+              "quote": "def run(kind, m, family, fixture):"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
+          "change_reason": "Round 7 closes numeric payload/hash input-domain B1, deterministic timestamp-format B2 and malformed-container P1; full field and guard sweeps retain earlier fixes."
         }
       },
       "remaining_gaps": [
@@ -6990,6 +7088,6 @@
       "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
     }
   ],
-  "reviewed_head": "69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
-  "revision_binding": "Assessed code 7a56f2132d37b48085cb5e39c94c4f4e23da7f97; self-inclusive round-6 report descendant on plans/ea-w2-gui-concerns-20261104. No admission or native proof."
+  "reviewed_head": "adda7279f8067637b109125f9524b0952f88f96b",
+  "revision_binding": "Round-7 technical repair and self-inclusive report descendant on plans/ea-w2-gui-concerns-20261104. Per-command source hashes bind the consumed worktree code; admission ABSENT and native NOT_RUN."
 }

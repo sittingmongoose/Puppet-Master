@@ -219,6 +219,9 @@ def rejection_mutants(m, function):
         elif isinstance(node, ast.AugAssign) and isinstance(node.value, ast.Call) and ast.unparse(node.value).startswith('list(Draft202012Validator'):
             replacement = ast.Pass()
             label = 'nested payload schema validation'
+        elif isinstance(node, ast.Return) and function == 'protocol_errors' and isinstance(node.value, ast.List) and node.value.elts:
+            replacement = ast.Return(value=ast.List(elts=[], ctx=ast.Load()))
+            label = ast.unparse(node.value)
         elif isinstance(node, ast.If) and function == 'writer_policy_errors':
             replacement = ast.Pass()
             label = 'replay-only rejection (duplicates unsupported-policy rejection)'
@@ -383,6 +386,7 @@ def history_matrix(kind, m, family, fixture):
                         return found
         payload_path, integer = integer_leaf(base['event']['payload'], ['event','payload'])
         negatives.append(dict(name='typed_original_payload_integer',path=payload_path,value=float(integer),guard='historical_payload'))
+        negatives.append(dict(name='wrong_payload_container',path=['event','payload'],value='false',guard='history_shape'))
         for policy in ('dedupe_by_idempotency_key', 'projector_replay_only'):
             base['event']['replay_policy'] = expected['event']['replay_policy'] = policy
             live = copy.deepcopy(base)
@@ -402,10 +406,10 @@ def history_matrix(kind, m, family, fixture):
         original_guards = shared.historical_guards
         for guard in original_guards(base, expected,
                 {(payload_schema['properties']['schema_id']['const'], payload_schema['properties']['schema_version']['const']):payload_schema},
-                cp_schema, m.checkpoint_errors):
+                cp_schema, m.checkpoint_errors) | {'history_shape': True}:
             def weakened(*args):
                 guards = original_guards(*args)
-                del guards[guard]
+                guards.pop(guard, None)
                 return guards
             flipped, rejected = [], []
             try:

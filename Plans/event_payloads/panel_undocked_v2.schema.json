@@ -126,12 +126,12 @@
     "prior_host_revision": {
       "type": "integer",
       "minimum": 0,
-      "maximum": 18446744073709551614
+      "maximum": 9007199254740991
     },
     "new_host_revision": {
       "type": "integer",
       "minimum": 1,
-      "maximum": 18446744073709551615
+      "maximum": 9007199254740991
     },
     "settled_at_utc": {
       "type": "string",

@@ -207,12 +207,12 @@
         "prior_host_revision": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 18446744073709551614
+          "maximum": 9007199254740991
         },
         "new_host_revision": {
           "type": "integer",
           "minimum": 1,
-          "maximum": 18446744073709551615
+          "maximum": 9007199254740991
         },
         "settled_at_utc": {
           "type": "string",
@@ -255,7 +255,7 @@
         "host_revision": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 18446744073709551615
+          "maximum": 9007199254740991
         },
         "host": {
           "enum": [
@@ -289,7 +289,7 @@
         "host_revision": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 18446744073709551615
+          "maximum": 9007199254740991
         },
         "host": {
           "enum": [
@@ -413,7 +413,7 @@
         "prior_host_revision": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 18446744073709551614
+          "maximum": 9007199254740991
         },
         "expected_layout_revision": {
           "type": [
@@ -421,7 +421,7 @@
             "null"
           ],
           "minimum": 0,
-          "maximum": 18446744073709551615
+          "maximum": 9007199254740991
         },
         "current_host": {
           "const": "chat_column"

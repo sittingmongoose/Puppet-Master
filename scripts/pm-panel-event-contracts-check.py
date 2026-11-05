@@ -15,10 +15,11 @@ spec = importlib.util.spec_from_file_location('dg6a_alert_oracles', ROOT / 'scri
 shared = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(shared)
 packed = shared.packed
+Draft202012Validator = shared.Draft202012Validator
 
 
 def load(path):
-    return json.loads((ROOT / path).read_text())
+    return shared.domain.loads((ROOT / path).read_text())
 
 
 def payload_errors(value, schema):
@@ -40,7 +41,7 @@ def payload_errors(value, schema):
 
 
 def identity(value, event_type):
-    return hashlib.sha256(packed([value['storage_instance_id'], value['server_id'], value['scope_partition'],
+    return hashlib.sha256(shared.semantic_packed([value['storage_instance_id'], value['server_id'], value['scope_partition'],
                                  value['app_session_id'], event_type, value['idempotency_key']])).hexdigest()
 
 
@@ -56,6 +57,8 @@ def checkpoint_errors(value, schema, original_context):
 
 def operation_errors(value, schema, payload_schema, event_type):
     found = list(Draft202012Validator(schema).iter_errors(value))
+    if found:
+        return found
     if len(packed(value)) > 16384:
         found.append('operation too large')
     if found:
@@ -93,11 +96,13 @@ def operation_errors(value, schema, payload_schema, event_type):
 
 
 def request_digest(command, payload):
-    return hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
+    return hashlib.sha256(shared.semantic_packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
 
 
 def protocol_errors(context, original_operation):
     """Synthetic evidence joins; real authority/OS proofs remain native obligations."""
+    if not shared.protocol_shape(context, original_operation, 'panel'):
+        return ['invalid protocol shape']
     original_payload = original_operation['payload']
     errors = []
     errors += shared.writer_policy_errors(context['replay_policy'])
@@ -115,7 +120,7 @@ def protocol_errors(context, original_operation):
         errors.append('prior session cannot act')
     if context['window'] != original_payload['window_id']:
         errors.append('wrong window')
-    if request_digest(context['retry_command'], context['retry_payload']) != original_operation['request_digest']:
+    if not shared.retry_digest_matches(context['retry_command'], context['retry_payload'], original_operation['request_digest']):
         errors.append('retry changed')
     if context['publication_state'] != 'current' or shared.cursor_errors(context['cursor'], context['frontier']):
         errors.append('unavailable publication/cursor')
@@ -177,7 +182,7 @@ def main():
             assert 'frozen command digest mismatch' in operation_errors(altered, op_schema, schema, event), case['name']
             count += 1
         altered = copy.deepcopy(operation)
-        altered['request_digest'] = hashlib.sha256(packed(altered['original_command'])).hexdigest()
+        altered['request_digest'] = hashlib.sha256(shared.semantic_packed(altered['original_command'])).hexdigest()
         assert operation_errors(altered, op_schema, schema, event), 'old command-only digest'
         count += 1
         for field, bad in [('app_session_id', 'other-session'), ('original_append_result_ref', None), ('event_id', 'reminted')]:

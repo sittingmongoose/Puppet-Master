@@ -351,7 +351,9 @@
           "$ref": "#/$defs/payload_non_empty_id"
         },
         "concern_revision": {
-          "const": 1
+          "const": 1,
+          "type": "integer",
+          "maximum": 9007199254740991
         },
         "concern_record_ref": {
           "$ref": "#/$defs/payload_non_secret_ref"
@@ -487,7 +489,7 @@
         "revision": {
           "type": "integer",
           "minimum": 1,
-          "maximum": 18446744073709551615
+          "maximum": 9007199254740991
         },
         "concern_category": {
           "type": "string",

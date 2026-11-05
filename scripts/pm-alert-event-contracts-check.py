@@ -18,8 +18,13 @@ _codec = importlib.util.module_from_spec(_spec)
 sys.modules[_spec.name] = _codec
 _spec.loader.exec_module(_codec)
 
+_domain_spec = importlib.util.spec_from_file_location('pm_dg6a_domain', ROOT / 'scripts/pm-dg6a-domain.py')
+domain = importlib.util.module_from_spec(_domain_spec)
+_domain_spec.loader.exec_module(domain)
+Draft202012Validator = domain.validator
+
 def load(path):
-    return json.loads((ROOT / path).read_text())
+    return domain.loads((ROOT / path).read_text())
 
 def errors(payload, schema, guard):
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
@@ -38,7 +43,7 @@ def errors(payload, schema, guard):
     return found
 
 def snooze_expired(payload):
-    return 'snooze_until' in payload and datetime.fromisoformat(payload['snooze_until'].upper()) <= datetime.fromisoformat(payload['ts'].upper())
+    return 'snooze_until' in payload and domain.instant_le(payload['snooze_until'], payload['ts'])
 
 
 def packed(value):
@@ -76,6 +81,8 @@ def check_schema(schema):
 
 def operation_errors(value, schema):
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
+    if found:
+        return found
     if len(packed(value)) > 16384:
         found.append('operation exceeds 16384 encoded bytes')
     if found:
@@ -130,8 +137,14 @@ def operation_errors(value, schema):
     return found
 
 
+def semantic_packed(value):
+    domain.semantic_numbers(value)
+    domain.semantic_formats(value)
+    return packed(value)
+
+
 def request_digest(command, payload):
-    return hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
+    return hashlib.sha256(semantic_packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
 
 
 def isolated_cases(kind, owner, family, fixture):
@@ -141,15 +154,43 @@ def isolated_cases(kind, owner, family, fixture):
     return helper.vectors(kind, owner, family, fixture)
 
 
+def retry_digest_matches(command, payload, original_digest):
+    try:
+        return request_digest(command, payload) == original_digest
+    except (TypeError, ValueError):
+        return False
+
+
+def protocol_shape(context, original, kind):
+    """Check navigation containers before any indexing, comparison or hashing."""
+    common = {'replay_policy', 'receipt_event_id', 'append_resolution', 'append_original'}
+    fields = {
+        'alert': {'admitted', 'allowed', 'current', 'source_verified', 'retry_command', 'retry_payload'},
+        'panel': {'admitted', 'desktop', 'source_verified', 'original_event_id', 'session', 'window',
+                  'retry_command', 'retry_payload', 'publication_state', 'cursor', 'frontier'},
+        'concern': {'admitted', 'authority_verified', 'source_current', 'permission_allowed',
+                    'subject_already_active', 'concern_key_exists', 'authority', 'retry_digest', 'retry_body', 'publication_state'},
+    }[kind]
+    if type(context) is not dict or not common | fields <= context.keys():
+        return False
+    if kind == 'concern':
+        authority = context['authority']
+        return type(authority) is dict and {'actor_ref', 'creator_kind', 'project_id', 'authority_basis_ref',
+                'currentness_basis_ref', 'permission_snapshot_ref', 'source_refs'} <= authority.keys()
+    return type(context['retry_command']) is dict and type(context['retry_payload']) is dict
+
+
 def protocol_errors(context, original):
     """Current retry evidence; the retained historical reader never calls this."""
+    if not protocol_shape(context, original, 'alert'):
+        return ['invalid protocol shape']
     found = writer_policy_errors(context['replay_policy'])
     for field in ('admitted', 'allowed', 'current', 'source_verified'):
         if context[field] is not True:
             found.append(field)
     if context['receipt_event_id'] != original['event_id']:
         found.append('wrong original receipt')
-    if request_digest(context['retry_command'], context['retry_payload']) != original['request_digest']:
+    if not retry_digest_matches(context['retry_command'], context['retry_payload'], original['request_digest']):
         found.append('idempotency_conflict')
     family = original['schema_id'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('_', '.', 1)
     found += append_result_errors(original, context['append_resolution'], context['append_original'], family)
@@ -173,10 +214,11 @@ def append_result_errors(operation, resolved, expected, event_type):
                     payload=operation['payload'])
     if 'scope_partition' in operation:
         bindings['scope_partition'] = operation['scope_partition']
-    if not all(exact_value(expected.get(key), value) for key, value in bindings.items()):
+    if not (type(expected) is dict and all(exact_value(expected.get(key), value) for key, value in bindings.items())):
         found.append('foreign original append family/scope/identity')
-    if operation['state'] == 'settled' and not exact_value(
-            operation['original_append_result_ref'], expected['receipt']['original_append_result_ref']):
+    receipt = expected.get('receipt') if type(expected) is dict else None
+    if operation['state'] == 'settled' and not (type(receipt) is dict and exact_value(
+            operation['original_append_result_ref'], receipt.get('original_append_result_ref'))):
         found.append('foreign original append-result reference')
     if operation['state'] == 'committed' and operation['original_append_result_ref'] is not None:
         found.append('unsettled operation carries append-result reference')
@@ -222,6 +264,8 @@ def checkpoint_errors(value, schema, original_context):
     source authentication remains a separate NOT_RUN obligation.
     """
     found = list(Draft202012Validator(schema).iter_errors(value))
+    if found:
+        return found
     if len(packed(value)) > 16384:
         found.append('checkpoint exceeds 16384 encoded bytes')
     if not found and 'index_read_token' in value:
@@ -265,6 +309,14 @@ def writer_policy_errors(policy):
         return ['replay_only_not_appendable']
     return [] if policy == 'dedupe_by_idempotency_key' else ['unsupported current writer policy']
 
+def producer_digest(record):
+    domain.semantic_numbers(record['payload'])
+    domain.semantic_formats(record['payload'])
+    domain.semantic_numbers(record['producer_sequence_id'])
+    domain.semantic_formats({'occurred_at_utc': record['occurred_at_utc']})
+    return _codec.event_producer_semantic_digest(record)
+
+
 def producer_cases(fixtures, event_type, payload):
     """Exercise the canonical partition codec and EventRecord semantic preimage.
 
@@ -283,12 +335,12 @@ def producer_cases(fixtures, event_type, payload):
                   idempotency_key=payload['idempotency_key'], payload_schema_id=payload['schema_id'],
                   payload=payload, payload_ref=None, redaction_profile='secret_refs_only', migration=None,
                   sequence_id=1, observed_at_utc='2026-11-04T18:00:00Z', persisted_at_utc='2026-11-04T18:00:00Z')
-    original = _codec.event_producer_semantic_digest(record)
+    original = producer_digest(record)
     for case in fixtures['semantic_digest_cases']:
         retry = copy.deepcopy(record)
         retry.update(case['envelope_changes'])
         retry['payload'].update(case['payload_changes'])
-        assert (original == _codec.event_producer_semantic_digest(retry)) == case['same_digest'], case['name']
+        assert (original == producer_digest(retry)) == case['same_digest'], case['name']
         count += 1
     # Exercise the actual producer digest codec, not an independent JSON codec.
     numeric_key = next(key for key, value in payload.items() if type(value) is int)
@@ -302,7 +354,7 @@ def producer_cases(fixtures, event_type, payload):
             candidate['payload'][numeric_key] = number
             if type(number) is float:
                 try:
-                    _codec.event_producer_semantic_digest(candidate)
+                    producer_digest(candidate)
                 except ValueError:
                     pass
                 else:
@@ -310,7 +362,7 @@ def producer_cases(fixtures, event_type, payload):
             else:
                 canonical = copy.deepcopy(record)
                 canonical['payload'][numeric_key] = int(number)
-                assert _codec.event_producer_semantic_digest(candidate) == _codec.event_producer_semantic_digest(canonical)
+                assert producer_digest(candidate) == producer_digest(canonical)
         count += 1
     return count
 
@@ -345,6 +397,37 @@ class HistoryUnavailable(ValueError):
         super().__init__('historical read unavailable: ' + ', '.join(guards))
 
 
+def history_shape(request, expected):
+    """Only inspect a member after its containing object and presence are proved.
+
+    Leaf values belong to the existing distinct custody/publication guards. This
+    checks the navigation shape, so malformed input has a modeled refusal.
+    """
+    if type(request) is not dict or not {'checkpoint', 'event', 'disclosure', 'after_sequence_id'} <= request.keys():
+        return False
+    for key in ('checkpoint', 'event', 'disclosure'):
+        if type(request[key]) is not dict:
+            return False
+    cp, event, disclosure = request['checkpoint'], request['event'], request['disclosure']
+    if not {'state', 'through_sequence_id', 'publication_id', 'index_read_token'} <= cp.keys():
+        return False
+    if not set(expected['event']) <= event.keys():
+        return False
+    if type(event['payload']) is not dict:
+        return False
+    if not {'permission_allowed', 'membership_allowed', 'source_access_allowed', 'deleted', 'withdrawn'} <= disclosure.keys():
+        return False
+    return True
+
+
+def stored_instants_valid(value):
+    try:
+        domain.semantic_formats(value)
+    except ValueError:
+        return False
+    return True
+
+
 def historical_guards(request, expected, payload_schemas, cp_schema, cp_checker):
     """Synthetic retained-original evidence, independent of current writer predicates.
 
@@ -352,22 +435,25 @@ def historical_guards(request, expected, payload_schemas, cp_schema, cp_checker)
     never reconstructed from the candidate being checked. This is not native auth.
     Each guard owns one distinct binding so its negative can be isolated and killed.
     """
+    if not history_shape(request, expected):
+        return {'history_shape': False}
     cp, event = request['checkpoint'], request['event']
     original = expected['event']
     publication = {k: v for k, v in cp.items() if k != 'state'}
     expected_publication = {k: v for k, v in expected['checkpoint'].items() if k != 'state'}
     identity_fields = set(original) - {'payload', 'receipt', 'source_selection', 'state', 'valid_when_written'}
     payload = event['payload']
-    schema = payload_schemas.get((payload.get('schema_id'), payload.get('schema_version')))
+    schema_key = (payload.get('schema_id'), payload.get('schema_version'))
+    schema = payload_schemas.get(schema_key) if all(type(v) is str for v in schema_key) else None
     payload_valid = schema is not None and not list(
         Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
     return {
         'checkpoint_publication': cp['state'] == 'current',
         'checkpoint_original': not cp_checker(cp, cp_schema, original) and exact_value(publication, expected_publication),
         'event_publication': event['state'] == 'current',
-        'event_original': set(event) == set(original) and all(exact_value(event[k], original[k]) for k in identity_fields),
+        'event_original': stored_instants_valid({k:event[k] for k in ('observed_at_utc','persisted_at_utc') if k in event}) and set(event) == set(original) and all(exact_value(event[k], original[k]) for k in identity_fields),
         'historical_payload': payload_valid and exact_value(payload, original['payload']),
-        'original_receipt': exact_value(event['receipt'], original['receipt']),
+        'original_receipt': stored_instants_valid(event['receipt']) and exact_value(event['receipt'], original['receipt']),
         'original_source': exact_value(event['source_selection'], original['source_selection']),
         'original_admission': original['valid_when_written'] is True and event['valid_when_written'] is True,
         'current_permission': all(request['disclosure'][key] is True for key in

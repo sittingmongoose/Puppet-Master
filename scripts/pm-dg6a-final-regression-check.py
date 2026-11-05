@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REVIEWED = '69776a6b88c79f5ad871d9b98304bc7ef89fcd83'
+REVIEWED = 'adda7279f8067637b109125f9524b0952f88f96b'
 GRADE = 'reports/event-authority-20261104/DG6A.self-grade.json'
 
 
@@ -77,7 +77,7 @@ def run_suite(output, selected=None):
     results = []
     restored = {}
 
-    def cli(family, check, name, script, path=None, change=None, expected=1, args=()):
+    def cli(family, check, name, script, path=None, change=None, expected=1, args=(), raw_number=None):
         available = next(int(line.split()[1]) for line in Path('/proc/meminfo').read_text().splitlines()
                          if line.startswith('MemAvailable:'))
         if available < 6 * 1024 * 1024:
@@ -90,7 +90,10 @@ def run_suite(output, selected=None):
             if target:
                 value = json.loads(original)
                 change(value)
-                target.write_text(json.dumps(value, indent=2) + '\n')
+                encoded = json.dumps(value, indent=2) + '\n'
+                if raw_number is not None:
+                    encoded = encoded.replace('"DG6A_RAW_NUMBER"', raw_number, 1)
+                target.write_text(encoded)
             command = [sys.executable, 'scripts/' + script, *args]
             if selected and script in ('pm-alert-event-contracts-check.py', 'pm-panel-event-contracts-check.py', 'pm-concern-created-contracts-check.py'):
                 command += ['--family', selected]
@@ -124,6 +127,30 @@ def run_suite(output, selected=None):
 
             def fixture_case(check, name, change, expected=1):
                 cli(event, check, name, script, path, change, expected)
+
+            # B1/B2 first-validator counterexamples use actual family CLIs. Each
+            # mutation changes one leaf of a positive fixture, preserving all other
+            # observations. Domain guard isolation is separately proved by field.
+            if kind=='concern':
+                payload_location=('settled_operation','payload')
+            else:
+                index=next(i for i,c in enumerate(fixture['payload_cases']) if c['valid'])
+                payload_location=('payload_cases',index,'payload' if kind=='alert' else 'value')
+            def positive_payload(v):
+                for key in payload_location:v=v[key]
+                return v
+            base_payload=positive_payload(fixture)
+            for field,number in base_payload.items():
+                if type(number) is not int:continue
+                for spelling in (str(number)+'.0',str(number)+'e0','-0','-0.0','01',str(2**53),str(2**53+1)):
+                    def numeric(v,field=field):positive_payload(v)[field]='DG6A_RAW_NUMBER'
+                    cli(event,'B1',field+'='+spelling,script,path,numeric,args=(),raw_number=spelling)
+            domain_checks=module('dg6a_cli_domains_'+kind,'pm-dg6a-domain-check.py')
+            for field,value in base_payload.items():
+                if type(value) is str and shared.domain.instant(value):
+                    for malformed in domain_checks.BAD_DATES:
+                        def timestamp(v,field=field,malformed=malformed):positive_payload(v)[field]=malformed
+                        fixture_case('B2',field+'='+repr(malformed),timestamp)
 
             def foreign_append(v):
                 original = v['operation_cases'][2]['value'] if kind=='alert' else v['settled_operation']

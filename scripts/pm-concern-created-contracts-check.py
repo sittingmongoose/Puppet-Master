@@ -15,15 +15,16 @@ spec = importlib.util.spec_from_file_location('dg6a_concern_shared', ROOT / 'scr
 shared = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(shared)
 packed = shared.packed
+Draft202012Validator = shared.Draft202012Validator
 CREATORS = {'Runtime', 'Package Overseer', 'Seam Overseer', 'Corroboration', 'Graph Patch'}
 
 
 def load(path):
-    return json.loads((ROOT / path).read_text())
+    return shared.domain.loads((ROOT / path).read_text())
 
 
 def digest(value):
-    return hashlib.sha256(packed(dict(original_command=value['original_command'],
+    return hashlib.sha256(shared.semantic_packed(dict(original_command=value['original_command'],
                                      candidate_payload=value['payload'], candidate_record=value['candidate_record']))).hexdigest()
 
 
@@ -37,15 +38,21 @@ def caller_body(command):
             ('project_id', 'title_ref', 'severity', 'category', 'source_refs', 'idempotency_key')}
 
 
+def payload_errors(value, schema):
+    return list(Draft202012Validator(schema).iter_errors(value))
+
+
 def operation_errors(value, schema, payload_schema):
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
+    if found:
+        return found
     if len(packed(value)) > 16384:
         found.append('operation exceeds 16384 bytes')
     if found:
         return found
     payload, command, record = value['payload'], value['original_command'], value['candidate_record']
     found += list(Draft202012Validator(payload_schema, format_checker=FormatChecker()).iter_errors(payload))
-    h = hashlib.sha256(packed([value['storage_instance_id'], value['project_id'], 'concern.created', value['idempotency_key']])).hexdigest()
+    h = hashlib.sha256(shared.semantic_packed([value['storage_instance_id'], value['project_id'], 'concern.created', value['idempotency_key']])).hexdigest()
     cid = 'concern_' + h
     if (value['operation_digest'], value['event_id'], payload['concern_id']) != (h, 'evt_concern_created_' + h, cid):
         found.append('original identity mismatch')
@@ -82,6 +89,8 @@ def operation_errors(value, schema, payload_schema):
 
 def protocol_errors(context, original):
     """Synthetic authority/source joins only. Native authentication remains NOT_RUN."""
+    if not shared.protocol_shape(context, original, 'concern'):
+        return ['invalid protocol shape']
     found = shared.writer_policy_errors(context['replay_policy'])
     for key in ('admitted', 'authority_verified', 'source_current', 'permission_allowed'):
         if context[key] is not True:
@@ -94,7 +103,7 @@ def protocol_errors(context, original):
     for key in ('actor_ref', 'creator_kind', 'project_id', 'authority_basis_ref', 'currentness_basis_ref', 'permission_snapshot_ref', 'source_refs'):
         if context['authority'][key] != command[key]:
             found.append('independent authority ' + key)
-    if context['authority']['creator_kind'] not in CREATORS:
+    if type(context['authority']['creator_kind']) is not str or context['authority']['creator_kind'] not in CREATORS:
         found.append('nomination or owner label grants no creation')
     if context['receipt_event_id'] != original['event_id']:
         found.append('wrong original receipt')
@@ -280,7 +289,7 @@ def main():
         assert checkpoint_errors(value, cp_schema, original)
         count += 1
     value = copy.deepcopy(checkpoint)
-    value['index_read_token']['storage_instance_id'] = 'foreign'
+    value['index_read_token']['storage_instance_id'] = '00000000-0000-4000-8000-000000000002'
     assert checkpoint_errors(value, cp_schema, original)
     value = copy.deepcopy(checkpoint)
     value['index_read_token']['redb_snapshot_id'] = 'forbidden'

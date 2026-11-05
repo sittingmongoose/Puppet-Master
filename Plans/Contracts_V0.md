@@ -24496,6 +24496,14 @@ canonical_text: alert.acknowledged 1.0.0 uses only Plans/event_payloads/attentio
   enums are binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original
   retry, SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-660;
   Plans/FinalGUISpec.md#F3-700 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers are exact JSON integer tokens in the I-JSON safe range -9007199254740991..9007199254740991,
+  further restricted by each field's schema bounds. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals. Storage-assigned sequence/frontier fields retain their separately declared u64 physical domain,
+  with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
+  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
+  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -24539,6 +24547,14 @@ canonical_text: alert.dismissed 1.0.0 uses only Plans/event_payloads/attention/a
   binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry,
   SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-661;
   Plans/FinalGUISpec.md#F3-701 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers are exact JSON integer tokens in the I-JSON safe range -9007199254740991..9007199254740991,
+  further restricted by each field's schema bounds. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals. Storage-assigned sequence/frontier fields retain their separately declared u64 physical domain,
+  with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
+  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
+  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -24581,6 +24597,14 @@ canonical_text: alert.rule_muted 1.0.0 uses only Plans/event_payloads/attention/
   binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry,
   SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-662;
   Plans/FinalGUISpec.md#F3-702 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers are exact JSON integer tokens in the I-JSON safe range -9007199254740991..9007199254740991,
+  further restricted by each field's schema bounds. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals. Storage-assigned sequence/frontier fields retain their separately declared u64 physical domain,
+  with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
+  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
+  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -24623,6 +24647,14 @@ canonical_text: alert.snoozed 1.0.0 uses only Plans/event_payloads/attention/ale
   Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry, SP-286/CV-339
   full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-663;
   Plans/FinalGUISpec.md#F3-703 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers are exact JSON integer tokens in the I-JSON safe range -9007199254740991..9007199254740991,
+  further restricted by each field's schema bounds. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals. Storage-assigned sequence/frontier fields retain their separately declared u64 physical domain,
+  with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
+  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
+  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -24666,6 +24698,14 @@ canonical_text: panel.redocked current payload 2.0.0 is the closed Plans/event_p
   and dispatches by its own stored schema id/version. The complete independent producer, original receipt/identity/custody,
   SP-286 full-value recovery, SP-278 bounded History, withdrawal and retention-pending contract is SP-664; semantic
   owner F3-704. No admission or native proof.
+  Current semantic numbers are exact JSON integer tokens in the I-JSON safe range -9007199254740991..9007199254740991,
+  further restricted by each field's schema bounds. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals. Storage-assigned sequence/frontier fields retain their separately declared u64 physical domain,
+  with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
+  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
+  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
 split_recommended: false
@@ -24714,6 +24754,14 @@ canonical_text: panel.undocked current payload 2.0.0 is the closed Plans/event_p
   and dispatches by its own stored schema id/version. The complete independent producer, original receipt/identity/custody,
   SP-286 full-value recovery, SP-278 bounded History, withdrawal and retention-pending contract is SP-665; semantic
   owner F3-705. No admission or native proof.
+  Current semantic numbers are exact JSON integer tokens in the I-JSON safe range -9007199254740991..9007199254740991,
+  further restricted by each field's schema bounds. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals. Storage-assigned sequence/frontier fields retain their separately declared u64 physical domain,
+  with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
+  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
+  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
 split_recommended: false
@@ -24770,6 +24818,14 @@ canonical_text: concern.created current 1.0.0 selects the existing closed Plans/
   Event membership ABSENT; event/operation/checkpoint retention PENDING_RETENTION_DECISION. Static positive and
   negative oracles are independently python3 scripts/pm-concern-created-contracts-check.py and this family's fixture;
   native execution NOT_RUN.
+  Current semantic numbers are exact JSON integer tokens in the I-JSON safe range -9007199254740991..9007199254740991,
+  further restricted by each field's schema bounds. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals. Storage-assigned sequence/frontier fields retain their separately declared u64 physical domain,
+  with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
+  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
+  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Event identity, authority, custody and storage contract; existing GUI action model is
   preserved.
