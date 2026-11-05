@@ -3088,6 +3088,11 @@ LEGACY_MATRIX_CLOSURE_FIELDS = frozenset({
 })
 LEGACY_MATRIX_EVOLUTION_FIELDS = frozenset(MATRIX_REQUIRED_FIELDS - LEGACY_MATRIX_CLOSURE_FIELDS)
 LEGACY_LIST_FIELDS = frozenset({"source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"})
+# Companion files the validator reads in their own role. Listed as a source artifact, one would be
+# validated twice under two roles, and only a prefix of the matrix is frozen; a run that lists any
+# of them as a source gets no demotions at all (Q7 Sol r5).
+LEGACY_RESERVED_SOURCE_NAMES = frozenset({"repair_closure_matrix.jsonl", "audit_report.json", "effective_status.json",
+                                          "audit_scope_manifest.jsonl", "repair_impact_matrix.jsonl"})
 _LEGACY_INVENTORY_CACHE: dict[str, Any] = {}
 
 
@@ -3171,11 +3176,13 @@ def classify_legacy_format_errors(
     matrix rows are historical (`historical_matrix_lines`), which matrix rows' identity agrees
     with their registry closure (`matrix_identity_agrees`, by line), which source artifacts the
     run read (`source_artifacts`), whether any input read is new (`unfrozen_inputs`) or a
-    symbolic link (`symlinked_inputs`, which keeps every error), and whether every
+    symbolic link (`symlinked_inputs`, which keeps every error), whether a companion file was
+    requested as a source artifact (`reserved_source_inputs`, which also keeps every error), and whether every
     non-actionable row a historical closure covers was judged by the compatibility inference
     (`extra_coverage_all_inferred`)."""
     meta = list(getattr(errors, "meta", None) or [])
-    if len(meta) != len(errors) or context.get("symlinked_inputs"):
+    if len(meta) != len(errors) or context.get("symlinked_inputs") or context.get("reserved_source_inputs") \
+            or (set(context.get("source_artifacts") or ()) & LEGACY_RESERVED_SOURCE_NAMES):
         return list(errors), {}
     frozen = set(context.get("frozen_files") or ())
     historical_lines = context.get("historical_matrix_lines")
@@ -3205,7 +3212,9 @@ def classify_legacy_format_errors(
         kind = None
         if isinstance(info, dict):
             name, k = own_name(info.get("origin")), info.get("kind")
-            frozen_source = name is not None and name in frozen and name in requested
+            # A companion file never takes the source path: the matrix is frozen only up to its
+            # historical rows, and its rows must also agree with their registry closures.
+            frozen_source = name is not None and name in frozen and name in requested and name not in LEGACY_RESERVED_SOURCE_NAMES
             frozen_matrix_row = name == matrix_name and name in frozen and historical_row(info.get("row"))
             if k in ("ref_missing", "ref_empty") and info.get("field") in AUDIT_REF_FIELDS:
                 if frozen_source or frozen_matrix_row or (name == report_name and name in frozen):
@@ -3317,6 +3326,7 @@ def validate_audit_dir(
         ),
         "matrix_identity_agrees": set(),
         "source_artifacts": list(requested_artifacts),
+        "reserved_source_inputs": sorted(set(requested_artifacts) & LEGACY_RESERVED_SOURCE_NAMES),
         # Any input the run reads that is a symbolic link disqualifies the directory: what a
         # diagnostic names is then not the file that was read.
         "symlinked_inputs": sorted(
@@ -5156,6 +5166,17 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 for (_, info), m in zip(demotable, [f"demotable message {i}" for i in range(len(demotable))])))
             check("legacy_rule_symlinked_input_keeps_everything",
                   classify_legacy_format_errors(legacy_dir, diag, dict(ctx, symlinked_inputs=["new_findings.jsonl"])) == (list(diag), {}))
+            check("legacy_rule_reserved_source_keeps_everything", all(
+                classify_legacy_format_errors(legacy_dir, diag, dict(ctx, source_artifacts=[*ctx["source_artifacts"], name])) == (list(diag), {})
+                for name in sorted(LEGACY_RESERVED_SOURCE_NAMES)))
+            check("legacy_rule_reserved_source_flag_keeps_everything",
+                  classify_legacy_format_errors(legacy_dir, diag, dict(ctx, reserved_source_inputs=[M])) == (list(diag), {}))
+            # The matrix requested as a source keeps an appended row's key and source-field errors.
+            role = AuditDiagnostics()
+            role.add("appended matrix key", origin=P(M), row=11, kind="key_algorithm")
+            role.add("appended matrix fields", origin=P(M), row=11, kind="finding_missing_fields", fields=["repair_required"])
+            check("legacy_rule_matrix_requested_as_source_keeps_appended_errors",
+                  classify_legacy_format_errors(legacy_dir, role, dict(ctx, source_artifacts=[M], reserved_source_inputs=[])) == (list(role), {}))
             check("legacy_rule_plain_list_keeps_everything",
                   classify_legacy_format_errors(legacy_dir, list(diag), ctx) == (list(diag), {}))
             only_matrix = classify_legacy_format_errors(legacy_dir, diag, dict(ctx, frozen_files=[M]))[1]
