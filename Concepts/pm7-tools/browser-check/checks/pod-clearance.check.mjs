@@ -23,6 +23,19 @@ export default async function (t) {
     if (await f.evaluate(() => document.body.getAttribute('data-ph-drawer') !== 'pinned')) await pin.click();
     await f.waitForFunction(() => document.body.getAttribute('data-ph-drawer') === 'pinned' && !!document.querySelector('.history-flyout'), null, { timeout: 10000 });
     const drawer = f.locator('.history-flyout');
+    // Pinning animates both the drawer and hosted chat. Read the drag baseline only
+    // after finite animations end and consecutive layout samples agree.
+    await f.waitForFunction(() => {
+      const e = document.querySelector('.history-flyout');
+      if (!e || document.body.getAttribute('data-ph-drawer') !== 'pinned') return false;
+      const busy = document.getAnimations().some(a => a.playState === 'running' &&
+        a.effect?.getComputedTiming().iterations !== Infinity &&
+        (e.contains(a.effect?.target) || a.effect?.target?.contains?.(e)));
+      const r = e.getBoundingClientRect(), key = [r.x,r.y,r.width,r.height].join(',');
+      const prior = window.__podGeometry;
+      window.__podGeometry = {key, count: !busy && prior?.key === key ? prior.count + 1 : 0};
+      return !busy && window.__podGeometry.count >= 4;
+    }, null, {polling:'raf',timeout:10000});
     const width = await drawer.evaluate(e => e.getBoundingClientRect().width);
     if (Math.abs(width - 320) > 1) {
       const box = await f.locator('.history-flyout [data-ph-resize]').boundingBox();
@@ -31,8 +44,14 @@ export default async function (t) {
       await t.page.mouse.move(x, y); await t.page.mouse.down();
       try { await t.page.mouse.move(x + 320 - width, y, { steps: 12 }); } finally { await t.page.mouse.up(); }
     }
+    await f.waitForFunction(() => {
+      const e = document.querySelector('.history-flyout');
+      return document.body.getAttribute('data-ph-drawer') === 'pinned' && e &&
+        Math.abs(e.getBoundingClientRect().width - 320) <= 1 && !e.classList.contains('is-history-narrow');
+    }, null, {timeout:6000});
     const actual = await drawer.evaluate(e => e.getBoundingClientRect().width);
     await t.check(`${w} History width is 320px`, Math.abs(actual - 320) <= 1, String(actual), { hard: true });
+    if (t.args.setupOnly) continue; // Repeat driver only; never used for full clearance certification.
     await f.evaluate(() => PM56_DEMO.setVariant(1, 5));
     const collapsed = f.locator('.history-flyout .history-section[data-collapsed="true"] .section-head');
     for (let n = 0; n < 10 && await collapsed.count(); n++) await collapsed.first().click();
@@ -98,5 +117,6 @@ export default async function (t) {
     }
     t.log(`${w}x${h}: inspected ${ids.length} threads at top and bottom`);
   }
+  if (t.args.setupOnly) return;
   await t.check('Pod clears controls in every size, thread and scroll position', views === threads * 2 && views > 0 && !bad.length, `${views} views; ${bad.slice(0, 12).join('; ')}`);
 }
