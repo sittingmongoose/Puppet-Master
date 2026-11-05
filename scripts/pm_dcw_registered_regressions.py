@@ -85,6 +85,14 @@ def audit(family):
                '$defs': {'run~/started': copy.deepcopy(document)}}
     variants = [('real_external_closure', {PATH: linked}, 'accept'),
                 ('exact_nonroot_pointer', {PATH: wrapped}, 'accept')]
+    scoped_registry = copy.deepcopy(registry)
+    scoped_owner = next(f for f in scoped_registry['families'] if f['event_type'] == 'run.started')
+    scoped_owner['payload_versions'] = [dict(scope_kind='project', payload_schema_id=scoped_owner['payload_schema_id'],
+                                           payload_schema_ref=copy.deepcopy(scoped_owner['payload_schema_ref']))]
+    variants.append(('exact_scope_edition', {REGISTRY: scoped_registry}, 'accept'))
+    changed = copy.deepcopy(scoped_registry)
+    next(f for f in changed['families'] if f['event_type'] == 'run.started')['payload_versions'][0]['scope_kind'] = 'application'
+    variants.append(('foreign_scope_edition', {REGISTRY: changed}, 'index_source_dispatch'))
     identity_definition = copy.deepcopy(document)
     identity_definition.pop('$id')
     identity_definition['properties']['schema_id'] = {'const': document['$id']}
@@ -107,6 +115,7 @@ def audit(family):
         ('ref_schema_id', 'schema_id', 'urn:pm:wrong-reference-id', 'registered_schema_id'),
         ('ref_path', 'path', 'Plans/DCW_MISSING.schema.json', 'registered_schema_path'),
         ('ref_pointer', 'json_pointer', '#/$defs/DCW_MISSING', 'registered_schema_pointer'),
+        ('ref_pointer_prefix', 'json_pointer', '/$defs/run_started_1_0_0_compatibility_reader', 'registered_schema_pointer'),
     ):
         changed = copy.deepcopy(registry)
         next(f for f in changed['families'] if f['event_type'] == 'run.started')['payload_schema_ref'][field] = bad

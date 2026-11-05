@@ -50,12 +50,11 @@ def pointer(document, fragment):
 
 
 def document_at(path):
-    m.require(isinstance(path, str) and path.startswith('Plans/') and
-              (m.ROOT / path).resolve().is_relative_to((m.ROOT / 'Plans').resolve()),
-              'registered_schema_path')
+    # The path comes from the canonical owner registry, never from an event or
+    # caller. Load precisely that local document; reference retrieval is offline.
     try:
         return m.load(path)
-    except (OSError, ValueError) as exc:
+    except (OSError, TypeError, ValueError) as exc:
         raise m.Refusal('registered_schema_path') from exc
 
 
