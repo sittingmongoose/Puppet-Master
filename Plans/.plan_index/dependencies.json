@@ -2226,6 +2226,7 @@
     "F3-467",
     "F3-469",
     "DL-230",
+    "DL-301",
     "DR-084",
     "DR-085",
     "DR-089",
@@ -29428,6 +29429,11 @@
       "edge_type": "depends_on",
       "from": "DL-300",
       "to": "DL-292"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-301",
+      "to": "DL-228"
     },
     {
       "edge_type": "depends_on",
@@ -111316,6 +111322,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "DL-301",
+      "to": "SSYS-010"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "DP-063",
       "to": "ATS-018"
     },
@@ -117230,7 +117241,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T04:24:46Z",
+  "generated_at_utc": "2026-11-05T08:46:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -152372,6 +152383,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "theme_scheme_ruling_20261104",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-301",
+      "reasoning_tier": "high",
+      "risk_class": "appearance_choice_or_compatibility_drift",
+      "source_location": {
+        "heading": "DL-301 - Theme Chooses A Family And One Control Chooses The Scheme",
+        "heading_level": 3,
+        "heading_line": 21109,
+        "line": 21111,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "product_canon_boundary",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
@@ -152381,8 +152409,8 @@
       "source_location": {
         "heading": "DL-302 - DL-260 Also Supersedes DL-173's Concept-Only Demo Controls",
         "heading_level": 3,
-        "heading_line": 21109,
-        "line": 21111,
+        "heading_line": 21156,
+        "line": 21158,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -229612,8 +229640,8 @@
       "source_location": {
         "heading": "SSYS-011 - Provider Installation Actions And Continuation",
         "heading_level": 3,
-        "heading_line": 745,
-        "line": 747,
+        "heading_line": 750,
+        "line": 752,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229629,8 +229657,8 @@
       "source_location": {
         "heading": "SSYS-012 - Server, Client, Project Location, SSH, And Full Backup Manager Routes",
         "heading_level": 3,
-        "heading_line": 805,
-        "line": 807,
+        "heading_line": 810,
+        "line": 812,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229646,8 +229674,8 @@
       "source_location": {
         "heading": "SSYS-013 - Browser, SCM, And Container Owner Boundaries",
         "heading_level": 3,
-        "heading_line": 857,
-        "line": 859,
+        "heading_line": 862,
+        "line": 864,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229663,8 +229691,8 @@
       "source_location": {
         "heading": "SSYS-014 - Onboarding Routing And Operational Doctor Projection Boundary",
         "heading_level": 3,
-        "heading_line": 908,
-        "line": 910,
+        "heading_line": 913,
+        "line": 915,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229680,8 +229708,8 @@
       "source_location": {
         "heading": "SSYS-015 - Full Settings Manager System",
         "heading_level": 3,
-        "heading_line": 958,
-        "line": 960,
+        "heading_line": 963,
+        "line": 965,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229697,8 +229725,8 @@
       "source_location": {
         "heading": "SSYS-016 - PMConcept7 Reference And Slint Portability Boundary",
         "heading_level": 3,
-        "heading_line": 1013,
-        "line": 1015,
+        "heading_line": 1018,
+        "line": 1020,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229714,8 +229742,8 @@
       "source_location": {
         "heading": "SSYS-017 - Settings Validation And Acceptance Gate",
         "heading_level": 3,
-        "heading_line": 1109,
-        "line": 1111,
+        "heading_line": 1114,
+        "line": 1116,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229731,8 +229759,8 @@
       "source_location": {
         "heading": "SSYS-018 - Settings Commands And Strict Machine Contracts",
         "heading_level": 3,
-        "heading_line": 1155,
-        "line": 1157,
+        "heading_line": 1160,
+        "line": 1162,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229748,8 +229776,8 @@
       "source_location": {
         "heading": "SSYS-019 - Exact Settings Route, Return, And Route-Only UI Actions",
         "heading_level": 3,
-        "heading_line": 1201,
-        "line": 1203,
+        "heading_line": 1206,
+        "line": 1208,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229765,8 +229793,8 @@
       "source_location": {
         "heading": "SSYS-020 - Canonical Manager Registry And DRY Owner Projections",
         "heading_level": 3,
-        "heading_line": 1252,
-        "line": 1254,
+        "heading_line": 1257,
+        "line": 1259,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229782,8 +229810,8 @@
       "source_location": {
         "heading": "SSYS-021 - Snapshot Persistence, Export, And Migration",
         "heading_level": 3,
-        "heading_line": 1298,
-        "line": 1300,
+        "heading_line": 1303,
+        "line": 1305,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229799,8 +229827,8 @@
       "source_location": {
         "heading": "SSYS-022 - Doctor Projection And Remediation Boundary",
         "heading_level": 3,
-        "heading_line": 1356,
-        "line": 1358,
+        "heading_line": 1361,
+        "line": 1363,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229816,8 +229844,8 @@
       "source_location": {
         "heading": "SSYS-023 - Older-Settings Visible-State And Command-Disposition Closure",
         "heading_level": 3,
-        "heading_line": 1393,
-        "line": 1395,
+        "heading_line": 1398,
+        "line": 1400,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229833,8 +229861,8 @@
       "source_location": {
         "heading": "SSYS-024 - Plugins Manager Owner Projection And Fail-Closed Actions",
         "heading_level": 3,
-        "heading_line": 1441,
-        "line": 1443,
+        "heading_line": 1446,
+        "line": 1448,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229850,8 +229878,8 @@
       "source_location": {
         "heading": "SSYS-025 - Project Settings Copy Alias Normalization",
         "heading_level": 3,
-        "heading_line": 1492,
-        "line": 1508,
+        "heading_line": 1497,
+        "line": 1513,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229867,8 +229895,8 @@
       "source_location": {
         "heading": "SSYS-026 - Provider, backup, and connector owner projections",
         "heading_level": 3,
-        "heading_line": 2499,
-        "line": 2501,
+        "heading_line": 2504,
+        "line": 2506,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229884,8 +229912,8 @@
       "source_location": {
         "heading": "SSYS-027 - Assistant Redesign Settings Managers And Ownership Split",
         "heading_level": 3,
-        "heading_line": 2755,
-        "line": 2757,
+        "heading_line": 2760,
+        "line": 2762,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229901,8 +229929,8 @@
       "source_location": {
         "heading": "SSYS-028 - Assistant Redesign Setting Registration And Packet Spelling Reconciliation",
         "heading_level": 3,
-        "heading_line": 2803,
-        "line": 2805,
+        "heading_line": 2808,
+        "line": 2810,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229918,8 +229946,8 @@
       "source_location": {
         "heading": "Working Notebook Settings Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2941,
-        "line": 2945,
+        "heading_line": 2946,
+        "line": 2950,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229935,8 +229963,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 3033,
-        "line": 3111,
+        "heading_line": 3038,
+        "line": 3116,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229952,8 +229980,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 3033,
-        "line": 3158,
+        "heading_line": 3038,
+        "line": 3163,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229969,8 +229997,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 3033,
-        "line": 3203,
+        "heading_line": 3038,
+        "line": 3208,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -229986,8 +230014,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 3033,
-        "line": 3255,
+        "heading_line": 3038,
+        "line": 3260,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230003,8 +230031,8 @@
       "source_location": {
         "heading": "SSYS-034 - Terminal Capability Remote Setup And Launch Provenance Projection",
         "heading_level": 3,
-        "heading_line": 3335,
-        "line": 3337,
+        "heading_line": 3340,
+        "line": 3342,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230020,8 +230048,8 @@
       "source_location": {
         "heading": "SSYS-034 - Terminal Capability Remote Setup And Launch Provenance Projection",
         "heading_level": 3,
-        "heading_line": 3335,
-        "line": 3422,
+        "heading_line": 3340,
+        "line": 3427,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230037,8 +230065,8 @@
       "source_location": {
         "heading": "SSYS-036 - Settings Transfer To An Uncreated Project Draft",
         "heading_level": 3,
-        "heading_line": 3485,
-        "line": 3487,
+        "heading_line": 3490,
+        "line": 3492,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230054,8 +230082,8 @@
       "source_location": {
         "heading": "SSYS-037 - External Research Limit Values",
         "heading_level": 3,
-        "heading_line": 3563,
-        "line": 3567,
+        "heading_line": 3568,
+        "line": 3572,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230071,8 +230099,8 @@
       "source_location": {
         "heading": "SSYS-038 - Commands Manager Layout And Palette Preferences",
         "heading_level": 3,
-        "heading_line": 3625,
-        "line": 3627,
+        "heading_line": 3630,
+        "line": 3632,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230088,8 +230116,8 @@
       "source_location": {
         "heading": "SSYS-039 - Chat Sound On By Default And Queue As The Busy Send Default",
         "heading_level": 3,
-        "heading_line": 3673,
-        "line": 3675,
+        "heading_line": 3678,
+        "line": 3680,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230105,8 +230133,8 @@
       "source_location": {
         "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
         "heading_level": 3,
-        "heading_line": 3890,
-        "line": 3939,
+        "heading_line": 3895,
+        "line": 3944,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230122,8 +230150,8 @@
       "source_location": {
         "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
         "heading_level": 3,
-        "heading_line": 3890,
-        "line": 4009,
+        "heading_line": 3895,
+        "line": 4014,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230139,8 +230167,8 @@
       "source_location": {
         "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
         "heading_level": 3,
-        "heading_line": 3890,
-        "line": 4067,
+        "heading_line": 3895,
+        "line": 4072,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230156,8 +230184,8 @@
       "source_location": {
         "heading": "SSYS-043 - NieR Theme Family, Adjust Parts, Background And Load Migration",
         "heading_level": 3,
-        "heading_line": 4165,
-        "line": 4167,
+        "heading_line": 4170,
+        "line": 4172,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230173,8 +230201,8 @@
       "source_location": {
         "heading": "SSYS-044 - Settings Controls Hosted Outside Settings",
         "heading_level": 3,
-        "heading_line": 4295,
-        "line": 4297,
+        "heading_line": 4300,
+        "line": 4302,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230190,8 +230218,8 @@
       "source_location": {
         "heading": "SSYS-050 - Panels, Tabs, Editor And Chat Column Rows, And The Rows The Redesign Retires",
         "heading_level": 3,
-        "heading_line": 4593,
-        "line": 4595,
+        "heading_line": 4598,
+        "line": 4600,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230207,8 +230235,8 @@
       "source_location": {
         "heading": "SSYS-051 - Terminal Look Rows On The One Appearance Model",
         "heading_level": 3,
-        "heading_line": 4774,
-        "line": 4776,
+        "heading_line": 4779,
+        "line": 4781,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230224,8 +230252,8 @@
       "source_location": {
         "heading": "SSYS-052 - Editor Look Rows And Shared Customize Entry",
         "heading_level": 3,
-        "heading_line": 4995,
-        "line": 4997,
+        "heading_line": 5000,
+        "line": 5002,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230241,8 +230269,8 @@
       "source_location": {
         "heading": "SSYS-053 - Settings Preserves The Reader And Opens Chapters At The Top",
         "heading_level": 3,
-        "heading_line": 5076,
-        "line": 5078,
+        "heading_line": 5081,
+        "line": 5083,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230258,8 +230286,8 @@
       "source_location": {
         "heading": "SSYS-054 - Wallpaper Setting And Replacement Of Old Glass Backgrounds",
         "heading_level": 3,
-        "heading_line": 5179,
-        "line": 5181,
+        "heading_line": 5184,
+        "line": 5186,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230275,8 +230303,8 @@
       "source_location": {
         "heading": "SSYS-055 - Chat Preferences In The Hosted Surface",
         "heading_level": 3,
-        "heading_line": 5272,
-        "line": 5274,
+        "heading_line": 5277,
+        "line": 5279,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230292,8 +230320,8 @@
       "source_location": {
         "heading": "SSYS-056 - Pip Parts And One Editor",
         "heading_level": 3,
-        "heading_line": 5398,
-        "line": 5400,
+        "heading_line": 5403,
+        "line": 5405,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230309,8 +230337,8 @@
       "source_location": {
         "heading": "SSYS-057 - Status Bar Numbers Or Words",
         "heading_level": 3,
-        "heading_line": 5521,
-        "line": 5523,
+        "heading_line": 5526,
+        "line": 5528,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230326,8 +230354,8 @@
       "source_location": {
         "heading": "SSYS-058 - Storage Health, Free Up Space And Backup Status In Settings",
         "heading_level": 3,
-        "heading_line": 5589,
-        "line": 5591,
+        "heading_line": 5594,
+        "line": 5596,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230343,8 +230371,8 @@
       "source_location": {
         "heading": "SSYS-059 - Reviewed Row Levels, Keys And Combine Rules",
         "heading_level": 3,
-        "heading_line": 1552,
-        "line": 1554,
+        "heading_line": 1557,
+        "line": 1559,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230360,8 +230388,8 @@
       "source_location": {
         "heading": "SSYS-060 - Single Writers, Following Copies, Join And History",
         "heading_level": 3,
-        "heading_line": 1692,
-        "line": 1694,
+        "heading_line": 1697,
+        "line": 1699,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230377,8 +230405,8 @@
       "source_location": {
         "heading": "SSYS-061 - Manager Home, Reach, Project Switches And Whole Versions",
         "heading_level": 3,
-        "heading_line": 1805,
-        "line": 1807,
+        "heading_line": 1810,
+        "line": 1812,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230394,8 +230422,8 @@
       "source_location": {
         "heading": "SSYS-062 - Detached Layered Copy And Destination Account Readiness",
         "heading_level": 3,
-        "heading_line": 1891,
-        "line": 1893,
+        "heading_line": 1896,
+        "line": 1898,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230411,8 +230439,8 @@
       "source_location": {
         "heading": "SSYS-063 - Changed, Origin Details, Targeted Edits And Undo",
         "heading_level": 3,
-        "heading_line": 2007,
-        "line": 2009,
+        "heading_line": 2012,
+        "line": 2014,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230428,8 +230456,8 @@
       "source_location": {
         "heading": "SSYS-064 - Pre-Release Fold Without Silent Value Changes",
         "heading_level": 3,
-        "heading_line": 2115,
-        "line": 2117,
+        "heading_line": 2120,
+        "line": 2122,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -230445,8 +230473,8 @@
       "source_location": {
         "heading": "SSYS-065 - Agent Targets, Limited Devices, Onboarding And Updated Defaults",
         "heading_level": 3,
-        "heading_line": 2200,
-        "line": 2202,
+        "heading_line": 2205,
+        "line": 2207,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -243430,12 +243458,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18752,
+    "depends_on_edge_count": 18753,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21960,
-    "node_count": 7423,
+    "edge_count": 21962,
+    "node_count": 7424,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3208,
+    "unblocks_edge_count": 3209,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

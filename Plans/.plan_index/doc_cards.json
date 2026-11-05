@@ -5759,9 +5759,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 59,
-        "True": 206
+        "True": 207
       },
-      "heading_count": 438,
+      "heading_count": 439,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5881,9 +5881,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 21152,
+      "line_count": 21199,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 265,
+      "plan_unit_count": 266,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -6149,6 +6149,7 @@
         "DL-298",
         "DL-299",
         "DL-300",
+        "DL-301",
         "DL-302"
       ],
       "reasoning_tiers": [
@@ -6162,6 +6163,7 @@
         "account_switch_vocabulary_drift",
         "activity_rollback_scope",
         "agent_mark_presentation_drift",
+        "appearance_choice_or_compatibility_drift",
         "approval_anchor_evidence_governance_drift",
         "assistant_hosted_routing_provider_default_drift",
         "automation_manual_stop_precedence",
@@ -6322,15 +6324,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "31bd8137c7ae377b7271f6d563b812be84eae55c1fed0e0a4db9c4e89afb4f31",
+      "sha256": "ebc27f0d7bfd00dc58c54870b2894b23cce0d87fd94a790917f99a38daefc282",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 265
+        "accepted": 266
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 152,
+        "decision": 153,
         "decision_record": 24,
         "requirement": 88
       },
@@ -6355,6 +6357,7 @@
         "Plans/pip_parts.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json#/$defs/source_control_command_disabled_reason",
+        "Settings Theme and scheme controls, title-bar quick switch, Project reload and Auto OS appearance changes.",
         "exact Case L 76-decision set-equality check",
         "exact supplemental nine-packet set-equality check",
         "exact supplemental three-packet set-equality check",
@@ -8756,7 +8759,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce",
+      "sha256": "fd873c198322441004a9befbb773cb3aca16df666f65e6a6d6193b073d90ecc1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 653,
@@ -17699,7 +17702,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5647,
+      "line_count": 5652,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 60,
       "plan_unit_ids": [
@@ -17820,7 +17823,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "1652ab14825f790df6f90ac25938bc88f8bdf91aefc496d81fafad9d8c6beabd",
+      "sha256": "09c295a2b5b5f32dc6c9fb3d7e47991c95b8760de61a1e1e85c706e91536593a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 60
@@ -21540,7 +21543,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T04:24:46Z",
+  "generated_at_utc": "2026-11-05T08:46:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21549,12 +21552,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3632,
-      "True": 3791
+      "True": 3792
     },
-    "plan_unit_count": 7423,
+    "plan_unit_count": 7424,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7205,
+      "accepted": 7206,
       "retired": 195,
       "superseded": 23
     },
@@ -21587,7 +21590,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 175,
+      "decision": 176,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
