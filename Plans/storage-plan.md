@@ -27445,7 +27445,7 @@ This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload
 
 **Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transitions and projection cases. `scripts/pm_coordination_events.py` checks these static cases. Native append, CAS, custody, read, withdrawal and recovery obligations remain NOT_RUN. Membership is ABSENT and this text grants no readiness, DEPTH_PASS or registry authority.
 
-**Answered threshold.** OSI-650 applies DL-095 from `plans/ea-s09-decisions-hb-scope-20261104`: heartbeat_expired requires observed heartbeat_age_ms strictly greater than 300000, never equality. Other crash evidence remains independent. The threshold is not a new payload field.
+**Answered threshold.** OSI-650 applies DL-095 from the landed `Plans/Decision_Log.md` (at drafting time recorded on branch `plans/ea-s09-decisions-hb-scope-20261104`): heartbeat_expired requires observed heartbeat_age_ms strictly greater than 300000, never equality. Other crash evidence remains independent. The threshold is not a new payload field.
 
 ```yaml
 plan_unit_id: SP-541

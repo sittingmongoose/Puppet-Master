@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L3627-L5705
 
-Source SHA256: `a9c9b254073e29133da61ac15e895350b1bcd9097149180c1b24d8f505e24ce6`
+Source SHA256: `140b1f74bad84b24a260a115c7eeb2538a20ead99766104616b46d91837d03e4`
 
 ---
 
@@ -350,7 +350,7 @@ owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md,
 
 ### OSI-650 - Answered coordination heartbeat threshold
 
-For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded on branch `plans/ea-s09-decisions-hb-scope-20261104`). This amendment supersedes OSI-438's pending-card, no-number and no-inference wording only. The current premise survives: Gap #30 and OSI-438 still use 30-second runtime liveness, four crash reasons and the same crash detector. No answer is extended to other policy values or application admission. A silent live agent is eligible for `heartbeat_expired` only when its observed age is strictly greater than 300000 ms; equality is insufficient. The payload keeps observed `heartbeat_age_ms`, not the threshold. Process exit, verified process loss and deleted worktree evidence remain independent. Computer-sleep handling remains technical work and is not decided here. This owner edit must land with or after the recorded answer and before or with this family's admission.
+For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded in the landed `Plans/Decision_Log.md`; at drafting time on branch `plans/ea-s09-decisions-hb-scope-20261104`). This amendment supersedes OSI-438's pending-card, no-number and no-inference wording only. The current premise survives: Gap #30 and OSI-438 still use 30-second runtime liveness, four crash reasons and the same crash detector. No answer is extended to other policy values or application admission. A silent live agent is eligible for `heartbeat_expired` only when its observed age is strictly greater than 300000 ms; equality is insufficient. The payload keeps observed `heartbeat_age_ms`, not the threshold. Process exit, verified process loss and deleted worktree evidence remain independent. Computer-sleep handling remains technical work and is not decided here. This owner edit must land with or after the recorded answer and before or with this family's admission.
 
 ```yaml
 plan_unit_id: OSI-650
