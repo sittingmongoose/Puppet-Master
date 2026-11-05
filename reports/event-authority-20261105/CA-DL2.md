@@ -124,3 +124,44 @@ Paths below are retained outside the repository. SHA-256 identifies the exact in
 | validation-baseline-comparison.json | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-DL2/validation-baseline-comparison.json` | `3ed2342d5c6c61bc7f6f0fb3e050ac38b9178c0030e7ffb94c98db3091f5ec07` |
 
 Report copy: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-DL2/CA-DL2.md`.
+
+## Review round 1: findings and responses
+
+This section supersedes the original report’s statement that the indexed PlanUnit-ID set is unchanged. Round 1 starts at `7ddbd14d27b41b29d041b9db5105ff39fc2eb350` and preserves its stack on deck 1 at `b6332f391a7870bad5f01a29a7e9d080050dac27`. Both fixes are in commit `d152e079438081df8ec935522b3040f3ecab146c`.
+
+| Finding | Where and cause | Response and verification |
+|---|---|---|
+| **CA-RET2-sol finding 1 — fixed** | DL-415..DL-452 were prose-only; Storage’s seven SP-237 dependencies had no indexed targets. | Added exactly **38** YAML PlanUnit fences in `Plans/Decision_Log.md:6881` through the DL-452 fence at `:11276`, in `## PlanUnits` immediately after DL-414 and before DL-002. All 21 fields and their order match DL-401..DL-414 on the pinned deck-1 base. Each fence carries its own complete entry text, decision scope, source lineage and metadata. The regenerated index has every DL-415..DL-452 target, no removed IDs, zero unresolved references and no cycles. The seven SP-237 edges on retention head `9b76338594c6f1ca75de6c757e7a8b98ab68e229` all resolve against these indexed targets. |
+| **CA-DL2 Astra N1 — fixed** | DL-428’s exact option A referred to “those six reasons” without reproducing the Gap paragraph. | Added the presented item 3.b **Gap paragraph verbatim** at `Plans/Decision_Log.md:5044`, under “Card’s presented context (not Jared’s words)” at `:5042`. The corresponding DL-428 PlanUnit at `:8173` contains the same context. Option A, Jared’s quote and every Sources line remain unchanged. |
+
+**Source fidelity:** removing only the 38 inserted PlanUnit blocks and the labelled DL-428 context restores the pinned Decision Log bytes exactly. Existing PlanUnit field values are unchanged. All 38 new `canonical_text` values match their own full prose entries. The unchanged frozen validator’s `decision_section_bytes` function extracts all 38 complete entries, including DL-429’s proposal and DL-450’s appendix. No frozen validator was edited or full seal validator executed.
+
+**Checks at the fixed content commit:**
+
+| Check | Exit | Result |
+|---|---:|---|
+| Currentness edition copy and `sha256sum` comparison | 0 | All 15 ignored files match the shared edition before index generation. |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | Top-level **pass**, 99 documents / 3,092 shards. |
+| `python3 scripts/pm-plan-index.py generate` | 0 | Top-level **pass**, 96 documents / **7,476 PlanUnits** / 30,097 acceptance units; **38 PlanUnits added**, none removed. |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | Top-level **pass**, zero failures. |
+| `python3 scripts/pm-plan-index.py validate`, before and after | 1 / 1 | Parsed top-level **fail** in both runs. Full failure arrays are exactly equal: 21 `plan_unit_removal_ledger_invalid` rows and one `plan_unit_removed_without_ledger_decision` for DL-302. **New failures: 0.** Both runs compare with `origin/main` at `73f2231a9ec1c93190adafcdde51030f028c8c2d`. |
+| Dependency graph / external retention target check | 0 | All DL-415..DL-452 indexed; zero unresolved references overall; build order available; zero cycles; zero missing targets among the seven external SP-237 edges. |
+| `python3 -m unittest discover -s tests -p test_pm_plan_index.py` | 0 | All 18 existing tests pass. |
+| `git diff --check` | 0 | No whitespace errors. |
+
+**Derived scope:** only the 13 existing `Plans/_shards/decision_log/**` paths and six `Plans/.plan_index/**` outputs changed. The 281 changed existing index rows are all Decision Log units and change only `source_doc_sha256` / `source_location`. All unrelated documents’ unit rows are unchanged. Normal generator timestamps are retained. Runtime readiness remains `blocked_runtime_certification_incomplete`; no governance or runtime pass is claimed.
+
+**Grades and limits:** family self-grades remain **not applicable → not applicable**: this lane prepares decision records, not family contracts, checkers or fixtures, and has no family self-grade file to update. No guard-isolation or mutation-proof implementation changed. IDs used are the existing reserved DL-415..DL-452 only; no new allocation. Astra’s mutable Wizard historical-source note and preservation of current main’s DL-302 remain integration work. This round changes no earlier prose other than the requested DL-428 context, no other owner document, registry, admission, script, test, governance lock or evidence bundle. There was no pm-mail, delegation, landing or `main` push.
+
+Resource preflight: 113 GB available disk and 10 GB available RAM before worktree creation; sparse cones are `Plans scripts reports tests`. Checkers ran sequentially with at least 8 GB available RAM. The detached worktree `/home/sittingmongoose/pm-worktrees/ca-dl2-fix1` is removed with a literal-path `git worktree remove --force` after the report commit is pushed.
+
+Round-1 evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-DL2/fix1/`. The `SHA256SUMS` manifest has SHA-256 `c66e556741d2367610f6baadbf9a0602ecd7199f48e397622da842d8aba47d0e` and covers all 27 retained check/proof files.
+
+| Evidence file in `fix1/` | SHA-256 |
+|---|---|
+| `entry-verification.json` | `42c8796fda73155b18a9fae23b488570bb4c041ae8aa9fbcafa56d90267c0d7d` |
+| `frozen-parser-check.json` | `78c2c96885bb1e1caad1e02fdbd930b9c401330c3e7ffab819bb327ebc0b44e6` |
+| `index-and-scope-check.json` | `c6a09b74c1c26994604760dfb114df245bd3004389b411c6e5794d7652a96726` |
+| `validation-baseline-comparison.json` | `359a292b383df8fa8b8de1e9d8290cf93741da9d332726d0dbd26111d0763f7d` |
+| `index-validate-before.stdout` | `6cb3267ace6091c9774e1b502d6c5a5d15e18446dd323c791861a6b6d3c04d37` |
+| `index-validate-after.stdout` | `f42f0c16259e92aa4107022cb0cf8a9fe3a299a0851dc0b7e93de7266e6b2289` |
