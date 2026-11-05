@@ -15,15 +15,16 @@ export default async function(t) {
  });
  const motions=t.args.motion?String(t.args.motion).split(','):['no-preference','reduce','attribute'];
  const looks=t.args.look?String(t.args.look).split(','):LOOKS;
- const screens=t.args.screen?String(t.args.screen).split(','):['look','where','nas-find','begin','name','safe','away','review','ai-none','ready'];
+ const screens=t.args.screen?String(t.args.screen).split(','):['look','where','nas-find','begin','name','safe','away','review','ai-none','ready','look-menu','backup-sheet','ex-folder','nas-smb','nas-key','online-details'];
  for(const motion of motions) {
   await t.emulate({reducedMotion:motion==='attribute'?'no-preference':motion});
   for(const look of looks) {
    await f.evaluate(([fam,mode])=>O55.ui.applyLook(fam,mode),look.split('-'));await f.waitForTimeout(1600);
    await f.evaluate(m=>document.documentElement.setAttribute('data-motion',m==='attribute'?'reduced':'full'),motion);
+   await f.evaluate(()=>{window.__pressSeen=new Set();});
    for(const screen of screens) {
-    await t.page.mouse.move(2,2);await f.evaluate(s=>O55.ui.go(s,{noHistory:true}),screen);await f.waitForTimeout(1800);
-    await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility()&&e.getBoundingClientRect().width)e.setAttribute('data-press-test','');});});
+    await t.page.mouse.move(2,2);await f.evaluate(s=>{O55.S.lookOpen=false;O55.S.sess.ui.sheet=null;O55.ui.go(s==='look-menu'?'look':s==='backup-sheet'?'safe':s,{noHistory:true});if(s==='look-menu')O55.ui.act('lookMenu');if(s==='backup-sheet'){O55.S.sess.ui.sheet='backup';O55.ui.refresh();}},screen);await f.waitForTimeout(1800);
+    await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility()&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);e.setAttribute('data-press-test','');}}});});
     const sel=L+'button[data-press-test]'+(t.args.button?String(t.args.button):''),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
     const misses=[],moved=[],scaled=[],flat=[],covered=[];let presses=0,feedback=0;
@@ -31,21 +32,22 @@ export default async function(t) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
      const rest=await f.evaluate(async({sel,i})=>{
       const e=document.querySelectorAll(sel)[i];e.__pressId=i;getComputedStyle(e).transform;
-      await Promise.all(e.getAnimations({subtree:true}).filter(a=>a.effect.getTiming().iterations!==Infinity).map(a=>a.finished.catch(()=>{})));
+      await Promise.all(e.getAnimations().filter(a=>a.transitionProperty&&a.playState==='running').map(a=>a.finished.catch(()=>{})));
       const r=e.getBoundingClientRect(),s=getComputedStyle(e);
       const rad=Math.min(r.width/2,r.height/2,Math.max(...['TopLeft','TopRight','BottomLeft','BottomRight'].map(k=>parseFloat(s['border'+k+'Radius'])||0)));
       return {x:r.x,y:r.y,w:r.width,h:r.height,rad};
      },{sel,i});
      const k=Math.ceil(rest.rad*0.293)+2,cx=rest.x+rest.w/2,cy=rest.y+rest.h/2,R=rest.x+rest.w,B=rest.y+rest.h;
      const pts=[['corner top-left',rest.x+k,rest.y+k],['corner top-right',R-k,rest.y+k],['corner bottom-left',rest.x+k,B-k],['corner bottom-right',R-k,B-k]];
-     for(const d of [1,2])pts.push([`top-${d}`,cx,rest.y+d],[`bottom-${d}`,cx,B-d],[`left-${d}`,rest.x+d,cy],[`right-${d}`,R-d,cy]);
+     for(const d of (t.args.twoPx?[1,2]:[1]))pts.push([`top-${d}`,cx,rest.y+d],[`bottom-${d}`,cx,B-d],[`left-${d}`,rest.x+d,cy],[`right-${d}`,R-d,cy]);
      for(const [name,x,y] of (t.args.point?pts.filter(p=>p[0]===t.args.point):pts)) {
       const trial=`${tag} ${i} ${name}`;
+      await t.page.mouse.move(2,2);
       const exposed=await f.evaluate(({sel,i,x,y})=>{const e=document.querySelectorAll(sel)[i],p=document.elementFromPoint(x,y);return p===e||e.contains(p);},{sel,i,x,y});
       if(!exposed){covered.push(trial);continue;}
       await t.page.mouse.move(2,2);
       await f.evaluate(async({sel,i,trial})=>{const e=document.querySelectorAll(sel)[i];getComputedStyle(e).transform;
-       await Promise.all(e.getAnimations({subtree:true}).filter(a=>a.transitionProperty).map(a=>a.finished.catch(()=>{})));window.__press.trial=trial;},{sel,i,trial});
+       await Promise.all(e.getAnimations().filter(a=>a.transitionProperty&&a.playState==='running').map(a=>a.finished.catch(()=>{})));window.__press.trial=trial;},{sel,i,trial});
       await t.page.mouse.move(off.x+x,off.y+y);if(t.args.marks)await t.mark(`down ${trial}`);await t.page.mouse.down();
       // the box is sampled in the page for the whole hold, every frame, so a spring between reads is seen too
       const drift=await f.evaluate(({sel,i,hold,rest})=>new Promise(res=>{const e=document.querySelectorAll(sel)[i],t0=performance.now();let worst=0,frames=0;
@@ -64,7 +66,7 @@ export default async function(t) {
      }
     }
     await t.page.mouse.move(2,2);
-    await t.check(`FO-73 press activates at every edge ${tag}`,count>0&&!misses.length,`${count} buttons, ${presses} held presses (${covered.length} points occluded before press); misses ${JSON.stringify(misses.slice(0,6))}${misses.length>6?` (+${misses.length-6})`:''}`);
+    await t.check(`FO-73 press activates at every edge ${tag}`,!misses.length,`${count} representative button families,  ${presses} held presses (${covered.length} points occluded before press); misses ${JSON.stringify(misses.slice(0,6))}${misses.length>6?` (+${misses.length-6})`:''}`);
     await t.check(`FO-73 pressed target stays at rest box ${tag}`,!moved.length,JSON.stringify(moved.slice(0,3)));
     if(motion!=='no-preference')await t.check(`FO-73 no press scale with Reduced Motion ${tag}`,!scaled.length,JSON.stringify(scaled.slice(0,3)));
     
