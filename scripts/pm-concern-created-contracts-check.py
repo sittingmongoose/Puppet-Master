@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """DG6A concern.created static contract oracles; no native/admission authority."""
 import base64
+import argparse
 import copy
 import hashlib
 import importlib.util
@@ -24,6 +25,16 @@ def load(path):
 def digest(value):
     return hashlib.sha256(packed(dict(original_command=value['original_command'],
                                      candidate_payload=value['payload'], candidate_record=value['candidate_record']))).hexdigest()
+
+
+def caller_body(command):
+    """UCC-147's six caller fields; title_ref commits to exact original title bytes.
+
+    Accepted time, record/result, Storage metadata and current owner classifications
+    are retained-original evidence, never new caller inputs to dedupe comparison.
+    """
+    return {key: copy.deepcopy(command[key]) for key in
+            ('project_id', 'title_ref', 'severity', 'category', 'source_refs', 'idempotency_key')}
 
 
 def operation_errors(value, schema, payload_schema):
@@ -75,7 +86,9 @@ def protocol_errors(context, original):
     for key in ('admitted', 'authority_verified', 'source_current', 'permission_allowed'):
         if context[key] is not True:
             found.append(key)
-    if context['subject_already_active'] is not False or context['concern_key_exists'] is not False:
+    if any(type(context[key]) is not bool for key in ('subject_already_active', 'concern_key_exists')):
+        found.append('invalid concern existence proof')
+    if original['state'] == 'prepared' and (context['subject_already_active'] is not False or context['concern_key_exists'] is not False):
         found.append('existing concern cannot be recreated')
     command = original['original_command']
     for key in ('actor_ref', 'creator_kind', 'project_id', 'authority_basis_ref', 'currentness_basis_ref', 'permission_snapshot_ref', 'source_refs'):
@@ -87,9 +100,23 @@ def protocol_errors(context, original):
         found.append('wrong original receipt')
     if context['retry_digest'] != original['request_digest']:
         found.append('idempotency_conflict')
+    if not shared.exact_value(context['retry_body'], caller_body(command)):
+        found.append('changed caller semantic body')
     if context['publication_state'] != 'current':
         found.append('withdrawn History')
+    found += shared.append_result_errors(original, context['append_resolution'], context['append_original'], 'concern.created')
     return found
+
+
+def concern_result(context, original):
+    """A current retry uses the frozen original, never a newly created record/result."""
+    if protocol_errors(context, original):
+        raise ValueError('concern request unavailable')
+    return dict(action={'prepared': 'create', 'committed': 'recover_original_append',
+                        'settled': 'return_original'}[original['state']],
+                record_ref=original['payload']['concern_record_ref'], result_ref=original['result_ref'],
+                dispatch_receipt_ref=original['dispatch_receipt_ref'],
+                original_append_result_ref=original['original_append_result_ref'])
 
 
 def checkpoint_errors(value, schema, original_context):
@@ -107,6 +134,9 @@ def historical_concern_page(request, expected, payload_schema, cp_schema):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--family', choices=['concern.created'])
+    parser.parse_args()
     fixture = load('Plans/concern_created_contracts/concern_created.fixtures.json')
     family = load('Plans/concern_created_contracts/manifest.json')['families'][0]
     isolated_count = shared.isolated_cases('concern', sys.modules[__name__], family, fixture)
@@ -128,6 +158,7 @@ def main():
                    authority=authority, subject_already_active=False, concern_key_exists=False,
                    receipt_event_id=original['event_id'], retry_digest=original['request_digest'],
                    publication_state='current', replay_policy='dedupe_by_idempotency_key')
+    context.update(shared.append_context(fixture, 'concern.created'), retry_body=caller_body(original['original_command']))
     assert not protocol_errors(context, original)
     assert set(fixture['authorized_creators']) == CREATORS
     for creator in fixture['authorized_creators']:
@@ -161,7 +192,7 @@ def main():
         assert (not shared.writer_policy_errors(case['policy'])) == case['valid']
         count += 1
     mutations = [('admitted', False), ('authority_verified', False), ('source_current', False),
-                 ('permission_allowed', False), ('subject_already_active', True), ('concern_key_exists', True),
+                 ('permission_allowed', False),
                  ('receipt_event_id', 'foreign'), ('retry_digest', 'f' * 64), ('publication_state', 'withdrawn'),
                  ('replay_policy', 'projector_replay_only')]
     for key, bad in mutations:
@@ -169,7 +200,26 @@ def main():
         proof[key] = bad
         assert protocol_errors(proof, original), key
         count += 1
-    for key, bad in [('actor_ref', 'pmref:foreign:actor'), ('creator_kind', 'User'), ('project_id', 'foreign'),
+    # Presence is a successful creation's normal postcondition, not a retry conflict.
+    for state in ('prepared', 'committed', 'settled'):
+        retained = copy.deepcopy(original)
+        retained['state'] = state
+        if state != 'settled':
+            retained['original_append_result_ref'] = None
+        if state == 'prepared':
+            for key in ('owner_commit_ref', 'result_ref', 'dispatch_receipt_ref'):
+                retained[key] = None
+        for present in (False, True):
+            proof = dict(context, concern_key_exists=present, subject_already_active=present)
+            if state == 'prepared' and present:
+                assert protocol_errors(proof, retained) == ['existing concern cannot be recreated']
+            else:
+                result = concern_result(proof, retained)
+                assert result['action'] == {'prepared': 'create', 'committed': 'recover_original_append', 'settled': 'return_original'}[state]
+                assert result['record_ref'] == original['payload']['concern_record_ref']
+                assert result['result_ref'] == retained['result_ref']
+            count += 1
+    for key, bad in [('actor_ref', 'pmref:foreign:actor'), ('creator_kind', 'Package Overseer'), ('project_id', 'foreign'),
                      ('authority_basis_ref', 'pmref:foreign:authority'), ('currentness_basis_ref', 'pmref:foreign:current'),
                      ('permission_snapshot_ref', 'pmref:foreign:permission'), ('source_refs', ['pmref:foreign:source'])]:
         proof = copy.deepcopy(context)
@@ -218,11 +268,13 @@ def main():
         if case['valid'] and case['path'][0] == 'live':
             request = shared.history_request(fixture, checkpoint)
             shared.history_patch(request, case)
-            assert protocol_errors(dict(context, **request['live']), original), ('live writer should refuse', case['name'])
+            fresh = dict(original, state='prepared')
+            assert protocol_errors(dict(context, **request['live']), fresh), ('fresh writer should refuse', case['name'])
+            assert not protocol_errors(dict(context, **request['live']), original), ('settled retry should return original', case['name'])
             count += 1
     count += shared.checkpoint_context_cases(checkpoint, cp_schema, original, checkpoint_errors)
     count += shared.trailing_lf_cases(checkpoint, cp_schema)
-    for field, bad in [('scope_partition', 'fixture'), ('event_refs', ['event'] * 1000)]:
+    for field, bad in [('scope_partition', 'fixture'), ('event_refs', ['event'])]:
         value = copy.deepcopy(checkpoint)
         value[field] = bad
         assert checkpoint_errors(value, cp_schema, original)

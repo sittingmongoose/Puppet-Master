@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REVIEWED = 'de28e8be91b347e209f8b75e25838ef3bf686f73'
+REVIEWED = '69776a6b88c79f5ad871d9b98304bc7ef89fcd83'
 GRADE = 'reports/event-authority-20261104/DG6A.self-grade.json'
 
 
@@ -70,7 +70,7 @@ def resize_checkpoint(value, size, packed):
     assert len(packed(value)) == size
 
 
-def run_suite(output):
+def run_suite(output, selected=None):
     panel = module('dg6a_final_panel', 'pm-panel-event-contracts-check.py')
     concern = module('dg6a_final_concern', 'pm-concern-created-contracts-check.py')
     shared = panel.shared
@@ -78,6 +78,10 @@ def run_suite(output):
     restored = {}
 
     def cli(family, check, name, script, path=None, change=None, expected=1, args=()):
+        available = next(int(line.split()[1]) for line in Path('/proc/meminfo').read_text().splitlines()
+                         if line.startswith('MemAvailable:'))
+        if available < 6 * 1024 * 1024:
+            raise RuntimeError('paused: less than 6 GiB memory available')
         target = ROOT / path if path else None
         original = target.read_bytes() if target else None
         if target:
@@ -88,6 +92,8 @@ def run_suite(output):
                 change(value)
                 target.write_text(json.dumps(value, indent=2) + '\n')
             command = [sys.executable, 'scripts/' + script, *args]
+            if selected and script in ('pm-alert-event-contracts-check.py', 'pm-panel-event-contracts-check.py', 'pm-concern-created-contracts-check.py'):
+                command += ['--family', selected]
             proc = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
             passed = proc.returncode == expected
             if expected == 0:
@@ -104,9 +110,13 @@ def run_suite(output):
             ('alert', 'alert_event_contracts', 'pm-alert-event-contracts-check.py'),
             ('panel', 'panel_event_contracts', 'pm-panel-event-contracts-check.py'),
             ('concern', 'concern_created_contracts', 'pm-concern-created-contracts-check.py')):
+        if selected and selected not in {f['event_type'] for f in load('Plans/' + folder + '/manifest.json')['families']}:
+            continue
         cli(kind, 'baseline', 'unmodified full checker', script, expected=0)
         for family in load('Plans/' + folder + '/manifest.json')['families']:
             event = family['event_type']
+            if selected and selected != event:
+                continue
             path = 'Plans/' + folder + '/' + family['slug'] + '.fixtures.json'
             fixture = load(path)
             op_schema_path = 'Plans/' + folder + '/' + family['operation'] + '.schema.json'
@@ -114,6 +124,21 @@ def run_suite(output):
 
             def fixture_case(check, name, change, expected=1):
                 cli(event, check, name, script, path, change, expected)
+
+            def foreign_append(v):
+                original = v['operation_cases'][2]['value'] if kind=='alert' else v['settled_operation']
+                original['original_append_result_ref'] = 'pmref:foreign:original_append'
+            fixture_case('B3', 'foreign current original append-result reference', foreign_append)
+            if kind == 'concern':
+                for field in ('concern_key_exists', 'subject_already_active'):
+                    def present_retry(v, field=field):
+                        case = next(c for c in v['isolated_cases'] if c['name']=='valid_protocol')
+                        case['value'][field] = True
+                    fixture_case('B2', 'exact settled retry with '+field, present_retry, 0)
+                def changed_retry(v):
+                    case = next(c for c in v['isolated_cases'] if c['name']=='valid_protocol')
+                    case['value']['retry_body']['title_ref'] = 'pmref:changed:title'
+                fixture_case('B2', 'changed caller semantic body cannot return original', changed_retry)
 
             fixture_case('1', 'current writer replay-only', lambda v: v['writer_policy_cases'][0].update(policy='projector_replay_only'))
             if kind == 'panel':
@@ -221,7 +246,7 @@ def run_suite(output):
             for fid in (family['operation'], family['checkpoint']):
                 cli(event, 'A1', 'missing mandatory profile ' + fid, script, 'Plans/storage_value_registry.json',
                     lambda v, fid=fid: v['storage_profile']['family_profiles'].pop(fid))
-            fixture_case('A2', 'unbounded 1000-ref checkpoint', lambda v: checkpoint(v, kind).update(event_refs=['event_' + str(i) + '_' + 'a' * 64 for i in range(1000)]))
+            fixture_case('A2', 'forbidden accumulating-ref field below byte limit', lambda v: checkpoint(v, kind).update(event_refs=['event_0']))
             fixture_case('A2', 'persisted live snapshot in durable token', lambda v: checkpoint(v, kind)['index_read_token'].update(redb_snapshot_id='forbidden'))
             for size in (16384, 16385):
                 def checkpoint_boundary(v, size=size):
@@ -260,16 +285,20 @@ def run_suite(output):
                 args=('--audit-grade-only',))
 
     for fid in ('shared_alert_state', 'shared_alert_rule_state'):
+        if selected and not selected.startswith('alert.'):
+            continue
         cli('alerts', 'A1', 'missing shared-state profile ' + fid, 'pm-alert-event-contracts-check.py',
             'Plans/storage_value_registry.json', lambda v, fid=fid: v['storage_profile']['family_profiles'].pop(fid))
-    cli('concern.created', 'A1', 'missing original concern record profile', 'pm-concern-created-contracts-check.py',
-        'Plans/storage_value_registry.json', lambda v: v['storage_profile']['family_profiles'].pop('concern_record'))
+    if selected in (None, 'concern.created'):
+        cli('concern.created', 'A1', 'missing original concern record profile', 'pm-concern-created-contracts-check.py',
+            'Plans/storage_value_registry.json', lambda v: v['storage_profile']['family_profiles'].pop('concern_record'))
     cli('all', 'A5', 'unmodified grade/citation/hold audit', Path(__file__).name, expected=0, args=('--audit-grade-only',))
     def wrong_annotation(v):
         row = next(r for r in v['families'] if r['event_type'] == 'bundle.annotation_state_changed')
         row['disposition_evidence'][0]['unit'] = 'CV-049'
-    cli('bundle.annotation_state_changed', 'A5', 'wrong annotation unit CV-049', Path(__file__).name,
-        GRADE, wrong_annotation, args=('--audit-grade-only',))
+    if selected is None:
+        cli('bundle.annotation_state_changed', 'A5', 'wrong annotation unit CV-049', Path(__file__).name,
+            GRADE, wrong_annotation, args=('--audit-grade-only',))
     for path, digest in restored.items():
         assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest, ('input not restored', path)
     data = dict(status='pass' if all(r['passed'] for r in results) else 'fail', reviewed_head=REVIEWED,
@@ -284,6 +313,7 @@ def run_suite(output):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', help='Evidence output outside the repository')
+    parser.add_argument('--family')
     parser.add_argument('--audit-grade-only', action='store_true')
     parser.add_argument('--failure-exit-probe', type=int)
     args = parser.parse_args()
@@ -294,7 +324,7 @@ def main():
     if args.audit_grade_only:
         audit_grade()
         return 0
-    return run_suite(args.output)
+    return run_suite(args.output, args.family)
 
 
 if __name__ == '__main__':

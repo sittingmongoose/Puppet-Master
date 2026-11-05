@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Static DG6A payload/custody oracle; grants no admission or native proof."""
 import copy
+import argparse
 import hashlib
 from datetime import datetime
 import importlib.util
@@ -150,7 +151,50 @@ def protocol_errors(context, original):
         found.append('wrong original receipt')
     if request_digest(context['retry_command'], context['retry_payload']) != original['request_digest']:
         found.append('idempotency_conflict')
+    family = original['schema_id'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('_', '.', 1)
+    found += append_result_errors(original, context['append_resolution'], context['append_original'], family)
     return found
+
+
+def append_result_errors(operation, resolved, expected, event_type):
+    """Join current recovery/return evidence to a separately retained Storage original.
+
+    The resolver output is an input, not authority. Its complete event, source,
+    eleven-field first receipt and four-field result must equal independent evidence.
+    Native authentication of that evidence remains NOT_RUN.
+    """
+    found = []
+    if operation['state'] == 'prepared':
+        return found  # No append exists yet; this path cannot return a result.
+    if not exact_value(resolved, expected):
+        found.append('resolved original append evidence mismatch')
+    bindings = dict(event_type=event_type, event_id=operation['event_id'],
+                    storage_instance_id=operation['storage_instance_id'], project_id=operation['project_id'],
+                    payload=operation['payload'])
+    if 'scope_partition' in operation:
+        bindings['scope_partition'] = operation['scope_partition']
+    if not all(exact_value(expected.get(key), value) for key, value in bindings.items()):
+        found.append('foreign original append family/scope/identity')
+    if operation['state'] == 'settled' and not exact_value(
+            operation['original_append_result_ref'], expected['receipt']['original_append_result_ref']):
+        found.append('foreign original append-result reference')
+    if operation['state'] == 'committed' and operation['original_append_result_ref'] is not None:
+        found.append('unsettled operation carries append-result reference')
+    return found
+
+
+def append_context(fixture, event_type):
+    # These are separately supplied inputs. Never derive either from a candidate.
+    return dict(append_family=event_type, append_resolution=copy.deepcopy(fixture['append_resolution']),
+                append_original=copy.deepcopy(fixture['history']['expected']['event']))
+
+
+def cursor_errors(after, frontier):
+    """Unsigned sequence cursors have one exact JSON type and the complete u64 domain."""
+    if not (type(after) is int and type(frontier) is int and
+            0 <= after <= frontier <= 18446744073709551615):
+        return ['invalid unsigned cursor/frontier']
+    return []
 
 def operation_size_cases(original, schema, cases):
     for case in cases:
@@ -180,7 +224,7 @@ def checkpoint_errors(value, schema, original_context):
     found = list(Draft202012Validator(schema).iter_errors(value))
     if len(packed(value)) > 16384:
         found.append('checkpoint exceeds 16384 encoded bytes')
-    if not found:
+    if not found and 'index_read_token' in value:
         token = value['index_read_token']
         if not (value['storage_instance_id'] == token['storage_instance_id'] == token['source_selection']['storage_instance_id']):
             found.append('foreign Storage token')
@@ -246,6 +290,28 @@ def producer_cases(fixtures, event_type, payload):
         retry['payload'].update(case['payload_changes'])
         assert (original == _codec.event_producer_semantic_digest(retry)) == case['same_digest'], case['name']
         count += 1
+    # Exercise the actual producer digest codec, not an independent JSON codec.
+    numeric_key = next(key for key, value in payload.items() if type(value) is int)
+    for spelling in ('1', '1.0', '1e0', '-0', '-0.0', '01'):
+        try:
+            number = json.loads(spelling)
+        except json.JSONDecodeError:
+            assert spelling == '01'
+        else:
+            candidate = copy.deepcopy(record)
+            candidate['payload'][numeric_key] = number
+            if type(number) is float:
+                try:
+                    _codec.event_producer_semantic_digest(candidate)
+                except ValueError:
+                    pass
+                else:
+                    raise AssertionError(('noncanonical numeric digest accepted', spelling))
+            else:
+                canonical = copy.deepcopy(record)
+                canonical['payload'][numeric_key] = int(number)
+                assert _codec.event_producer_semantic_digest(candidate) == _codec.event_producer_semantic_digest(canonical)
+        count += 1
     return count
 
 def history_page(events, event_type, project_id, after, frontier, publication_id, index_read_token):
@@ -253,7 +319,9 @@ def history_page(events, event_type, project_id, after, frontier, publication_id
     def response(refs, cursor):
         return dict(publication_id=publication_id, index_read_token=index_read_token,
                     after_sequence_id=cursor, event_refs=refs, complete=cursor == frontier)
-    if after > frontier or len(packed(response([], after))) > 16384:
+    if cursor_errors(after, frontier):
+        raise ValueError('invalid cursor/frontier')
+    if len(packed(response([], after))) > 16384:
         raise ValueError('unpageable metadata or invalid cursor')
     result, scanned, cursor = [], 0, after
     for event in events:
@@ -347,9 +415,9 @@ def exact_value(left, right):
     """Immutable evidence equality includes JSON value types, not Python coercions."""
     if type(left) is not type(right):
         return False
-    if isinstance(left, dict):
-        return left.keys() == right.keys() and all(exact_value(left[k], right[k]) for k in left)
-    if isinstance(left, list):
+    if isinstance(left, dict) and isinstance(right, dict):
+        return left.keys() == right.keys() and all(exact_value(left[k], right[k]) for k in left.keys() & right.keys())
+    if isinstance(left, list) and isinstance(right, list):
         return len(left) == len(right) and all(exact_value(a, b) for a, b in zip(left, right))
     return left == right
 
@@ -376,6 +444,27 @@ def historical_reader_cases(fixture, checkpoint, reader, observations=None):
     assert original['source_selection'] == expected['checkpoint']['index_read_token']['source_selection']
     assert 0 < original['sequence_id'] <= expected['checkpoint']['through_sequence_id']
     before = copy.deepcopy(base)
+    for cursor in (-1, 2, 18446744073709551615, 18446744073709551616, True, False, '0', 'false', 'true', None,
+                   [], {}, {'nested': 0}, 0.0, 1.0):
+        malformed = copy.deepcopy(base)
+        malformed['after_sequence_id'] = cursor
+        try:
+            reader(malformed, expected)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(('invalid cursor accepted', cursor))
+    for cursor in (0, checkpoint['through_sequence_id']):
+        boundary = copy.deepcopy(base)
+        boundary['after_sequence_id'] = cursor
+        page = reader(boundary, expected)
+        assert type(page['after_sequence_id']) is int and page['complete']
+    maximum_request, maximum_original = copy.deepcopy(base), copy.deepcopy(expected)
+    maximum_request['checkpoint']['through_sequence_id'] = 18446744073709551615
+    maximum_original['checkpoint']['through_sequence_id'] = 18446744073709551615
+    maximum_request['after_sequence_id'] = 18446744073709551615
+    maximum_page = reader(maximum_request, maximum_original)
+    assert maximum_page['event_refs'] == [] and maximum_page['complete']
     response = reader(base, expected)
     assert response['event_refs'] == [original['event_ref']] and response['complete']
     assert base == before, 'historical read mutated its inputs'
@@ -389,7 +478,7 @@ def historical_reader_cases(fixture, checkpoint, reader, observations=None):
     base['checkpoint']['index_read_token']['checkpoint_ref'] = case_ref
     expected['checkpoint']['index_read_token']['checkpoint_ref'] = case_ref
     assert reader(base, expected)['event_refs'] == [original['event_ref']]
-    count = 2
+    count = 20  # Two originals, fifteen refusals, two cursor endpoints and u64 max.
     for case in fixture['history']['cases']:
         request = copy.deepcopy(base)
         history_patch(request, case)
@@ -570,6 +659,9 @@ def history_response_cases(checkpoint, schema, event_type, project_id, original_
     return 5
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--family', choices=[f['event_type'] for f in load('Plans/alert_event_contracts/manifest.json')['families']])
+    selected = parser.parse_args().family
     count = 0
     for path in (ROOT / 'Plans/alert_event_contracts').glob('*.schema.json'):
         check_schema(json.loads(path.read_text()))
@@ -578,6 +670,8 @@ def main():
     admitted = {x.get('event_type') for x in registry['families']}
     values = load('Plans/storage_value_registry.json')
     for family in load('Plans/alert_event_contracts/manifest.json')['families']:
+        if selected and selected != family['event_type']:
+            continue
         schema = load(family['payload_schema'])
         check_schema(schema)
         fixtures = load(f"Plans/alert_event_contracts/{family['slug']}.fixtures.json")
@@ -605,6 +699,9 @@ def main():
                 valid = not (checkpoint_errors(case['value'], value_schema, original_context) if key == 'checkpoint'
                              else operation_errors(case['value'], value_schema))
                 assert valid == case['valid'], (family['event_type'], key, case['name'])
+                if key == 'operation' and case['valid']:
+                    assert not append_result_errors(case['value'], fixtures['append_resolution'],
+                                                    fixtures['history']['expected']['event'], family['event_type'])
                 count += 1
             if key == 'operation':
                 count += operation_size_cases(original_context, value_schema, fixtures['operation_size_cases'])
@@ -623,8 +720,8 @@ def main():
                         count += 1
                 count += checkpoint_context_cases(baseline, value_schema, original_context)
                 regression = copy.deepcopy(baseline)
-                regression['event_refs'] = ['event_' + str(i) + '_' + 'a' * 64 for i in range(1000)]
-                assert len(packed(regression)) > 16384 and checkpoint_errors(regression, value_schema, original_context)
+                regression['event_refs'] = ['event_0']
+                assert len(packed(regression)) < 16384 and checkpoint_errors(regression, value_schema, original_context)
                 count += 1
                 for case in fixtures['checkpoint_size_cases']:
                     value = copy.deepcopy(baseline)
@@ -682,7 +779,7 @@ def main():
         del missing['storage_profile']['family_profiles'][fid]
         assert profile_errors(missing, fid, 'redb', 'settings_and_layout')
         count += 2
-    print(json.dumps({'status':'pass','cases':count,'families':4,'admission':'ABSENT','native':'NOT_RUN','retention':'PENDING_RETENTION_DECISION'}))
+    print(json.dumps({'status':'pass','cases':count,'families':1 if selected else 4,'admission':'ABSENT','native':'NOT_RUN','retention':'PENDING_RETENTION_DECISION'}))
 
 if __name__ == '__main__':
     main()

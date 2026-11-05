@@ -451,7 +451,7 @@
         "owner_commit_ref": "pmref:test:original",
         "result_ref": "pmref:test:original",
         "dispatch_receipt_ref": "pmref:test:original",
-        "original_append_result_ref": "pmref:test:original",
+        "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
         "prior_owner_state": {
           "schema_id": "pm.storage_value.shared_alert_state.v1",
           "schema_version": "1.0.0",
@@ -783,7 +783,16 @@
     {
       "name": "missing_token",
       "value": {
-        "schema_id": "pm.storage_value.alert_acknowledged_checkpoint.v1"
+        "schema_id": "pm.storage_value.alert_acknowledged_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "consumer_id": "projector.alert_acknowledged.history",
+        "consumer_version": "1.0.0",
+        "publication_id": "fixture",
+        "state": "current",
+        "through_sequence_id": 1,
+        "last_event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f"
       },
       "valid": false
     },
@@ -799,10 +808,33 @@
         "publication_id": "fixture",
         "state": "current",
         "index_read_token": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_key": "fixture",
+          "checkpoint_ref": "fixture",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frontier_revision": 0,
+          "frontier_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "index_dataset_name": "fixture",
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
           "redb_snapshot_id": "forbidden"
         },
-        "through_sequence_id": 0,
-        "last_event_id": null
+        "through_sequence_id": 1,
+        "last_event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f"
       },
       "valid": false
     },
@@ -853,14 +885,14 @@
       "value": {
         "schema_id": "pm.storage_value.alert_acknowledged_checkpoint.v1",
         "schema_version": "1.0.0",
-        "storage_instance_id": "00000000-0000-4000-8000-000000000002",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
         "project_id": "fixture",
         "consumer_id": "projector.alert_acknowledged.history",
         "consumer_version": "1.0.0",
         "publication_id": "fixture",
         "state": "current",
         "index_read_token": {
-          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000002",
           "checkpoint_key": "fixture",
           "checkpoint_ref": "fixture",
           "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -884,8 +916,8 @@
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           }
         },
-        "through_sequence_id": 0,
-        "last_event_id": null
+        "through_sequence_id": 1,
+        "last_event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f"
       },
       "valid": false
     }
@@ -1096,7 +1128,7 @@
         "storage_instance_id": "00000000-0000-4000-8000-000000000001",
         "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
         "sequence_id": 1,
-        "original_append_result_ref": "pmref:test:original",
+        "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
         "first_append_receipt": {
           "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
           "sequence_id": 1,
@@ -1167,7 +1199,7 @@
           "storage_instance_id": "00000000-0000-4000-8000-000000000001",
           "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
           "sequence_id": 1,
-          "original_append_result_ref": "pmref:test:original",
+          "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
           "first_append_receipt": {
             "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
             "sequence_id": 1,
@@ -4436,6 +4468,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [],
@@ -4556,6 +4729,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -4678,6 +4992,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -4800,6 +5255,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -4922,6 +5518,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -5044,6 +5781,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -5166,6 +6044,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -5288,6 +6307,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -5410,6 +6570,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -9201,6 +10502,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -9323,6 +10765,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -9445,6 +11028,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -9567,6 +11291,147 @@
           "correlation_id": "fixture",
           "idempotency_key": "fixture",
           "ts": "2026-11-04T00:00:00Z"
+        },
+        "append_family": "alert.acknowledged",
+        "append_resolution": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
+        },
+        "append_original": {
+          "event_type": "alert.acknowledged",
+          "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+          "sequence_id": 1,
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "project_id": "fixture",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "payload": {
+            "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+            "schema_version": "1.0.0",
+            "project_id": "fixture",
+            "alert_id": "fixture",
+            "alert_record_ref": "pmref:test:fixture",
+            "actor_ref": "pmref:test:fixture",
+            "prior_revision": 1,
+            "result_revision": 2,
+            "currentness_basis_ref": "pmref:test:fixture",
+            "prior_acknowledgement_state": "unacknowledged",
+            "result_acknowledgement_state": "acknowledged",
+            "origin": "notification_center",
+            "handler_target": "handlers::alert::acknowledge",
+            "command_id": "cmd.alert.acknowledge",
+            "correlation_id": "fixture",
+            "idempotency_key": "fixture",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "receipt": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "sequence_id": 1,
+            "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+            "first_append_receipt": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_generation": 0,
+              "segment_name": "segment-0",
+              "byte_offset": 0,
+              "commit_group_id": "history-original-group",
+              "durability_class": "ordinary",
+              "durable_end_offset": 1024,
+              "durability_state": "synced",
+              "manifest_generation": 0,
+              "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+            },
+            "original_append_result": {
+              "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+              "sequence_id": 1,
+              "segment_ref": "pmref:segment:original",
+              "byte_offset": 0
+            }
+          },
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "state": "current",
+          "valid_when_written": true
         }
       },
       "errors": [
@@ -9916,6 +11781,2048 @@
         }
       },
       "errors": []
+    },
+    {
+      "name": "cursor_after_0",
+      "target": "cursor",
+      "value": {
+        "after": -1,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_1",
+      "target": "cursor",
+      "value": {
+        "after": 18446744073709551616,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_2",
+      "target": "cursor",
+      "value": {
+        "after": true,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_3",
+      "target": "cursor",
+      "value": {
+        "after": false,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_4",
+      "target": "cursor",
+      "value": {
+        "after": "0",
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_5",
+      "target": "cursor",
+      "value": {
+        "after": "false",
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_6",
+      "target": "cursor",
+      "value": {
+        "after": "true",
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_7",
+      "target": "cursor",
+      "value": {
+        "after": null,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_8",
+      "target": "cursor",
+      "value": {
+        "after": [],
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_9",
+      "target": "cursor",
+      "value": {
+        "after": {},
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_10",
+      "target": "cursor",
+      "value": {
+        "after": {
+          "nested": 0
+        },
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_11",
+      "target": "cursor",
+      "value": {
+        "after": 0.0,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_12",
+      "target": "cursor",
+      "value": {
+        "after": 1.0,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_0",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": -1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_1",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": 18446744073709551616
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_2",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": true
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_3",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": false
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_4",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": "0"
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_5",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": "false"
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_6",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": "true"
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_7",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": null
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_8",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": []
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_9",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": {}
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_10",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": {
+          "nested": 0
+        }
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_11",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": 0.0
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_frontier_12",
+      "target": "cursor",
+      "value": {
+        "after": 0,
+        "frontier": 1.0
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    },
+    {
+      "name": "cursor_after_frontier",
+      "target": "cursor",
+      "value": {
+        "after": 2,
+        "frontier": 1
+      },
+      "errors": [
+        "invalid unsigned cursor/frontier"
+      ]
+    }
+  ],
+  "append_resolution": {
+    "event_type": "alert.acknowledged",
+    "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+    "event_ref": "pmref:event:evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+    "sequence_id": 1,
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+    "project_id": "fixture",
+    "scope_partition": "project~Zml4dHVyZQ",
+    "payload": {
+      "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+      "schema_version": "1.0.0",
+      "project_id": "fixture",
+      "alert_id": "fixture",
+      "alert_record_ref": "pmref:test:fixture",
+      "actor_ref": "pmref:test:fixture",
+      "prior_revision": 1,
+      "result_revision": 2,
+      "currentness_basis_ref": "pmref:test:fixture",
+      "prior_acknowledgement_state": "unacknowledged",
+      "result_acknowledgement_state": "acknowledged",
+      "origin": "notification_center",
+      "handler_target": "handlers::alert::acknowledge",
+      "command_id": "cmd.alert.acknowledge",
+      "correlation_id": "fixture",
+      "idempotency_key": "fixture",
+      "ts": "2026-11-04T00:00:00Z"
+    },
+    "receipt": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+      "sequence_id": 1,
+      "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+      "first_append_receipt": {
+        "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+        "sequence_id": 1,
+        "segment_generation": 0,
+        "segment_name": "segment-0",
+        "byte_offset": 0,
+        "commit_group_id": "history-original-group",
+        "durability_class": "ordinary",
+        "durable_end_offset": 1024,
+        "durability_state": "synced",
+        "manifest_generation": 0,
+        "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+      },
+      "original_append_result": {
+        "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+        "sequence_id": 1,
+        "segment_ref": "pmref:segment:original",
+        "byte_offset": 0
+      }
+    },
+    "source_selection": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "current_ref": "storage/seglog/CURRENT",
+      "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "selected_segment_generation": 0,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "manifest_generation": 0,
+      "recovery_epoch": 0,
+      "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "state": "current",
+    "valid_when_written": true
+  },
+  "append_operations": {
+    "settled": {
+      "schema_id": "pm.storage_value.alert_acknowledged_operation.v1",
+      "schema_version": "1.0.0",
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "project_id": "fixture",
+      "operation_digest": "aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+      "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+      "idempotency_key": "fixture",
+      "request_digest": "71e9c545b2ce38c14c306afa78f276810d0417b6fc20ace20fb1e49227afac51",
+      "state": "settled",
+      "payload": {
+        "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_acknowledgement_state": "unacknowledged",
+        "result_acknowledgement_state": "acknowledged",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::acknowledge",
+        "command_id": "cmd.alert.acknowledge",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "owner_commit_ref": "pmref:test:original",
+      "result_ref": "pmref:test:original",
+      "dispatch_receipt_ref": "pmref:test:original",
+      "original_append_result_ref": "pmref:append_result:00000000-0000-4000-8000-000000000001/70726f6a6563747e5a6d6c34644856795a51/evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+      "prior_owner_state": {
+        "schema_id": "pm.storage_value.shared_alert_state.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "revision": 1,
+        "source_record_ref": "pmref:test:fixture",
+        "acknowledgement_state": "unacknowledged",
+        "unread": true,
+        "inbox_visible": true,
+        "snooze_until": null
+      },
+      "candidate_owner_state": {
+        "schema_id": "pm.storage_value.shared_alert_state.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "revision": 2,
+        "source_record_ref": "pmref:test:fixture",
+        "acknowledgement_state": "acknowledged",
+        "unread": false,
+        "inbox_visible": true,
+        "snooze_until": null
+      },
+      "original_command": {
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_acknowledgement_state": "unacknowledged",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::acknowledge",
+        "command_id": "cmd.alert.acknowledge",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      }
+    },
+    "committed": {
+      "schema_id": "pm.storage_value.alert_acknowledged_operation.v1",
+      "schema_version": "1.0.0",
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "project_id": "fixture",
+      "operation_digest": "aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+      "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+      "idempotency_key": "fixture",
+      "request_digest": "71e9c545b2ce38c14c306afa78f276810d0417b6fc20ace20fb1e49227afac51",
+      "state": "committed",
+      "payload": {
+        "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_acknowledgement_state": "unacknowledged",
+        "result_acknowledgement_state": "acknowledged",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::acknowledge",
+        "command_id": "cmd.alert.acknowledge",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "owner_commit_ref": "pmref:test:original",
+      "result_ref": "pmref:test:original",
+      "dispatch_receipt_ref": "pmref:test:original",
+      "original_append_result_ref": null,
+      "prior_owner_state": {
+        "schema_id": "pm.storage_value.shared_alert_state.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "revision": 1,
+        "source_record_ref": "pmref:test:fixture",
+        "acknowledgement_state": "unacknowledged",
+        "unread": true,
+        "inbox_visible": true,
+        "snooze_until": null
+      },
+      "candidate_owner_state": {
+        "schema_id": "pm.storage_value.shared_alert_state.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "revision": 2,
+        "source_record_ref": "pmref:test:fixture",
+        "acknowledgement_state": "acknowledged",
+        "unread": false,
+        "inbox_visible": true,
+        "snooze_until": null
+      },
+      "original_command": {
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_acknowledgement_state": "unacknowledged",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::acknowledge",
+        "command_id": "cmd.alert.acknowledge",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      }
+    }
+  },
+  "append_cases": [
+    {
+      "name": "valid_append_custody",
+      "state": "settled",
+      "patches": [],
+      "errors": []
+    },
+    {
+      "name": "valid_committed_append_custody",
+      "state": "committed",
+      "patches": [],
+      "errors": []
+    },
+    {
+      "name": "committed_resolved_event_type",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "event_type"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_event_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_event_ref",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "event_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_sequence_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_storage_instance_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "storage_instance_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_project_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "project_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_scope_partition",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "scope_partition"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_storage_instance_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "storage_instance_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_event_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_sequence_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_original_append_result_ref",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_event_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_sequence_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_segment_generation",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "segment_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_segment_name",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "segment_name"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_byte_offset",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "byte_offset"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_commit_group_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "commit_group_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_durability_class",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "durability_class"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_durable_end_offset",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "durable_end_offset"
+          ],
+          "value": 1025
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_durability_state",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "durability_state"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_manifest_generation",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "manifest_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_first_append_receipt_acknowledged_at_utc",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "acknowledged_at_utc"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_original_append_result_event_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_original_append_result_sequence_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_original_append_result_segment_ref",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "segment_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_receipt_original_append_result_byte_offset",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "byte_offset"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_storage_instance_id",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "storage_instance_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_current_ref",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "current_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_current_bytes_sha256",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "current_bytes_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_selected_segment_generation",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "selected_segment_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_manifest_ref",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_manifest_bytes_sha256",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_bytes_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_manifest_generation",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_recovery_epoch",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "recovery_epoch"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_manifest_survivor_prefix_sha256",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_survivor_prefix_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_retained_inventory_sha256",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "retained_inventory_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_durable_watermarks_sha256",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "durable_watermarks_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_excluded_ranges_sha256",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "excluded_ranges_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_source_selection_retired_inputs_sha256",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "retired_inputs_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_state",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "state"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "committed_resolved_valid_when_written",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "valid_when_written"
+          ],
+          "value": false
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "valid_settled_append_custody",
+      "state": "settled",
+      "patches": [],
+      "errors": []
+    },
+    {
+      "name": "settled_resolved_event_type",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "event_type"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_event_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_event_ref",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "event_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_sequence_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_storage_instance_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "storage_instance_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_project_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "project_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_scope_partition",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "scope_partition"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_storage_instance_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "storage_instance_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_event_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_sequence_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_original_append_result_ref",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_event_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_sequence_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_segment_generation",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "segment_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_segment_name",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "segment_name"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_byte_offset",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "byte_offset"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_commit_group_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "commit_group_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_durability_class",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "durability_class"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_durable_end_offset",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "durable_end_offset"
+          ],
+          "value": 1025
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_durability_state",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "durability_state"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_manifest_generation",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "manifest_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_first_append_receipt_acknowledged_at_utc",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "first_append_receipt",
+            "acknowledged_at_utc"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_original_append_result_event_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_original_append_result_sequence_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "sequence_id"
+          ],
+          "value": 2
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_original_append_result_segment_ref",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "segment_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_receipt_original_append_result_byte_offset",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "receipt",
+            "original_append_result",
+            "byte_offset"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_storage_instance_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "storage_instance_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_current_ref",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "current_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_current_bytes_sha256",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "current_bytes_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_selected_segment_generation",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "selected_segment_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_manifest_ref",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_ref"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_manifest_bytes_sha256",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_bytes_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_manifest_generation",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_generation"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_recovery_epoch",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "recovery_epoch"
+          ],
+          "value": 1
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_manifest_survivor_prefix_sha256",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "manifest_survivor_prefix_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_retained_inventory_sha256",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "retained_inventory_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_durable_watermarks_sha256",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "durable_watermarks_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_excluded_ranges_sha256",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "excluded_ranges_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_source_selection_retired_inputs_sha256",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "source_selection",
+            "retired_inputs_sha256"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_state",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "state"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "settled_resolved_valid_when_written",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "resolved",
+            "valid_when_written"
+          ],
+          "value": false
+        }
+      ],
+      "errors": [
+        "resolved original append evidence mismatch"
+      ]
+    },
+    {
+      "name": "foreign_original_append_result_ref",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "operation",
+            "original_append_result_ref"
+          ],
+          "value": "pmref:foreign:original_append"
+        }
+      ],
+      "errors": [
+        "foreign original append-result reference"
+      ]
+    },
+    {
+      "name": "append_original_event_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "operation",
+            "event_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "foreign original append family/scope/identity"
+      ]
+    },
+    {
+      "name": "append_original_storage_instance_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "operation",
+            "storage_instance_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "foreign original append family/scope/identity"
+      ]
+    },
+    {
+      "name": "append_original_project_id",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "operation",
+            "project_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "errors": [
+        "foreign original append family/scope/identity"
+      ]
+    },
+    {
+      "name": "append_payload_family",
+      "state": "settled",
+      "patches": [
+        {
+          "path": [
+            "operation",
+            "payload",
+            "schema_id"
+          ],
+          "value": "pm.event.foreign.v1"
+        }
+      ],
+      "errors": [
+        "foreign original append family/scope/identity"
+      ]
+    },
+    {
+      "name": "committed_foreign_append_reference",
+      "state": "committed",
+      "patches": [
+        {
+          "path": [
+            "operation",
+            "original_append_result_ref"
+          ],
+          "value": "pmref:foreign:original_append"
+        }
+      ],
+      "errors": [
+        "unsettled operation carries append-result reference"
+      ]
     }
   ]
 }

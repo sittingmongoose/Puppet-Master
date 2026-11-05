@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DG6A-FIX5-20261104",
+  "assessment_id": "DG6A-FIX6-20261105",
   "assessment_kind": "self_grade_preparation",
   "source_base": "be4766513ff71776346fc73b84f2542990f955af",
   "rubric": {
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "owner_doc": {
           "status": "PASS",
@@ -84,11 +84,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "producer": {
           "status": "PASS",
@@ -111,11 +111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -145,11 +145,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "scope_identity": {
           "status": "PASS",
@@ -172,11 +172,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -206,11 +206,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -226,11 +226,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -250,14 +250,28 @@
               "line_start": 29521,
               "line_end": 29521,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_acknowledged.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 13731,
+              "line_end": 13731,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "transitions": {
           "status": "PASS",
@@ -273,11 +287,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -307,11 +321,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -334,11 +348,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -362,24 +376,45 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 367,
-              "line_end": 367,
+              "line_start": 435,
+              "line_end": 435,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 193,
-              "line_end": 193,
+              "line_start": 275,
+              "line_end": 275,
               "quote": "def duplicate_proofs("
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_acknowledged.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 13731,
+              "line_end": 13731,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "executed_cases",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "def executed_cases"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         }
       },
       "remaining_gaps": [
@@ -391,7 +426,7 @@
         "scripts/pm-alert-event-contracts-check.py",
         "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
     },
     {
       "event_type": "alert.dismissed",
@@ -429,11 +464,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "owner_doc": {
           "status": "PASS",
@@ -456,11 +491,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "producer": {
           "status": "PASS",
@@ -483,11 +518,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -517,11 +552,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "scope_identity": {
           "status": "PASS",
@@ -544,11 +579,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -578,11 +613,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -598,11 +633,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -622,14 +657,28 @@
               "line_start": 29521,
               "line_end": 29521,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_dismissed.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 13936,
+              "line_end": 13936,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "transitions": {
           "status": "PASS",
@@ -645,11 +694,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -679,11 +728,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -706,11 +755,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -734,24 +783,45 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 367,
-              "line_end": 367,
+              "line_start": 435,
+              "line_end": 435,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 193,
-              "line_end": 193,
+              "line_start": 275,
+              "line_end": 275,
               "quote": "def duplicate_proofs("
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_dismissed.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 13936,
+              "line_end": 13936,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "executed_cases",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "def executed_cases"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         }
       },
       "remaining_gaps": [
@@ -763,7 +833,7 @@
         "scripts/pm-alert-event-contracts-check.py",
         "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
     },
     {
       "event_type": "alert.rule_muted",
@@ -801,11 +871,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "owner_doc": {
           "status": "PASS",
@@ -828,11 +898,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "producer": {
           "status": "PASS",
@@ -855,11 +925,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -889,11 +959,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "scope_identity": {
           "status": "PASS",
@@ -916,11 +986,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -950,11 +1020,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -970,11 +1040,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -994,14 +1064,28 @@
               "line_start": 29521,
               "line_end": 29521,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_rule_muted.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 13914,
+              "line_end": 13914,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "transitions": {
           "status": "PASS",
@@ -1017,11 +1101,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1051,11 +1135,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1078,11 +1162,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -1106,24 +1190,45 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 367,
-              "line_end": 367,
+              "line_start": 435,
+              "line_end": 435,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 193,
-              "line_end": 193,
+              "line_start": 275,
+              "line_end": 275,
               "quote": "def duplicate_proofs("
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_rule_muted.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 13914,
+              "line_end": 13914,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "executed_cases",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "def executed_cases"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         }
       },
       "remaining_gaps": [
@@ -1135,7 +1240,7 @@
         "scripts/pm-alert-event-contracts-check.py",
         "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
     },
     {
       "event_type": "alert.snoozed",
@@ -1173,11 +1278,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1200,11 +1305,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "producer": {
           "status": "PASS",
@@ -1227,11 +1332,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1261,11 +1366,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1288,11 +1393,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1322,11 +1427,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1342,11 +1447,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1366,14 +1471,28 @@
               "line_start": 29521,
               "line_end": 29521,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_snoozed.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 14714,
+              "line_end": 14714,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "transitions": {
           "status": "PASS",
@@ -1389,11 +1508,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1423,11 +1542,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1450,11 +1569,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -1478,24 +1597,45 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 367,
-              "line_end": 367,
+              "line_start": 435,
+              "line_end": 435,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 193,
-              "line_end": 193,
+              "line_start": 275,
+              "line_end": 275,
               "quote": "def duplicate_proofs("
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/alert_event_contracts/alert_snoozed.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 14714,
+              "line_end": 14714,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "executed_cases",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "def executed_cases"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         }
       },
       "remaining_gaps": [
@@ -1507,7 +1647,7 @@
         "scripts/pm-alert-event-contracts-check.py",
         "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
     },
     {
       "event_type": "bundle.annotation_state_changed",
@@ -3377,11 +3517,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3404,11 +3544,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "producer": {
           "status": "PASS",
@@ -3431,11 +3571,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3465,11 +3605,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3492,11 +3632,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3523,14 +3663,21 @@
               "line_start": 491,
               "line_end": 491,
               "quote": "projector_replay_only"
+            },
+            {
+              "path": "scripts/pm-concern-created-contracts-check.py",
+              "unit": "caller_body",
+              "line_start": 30,
+              "line_end": 30,
+              "quote": "def caller_body"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3546,11 +3693,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3570,14 +3717,28 @@
               "line_start": 30489,
               "line_end": 30489,
               "quote": "backup/restore includes all of them with the original Storage source under one verified recovery boundary."
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 26378,
+              "line_end": 26378,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "transitions": {
           "status": "PASS",
@@ -3593,11 +3754,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3627,11 +3788,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3654,11 +3815,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -3682,24 +3843,45 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 367,
-              "line_end": 367,
+              "line_start": 435,
+              "line_end": 435,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 193,
-              "line_end": 193,
+              "line_start": 275,
+              "line_end": 275,
               "quote": "def duplicate_proofs("
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 26378,
+              "line_end": 26378,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "executed_cases",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "def executed_cases"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         }
       },
       "remaining_gaps": [
@@ -3711,7 +3893,7 @@
         "scripts/pm-concern-created-contracts-check.py",
         "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN.",
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged.",
       "separate_proposal": {
         "question": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
         "review_recommendation_unapplied": "Keep the already specified canonical creators. Worker, User and External Resource input is nomination until accepted by an authorized owner. Record creator separately from accountable owner. Do not re-ask whether the listed runtime creators may create.",
@@ -6029,11 +6211,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6056,11 +6238,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "producer": {
           "status": "PASS",
@@ -6083,11 +6265,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6117,11 +6299,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6144,11 +6326,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6178,11 +6360,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6198,11 +6380,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6222,14 +6404,28 @@
               "line_start": 245,
               "line_end": 245,
               "quote": "backup"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/panel_event_contracts/panel_redocked.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 15333,
+              "line_end": 15333,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "transitions": {
           "status": "PASS",
@@ -6245,11 +6441,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6279,11 +6475,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6306,11 +6502,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -6334,24 +6530,45 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 367,
-              "line_end": 367,
+              "line_start": 435,
+              "line_end": 435,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 193,
-              "line_end": 193,
+              "line_start": 275,
+              "line_end": 275,
               "quote": "def duplicate_proofs("
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/panel_event_contracts/panel_redocked.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 15333,
+              "line_end": 15333,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "executed_cases",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "def executed_cases"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         }
       },
       "remaining_gaps": [
@@ -6363,7 +6580,7 @@
         "scripts/pm-panel-event-contracts-check.py",
         "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
     },
     {
       "event_type": "panel.undocked",
@@ -6401,11 +6618,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6428,11 +6645,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "producer": {
           "status": "PASS",
@@ -6455,11 +6672,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6489,11 +6706,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6516,11 +6733,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6550,11 +6767,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6570,11 +6787,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6594,14 +6811,28 @@
               "line_start": 245,
               "line_end": 245,
               "quote": "backup"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/panel_event_contracts/panel_undocked.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 15329,
+              "line_end": 15329,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
-            "status": "PASS"
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change": "upgraded",
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "transitions": {
           "status": "PASS",
@@ -6617,11 +6848,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6651,11 +6882,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6678,11 +6909,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -6706,24 +6937,45 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 367,
-              "line_end": 367,
+              "line_start": 435,
+              "line_end": 435,
               "quote": "def historical_reader_cases"
             },
             {
               "path": "scripts/pm-dg6a-guard-check.py",
               "unit": "duplicate_proofs",
-              "line_start": 193,
-              "line_end": 193,
+              "line_start": 275,
+              "line_end": 275,
               "quote": "def duplicate_proofs("
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "append_result_errors",
+              "line_start": 159,
+              "line_end": 159,
+              "quote": "def append_result_errors"
+            },
+            {
+              "path": "Plans/panel_event_contracts/panel_undocked.fixtures.json",
+              "unit": "append_cases",
+              "line_start": 15329,
+              "line_end": 15329,
+              "quote": "\"name\": \"foreign_original_append_result_ref\""
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "executed_cases",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "def executed_cases"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
+            "source": "DG6A-sol/REVIEW-astra-2.md@69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
+          "change_reason": "Round 6 retains exact owner contracts and earlier guards; independent original append custody, concern caller-body retries, typed unsigned cursors and whole-entry-point guard proofs close B1/B2/B3/P1/S1."
         }
       },
       "remaining_gaps": [
@@ -6735,9 +6987,9 @@
         "scripts/pm-panel-event-contracts-check.py",
         "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
     }
   ],
-  "reviewed_head": "370e7718684f2bcb025dafa3a3993091a96a49fd",
-  "revision_binding": "Round-5 technical repair plus self-inclusive report commit on plans/ea-w2-gui-concerns-20261104; no admission or native proof."
+  "reviewed_head": "69776a6b88c79f5ad871d9b98304bc7ef89fcd83",
+  "revision_binding": "Round-6 technical repair and self-inclusive report commit on plans/ea-w2-gui-concerns-20261104; no admission or native proof."
 }
