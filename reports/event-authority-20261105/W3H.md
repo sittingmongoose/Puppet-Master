@@ -1,6 +1,6 @@
 # W3H — deck-1 4b names, phase 1 prepared without admission
 
-Branch: `plans/ea-w3-4b-names-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. The commit containing this report is the phase-1 delivery; the pushed head SHA is recorded in the external delivery receipt.
+Branch: `plans/ea-w3-4b-names-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Reviewed parent: `b7786180e4b2c5f53440cd3820f0f3ad13cf8bac`. Phase-1 review-round-1 fixes are in `192883fd06bae67013bd243e3ed46f10ee798a1e`; the final report/check receipt commit and pushed head are recorded in the external delivery receipt.
 
 **Outcome:** 32 prepared, 0 merged, 0 excluded, 0 stopped. No Jared question or unresolved retention choice was discovered. Membership is ABSENT for every family; criterion 12 is PARTIAL for every family. This is owner-text and schema preparation, not admission, executable oracle proof, native implementation, or a governance seal.
 
@@ -114,7 +114,7 @@ The newly authored read-only recovery readers have zero durable effects and expl
 
 ## Criterion-12 oracle plan and standing checks
 
-`W3H-oracle-plan.json` contains 32 separate family plans and 5087 planned field/predicate negatives, each with its positive layer and a one-defect/coherence rule. Schema-only negatives exercise payload predicates before source/envelope joins. Runtime negatives use schema-valid inputs and independently trusted original custody, repairing all non-target copies, keys, commitments and post-state. The count is a planning inventory, not executed oracle coverage or a check-11 proof. At phase 2 the actual checker/schema assertion inventory must be complete; compound inventory groups expand into independent field/clause cases.
+`W3H-oracle-plan.json` contains 32 separate family plans and 19359 guard entries (34304 separate planned negative variants), including all 512 publication-state pairs, each with its positive layer and a one-defect/coherence rule. Schema-only negatives exercise payload predicates before source/envelope joins. Runtime negatives use schema-valid inputs and independently trusted original custody, repairing all non-target copies, keys, commitments and post-state. The count is a planning inventory, not executed oracle coverage or a check-11 proof. At phase 2 the actual checker/schema assertion inventory must be complete; compound inventory groups expand into independent field/clause cases.
 
 | Standing defect class | Phase-1 treatment; phase-2 proof obligation |
 |---|---|
@@ -134,7 +134,7 @@ The newly authored read-only recovery readers have zero durable effects and expl
 
 **No executable W3H oracle, mutation proof, or shared-tool adoption is claimed now.** Phase 2 begins only after the lead rebases this branch onto the reviewed number/time and guard-tool foundations. Sol and Astra reviews follow that work. No review was delegated in phase 1.
 
-## Checks and resource discipline
+## Initial drafting checks and resource discipline (before review)
 
 Generators and checkers ran serially on this lane through the memory-aware wrapper. It stops its process below 6 GiB available, samples again every two minutes and resumes at 7 GiB. Initial disk availability was 70 GiB. The ignored currentness edition was copied from the shared checkout; all 15 files matched SHA-256 before index generation. Raw logs, receipts and the copy manifest are under the external W3H draft path; check-log SHA-256 values are in W3H-checks.json.
 
@@ -161,14 +161,14 @@ All original prose prefixes are byte-preserved. New units are appended; original
 |---|---:|---|---|
 | `Plans/Assistant_Plan_Runtime.md` | 2229 | `APR-1550` | 2230–2297 |
 | `Plans/Contracts_V0.md` | 24468 | `CV-1550`, `CV-1551`, `CV-1552`, `CV-1553`, `CV-1554`, `CV-1555`, `CV-1556`, `CV-1557`, `CV-1558`, `CV-1559`, `CV-1560`, `CV-1561`, `CV-1562`, `CV-1563`, `CV-1564`, `CV-1565`, `CV-1566`, `CV-1567`, `CV-1568`, `CV-1569`, `CV-1570`, `CV-1571`, `CV-1572`, `CV-1573`, `CV-1574`, `CV-1575`, `CV-1576`, `CV-1577`, `CV-1578`, `CV-1579`, `CV-1580`, `CV-1581` | 24469–26324 |
-| `Plans/storage-plan.md` | 29476 | `SP-1550`, `SP-1551`, `SP-1552`, `SP-1553`, `SP-1554`, `SP-1555`, `SP-1556`, `SP-1557`, `SP-1558`, `SP-1559`, `SP-1560`, `SP-1561`, `SP-1562`, `SP-1563`, `SP-1564`, `SP-1565`, `SP-1566`, `SP-1567`, `SP-1568`, `SP-1569`, `SP-1570`, `SP-1571`, `SP-1572`, `SP-1573`, `SP-1574`, `SP-1575`, `SP-1576`, `SP-1577`, `SP-1578`, `SP-1579`, `SP-1580`, `SP-1581` | 29477–31652 |
+| `Plans/storage-plan.md` | 29476 | `SP-1550`, `SP-1551`, `SP-1552`, `SP-1553`, `SP-1554`, `SP-1555`, `SP-1556`, `SP-1557`, `SP-1558`, `SP-1559`, `SP-1560`, `SP-1561`, `SP-1562`, `SP-1563`, `SP-1564`, `SP-1565`, `SP-1566`, `SP-1567`, `SP-1568`, `SP-1569`, `SP-1570`, `SP-1571`, `SP-1572`, `SP-1573`, `SP-1574`, `SP-1575`, `SP-1576`, `SP-1577`, `SP-1578`, `SP-1579`, `SP-1580`, `SP-1581` | 29477–31716 |
 | `Plans/Containers_Registry_and_Unraid.md` | 6976 | `CRAU-1551`, `CRAU-1552`, `CRAU-1553`, `CRAU-1554` | 6977–7243 |
 | `Plans/Scheduling_and_Quota_Resume.md` | 2098 | `SQR-1555`, `SQR-1556`, `SQR-1557`, `SQR-1566`, `SQR-1567`, `SQR-1568`, `SQR-1569`, `SQR-1570`, `SQR-1571`, `SQR-1572`, `SQR-1573`, `SQR-1574`, `SQR-1565` | 2099–2983 |
 | `Plans/Goal_Runtime_System.md` | 8355 | `GRS-1558` | 8356–8425 |
 | `Plans/Named_Plan_System.md` | 474 | `NPLAN-1559`, `NPLAN-1560`, `NPLAN-1561`, `NPLAN-1562`, `NPLAN-1563`, `NPLAN-1564` | 475–872 |
 | `Plans/Commands_System.md` | 10720 | `CS-1565` | 10721–10774 |
 | `Plans/ToDo_Runtime.md` | 1020 | `TDR-1575`, `TDR-1576`, `TDR-1577`, `TDR-1578`, `TDR-1579`, `TDR-1580`, `TDR-1581` | 1021–1510 |
-| `Plans/Automated_Testing_System.md` | 7236 | `ATS-1270` | 7237–7353 |
+| `Plans/Automated_Testing_System.md` | 7236 | `ATS-1270` | 7237–7355 |
 | `Plans/storage_value_registry.json` | existing family/profile rows unchanged | 32 `ea_w3h_*_publication` rows; 32 matching `storage_profile.family_profiles` members | Append-only JSON members; no policy object or event admission |
 
 **IDs:** CV-1550..1581; SP-1550..1581; APR-1550; CRAU-1551..1554; SQR-1555..1557 and SQR-1565..1574; GRS-1558; NPLAN-1559..1564; CS-1565 (route only); TDR-1575..1581; ATS-1270. `id-allocation.json` records checks against main and all 527 fetched origin refs before minting, with no collision.
@@ -193,4 +193,78 @@ The wider final ID search covered 532 fetched origin refs and every root canonic
 
 Integration dependencies: carry the exact approved chat-retention policy object; reviewed shared number/time and guard-isolation foundations; implement the individual oracle cases and prove every predicate; Sol then Astra reviews; separate one-family-at-a-time admission commits under the lead’s authorized batch process. Membership remains absent until that later step. Governance staleness needs the separately assigned reseal; this lane does not perform it.
 
-Push only `HEAD:refs/heads/plans/ea-w3-4b-names-20261105`. Remove only the literal `/home/sittingmongoose/pm-worktrees/W3H` worktree after verifying the pushed head. The branch and copied report remain available to the lead.
+Push only `HEAD:refs/heads/plans/ea-w3-4b-names-20261105`. Remove only the literal `/home/sittingmongoose/pm-worktrees/W3H-fix1` worktree after verifying the pushed head. The branch and copied report remain available to the lead.
+
+
+
+## Phase-1 review round 1: findings and responses
+
+Reviewed parent: `b7786180e4b2c5f53440cd3820f0f3ad13cf8bac`. Fix commit: `192883fd06bae67013bd243e3ed46f10ee798a1e`. All three blocking findings are **fixed at the phase-1 contract/schema/plan level**, with no dispute. Independent re-review has not been claimed. There is no oracle implementation or phase-2 guard-removal proof.
+
+- **B1 — fixed (`192883fd06bae67013bd243e3ed46f10ee798a1e`).** All 32 schemas now give stored SP-337 journals an explicit closed physical representation and keep a separate resolved logical EventRecord. The physical body is null and its descriptor contains the existing `payload:v1:{blake3_hex}` route, raw BLAKE3 id, exact uncompressed encoded byte size and actual media type. CV/SP text requires independent pack/index authentication, exact size/media/hash joins, then resolved payload/envelope/source/identity and full-value original receipt verification. The unchanged logical envelope and all 32 resolved payload schemas are preserved. The EventRecord body ceiling and complete redb wrapper ceiling are independently 16 KiB; reference an at-boundary body when wrapper overhead requires it. No size refusal replaces the external route. First locations: `Plans/Contracts_V0.md:24520`, `Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json:374`, `Plans/storage-plan.md:29532`. Verify with `schema-probes-final` and `phase1-static-final`; these materialize the physical schema and logical shape, without claiming native pack issuance or hash execution.
+- **B2 — fixed (`192883fd06bae67013bd243e3ed46f10ee798a1e`).** All 32 canonical non-rebuildable journal rows, their SP tables/cleanup prose and their semantic-owner retention clauses now bind their own approved canonical lifetime. `RP-EVENT-INDEX-SOURCE` and every pre-existing policy object are unchanged. Genuine original pending effects/results, unresolved append/acknowledgement, first receipt, recovery anchors, live references, legal holds and backups fence cleanup; a missing original is restored from genuine mandatory custody or remains unavailable, never rebuilt as an index. First location: `Plans/storage-plan.md:29532`; exact before/after rows are in `p1fix1/schema-probes-result.json#/canonical_retention_cells_changed`. Verify with `final-scope` and the unchanged-policy/prefix checks. The seven approved G20 object references remain an integration dependency, not an unanswered lifetime.
+- **B3 — fixed (`192883fd06bae67013bd243e3ed46f10ee798a1e`).** Every family now has explicit publication schema/field/envelope/receipt and runtime-join plans, physical-key formula and copied-key checks, each copied instance/partition/operation/source join, exact event type, SP-337 route/id/size/media/durability/body/wrapper limits, actual append/group custody and final-release gates. Missing first receipt and missing full-value commitment each have their own appended/settled negative with the other value valid. Every family lists all sixteen absent/prepared/appended/settled pairs, with valid destination shape/custody and exact expected predecessor CAS for each illegal edge. Positives cover atomic preparation, appended/settled release, all crash cuts, identical retries, retained reads, writer withdrawal with pending originals, reader withdrawal, and authorized cleanup. Plans identify selected schema, byte-authentication, transition and runtime layers, repair every non-target copy/key/commitment/post-state and keep independent issuance intact. `Plans/Automated_Testing_System.md:7355` and `W3H-oracle-plan.json` are the owners. Verify static inventory and exact state-pair uniqueness with `schema-probes-final`/`final-scope`; execution remains phase 2.
+
+### Retention cells changed
+
+| Cells | Approved group | Canonical journal policy after fix | Status |
+|---|---|---|---|
+| 14 | G18 Scheduling/quota/pause/Plan invalidation | `RP-AUTHORITY-INDEFINITE@1.0.0` | Normative PASS |
+| 6 | G19 Named Plans | `RP-AUTHORITY-INDEFINITE@1.0.0` | Normative PASS |
+| 4 | G21 Compose scenarios | `RP-AUTHORITY-INDEFINITE@1.0.0` | Normative PASS |
+| 1 | G29 Goal continuation | `RP-GOAL-THREAD-LIFETIME@1.0.0`, no count cap | Normative PASS |
+| 7 | G20 ToDo | `RP-CHAT-THREAD-LIFETIME@1.0.0` | PARTIAL until approved policy object is integrated |
+
+All 32 replace `RP-EVENT-INDEX-SOURCE`. The original answer and presented deck’s Keep/Chat legend still decide these populations; the G20 object was also read directly at `2663667e14346235daaa561d193e959422640b6e`, with its 250,000/thread linked-successor rule. No policy object, lifetime, deletion choice, registry admission or Decision Log entry was invented. **PENDING_RETENTION_DECISION rows: none. Exact new Jared questions: none.**
+
+### Re-grade, oracle additions and check 11
+
+All 32 families were re-graded. The review-confirmed B1/B2 defects imply a pre-fix full-lane baseline of 256 PASS, 96 PARTIAL and 32 ABSENT (the reviewer independently sampled 15; this derived baseline does not claim a 32-row review). After repair: **313 PASS, 39 PARTIAL, 32 ABSENT**, exactly the intended normative phase-1 distribution. C3 is normative PASS for 32; C7 is normative PASS for 25 and PARTIAL for seven G20 integration cells. C1 remains ABSENT and C12 remains PARTIAL for all 32; native execution is NOT_RUN. The prior author overgrades are not used as evidence that the old head passed.
+
+The revised inventory has 19359 guard entries and 34304 separate planned negative variants, with 512 state pairs. No count is executed runtime coverage. Every primitive-domain variant is its own one-defect case. Existing source/family/payload plans remain; wrapper plans are additional. Whole-keyword cuts, unrelated predicate unions and stale-copy negatives are prohibited.
+
+| Planned proof layer | Negatives that must flip under the exact target cut | Peers that must still reject | Phase-1 result |
+|---|---|---|---|
+| Selected schema predicate | Only this field/type/domain/presence/closure variant | Other field predicates and other receipt/commitment presence cases | PLANNED_NOT_RUN |
+| Descriptor/pack-byte authentication | Only its route/id, BLAKE3, exact-size, media or durability predicate | Other independently valid descriptor predicates | PLANNED_NOT_RUN |
+| Runtime original/copy join | Only its copied key/instance/partition/operation/source/envelope/receipt relationship | Every other source/copy/identity/receipt/commitment predicate | PLANNED_NOT_RUN |
+| Publication transition | Only the selected illegal predecessor→successor edge | Destination shape, real prior-value CAS and all other state edges | PLANNED_NOT_RUN |
+| Canonical cleanup/custody/final release | Only its individually missing dependency or changed live gate | Every other dependency/gate and all historical-reader boundaries | PLANNED_NOT_RUN |
+
+This is the required phase-1 plan for the whole lane, not a guard-removal result. The explicit wave-3 two-phase scope defers executable oracles and the actual shared-tool table until the lead supplies the reviewed number/time and guard-isolation foundations. Shared-rule number domains, historical recipe selection and format enforcement remain sweep items; no lane-local cap, serializer, timestamp grammar or proof engine was added.
+
+### Final checks and resource discipline
+
+Generators and checkers ran one at a time for this lane. Setup verified Nas1, fetched origin, checked 476 GB free root space and 8 GB available memory before creating the sparse detached worktree. The exact ignored currentness edition’s 15 files matched SHA-256 before index generation. The memory guard paused below 6 GB, sampled every two minutes and resumed only at 7 GB; receipts retain every pause. The two VM-local memory note files named by the shared brief are absent on Nas1; the brief’s ID/currentness instructions were followed directly and no new ID was minted.
+
+| Check | Exit | Result |
+|---|---:|---|
+| `phase1-static-final` | 0 | PASS |
+| `schema-probes-final` | 0 | 162 inline + 162 external journal shapes; 324 resolved logical shapes; 972 bad physical shapes, 432 missing receipt/commitment cases and 108 foreign families rejected |
+| `shards-generate-final` | 0 | PASS |
+| `index-generate-final` | 0 | PASS |
+| `shards-check-final` | 0 | PASS |
+| `index-validate-final` | 0 | Parsed top-level status=pass, failures=[]; runtime certification still blocked |
+| `storage-profile-final` | 1 | 41 errors, exactly the original missing-profile baseline; no W3H profile gap |
+| `named-plan-semantics-final` | 0 | 14 existing tests passed |
+| `assistant-contract-final` | 1 | Unchanged baseline Browser admission gaps; errors=[]; no new structural failure |
+| `post-plan-static` | 0 | PASS |
+| `final-scope` | 0 | PASS |
+| `diff-check` | 0 | PASS |
+
+The profile check’s 41 exact error strings equal the original baseline. The Assistant checker’s structural errors are empty and its Browser admission gaps are unchanged; both nonzero exits stay nonzero. Top-level index validation passed, while native/runtime certification stays blocked as expected. No full landing/governance check or reseal was run.
+
+The first scratch scope-audit attempt returned 1 because its baseline comparison still included nested reference-source hashes. Inspection found only the nine edited owner hashes changed. The final audit authenticates every old hash against the pinned Git blob and every new hash against the current file, then compares all substantive results unchanged; it returns 0. `p1fix1/scope-audit-first-attempt.json` and `p1fix1/assistant-baseline-comparison.json` retain the distinction. No product checker or product guard was changed.
+
+The first 8,355 Goal lines remain byte-identical; only **GRS-1558** changed. Its one-original-per-continuation-tuple wording now explicitly preserves GRS-050 and forbids reminting the same tuple after a state change. No DG unit is edited. Regenerated Goal shards can carry the changed owner-document source hash; that metadata does not change another unit’s canonical body. No PlanUnit ID was added, removed or reassigned: the original CV/SP-1550..1581 and semantic units plus ATS-1270 remain the IDs used.
+
+All pre-lane owner prefixes, existing Storage family rows/profiles/policy objects, logical EventRecord and all resolved payload definitions are preserved. Changed shards belong only to edited owner/registry sources; indexes are regenerated. No event-family append, admission, Decision Log, Spec Lock, evidence bundle, application/oracle code, test file, pm-mail or subagent work occurred. Only the named lane branch is pushed. The literal fix worktree is removed after verified push.
+
+**Stopped cells: none.** Remaining integration work: carry the approved G20 policy object; reviewed shared foundations; implement/prove phase-2 oracles; independent reviews and the lead’s later admission process. Those are not claimed complete here.
+
+Evidence custody (absolute path and SHA-256):
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/p1fix1/schema-probes-result.json` — SHA-256 `3e5e951ad587565dd3e2e7f7b371a8824a6d01da574460bf87cc3321f59b6f1b`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/p1fix1/final-scope-result.json` — SHA-256 `dd979b6d47ce15f5933fe2f2e57893004be1caf1686207f5c22ba1a0dfef0484`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/p1fix1/currentness-copy-sha256.json` — SHA-256 `eaa91ddf784ccf60e7f54e56dee4dd763db8c2bdb076fd563349fddcea4e4fd9`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3H/W3H-checks.json` — SHA-256 `d2a277fcbe654d22f515abc76d3a52b6fe9248b86188ace30f9113836024fa9c`.
