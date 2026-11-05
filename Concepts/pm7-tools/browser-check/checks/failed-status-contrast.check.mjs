@@ -1,5 +1,6 @@
 // FO-68/74: real failure routes, every requested look/size, painted ink and non-overlapping recovery.
 import {paintedText,paintedBody} from '../helpers/painted-text.mjs';
+import {decodePng} from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
 const SIZES=[[740,900],[860,900],[1024,900],[1280,900],[1280,500],[1390,900],[1920,900]];
 const REASONS=['permission','offline','unsupported','verify','expired','signin','signinOffline','connection','installed'];
@@ -59,6 +60,28 @@ async function scrollRange(el){
  return {scroller,range};
 }
 
+// The native ring must paint after focus and scroll restoration. Only the outline is
+// hidden for the middle paint; count stable changed pixels in its band outside the button.
+async function paintedFocus(row,action){
+ const r=await row.boundingBox(),b=await action.boundingBox();
+ const saved=await action.getAttribute('style');
+ const pad=await action.evaluate(e=>{const s=getComputedStyle(e);return parseFloat(s.outlineWidth)+Math.max(0,parseFloat(s.outlineOffset))+1;});
+ const before=decodePng(await row.screenshot());let ground;
+ try{await action.evaluate(e=>e.style.setProperty('outline-color','transparent','important'));ground=decodePng(await row.screenshot());}
+ finally{await action.evaluate((e,s)=>s===null?e.removeAttribute('style'):e.setAttribute('style',s),saved);}
+ const after=decodePng(await row.screenshot());
+ if([ground,after].some(p=>p.width!==before.width||p.height!==before.height))return 0;
+ const sx=before.width/r.width,sy=before.height/r.height;let count=0;
+ for(let y=0;y<before.height;y++)for(let x=0;x<before.width;x++){
+  const px=r.x+x/sx,py=r.y+y/sy;
+  if(px<b.x-pad||px>b.x+b.width+pad||py<b.y-pad||py>b.y+b.height+pad)continue;
+  if(px>=b.x&&px<=b.x+b.width&&py>=b.y&&py<=b.y+b.height)continue;
+  const i=(y*before.width+x)*4;
+  if([0,1,2].every(j=>Math.abs(before.data[i+j]-after.data[i+j])<=8)&&[0,1,2].some(j=>Math.abs(before.data[i+j]-ground.data[i+j])>=24&&Math.abs(after.data[i+j]-ground.data[i+j])>=24))count++;
+ }
+ return count;
+}
+
 export default async function(t){
  const f=await t.app.open();
  // Reduce Motion by default (the kit's rule), set here explicitly; --set motion=on measures with motion on
@@ -106,6 +129,8 @@ export default async function(t){
       if(state==='focus'){
        const action=row.locator('.o55-row > button:not(.o55-tipq)');
        await t.visible(action, 'focused recovery action remains visible');
+       const ring=await paintedFocus(row.locator('.o55-row'),action);
+       await t.check(`${route} ${code} ${look} ${w}x${h} restored keyboard focus ring paints`,ring>=8,`${ring} native ring pixels`);
        await t.check('restored action keeps visible keyboard focus',await action.evaluate(e=>{const s=getComputedStyle(e);return e.matches(':focus-visible')&&parseFloat(s.outlineWidth)>0&&s.outlineStyle!=='none';}));
       }
       const boxes=await row.evaluate(e=>{
