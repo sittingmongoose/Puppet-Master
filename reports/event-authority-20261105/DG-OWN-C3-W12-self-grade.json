@@ -1,0 +1,1307 @@
+{
+  "schema_version": "1.0.0",
+  "assessment_scope": "C3-W12 prerequisite stop; neither family fully prepared",
+  "base_commit": "e1188eae0c5fa5cf0a8548d9dba76f6f0de8c437",
+  "branch": "plans/ea-goal-own-c3-w12-20261105",
+  "native_execution": "NOT_RUN",
+  "new_admission": false,
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "rows": [
+    {
+      "event_type": "goal.cancelled",
+      "family_id": "event-family-goal-cancelled",
+      "family_revision": "3.0.0",
+      "disposition": "CURRENT_WRITER",
+      "drafted_by_lane_dg": true,
+      "pass_count": 10,
+      "prior_pass_count_d1a": 9,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Row event-family-goal-cancelled at 3.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_cancelled.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+              "unit": "root",
+              "line_start": 86,
+              "line_end": 86,
+              "quote": "\"$id\": \"pm.goal_runtime_event.goal_cancelled.schema.v3\",",
+              "excerpt_sha256": "aa656a0f63604658822f31df25850c6080fc22ff278d89f6dab346667b66a0cf",
+              "file_sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+              "unit": "root/properties/schema_version",
+              "line_start": 27,
+              "line_end": 27,
+              "quote": "\"const\": \"3.0.0\"",
+              "excerpt_sha256": "0a976b427a647ac5225ad42d3e531f994e2944b31653c07c042f7e18cb44562d",
+              "file_sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-347",
+              "line_start": 22978,
+              "line_end": 22978,
+              "quote": "Exactly one existing registry row changes to current v3; whole old v2 schema and every other row remain exact.",
+              "excerpt_sha256": "8a08be1f8a5727f85348e2253cb12387d35033d10e1b28c86e5fe948bc9d8473",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\"",
+              "excerpt_sha256": "e360901f796b4e18c793472a36771e1d493eafa36618a100ae22cd003bd6f4ea",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "semantic_owner_doc is the GRS-073 PlanUnit (current explicit Goal cancellation) and payload_owner_doc the SP-304 PlanUnit (original cancellation stages and custody); both govern v3. The payload-minima row also routes active v3 to GRS-073.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/7",
+              "line_start": 495,
+              "line_end": 495,
+              "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#GRS-073\",",
+              "excerpt_sha256": "68a4df1637feb9a1976abe6628b20247312521df9157a3f898ef0f64572475a1",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/7",
+              "line_start": 496,
+              "line_end": 496,
+              "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#SP-304\",",
+              "excerpt_sha256": "d6ad8c70f233abd0affd566513538908dbac5c6df5c6dfaa51d4e51145764fbc",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-073",
+              "line_start": 7018,
+              "line_end": 7018,
+              "quote": "publishes a content-free minimal receipt and current",
+              "excerpt_sha256": "b48a77b3b55e0c2795e2f4dcacc51f60cb954fccc14ddd53fe2288e4ffde95f9",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-304",
+              "line_start": 25291,
+              "line_end": 25291,
+              "quote": "Own the seven new canonical cancellation/Stop/audit families",
+              "excerpt_sha256": "e307c92d27f894f692cb9fb581d2841ed0c2a37f4ea4d6275413c0c1060cb282",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Sole cmd.chat.goal.cancel handler (GRS-073). SP-304 orders C-source, C-stop, C-receipt, C-owners, C-event (frozen ProducerInput), one append with SP-278/SP-286 first receipt and full value mandatory, C-publish, then SIR-050 terminal. Bound-Plan (GRS-076) and Workflow (GRS-078 late assignment, append 'performs the real SP-278/SP-286 append') profiles are explicit.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Owner disposition and exact command (GRS-073)",
+              "line_start": 7083,
+              "line_end": 7083,
+              "quote": "The existing sole cmd.chat.goal.cancel / handlers::goal_runtime::goal_cancel gains exact GoalCancelRequestV2 and GoalCancelResultV2 definitions",
+              "excerpt_sha256": "980f4fd50f11b9c86211e428095d68f49e71f348c22448cb5a266c32a47d3b9b",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Original operation stages (SP-304)",
+              "line_start": 25359,
+              "line_end": 25359,
+              "quote": "C-event freezes ProducerInput from the actual original minimal receipt, SourceAudit and independently authenticated owners_settled progress",
+              "excerpt_sha256": "b150f907e1eaee051a5159dc9ba902b6c6bfaef6fc77b02ff13043629569932e",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Original operation stages (SP-304)",
+              "line_start": 25361,
+              "line_end": 25361,
+              "quote": "SP-278 original full-value and SP-286 genuine eleven-field first AppendReceipt, original append result and independently authenticated original full EventRecord commitment all remain mandatory.",
+              "excerpt_sha256": "63538be91954ff083a5116702d2011243c9193bae2f461aeda0f9346387eb130",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-304",
+              "line_start": 25298,
+              "line_end": 25298,
+              "quote": "- SP-286",
+              "excerpt_sha256": "95383e35fe06f04f82484c84bad4d604537183e910948a591cb5d8737a899d69",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Active v3 root is closed with sixteen content-free fields, schema_id/schema_version consts and cancel_reason const user_cancelled; no settlement lists or cancelled state. Whole v2 is kept only at #/legacy_v2_reader, and D-R02 is declared historical-only, resolving the old retired-structure conflict.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+              "unit": "root",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"additionalProperties\": false,",
+              "excerpt_sha256": "160526e09779b6c4891597c162e685a433c13504fabe77e83b41d2090301cf45",
+              "file_sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+              "unit": "root/properties/cancel_reason",
+              "line_start": 62,
+              "line_end": 62,
+              "quote": "\"const\": \"user_cancelled\"",
+              "excerpt_sha256": "39945632ddee3caa76ccaf6a0c799658d2e247e9b77bde0293f5d585e603a601",
+              "file_sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+              "unit": "root",
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "\"legacy_v2_reader\": {",
+              "excerpt_sha256": "a5df703e685e120224d71f543fdb34206a9940ab5c3ec29c04fd8df2f6cee9a1",
+              "file_sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "EA-UND-0002-GOAL (D-R02)",
+              "line_start": 3732,
+              "line_end": 3732,
+              "quote": "This exact D-R02 branch is whole historical v2 interpretation only. Current `goal.cancelled` follows GRS-073/CV-347",
+              "excerpt_sha256": "ecedfc46eaaae660aaa8e70306b70105bc56f3c0c35f361e8bb987868f3abde5",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-422 derives D at C-source; event ID goal.cancelled.v1:{D}, key goal.cancelled.command.v1:{D}; payload operation_id/cancellation_id/command_instance_id join; late assignment changes only sequence_id.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-422",
+              "line_start": 25473,
+              "line_end": 25473,
+              "quote": "Event ID is goal.cancelled.v1:{D}; event idempotency key is goal.cancelled.command.v1:{D}.",
+              "excerpt_sha256": "169160441ede7768d1074bef5277fe531a349cd051f4aee5afdb963ad5c0f123",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Duplicate identity replays only the immutable original and altered requests conflict; lost acknowledgement is event_unknown resolved only from original shared append custody, never by minting a replacement; SIR replay returns the immutable original with CV-333 decoration and never re-calls the handler, relatches Stop or emits another event.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-073",
+              "line_start": 7039,
+              "line_end": 7039,
+              "quote": "Complete duplicate identity replays only the immutable original; altered request under that identity conflicts.",
+              "excerpt_sha256": "5e958582aa61829bad02a0915f62c050433e08525c429dea58179f538bb93e29",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Original operation stages (SP-304)",
+              "line_start": 25361,
+              "line_end": 25361,
+              "quote": "A lost acknowledgement is event_unknown.",
+              "excerpt_sha256": "63538be91954ff083a5116702d2011243c9193bae2f461aeda0f9346387eb130",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Original operation stages (SP-304)",
+              "line_start": 25361,
+              "line_end": 25361,
+              "quote": "absence, time or an equal payload cannot prove no event or mint a replacement",
+              "excerpt_sha256": "63538be91954ff083a5116702d2011243c9193bae2f461aeda0f9346387eb130",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Current, audit, replay and event consumers (GRS-073)",
+              "line_start": 7109,
+              "line_end": 7109,
+              "quote": "It does not call the cancellation handler, relatch Stop, issue another receipt/event/control mutation or change terminal unknown to success.",
+              "excerpt_sha256": "6760ce3fd28c07321f5a7ca6fa52a601f40275b5c520a1e5af358d8dceacff73",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0, unchanged by CV-347; SP-304 assigns its seven new families to RP-AUTHORITY-INDEFINITE except host Stop control (RP-GOAL-THREAD-LIFETIME). The inspector owns no durable checkpoint or projection, so no further policy is needed.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/7",
+              "line_start": 528,
+              "line_end": 528,
+              "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+              "excerpt_sha256": "70500814c94f64578c8eeff1bc58d55590f9e4f1041fbfb662e1c1184598e278",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-347 prose",
+              "line_start": 23017,
+              "line_end": 23017,
+              "quote": "This existing event changes revision, not family count, aliases, EventRecord envelope, legacy joins or indefinite event retention.",
+              "excerpt_sha256": "5c8b711ea31d5dae56fb3c3427dc0407dd83c8c4f94e1a3bbb4c62c8e9478f59",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Exact physical and digest contract (SP-304)",
+              "line_start": 25396,
+              "line_end": 25396,
+              "quote": "| goal_host_stop_control | goal_host_stop_control:G | StorageStopControl | RP-GOAL-THREAD-LIFETIME |",
+              "excerpt_sha256": "34686e45b42a37400b90dfa9b64432c8ffca7bb30006367c5a7d09a3b5d5bed0",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Effects and checkpoints (SP-304)",
+              "line_start": 25453,
+              "line_end": 25453,
+              "quote": "produce no durable effect and need no checkpoint",
+              "excerpt_sha256": "91bb2352677c2a72aff41b683ed0c9f754a2e9acfa6f1db8552c8e7c254c5507",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Registry rejects unhandled secrets; SP-304 retains only redacted owner-issued identifiers, backs up the full Stop/control/body/history unit plus every source/progress/receipt/terminal and shared event custody, restores with tombstones first; the audit reader needs current app/Project audit permission and original install/backup guards.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/7",
+              "line_start": 516,
+              "line_end": 516,
+              "quote": "\"mode\": \"reject_unhandled_secrets\",",
+              "excerpt_sha256": "98884d293bba5a777b13982b165eb6be0e7acc8b1e165b123495fb125c48785d",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Lifetime and original backup (SP-304)",
+              "line_start": 25433,
+              "line_end": 25433,
+              "quote": "All retained string refs/IDs are actual owner-issued redacted identifiers, never raw user text",
+              "excerpt_sha256": "236ddeb573e9472544ee69e96d2e575f4b64c68fae73542f18a42db2dedd1957",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Lifetime and original backup (SP-304)",
+              "line_start": 25437,
+              "line_end": 25437,
+              "quote": "Backup capture includes the actual complete stop/control/body/history/origin unit while retained",
+              "excerpt_sha256": "9c7151f8a270ad597f517a360ea3533c87de34dddedda820c840fab0f9af82d3",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Lifetime and original backup (SP-304)",
+              "line_start": 25437,
+              "line_end": 25437,
+              "quote": "applies current tombstones before content release",
+              "excerpt_sha256": "9c7151f8a270ad597f517a360ea3533c87de34dddedda820c840fab0f9af82d3",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Cancel accepts only active/paused/blocked; completed or already cancelled refuse. Cancellation keeps the four-state body and revision, latches host Stop first (C-stop), then minimal receipt, owner settlement, event and control marker removal; no fifth state. D-R02's cancelled-state edge is historical-only.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-073",
+              "line_start": 7037,
+              "line_end": 7037,
+              "quote": "Cancel accepts only active/paused/blocked with actual original user/SIR acceptance; completed and previously",
+              "excerpt_sha256": "2a86e606e107fd6adab276e5617d6a8861f5c54fa18050d5be1a56410468bdbb",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Original operation stages (SP-304)",
+              "line_start": 25363,
+              "line_end": 25363,
+              "quote": "Atomically set control.cancellation_receipt_ref to the actual minimal receipt, clear only cancellation_pending",
+              "excerpt_sha256": "e26c81f24708162449ec219f9489b662e0fd16e1cfe374786dae2259cabad0e4",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "EA-UND-0002-GOAL (D-R02)",
+              "line_start": 3732,
+              "line_end": 3732,
+              "quote": "no current fifth state or Goal-owned child/tool settlement is admitted",
+              "excerpt_sha256": "ecedfc46eaaae660aaa8e70306b70105bc56f3c0c35f361e8bb987868f3abde5",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-073",
+              "line_start": 7018,
+              "line_end": 7018,
+              "quote": "the actual host Stop before cancellation effects, publishes a content-free minimal receipt",
+              "excerpt_sha256": "b48a77b3b55e0c2795e2f4dcacc51f60cb954fccc14ddd53fe2288e4ffde95f9",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Activity reads canonical control, not events. storage.goal_cancelled.inspect_current.v1 is a passive single-member SP-278 consumer taking the ten-field read_token as request input (not stored); Workflow V3 operations use GRS-081/SP-313 inspect_current_event.v2. SP-304 assigns no durable effect or checkpoint by explicit owner assignment and refuses SP-214's old projectors.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Current, audit, replay and event consumers (GRS-073)",
+              "line_start": 7105,
+              "line_end": 7105,
+              "quote": "Current Activity is the existing canonical Goal/body-control view, not an event-built state.",
+              "excerpt_sha256": "39b3ddbd2d1e4e5f2ca0cd7d37f0c16703d9bee8b17538e4f66a860f877dc2bd",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Exact current event inspection (SP-304)",
+              "line_start": 25441,
+              "line_end": 25441,
+              "quote": "NEW storage.goal_cancelled.inspect_current.v1 is a passive single-member SP-278 consumer",
+              "excerpt_sha256": "583acc03be064d7a27ae5e68a9291317e3719ddf2ef6b7f3952207ac4dce4888",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Exact current event inspection (SP-304)",
+              "line_start": 25441,
+              "line_end": 25441,
+              "quote": "owner.goal.workflow_cancel.inspect_current_event.v2",
+              "excerpt_sha256": "583acc03be064d7a27ae5e68a9291317e3719ddf2ef6b7f3952207ac4dce4888",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Effects and checkpoints (SP-304)",
+              "line_start": 25453,
+              "line_end": 25453,
+              "quote": "by explicit owner assignment for this passive current/historical observation only",
+              "excerpt_sha256": "91bb2352677c2a72aff41b683ed0c9f754a2e9acfa6f1db8552c8e7c254c5507",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "compatibility_withdrawal": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1131/CV-1131/APR-1130/SQR-1130/SIR-1131 newly define M1-M9 complete-owner preservation, original Stop/pending mapping, atomic result and separate immutable withdrawal. The executable actual old-representation resolver/mapping bank and complete original source-image/transaction witnesses remain incomplete, so compatibility stays PARTIAL.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-423",
+              "line_start": 25536,
+              "line_end": 25536,
+              "quote": "Writer cutoff: when the StorageMigrationCoordinator withdraws the cancellation mutation role",
+              "excerpt_sha256": "a3d1238b9ff2663ccdc7f4243a23440b9ce82c3cad2fc287d98b6f3c7bf45f50",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-423",
+              "line_start": 25592,
+              "line_end": 25592,
+              "quote": "SP-305 keeps their mapping as a separate technical source-migration dependency.",
+              "excerpt_sha256": "e632348449ad3156e71434d5027bfa88d314bc57fa8c1211558d9748b4e5fee3",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "M6",
+              "line_start": 35,
+              "line_end": 35,
+              "quote": "An unknown or partially effective operation",
+              "excerpt_sha256": "e475182e869ecd5fc163f3e15e7993bd307e1aa662a481b617f95e64830fe512",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Part 2 adds bounded source/storage witnesses for Goal update/cancellation; it does not instantiate this family's complete original current producer/consumer tuple corpus. Whole-path closure remains PARTIAL; no upgrade follows from native NOT_RUN or component passes.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-210",
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "goal.cancelled: v3 payload cases, SP-422 identity vectors",
+              "excerpt_sha256": "eac9634bcf0563654d0bd02a8ffc3f26a93142d6236ff5cb082df79a2acd7d7a",
+              "file_sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Common complete-path fixture and guard rules",
+              "line_start": 79,
+              "line_end": 79,
+              "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
+              "excerpt_sha256": "b76b48f7ea15468b77c18eef1af0220222cfbc15c656dbf82bcb26bd5a5ffc87",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 94,
+              "line_end": 94,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "63696835820fb237f3f7df0807ded752cb23f8a48cdea5ad555f2a602571c245",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        }
+      },
+      "remaining_gaps": [
+        "O7: complete inherited original source/method-root fixtures and every own boundary remain incomplete; the new adapter is bounded.",
+        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
+        "O5: instantiate complete actual old-source schema realms/mapping/manifest/transaction witnesses without inferring absent-as-empty.",
+        "Part 2 did not finish the requested whole original W1-W5/native source corpus; see the exact family closure table in DG-OWN-C.md."
+      ],
+      "normative_depth_complete": false,
+      "disposition_evidence": [
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "unit": "Owner disposition and exact command (GRS-073)",
+          "line_start": 7083,
+          "line_end": 7083,
+          "quote": "The existing sole cmd.chat.goal.cancel / handlers::goal_runtime::goal_cancel gains exact GoalCancelRequestV2 and GoalCancelResultV2 definitions",
+          "excerpt_sha256": "980f4fd50f11b9c86211e428095d68f49e71f348c22448cb5a266c32a47d3b9b",
+          "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+          "quote_check": "exact"
+        }
+      ],
+      "static_checks_seen": [
+        "scripts/pm_goal_current_writer_oracles.py",
+        "scripts/pm_goal_own_c_oracles.py",
+        "python3 scripts/pm_goal_own_c_source_oracles.py (component coverage only)"
+      ],
+      "whole_root_closure": "BLOCKED_ORIGINAL_INPUTS",
+      "prior_pass_count_c3": 10
+    },
+    {
+      "event_type": "goal.updated",
+      "family_id": "event-family-goal-updated",
+      "family_revision": "3.0.0",
+      "disposition": "CURRENT_WRITER",
+      "drafted_by_lane_dg": true,
+      "pass_count": 10,
+      "prior_pass_count_d1a": 9,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Row event-family-goal-updated at 3.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_updated.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+              "unit": "root",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "\"$id\": \"pm.goal_runtime_event.goal_updated.schema.v3\",",
+              "excerpt_sha256": "96772560416209adebf8d3e4f83b0cdb68509f4a78269611dc59169424d0f6ca",
+              "file_sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "Original Goal update command and event shapes (CV-342)",
+              "line_start": 22558,
+              "line_end": 22558,
+              "quote": "Existing `event-family-goal-updated` alone advances to revision 3.0.0 / `pm.goal_runtime_event.goal_updated.schema.v3`.",
+              "excerpt_sha256": "149f05c8c0f19750196486705cf38ced1e675f5aa0d49d2baa3c61ab76e5604f",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Goal V2 events",
+              "line_start": 272,
+              "line_end": 272,
+              "quote": "`goal.updated` only through CV-342/SP-299",
+              "excerpt_sha256": "041d0cbd36823d16e25c384652174104e98849cde5f665dcc6265cc352baf870",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\"",
+              "excerpt_sha256": "e360901f796b4e18c793472a36771e1d493eafa36618a100ae22cd003bd6f4ea",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "semantic_owner_doc resolves to the explicit anchor for 'Original Goal objective update acceptance and settlement' (GRS-068 prose); payload_owner_doc resolves to the explicit storage anchor for 'Original Goal update source, physical custody and publication' (SP-299). Both govern active v3.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 1246,
+              "line_end": 1246,
+              "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#original-goal-objective-update-acceptance-and-settlement\",",
+              "excerpt_sha256": "f18bc2a4f5d6d858194e2222e73ff5b3ac45615259813b5bc4b26954f08a9275",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 1247,
+              "line_end": 1247,
+              "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#goal-update-original-command-custody-and-publication\",",
+              "excerpt_sha256": "232b2d7efbee0b02bfc5639a386a59197f7f43fbb122ab512fbba200d076d71e",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "anchor original-goal-objective-update-acceptance-and-settlement",
+              "line_start": 6513,
+              "line_end": 6513,
+              "quote": "GRS-068 adopts active `goal.updated` v3 for the existing complete objective replacement command.",
+              "excerpt_sha256": "1bdbb9fe58f94312c89b275a3929b6720b37299eab62e5d7953214fe9c5a6f16",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "anchor goal-update-original-command-custody-and-publication (SP-299)",
+              "line_start": 24516,
+              "line_end": 24516,
+              "quote": "SP-299 adopts the existing `cmd.chat.goal.update` through GRS-068, SIR-049 and CV-342.",
+              "excerpt_sha256": "1a76038409c0a4b39756bd38b85ed9c04a2a6c1f387f40dcc16091a185b44237",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "HITL-1130/PS-1130/SIR-1130/SP-1130/CV-1130 newly define U1-U7 provider and explicit proposal request/result route. Direct Save remains exact. Full provider original source-realm acquisition, actual mutation-side joins and complete source-shaped oracle corpus remain incomplete; a transport/schema-shaped source is not authority.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299 section",
+              "line_start": 24516,
+              "line_end": 24516,
+              "quote": "The sole body writer remains SP-287's `owner.goal.body.mutation@1.0.0`",
+              "excerpt_sha256": "1a76038409c0a4b39756bd38b85ed9c04a2a6c1f387f40dcc16091a185b44237",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6524,
+              "line_end": 6524,
+              "quote": "SP-299 defines the complete original source \u2192 reservation \u2192 body commit \u2192 frozen event input \u2192 shared first publication \u2192 SIR terminal sequence.",
+              "excerpt_sha256": "06216ca0ce330517b9f86e63403542727d9990800bae032d3f735efda2b5d0d3",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299 section, step 5",
+              "line_start": 24551,
+              "line_end": 24551,
+              "quote": "Retain the genuine first AppendReceipt, original append result and independently captured full original EventRecord value commitment.",
+              "excerpt_sha256": "a98c6dbe6f3ac57b918bd54a42adae286512cb4322fb577b92c97716f8080ede",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299",
+              "line_start": 24658,
+              "line_end": 24658,
+              "quote": "- SP-286",
+              "excerpt_sha256": "95383e35fe06f04f82484c84bad4d604537183e910948a591cb5d8737a899d69",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "U4",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "U4. `owner.hitl.goal_update.read_resolution.v1` resolves the actual request AND resolution from original owner custody",
+              "excerpt_sha256": "970911664c08dc49548591785e97812808544b3dd316ce55725c428c68437bf6",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Active v3 root is closed with eighteen content-free fields, two-value change_source and direct-save null rules; whole v2 lives only under legacy_v2_reader. GRS-068 supersedes D-R14 and the delta/child/budget minima for current writes, so the old retired-structure conflict is resolved.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+              "unit": "root",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"additionalProperties\": false,",
+              "excerpt_sha256": "160526e09779b6c4891597c162e685a433c13504fabe77e83b41d2090301cf45",
+              "file_sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+              "unit": "root/$defs",
+              "line_start": 187,
+              "line_end": 187,
+              "quote": "\"legacy_v2_reader\": {",
+              "excerpt_sha256": "32f2ce59c01976e63e5db0d77e44f0dbe32b97153968dcd124378756c69cb517",
+              "file_sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6513,
+              "line_end": 6513,
+              "quote": "It supersedes current-write interpretation of D-R14, the old delta/child/budget minima and their common-v2 envelope assumptions only for this exact family.",
+              "excerpt_sha256": "1bdbb9fe58f94312c89b275a3929b6720b37299eab62e5d7953214fe9c5a6f16",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "EA-UND-0014-GOAL (D-R14)",
+              "line_start": 3838,
+              "line_end": 3838,
+              "quote": "The following D-R14 bullets retain whole-v2 historical validation only.",
+              "excerpt_sha256": "bd45add2775f7026c9e2b0841979fc9a340293611e25cf4c4d655b039d48da7a",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-421 derives D over the admitted SourceAudit; event ID goal.updated.v1:{D}, event idempotency key goal.updated.command.v1:{D}; ProducerMetadata and ProducerInput carry them; CV-342 routes.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-421",
+              "line_start": 24732,
+              "line_end": 24732,
+              "quote": "Event ID is goal.updated.v1:{D}; event idempotency key is goal.updated.command.v1:{D}.",
+              "excerpt_sha256": "887ff857cbb343a20cf58ea4b853932db0aeedcd3f7e06008be55adafb1b11b2",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-342 amendment",
+              "line_start": 22642,
+              "line_end": 22642,
+              "quote": "ProducerMetadata.event_id and idempotency_key take the values SP-421 derives.",
+              "excerpt_sha256": "3c9df538261b0bf3f428c4f65bf3768bb4181197cbc0623c5baa3fd6030efd1f",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Operation identity dedupes source custody; event identity is frozen at U0 with dedupe_by_idempotency_key; lost acknowledgement becomes event_unknown resolved only from original append custody, never fresh IDs; terminal replay returns the original result with CV-333 decoration and no body/event/result write; recovery never creates a second revision or event.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Immutable unknown, retries and command/result joins (SP-299)",
+              "line_start": 24560,
+              "line_end": 24560,
+              "quote": "Duplicate original request/operation identity resolves original source custody.",
+              "excerpt_sha256": "e48fbd1e5fc4841a3e9bd18d47da42a6bd93abfe1aadac8e134a27a93045c9cc",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Immutable unknown, retries and command/result joins (SP-299)",
+              "line_start": 24560,
+              "line_end": 24560,
+              "quote": "Once terminal audit exists, replay returns the exact original result/outcome/response with central replay decoration only; no body, event, result or original terminal write is allowed.",
+              "excerpt_sha256": "e48fbd1e5fc4841a3e9bd18d47da42a6bd93abfe1aadac8e134a27a93045c9cc",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299 section, step 5",
+              "line_start": 24551,
+              "line_end": 24551,
+              "quote": "A lost acknowledgement yields event_unknown.",
+              "excerpt_sha256": "a98c6dbe6f3ac57b918bd54a42adae286512cb4322fb577b92c97716f8080ede",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_update_command_custody.schema.json",
+              "unit": "$defs/ProducerInput",
+              "line_start": 867,
+              "line_end": 867,
+              "quote": "\"const\": \"dedupe_by_idempotency_key\"",
+              "excerpt_sha256": "52f30a5c57304b15d287021e653babc8c0dbd31551f820d9c0955fe66184a798",
+              "file_sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0 matches CV-342's unchanged indefinite audit retention; SP-299 assigns indefinite policy to the three content-free audit families and RP-GOAL-THREAD-LIFETIME (DL-047) to input content. No derived checkpoint/projection is owned (none_required per consumer).",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 1283,
+              "line_end": 1283,
+              "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+              "excerpt_sha256": "70500814c94f64578c8eeff1bc58d55590f9e4f1041fbfb662e1c1184598e278",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-342 prose",
+              "line_start": 22558,
+              "line_end": 22558,
+              "quote": "Its outer EventRecord remains pm.event.v0 version 2.0.0, Project scope and unchanged indefinite audit retention.",
+              "excerpt_sha256": "149f05c8c0f19750196486705cf38ced1e675f5aa0d49d2baa3c61ab76e5604f",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Closed source, content and progress carriers (SP-299)",
+              "line_start": 24543,
+              "line_end": 24543,
+              "quote": "The three audit carriers use existing RP-AUTHORITY-INDEFINITE.",
+              "excerpt_sha256": "66f77da173c30a638341076f121afdc8157b133a1b31b3b67e8000e22ebe3b1a",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Closed source, content and progress carriers (SP-299)",
+              "line_start": 24543,
+              "line_end": 24543,
+              "quote": "The input carrier uses RP-GOAL-THREAD-LIFETIME with the exact bound thread",
+              "excerpt_sha256": "66f77da173c30a638341076f121afdc8157b133a1b31b3b67e8000e22ebe3b1a",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Registry rejects unhandled secrets; audit carriers forbid text and previews; input content follows the bound thread and hides on deletion; reader.goal.update_input requires current content/access/deletion authority while audit uses current app/Project/audit authority; backup atomically captures source, progress, terminal, input and SP-287 scope and restore replays tombstones.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 1267,
+              "line_end": 1267,
+              "quote": "\"mode\": \"reject_unhandled_secrets\",",
+              "excerpt_sha256": "98884d293bba5a777b13982b165eb6be0e7acc8b1e165b123495fb125c48785d",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Closed source, content and progress carriers (SP-299)",
+              "line_start": 24543,
+              "line_end": 24543,
+              "quote": "No text, complete request, request preview, context body, pending afterimage or text-bearing error is permitted there.",
+              "excerpt_sha256": "66f77da173c30a638341076f121afdc8157b133a1b31b3b67e8000e22ebe3b1a",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Event version, readers and backup (SP-299)",
+              "line_start": 24572,
+              "line_end": 24572,
+              "quote": "Input read is a separate new `reader.goal.update_input@1.0.0` requiring current thread content/access/deletion authority",
+              "excerpt_sha256": "8e2356d5d0c4c91fc82b6aad446a820f2867c8311f611847a2a425d016b216c2",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Event version, readers and backup (SP-299)",
+              "line_start": 24574,
+              "line_end": 24574,
+              "quote": "Backup must atomically capture every original source, retained progress epoch/head, terminal member, complete still-retained input",
+              "excerpt_sha256": "6bcaa889bbcdcfe49270031822df12c69414619e491eb6ace7b4450ff39e5ebc",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current rules: active/paused/blocked permit edit, completed rejects; body revision n to n+1 with one accepted revision against the latest accepted predecessor; update affects only the next continuation boundary and never resumes or defeats Stop; progress edges and no-effect limits are explicit. D-R14's old state rules are retained-v2 only.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6517,
+              "line_end": 6517,
+              "quote": "Active/paused/blocked permit edit; completed rejects.",
+              "excerpt_sha256": "2d99e3436e3f6e1fa4c202bab8603fa1439d9d232ac63c35d82fe517e8870309",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6517,
+              "line_end": 6517,
+              "quote": "it neither changes a running turn nor resumes a paused/blocked Goal or defeats host Stop",
+              "excerpt_sha256": "2d99e3436e3f6e1fa4c202bab8603fa1439d9d232ac63c35d82fe517e8870309",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Acyclic operation and original effect resolution (SP-299)",
+              "line_start": 24554,
+              "line_end": 24554,
+              "quote": "Permitted progress edges are source_admitted\u2192body_reserved\u2192body_committed\u2192event_ready\u2192event_issued",
+              "excerpt_sha256": "a571696819a97fc1b78bd344933ac24c968cc2b1b8e3d5a600f176c08194be39",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Acyclic operation and original effect resolution (SP-299)",
+              "line_start": 24554,
+              "line_end": 24554,
+              "quote": "There is no edge from committed/issued to no_effect or backward to a new reservation.",
+              "excerpt_sha256": "a571696819a97fc1b78bd344933ac24c968cc2b1b8e3d5a600f176c08194be39",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-299 names seven consumers with exact versions (reader.goal.body@1.0.0, objective_history, storage.goal_updated.inspect_current.v1@1.0.0, update audit/input readers, body receipt reader, SIR-049 replay) and assigns none_required per actual effect. The inspector imports the SP-278 read_token into a transient, non-stored witness; nothing persists a token, so DL-076 is not engaged.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Current update consumers and accepted Goal state",
+              "line_start": 6167,
+              "line_end": 6167,
+              "quote": "For exactly active `goal.updated` v3, GRS-064/GRS-068 explicitly adopt SP-299's update-only consumer composition.",
+              "excerpt_sha256": "0f9aa7911b8da3bd4d58cfb88a3fcda0caf1b68f1e44552d470aebd01fce1408",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Active updated-v3 consumers (SP-299)",
+              "line_start": 24593,
+              "line_end": 24593,
+              "quote": "NEW `storage.goal_updated.inspect_current.v1@1.0.0`",
+              "excerpt_sha256": "4bf9b1a4bededeb5fc7042806e51560ef82027370f966f28d559363ad7efcc97",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Active updated-v3 consumers (SP-299)",
+              "line_start": 24599,
+              "line_end": 24599,
+              "quote": "The `none_required` disposition here follows each actual listed effect, not another family's passive status.",
+              "excerpt_sha256": "715ebef26584261486f109c055041b7d6344b38ed216e82d6269d2a9aa566302",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Selected current updated-v3 event inspection (SP-299)",
+              "line_start": 24611,
+              "line_end": 24611,
+              "quote": "Import the complete ten-field `read_token`, including its exact thirteen-field `source_selection`",
+              "excerpt_sha256": "991fdbcbeeaa28d5e634a84927ce886467df2c91f82454aee2f990df688acfc6",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Whole v2 stays under legacy_v2_reader and the active-only inspector returns unsupported_payload for v2. Writers become available only after coordinator enrollment of all four families and roles; pre-existing backup paths refuse; package migration/withdrawal invalidates in-flight readers and needs re-enrollment; SP-287 withdrawal fences dependent use.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Event version, readers and backup (SP-299)",
+              "line_start": 24570,
+              "line_end": 24570,
+              "quote": "selects active v3 and embeds the **whole** old v2 resource under legacy_v2_reader",
+              "excerpt_sha256": "a7b2a454510f752bcdbe93175333cd95e3f89ccc6cef1ebede08289bd5783a08",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Selected current updated-v3 event inspection (SP-299)",
+              "line_start": 24615,
+              "line_end": 24615,
+              "quote": "this active-only inspection returns unsupported_payload for v2",
+              "excerpt_sha256": "ba6cb51a3adf7f74caacbbeb34ac0d8436421ea69d2e77e4698139aa6815e8d0",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Original owner participation and installation (SP-299)",
+              "line_start": 24583,
+              "line_end": 24583,
+              "quote": "coherent mandatory backup/restore ownership before a writer becomes available",
+              "excerpt_sha256": "1014b18e30e34c9e9b7b9a64825cf6d25676452e5edab80f08954139f1015bbb",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Exact encodings, retention, backup and adoption (SP-299)",
+              "line_start": 24641,
+              "line_end": 24641,
+              "quote": "Package migration/withdrawal and root changes invalidate in-flight readers",
+              "excerpt_sha256": "04b2ae7c62b10b5b7fb8b90f1a0242ab86e3ad6387d7b2ddb4bbf8728b948c5e",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Part 2 adds bounded source/storage witnesses for Goal update/cancellation; it does not instantiate this family's complete original current producer/consumer tuple corpus. Whole-path closure remains PARTIAL; no upgrade follows from native NOT_RUN or component passes.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-210",
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Newly authored owner contract under DL-045 (2026-11-04). It names the static oracles of five current Goal writers, each with its own cases in Plans/goal_current_writer_oracle_fixtures.json, ",
+              "excerpt_sha256": "eac9634bcf0563654d0bd02a8ffc3f26a93142d6236ff5cb082df79a2acd7d7a",
+              "file_sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Common complete-path fixture and guard rules",
+              "line_start": 79,
+              "line_end": 79,
+              "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
+              "excerpt_sha256": "b76b48f7ea15468b77c18eef1af0220222cfbc15c656dbf82bcb26bd5a5ffc87",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 94,
+              "line_end": 94,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "63696835820fb237f3f7df0807ded752cb23f8a48cdea5ad555f2a602571c245",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "reports/event-authority-20261105/DG-OWN-C-self-grade.json",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "No canonical Plans content changed; complete original-source prerequisites fail before whole-root closure."
+        }
+      },
+      "remaining_gaps": [
+        "O7: complete inherited original source/method-root fixtures and every own boundary remain incomplete; the new adapter is bounded.",
+        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
+        "O4: finish complete original provider-source realm/mutation join companions and whole-path specimens; existing descriptor references require explicit route integration.",
+        "Part 2 did not finish the requested whole original W1-W5/native source corpus; see the exact family closure table in DG-OWN-C.md."
+      ],
+      "normative_depth_complete": false,
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-299 section",
+          "line_start": 24516,
+          "line_end": 24516,
+          "quote": "The sole body writer remains SP-287's `owner.goal.body.mutation@1.0.0`",
+          "excerpt_sha256": "1a76038409c0a4b39756bd38b85ed9c04a2a6c1f387f40dcc16091a185b44237",
+          "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+          "quote_check": "exact"
+        }
+      ],
+      "static_checks_seen": [
+        "scripts/pm_goal_current_writer_oracles.py",
+        "scripts/pm_goal_own_c_oracles.py",
+        "python3 scripts/pm_goal_own_c_source_oracles.py (component coverage only)"
+      ],
+      "whole_root_closure": "BLOCKED_ORIGINAL_INPUTS",
+      "prior_pass_count_c3": 10
+    }
+  ],
+  "cell_citations_verified": 89,
+  "new_complete_path_oracles": 0
+}
