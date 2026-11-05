@@ -110,7 +110,9 @@ window.PM56_EXT = window.PM56_EXT || {
 };
 """
 
-data=(SPROUT_JS + '\n' + join(['data.js','motion.js','variants-a.js','variants-b.js','variants-c.js'])
+# Standalone uses the same Pip drawing kit as the hosted page. The port already owns it.
+PIP_JS=(root.parents[1]/'glyph-system'/'opus-5.5'/'src'/'logo'/'pm-logo.js').read_text(encoding=ENC)
+data=(SPROUT_JS + '\n' + PIP_JS + '\n' + join(['data.js','motion.js','variants-a.js','variants-b.js','variants-c.js'])
       + '\n' + EXT_SHIM + '\n'
       + read('plan-media-batch17.js') + '\n' + join([f'{m}.js' for m in MODULES]))
 app=read('app.js')
