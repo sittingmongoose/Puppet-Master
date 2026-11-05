@@ -59,7 +59,6 @@ export default async function(t) {
     await key('demo-key-previous-123456');
     await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
     await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
-    await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
     await f.locator(LAYER+' '+row+'[data-o55-do="addAnother"]').first().click();
    }
    await key('short-key');
