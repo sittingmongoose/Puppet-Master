@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3688-L17650
+Source lines: L3688-L17653
 
-Source SHA256: `a0660a24f4ddf7eab642d0133b57475b095144ff4593d62f920b4f8619dcc221`
+Source SHA256: `0a3e0bf0b32bc41c17138244a37a26b68f04df953ce71ea50d6ed22bd884b443`
 
 ---
 
@@ -7573,7 +7573,8 @@ split_recommended: true
 depends_on: [CV-159]
 unblocks: []
 acceptance_criteria:
-  - "cmd.chat.worktree.bind_existing, cmd.chat.worktree.open_files, and cmd.chat.worktree.create_pr may route to canonical assistant worktree commands."
+  - "cmd.chat.worktree.open_files and cmd.chat.worktree.create_pr may route to canonical assistant worktree commands."
+  - "cmd.chat.worktree.bind_existing does not route: it is retired as a non-alias (DL-335; UCC-058 forbids exposing it)."
   - "Aliases normalize through canonical command IDs."
   - "Aliases are not replacements for the canonical six command IDs."
 validation_surfaces:
@@ -7597,6 +7598,8 @@ preserved_exact_tokens:
   - "`alias_of_command_id`"
 compatibility_only_notes:
   - "Compatibility aliases may route to canonical assistant worktree commands."
+stale_retired_dispositions:
+  - "Amended 2026-11-05 (DL-335): cmd.chat.worktree.bind_existing is retired as a non-alias and is no longer listed as a compatibility alias; it has no primary handler, production-wiring row or dispatch alias."
 negative_constraints:
   - "Compatibility aliases are not replacements for the canonical six command IDs."
 owner_hints:
