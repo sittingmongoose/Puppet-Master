@@ -9,12 +9,12 @@ const gaps=a=>a.slice(1).map((x,i)=>x[0]-a[i][0]);
 export default async function(t){
   await t.viewport(1920,1080); const rows=[]; let startup;
   for(const [i,kind] of ['A','B','B','A'].entries()){
-    const f=await t.app.open(); await t.app.look('friendly-dark');
-    await f.evaluate(sampler); const p=await f.evaluate(target,'home');
-    if(!p)throw Error('Home divider not reachable');
+    const f=await t.app.open(); await t.app.resetLayout(); await f.locator('#tab-dashboard').click(); await t.app.look('friendly-dark');
+    await f.evaluate(sampler); const p=await f.evaluate(target,'left');
+    if(!p)throw Error('Left Rail divider not reachable');
     await f.waitForTimeout(2500);
-    if(startup===undefined){const raw=await f.evaluate(()=>window.__rz.stop());startup=q(gaps(raw.frames));await f.evaluate(target,'home');await f.waitForTimeout(2500);}
-    if(kind==='A')await f.evaluate(target,'home');
+    if(startup===undefined){const raw=await f.evaluate(()=>window.__rz.stop());startup=q(gaps(raw.frames));await f.evaluate(target,'left');await f.waitForTimeout(2500);}
+    if(kind==='A')await f.evaluate(target,'left');
     await t.page.mouse.move(p.x,p.y);await t.page.mouse.down();
     try{for(const end of [200,0]){const start=end===200?0:200;for(let n=1;n<=60;n++){await t.page.mouse.move(p.x+start+(end-start)*n/60,p.y);await f.waitForTimeout(25);}}}
     finally{await t.page.mouse.up();}
