@@ -421,10 +421,14 @@ def run_corpus(path):
     from pm_event_datetime_inventory import check_inventory
     inventory_check = check_inventory(root)
     checks["datetime_inventory_complete_and_classified"] = inventory_check["status"] == "pass"
-    # Review C6-B1: schema fences inside Markdown containers are discovered too.
+    # Reviews C6-B1 and C7-B1/B2: schema fences inside any Markdown container,
+    # and fences after misleading boundaries, are discovered (CommonMark is
+    # authoritative; the over-inclusive supplementary scan only adds spans).
     from pm_event_datetime_inventory import _markdown_fences
     fence_schema = {"type": "object", "properties": {"observed_at_utc": {"type": "string", "format": "date-time"}}}
     fence_json = json.dumps(fence_schema)
+    escaped_json = fence_json.replace('"properties"', '"\\u0070roperties"').replace(
+        '"observed_at_utc"', '"\\u006fbserved_at_utc"')
     fence_forms = {
         "top_level": "```json\n" + fence_json + "\n```\n",
         "blockquote": "> ```json\n> " + fence_json + "\n> ```\n",
@@ -433,11 +437,27 @@ def run_corpus(path):
         "list_marker_on_fence_line": "1. ```json\n   " + fence_json + "\n   ```\n",
         "blockquote_list": "> - ```json\n>   " + fence_json + "\n>   ```\n",
         "tilde_blockquote": "> ~~~json\n> " + fence_json + "\n> ~~~\n",
+        "list_then_blockquote": "- > ```json\n  > " + fence_json + "\n  > ```\n",
+        "blockquote_list_blockquote": "> - > ```json\n>   > " + fence_json + "\n>   > ```\n",
+        "html_details": "<details>\n\n```json\n" + fence_json + "\n```\n\n</details>\n",
     }
+    for keys, body in (("literal", fence_json), ("escaped", escaped_json)):
+        fence_forms["after_indented_literal_close_" + keys] = (
+            "```rust\n        ```\n```\n\n```json\n" + body + "\n```\n")
+        fence_forms["after_unclosed_blockquote_fence_" + keys] = (
+            "> ```text\n> quoted\n\n```json\n" + body + "\n```\n")
     fence_ok = True
+    fence_failures = []
     for form, text in fence_forms.items():
-        bodies = [json.loads(body) for _, body in _markdown_fences(text)]
-        fence_ok = fence_ok and bodies == [fence_schema]
+        bodies = []
+        for _, body in _markdown_fences(text):
+            try:
+                bodies.append(json.loads(body))
+            except ValueError:
+                pass
+        if fence_schema not in bodies:
+            fence_ok = False
+            fence_failures.append(form)
     fence_ok = fence_ok and list(_markdown_fences("Prose naming observed_at_utc, no fence.\n")) == []
     checks["datetime_inventory_fence_containers"] = fence_ok
     from pm_event_datetime import datetime_validator

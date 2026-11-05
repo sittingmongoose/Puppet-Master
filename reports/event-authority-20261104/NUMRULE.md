@@ -415,3 +415,23 @@ Artifacts below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
   - The blockquote injection also makes `python3 scripts/pm_event_numbers.py --self-test` exit 1, with `datetime_inventory_complete_and_classified: false`.
   - Without injection, the self-test passes: 13,372/13,372 cases (6,836 positives, 6,536 labelled negatives) and 71/71 integration checks.
 - No owner prose, pinned schema, corpus case or inventory entry changed.
+
+## Review round 7: findings and responses (lead fix, 2026-11-05)
+
+**C7-B1 (list-before-blockquote nesting) and C7-B2 (supplementary fence boundaries that consumed real fences), `reviews/NUMRULE-sol/REVIEW-cycle7.md`.** Fixed by the stream E lead.
+
+- **Authoritative discovery:** `scripts/pm_event_datetime_inventory.py` now finds fences with a real CommonMark parser, `_commonmark_fences()`, which uses markdown-it-py's `MarkdownIt("commonmark")` with the system package `python3-markdown-it` 3.0.0, present on the VM and on Nas1. The parser handles container nesting, fence and container lifetimes and relative indentation, and returns decoded bodies with their opening lines. It is a hard dependency: without it, the scan records an error and the gate fails closed.
+- **Supplementary scan:** the over-inclusive scanner from round 6, now `_supplementary_fences()` and also stripping blockquotes after each list marker, only adds spans that CommonMark does not treat as fences, such as fences inside HTML blocks or details elements. It runs independently, so it can never close or consume a CommonMark span. A supplementary span that opens on a CommonMark fence line is dropped, so the authoritative body always wins.
+- **Parse failures:** a fence body that fails to parse is now an error whenever it names a property map and a Storage field, either literally or through JSON `\uXXXX` escapes (`_looks_like_utc_schema()`). Escaped keys can no longer slip past the error check.
+- **Registered check `datetime_inventory_fence_containers`:** it now covers 14 forms, each of which must yield the schema among its parsed bodies, plus a no-fence control:
+  - the 7 round-6 forms;
+  - list containing a quote, and quote, list, quote;
+  - an HTML details block;
+  - a fence after an indented literal closing fence inside a Rust example, with literal and escaped keys;
+  - a fence after an unclosed blockquote fence, with literal and escaped keys.
+- **Regression sensitivity:** the round-6 scanner fails six of these forms (both mixed-container forms and all four boundary forms).
+- **Verification on this head:**
+  - Real tree: `python3 scripts/pm_event_datetime_inventory.py` exits 0, with 212 nodes, 133 Storage, 79 other-owner, 0 unclassified and 0 failures.
+  - Reviewer injections: list-then-blockquote, blockquote-list-blockquote, the indented literal close (escaped and literal keys), the unclosed blockquote fence (escaped and literal keys), details without a blank line, and a simple blockquote each make the CLI exit 1, with 213 nodes and 1 `unclassified_schema_node`. The indented-close cases also record a parse error from the supplementary span, which fails closed.
+  - Self-test: clean, it passes 13,372/13,372 cases and 71/71 integration checks. With the list-then-blockquote node injected, it exits 1, failing only `datetime_inventory_complete_and_classified`, with 213 nodes and 1 unclassified.
+- No owner prose, pinned schema, corpus case or inventory entry changed.

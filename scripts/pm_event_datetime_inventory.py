@@ -63,15 +63,13 @@ def _strip_blockquotes(line):
     return line[_BLOCKQUOTE_MARKERS.match(line).end():]
 
 
-def _markdown_fences(text):
-    """Backtick/tilde fences at any container depth, including an unclosed final fence.
+def _supplementary_fences(text):
+    """Over-inclusive backtick/tilde fence scan at any container depth.
 
-    Deliberately over-inclusive so the completeness gate fails closed: a fence
-    inside a blockquote or a list item, at any indentation, with or without list
-    markers on its opening line, is scanned. Body lines lose their blockquote
-    markers; JSON tolerates the remaining indentation. A body that then fails to
-    parse but names a property map and a Storage field is a scan error, never a
-    silent skip (see scan()).
+    It finds fence-like spans CommonMark does not treat as fences (for example
+    inside HTML blocks or details elements). It is never authoritative: its
+    boundaries may be wrong, so _markdown_fences() discovers CommonMark spans
+    independently and a supplementary span can never close or consume one.
     """
     opening, start, body = None, None, []
     for line_no, raw in enumerate(text.splitlines(keepends=True), 1):
@@ -79,7 +77,7 @@ def _markdown_fences(text):
         if opening is None:
             candidate = line
             while _LIST_MARKER.match(candidate):
-                candidate = _LIST_MARKER.sub("", candidate, count=1)
+                candidate = _strip_blockquotes(_LIST_MARKER.sub("", candidate, count=1))
             match = re.match(r"^[ \t]*(`{3,}|~{3,})([^\n]*)", candidate)
             if match and (match.group(1)[0] == "~" or "`" not in match.group(2)):
                 opening, start, body = match.group(1), line_no, []
@@ -91,6 +89,47 @@ def _markdown_fences(text):
             body.append(line)
     if opening is not None:
         yield start, "".join(body)
+
+
+def _commonmark_fences(text):
+    """Authoritative CommonMark fence spans (markdown-it-py, CommonMark preset).
+
+    The parser handles container nesting, fence and container lifetimes and
+    relative indentation, and returns the decoded body. It is a hard
+    dependency (Debian/Ubuntu `python3-markdown-it`): without it completeness
+    cannot be shown, so the scan records an error and the gate fails closed.
+    """
+    try:
+        from markdown_it import MarkdownIt
+    except ImportError as error:
+        raise ValueError("markdown-it-py is required by the datetime inventory gate") from error
+    for token in MarkdownIt("commonmark").parse(text):
+        if token.type == "fence" and token.map:
+            yield token.map[0] + 1, token.content
+
+
+def _markdown_fences(text):
+    """Every CommonMark fence, then each supplementary span CommonMark lacks.
+
+    Opening lines are 1-based. Discovery is independent per source, and a
+    supplementary span opening on a CommonMark fence line is dropped, so the
+    authoritative body always wins.
+    """
+    authoritative = list(_commonmark_fences(text))
+    starts = {line_no for line_no, _ in authoritative}
+    yield from authoritative
+    for line_no, body in _supplementary_fences(text):
+        if line_no not in starts:
+            yield line_no, body
+
+
+_JSON_U_ESCAPE = re.compile(r"\\u([0-9a-fA-F]{4})")
+
+
+def _looks_like_utc_schema(body):
+    """True when a body names a property map and a Storage field, literally or escaped."""
+    decoded = _JSON_U_ESCAPE.sub(lambda match: chr(int(match.group(1), 16)), body)
+    return "properties" in decoded and any(field in decoded for field in FIELDS)
 
 
 def scan(root=ROOT):
@@ -140,7 +179,7 @@ def scan(root=ROOT):
                     try:
                         value = json.loads(body, object_pairs_hook=_unique_object)
                     except ValueError:
-                        if "properties" in body and any(field in body for field in FIELDS):
+                        if _looks_like_utc_schema(body):
                             raise
                         continue
                     inspect(value, path, "fence:" + str(line_no))
