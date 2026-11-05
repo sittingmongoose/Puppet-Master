@@ -1,10 +1,12 @@
 # CA-SEAL branch report: the DL-412 seal-check change, 2026-11-04
 
-Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. Fix round 2 was by CA-SEAL-FIX2 (Codex). Fix round 3 was by CA-SEAL-FIX3 (Codex). Fix round 4 was by CA-SEAL-FIX4 (Codex). Fix round 5 is by CA-SEAL-FIX5 (Codex). The stream lead `claude-opus-5.5:pm-ea-lead`, session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, made `616345d688`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
+**Current status, CA-SEAL-FIX6: STOPPED / NOT_READY.** C6-01 remains blocking. Investigation and eighteen actual CLI runs establish that the existing receipt chain has no independent protected anchor to reuse. This round changes only this report and the change record, including both procedural seal exclusions. The final round-6 section contains the stop question and evidence; earlier verification counts remain historical.
+
+Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. Fix round 2 was by CA-SEAL-FIX2 (Codex). Fix round 3 was by CA-SEAL-FIX3 (Codex). Fix round 4 was by CA-SEAL-FIX4 (Codex). Fix round 5 is by CA-SEAL-FIX5 (Codex). Fix round 6 investigation and stop are by CA-SEAL-FIX6 (Codex). The stream lead `claude-opus-5.5:pm-ea-lead`, session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, made `616345d688`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
 
 ## What this branch does
 
-It makes exactly the change Jared approved in E-CARDS-1 item 4c, option B (DL-412): the frozen seal check now accepts an admission record that describes a truthful registry step that added several families at once, provided every family of that step has its own complete record naming the same step. The new input pin requires intact live-validator byte links even for legacy admission and holding. Missing or altered byte-chain inputs reject with DL-077's original message; unrelated DL-412 semantic fields cannot affect legacy judgments. Jared explicitly confirmed this FIX5 boundary.
+It implements E-CARDS-1 item 4c, option B (DL-412): an admission record can describe a truthful registry step that added several families at once, provided every family has its own complete record naming that step. FIX5 checks two live-validator byte links for legacy admission and holding. C6-01 demonstrates that a forged receipt can satisfy those links for altered executable bytes. The approved integrity property is therefore not met. The FIX6 stop below preserves Jared's compatibility boundary rather than claiming that attack is repaired.
 
 | Commit | What |
 |---|---|
@@ -135,7 +137,7 @@ All runs used scratch trees; no checkout's tracked output receipt was written.
 2. **Landing order.** The branch lands after `plans/ea-cards1-answers-20261104` (DL-412).
 3. **The test patch.** It lands as a separate commit in the same landing as the validator, after DL-413's `.gitignore` line (`66af5d0d67`) is on `main`. Without it the holding-bucket test fails 41 entries instead of today's 2.
 4. **The DL-300 records.** The record writer chooses and documents the truthful step. The commit that appended the three rows is `102a7e99e8`, and that step also changed eleven Goal rows.
-5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal.
+5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), CA-SEAL-FIX6 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal.
 6. **The seal exclusion is procedural.** The receipt's checked `seal_applier_forbidden_tasks` remains exactly the author and lander. Its validator guard is unchanged. The seal applier must separately enforce the full participant exclusion above.
 
 ## Historical review round 2: findings and responses
@@ -607,3 +609,43 @@ Validator SHA-256: `0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix5/`. Summary `results/fix5-summary.json`, SHA-256 `cca4d108363e554afa78a4d0e0ae159b22321a6e843444bed9e087e5798d79ae`; full guard matrix `results/guard-matrix.json`, SHA-256 `7a608297446ef60ef031ec0b49b6e041f9cf6314c67815accec5b7818f3bfbc3`; integrity controls `results/integrity-rejections.json`, SHA-256 `fd40d98bdac9cc061339872a6ba4a042cdfa94ba3abd8c07db0fd3c843f7d8d2`. Replay sources, exact traces, full CLI receipts, original nonzero/superseded expectations and final logs are retained with a manifest. One guard preparation run was stopped to pair the newly duplicated byte guards before the final full run; its partial output is not a verification count. Initial new-test setup assertions were corrected before the successful 79-method run; production code did not change. Raw scratch trees and the requested worktree are removed after the result is pushed and evidence copied.
 
 **Family grades before → after:** N/A → N/A; no self-grade JSON applies. **Ids used:** none minted; DL-412 is cited authority and DL-998/DL-999 remain fixture-only. **New bindings:** none. **Open integration work:** DL-412/DL-413 dependencies, actual lander and matching receipt list, the fixture patch as its own commit in the same landing, ordered Sol/Astra pre/post reviews and landing checks. No admission, registry append, seal, main push, pm-mail or subagent occurred.
+
+## Review round 6: findings and responses (CA-SEAL-FIX6)
+
+**C6-01 — STOPPED FOR THE LEAD / NOT_READY.** No finding is disputed or fixed in this round. The complete investigation and stop question are in `seal-check-multifamily-step-amendment.md`, round 6, and copied to `drafts/CA-SEAL/fix6/STOP-QUESTION.md`. This documentation commit changes only these two reports and explicitly excludes CA-SEAL-FIX6 from applying the seal.
+
+**Where:** validator `Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py:249`. **Cause:** both bridge hash operands come from an editable, unauthenticated DL-412 receipt; even its complete semantic predicate accepts a matching altered-executable after-hash. **Required fix:** independently authenticate the complete receipt before presenting DL-077's historical after-hash, while preserving the approved old predicate and compatibility controls. There is no independent protected anchor to reuse today.
+
+### Anchor investigation before code changes
+
+- **Existing receipt pin:** all four admission records under `reports/event-authority-20260911/admission-records/` pin the unchanged DL-077 receipt at line 5; branch validator `:406` checks that byte hash. This is cross-file consistency while the records remain fixed.
+- **Executable pin:** DL-077 receipt `reports/event-authority-20260911/step-10-post-august-admission-receipt.json:24` pins the old executable; main validator `:165` compares it to live bytes. Holding reaches Step 3's older after-pin through DL-077. No independent receipt authentication occurs.
+- **Protected files:** the entire 101-entry `Plans/Spec_Lock.json:3` list and all 737 rows of `Plans/.audits/_semantic_closure_registry.jsonl` contain none of the relevant paths/hashes. Branch and fetched main `fb441b27fd75440e14115fb382b15a5258ad7ea3` are byte-identical for both. Whole tracked `.evidence` and script searches also find no such anchor. The August freeze/output receipt contains no validator/amendment byte pin.
+- **Same-commit isolation:** four fresh old-validator CLIs show that altered executable bytes plus changing only DL-077's after-hash restore holding validity. Unchanged record pins still block admission. There is no hidden protected anchor preventing this holding forgery.
+
+The change record gives every source path:line, complete negative-search evidence, the exact proposed common Spec Lock entries for the reviewed bytes and the required final-receipt rehash. Those entries are proposals only; no protected file is edited or resealed.
+
+### Stop question and effect on main
+
+**For the lead:** Can a separately authorized common receipt anchor be arranged at the same landing boundary, with no unanchored main interval, and can the compatibility boundary be resolved for intact-byte DL-412 semantic faults? The requested full-receipt eligibility rule rejects cases the exact C4 controls preserve, including stale prior-receipt bytes after notes-only edits. Merely evaluating the full predicate elsewhere does not remove that conflict.
+
+Requiring a missing protected anchor would make otherwise intact legacy admission empty, holding invalid and the DL-077 returned pin null from landing until reseal. That changes intact-chain behavior and is outside the approved boundary. Accepting a missing anchor would retain C6-01. With no existing common anchor, choosing another authority or relaxing the preserved controls requires the lead's ruling. This stop follows the user's explicit conditional stop instruction.
+
+### Fresh checks and their limits
+
+| Check | Round-6 result |
+|---|---|
+| Complete branch/main anchor inventory | Read-only, successful; no independent common anchor. |
+| Cycle-6 forged-receipt recorder | Fourteen fresh actual CLIs, all expected unfinished-seal exit 1. Three combined attacks still restore legacy admission and holding; the full-receipt forgery also restores the new pin. Original receipt/record bytes asserted unchanged. |
+| DL-077 trust-model isolation | Four additional actual CLIs; baseline/change/after-repin/restore prove the limited old-chain protection described above. |
+| Original differential and C4 controls | **Not rerun after the stop.** Historical independently reviewed result only: 17,480 pairs / 17,457 exact / 23 intended rejections / zero unexpected differences; 125/125 and 12/12 exact. That corpus omits C6-01 and is not a FIX6 pass. |
+| Check 11 and earlier-review probes | No guards or executable bytes change; no new matrix or full probe replay claimed. C6-01 remains blocking. |
+| Scope and text | Exactly two report paths; both exclusions name CA-SEAL-FIX6. Validator/spec/receipt and every protected artifact remain unchanged. Whitespace and explicit scope checks run before the documentation commit. |
+
+The current check detects unrepinned byte changes and inconsistent links, but not an altered executable with a matching forged DL-412 receipt. A protected receipt hash would authenticate every receipt field and its validator pin only while the enforcing code and anchor remain trusted. An actor able to rewrite the validator, the receipt, DL-412's text and the anchor together is outside any in-repo check; deleting the enforcement from the executing program likewise requires code/history review.
+
+**Unchanged validator SHA-256:** `0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd80d6`. **Unchanged new receipt SHA-256:** `ee9ce3a023d9cc35111e5cd209ea511f2f572307fff876524c6c6e584f66ed9a`. No new validator SHA-256 exists. No spec/receipt description is updated to claim an unimplemented repair; the current NOT_READY status supersedes FIX5's broader authentication claims.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix6/`. Anchor inventory SHA-256 `5bb76c4f051379f720571cfc53828bb910c0cdf00418a0ff90c2f81239e2cb01`; forged recorder result `6275381bf0dbb25480a06cc4d774d6335fd7820ada02d3abc07179d501684232`; old-anchor isolation result `e8ebbee3c8a11172b74a3349bc2b08ee321340f288abc94023014705e5209f35`; exact proposed reviewed-head anchor entries `0d0fa20c4a7e24be3ac0da316712026717c5d2eb8c78d07b80988468f1466678`. Scripts, fresh CLI outputs, stop question and report copies are retained with `SHA256SUMS`.
+
+**Family grades before → after:** N/A → N/A; no self-grade JSON applies. **Ids used:** none minted; DL-412 is existing authority. **Bindings:** none. **Open:** C6-01, common-anchor/compatibility ruling and all previous landing prerequisites. No admission, seal, main push, protected edit, pm-mail or subagent occurred. Scratch and `/home/sittingmongoose/pm-worktrees/ca-seal-fix6` are removed after the documentation-only result is pushed and copied.

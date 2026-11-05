@@ -1,12 +1,14 @@
 # DL-412: the seal check's third recorded change, truthful multi-family registry steps, 2026-11-04
 
+**Current status, CA-SEAL-FIX6: STOPPED / NOT_READY.** C6-01 is reproduced and remains blocking. The integrity descriptions below document FIX5's implementation, not authentication of an approved executable. No independent protected receipt/executable anchor exists on the reviewed branch or fetched main. The round-6 section records the exact proposed anchor entries, the landing-to-reseal effect and the question for the lead. No validator, spec or receipt bytes change in this round.
+
 DL-412 (Jared, 2026-11-04, card E-CARDS-1 item 4c, option B) approves a third recorded change to the frozen independent seal check (`Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py`), after DL-039's holding-bucket change and DL-077's post-August admission change. Jared's verbatim answer was "approve all except 4c B". The approved option reads: "a third recorded change to the frozen check, so it accepts a truthful step that added several families at once. Each family still needs its own record. DL-077 allowed exactly one more change, so this needs your new approval."
 
 pm7-build relayed this reading with the answer (not Jared's words): 4c B was pm7-build's suggestion, not the stream E recommendation. Make the change openly, with the same before and after reviews, and record what it does and does not relax. No other change to that check is approved.
 
 This branch makes that change and writes its receipt. It writes no admission record. The records for the three DL-300 families come later, once each family's contract reaches 12 of 12.
 
-**Barred from the seal.** The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The validator still checks exactly the author and lander in its receipt list; the complete exclusion is a procedural obligation.
+**Barred from the seal.** The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), CA-SEAL-FIX6 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The validator still checks exactly the author and lander in its receipt list; the complete exclusion is a procedural obligation.
 
 **Approving entry.** DL-412 is on `plans/ea-cards1-answers-20261104` at `b6332f391a`, not yet on `main`. Its prose section (`### DL-412:`) has SHA-256 `95375f1997a193d58a3d02c82a46892e324ac0dd1cfbbc2b69efc212ae932927`, and the receipt pins that value.
 
@@ -249,7 +251,7 @@ Positive cases:
   - `5375bfd2a7` (DL-300's landing) only relabeled the registry to `2026-11-04.1` (`443ae71d...`) and added no family. A record naming `2026-10-09.1@43` -> `2026-11-04.1@46` would pair two states that are not one commit's before and after. Which pair is the truthful step is the record writer's to state and the reviewers' to verify.
   - The same step (`102a7e99e8`) also changed eleven existing Goal rows (their application-scope editions). The check does not examine that, before or after this change. The records should say so in their notes.
 - **Reviews.** Sol 6.1 max, then Astra max, before landing and right after, as DL-412 and DL-400 require.
-- **The seal.** It is not applied here. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The receipt's checked list remains exactly the author and lander. The seal applier must enforce the remaining exclusions procedurally; this does not add a validator rule.
+- **The seal.** It is not applied here. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), CA-SEAL-FIX6 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The receipt's checked list remains exactly the author and lander. The seal applier must enforce the remaining exclusions procedurally; this does not add a validator rule.
 
 ## Open items
 
@@ -482,3 +484,90 @@ Validator SHA-256: `0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix5/`. Summary `results/fix5-summary.json`, SHA-256 `cca4d108363e554afa78a4d0e0ae159b22321a6e843444bed9e087e5798d79ae`; full guard matrix `results/guard-matrix.json`, SHA-256 `7a608297446ef60ef031ec0b49b6e041f9cf6314c67815accec5b7818f3bfbc3`; integrity controls `results/integrity-rejections.json`, SHA-256 `fd40d98bdac9cc061339872a6ba4a042cdfa94ba3abd8c07db0fd3c843f7d8d2`. Replay sources, exact traces, full CLI receipts, original nonzero/superseded expectations and final logs are retained with a manifest. One guard preparation run was stopped to pair the newly duplicated byte guards before the final full run; its partial output is not a verification count. Initial new-test setup assertions were corrected before the successful 79-method run; production code did not change. Raw scratch trees and the requested worktree are removed after the result is pushed and evidence copied.
 
 **Family grades before → after:** N/A → N/A; no self-grade JSON applies. **Ids used:** none minted; DL-412 is cited authority and DL-998/DL-999 remain fixture-only. **New bindings:** none. **Open integration work:** DL-412/DL-413 dependencies, actual lander and matching receipt list, the fixture patch as its own commit in the same landing, ordered Sol/Astra pre/post reviews and landing checks. No admission, registry append, seal, main push, pm-mail or subagent occurred.
+
+## Review round 6: findings and responses (CA-SEAL-FIX6)
+
+**Status: STOPPED / NOT_READY.** Reviewed branch head `b99a1c920976db3207b68d7e8147501b41cda8ad`; fetched main `fb441b27fd75440e14115fb382b15a5258ad7ea3`. This is an investigation and documentation result. No implementation repair, new validator digest, admission, seal or governance refresh is claimed.
+
+## C6-01: location, cause and required fix
+
+**Where:** `Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py:245`, with the untrusted two-field bridge at `:249` and the separately checked complete receipt at `:207`.
+
+**Cause:** the bridge authenticates neither the receipt nor the executable it describes. Matching two editable hash strings is sufficient to present the historical DL-077 after-hash. The complete receipt predicate can reject a forged object while legacy admission and holding still succeed. A full receipt with its after-hash repinned to changed bytes even passes that complete predicate. Checking the complete predicate alone therefore cannot authenticate that after-hash.
+
+**Required fix, not implemented:** independently authenticate the complete DL-412 receipt, including every field, the live DL-412 Decision Log section hash, the prior DL-077 receipt byte hash and current executable hash, before an authorized bridge can present the historical hash. Keep that verification separate from DL-077's original predicate and preserve its diagnostic ordering. A protected receipt/executable anchor and a compatible boundary for semantic-invalid legacy controls are prerequisites. This worker cannot supply either by rewriting an old receipt, a protected artifact or the approved compatibility rule.
+
+## Step 1 — the existing trust model
+
+| Surface | What is anchored today, with path:line |
+|---|---|
+| DL-077 validator bytes | On main, `pm_event_authority_independent_validator.py:165` compares the live executable SHA-256 to `reports/event-authority-20260911/step-10-post-august-admission-receipt.json:24` (`190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20`). It is a comparison against an editable receipt, not an independent immutable pin. On this branch the comparison is `:182`, and the bridge supplies its operand. |
+| DL-077 receipt bytes | Each existing admission record pins `dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827` at line 5: `reports/event-authority-20260911/admission-records/browser.workspace.created.json:5`, `browser.workspace.reset.json:5`, `context.compaction.completed.json:5`, `coordination.agent_registered.json:5`. The branch checks this at `pm_event_authority_independent_validator.py:406`; main's corresponding check is at `:196`. These record pins detect a changed receipt while the records stay fixed. They are not an anchor outside the editable chain. |
+| Step 3 / August history | `reports/event-authority-20260911/step-03-holding-bucket-receipt.json:12` records the prior August executable hash `24f23936c5b45398a88fcf1b81c83b0801ca9fc3659781e7336c3d71fe568398`; `:13` records the Step 3 after-hash `bd54afffc689146753daec474d6cdbc7ac663afaf21d842aad4fcf10255112d5`. DL-077 chains from the latter at its receipt `:23`. Holding obtains that before-pin from DL-077 at branch validator `:202` and compares it to Step 3's after-pin at `:583`. It does not hash or authenticate the original August executable against the Step 3 before-pin. |
+| Spec Lock | `Plans/Spec_Lock.json:3` starts the 101-entry `canonical_ssot_hashes.files` list, ending at `:408`. Neither the executable nor either receipt is an entry, and none of their hashes or the August/Step 3 executable hashes occurs anywhere in the file. Identical bytes on branch and fetched main. No receipt anchor exists here. |
+| Closure registry | Entire `Plans/.audits/_semantic_closure_registry.jsonl` searched: 737 rows; no executable/receipt path or relevant hash occurs. Row `:737` is an unrelated PNC currentness reopen record, not a seal-check receipt anchor. Identical bytes on branch and fetched main. |
+| August freeze | `closed-world-census/CURRENT_SOURCE_INVENTORY.json:6` declares 180 sources, with its source digest at `:8`; neither it nor `closed-world-census/FREEZE_DIGEST.txt:1` contains the receipt paths or validator hashes. These freeze census source inputs, not the later validator amendments. No freeze file changes. |
+| August output receipt | `independent-validator/receipts/event_authority_validator_receipt.json:48` starts its input-pin object. It contains no validator-byte hash or DL-077/DL-412 receipt hash. It is historical output; the spec at `INDEPENDENT_EA_VALIDATOR_SPEC.md:17` and `:23` expressly denies self-authorizing receipt flags/hashes. |
+| `.evidence` and landing checks | Full tracked `.evidence` and `scripts` searches at both revisions contain none of the executable/receipt paths or relevant hashes. `scripts/pm-plans-verify.py:1111` checks only explicit Spec Lock entries. `scripts/pm-landing-check.py:171` classifies `stale_hash` as reseal staleness; landing checks do not supply a missing seal-check anchor. No landing check is claimed run. |
+
+All validator-relative and freeze-relative paths in this table are under `Plans/.audits/event-authority-2026-08-12/`. The table's main line numbers were inspected at the frozen DL-077 file `16acf7594a3fe8559af89491b895f440b314b99e`; fetched main has byte-identical validator bytes. Negative search evidence is the complete inventory, not a claim that one cited line proves absence throughout a file.
+
+**Conclusion:** there is no independent protected same-commit-forgery anchor to reuse. The existing trust model is cross-file consistency plus retained Git history and procedural review. Existing record pins protect the DL-077 receipt only while those records remain unchanged. They cannot gain a forward pin to a new DL-412 receipt without changing historical inputs. Git history/review is a human verification boundary; this CLI does not authenticate a commit, signature or trusted remote ref.
+
+## Fresh actual CLI evidence
+
+The cycle-6 recorder was executed unchanged, except its scratch location, using independently extracted old and requested validators. All fourteen outputs are fresh. Every case asserts unchanged DL-077 receipt and all four no-field record bytes. All exit 1 for unfinished seal conditions; admission, holding and returned pins are checked directly.
+
+| Control | Old validator | Requested validator |
+|---|---|---|
+| Valid baseline and restore | coordination admitted; holding valid | same |
+| Alter executable with an inert comment only | no post-August admission; holding invalid | same rejection |
+| Alter executable + two-field forged receipt | no admission; holding invalid | **coordination admitted; holding valid**; new pin null |
+| Alter executable + full-shaped forged identity/authority/prior receipt | no admission; holding invalid | **coordination admitted; holding valid**; new pin null |
+| Alter executable + otherwise intact full receipt, only after-hash repinned | no admission; holding invalid | **coordination admitted; holding valid**; new pin present |
+| Pristine executable + two-field receipt | coordination admitted; holding valid | same legacy outcome; new pin null |
+
+The normalized forged-receipt result is byte-identical to cycle 6's result: SHA-256 `6275381bf0dbb25480a06cc4d774d6335fd7820ada02d3abc07179d501684232`. C6-01 is confirmed, not disputed or fixed.
+
+Four further old-validator CLI controls isolate the old trust model: baseline; comment-only; comment plus changing only DL-077's after-hash; restore. The combined forgery restores **holding valid**, despite byte-identical Step 3 receipt and all four admission records. Admission stays empty because the unchanged records detect the changed DL-077 receipt bytes. This disproves an implicit independent DL-077 receipt anchor protecting holding.
+
+## Step 2 — why this lane stops
+
+1. **No protected entry exists.** A bridge requiring a common protected receipt anchor cannot be enabled on the current landing tree without a protected-artifact change outside this lane. Requiring the absent entry fails closed on every otherwise valid bridge use: the live amended executable hash differs from DL-077's after-pin, so legacy admission becomes empty, holding becomes invalid and the returned DL-077 pin becomes null. That is an additional difference for intact-chain baselines, not one of the existing 23 sole-cause integrity rejections. This consequence follows from the existing predicate and the fresh byte-only rejection controls; no candidate gate is presented as tested or approved code.
+2. **A later reseal leaves a behavioral interval.** If such a requirement lands before its anchor, main rejects legacy admission/holding from landing until the correctly pinned anchor lands. Allowing that interval would contradict the required intact-chain behavior. Bypassing the absent entry during the interval would reopen C6-01 and is not proposed.
+3. **Complete semantics also needs a boundary ruling.** The required compatibility corpus deliberately preserves legacy judgments for intact-byte new schema/authority/lander/prior-byte faults. C4's notes-only old-receipt edit makes the new prior-byte pin stale but preserves the old predicate's seven ordered admission issues and returned old pin. The pending receipt also has a null lander. A rule that presents the old constant only after the complete DL-412 predicate passes refuses these cases, even if evaluated outside the old predicate. Moving its call alone does not resolve C4-02. An independent known-executable pin could distinguish byte integrity from these semantics, but choosing a new rule would exceed this worker's scope.
+
+### Exact proposed common anchor entries — not applied
+
+A separately authorized reseal could establish a common anchor in `Plans/Spec_Lock.json` under `canonical_ssot_hashes.files`. For the **reviewed snapshot's existing bytes**, the exact entries are:
+
+```json
+[
+  {
+    "path": "reports/event-authority-20260911/step-10-post-august-admission-receipt.json",
+    "sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827"
+  },
+  {
+    "path": "reports/event-authority-20261104/seal-check-multifamily-step-receipt.json",
+    "sha256": "ee9ce3a023d9cc35111e5cd209ea511f2f572307fff876524c6c6e584f66ed9a"
+  }
+]
+```
+
+The first hash stays exact because this task forbids changing the old receipt. The second identifies the **unfixed, pending** reviewed receipt, with null lander; it must not be installed as approval of C6-01. After an authorized repair, full receipt-text alignment, refresh of only its new validator pin and actual lander selection, the reseal worker must substitute SHA-256 of those final receipt bytes. No honest final DL-412 anchor digest can be calculated before that work exists. The executable then follows from the protected receipt's after-pin, while complete receipt-byte hashing binds every field. Spec Lock's generic check alone is insufficient: the future bridge must itself require the exact matching entry. No protected file is edited here, and no final digest is fabricated.
+
+**Stop question for the lead:** Can the lead arrange a separately authorized common receipt anchor at the same landing boundary, with no unanchored main interval, and resolve whether intact-byte DL-412 semantic faults retain the exact C4 legacy judgments or instead become full-receipt integrity rejections? The present task requires both full receipt eligibility and those exact controls, while no protected common anchor exists. This worker implements neither a new trust authority nor a compatibility exception without that ruling.
+
+This stop follows the user's explicit instruction to stop when an anchor requirement cannot preserve intact-chain and 125/twelve-control behavior; it is not an inferred approval rule from a skill.
+
+## Detection limits and remaining verification
+
+The existing check detects unrepinned changed validator bytes, broken hash links and inconsistent old receipt/record pins. It does **not** authenticate a forged DL-412 receipt matching altered executable bytes. Full receipt field/authority/prior consistency alone does not fix that gap. A future protected-anchor check can detect modifications while its trusted anchor and enforcing code remain intact. An actor able to rewrite the validator, the receipt, DL-412's text and the anchor together is outside any in-repo check; so is an actor simply removing the enforcing predicate from the executed program. Git/procedural review remains necessary.
+
+**Round-6 verification:** eighteen actual CLIs; complete read-only anchor inventory at branch and fetched main; all new forged controls reproduced; old-chain isolation proved. No checker guard changed, so a new whole-lane guard-removal table, the full 17,480-pair differential, the 125/twelve replay and every earlier review probe were **not rerun after the stop**. The last independently reviewed historical result remains 17,480 pairs: 17,457 exact, 23 intended integrity rejections, zero unexpected differences in that corpus; 125/125 and 12/12 exact. It omits C6-01 and is not a FIX6 pass. No family is graded: **N/A → N/A**. No id is minted; DL-412 is existing authority. No self-grade JSON applies.
+
+Only the change record and `CA-SEAL.md` change on the branch. CA-SEAL-FIX6 joins their procedural seal-applier exclusions; the checked author/lander list is unchanged. Validator/spec/new receipt, August artifacts, fingerprints/freeze, old receipts, records, Spec Lock, closure registry, `.evidence`, `.gitignore`, auto-decisions, shards and index remain byte-identical to the requested head. No owner source changed and no derived regeneration applies. The branch remains NOT_READY.
+
+**Unchanged validator SHA-256:** `0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd80d6`. **Unchanged pending new receipt SHA-256:** `ee9ce3a023d9cc35111e5cd209ea511f2f572307fff876524c6c6e584f66ed9a`.
+
+Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix6/`. `results/anchor-inventory.json` SHA-256 `5bb76c4f051379f720571cfc53828bb910c0cdf00418a0ff90c2f81239e2cb01`; `results/forged-receipt-results.json` SHA-256 `6275381bf0dbb25480a06cc4d774d6335fd7820ada02d3abc07179d501684232`; `results/old-receipt-anchor-probe.json` SHA-256 `e8ebbee3c8a11172b74a3349bc2b08ee321340f288abc94023014705e5209f35`; `results/proposed-spec-lock-entries.reviewed-head.json` SHA-256 `0d0fa20c4a7e24be3ac0da316712026717c5d2eb8c78d07b80988468f1466678`. Replay sources and all fresh CLI outputs are retained with `SHA256SUMS`. Scratch and the requested worktree are removed after the documentation commit is pushed and the deliverables are copied.
