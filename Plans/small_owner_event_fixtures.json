@@ -10152,6 +10152,26 @@
           "value": "99.0.0",
           "expected": "identity_conflict_without_effect"
         }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
+          "expected": "identity_conflict_without_effect"
+        }
       ]
     },
     {
@@ -20408,6 +20428,26 @@
           "case_id": "retry_unknown_envelope_version",
           "field": "schema_version",
           "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
           "expected": "identity_conflict_without_effect"
         }
       ]
@@ -33031,6 +33071,26 @@
           "case_id": "retry_unknown_envelope_version",
           "field": "schema_version",
           "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
           "expected": "identity_conflict_without_effect"
         }
       ]
@@ -45806,6 +45866,26 @@
           "case_id": "retry_unknown_envelope_version",
           "field": "schema_version",
           "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
           "expected": "identity_conflict_without_effect"
         }
       ]
@@ -58609,6 +58689,26 @@
           "value": "99.0.0",
           "expected": "identity_conflict_without_effect"
         }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
+          "expected": "identity_conflict_without_effect"
+        }
       ]
     },
     {
@@ -68673,6 +68773,26 @@
           "case_id": "retry_unknown_envelope_version",
           "field": "schema_version",
           "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
           "expected": "identity_conflict_without_effect"
         }
       ]
@@ -78750,6 +78870,26 @@
           "case_id": "retry_unknown_envelope_version",
           "field": "schema_version",
           "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
           "expected": "identity_conflict_without_effect"
         }
       ]
@@ -88991,6 +89131,26 @@
           "case_id": "retry_unknown_envelope_version",
           "field": "schema_version",
           "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "retry_extra_field_cases": [
+        {
+          "case_id": "retry_extra_unexpected",
+          "field": "unexpected",
+          "value": "opaque",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_payload_schema_version",
+          "field": "payload_schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_extra_scope_partition",
+          "field": "scope_partition",
+          "value": "project~Zm9yZWlnbg",
           "expected": "identity_conflict_without_effect"
         }
       ]

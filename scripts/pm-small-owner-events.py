@@ -540,6 +540,11 @@ def resolve_full_value(row, requested, authority):
 
 def current_retry(row, incoming, authority):
     """Current writer policy admission precedes immutable semantic resolution."""
+    # Closure belongs to the current request, independently of semantic hashing
+    # and the protected stored envelope. Storage metadata stays outside the hash.
+    envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
+    if incoming.keys() - envelope['properties'].keys():
+        return ('identity_conflict_without_effect', None, 0)
     # Dispatch the current request before resolving its retained original.
     # These envelope markers are not producer semantics or Storage metadata.
     if incoming.get('schema_id') != 'pm.event.v0':
@@ -1055,6 +1060,19 @@ def main(guard_first=None):
     for row in families_for_run(fixtures):
         original = row['positive_event_record']
         authority = row['receipt_authority']
+        envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
+        for case in row['retry_extra_field_cases']:
+            incoming = dict(original, **{case['field']: case['value']})
+            before = copy.deepcopy((original, authority))
+            assert case['field'] not in original, case['case_id']
+            assert incoming.keys() - original.keys() == {case['field']} and all(exact_value(incoming[k], original[k]) for k in original), case['case_id']
+            errors = list(DMValidator(envelope, format_checker=FORMATS).iter_errors(incoming))
+            assert len(errors) == 1 and errors[0].validator == 'additionalProperties' and not errors[0].path, case['case_id']
+            assert producer_digest(incoming) == producer_digest(original), case['case_id']
+            assert not valid_event(row, incoming, row['original_operation']), case['case_id']
+            assert current_retry(row, incoming, authority) == (case['expected'], None, 0), case['case_id']
+            assert exact_value((original, authority), before), (case['case_id'], 'authentic original unchanged')
+            retry_boundary_count += 7
         for case in row['retry_envelope_cases']:
             incoming = dict(original, **{case['field']: case['value']})
             before = copy.deepcopy((original, authority))
