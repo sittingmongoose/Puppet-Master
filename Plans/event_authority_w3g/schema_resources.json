@@ -182,5 +182,22 @@
       "sha256": "911fb0bbca4716cd4542d52120df7a9cd0ffab6339886f817549bdaf0f66410b"
     }
   ],
-  "note": "Exact whole resources for all reachable payload references. Source/native result schemas are selected separately by contracts.json and their original owner graphs; no copied native resource is substituted."
+  "note": "Phase-1 resource seeds plus explicit complete offline canonical discovery and exact-ID symbolic value-schema resolution. Phase-2 resolver implementation remains deferred.",
+  "offline_discovery": {
+    "roots": [
+      "Plans/**/*.schema.json"
+    ],
+    "registration": [
+      "Register every complete canonical schema by its actual top-level $id.",
+      "Also register canonical filename retrieval URI https://puppetmaster.local/Plans/<filename>, including nested relative paths as needed by actual refs.",
+      "Resolve relative refs from the referring resource base; preserve declared $id scope. Refuse ambiguous URI registrations with different bytes."
+    ],
+    "closure": "Eagerly traverse every $ref and branch within each selected schema/selector and every recursively reached definition, including branches no fixture visits. Register the complete canonical referenced resource under its actual $id and retrieval URI. Registration alone does not select unrelated definitions outside that closure. Missing, ambiguous or unresolved reachable resources fail closed before any effect; no network lookup. The resources list is a hash-pinned seed list, not the complete closure.",
+    "phase": 2
+  },
+  "symbolic_value_schema_refs": {
+    "notation": "Plans/storage_value_registry.json#/families/<family_id>/value_schema",
+    "resolution": "The inherited families collection is an array. Look up the exact unique family_id in that array, then select its value_schema and resolve its refs in the same offline registry. Missing or duplicate family IDs refuse. Never feed the symbolic path to an ordinary JSON Pointer resolver or silently pick an array position.",
+    "shared_registry_modified": false
+  }
 }

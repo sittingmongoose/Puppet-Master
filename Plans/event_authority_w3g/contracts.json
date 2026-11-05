@@ -515,7 +515,7 @@
       "source_schema_refs": {
         "project": [
           "Plans/goal_body_custody.schema.json#/$defs/storage_body",
-          "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+          "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
           "Plans/goal_body_custody.schema.json#/$defs/storage_receipt"
         ],
         "application": [
@@ -524,8 +524,23 @@
           "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyMutationReceiptStorageApplicationV1"
         ]
       },
-      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "The original narrow GRS-064 body receipt supplies before_revision/after_revision and before/after currentness; they equal expected_revision/goal_revision and before_currentness_hash/currentness_hash respectively. Whole original before/after body/control, genuine Stop, actual active_run_ref, immutable scope/thread/Goal and actor/permissions must agree. Ordinary body revision advances by one; accepted objective history remains unchanged. App hashes use exact CV-366 app source recipe; no Project hash is recast. Pause preserves actual blocker lineage; a pending owner condition cannot be erased by a state label. Any clearing must be independently authorized by the original condition owner."
+      "source_selection_rule": "Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2 (wrapper pm.storage_value.goal_body_control.v2, schema_version 2.0.0, record pm.goal.body_control.v2). Validate the actual complete original V2 control, including independently owned cancellation_pending and cancellation_receipt_ref; never default either from missing fields. The selected source is independently authenticated by native owner/installation, not payload source_schema_id. Plans/goal_body_custody.schema.json#/$defs/storage_control is decoder-only for retained originals whose authenticated original installation and original family/selector admission selected V1. It cannot authorize a current write/retry, be relabelled V2 or receive a fabricated cancellation_pending=null upgrade. A retained V2 original keeps its original V2 admission/edition despite later cancellation or Stop. Current disclosure/deletion/withdrawal remains separate. Application sources retain their distinct original GRS-086/CV-366 selected graph; no Project control or hash is cast into an application value and unresolved original app custody leaves the route unavailable.",
+      "field_join_recipe": "The original narrow GRS-064 body receipt supplies before_revision/after_revision and before/after currentness; they equal expected_revision/goal_revision and before_currentness_hash/currentness_hash respectively. Whole original before/after body/control, genuine Stop, actual active_run_ref, immutable scope/thread/Goal and actor/permissions must agree. Ordinary body revision advances by one; accepted objective history remains unchanged. App hashes use exact CV-366 app source recipe; no Project hash is recast. Pause preserves actual blocker lineage; a pending owner condition cannot be erased by a state label. Any clearing must be independently authorized by the original condition owner. Current Project before/after control wrappers must both be StorageBodyControlV2; join their body_key/body_sha256, current_revision/currentness_hash, accepted-history head/origin, control_epoch, pending, cancellation_pending and cancellation_receipt_ref to the same actual original body mutation and host Stop under the native owner boundary. A new pause/resume mutation requires cancellation_pending=null and cancellation_receipt_ref=null separately. Ordinary pending is either absent for the direct route or the same original operation/intent under its admitted staged route; a foreign pending owner cannot be overwritten. Current/retry authority is rechecked after every helper. An already committed native mutation is resolved by its original result/receipt without another mutation; current cancellation never rewrites the original fact.",
+      "historical_source_schema_refs": {
+        "project_control_v1": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+        "project_control_v2": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+        "selection_rule": "Authenticated original installation, original family/selector admission and original edition only; not caller choice or live writer eligibility."
+      },
+      "source_version_authority": {
+        "revision": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+        "refs": [
+          "Plans/Goal_Runtime_System.md#GRS-064",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/storage-plan.md#SP-304",
+          "Plans/storage_value_registry.json:goal_body_control"
+        ],
+        "integration_dependency": null
+      }
     },
     {
       "prefix": "GRS",
@@ -564,7 +579,7 @@
       "source_schema_refs": {
         "project": [
           "Plans/goal_body_custody.schema.json#/$defs/storage_body",
-          "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+          "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
           "Plans/goal_body_custody.schema.json#/$defs/storage_receipt"
         ],
         "application": [
@@ -573,8 +588,23 @@
           "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyMutationReceiptStorageApplicationV1"
         ]
       },
-      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
-      "field_join_recipe": "The original narrow GRS-064 body receipt supplies before_revision/after_revision and before/after currentness; they equal expected_revision/goal_revision and before_currentness_hash/currentness_hash respectively. Whole original before/after body/control, genuine Stop, actual active_run_ref, immutable scope/thread/Goal and actor/permissions must agree. Ordinary body revision advances by one; accepted objective history remains unchanged. App hashes use exact CV-366 app source recipe; no Project hash is recast. Pause preserves actual blocker lineage; a pending owner condition cannot be erased by a state label. Any clearing must be independently authorized by the original condition owner."
+      "source_selection_rule": "Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2 (wrapper pm.storage_value.goal_body_control.v2, schema_version 2.0.0, record pm.goal.body_control.v2). Validate the actual complete original V2 control, including independently owned cancellation_pending and cancellation_receipt_ref; never default either from missing fields. The selected source is independently authenticated by native owner/installation, not payload source_schema_id. Plans/goal_body_custody.schema.json#/$defs/storage_control is decoder-only for retained originals whose authenticated original installation and original family/selector admission selected V1. It cannot authorize a current write/retry, be relabelled V2 or receive a fabricated cancellation_pending=null upgrade. A retained V2 original keeps its original V2 admission/edition despite later cancellation or Stop. Current disclosure/deletion/withdrawal remains separate. Application sources retain their distinct original GRS-086/CV-366 selected graph; no Project control or hash is cast into an application value and unresolved original app custody leaves the route unavailable.",
+      "field_join_recipe": "The original narrow GRS-064 body receipt supplies before_revision/after_revision and before/after currentness; they equal expected_revision/goal_revision and before_currentness_hash/currentness_hash respectively. Whole original before/after body/control, genuine Stop, actual active_run_ref, immutable scope/thread/Goal and actor/permissions must agree. Ordinary body revision advances by one; accepted objective history remains unchanged. App hashes use exact CV-366 app source recipe; no Project hash is recast. Pause preserves actual blocker lineage; a pending owner condition cannot be erased by a state label. Any clearing must be independently authorized by the original condition owner. Current Project before/after control wrappers must both be StorageBodyControlV2; join their body_key/body_sha256, current_revision/currentness_hash, accepted-history head/origin, control_epoch, pending, cancellation_pending and cancellation_receipt_ref to the same actual original body mutation and host Stop under the native owner boundary. A new pause/resume mutation requires cancellation_pending=null and cancellation_receipt_ref=null separately. Ordinary pending is either absent for the direct route or the same original operation/intent under its admitted staged route; a foreign pending owner cannot be overwritten. Current/retry authority is rechecked after every helper. An already committed native mutation is resolved by its original result/receipt without another mutation; current cancellation never rewrites the original fact.",
+      "historical_source_schema_refs": {
+        "project_control_v1": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+        "project_control_v2": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+        "selection_rule": "Authenticated original installation, original family/selector admission and original edition only; not caller choice or live writer eligibility."
+      },
+      "source_version_authority": {
+        "revision": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+        "refs": [
+          "Plans/Goal_Runtime_System.md#GRS-064",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/storage-plan.md#SP-304",
+          "Plans/storage_value_registry.json:goal_body_control"
+        ],
+        "integration_dependency": null
+      }
     },
     {
       "prefix": "WN",
