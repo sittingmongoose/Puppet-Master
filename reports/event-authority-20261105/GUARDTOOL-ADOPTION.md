@@ -159,13 +159,13 @@ These were automatic at `dec0a57dce`, and each named trap was a credited PASS th
 
 ### Name-read scope audit
 
-`expression:bound-name` follows Python's scope rules (language reference 4.2.2), with `symtable` as a second opinion: wherever the compiler has a table for the scope and disagrees, the read is an obligation. List, set and dict comprehensions have no table of their own from Python 3.12, so the resolver alone decides them. A read is automatic only when it resolves to a scope and a binding of that scope dominates it. These forms were automatic at `07fefa83bd`; each trap holds out the original raising, except the three lazy forms marked below, which do not raise on that path and are obligations because they have no written argument.
+`expression:bound-name` follows Python's scope rules (language reference 4.2.2), with `symtable` as a second opinion: wherever the compiler has a table for the scope and disagrees, the read is an obligation. List, set and dict comprehensions have no table of their own from Python 3.12, so the resolver alone decides them. A read is automatic only when it resolves to a scope and a binding of that scope dominates it. These forms were automatic at `07fefa83bd`; each trap holds out the original raising, except the lazy forms and the annotation below, which do not raise on that path and are obligations because they have no written argument.
 
 | Read | Python's rule | Now | Trap |
 |---|---|---|---|
 | Method, nested `def`, lambda, comprehension result or condition, later iterable, or generator, with a class binding of that name | A class namespace does not enclose them | Resolves past the class; an obligation unless a function, global or builtin binding exists | `C6-class-binding-is-not-method-binding`, `C6-class-binding-nested-def`, `C6-class-binding-lambda`, `C6-class-binding-list-comprehension-result`, `C6-class-binding-comprehension-condition`, `C6-class-binding-second-iterable`, `C6-class-binding-generator-result` |
 | A nested class body, with the outer class binding | Class namespaces do not nest | Obligation | `C6-outer-class-binding-in-nested-class` |
-| A class body read of a name the class binds later | `LOAD_NAME` goes to globals and builtins, never the enclosing function | Obligation unless a module or builtin binding exists | `C6-class-read-skips-enclosing-function` |
+| A class body read or method default of a name the class binds later | `LOAD_NAME` goes to globals and builtins, never the enclosing function | Obligation unless a module or builtin binding exists | `C6-class-read-skips-enclosing-function`, `C6-class-default-before-class-binding` |
 | A comprehension iterable or condition reading a later target of the same comprehension | The target makes the name comprehension-local | Obligation, whatever the enclosing function binds | `C6-comprehension-later-target-iterable`, `C6-comprehension-later-target-condition` |
 | A read under `global` | Skips every enclosing function | Needs a module or builtin binding | `C6-global-skips-enclosing-function`, `C6-class-global-skips-enclosing-function` |
 | A closure read of a handler target | The target is deleted when the handler ends, so the closure can outlive it | Obligation | `C6-handler-target-in-closure` |
@@ -173,7 +173,7 @@ These were automatic at `dec0a57dce`, and each named trap was a credited PASS th
 | A `__private` name under a class | The compiler mangles it, so the module binding is a different name | Obligation | `C6-private-name-in-method`, `C6-private-name-in-class-body` |
 | A generic method | The type-parameter scope is function-like and the class stays excluded | Obligation | `C6-type-params-keep-class-exclusion` |
 | A type-parameter bound, or a type alias value (lazy) | A lazily evaluated annotation scope, with no written argument | Obligation, even with an enclosing binding | `C6-type-bound-read-is-an-obligation`, `C6-type-alias-read-is-an-obligation` |
-| An annotation | Evaluation is deferred or absent, depending on version and future import | Automatic only for a module or builtin binding no scope in the file rebinds | Existing annotation traps |
+| An annotation | Evaluation is deferred or absent, depending on version and future import | Automatic only for a module or builtin binding no scope in the file rebinds | `C6-annotation-local-name-is-an-obligation`, with `C6-annotation-builtin-control` |
 
 These stay automatic, each with a paired control: a genuine enclosing-function binding read through a class or a generic definition; a module binding read past a class attribute; a class-body read after a class binding; a first iterable or method default, both of which run in the class scope; a comprehension result reading its own target; `nonlocal` and `global` with a real dominating binding; a read in a handler's own body. A type-parameter read (`C6-type-parameter-read-is-an-obligation`) is valid Python but has no written argument, so it is an obligation.
 
