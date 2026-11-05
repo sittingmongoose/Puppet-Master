@@ -1,10 +1,62 @@
 # Lane DS (stream E, batch 1): clearing the frozen seal check's blockers
 
-**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 3 is current; earlier sections are historical.
+**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 4 is current; earlier sections are historical.
 **Historical first-pass worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
 **Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
 
-## Review round 3: findings and responses (DS-FIX3, current)
+## Review round 4: findings and responses (DS-FIX4, current)
+
+**Reviewed head:** `25c568598fa3ff1028a95c326c885474ffd7dcd1`. **Code/fixture head:** `f479a6eaee994bbc34b14395aedf7a56c124b46e`. **Final base:** `57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5`. The initial rebase used `fb441b27fd75440e14115fb382b15a5258ad7ea3`; the final rebase incorporates later main. DS checker sources are byte-identical across that final rebase. Main's stronger ACD-461 and CV-329 app non-emission text is retained and re-adjudicated. Generated conflicts were regenerated, never hand-merged. No admission, seal, main landing or native execution is claimed.
+
+| Finding | Status; where / cause / fix | Verification |
+|---|---|---|
+| **DS-SOL4-01** | **Fixed**, `9cae9bd3da82a459c4815ab36d21e3f62ec011c5`. `pm_home_layout_v2_slot_receipt.py:529` and `pm_event_authority_ds_round2.py:371`: strict current integer validation reached valid retained bodies. Both historical entries now use the payload-validation recipe committed with exact retained event bytes in the verified source observation. A strict recorded recipe cannot select the original rule. | Original-recipe numeric history passes; current writes and strict-recipe history refuse the same integral-float bodies. Changed recipe/source/event, missing source/store, foreign joins and individual custody flags refuse. Exact retained bytes/pins are preserved. The verified adapter/custody is an explicit synthetic precondition, not native authentication. |
+| **DS-SOL4-02** | **Fixed**, same commit. `pm_home_layout_v2_slot_receipt.py:603`: Python equality treated Boolean/integer and integer/float copies as equal. Recursive comparison checks exact primitive/container types before values. | Actual captured JSON `7.0`/`7e0` and Boolean-to-number substitutions refuse through the full Home4 reader with source SHA and readback copies refreshed. String/null/list/object forms are covered. No new numeric cap or serializer is introduced. |
+| **DS-SOL4-03** | **Fixture gaps repaired; complete proof remains PARTIAL and disputed in part**, `dc771f4d496235fa5569c7f82216527a1177c014`, with format CLI control `f479a6eaee994bbc34b14395aedf7a56c124b46e`. Complete-entry source, join, checkpoint, history, state, representation and CLI-fault cohorts were added; original 65/53/38-test assertions remain. Four non-independent diagnostics have explicit counter-evidence; no guard is removed for them. | **686 supplemental baseline controls**; **33 targeted groups / 144 negatives / 77 positives**, all matrix peers still refused. The 374-row review partition and nine named pairs are preserved. Full source counts, exceptions and pending proof-engine work are in [ds-fix4-guard-removal.md](ds-fix4-guard-removal.md); no 262-row closure is asserted. |
+| **DS-SOL4-04** | **Fixed**, `9cae9bd3da82a459c4815ab36d21e3f62ec011c5`. Removed the repeated compaction envelope arm and the impossible naive-time arm after mandatory zone grammar. | First envelope and timestamp/calendar/zone guards remain. No artificial dead-arm negative was added. |
+| **DS-SOL4-05** | **Fixed**, `a6bef7d41c98932e160d3203003fd9829949280c`. The Browser schema's old resource pin survived its strict-identifier repair. `pm-regenerate-application-source-graph.py` verifies the reviewed prior pin, regenerates actual resource and full semantic graph hashes, and requires the ordinary graph validator to accept before writing. | Projects refresh **PASS**, 834 cases. Browser pin is `c3d627e64a3ca958d1f00adc8d2c67614723e207972535f0d461fb7f802a6ce7`; graph digest is `c90bbc44b48ce39c3ef272e478c3280afd30045be7787deb59e79d9acdfcc552`. Resource selection, literal pointers, methods and role edges are unchanged. The exact regeneration command is recorded in the verification JSON. |
+
+### Grades and preserved authority
+
+| Family | Before | After |
+|---|---:|---:|
+| **context.compaction.completed** | 11/12 | 11/12 |
+| **browser.workspace.created** | 11/12 | 11/12 |
+| **browser.workspace.reset** | 11/12 | 11/12 |
+| **workspace.layout_changed** | 11/12 | 11/12 |
+| **terminal.workgroup_moved** | 10/12 | 10/12 |
+
+**54 PASS / 6 PARTIAL; 0 of 5 at 12/12.** The four active-family oracle cells remain PARTIAL. Terminal's consumer and oracle cells remain PARTIAL; the exact existing question remains Jared's second-deck 8.a. No answer, operating terminal reader or disclosure permission was invented. Native execution is **NOT_RUN**, independently of those proof gaps.
+
+The regrade receipt is [ds-fix4-regrade-application.json](ds-fix4-regrade-application.json). All **294 current self-grade citations** were rechecked; **127** were reanchored and three quotations re-adjudicated against stronger current ACD-461 wording. No criterion status changes. The published depth assessment and historical application receipts stay historical, pinned and byte-unchanged; no claim is made that their old line numbers became current by a rebase. The receipted grade correction, four original application records, three partial-depth admission pins, layout successor, SP-273/Home4 amendment, old envelope, August fingerprints and frozen validator are preserved. The partial assessment remains SHA-256 `535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035`.
+
+### Eleven checks and Astra items 1–12 / 10a
+
+| Check / item | Result and boundary |
+|---|---|
+| **Replay-only writers / custody on every path** | Active-family writers and Browser known retries refuse replay-only; retained originals use their historical route. Individual access/source/deletion/token/admission flags refuse wrong types. Terminal remains retained-schema-only. |
+| **App keys / encoded Project partitions** | All five registered editions remain Project-only. Existing encoded `project~` positives and foreign/raw partition negatives hold. App compaction remains non-emitting. |
+| **Complete sizes / partial measurements** | Exact 16384/16385-byte controls, original Browser overflow bodies, complete external event, all 1208 affected layout ids and whole Home4 slot/receipt references pass. No split, truncation, omitted id or new cap. |
+| **Identifiers / forged claims** | Full-match identifiers and well-formed false content ids, digests, event ids, source selections and bindings are exercised. Observational copies and physical size/media/hash claims follow the changed fact. |
+| **Retries / assigned Storage metadata** | Metadata-only retries retain original results and pins; caller body changes conflict. Token/Storage joins remain. No native frame or receipt authentication is inferred from fixture flags. |
+| **Failure exits** | Bad-positive/nonflipping/baseline-negative controls pass. CLI dependency/diagnostic/source-identity faults assert exact failure and nonzero exit. A failed format-sweep report makes the real round-4 CLI exit 1. |
+| **Eager refs / dormant branches** | Existing five-family dormant-reference controls and full offline closures remain. Full Home4 closure resolves 415 refs. No input-validation result cache is credited as proof. |
+| **History / numeric recipes (10a)** | Both layout historical entries now distinguish original and strict recorded recipes using exact bytes plus independent trusted-custody commitment. Browser/compaction retained positive and forged/withdrawn/foreign refusals remain. Broader numeric-domain adoption belongs to NUMRULE; no lane-local range cap, replacement serializer or signed-zero normalization was added. |
+| **Types / one field read two ways** | Round-3's **156** wrong-type refusals remain. Round 4 has **34 negatives / 11 positives**, including raw exponent captures and exact source types. Reset checks witness type before producer interpretation; compaction history context requires an actual Boolean. |
+| **Own defects / honest grades** | Declared targeted matrix passes. The whole source inventory remains **PARTIAL**; representation/state/fault assertions and exceptions are never relabelled as accepted invalid events. Exact current counts and pending rows are reported separately. |
+| **Formats (12)** | Explicit date-time grammar/calendar/time/offset validation replaces a silently unavailable optional checker. Unknown formats fail closed. **108 full-entry malformed timestamp probes**, **1371 format-node probes**, and five permitted retained timestamp grammar forms pass. Fractional spelling/precision is not rewritten; leap/offset/fraction edge controls are explicit. Terminal's payload has no formats; its shared envelope nodes are covered without granting disclosure. |
+
+### Verification, limits and integration
+
+Final targeted matrices, Home4/self-test, created/v2/reset/shared Browser CLIs, PM7, shared-runtime self-test, Projects refresh and **65 / 53 / 38 / 13** unittest suites pass. Shards and top-level plan-index validation pass on the final base (**7424 PlanUnits**); runtime readiness remains `blocked_runtime_certification_incomplete`. Currentness inputs were copied and hash-verified before generation. One shared-runtime invocation omitted required CLI arguments and exited 2; its corrected `--self-test` passes. The original duplicate fixture left its second schema URI alias stale; an explicitly recorded, coherent two-alias reproduction passes. Original reviewer programs are untouched.
+
+The completed committed whole-lane audit reports **881 namespace rows / 308 observed witnesses**, **570 distinct conditions / 230 with an observed witness**, and **63 exception-bearing rows**. All **1191** baseline negatives refuse; baseline failures are zero. Its status remains **PARTIAL**. An earlier tool-session run ended with SIGTERM/143 before producing a table; a slower experimental run was stopped/130 and receives no proof credit. Experimental proof machinery stays outside the repository. FIX-ROUND's **04:45Z shared-tool directive** sends assertion-inventory, compound/whole-keyword cuts and engine defects to adoption of `pm_guard_isolation.py`; it does not excuse malformed fixtures or product acceptance bugs. No local replacement engine is adopted and no full check-11 closure is claimed.
+
+The unchanged frozen validator exits **1 before / 1 after**, with **5 / 5** failure categories and all four seal/depth flags false. Its SHA is `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20`; receipts/categories are recorded in [ds-fix4-verification.json](ds-fix4-verification.json). Expected seal/depth failures are preserved; no reseal or altered validator obtains a pass. All raw evidence is under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/`, cited with SHA-256 in the verification/guard reports and `SHA256SUMS`. No raw captures or runtime workspace are committed.
+
+**Ids:** none minted in round 4; the branch's existing **SP-400** is retained. No ledger compile, WorkNodes, registry append, Decision Log write, new admission, main push, landing lock or governance reseal. The task worktree is removed after the checked branch push. Initial inbox/who reads preceded loading the no-mail rule; no registration, message, later mailbox call, reviewer consultation or subagent followed.
+
+## Review round 3: findings and responses (DS-FIX3, historical)
 
 **Source revision:** `3f762144faf6edc258e070d680aab2a14fe79d8e`. **Repairs:** `c75ecbfc2faba6dc0120126f0856199857f17d9a` (pushed). **Review base:** `35dc107d9121c43ad035de82cde1fddb8e3602e3`. VM worktree `/home/sittingmongoose/pm-worktrees/DS-fix3`, removed after the final push. No native execution, full-depth admission, seal or landing is claimed.
 
