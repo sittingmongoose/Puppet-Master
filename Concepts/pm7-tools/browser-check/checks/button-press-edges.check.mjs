@@ -36,6 +36,8 @@ export default async function(t) {
     const misses=[],moved=[],scaled=[],covered=[],undecorated=[];let presses=0;
     for(let i=0;i<count;i++) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
+     const isLink=await c.evaluate(e=>e.matches('.o55-link'));let linkShot=false;
+     if(isLink&&t.args.inventoryOut&&motion==='no-preference')await t.crop(`${look}-${screen}-link-rest`,c,'Native underline at rest after moving text into its visual layer.');
      const rest=await f.evaluate(async({sel,i})=>{
       const e=document.querySelectorAll(sel)[i];e.__pressId=i;getComputedStyle(e).transform;
       const ancestors=[];for(let n=e;n&&n!==document.body;n=n.parentElement)ancestors.push(n);
@@ -59,10 +61,11 @@ export default async function(t) {
       await t.page.mouse.move(off.x+x,off.y+y);if(t.args.marks)await t.mark(`down ${trial}`);await t.page.mouse.down();
       // Sampling starts in pointerdown capture, before owner press handlers and the first painted frame.
       await f.waitForTimeout(hold);
-      const drift=await f.evaluate(()=>({...window.__press.metrics}));
       const read=()=>f.evaluate(({sel,i})=>{const e=document.querySelectorAll(sel)[i],r=e.getBoundingClientRect(),kid=e.firstElementChild,ks=kid?getComputedStyle(kid):null;
        return {x:r.x,y:r.y,w:r.width,h:r.height,transform:getComputedStyle(e).transform,active:e.matches(':active'),linkUnderline:!e.matches('.o55-link')||!kid||ks.textDecorationLine.includes('underline'),kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
       let h=await read();
+      if(isLink&&t.args.inventoryOut&&motion==='no-preference'&&!linkShot){await t.crop(`${look}-${screen}-link-held`,{x:off.x+rest.x,y:off.y+rest.y,width:rest.w,height:rest.h},'Native underline stays with the pressed text while the link target is stationary.');linkShot=true;}
+      const drift=await f.evaluate(()=>({...window.__press.metrics}));
       if(t.args.marks)await t.mark(`up ${trial}`);await t.page.mouse.up();presses++;
       const got=await f.evaluate(trial=>({c:window.__press.clicks.filter(x=>x.trial===trial),d:window.__press.downs.filter(x=>x.trial===trial)}),trial);
       if(!(got.d.length===1&&got.d[0].id===i&&got.c.length===1&&got.c[0].id===i))misses.push({trial,down:got.d.map(x=>x.id),click:got.c.map(x=>x.id),held:h.transform});
