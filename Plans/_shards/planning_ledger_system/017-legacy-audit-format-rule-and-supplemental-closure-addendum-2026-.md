@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1617-L1695
+Source lines: L1617-L1705
 
-Source SHA256: `82252cfc58c1c7eafee34c7519b8c5621a52ae725871d648b8d4d22bbfb5d89a`
+Source SHA256: `e75c9542de088d35a73ffe216be025591beabb77f564d618e5aace128cef463e`
 
 ---
 
@@ -21,14 +21,20 @@ status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: The per-audit closure check of scripts/pm-audit-closure.py applies the legacy format rule
   pm.audit_closure.legacy_format.v1 to the 55 audit directories written in June 2026 that the validator names in its
-  closed LEGACY_AUDIT_DIRS list, and to no other directory. For those directories only, it reports these format and
+  closed LEGACY_AUDIT_DIRS list, and to no other directory, and only while each is still its historical self - the
+  real directory Plans/.audits/<name> with no symlink in its path, whose files match the frozen inventory
+  Plans/.audits/_legacy_format_inventory.json (pinned by SHA-256 in the validator; only repair_closure_matrix.jsonl
+  may grow, by appended lines, and only its frozen rows count as historical). Appended matrix rows, new content under
+  a listed name and edited historical files get the full rules. For those directories only, it reports these format and
   schema-evolution errors as one warning per directory instead of as errors - missing or empty audit_id, ledger_id,
   baseline_ref, subject_ref or observation_ref; an absent audit_scope_manifest.jsonl or repair_impact_matrix.jsonl,
   and the scope manifest's family coverage while that file is absent; audit-finding and closure-matrix row fields
   that came with the newer schema (finding_family, the identity lists, repair_required, finding_level, finding_key)
-  when the row lacks them; finding keys built by the older key algorithm; an audit_report.json without
-  repair_required_count or without a status; and closure rows over source rows that the compatibility inference,
-  not an explicit repair_required or finding_level field, treats as non-actionable. The rule never excuses a missing
+  when the row lacks them; finding keys built by the older key algorithm (for a closure-matrix row, only when its
+  identity fields give the same deterministic key as the identity fields of the registry closure it links to); an
+  audit_report.json without repair_required_count or without a status; and historical closure rows over source rows
+  that the compatibility inference, not an explicit repair_required or finding_level field on any row with that key,
+  treats as non-actionable. The rule never excuses a missing
   closure row or any other substantive gap. An uncovered actionable source row, a missing closure matrix, a closure
   row without its source row, status, evidence, reason or registry closure, a registry link that does not hold,
   missing evidence, a stated status that contradicts the computed one, an artifact that is present but incomplete,
@@ -46,8 +52,10 @@ depends_on:
 - PLS-025
 unblocks: []
 acceptance_criteria:
-- python3 scripts/pm-audit-closure.py self-test passes, covering the closed list and its pre-July dates, symlinked,
-  relocated and unlisted directories, every demoted and every kept kind, the conditions on report status, scope
+- python3 scripts/pm-audit-closure.py self-test passes, covering the closed list and its pre-July dates, symlinked
+  leaves and parents, external and unlisted directories, edited historical files and matrix prefixes, a changed
+  inventory pin, appended matrix rows, a historical row whose identity disagrees with its registry closure, duplicate
+  validator-result names with a stated classification, every demoted and every kept kind, the conditions on report status, scope
   manifest and over-coverage, explicit versus inferred over-coverage, the single warning, and that a listed and a
   July directory with the same files produce the same messages, only classified differently.
 - On the repository, every audit directory outside the list reports exactly the errors and warnings it reported
@@ -65,6 +73,7 @@ implementation_surfaces:
 - scripts/pm-audit-closure.py
 - Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl
 - Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/supplemental_closure_pass-20261105.json
+- Plans/.audits/_legacy_format_inventory.json
 node_compile_hint:
   mode: contract_specification
   create_worknodes: false
@@ -76,6 +85,7 @@ source_lineage:
 preserved_exact_tokens:
 - pm.audit_closure.legacy_format.v1
 - LEGACY_AUDIT_DIRS
+- _legacy_format_inventory.json
 - supplemental_closure_pass
 - never excuses a missing closure row or any other substantive gap
 negative_constraints:

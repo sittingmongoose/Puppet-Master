@@ -28542,9 +28542,16 @@ canonical_text: >-
   because its uncovered row is a real gap. (b) The audit directories written before July 2026 get a legacy rule for
   format and schema-evolution errors only; new audits stay under the full rules. The legacy rule must not excuse a
   missing closure row or any other substantive gap in any audit. This loosens a check, and the limit is stated plainly
-  in Plans/Planning_Ledger_System.md#PLS-026: on the 2026-11-05 tree the rule reports 31,793 of the 44,559 per-audit
-  errors of the 55 June directories as warnings and keeps 12,766 as errors; every directory from July on reports
-  exactly what it reported before.
+  in Plans/Planning_Ledger_System.md#PLS-026. Measured on the audit data of commit 6fac1ed357 (after the
+  audit-20260619-002 and audit-20260619-004 supplemental rows), with the closure matrix required and effective status
+  optional: the 55 June directories report 44,557 per-audit errors under the earlier validator; the rule reports
+  31,793 of them as warnings and keeps 12,764 as errors, and 19 of the 55 directories pass; every directory from July
+  on reports exactly what it reported before. The rule also covers closure rows over source rows that are
+  non-actionable only by the compatibility inference: those rows predate the explicit repair_required field, so
+  whether they need repair is inferred, and a historical closure that over-covers them leaves nothing unrepaired. A
+  row that states repair_required or finding_level, or a closure row added later, keeps that error. The same answer,
+  relayed by the coordinator, extends the supplemental pass to every June audit with an uncovered actionable row; a
+  row closes only if its repair is real against current canon.
 gui_related: false
 gui_classification_reason: Records a governance decision about historical audit validation; no GUI contract changes.
 split_recommended: false
