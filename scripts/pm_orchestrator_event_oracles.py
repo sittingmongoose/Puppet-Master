@@ -451,6 +451,15 @@ def selected_validators(root, format_checker):
     return result
 
 
+def member_payload_schema_id(definition, version):
+    """The envelope's payload_schema_id, from the selected definition.
+
+    SP-320 board members carry no stored schema_id, so this never reads one from
+    the payload; for the other families their schema's const pins the same name.
+    """
+    return f'pm.event_payload.{definition}.v1@{version}'
+
+
 def event_errors(case, schema, identity, retry_allowed, root, formats, *, historical=False):
     event, payload = case['event'], case['logical_payload']
     numeric_errors = record_number_errors([
@@ -480,7 +489,7 @@ def event_errors(case, schema, identity, retry_allowed, root, formats, *, histor
     expected = {'idempotency_key': key, 'event_id': event_id, 'scope_kind': payload['scope'],
                 'project_id': payload.get('project_id'), 'thread_id': payload['thread_id'],
                 'run_id': payload['run_id'], 'occurred_at_utc': payload['occurred_at_utc'],
-                'payload_schema_id': payload['schema_id'] + '@' + payload['schema_version']}
+                'payload_schema_id': member_payload_schema_id(case['definition'], payload['schema_version'])}
     errors += ['event_join_' + k for k, value in expected.items() if event.get(k) != value]
     if case['scope_partition'] != partition(payload):
         errors.append('scope_partition')
