@@ -47,8 +47,9 @@ export default async function(t) {
  await A.click('pairInstead',undefined,'nas-pmpair'); await A.click('back',undefined,'nas-find');
  await t.equal('typed address kept',await f.locator('#o55f-addr').inputValue(),'192.168.1.20');
  await t.equal('typed port kept',await f.locator('#o55f-port').inputValue(),'22');
- // Media server can only use SSH; Check again models the person enabling it on that NAS.
+ // Media server can only use SSH; changing the typed endpoint must not offer pairing for Home NAS.
+ await A.click('next',undefined,'nas-pmpair'); await A.click('useSsh',undefined,'nas-identity'); await A.click('back',undefined,'nas-find');
  await A.fill('o55f-addr','192.168.1.31'); await t.count(L+'[data-o55-do="pairInstead"]',0);
- await A.click('checkAgain'); await A.waitEnabled('next'); await A.click('next',undefined,'nas-identity'); await A.click('back',undefined,'nas-find');
+ await A.waitEnabled('next'); await A.click('next',undefined,'nas-identity'); await A.click('back',undefined,'nas-find');
  for(const wording of ['ELI5','Expert']) {await f.evaluate(w=>O55.talk.set(w),wording);await t.count(L+'[data-o55-do="pairInstead"]',0);}
 }

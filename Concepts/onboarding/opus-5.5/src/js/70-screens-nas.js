@@ -67,6 +67,11 @@
     S.save();
   }
 
+  const canPairInstead = (S) => {
+    const n = N(S), d = n.manual ? S.env.devices.find((x) => sameHost(x.address, n.addr)) : picked(S);
+    return (n.method || 'ssh') === 'ssh' && n.useSsh && !!d && d.pm && d.id === n.device;
+  };
+
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {
     chapter: 'project', stage: 'server_storage_client',
@@ -135,7 +140,7 @@
         else if (!d) reason = T('nas.find.choose');
       }
       else if (m === 'mounted') ok = !!n.volume && volumes(S).includes(n.volume); else { ok = !!shareOf(S); reason = n.shareManual ? T('nas.find.shareBad.' + m) : T('missing.storage'); }
-      return { secondary: m === 'ssh' && d && d.pm && d.id === n.device && n.useSsh
+      return { secondary: canPairInstead(S)
         ? [{ label: T('nas.pmpair.pairInstead'), do: 'pairInstead' }] : [],
         primary: { label: T('chrome.continue'), do: 'next', disabled: !ok, reason } };
     },
@@ -168,8 +173,8 @@
       /* The mirror of Use SSH instead changes only the way into this committed NAS. A pending different device
          must never redirect pairing or discard the SSH facts and pairing choice already held for this one. */
       pairInstead(S) {
-        const n = N(S), d = picked(S);
-        if ((n.method || 'ssh') !== 'ssh' || !n.useSsh || !d || !d.pm || d.id !== n.device) return;
+        const n = N(S);
+        if (!canPairInstead(S)) return;
         n.useSsh = false; S.save(); O55.ui.go('nas-pmpair');
       },
       manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
