@@ -1,3 +1,75 @@
+# DG6A: sweep part 1 (fixture pass)
+
+Branch `plans/ea-w2-gui-concerns-20261104`. **Fix commit:** `d3045f0ca5`. **Start:** text-pass head `5f61b7d259`. **Rebase:** none; the text pass did not abort its rebase, so this round stayed on base `2989975e8f`.
+
+This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+## Sweep part 1 (fixture pass): findings and responses
+
+| # | Item | Result | Commit |
+|---|---|---|---|
+| 1 | B1, registered Storage schema checks | Fixed, awaiting review. Left as it is; its checkers rerun below. | `806ee0517c` (round 10) |
+| 2 | B2, standalone timestamp probes | Fixed, awaiting review. Left as it is; its checkers rerun below. | `eac56c62de` (round 10) |
+| 3 | `Plans/card5_event_contracts/manifest.json:4` named the old decision branch | **Fixed.** | `d3045f0ca5` |
+| 4 | Cycle-9 note 4, index state | No lane edit. Its text-pass "resolved" no longer holds at today's `origin/main`; see "Index findings". | none |
+
+### Item 3: stale decision source
+
+- **Where:** `Plans/card5_event_contracts/manifest.json:4`.
+- **Why it broke:** the manifest still read `"decision_branch": "plans/ea-cards2-answers-20261105"` after DL-437..443 landed. Nothing read the field, so nothing noticed.
+- **Fix:** the key is now `"decision_source": "Plans/Decision_Log.md"`. No script read the old key.
+- **Guard:** `decision_citation_errors`, `scripts/pm-card5-event-contracts-check.py:119`, called from `main` through `decision_citation_cases` (`:138`). Each of the nine Card 5 families now requires the landed source, no leftover branch key, exactly one `### DL-nnn:` entry for its decision, and its exact option-A text in that entry's `A (recommended)` line.
+- **Negatives:** 7 per family plus 1 control, all in the normal family suite: stale branch source, non-string source, old key kept, unknown decision, foreign decision, changed option text, non-string option text.
+- **Verify:** `python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved`, or the removal table below.
+
+**Guard removal (each predicate alone, complete process, all nine families):** controls 9 x 0. Every row 9 x 1. Evidence: `drafts/DG6A/sweep-p1/fixture-pass/citation-removal.json`.
+
+| Predicate removed | First failure |
+|---|---|
+| source must be the landed log | `stale_branch_source` accepted |
+| old branch key refused | `old_branch_key_kept` accepted |
+| exactly one decision entry | `unknown_decision` raises `ValueError` |
+| option text in that entry | `foreign_decision` accepted |
+| option text exact type | `option_text_not_string` raises `TypeError` |
+
+The source test is exact string equality, so `source_not_string` needs no separate type predicate. This is a witness for this guard only, not a whole-lane check-11 claim; that stays S1.
+
+**Case counts:** each of the nine families gains 8 observations. `bundle.annotation_state_changed` 345, `bundle.note_created` 954, `bundle.note_status_changed` 961, `concern.assigned` 988, `concern.evidence_linked` 967, `concern.promoted` 989, `concern.reopened` 968, `concern.resolved` 1014, `concern.updated` 968. Complete-family total 11,598 to 11,670.
+
+### Checks (serial, at `d3045f0ca5`)
+
+| Command (under `scripts/`) | Exit |
+|---|---|
+| `pm-alert-event-contracts-check.py --family`, 4 families | 4 x 0 |
+| `pm-panel-event-contracts-check.py --family`, 2 families | 2 x 0 |
+| `pm-concern-created-contracts-check.py --family concern.created` | 0 |
+| `pm-card5-event-contracts-check.py --family`, 9 families | 9 x 0 |
+| `pm-dg6a-domain-check.py --family`, 7 families | `concern.created` 0; six alert and panel families 1, the known S2 assertion at `pm-dg6a-domain-check.py:101` (`prior_revision` or `prior_host_revision` 18446744073709551616). Part 2, unchanged. |
+| `pm-dg6a-guard-check.py --family`, 7 families | 7 x 0 |
+| `pm-dg6a-final-regression-check.py --family`, 7 families | 7 x 0 |
+| `pm-dg6a-final-regression-check.py --audit-grade-only` | 0 |
+| `pm-storage-profile-check.py` | 1, on this head and on `origin/main` `6861d332de`. The two outputs differ only in `families` (377 vs 344) and `profiles` (336 vs 303); every error line matches. Not lane-caused. |
+| `pm-shard-plans.py --generate` / `--check` | 0 / 0 |
+| `pm-plan-index.py generate` | 0; only four `generated_at_utc` clock lines change, so nothing derived is committed |
+| `pm-plan-index.py validate` | **1**, top-level `fail`, 24 findings |
+
+### Index findings
+
+All 24 are **new here and not on `origin/main`**; `origin/main` `6861d332de` validates with exit 0, no findings.
+
+- **Where:** 3 x `plan_unit_removed_without_ledger_decision` (DL-337, DL-338, DL-339), and 21 x `plan_unit_removal_ledger_invalid` (legacy ledger records, read only when a removal is detected).
+- **Why:** `pm-plan-index.py` compares against `origin/main`, which gained those three units after this lane's base. This lane removes nothing.
+- **Check:** the same validation with the baseline set in memory to the merge base `2989975e8f` exits 0, no findings. No source or index was edited for it.
+- **Fix:** the next rebase onto `origin/main` clears them.
+
+### Grades and other records
+
+Family grades are carried unchanged: all sixteen families 9 PASS / 2 PARTIAL / 1 ABSENT. C1 membership ABSENT, C7 retention PARTIAL, C12 PARTIAL pending the shared tools. Native NOT_RUN. `DG6A.self-grade.json` is unchanged; its quotes still resolve (`--audit-grade-only` exits 0).
+
+Part 2 items 1-4 below are unchanged. No Decision Log entry, registry append, admission, seal, `Spec_Lock`, `.evidence`, `auto_decisions`, `.gitignore` or frozen-validator edit. No pm-mail or subagent.
+
+---
+
 # DG6A — Sweep part 1 (text pass)
 
 Branch `plans/ea-w2-gui-concerns-20261104`; lane input `5c7b434364d88fe44cffa60185237ad6f7298101`; rebased onto `origin/main` `2989975e8f8a4a1e49235e8ae2095b3df7ea0321`. Technical head `1a3c3be654` (citations `72326566ea`; self-grade relocation `1a3c3be654`); this report commit is self-inclusive. Text pass only: rebase, landed citations, deck confirmation, checker runs, regeneration. No checker, fixture, schema or proof edit; no Decision Log entry, admission, registry append or governance artifact.
