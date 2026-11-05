@@ -7267,6 +7267,8 @@ canonical_text: |-
   history_families checks standing check 10 for each exact family: a retained original is returned unchanged after completion and when the source revision, request digest, counters or (for rebuilds) selector have changed; a withdrawal fence, revoked access, forged hash, rehashed changed value, rehashed foreign identity, missing start custody, unwritten original, another family's type and a trailing-LF type refuse without changing state. reference_cases checks standing check 9: before any instance validation the checker walks every subschema of every schema document it uses and of the registry mirrors, follows nested $id bases, resolves every $ref offline and fails on any unresolved one. Each family has dormant, active, nested-base, cross-document and unknown-document mutations, and definitions are validated inside their own documents.
 
   These are a static contract model and adversarial fixtures. They do not execute MemoryMaintenance, authenticate real SP-286 receipts, validate physical SeglogFrameV2 bytes or prove redb/filesystem atomicity/flush, native crash recovery, backup/restore or read-time deletion/permission races. Those native obligations remain NOT_RUN. Static success confers no Event Authority, retention assignment or deletion policy. The four monthly-summary/prune families have conditional payload and operation definitions under ATS-316; activation still requires their own admission, operation/result retention resolution and an authenticated DL-403 cutoff approval. No cutoff values are selected.
+
+  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe and guard-proof machinery issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -7315,13 +7317,15 @@ canonical_text: For memory.monthly_summary.started, memory.monthly_summary.compl
   2.0.0, encoded Project partition, storage-assigned retry-field exclusion, replay-only refusal, both terminal outcomes,
   CAS, start receipt on all writer/effect/recovery/history paths and SP-278 storage joins. Test cutoff refusal for
   automatic, Memory-panel and direct invocation with no operation/effect/append/output; buttons unavailable with
-  a reason; synthetic approval control never selects cutoff values. Historical originals stay readable with current
+  a reason; synthetic authority exercises the DL-446/DL-447 approved values without granting runtime admission. Historical originals stay readable with current
   cutoffs absent and source/request/counters changed, but forgery, access revocation and withdrawal refuse. Archive
   oracles compare selected originals in full except the allowed archived change, preserve all evidence refs/version refs and pins, and reject deletion/merging a pin. Cutoff lookup keys, resolved self-references and frozen operation refs must identify exactly one record; copied content hashes and all owner fields agree. A contradictory or ambiguous reference refuses despite coherent rehashing and intact start custody. Every negative is derived
   from an intact control; run the whole negative corpus with each logical guard removed, report negatives that flip
   and all others that remain rejected, and restore the guard. A failed oracle must produce a nonzero process exit;
   unresolved refs including dormant branches fail. Bounds enforce 16 KiB and trailing LF rejection. Physical transactions,
-  receipts, flushes and native GUI execution are NOT_RUN. No admission or numeric cutoff is authorized.
+  receipts, flushes and native GUI execution are NOT_RUN. No admission or runtime activation is authorized by these tests.
+
+  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe and guard-proof machinery issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
 gui_related: true
 gui_classification_reason: Includes unavailable Memory-panel button contract.
 depends_on:
@@ -7351,5 +7355,5 @@ preserved_exact_tokens:
 - cutoffs_unavailable
 - NOT_RUN
 negative_constraints:
-- No selected cutoff, admission or native proof.
+- No admission, automatic deletion or native proof.
 ```

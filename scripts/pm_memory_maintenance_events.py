@@ -1283,6 +1283,12 @@ def storage_metadata():
     return result
 
 
+def memory_policy():
+    spec = importlib.util.spec_from_file_location('_dmem_policy', ROOT / 'scripts/pm_memory_policy.py')
+    result = importlib.util.module_from_spec(spec); spec.loader.exec_module(result)
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(); parser.add_argument('--family'); args = parser.parse_args()
     check_resources()
@@ -1320,6 +1326,7 @@ def main():
     domains = boundary_domains().run(__import__('sys').modules[__name__], contexts, fixtures['cases'])
     recipes = write_recipes().run(__import__('sys').modules[__name__], contexts)
     metadata = storage_metadata().run(__import__('sys').modules[__name__], contexts)
+    policy = memory_policy().run(__import__('sys').modules[__name__], families)
     identifier_names = [case['name'] for case in fixtures['identifier_cases']]
     assert len(identifier_names) == len(set(identifier_names))
     assert {event.replace('.', '_') + ':' + name for event in families
@@ -1352,6 +1359,9 @@ def main():
             assert token in section
         for token in (contract['payload_schema_id'], contract['replay_policy'], 'replay_only_not_appendable'):
             assert token in section
+        if contract['event_type'].startswith('memory.dedup_sweep.'):
+            assert contract['approved_policy']['decisions'] == ['DL-444', 'DL-445']
+            assert all(token in section for token in ('DL-444', 'DL-445', 'E-CARDS-2 Card 6.a'))
         # The one start custody gate is written in this family's own storage unit, citing SP-286 and its owners.
         gate = section.split('Start custody gate for exactly ' + contract['event_type'] + '@1.0.0', 1)[1].split('\n\n', 1)[0]
         for token in ('SP-286', 'CV-339', unit, contract['semantic_owner'].split('#')[1],
@@ -1364,7 +1374,7 @@ def main():
                       'start_custody_matrix': matrix, 'history_cases': history,
                       'canonical_history_cases': canonical_history,
                       'numeric_writer_cases': numeric_writers, 'boundary_domains': domains, 'write_recipes': recipes,
-                      'storage_uint64': metadata,
+                      'storage_uint64': metadata, 'card6_policy': policy,
                       'schema_reference_cases': references, 'registry_mirrors_reference_checked': mirrors,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 

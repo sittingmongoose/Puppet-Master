@@ -24504,6 +24504,8 @@ canonical_text: Newly authored closed payload owner contract for exactly memory.
   status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
   bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-630, not borrowed
   from another event.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -24549,6 +24551,8 @@ canonical_text: Newly authored closed payload owner contract for exactly memory.
   the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
   mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
   identity and ordered recovery are defined for this family by SP-631, not borrowed from another event.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -24858,7 +24862,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared
   without admission. Search and negative evidence: this exact family''s row in reports/event-authority-20261104/DMEM-card1b-search.json.
-  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This
+  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This
   unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0
   through cmd.chat.memory.prune_archive, the same authenticated in-process handler for GUI and internal maintenance.
   Project-only edition, never a synthetic Project for AMS-054 app-thread memory; application editions and their
@@ -24868,8 +24872,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.p
   Archive eligible very low-activation originals in place with their versions and EvidenceRefs; never delete them.
   Never archive or merge a pinned memory. The optional UCC-085 policy argument may only identify the approved cutoff
   policy, never override it or introduce deletion. Both jobs only archive and only the user deletes a memory (DL-402);
-  pins still permit verification, index rebuilds and out-of-date marking. The duplicate-sweep survivor/disposition
-  remains undecided and is not changed here.
+  pins still permit verification, index rebuilds and out-of-date marking. The separate duplicate-sweep survivor and archive disposition follow DL-444 and DL-445; they do not set these archive-job cutoffs.
 
 
   Explicit adoption for this exact family: adopt every producer, first-append, operation-CAS, outcome, replay, redaction,
@@ -24913,15 +24916,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.p
   read all use this rule. The counterpart''s own unit is CV-659.
 
 
-  DL-403 cutoff gate is additional to admission and start custody. No approved cutoff exists today: neither automatic
-  nor Memory-panel dispatch may accept, create an operation, append either family, settle an effect, recover an
-  effect, or return a writer retry. Refuse cutoffs_unavailable with unchanged durable state and no output. Both
-  panel buttons are unavailable with the reason "Approved age and activation-score cutoffs are missing". A direct/programmatic
-  invocation cannot bypass it. When Jared approves an owner proposal, resolve that exact authenticated owner-approved
-  policy for this job and this Project, freeze its ref/content hash in the initial operation and request digest,
-  and recheck it before each current writer/effect boundary. A Boolean, caller policy argument, wrong-scope ref,
-  altered digest or sibling-job approval is insufficient. The lookup key, resolved record''s own cutoff_ref and frozen operation cutoff_ref must be equal and resolve to exactly one owner record, never multiple alias records. The resolved job/scope/Project and recomputed content hash must agree with the frozen operation, request binding and every copied start/terminal payload field. A coherent rehash cannot authorize contradictory refs. Fixtures contain a synthetic resolver record solely to
-  test this conditional contract; they select no real cutoff values and create no approval. History reads do not
+  DL-447 answers DL-403 for this exact job with E-CARDS-2 Card 6.d option A. Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
+
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
   refuses.
@@ -24975,7 +24972,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- Exact family has its own conditional contract; no admission or selected cutoff.
+- Exact family has its own conditional contract; approved DL-447 cutoff; no admission.
 - Archive-only, pin/evidence preservation and cutoff refusal pass ATS-316.
 validation_surfaces:
 - python3 scripts/pm_memory_archive_events.py
@@ -24995,7 +24992,7 @@ preserved_exact_tokens:
 - cutoffs_unavailable
 - RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
-- No admission, cutoff value, user deletion policy expansion, app edition or native proof.
+- No admission, automatic deletion, user deletion policy expansion, app edition or native proof.
 ```
 
 
@@ -25008,7 +25005,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.started@1.0.0, prepared
   without admission. Search and negative evidence: this exact family''s row in reports/event-authority-20261104/DMEM-card1b-search.json.
-  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This
+  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This
   unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.started.v1@1.0.0
   through cmd.chat.memory.prune_archive, the same authenticated in-process handler for GUI and internal maintenance.
   Project-only edition, never a synthetic Project for AMS-054 app-thread memory; application editions and their
@@ -25018,8 +25015,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.p
   Archive eligible very low-activation originals in place with their versions and EvidenceRefs; never delete them.
   Never archive or merge a pinned memory. The optional UCC-085 policy argument may only identify the approved cutoff
   policy, never override it or introduce deletion. Both jobs only archive and only the user deletes a memory (DL-402);
-  pins still permit verification, index rebuilds and out-of-date marking. The duplicate-sweep survivor/disposition
-  remains undecided and is not changed here.
+  pins still permit verification, index rebuilds and out-of-date marking. The separate duplicate-sweep survivor and archive disposition follow DL-444 and DL-445; they do not set these archive-job cutoffs.
 
 
   Explicit adoption for this exact family: adopt every producer, first-append, operation-CAS, outcome, replay, redaction,
@@ -25063,15 +25059,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.p
   read all use this rule. The counterpart''s own unit is CV-658.
 
 
-  DL-403 cutoff gate is additional to admission and start custody. No approved cutoff exists today: neither automatic
-  nor Memory-panel dispatch may accept, create an operation, append either family, settle an effect, recover an
-  effect, or return a writer retry. Refuse cutoffs_unavailable with unchanged durable state and no output. Both
-  panel buttons are unavailable with the reason "Approved age and activation-score cutoffs are missing". A direct/programmatic
-  invocation cannot bypass it. When Jared approves an owner proposal, resolve that exact authenticated owner-approved
-  policy for this job and this Project, freeze its ref/content hash in the initial operation and request digest,
-  and recheck it before each current writer/effect boundary. A Boolean, caller policy argument, wrong-scope ref,
-  altered digest or sibling-job approval is insufficient. The lookup key, resolved record''s own cutoff_ref and frozen operation cutoff_ref must be equal and resolve to exactly one owner record, never multiple alias records. The resolved job/scope/Project and recomputed content hash must agree with the frozen operation, request binding and every copied start/terminal payload field. A coherent rehash cannot authorize contradictory refs. Fixtures contain a synthetic resolver record solely to
-  test this conditional contract; they select no real cutoff values and create no approval. History reads do not
+  DL-447 answers DL-403 for this exact job with E-CARDS-2 Card 6.d option A. Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
+
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
   refuses.
@@ -25125,7 +25115,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- Exact family has its own conditional contract; no admission or selected cutoff.
+- Exact family has its own conditional contract; approved DL-447 cutoff; no admission.
 - Archive-only, pin/evidence preservation and cutoff refusal pass ATS-316.
 validation_surfaces:
 - python3 scripts/pm_memory_archive_events.py
@@ -25145,5 +25135,5 @@ preserved_exact_tokens:
 - cutoffs_unavailable
 - RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
-- No admission, cutoff value, user deletion policy expansion, app edition or native proof.
+- No admission, automatic deletion, user deletion policy expansion, app edition or native proof.
 ```

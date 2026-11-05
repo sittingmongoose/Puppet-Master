@@ -401,7 +401,7 @@ Required operations:
 1. Rebuild Tantivy index from `assistant_memory.redb`
 2. Rebuild USearch index from `assistant_memory.redb` (re-embed + rebuild)
 3. Verification sweep: re-evaluate verification_state for all gists
-4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
+4. Dedup sweep: merge only eligible identical `embed_text_hash` gists. Keep the oldest by original creation time, breaking ties by the unchanging note ID. Preserve every evidence reference and the merge record. Archive the other eligible originals with identities, evidence references, versions and survivor links retained; history remains available and automatic deletion is forbidden (DL-444, DL-445). Pins stay excluded; skip a merge that pin protection forbids.
 5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
 6. Prune/archive: archive very low-activation gists only (DL-402). Monthly summary and prune only archive; deletion is only by the user. Monthly summaries keep their originals archived with all EvidenceRefs. Neither job archives or merges a pinned memory; pins still permit verification, index rebuilds and out-of-date marking.
    ContractRef: ContractName:Plans/Decision_Log.md#DL-402
@@ -413,8 +413,14 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-
 Rule: Maintenance operations MUST be user-invokable in GUI and callable by internal maintenance jobs with explicit success/failure status.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 
-Rule: Monthly summary and prune/archive MUST NOT run automatically or from the Memory panel until cutoffs exist (DL-403). Their two panel buttons MUST be unavailable and explain that approved cutoffs are missing. The memory owner proposes exact age and activation-score cutoffs for Jared to decide; none is selected here.
-ContractRef: ContractName:Plans/Decision_Log.md#DL-403
+Rule: DL-446 answers DL-403 for monthly summary (E-CARDS-2 Card 6.c, option A). Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+
+Rule: DL-447 answers DL-403 for prune/archive (E-CARDS-2 Card 6.d, option A). Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+
+Rule: Usefulness is section 6.3's computed ranking, not a percentage. Use its existing per-kind and Done decay and zero contribution for each missing BM25/ANN score. These approved cutoffs replace the missing-cutoffs condition only. Automatic jobs and Memory-panel buttons remain unavailable until all remaining definition, review and recording approvals pass; actual Project permission, admission, operation/result retention, single-writer/source fences and original-start custody still gate dispatch and effects. A missing authenticated policy binding still refuses `cutoffs_unavailable`; a caller Boolean or arbitrary policy cannot authorize a job.
+
+Source: E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105. Jared's verbatim answer was "i approve all of it"; the deck's fast-reply rule maps that answer to option A.
+ContractRef: ContractName:Plans/Decision_Log.md#DL-402, ContractName:Plans/Decision_Log.md#DL-403, ContractName:Plans/Decision_Log.md#DL-444, ContractName:Plans/Decision_Log.md#DL-445, ContractName:Plans/Decision_Log.md#DL-446, ContractName:Plans/Decision_Log.md#DL-447
 
 ---
 
@@ -3165,9 +3171,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.d
   Reuse UCC-085''s cmd.chat.memory.dedup_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
   This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
   or expand AMS-054''s app memory; app-thread events require their own owner binding. Merge only identical embed_text_hash
-  candidates under section 7.2, preserving the union of EvidenceRefs, pins and existing claim provenance. This contract
-  chooses no deletion method, survivor selection or policy-driven eligibility; an unset policy blocks the underlying
-  mutation. Never infer gist admission from this maintenance event.
+  candidates under section 7.2, preserving the union of EvidenceRefs, pins and existing claim provenance. Existing owner eligibility gates still apply; an unset eligibility policy blocks the underlying mutation. Never infer gist admission from this maintenance event.
 
   The exact emitter is MemoryMaintenance.dedup_sweep.completed.v1@1.0.0. GUI command and internal job use the same
   authenticated in-process handler and durable operation identity; this defines no new UI command or job schedule.
@@ -3175,8 +3179,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.d
   No event is an instruction to merge, verify, delete, index or inject. Failure details are opaque authorized result
   refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload
   joins are governed by CV-650; persistence and read-only history by SP-630. Existing pinned protection, claim verification,
-  NullMemoryProvider and locked-rule rules survive. Policy-dependent deletion remains unavailable until Jared settles
-  it. Native emission and recovery are NOT_RUN.'
+  NullMemoryProvider and locked-rule rules survive. Automatic deletion is forbidden by DL-445; only the user deletes memories. Native emission and recovery are NOT_RUN.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -3201,7 +3206,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- No admission, automatic deletion, app-scope expansion or native proof.
 ```
 
 
@@ -3217,9 +3222,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.d
   Reuse UCC-085''s cmd.chat.memory.dedup_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
   This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
   or expand AMS-054''s app memory; app-thread events require their own owner binding. Merge only identical embed_text_hash
-  candidates under section 7.2, preserving the union of EvidenceRefs, pins and existing claim provenance. This contract
-  chooses no deletion method, survivor selection or policy-driven eligibility; an unset policy blocks the underlying
-  mutation. Never infer gist admission from this maintenance event.
+  candidates under section 7.2, preserving the union of EvidenceRefs, pins and existing claim provenance. Existing owner eligibility gates still apply; an unset eligibility policy blocks the underlying mutation. Never infer gist admission from this maintenance event.
 
   The exact emitter is MemoryMaintenance.dedup_sweep.started.v1@1.0.0. GUI command and internal job use the same
   authenticated in-process handler and durable operation identity; this defines no new UI command or job schedule.
@@ -3227,8 +3230,10 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.d
   verify, delete, index or inject. Failure details are opaque authorized result refs, never gist text, prompts,
   embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed by CV-651; persistence
   and read-only history by SP-631. Existing pinned protection, claim verification, NullMemoryProvider and locked-rule
-  rules survive. Policy-dependent deletion remains unavailable until Jared settles it. Native emission and recovery
-  are NOT_RUN.'
+  rules survive. Automatic deletion is forbidden by DL-445; only the user deletes memories. Native emission and recovery
+  are NOT_RUN.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -3253,7 +3258,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- No admission, automatic deletion, app-scope expansion or native proof.
 ```
 
 

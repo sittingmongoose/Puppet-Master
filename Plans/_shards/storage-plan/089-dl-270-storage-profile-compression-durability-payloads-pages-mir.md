@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L30272
+Source lines: L28057-L30262
 
-Source SHA256: `0a774337a16a83581462ec99314619efc40e8965f5dbba5bb47a5bfd1b3ab301`
+Source SHA256: `df5a309fdd04a5e02ad1ee17f29bb1b2baf67ad10772d1d69fd6f9da97c2872e`
 
 ---
 
@@ -1459,6 +1459,8 @@ canonical_text: |-
   Current producer-semantic projections and current identity inputs use safe-integer-write-v2: their numeric leaves are integers in the I-JSON safe range -9007199254740991 through 9007199254740991; existing nonnegative domains keep their lower bound. This producer route excludes Storage-assigned sequence_id, observed_at_utc and persisted_at_utc under Contracts_V0.md#EventRecord. Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type; booleans, floats and strings refuse. Fresh writes and metadata-only retries preserve that full domain without a producer-number ceiling. Decode decimal/exponent tokens losslessly before validation. Identity, idempotency, result and target commitments use sorted-key compact UTF-8 JSON after recursive exact integer normalization: 1, 1.0 and 1e0 encode as 1; -0 encodes as 0. Current producer fractions, nonfinite values and out-of-range producer integers refuse before hashing or append. Full EventRecord commitments reuse the existing integer-json-v1 encoding with exact Storage uint64 metadata; no new serializer is introduced. Historical originals instead use their frozen write-time recipe integer-json-v1: pm.event.v0 envelope editions 1.0.0 and 2.0.0 both retain their original unbounded integral sequence domains; operation/target edition 1.0.0 uses the explicit historical_ definitions frozen from 77323e87d65908dbce2ea655ee344b6185a13ff1, including artifact byte_length up to 9223372036854775807. The two envelope editions share the same numeric/hash recipe, and current writes are a byte-identical subset, so no edition change can select weaker numeric hashing. Reader dispatch is closed by schema_id/schema_version; no caller recipe override, permissive fallback or current writer predicate reaches a historical commitment. The original full-value commitment is recomputed under that recipe with no rewrite of retained values, hashes, frozen operation or receipt. Historical numeric decoding preserves the original typed integer or binary64 stored value; a current lossless decimal parse never reinterprets an older binary64 original. Original verification in current-writer retries and checkpoint reader projections uses the same frozen recipe; only the new caller producer-semantic projection and new-write producer admission use the strict current recipe; new caller Storage metadata is independently checked against SP-236. Valid retained large integers remain readable in canonical, replay-only, compatibility and compatibility-replay modes after live state/admission/cutoffs change; forged commitments, rehashed foreign values, unknown editions/recipe fields, lost custody, revoked permission and withdrawal still refuse. Plans/memory_maintenance_event_record.schema.json keeps SP-236 current Storage uint64 bounds, the separate producer bounds and unchanged frozen reader definitions; operation/target schemas keep current definitions and their frozen historical_ counterparts. Generic Storage metadata ownership is unchanged. Every declared date-time and uuid format is explicitly enforced without optional validator packages: a timestamp requires a real calendar date/time and explicit RFC3339 zone, allows a nonempty decimal fraction, and refuses leap seconds, bad fields/separators, missing zones and trailing LF; existing UTC-Z and length constraints remain. Timestamp strings retain their exact hash bytes. UUID uses the full 8-4-4-4-12 hexadecimal grammar. These enforce the existing format contract, not a narrower historical format edition.
 
   Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1516,6 +1518,8 @@ canonical_text: |-
   Current producer-semantic projections and current identity inputs use safe-integer-write-v2: their numeric leaves are integers in the I-JSON safe range -9007199254740991 through 9007199254740991; existing nonnegative domains keep their lower bound. This producer route excludes Storage-assigned sequence_id, observed_at_utc and persisted_at_utc under Contracts_V0.md#EventRecord. Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type; booleans, floats and strings refuse. Fresh writes and metadata-only retries preserve that full domain without a producer-number ceiling. Decode decimal/exponent tokens losslessly before validation. Identity, idempotency, result and target commitments use sorted-key compact UTF-8 JSON after recursive exact integer normalization: 1, 1.0 and 1e0 encode as 1; -0 encodes as 0. Current producer fractions, nonfinite values and out-of-range producer integers refuse before hashing or append. Full EventRecord commitments reuse the existing integer-json-v1 encoding with exact Storage uint64 metadata; no new serializer is introduced. Historical originals instead use their frozen write-time recipe integer-json-v1: pm.event.v0 envelope editions 1.0.0 and 2.0.0 both retain their original unbounded integral sequence domains; operation/target edition 1.0.0 uses the explicit historical_ definitions frozen from 77323e87d65908dbce2ea655ee344b6185a13ff1, including artifact byte_length up to 9223372036854775807. The two envelope editions share the same numeric/hash recipe, and current writes are a byte-identical subset, so no edition change can select weaker numeric hashing. Reader dispatch is closed by schema_id/schema_version; no caller recipe override, permissive fallback or current writer predicate reaches a historical commitment. The original full-value commitment is recomputed under that recipe with no rewrite of retained values, hashes, frozen operation or receipt. Historical numeric decoding preserves the original typed integer or binary64 stored value; a current lossless decimal parse never reinterprets an older binary64 original. Original verification in current-writer retries and checkpoint reader projections uses the same frozen recipe; only the new caller producer-semantic projection and new-write producer admission use the strict current recipe; new caller Storage metadata is independently checked against SP-236. Valid retained large integers remain readable in canonical, replay-only, compatibility and compatibility-replay modes after live state/admission/cutoffs change; forged commitments, rehashed foreign values, unknown editions/recipe fields, lost custody, revoked permission and withdrawal still refuse. Plans/memory_maintenance_event_record.schema.json keeps SP-236 current Storage uint64 bounds, the separate producer bounds and unchanged frozen reader definitions; operation/target schemas keep current definitions and their frozen historical_ counterparts. Generic Storage metadata ownership is unchanged. Every declared date-time and uuid format is explicitly enforced without optional validator packages: a timestamp requires a real calendar date/time and explicit RFC3339 zone, allows a nonempty decimal fraction, and refuses leap seconds, bad fields/separators, missing zones and trailing LF; existing UTC-Z and length constraints remain. Timestamp strings retain their exact hash bytes. UUID uses the full 8-4-4-4-12 hexadecimal grammar. These enforce the existing format contract, not a narrower historical format edition.
 
   Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1929,7 +1933,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.monthly_summary.completed@1.0.0,
   prepared without admission. Search and negative evidence: this exact family''s row in reports/event-authority-20261104/DMEM-card1b-search.json.
-  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This
+  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-446. This
   unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.completed.v1@1.0.0
   through cmd.chat.memory.summarize_monthly, the same authenticated in-process handler for GUI and internal maintenance.
   Project-only edition, never a synthetic Project for AMS-054 app-thread memory; application editions and their
@@ -1940,8 +1944,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   with all its EvidenceRefs and original version history. No original is deleted or stripped of evidence. Never
   include a pinned original, including in a merge. The month argument remains the existing UCC-085 optional month,
   not a schedule or a new selection UI. Both jobs only archive and only the user deletes a memory (DL-402); pins
-  still permit verification, index rebuilds and out-of-date marking. The duplicate-sweep survivor/disposition remains
-  undecided and is not changed here.
+  still permit verification, index rebuilds and out-of-date marking. The separate duplicate-sweep survivor and archive disposition follow DL-444 and DL-445; they do not set these archive-job cutoffs.
 
 
   Explicit adoption for this exact family: adopt every producer, first-append, operation-CAS, outcome, replay, redaction,
@@ -1985,15 +1988,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   read all use this rule. The counterpart''s own unit is SP-639.
 
 
-  DL-403 cutoff gate is additional to admission and start custody. No approved cutoff exists today: neither automatic
-  nor Memory-panel dispatch may accept, create an operation, append either family, settle an effect, recover an
-  effect, or return a writer retry. Refuse cutoffs_unavailable with unchanged durable state and no output. Both
-  panel buttons are unavailable with the reason "Approved age and activation-score cutoffs are missing". A direct/programmatic
-  invocation cannot bypass it. When Jared approves an owner proposal, resolve that exact authenticated owner-approved
-  policy for this job and this Project, freeze its ref/content hash in the initial operation and request digest,
-  and recheck it before each current writer/effect boundary. A Boolean, caller policy argument, wrong-scope ref,
-  altered digest or sibling-job approval is insufficient. The lookup key, resolved record''s own cutoff_ref and frozen operation cutoff_ref must be equal and resolve to exactly one owner record, never multiple alias records. The resolved job/scope/Project and recomputed content hash must agree with the frozen operation, request binding and every copied start/terminal payload field. A coherent rehash cannot authorize contradictory refs. Fixtures contain a synthetic resolver record solely to
-  test this conditional contract; they select no real cutoff values and create no approval. History reads do not
+  DL-446 answers DL-403 for this exact job with E-CARDS-2 Card 6.c option A. Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
+
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
   refuses.
@@ -2049,7 +2046,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- Exact family has its own conditional contract; no admission or selected cutoff.
+- Exact family has its own conditional contract; approved DL-446 cutoff; no admission.
 - Archive-only, pin/evidence preservation and cutoff refusal pass ATS-316.
 validation_surfaces:
 - python3 scripts/pm_memory_archive_events.py
@@ -2069,7 +2066,7 @@ preserved_exact_tokens:
 - cutoffs_unavailable
 - RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
-- No admission, cutoff value, user deletion policy expansion, app edition or native proof.
+- No admission, automatic deletion, user deletion policy expansion, app edition or native proof.
 ```
 
 
@@ -2082,7 +2079,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.monthly_summary.started@1.0.0, prepared
   without admission. Search and negative evidence: this exact family''s row in reports/event-authority-20261104/DMEM-card1b-search.json.
-  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This
+  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-446. This
   unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.started.v1@1.0.0
   through cmd.chat.memory.summarize_monthly, the same authenticated in-process handler for GUI and internal maintenance.
   Project-only edition, never a synthetic Project for AMS-054 app-thread memory; application editions and their
@@ -2093,8 +2090,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   with all its EvidenceRefs and original version history. No original is deleted or stripped of evidence. Never
   include a pinned original, including in a merge. The month argument remains the existing UCC-085 optional month,
   not a schedule or a new selection UI. Both jobs only archive and only the user deletes a memory (DL-402); pins
-  still permit verification, index rebuilds and out-of-date marking. The duplicate-sweep survivor/disposition remains
-  undecided and is not changed here.
+  still permit verification, index rebuilds and out-of-date marking. The separate duplicate-sweep survivor and archive disposition follow DL-444 and DL-445; they do not set these archive-job cutoffs.
 
 
   Explicit adoption for this exact family: adopt every producer, first-append, operation-CAS, outcome, replay, redaction,
@@ -2138,15 +2134,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   read all use this rule. The counterpart''s own unit is SP-638.
 
 
-  DL-403 cutoff gate is additional to admission and start custody. No approved cutoff exists today: neither automatic
-  nor Memory-panel dispatch may accept, create an operation, append either family, settle an effect, recover an
-  effect, or return a writer retry. Refuse cutoffs_unavailable with unchanged durable state and no output. Both
-  panel buttons are unavailable with the reason "Approved age and activation-score cutoffs are missing". A direct/programmatic
-  invocation cannot bypass it. When Jared approves an owner proposal, resolve that exact authenticated owner-approved
-  policy for this job and this Project, freeze its ref/content hash in the initial operation and request digest,
-  and recheck it before each current writer/effect boundary. A Boolean, caller policy argument, wrong-scope ref,
-  altered digest or sibling-job approval is insufficient. The lookup key, resolved record''s own cutoff_ref and frozen operation cutoff_ref must be equal and resolve to exactly one owner record, never multiple alias records. The resolved job/scope/Project and recomputed content hash must agree with the frozen operation, request binding and every copied start/terminal payload field. A coherent rehash cannot authorize contradictory refs. Fixtures contain a synthetic resolver record solely to
-  test this conditional contract; they select no real cutoff values and create no approval. History reads do not
+  DL-446 answers DL-403 for this exact job with E-CARDS-2 Card 6.c option A. Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
+
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
   refuses.
@@ -2202,7 +2192,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- Exact family has its own conditional contract; no admission or selected cutoff.
+- Exact family has its own conditional contract; approved DL-446 cutoff; no admission.
 - Archive-only, pin/evidence preservation and cutoff refusal pass ATS-316.
 validation_surfaces:
 - python3 scripts/pm_memory_archive_events.py
@@ -2222,5 +2212,5 @@ preserved_exact_tokens:
 - cutoffs_unavailable
 - RP-OPERATIONAL-2555D@1.0.0
 negative_constraints:
-- No admission, cutoff value, user deletion policy expansion, app edition or native proof.
+- No admission, automatic deletion, user deletion policy expansion, app edition or native proof.
 ```

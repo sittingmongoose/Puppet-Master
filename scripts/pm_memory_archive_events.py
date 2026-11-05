@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Card 1b static model: explicit adoption of DMEM's custody core; native NOT_RUN.
 
-The injected policy resolver is synthetic test authority, never caller input or a real cutoff approval.
-No age, activation score or count cutoff is selected by this file or its fixtures.
+The injected resolver is synthetic test authority, never caller input or runtime admission.
+DL-446/DL-447 supply the approved cutoffs; the other activation gates remain.
 """
 from copy import deepcopy
 from contextlib import contextmanager
@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 _spec = importlib.util.spec_from_file_location('_card1b_custody', ROOT / 'scripts/pm_memory_maintenance_events.py')
 core = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(core)
+POLICY = core.memory_policy()
 JOBS = ('monthly_summary', 'prune_archive')
 COMMANDS = {'cmd.chat.memory.summarize_monthly': 'monthly_summary',
             'cmd.chat.memory.prune_archive': 'prune_archive'}
@@ -114,7 +115,7 @@ def panel(state):
     try:
         cutoff_gate(state)
     except core.Refusal:
-        return {'available': False, 'reason': 'Approved age and activation-score cutoffs are missing'}
+        return {'available': False, 'reason': 'The approved cutoff binding is unavailable'}
     return {'available': True, 'reason': None}
 
 
@@ -132,6 +133,8 @@ def archive_candidate(before, job):
     guard('selection_pinned', all(before['memories'][k]['pinned'] is not True for k in selected if k in before['memories']))
     guard('selection_kind', job != 'monthly_summary'
           or all(before['memories'][k]['kind'] == 'Note' for k in selected if k in before['memories']))
+    for name, valid in POLICY.selection_checks(core, before, job):
+        guard(name, valid)
     for key in selected:
         if key in after['memories']:
             after['memories'][key]['archived'] = True
@@ -175,6 +178,7 @@ def transition(before, action):
     candidate = None
     if action['op'] == 'settle' and action.get('status') == 'succeeded':
         job = COMMANDS[before['operation']['command_id']]
+        guard('selection_scope', before['archive']['project_id'] == before['operation']['project_id'])
         candidate = archive_candidate(before['archive'], job)
         archive_validate(before['archive'], candidate, job)
     global _REQUESTED_EVENT
@@ -496,8 +500,13 @@ def main():
         path, unit = contract['storage_owner'].split('#')
         text = (ROOT/path).read_text().split('### '+unit+' - ',1)[1].split('\n### ',1)[0]
         for token in (event, contract['payload_schema_id'], contract['consumer_id'], 'SP-278', 'SP-286', 'CV-339',
-                      'cutoffs_unavailable', 'start_receipt_missing', 'replay_only_not_appendable', 'DL-402', 'DL-403'):
+                      'cutoffs_unavailable', 'start_receipt_missing', 'replay_only_not_appendable', 'DL-402', 'DL-403',
+                      POLICY.CUTOFFS[event.split('.')[1]][2], 'E-CARDS-2 Card 6.'):
             assert token in text, (event, token)
+        days, score, decision = POLICY.CUTOFFS[event.split('.')[1]]
+        assert contract['approved_policy']['decisions'] == [decision]
+        assert contract['approved_policy']['idle_days_at_least'] == days
+        assert contract['approved_policy']['usefulness_below'] == score
     bounds = payload_upper_bounds(families)
     paths = run_adopted_paths(fixtures, families)
     guards = run_guards(fixtures, families)
@@ -507,12 +516,15 @@ def main():
     domains = core.boundary_domains().run(core, contexts, [c for f in fixtures['families'] for c in f['boundary_cases']], __import__('sys').modules[__name__])
     recipes = core.write_recipes().run(core, contexts, __import__('sys').modules[__name__])
     metadata = core.storage_metadata().run(core, contexts)
+    policy = POLICY.run(core, families, __import__('sys').modules[__name__])
     print(json.dumps({'status':'pass','families':paths,'guard_cases':len(fixtures['guard_cases']),
                       'guard_removal_table':guards,'canonical_history_cases':canonical_history,
                       'numeric_writer_cases':numeric_writers,'boundary_domains':domains,'write_recipes':recipes,
-                      'storage_uint64':metadata,
+                      'storage_uint64':metadata, 'card6_policy':policy,
                       'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
-                      'real_cutoffs':'ABSENT; numeric proposals in report only'},indent=2))
+                      'approved_cutoffs':{'monthly_summary':'DL-446: idle >=90 days AND score <0.10',
+                                          'prune_archive':'DL-447: idle >=180 days AND score <0.05'},
+                      'activation':'admission ABSENT; operation retention pending'},indent=2))
 
 if __name__ == '__main__':
     main()

@@ -26,7 +26,17 @@
         "CV-650"
       ],
       "replay_policy": "dedupe_by_idempotency_key",
-      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed"
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed",
+      "approved_policy": {
+        "decisions": [
+          "DL-444",
+          "DL-445"
+        ],
+        "source_card": "E-CARDS-2 6.a/6.b A",
+        "survivor": "oldest original created_at; stable note ID tie",
+        "other_originals": "archive only; preserve identities/evidence/versions/survivor links",
+        "pinned": "excluded"
+      }
     },
     {
       "event_type": "memory.dedup_sweep.started",
@@ -50,7 +60,17 @@
         "CV-651"
       ],
       "replay_policy": "dedupe_by_idempotency_key",
-      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started"
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started",
+      "approved_policy": {
+        "decisions": [
+          "DL-444",
+          "DL-445"
+        ],
+        "source_card": "E-CARDS-2 6.a/6.b A",
+        "survivor": "oldest original created_at; stable note ID tie",
+        "other_originals": "archive only; preserve identities/evidence/versions/survivor links",
+        "pinned": "excluded"
+      }
     },
     {
       "event_type": "memory.index.lexical.rebuild.completed",

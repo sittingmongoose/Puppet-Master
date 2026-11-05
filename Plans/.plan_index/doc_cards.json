@@ -1629,7 +1629,7 @@
         "Plans/settings_system_contracts.schema.json",
         "Plans/storage-plan.md"
       ],
-      "line_count": 3569,
+      "line_count": 3574,
       "path": "Plans/assistant-memory-subsystem.md",
       "plan_unit_count": 62,
       "plan_unit_ids": [
@@ -1735,7 +1735,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "0f4898ab5495f56c138cda5a95881f9ea94a5d86c11f50556bec74f0e12f4eb0",
+      "sha256": "c4aa8390a4554dc65ce0b3688a49610ec0e55cf7167ec541e5535beab3d01f56",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 62
@@ -1998,7 +1998,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7349,
+      "line_count": 7353,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 79,
       "plan_unit_ids": [
@@ -2153,7 +2153,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "2c20d659813c6dd9a0da1d34b0da3f1c2ca89dd92b78a4c3d5ac341c03610913",
+      "sha256": "e6f331cac3595e54d0c216a129bafe21c97dd9b5f9ec528000d79d2da8ed3297",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 78,
@@ -4591,7 +4591,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 25133,
+      "line_count": 25123,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 371,
       "plan_unit_ids": [
@@ -5327,7 +5327,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "2407aaa6c38d2d0785521dc90131bf8dc85276883adfebacaee47a87df38d07c",
+      "sha256": "e4d89a882c6b0e56ffaba52ae0673c624e7b448f8b613001ebb2ded0094abc26",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 371
@@ -18695,7 +18695,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 30272,
+      "line_count": 30262,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 351,
       "plan_unit_ids": [
@@ -19173,7 +19173,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0a774337a16a83581462ec99314619efc40e8965f5dbba5bb47a5bfd1b3ab301",
+      "sha256": "df5a309fdd04a5e02ad1ee17f29bb1b2baf67ad10772d1d69fd6f9da97c2872e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 347,
@@ -21550,7 +21550,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T04:56:57Z",
+  "generated_at_utc": "2026-11-05T05:36:55Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

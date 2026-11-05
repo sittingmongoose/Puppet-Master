@@ -29,7 +29,20 @@
       ],
       "replay_policy": "dedupe_by_idempotency_key",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed",
-      "current_activation": "cutoffs_unavailable; admission ABSENT; operation retention pending"
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-446"
+        ],
+        "source_card": "E-CARDS-2 6.c A",
+        "idle_days_at_least": 90,
+        "usefulness_below": 0.1,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
     },
     {
       "event_type": "memory.monthly_summary.started",
@@ -57,7 +70,20 @@
       ],
       "replay_policy": "dedupe_by_idempotency_key",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started",
-      "current_activation": "cutoffs_unavailable; admission ABSENT; operation retention pending"
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-446"
+        ],
+        "source_card": "E-CARDS-2 6.c A",
+        "idle_days_at_least": 90,
+        "usefulness_below": 0.1,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
     },
     {
       "event_type": "memory.prune_archive.completed",
@@ -85,7 +111,20 @@
       ],
       "replay_policy": "dedupe_by_idempotency_key",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed",
-      "current_activation": "cutoffs_unavailable; admission ABSENT; operation retention pending"
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-447"
+        ],
+        "source_card": "E-CARDS-2 6.d A",
+        "idle_days_at_least": 180,
+        "usefulness_below": 0.05,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
     },
     {
       "event_type": "memory.prune_archive.started",
@@ -113,7 +152,20 @@
       ],
       "replay_policy": "dedupe_by_idempotency_key",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started",
-      "current_activation": "cutoffs_unavailable; admission ABSENT; operation retention pending"
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-447"
+        ],
+        "source_card": "E-CARDS-2 6.d A",
+        "idle_days_at_least": 180,
+        "usefulness_below": 0.05,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
     }
   ]
 }
