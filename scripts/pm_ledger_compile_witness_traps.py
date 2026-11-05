@@ -369,6 +369,7 @@ def exercise(g, *, scratch=None):
     case("metadata-fence-under-a-deeper-subheading-control", lambda f: no_tokens(f, "## AA-001 — Owner\n\nBody.\n\n### Detail\n\nMore.\n\n" + fence("AA-001", "Body.", [])), verify=no_ambiguity)
     case("hash-comment-in-a-fence-keeps-the-section-control", lambda f: no_tokens(f, "## AA-001 — Owner\n\n```sh\n# a comment, not a heading\n```\n\n" + fence("AA-001", "Body.", [])), verify=no_ambiguity)
     case("single-heading-with-its-own-fence-control", verify=no_ambiguity)
+    case("unterminated-own-fence-control", lambda f: no_tokens(f, "## AA-001 — Owner\n\n```yaml\nplan_unit_id: AA-001\n"), verify=no_ambiguity)
     case("single-headless-fence-control", lambda f: f.update(owner=fence("AA-001", "Required live token.", ["live token"])), verify=no_ambiguity)
     def nested_other_unit(f):
         f["queue"]["items"][0]["target_plan_unit_ids"].append("BB-001")

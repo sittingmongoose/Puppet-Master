@@ -98,7 +98,7 @@ def definitions_in(text: str) -> list[dict]:
         i = j
     for start, stop, ids in fences:
         for uid in ids:
-            own = next((s for s in sections.get(uid, ()) if s[0] < start and stop < s[1] and not s[2]), None) if len(ids) == 1 else None
+            own = next((s for s in sections.get(uid, ()) if s[0] < start and stop <= s[1] and not s[2]), None) if len(ids) == 1 else None
             if own is not None:
                 own[2] = True
                 continue
