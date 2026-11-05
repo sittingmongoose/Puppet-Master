@@ -10044,6 +10044,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     },
     {
@@ -20194,6 +20288,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     },
     {
@@ -32709,6 +32897,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     },
     {
@@ -45370,6 +45652,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     },
     {
@@ -58057,6 +58433,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     },
     {
@@ -68015,6 +68485,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     },
     {
@@ -77984,6 +78548,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     },
     {
@@ -88117,6 +88775,100 @@
           18446744073709551615
         ],
         "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      },
+      "timestamp_representation_cases": {
+        "positive": [
+          "2026-11-04T12:00:00Z",
+          "2024-02-29T23:59:59Z",
+          "2026-11-04T12:00:00.123456789Z"
+        ],
+        "lexical_negative": [
+          "2026-11-04X12:00:00Z",
+          "2026-11-04T12:00:00+01:00",
+          "2026-11-04T12:00Z",
+          "2026-11-04T12:00:00+00:00",
+          "2026-11-04 12:00:00Z",
+          "20261104T120000Z",
+          "2026-11-04T120000Z",
+          "2026-11-04t12:00:00Z",
+          "2026-11-04T12:00:00,5Z",
+          "2026-11-04T24:00:00Z",
+          "2026-11-04T12:00:00.Z"
+        ],
+        "timezone_negative": [
+          "2026-11-04T12:00:00"
+        ],
+        "calendar_negative": [
+          "2026-02-29T12:00:00Z",
+          "2026-02-30T12:00:00Z",
+          "2026-13-04T12:00:00Z",
+          "2026-00-04T12:00:00Z",
+          "2026-11-00T12:00:00Z",
+          "2026-11-31T12:00:00Z",
+          "0000-11-04T12:00:00Z",
+          "2026-11-04T12:60:00Z",
+          "2026-11-04T12:00:60Z"
+        ],
+        "lexical_parse_negative": [
+          "2026-11-04T12:00:00Z\n",
+          "2026-11-04T12:00:00Z\r",
+          "2026-11-04T12:00:00z",
+          " 2026-11-04T12:00:00Z",
+          "2026-11-04T12:00:00Z ",
+          "not-a-date"
+        ]
+      },
+      "wrong_type_cases": {
+        "boolean": [
+          "false",
+          "0",
+          "true",
+          "1",
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ],
+        "integer": [
+          true,
+          false,
+          "0",
+          "1",
+          "1.0",
+          null,
+          [],
+          [
+            1
+          ],
+          {},
+          {
+            "nested": 1
+          }
+        ],
+        "other": [
+          "false",
+          "0",
+          true,
+          false,
+          0,
+          1,
+          null,
+          [],
+          [
+            false
+          ],
+          {},
+          {
+            "nested": false
+          }
+        ]
       }
     }
   ],

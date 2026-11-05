@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Static DM contract oracles. Synthetic checks; no native execution proof."""
 import copy
+import os
 import hashlib
 import json
 import base64
@@ -22,6 +23,8 @@ FORMATS = FormatChecker()
 def utc_datetime(value):
     if not isinstance(value, str):
         return True
+    if re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z', value) is None:
+        return False
     try:
         parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
         return parsed.tzinfo is not None
@@ -52,6 +55,26 @@ def integer_tree(value):
     if isinstance(value, list):
         return all(integer_tree(v) for v in value)
     return True
+
+
+
+def exact_value(value, expected):
+    """Compare typed JSON facts; bool is never an integer observation.
+
+    Integers share the instance validator callback, so its representation fence
+    is identical in schemas and in independently observed copies. Retained u64
+    values stay integers and never acquire the current producer range bound.
+    """
+    if integer_type(None, expected):
+        if not integer_type(None, value):
+            return False
+    elif type(value) is not type(expected):
+        return False
+    if type(expected) is dict:
+        return value.keys() == expected.keys() and all(exact_value(value[k], v) for k, v in expected.items())
+    if type(expected) is list:
+        return len(value) == len(expected) and all(exact_value(v, e) for v, e in zip(value, expected))
+    return value == expected
 
 
 def current_integer_token(token):
@@ -178,9 +201,9 @@ def digest(event, instance, payload):
 
 
 def semantic(payload, scope, event):
-    if scope == 'project_only' and not payload['project_id']:
+    if scope == 'project_only' and (type(payload['project_id']) is not str or not payload['project_id']):
         return False
-    if 'after_revision' in payload and payload['after_revision'] != payload['before_revision'] + 1:
+    if 'after_revision' in payload and (not integer_type(None, payload['after_revision']) or not integer_type(None, payload['before_revision']) or payload['after_revision'] != payload['before_revision'] + 1):
         return False
     if event == 'lsp.server.lifecycle_changed' and payload['previous_state'] == payload['state']:
         return False
@@ -188,11 +211,11 @@ def semantic(payload, scope, event):
 
 
 def read_allowed(current_token, selected_token, permission, source_present, withdrawn, version):
-    return current_token == selected_token and permission and source_present and not withdrawn and version == '1.0.0'
+    return type(current_token) is str and type(selected_token) is str and exact_value(current_token, selected_token) and permission is True and source_present is True and withdrawn is False and version == '1.0.0'
 
 
 def replay_decision(original_digest, retry_digest, original_receipt):
-    if original_digest != retry_digest:
+    if type(original_digest) is not str or type(retry_digest) is not str or type(original_receipt) is not str or original_digest != retry_digest:
         return ('identity_conflict_without_effect', None, 0)
     return ('return_original_without_effect', original_receipt, 0)
 
@@ -208,7 +231,7 @@ def producer_witness_allowed(event, witness):
         'project.created': {'atomic_registration_readback':True,'permission_and_handoffs_committed':True,'remote_effect_unknown':False,'semantic_action':'new_creation'},
         'git.clone.completed': {'scm_backend':'git','terminal_result':'succeeded','destination_verified':True,'terminal_receipt_original':True,'reserved_lineage_join':True},
     }[event]
-    return witness == required
+    return exact_value(witness, required)
 
 
 # These bindings are independently fixed by each owner contract, never borrowed
@@ -363,7 +386,7 @@ def resolved_payload(event, schema, storage=None):
         if not isinstance(body, dict):
             return None
         descriptor = payload_descriptor(body)
-        if descriptor['byte_size'] <= INLINE_LIMIT or storage.get('descriptor') != descriptor:
+        if descriptor['byte_size'] <= INLINE_LIMIT or not exact_value(storage.get('descriptor'), descriptor):
             return None
         if not integer_tree(storage['descriptor']):
             return None
@@ -394,13 +417,13 @@ def valid_event(row, event, original):
     time_field, profile, owner = FAMILY_BINDINGS[row['event_type']]
     if original.get('owner') != owner or original.get('operation_id') != payload['operation_id']:
         return False
-    if original.get('result_operation_id') != original['operation_id'] or original.get('result_payload') != payload:
+    if original.get('result_operation_id') != original['operation_id'] or not exact_value(original.get('result_payload'), payload):
         return False
     if not producer_witness_allowed(row['event_type'], original.get('producer_witness')):
         return False
     if not semantic(payload, row['scope_policy'], row['event_type']):
         return False
-    if any(event[k] != original['envelope_joins'][k] for k in ORIGINAL_JOINS):
+    if type(original.get('envelope_joins')) is not dict or set(original['envelope_joins']) != set(ORIGINAL_JOINS) or any(not exact_value(original['envelope_joins'][k], event[k]) for k in ORIGINAL_JOINS):
         return False
     if event['project_id'] != payload['project_id']:
         return False
@@ -409,6 +432,8 @@ def valid_event(row, event, original):
     if event['event_type'] != row['event_type'] or event['payload_schema_id'] != payload_schema['$id']:
         return False
     if event['redaction_profile'] != profile or event['replay_policy'] != 'dedupe_by_idempotency_key':
+        return False
+    if type(original.get('storage_instance_id')) is not str:
         return False
     identity = digest(row['event_type'], original['storage_instance_id'], payload)
     key = row['event_type'] + ':' + identity
@@ -430,23 +455,29 @@ def append_policy_refusal(event):
     return 'replay_only_not_appendable' if event.get('replay_policy') == 'projector_replay_only' else None
 
 
+def delivery_types_valid(state):
+    return type(state['receipt_delivery']) is bool and type(state['terminal_delivery']) is bool
+
+
 def publication(row, state):
     """Fixture append adapter: no owner effects are invoked or undone."""
     outcome = {'durable_events': 0, 'receipt': None, 'terminal': False, 'owner_effects': 0}
+    if not delivery_types_valid(state):
+        return outcome
     if not integer_tree(state):
         return outcome
     if append_policy_refusal(state['event']) is not None:
         return outcome
-    if not all(state[k] for k in ADMISSION_GATES):
+    if not all(state[k] is True for k in ADMISSION_GATES):
         return outcome
     original = state['original_operation']
-    if state['admission_epoch'] != original['accepted_admission_epoch'] or original['accepted_admission_epoch'] != state['current_admission_epoch']:
+    if not all(integer_type(None, v) for v in (state['admission_epoch'], original['accepted_admission_epoch'], state['current_admission_epoch'])) or state['admission_epoch'] != original['accepted_admission_epoch'] or original['accepted_admission_epoch'] != state['current_admission_epoch']:
         return outcome
-    if original['accepted_session_id'] != state['current_owner_session_id'] or original['restore_occurrence_id'] != state['current_restore_occurrence_id']:
+    if type(original['accepted_session_id']) is not str or type(original['restore_occurrence_id']) is not str or not exact_value(state['current_owner_session_id'], original['accepted_session_id']) or not exact_value(state['current_restore_occurrence_id'], original['restore_occurrence_id']):
         return outcome
     if not valid_event(row, state['event'], state['original_operation']):
         return outcome
-    if not state['frame_written'] or not state['group_synced']:
+    if state['frame_written'] is not True or state['group_synced'] is not True:
         return outcome
     # A durable group commit IS first issuance. A lagging custody row is rebuilt
     # from it; row presence is never an additional issuance phase.
@@ -455,7 +486,7 @@ def publication(row, state):
         # Issuance is protected by the committed original full-value authority.
         # A foreign/mutated delivery cannot publish success or undo its frame.
         replay = resolve_full_value(row, state['event'], state['committed_authority'])
-        if replay is None or replay[1] != state['first_append_receipt']:
+        if replay is None or not exact_value(state['first_append_receipt'], replay[1]):
             return outcome
         outcome['receipt'] = copy.deepcopy(state['first_append_receipt'])
         outcome['terminal'] = state['terminal_delivery']
@@ -464,7 +495,7 @@ def publication(row, state):
 
 def resolve_original(row, incoming, authority):
     """Immutable semantic replay can outlive owner request/source handles."""
-    if not custody_valid(authority['stored_custody']) or not authority['protected_authority_current']:
+    if not custody_valid(authority['stored_custody']) or authority['protected_authority_current'] is not True:
         return None
     if not integer_tree(authority) or not integer_tree({k: incoming[k] for k in PRODUCER_FIELDS}):
         return None
@@ -481,11 +512,11 @@ def resolve_original(row, incoming, authority):
         return None
     if incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or retained_producer_digest(incoming) != retained_producer_digest(stored):
         return None
-    if result != {'event_id': stored['event_id'], 'sequence_id': stored['sequence_id'], 'segment_ref': custody['original_segment_ref'], 'byte_offset': receipt['byte_offset']}:
+    if not exact_value(result, {'event_id': stored['event_id'], 'sequence_id': stored['sequence_id'], 'segment_ref': custody['original_segment_ref'], 'byte_offset': receipt['byte_offset']}):
         return None
     if receipt['event_id'] != stored['event_id'] or receipt['sequence_id'] != stored['sequence_id']:
         return None
-    if receipt != authority['first_append_receipt']:
+    if not exact_value(authority['first_append_receipt'], receipt):
         return None
     return copy.deepcopy((result, receipt))
 
@@ -571,8 +602,8 @@ def checkpoint_matches_original(state):
     if not token_matches_original(token, original, durable=True) or not token_matches_original(selected, original):
         return False
     return (
-        token == {k: v for k, v in selected.items() if k != 'redb_snapshot_id'}
-        and checkpoint.get('frontier_revision') == token['frontier_revision']
+        exact_value(token, {k: v for k, v in selected.items() if k != 'redb_snapshot_id'})
+        and exact_value(checkpoint.get('frontier_revision'), token['frontier_revision'])
     )
 
 
@@ -589,7 +620,7 @@ def retained_event_valid(row, event, authority, selected):
     return (
         event['event_type'] == row['event_type']
         and event['payload_schema_id'] == schema['$id']
-        and authority['source_selection'] == selected['source_selection']
+        and exact_value(authority['source_selection'], selected['source_selection'])
         and resolve_full_value(row, event, authority) is not None
     )
 
@@ -597,11 +628,11 @@ def retained_event_valid(row, event, authority, selected):
 def reader_result(row, state):
     return 'available' if (
         integer_tree({k: state[k] for k in ('event', 'retained_authority', 'live_token', 'selected_token')})
-        and state['reader_enabled'] and state['permission_current'] and state['source_present']
-        and state['deletion_clear'] and state['hold_allows_disclosure']
-        and state['version'] == '1.0.0' and state['current_frontier_verified']
+        and state['reader_enabled'] is True and state['permission_current'] is True and state['source_present'] is True
+        and state['deletion_clear'] is True and state['hold_allows_disclosure'] is True
+        and state['version'] == '1.0.0' and state['current_frontier_verified'] is True
         and token_matches_original(state['live_token'], state['retained_authority'])
-        and state['live_token'] == state['selected_token']
+        and exact_value(state['selected_token'], state['live_token'])
         and retained_event_valid(row, state['event'], state['retained_authority'], state['live_token'])
     ) else 'unavailable'
 
@@ -610,7 +641,7 @@ def rebuild_publication(row, state):
     old = copy.deepcopy(state['old_publication'])
     if not integer_tree({k: state[k] for k in ('event', 'retained_authority', 'new_checkpoint', 'selected_live_token')}):
         return old
-    if not all(state[k] for k in REBUILD_GATES):
+    if not all(state[k] is True for k in REBUILD_GATES):
         return old
     if state['version'] != '1.0.0' or not retained_event_valid(row, state['event'], state['retained_authority'], state['selected_live_token']):
         return old
@@ -980,6 +1011,32 @@ def event_receipt_fields(row):
     return row['publication_positive']['first_append_receipt'].keys()
 
 
+
+def families_for_run(fixtures):
+    """Keep each VM checker/audit run to one family when requested."""
+    family = os.environ.get('PM_DM_FAMILY')
+    rows = [r for r in fixtures['families'] if family is None or r['event_type'] == family]
+    assert rows, ('unknown DM family', family)
+    return rows
+
+
+def timestamp_state(row, value, field='occurred_at_utc'):
+    """One time fact with its owner/result/Storage observation copies coherent."""
+    state = copy.deepcopy(row['publication_positive'])
+    event, original = state['event'], state['original_operation']
+    event[field] = value
+    if field == 'occurred_at_utc':
+        time_field = FAMILY_BINDINGS[row['event_type']][0]
+        event['payload'][time_field] = value
+        original['completed_at_utc'] = value
+        original['result_payload'][time_field] = value
+    authority = state['committed_authority']
+    authority['stored_event'] = copy.deepcopy(event)
+    authority['stored_custody']['producer_semantic_digest'] = retained_producer_digest(event)
+    authority['stored_custody']['original_event_value_commitment']['sha256'] = hashlib.sha256(full_value_preimage(event)).hexdigest()
+    return state
+
+
 def main(guard_first=None):
     fixtures = json.loads((ROOT / 'Plans/small_owner_event_fixtures.json').read_text())
     assert len(fixtures['families']) == len(FAMILY_BINDINGS) and {r['event_type'] for r in fixtures['families']} == set(FAMILY_BINDINGS)
@@ -989,7 +1046,7 @@ def main(guard_first=None):
     isolation_count = guard_oracles.normal_checks(globals(), fixtures, guard_first)
     families = {row['event_type']: row for row in fixtures['families']}
     retry_boundary_count = 0
-    for row in fixtures['families']:
+    for row in families_for_run(fixtures):
         for case in row.get('foreign_family_retry_cases', []):
             foreign = families[case['source_family']]
             assert foreign is not row, case['case_id']
@@ -1013,7 +1070,7 @@ def main(guard_first=None):
     assert full_value_preimage(golden['base_original_event']).hex() == golden['commitment_preimage_hex']
     assert hashlib.sha256(full_value_preimage(golden['base_original_event'])).hexdigest() == golden['commitment_sha256']
     count = 2 + len(schema_paths) + reference_count + settings_count + isolation_count + retry_boundary_count
-    for row in fixtures['families']:
+    for row in families_for_run(fixtures):
         event = row['event_type']
         schema = json.loads((ROOT / row['schema']).read_text())
         Draft202012Validator.check_schema(schema)
@@ -1075,6 +1132,10 @@ def main(guard_first=None):
             assert not read_allowed(*vector)
         count += 6
         count += run_exact_family(row)
+        for value in row['timestamp_representation_cases']['positive']:
+            for field in ('occurred_at_utc', 'observed_at_utc', 'persisted_at_utc'):
+                assert publication(row, timestamp_state(row, value, field))['terminal'] is True, (event, 'valid UTC timestamp', field, value)
+                count += 1
         count += run_numeric_family(row)
         print(event + ': payload/full-envelope/original-joins/admission/receipt/withdrawal/rebuild vectors PASS; native NOT_RUN')
     print(json.dumps({'status': 'PASS', 'assertions': count, 'native_execution': 'NOT_RUN'}))

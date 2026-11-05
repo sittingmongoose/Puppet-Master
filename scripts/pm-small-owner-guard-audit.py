@@ -66,7 +66,7 @@ def catalogue(m, fixtures):
     def no_if(expression):
         return [('if ' + expression + ':', 'if False:')]
 
-    for row in fixtures['families']:
+    for row in m.families_for_run(fixtures):
         family = row['event_type']
         e, o, a = (copy.deepcopy(row[k]) for k in ('positive_event_record', 'original_operation', 'receipt_authority'))
         vp = (row, e, o)
@@ -93,11 +93,11 @@ def catalogue(m, fixtures):
         orig=dict(o,operation_id='op:foreign',result_operation_id='op:foreign')
         bad=dict(e,idempotency_key=m.application_key(o['server_id'],'op:foreign')) if e['scope_kind']=='application' else e
         writer('writer.owner', 'foreign_operation',event=bad,original=orig,expression="original.get('owner') != owner or original.get('operation_id') != payload['operation_id']")
-        writer('writer.result', 'foreign_result_operation', original=dict(o, result_operation_id='op:foreign'), expression="original.get('result_operation_id') != original['operation_id'] or original.get('result_payload') != payload")
-        writer('writer.result', 'foreign_result_payload', original=dict(o,result_payload={}),expression="original.get('result_operation_id') != original['operation_id'] or original.get('result_payload') != payload")
+        writer('writer.result', 'foreign_result_operation', original=dict(o, result_operation_id='op:foreign'), expression="original.get('result_operation_id') != original['operation_id'] or not exact_value(original.get('result_payload'), payload)")
+        writer('writer.result', 'foreign_result_payload', original=dict(o,result_payload={}),expression="original.get('result_operation_id') != original['operation_id'] or not exact_value(original.get('result_payload'), payload)")
         for field in m.ORIGINAL_JOINS:
             joins=copy.deepcopy(o['envelope_joins']);joins[field]='foreign'
-            writer('writer.original_joins', 'original_join_'+field, original=dict(o,envelope_joins=joins), expression="any(event[k] != original['envelope_joins'][k] for k in ORIGINAL_JOINS)")
+            writer('writer.original_joins', 'original_join_'+field, original=dict(o,envelope_joins=joins), expression="type(original.get('envelope_joins')) is not dict or set(original['envelope_joins']) != set(ORIGINAL_JOINS) or any(not exact_value(original['envelope_joins'][k], event[k]) for k in ORIGINAL_JOINS)")
         # Envelope/project join: keep owner-result and all lineage observations valid.
         project=next((v for v in row['scope_variants'] if v['event']['scope_kind']=='project'),dict(event=e,original_operation=o))
         project_e,project_o=project['event'],project['original_operation']
@@ -122,18 +122,18 @@ def catalogue(m, fixtures):
         for c in row['producer_witness_negatives']:
             add('producer.witness',family+':'+c['case_id'],'producer_witness_allowed',
                 (family,row['producer_witness_positive']),(family,c['witness']),
-                [('return witness == required','return True')])
+                [('return exact_value(witness, required)','return True')])
         payload=row['positive_payload']
         if row['scope_policy']=='project_only':
             add('semantic.project',family+':real_project','semantic',(payload,row['scope_policy'],family),
-                (dict(payload,project_id=None),row['scope_policy'],family),no_if("scope == 'project_only' and not payload['project_id']"))
+                (dict(payload,project_id=None),row['scope_policy'],family),no_if("scope == 'project_only' and (type(payload['project_id']) is not str or not payload['project_id'])"))
         if 'after_revision' in payload:
             add('semantic.revision',family+':revision_successor','semantic',(payload,row['scope_policy'],family),
-                (dict(payload,after_revision=payload['before_revision']),row['scope_policy'],family),no_if("'after_revision' in payload and payload['after_revision'] != payload['before_revision'] + 1"))
+                (dict(payload,after_revision=payload['before_revision']),row['scope_policy'],family),no_if("'after_revision' in payload and (not integer_type(None, payload['after_revision']) or not integer_type(None, payload['before_revision']) or payload['after_revision'] != payload['before_revision'] + 1)"))
         if family=='lsp.server.lifecycle_changed':
             add('semantic.edge',family+':lifecycle_edge','semantic',(payload,row['scope_policy'],family),
                 (dict(payload,state=payload['previous_state']),row['scope_policy'],family),no_if("event == 'lsp.server.lifecycle_changed' and payload['previous_state'] == payload['state']"))
-        add('retry.semantic_conflict',family+':changed_digest','replay_decision',('a','a','ref:original'),('a','b','ref:original'),no_if('original_digest != retry_digest'),lambda x:x[0]=='return_original_without_effect')
+        add('retry.semantic_conflict',family+':changed_digest','replay_decision',('a','a','ref:original'),('a','b','ref:original'),no_if('type(original_digest) is not str or type(retry_digest) is not str or type(original_receipt) is not str or original_digest != retry_digest'),lambda x:x[0]=='return_original_without_effect')
         hist=row['historical_reader_only']
         add('append.replay_policy',family+':append_policy','append_policy_refusal',(e,),(hist['stored_event'],),
             [("return 'replay_only_not_appendable' if event.get('replay_policy') == 'projector_replay_only' else None",'return None')],lambda x:x is None)
@@ -183,7 +183,7 @@ def catalogue(m, fixtures):
             add('receipt.full_value',family+':forged_'+field,'resolve_full_value',(row,e,a),(row,dict(e,**{field:value}),a),
                 no_if("commitment['sha256'] != hashlib.sha256(requested_preimage).hexdigest() or commitment['sha256'] != hashlib.sha256(stored_preimage).hexdigest()"))
         add('receipt.protected_authority',family+':unprotected_original','resolve_original',(row,e,a),(row,e,dict(a,protected_authority_current=False)),
-            [(" or not authority['protected_authority_current']",'')])
+            [(" or authority['protected_authority_current'] is not True",'')])
         fields=['event_id','scope_partition','event_type','idempotency_key','producer_semantic_digest','storage_instance_id']
         for field in fields:
             value='f'*64 if field=='producer_semantic_digest' else 'foreign'
@@ -194,7 +194,7 @@ def catalogue(m, fixtures):
         for field in ['event_id','sequence_id','segment_ref','byte_offset']:
             value=a['original_append_result'][field];value=value+1 if isinstance(value,int) else value+':foreign'
             bad=change(a,['original_append_result',field],value)
-            add('receipt.append_result',family+':result_'+field,'resolve_original',(row,e,a),(row,e,bad),no_if("result != {'event_id': stored['event_id'], 'sequence_id': stored['sequence_id'], 'segment_ref': custody['original_segment_ref'], 'byte_offset': receipt['byte_offset']}"))
+            add('receipt.append_result',family+':result_'+field,'resolve_original',(row,e,a),(row,e,bad),no_if("not exact_value(result, {'event_id': stored['event_id'], 'sequence_id': stored['sequence_id'], 'segment_ref': custody['original_segment_ref'], 'byte_offset': receipt['byte_offset']})"))
         for field in ['event_id','sequence_id']:
             value=a['first_append_receipt'][field];value=value+1 if isinstance(value,int) else value+':foreign'
             bad=change(a,['stored_custody','first_append_receipt',field],value)
@@ -205,7 +205,7 @@ def catalogue(m, fixtures):
         for field in a['first_append_receipt']:
             value=a['first_append_receipt'][field];value=value+1 if isinstance(value,int) else value+':foreign'
             bad=change(a,['first_append_receipt',field],value)
-            add('receipt.original_receipt',family+':original_receipt_'+field,'resolve_original',(row,e,a),(row,e,bad),no_if("receipt != authority['first_append_receipt']"))
+            add('receipt.original_receipt',family+':original_receipt_'+field,'resolve_original',(row,e,a),(row,e,bad),no_if("not exact_value(authority['first_append_receipt'], receipt)"))
         pub=row['publication_positive']
         bad=change(pub,['event','actor_ref'],'ref:foreign')
         add('append.current_event',family+':append_original_event','publication',(row,pub),(row,bad),no_if("not valid_event(row, state['event'], state['original_operation'])"),lambda x:x['durable_events']==1)
@@ -216,15 +216,15 @@ def catalogue(m, fixtures):
             add('append.'+field,family+':'+field,'publication',(row,pub),(row,dict(pub,**{field:False})),edits,lambda x:x['terminal'])
         for gate in m.ADMISSION_GATES:
             add('append.'+gate,family+':cut_'+gate,'publication',(row,pub),(row,dict(pub,**{gate:False})),
-                [('state[k] for k in ADMISSION_GATES',f"state[k] for k in ADMISSION_GATES if k != {gate!r}")],lambda x:x['durable_events']==1)
+                [('state[k] is True for k in ADMISSION_GATES',f"state[k] is True for k in ADMISSION_GATES if k != {gate!r}")],lambda x:x['durable_events']==1)
         for field in ['admission_epoch','current_admission_epoch']:
-            add('append.epoch',family+':'+field,'publication',(row,pub),(row,dict(pub,**{field:2})),no_if("state['admission_epoch'] != original['accepted_admission_epoch'] or original['accepted_admission_epoch'] != state['current_admission_epoch']"),lambda x:x['durable_events']==1)
+            add('append.epoch',family+':'+field,'publication',(row,pub),(row,dict(pub,**{field:2})),no_if("not all(integer_type(None, v) for v in (state['admission_epoch'], original['accepted_admission_epoch'], state['current_admission_epoch'])) or state['admission_epoch'] != original['accepted_admission_epoch'] or original['accepted_admission_epoch'] != state['current_admission_epoch']"),lambda x:x['durable_events']==1)
         for field in ['current_owner_session_id','current_restore_occurrence_id']:
-            add('append.session_restore',family+':'+field,'publication',(row,pub),(row,dict(pub,**{field:'foreign'})),no_if("original['accepted_session_id'] != state['current_owner_session_id'] or original['restore_occurrence_id'] != state['current_restore_occurrence_id']"),lambda x:x['durable_events']==1)
+            add('append.session_restore',family+':'+field,'publication',(row,pub),(row,dict(pub,**{field:'foreign'})),no_if("type(original['accepted_session_id']) is not str or type(original['restore_occurrence_id']) is not str or not exact_value(state['current_owner_session_id'], original['accepted_session_id']) or not exact_value(state['current_restore_occurrence_id'], original['restore_occurrence_id'])"),lambda x:x['durable_events']==1)
         for field in ['frame_written','group_synced']:
-            add('append.durability',family+':'+field,'publication',(row,pub),(row,dict(pub,**{field:False})),no_if("not state['frame_written'] or not state['group_synced']"),lambda x:x['durable_events']==1)
+            add('append.durability',family+':'+field,'publication',(row,pub),(row,dict(pub,**{field:False})),no_if("state['frame_written'] is not True or state['group_synced'] is not True"),lambda x:x['durable_events']==1)
         bad=change(pub,['first_append_receipt','sequence_id'],42)
-        add('append.receipt_delivery_identity',family+':delivered_receipt','publication',(row,pub),(row,bad),no_if("replay is None or replay[1] != state['first_append_receipt']"),lambda x:x['terminal'])
+        add('append.receipt_delivery_identity',family+':delivered_receipt','publication',(row,pub),(row,bad),no_if("replay is None or not exact_value(state['first_append_receipt'], replay[1])"),lambda x:x['terminal'])
         read=row['reader_positive']
         for c in row['reader_cases']:
             if c['case_id'].startswith('forged_storage_'):
@@ -236,12 +236,12 @@ def catalogue(m, fixtures):
                 add('reader.token_identity',family+':operating_'+c['case_id'],'reader_result',(row,read),(row,bad),
                     [("and token_matches_original(state['live_token'], state['retained_authority'])",'and True')],lambda x:x=='available')
         for field in ['reader_enabled','permission_current','source_present','deletion_clear','hold_allows_disclosure','current_frontier_verified','version']:
-            old="state['version'] == '1.0.0'" if field=='version' else 'state['+repr(field)+']'
-            edits=[('and '+old,'and True')] if field!='reader_enabled' else [("state['reader_enabled'] and state['permission_current']","True and state['permission_current']")]
+            old="state['version'] == '1.0.0'" if field=='version' else 'state['+repr(field)+'] is True'
+            edits=[('and '+old,'and True')] if field!='reader_enabled' else [("state['reader_enabled'] is True and state['permission_current'] is True","True and state['permission_current'] is True")]
             # Restrict first occurrence for reader gates below in source edits.
             add('reader.'+field,family+':reader_'+field,'reader_result',(row,read),(row,dict(read,**{field:'2.0.0' if field=='version' else False})),edits,lambda x:x=='available')
         bad=change(read,['selected_token','redb_snapshot_id'],'snapshot:stale')
-        add('reader.selected_token',family+':selected_snapshot','reader_result',(row,read),(row,bad),[("state['live_token'] == state['selected_token']",'True')],lambda x:x=='available')
+        add('reader.selected_token',family+':selected_snapshot','reader_result',(row,read),(row,bad),[("exact_value(state['selected_token'], state['live_token'])",'True')],lambda x:x=='available')
         rebuild=row['rebuild_positive']
         for c in row['rebuild_cases']:
             if c['case_id'].startswith('forged_storage_') or c['case_id'] in (
@@ -257,13 +257,13 @@ def catalogue(m, fixtures):
                 add(guard,family+':operating_'+c['case_id'],'rebuild_publication',(row,rebuild),(row,bad),edits,lambda x,old=rebuild['old_publication']:x!=old)
         for gate in m.REBUILD_GATES:
             add('rebuild.'+gate,family+':rebuild_'+gate,'rebuild_publication',(row,rebuild),(row,dict(rebuild,**{gate:False})),
-                [('state[k] for k in REBUILD_GATES',f"state[k] for k in REBUILD_GATES if k != {gate!r}")],lambda x:x!=rebuild['old_publication'])
+                [('state[k] is True for k in REBUILD_GATES',f"state[k] is True for k in REBUILD_GATES if k != {gate!r}")],lambda x:x!=rebuild['old_publication'])
         add('rebuild.version',family+':rebuild_version','rebuild_publication',(row,rebuild),(row,dict(rebuild,version='2.0.0')),
             [("state['version'] != '1.0.0' or ",'')],lambda x:x!=rebuild['old_publication'])
         bad=change(rebuild,['new_checkpoint','frontier_revision'],2)
-        add('checkpoint.outer_revision',family+':outer_revision','checkpoint_matches_original',(rebuild,),(bad,),[("checkpoint.get('frontier_revision') == token['frontier_revision']",'True')])
+        add('checkpoint.outer_revision',family+':outer_revision','checkpoint_matches_original',(rebuild,),(bad,),[("exact_value(checkpoint.get('frontier_revision'), token['frontier_revision'])",'True')])
         bad=change(rebuild,['new_checkpoint','durable_read_token','frontier_sha256'],'d'*64)
-        add('checkpoint.selected_token',family+':checkpoint_selected','checkpoint_matches_original',(rebuild,),(bad,),[("token == {k: v for k, v in selected.items() if k != 'redb_snapshot_id'}",'True')])
+        add('checkpoint.selected_token',family+':checkpoint_selected','checkpoint_matches_original',(rebuild,),(bad,),[("exact_value(token, {k: v for k, v in selected.items() if k != 'redb_snapshot_id'})",'True')])
         for key,expr in [('storage_instance_id',"token['storage_instance_id'] == storage"),('source_storage',"token['source_selection']['storage_instance_id'] == storage"),('checkpoint_key',"token['checkpoint_key'] == 'event_record_index_checkpoint.v1:' + storage"),('dataset_generation',"token['index_dataset_name'] == 'event_record_index.v2@' + token['generation_id']")]:
             token=copy.deepcopy(read['live_token'])
             if key=='source_storage':token['source_selection']['storage_instance_id']='22222222-2222-4222-8222-222222222222'
@@ -281,7 +281,7 @@ def catalogue(m, fixtures):
             bad_a['stored_custody']['original_event_value_commitment']['sha256']=hashlib.sha256(m.full_value_preimage(bad_e)).hexdigest()
             add('history.'+key,family+':retained_'+key,'retained_event_valid',retained,(row,bad_e,bad_a,read['live_token']),[(expr,'True')])
         bad=change(read['retained_authority'],['source_selection','recovery_epoch'],1)
-        add('history.source_selection',family+':retained_source','retained_event_valid',retained,(row,e,bad,read['live_token']),[("authority['source_selection'] == selected['source_selection']",'True')])
+        add('history.source_selection',family+':retained_source','retained_event_valid',retained,(row,e,bad,read['live_token']),[("exact_value(authority['source_selection'], selected['source_selection'])",'True')])
         # All authored checkpoint grammar negatives, now with coherent copies.
         for c in row['rebuild_cases']:
             if 'trailing_LF' not in c['case_id'] and not c['case_id'].startswith('checkpoint_generation_'):
@@ -324,22 +324,22 @@ def catalogue(m, fixtures):
             bad=copy.deepcopy(evt);bad['payload']={'untrusted':'inline alongside external'}
             add('payload.external_exclusivity',family+':external_inline','resolved_payload',positive,(bad,ps,storage),no_if("body != {} or not isinstance(storage, dict)"),lambda x:x is not None)
             bad=change(storage,['descriptor','blake3_id'],'f'*64)
-            add('payload.external_descriptor',family+':external_descriptor','resolved_payload',positive,(evt,ps,bad),no_if("descriptor['byte_size'] <= INLINE_LIMIT or storage.get('descriptor') != descriptor"),lambda x:x is not None)
+            add('payload.external_descriptor',family+':external_descriptor','resolved_payload',positive,(evt,ps,bad),no_if("descriptor['byte_size'] <= INLINE_LIMIT or not exact_value(storage.get('descriptor'), descriptor)"),lambda x:x is not None)
             small=copy.deepcopy(e);desc=m.payload_descriptor(small['payload']);small_storage=dict(storage,body=small['payload'],descriptor=desc)
             small['payload']={};small['payload_ref']=m.payload_reference(desc)
-            add('payload.external_descriptor',family+':external_below_threshold','resolved_payload',positive,(small,ps,small_storage),no_if("descriptor['byte_size'] <= INLINE_LIMIT or storage.get('descriptor') != descriptor"),lambda x:x is not None)
+            add('payload.external_descriptor',family+':external_below_threshold','resolved_payload',positive,(small,ps,small_storage),no_if("descriptor['byte_size'] <= INLINE_LIMIT or not exact_value(storage.get('descriptor'), descriptor)"),lambda x:x is not None)
             bad=dict(evt,payload_ref='ref:foreign')
             add('payload.external_ref',family+':external_ref','resolved_payload',positive,(bad,ps,storage),no_if("event['payload_ref'] != payload_reference(descriptor)"),lambda x:x is not None)
         # Legacy helper fences are independently enforced as well as the actual
         # operating path. Every conjunct has its own single-fact witness.
         allowed=('current','current',True,True,False,'1.0.0')
         for i,(name,expr,value) in enumerate([
-            ('token','current_token == selected_token','stale'),
-            ('permission','permission',False),('source','source_present',False),
-            ('withdrawal','not withdrawn',True),('version',"version == '1.0.0'",'2.0.0'),
+            ('token','type(current_token) is str and type(selected_token) is str and exact_value(current_token, selected_token)','stale'),
+            ('permission','permission is True',False),('source','source_present is True',False),
+            ('withdrawal','withdrawn is False',True),('version',"version == '1.0.0'",'2.0.0'),
         ]):
             index=[1,2,3,4,5][i];bad=list(allowed);bad[index]=value
-            add('read_helper.'+name,family+':read_helper_'+name,'read_allowed',allowed,tuple(bad),[("return current_token == selected_token and permission and source_present and not withdrawn and version == '1.0.0'","return "+' and '.join(v for j,v in enumerate(['current_token == selected_token','permission','source_present','not withdrawn',"version == '1.0.0'"]) if j!=i))])
+            add('read_helper.'+name,family+':read_helper_'+name,'read_allowed',allowed,tuple(bad),[("return type(current_token) is str and type(selected_token) is str and exact_value(current_token, selected_token) and permission is True and source_present is True and withdrawn is False and version == '1.0.0'","return "+' and '.join(v for j,v in enumerate(['type(current_token) is str and type(selected_token) is str and exact_value(current_token, selected_token)','permission is True','source_present is True','withdrawn is False',"version == '1.0.0'"]) if j!=i))])
         schema=json.loads((ROOT/row['schema']).read_text())
         broken=copy.deepcopy(schema);broken.setdefault('$defs',{})['unused']={'$ref':row['unresolved_reference_negative']}
         add('schema.references',family+':unused_unresolved_ref','schema_references_valid',(schema,),(broken,),
@@ -370,10 +370,21 @@ def catalogue(m, fixtures):
                 # vacuously valid for such values, and 'not' then refuses it.
                 # Remove that redundant type fence with the explicit type.
                 schema_probe(path,'type',change(payload,value_path,{}),also=('not',) if 'not' in shape else ())
+                current=payload
+                for key in value_path: current=current[key]
+                for i,bad in enumerate(row['wrong_type_cases']['integer' if typ=='integer' else 'other']):
+                    if type(bad) is type(current) or bad is None and 'anyOf' in path: continue
+                    schema_probe(path,'type',change(payload,value_path,bad),label='wrong_type:'+'.'.join(map(str,value_path))+':'+str(i),also=('not',) if 'not' in shape else ())
             if 'const' in shape:
                 schema_probe(path,'const',change(payload,value_path,'other'))
+                for i,bad in enumerate(row['wrong_type_cases']['other']):
+                    if type(bad) is str: continue
+                    schema_probe(path,'const',change(payload,value_path,bad),label='wrong_type_const:'+'.'.join(map(str,value_path))+':'+str(i))
             if 'enum' in shape:
                 schema_probe(path,'enum',change(payload,value_path,'OtherState'))
+                for i,bad in enumerate(row['wrong_type_cases']['other']):
+                    if type(bad) is str: continue
+                    schema_probe(path,'enum',change(payload,value_path,bad),label='wrong_type_enum:'+'.'.join(map(str,value_path))+':'+str(i))
             if 'minLength' in shape:
                 schema_probe(path,'minLength',change(payload,value_path,''))
             if 'maxLength' in shape:
@@ -434,12 +445,167 @@ def catalogue(m, fixtures):
     for token in ('settings.layer.changed','owner-adoption','owner_contract_missing','disabled'):
         note=docs['exclusions']['notes'][command]
         settings('dry_exclusion','exclusion:'+token,change(docs,['exclusions','notes',command],note.replace(token,'absent-token')),[("return all(token in exclusion for token in ('settings.layer.changed', 'owner-adoption', 'owner_contract_missing', 'disabled'))",'return True')])
-    add('datetime.timezone','datetime:timezone','utc_datetime',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00',),[('return parsed.tzinfo is not None','return True')])
-    add('datetime.parse','datetime:parse','utc_datetime',('2026-11-04T12:00:00Z',),('not-a-date',),
-        [('return parsed.tzinfo is not None\n    except ValueError:\n        return False',
-          'return parsed.tzinfo is not None\n    except ValueError:\n        return True')])
+    type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants)
     numeric_catalogue(m, fixtures, add, change)
     return probes,mutants
+
+
+def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):
+    lexical = [("if re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z', value) is None:", 'if False:')]
+    parse = [('return parsed.tzinfo is not None\n    except ValueError:\n        return False',
+              'return parsed.tzinfo is not None\n    except ValueError:\n        return True')]
+    timezone = [('return parsed.tzinfo is not None', 'return True')]
+    date_edits = {'lexical_negative': lexical, 'calendar_negative': parse,
+                  'timezone_negative': lexical + timezone,
+                  'lexical_parse_negative': lexical + parse}
+    date_guards = {'lexical_negative': 'datetime.lexical', 'calendar_negative': 'datetime.calendar',
+                   'timezone_negative': 'datetime.timezone',
+                   'lexical_parse_negative': 'datetime.parse'}
+    add('datetime.timezone','datetime:timezone','utc_datetime',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00',),lexical+timezone)
+    add('datetime.parse','datetime:parse','utc_datetime',('2026-11-04T12:00:00Z',),('not-a-date',),lexical+parse)
+    def old(guard, label, fn, positive, negative, accept=bool):
+        add(guard, label, fn, positive, negative, mutants[guard], accept)
+    def paths(value, prefix=()):
+        yield prefix, value
+        if type(value) is dict:
+            for k,v in value.items(): yield from paths(v, prefix+(k,))
+        elif type(value) is list:
+            for k,v in enumerate(value): yield from paths(v, prefix+(k,))
+    def alternatives(row, value):
+        key = 'boolean' if type(value) is bool else 'integer' if type(value) is int else 'other'
+        # A different value with the correct type is another guard's concern.
+        return [v for v in row['wrong_type_cases'][key] if type(v) is not type(value)]
+    for row in m.families_for_run(fixtures):
+        family=row['event_type'];pub=row['publication_positive'];e=row['positive_event_record'];a=row['receipt_authority'];o=row['original_operation']
+        for kind, guard in date_guards.items():
+            for i,value in enumerate(row['timestamp_representation_cases'][kind]):
+                # No stale original/result/full-value copy: the one timestamp
+                # fact and every observation/commitment are changed together.
+                for field in ('occurred_at_utc','observed_at_utc','persisted_at_utc'):
+                    bad=m.timestamp_state(row,value,field)
+                    add(guard,family+':timestamp:'+field+':'+kind+':'+str(i),'publication',
+                        (row,pub),(row,bad),date_edits[kind],lambda x:x['terminal'] is True)
+        for guard,fn,value,args in (
+            ('envelope.schema','envelope_valid',e,()),
+            ('custody.schema','custody_valid',a['stored_custody'],()),
+            ('token.schema','token_schema_valid',row['durable_read_token'],(True,)),
+        ):
+            for path,leaf in paths(value):
+                # EventRecord's opaque logical payload is governed by its own
+                # closed schema, not by the envelope's object-only boundary.
+                if guard=='envelope.schema' and len(path)>1 and path[0]=='payload': continue
+                for i,bad in enumerate(alternatives(row,leaf)):
+                    negative=bad if not path else change(value,path,bad)
+                    # Null or flexible enum/anyOf slots may legitimately admit
+                    # another JSON type; only the schema's declared domain is a refusal.
+                    if fn=='token_schema_valid': valid=m.read_token_validator(True).is_valid(negative)
+                    else: valid=getattr(m,fn)(negative)
+                    if valid: continue
+                    old(guard,family+':type:boundary:'+guard+':'+'.'.join(map(str,path))+':'+str(i),fn,(value,)+args,(negative,)+args)
+        for gate in m.ADMISSION_GATES:
+            for i,value in enumerate(row['wrong_type_cases']['boolean']):
+                old('append.'+gate,family+':type:append:'+gate+':'+str(i),'publication',
+                    (row,pub),(row,dict(pub,**{gate:value})),lambda x:x['durable_events']==1)
+        for gate in ('frame_written','group_synced'):
+            for i,value in enumerate(row['wrong_type_cases']['boolean']):
+                old('append.durability',family+':type:append:'+gate+':'+str(i),'publication',
+                    (row,pub),(row,dict(pub,**{gate:value})),lambda x:x['durable_events']==1)
+        for gate in ('receipt_delivery','terminal_delivery'):
+            for i,value in enumerate(row['wrong_type_cases']['boolean']):
+                add('append.delivery_types',family+':type:delivery:'+gate+':'+str(i),'delivery_types_valid',
+                    (pub,),(dict(pub,**{gate:value}),),[("return type(state['receipt_delivery']) is bool and type(state['terminal_delivery']) is bool",'return True')])
+        for mode, gates, fn, accept in (
+            ('reader',('reader_enabled','permission_current','source_present','deletion_clear','hold_allows_disclosure','current_frontier_verified'),'reader_result',lambda x:x=='available'),
+            ('rebuild',m.REBUILD_GATES,'rebuild_publication',lambda x,old=row['rebuild_positive']['old_publication']:x!=old),
+        ):
+            state=row[mode+'_positive']
+            for gate in gates:
+                for i,value in enumerate(row['wrong_type_cases']['boolean']):
+                    old(mode+'.'+gate,family+':type:'+mode+':'+gate+':'+str(i),fn,(row,state),(row,dict(state,**{gate:value})),accept)
+        for i,value in enumerate(row['wrong_type_cases']['boolean']):
+            old('receipt.protected_authority',family+':type:protected:'+str(i),'resolve_original',
+                (row,e,a),(row,e,dict(a,protected_authority_current=value)),lambda x:x is not None)
+        for path in (['admission_epoch'],['current_admission_epoch'],['original_operation','accepted_admission_epoch']):
+            for i,value in enumerate(row['wrong_type_cases']['integer']):
+                old('append.epoch',family+':type:epoch:'+'.'.join(path)+':'+str(i),'publication',
+                    (row,pub),(row,change(pub,path,value)),lambda x:x['durable_events']==1)
+        for path,value in paths(row['producer_witness_positive']):
+            for i,bad in enumerate(alternatives(row,value)):
+                witness=bad if not path else change(row['producer_witness_positive'],path,bad)
+                old('producer.witness',family+':type:witness:'+'.'.join(map(str,path))+':'+str(i),
+                    'producer_witness_allowed',(family,row['producer_witness_positive']),(family,witness))
+        # Source-side typed joins, tested at the exact boundary. Mutating the
+        # caller/event side alone would leave a stale digest or receipt copy.
+        joins = [
+            ('writer.result','valid_event',(row,e,o),2,['result_payload']),
+            ('writer.original_joins','valid_event',(row,e,o),2,['envelope_joins']),
+            ('receipt.append_result','resolve_original',(row,e,a),2,['original_append_result']),
+            ('receipt.original_receipt','resolve_original',(row,e,a),2,['first_append_receipt']),
+            ('append.receipt_delivery_identity','publication',(row,pub),1,['first_append_receipt']),
+            ('history.source_selection','retained_event_valid',(row,e,row['reader_positive']['retained_authority'],row['reader_positive']['live_token']),2,['source_selection']),
+            ('reader.selected_token','reader_result',(row,row['reader_positive']),1,['selected_token']),
+            ('checkpoint.outer_revision','checkpoint_matches_original',(row['rebuild_positive'],),0,['new_checkpoint','frontier_revision']),
+        ]
+        for guard,fn,args,index,base_path in joins:
+            source=args[index]
+            value=source
+            for k in base_path:value=value[k]
+            for tail,leaf in paths(value):
+                # Whole envelope_joins shape has its own guard. Other whole
+                # structures compare directly without dereferencing the input.
+                for i,bad in enumerate(alternatives(row,leaf)):
+                    arguments=list(args);arguments[index]=change(source,base_path+list(tail),bad)
+                    accept=(lambda x:x['terminal'] is True) if fn=='publication' else (lambda x:x=='available') if fn=='reader_result' else bool if fn in ('valid_event','retained_event_valid','checkpoint_matches_original') else lambda x:x is not None
+                    old(guard,family+':type:join:'+guard+':'+'.'.join(map(str,tail))+':'+str(i),fn,args,tuple(arguments),accept)
+        external=next((c for c in row['payload_boundary_cases'] if c['case_id']=='external_16385'),None)
+        if external:
+            state=m.boundary_state(row,external);schema=json.loads((ROOT/row['schema']).read_text());storage=state['original_operation']['payload_storage'];evt=state['event']
+            for gate in ('pack_synced','index_synced','source_present','permission_current','deletion_clear','hold_allows_disclosure'):
+                for i,value in enumerate(row['wrong_type_cases']['boolean']):
+                    old('payload.external_'+gate,family+':type:external:'+gate+':'+str(i),'resolved_payload',
+                        (evt,schema,storage),(evt,schema,dict(storage,**{gate:value})),lambda x:x is not None)
+        for field,original_field in (('current_owner_session_id','accepted_session_id'),('current_restore_occurrence_id','restore_occurrence_id')):
+            for i,bad in enumerate(alternatives(row,pub[field])):
+                state=change(pub,['original_operation',original_field],bad)
+                state=change(state,[field],bad)
+                old('append.session_restore',family+':type:session:'+field+':'+str(i),'publication',(row,pub),(row,state),lambda x:x['durable_events']==1)
+        # Storage identity is independently captured by the original adapter.
+        # Recompute every derived identity observation; a stale key cannot
+        # accidentally enforce this type fence.
+        for i,bad in enumerate(alternatives(row,o['storage_instance_id'])):
+            event=copy.deepcopy(e);original=copy.deepcopy(o);original['storage_instance_id']=bad
+            identity=m.digest(family,bad,row['positive_payload']);event['event_id']='evt_'+identity
+            if event['scope_kind']=='project':event['idempotency_key']=family+':'+identity
+            add('writer.storage_identity_type',family+':type:original_storage:'+str(i),'valid_event',(row,e,o),(row,event,original),no_if("type(original.get('storage_instance_id')) is not str"))
+        for mode,fn,accept in (('reader','reader_result',lambda x:x=='available'),('rebuild','rebuild_publication',lambda x,old=row['rebuild_positive']['old_publication']:x!=old)):
+            state=row[mode+'_positive']
+            for i,bad in enumerate(alternatives(row,state['version'])):
+                old(mode+'.version',family+':type:version:'+mode+':'+str(i),fn,(row,state),(row,dict(state,version=bad)),accept)
+        for i,bad in enumerate(alternatives(row,'1.0.0')):
+            old('read_helper.version',family+':type:version:helper:'+str(i),'read_allowed',('current','current',True,True,False,'1.0.0'),('current','current',True,True,False,bad))
+        payload=row['positive_payload']
+        if row['scope_policy']=='project_only':
+            for i,bad in enumerate(alternatives(row,payload['project_id'])):
+                old('semantic.project',family+':type:semantic:project:'+str(i),'semantic',
+                    (payload,row['scope_policy'],family),(dict(payload,project_id=bad),row['scope_policy'],family))
+        if 'after_revision' in payload:
+            for field in ('before_revision','after_revision'):
+                for i,bad in enumerate(row['wrong_type_cases']['integer']):
+                    old('semantic.revision',family+':type:semantic:'+field+':'+str(i),'semantic',
+                        (payload,row['scope_policy'],family),(dict(payload,**{field:bad}),row['scope_policy'],family))
+        for i,bad in enumerate(row['wrong_type_cases']['other']):
+            if type(bad) is str: continue
+            old('retry.semantic_conflict',family+':type:retry_helper:digest:'+str(i),'replay_decision',
+                ('a','a','ref:original'),(bad,bad,'ref:original'),lambda x:x[0]=='return_original_without_effect')
+            old('retry.semantic_conflict',family+':type:retry_helper:receipt:'+str(i),'replay_decision',
+                ('a','a','ref:original'),('a','a',bad),lambda x:x[0]=='return_original_without_effect')
+            old('read_helper.token',family+':type:read_helper:token:'+str(i),'read_allowed',
+                ('current','current',True,True,False,'1.0.0'),(bad,bad,True,True,False,'1.0.0'))
+        allowed=('current','current',True,True,False,'1.0.0')
+        for index,guard in ((2,'read_helper.permission'),(3,'read_helper.source'),(4,'read_helper.withdrawal')):
+            for i,value in enumerate(row['wrong_type_cases']['boolean']):
+                bad=list(allowed);bad[index]=value
+                old(guard,family+':type:'+guard+':'+str(i),'read_allowed',allowed,tuple(bad))
 
 
 def numeric_catalogue(m, fixtures, add, change):
@@ -455,7 +621,7 @@ def numeric_catalogue(m, fixtures, add, change):
             'numeric.integer_codec_duplicate': integer_edits + codec_edits,
         }[guard]
         add(guard, family + ':numeric:' + label, fn, positive, negative, edits, accept)
-    for row in fixtures['families']:
+    for row in m.families_for_run(fixtures):
         family = row['event_type']
         for token in row['numeric_representation_cases']['upstream_aliases']:
             alias = json.loads(token)
@@ -533,10 +699,10 @@ def numeric_catalogue(m, fixtures, add, change):
             add(guard,family+':numeric:json_'+token,'current_json_valid',('1',),(token,),edits)
 
 
-def container_rules(fixtures, probes):
+def container_rules(m, fixtures, probes):
     """Composite JSON Schema gates, using the same already authored witnesses."""
     rules={}
-    for row in fixtures['families']:
+    for row in m.families_for_run(fixtures):
         schema=json.loads((ROOT/row['schema']).read_text())
         for field,shape in schema['properties'].items():
             base=['properties',field]
@@ -600,7 +766,10 @@ def invoke(m, probe, which):
 
 def normal_checks(namespace, fixtures, guard_first=None):
     m=SimpleNamespace(**namespace) if isinstance(namespace,dict) else namespace
-    probes,_=catalogue(m,fixtures)
+    probes=getattr(m, '_guard_probe_catalogue', None)
+    if probes is None:
+        probes,_=catalogue(m,fixtures)
+    probes=list(probes)
     if guard_first is not None:
         probes.sort(key=lambda p: p['guard'] != guard_first)
     for p in probes:
@@ -619,7 +788,13 @@ def expected_probe_ids(guard, probes, containers):
               or guard=='receipt.full_value' and p['guard'] in ('reader.retained_value','rebuild.retained_value')
               or guard=='token.schema' and (p['guard']=='token.durable_snapshot'
                   or p['guard']=='token.generation_dataset_grammar' and ':checkpoint_generation_' in p['label'])
-              or guard=='datetime.parse' and p['guard'].startswith('schema.') and p['guard'].endswith('.format')]
+              ]
+    if guard in ('datetime.timezone','datetime.parse'):
+        groups={'datetime.lexical'}
+        if guard=='datetime.parse': groups.add('datetime.calendar')
+        expected.extend(p['id'] for p in probes if p['guard'] in groups or guard=='datetime.parse' and p['guard'].startswith('schema.') and p['guard'].endswith('.format'))
+    if guard=='envelope.schema':
+        expected.extend(p['id'] for p in probes if p['guard'].startswith('datetime.') and any(':timestamp:'+field+':' in p['label'] for field in ('observed_at_utc','persisted_at_utc')))
     if guard=='numeric.integer_codec_duplicate':
         expected.extend(p['id'] for p in probes if p['guard'] in ('numeric.integer_form','numeric.msgpack_integer_form'))
     numeric_validator = {'envelope.schema':'envelope:', 'custody.schema':'custody:', 'token.schema':'token:'}.get(guard)
@@ -651,9 +826,10 @@ def main():
     source=SUBJECT.read_text();m=load(source)
     fixtures=json.loads((ROOT/'Plans/small_owner_event_fixtures.json').read_text())
     probes,mutants=catalogue(m,fixtures)
-    containers=container_rules(fixtures,probes)
+    containers=container_rules(m,fixtures,probes)
     mutants.update({guard:rule['edits'] for guard,rule in containers.items()})
     schema_owners={json.loads((ROOT/r['schema']).read_text())['$id']:r['event_type'] for r in fixtures['families']}
+    m._guard_probe_catalogue=probes
     normal_checks(m,fixtures)
     table=[]
     # Reuse an observed refusal only when the tested function and its complete
@@ -678,6 +854,9 @@ def main():
             return ast.dump(node)+''.join(closure(c,seen) for c in calls)
         return {name:hashlib.sha256(closure(name).encode()).hexdigest() for name in funcs}
     for guard,edits in mutants.items():
+        available_kib=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))
+        if available_kib < 6*1024*1024:
+            raise SystemExit('RESOURCE PAUSE: under 6 GiB available; no further guard run')
         if len(sys.argv)==3 and not re.search(sys.argv[2],guard):
             continue
         changed=source
@@ -689,6 +868,7 @@ def main():
             assert old in changed,(guard,old)
             changed=changed.replace(old,new)
         mutant=load(changed,schema_edits)
+        mutant._guard_probe_catalogue=probes
         prints=fingerprints(changed)
         flips=[];rejected=[];errors=[]
         expected=expected_probe_ids(guard,probes,containers)
