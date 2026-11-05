@@ -62,7 +62,7 @@ export default async function(t) {
       // Sampling starts in pointerdown capture, before owner press handlers and the first painted frame.
       await f.waitForTimeout(hold);
       const read=()=>f.evaluate(({sel,i})=>{const e=document.querySelectorAll(sel)[i],r=e.getBoundingClientRect(),kid=e.firstElementChild,ks=kid?getComputedStyle(kid):null;
-       return {x:r.x,y:r.y,w:r.width,h:r.height,transform:getComputedStyle(e).transform,active:e.matches(':active'),linkUnderline:!e.matches('.o55-link')||!kid||ks.textDecorationLine.includes('underline'),kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
+       return {x:r.x,y:r.y,w:r.width,h:r.height,transform:getComputedStyle(e).transform,active:e.matches(':active'),linkUnderline:!e.matches('.o55-link')||!kid||ks.textDecorationLine===getComputedStyle(e).textDecorationLine,kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
       let h=await read();
       if(isLink&&t.args.inventoryOut&&motion==='no-preference'&&!linkShot){await t.crop(`${look}-${screen}-link-held`,{x:off.x+rest.x,y:off.y+rest.y,width:rest.w,height:rest.h},'Native underline stays with the pressed text while the link target is stationary.');linkShot=true;}
       const drift=await f.evaluate(()=>({...window.__press.metrics}));
