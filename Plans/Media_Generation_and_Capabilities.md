@@ -943,7 +943,7 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 **Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
-> "The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account, auth mode, or API key for media generation."
+> "The current backend supports Image Generation only. To use Video/TTS/Music, use a provider route with verified generated-media support for that kind."
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
 

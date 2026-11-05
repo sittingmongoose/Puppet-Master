@@ -2,17 +2,17 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L904-L952
+Source lines: L903-L953
 
-Source SHA256: `28edb53e508961708b70c041ce43bb6a9d0cac80667419b95c8c9c470f88e8cf`
+Source SHA256: `1bb2689a68934137661ab94c681f63ad0789be26580c1e33f264295872f894c3`
 
 ---
 
 ## Typed controls, exact owner routes, and shared hover-overlay addendum - 2026-08-31
 
-Every actionable or focusable control on a touched surface carries exactly one canonical `data-command-id` or typed local `data-ui-action-id`. It also exposes current availability, a machine-readable disabled reason when unavailable, one owner/handler destination, and a deterministic result/error/return route. A command-required control cannot degrade into page-local mutation. A presentation-only control cannot manufacture a domain command. PMConcept7 controls remain simulation-marked until the native dispatcher and owner handler are observed.
+Every actionable or focusable control on a touched surface has exactly one canonical command binding or typed local UI action through its real owner. It also exposes current availability, a machine-readable disabled reason when unavailable, one owner/handler destination, and a deterministic result/error/exact return route. A command-required control cannot degrade into page-local mutation. A presentation-only control cannot manufacture a domain command. PMConcept7 controls remain simulation-marked until the native dispatcher and owner handler are observed.
 
-`PMHoverTag`/`HoverTagController` is one shared Final GUI overlay consumer. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. Three exemption kinds are documented: a picker plate (`menu`) and a labelled Settings field (`labelled-field`), both in FinalGUISpec F3-523 (amended 2026-10-17, DL-228; it read: one exception), and this one (DL-157, FinalGUISpec F3-590): inside an open assistant-chat activity bar domain preview, which is itself a hover surface, a control opens no hover tag, because the chat shows one hover surface at a time and a tag would replace the preview card under the pointer; such a control names itself by its visible text or accessible name, and a native `title` it carries there is the only tooltip it has. F3-590 lists the controls this covers. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, never covers a primary action (F3-523, DL-228), and uses the shared overlay root without changing document layout.
+The shared accessible hover overlay owned by FinalGUISpec F3-523 is one consumer of the shared overlay root. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. Three exemption kinds are documented: a picker plate (`menu`) and a labelled Settings field (`labelled-field`), both in FinalGUISpec F3-523 (amended 2026-10-17, DL-228; it read: one exception), and this one (DL-157, FinalGUISpec F3-590): inside an open assistant-chat activity bar domain preview, which is itself a hover surface, a control opens no hover tag, because the chat shows one hover surface at a time and a tag would replace the preview card under the pointer; such a control names itself by its visible text or accessible name, and a native `title` it carries there is the only tooltip it has. F3-590 lists the controls this covers. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, never covers a primary action (F3-523, DL-228), and uses the shared overlay root without changing document layout.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/touch_closure.json, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json
 
@@ -23,7 +23,7 @@ plan_unit_id: UIW-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action, one availability and disabled-reason contract, one owner route, one tested response and exact return, and a Touch Closure reverse-consumer row. The shared PMHoverTag overlay supplies stable accessible descriptions and theme-native pointer/focus presentation without changing accessible names, enabling disabled actions, dispatching domain work, or changing layout. Native title-only behavior, orphan controls, duplicate keys, missing bindings, inaccessible disabled controls, clipping, stale text, and undocumented exemptions fail the generated census. One exemption is documented (DL-157, F3-590). A control inside an open assistant-chat activity bar domain preview opens no hover tag, since a tag would replace the preview card, and keeps its visible text or accessible name, with a native title where F3-590 lists one; the census counts these as documented exemptions, not missing bindings.
+canonical_text: Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action, one availability and disabled-reason contract, one owner route, one tested response and exact return, and a Touch Closure reverse-consumer row. The shared hover overlay owned by FinalGUISpec F3-523 supplies stable aria-describedby descriptions and role=tooltip semantics and theme-native pointer/focus presentation without changing accessible names, enabling disabled actions, dispatching domain work, or changing layout. Native title-only behavior, orphan controls, duplicate keys, missing bindings, inaccessible disabled controls, clipping, stale text, and undocumented exemptions fail the generated census. The documented exemptions remain with F3-523 and F3-590 (DL-157, DL-228); general.interaction.show-tooltips hides visual paint only, retaining accessible descriptions. A control inside an open assistant-chat activity bar domain preview opens no hover tag, since a tag would replace the preview card, and keeps its visible text or accessible name, with a native title where F3-590 lists one; the census counts these as documented exemptions, not missing bindings.
 gui_related: true
 gui_classification_reason: Defines visible control activation, disabled behavior, hover tags, keyboard access, and exact return.
 split_recommended: false
@@ -38,9 +38,9 @@ acceptance_criteria:
   - The census treats the controls inside an open activity bar domain preview that F3-590 lists as documented exemptions (DL-157) and still fails a hover tag on any of them.
   - PMConcept7 remains simulation-only until native dispatcher and handler evidence exists.
 validation_surfaces:
-  - Plans/FinalGUISpec.md#F3-523 (hover/focus, Escape, departure grace, geometry, themes and reduced-motion acceptance)
-  - Plans/UI_Wiring_Rules.md#UIW-013 (accessible names/descriptions, disabled focus without activation, keyboard parity and documented exemptions)
-  - python3 scripts/pm-touch-closure-verify.py
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Wiring_Rules.md
+  - scripts/pm-touch-closure-verify.py
 risk_class: orphan_control_or_inaccessible_hover_overlay
 reasoning_tier: high
 context_scope: typed_controls_and_hover_overlay
@@ -49,7 +49,9 @@ node_compile_hint: {mode: typed_control_and_hover_binding, create_worknodes: fal
 source_lineage:
   - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
   - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
-preserved_exact_tokens: [PMHoverTag, HoverTagController, aria-describedby, role=tooltip, general.interaction.show-tooltips]
+  - "DL-260 source lineage only (no product API or implementation obligation): PMHoverTag/HoverTagController were concept overlay names; F3-523 owns the shared product hover overlay."
+  - "DL-260/DL-280 source lineage only (no product DOM or exact-token obligation): data-command-id and data-ui-action-id were concept census instrumentation; product controls bind one canonical command or typed local UI action through the actual owner."
+preserved_exact_tokens: [ aria-describedby, role=tooltip, general.interaction.show-tooltips]
 negative_constraints:
   - Do not rely on native title as the user-facing tooltip, except for the controls inside an open activity bar domain preview that F3-590 lists (DL-157).
   - Do not enable a disabled control merely to make it focusable.

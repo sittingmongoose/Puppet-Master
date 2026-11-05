@@ -71,9 +71,9 @@
     "command_action_parity": "command_result.command_id must equal command_result.output.action"
   },
   "fixture_summary": {
-    "total_cases": 139,
-    "positive_cases": 89,
-    "negative_cases": 50,
+    "total_cases": 151,
+    "positive_cases": 93,
+    "negative_cases": 58,
     "preserved_system_positive_cases": 6,
     "preserved_system_negative_cases": 6,
     "merged_short_positive_cases": 41,
@@ -86,7 +86,9 @@
     "client_trust_positive_cases": 15,
     "client_trust_negative_cases": 9,
     "srv_013_positive_cases": 1,
-    "srv_013_negative_cases": 1
+    "srv_013_negative_cases": 1,
+    "settings_home_move_positive_cases": 4,
+    "settings_home_move_negative_cases": 6
   },
   "source_sha256": {
     "Plans/server_system_contracts.schema.json": "7d0b96e9154107046d10cdd5349a2d1dd173502ae9c0460cd5a9b0d86b5f63ad",
@@ -2862,6 +2864,278 @@
         "expected_event_types": [],
         "runtime_claim": false
       }
+    },
+    {
+      "name": "wonder-settings-home-preview",
+      "definition": "settings_home_move_request",
+      "value": {
+        "command_id": "cmd.server.settings_home.move",
+        "operation": "preview",
+        "source_server_id": "server:old-home",
+        "destination_server_id": "server:new-home",
+        "expected_home_generation": 7,
+        "source_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:old-home:4",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 4,
+          "generation": 7
+        },
+        "destination_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:new-home:4",
+          "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "revision": 4,
+          "generation": 7
+        },
+        "trust_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "trust:settings-follow:4",
+          "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "revision": 4,
+          "generation": 7
+        },
+        "copy_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "history_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "old_writer_fence_evidence": null,
+        "preview_sha256": null,
+        "idempotency_key": "idempotency:settings-home:preview:1",
+        "person_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "human:home-choice:1",
+          "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "revision": 4,
+          "generation": 7
+        },
+        "return_context_ref": "return:settings:servers:1"
+      }
+    },
+    {
+      "name": "wonder-settings-home-apply",
+      "definition": "settings_home_move_request",
+      "value": {
+        "command_id": "cmd.server.settings_home.move",
+        "operation": "apply",
+        "source_server_id": "server:old-home",
+        "destination_server_id": "server:new-home",
+        "expected_home_generation": 7,
+        "source_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:old-home:4",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 4,
+          "generation": 7
+        },
+        "destination_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:new-home:4",
+          "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "revision": 4,
+          "generation": 7
+        },
+        "trust_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "trust:settings-follow:4",
+          "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "revision": 4,
+          "generation": 7
+        },
+        "copy_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "history_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "old_writer_fence_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "lease-revocation:old-home:7",
+          "source_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "revision": 4,
+          "generation": 7
+        },
+        "preview_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "idempotency_key": "idempotency:settings-home:apply:1",
+        "person_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "human:home-choice:1",
+          "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "revision": 4,
+          "generation": 7
+        },
+        "return_context_ref": "return:settings:servers:1"
+      }
+    },
+    {
+      "name": "wonder-settings-home-promotion-preview",
+      "definition": "settings_home_move_request",
+      "value": {
+        "command_id": "cmd.server.settings_home.move",
+        "operation": "preview",
+        "source_server_id": "server:old-home",
+        "destination_server_id": "server:new-home",
+        "expected_home_generation": 7,
+        "source_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:old-home:4",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 4,
+          "generation": 7
+        },
+        "destination_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:new-home:4",
+          "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "revision": 4,
+          "generation": 7
+        },
+        "trust_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "trust:settings-follow:4",
+          "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "revision": 4,
+          "generation": 7
+        },
+        "copy_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "history_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "old_writer_fence_evidence": null,
+        "preview_sha256": null,
+        "idempotency_key": "idempotency:settings-home:promotion-preview:1",
+        "person_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "human:home-choice:1",
+          "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "revision": 4,
+          "generation": 7
+        },
+        "return_context_ref": "return:settings:servers:1",
+        "schema_id": "pm.server.settings_home.promotion_request.v1",
+        "schema_version": "1.0.0",
+        "recovery_kind": "lost_home_promotion",
+        "last_known_copy_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "last-known-copy:new-home:4",
+          "source_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "revision": 4,
+          "generation": 7
+        },
+        "copy_as_of_utc": "2026-11-03T10:45:00Z",
+        "loss_acknowledgement_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "human:acknowledged-loss-window:1",
+          "source_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "revision": 4,
+          "generation": 7
+        }
+      }
+    },
+    {
+      "name": "wonder-settings-home-promotion-apply",
+      "definition": "settings_home_move_request",
+      "value": {
+        "command_id": "cmd.server.settings_home.move",
+        "operation": "apply",
+        "source_server_id": "server:old-home",
+        "destination_server_id": "server:new-home",
+        "expected_home_generation": 7,
+        "source_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:old-home:4",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 4,
+          "generation": 7
+        },
+        "destination_catalog_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "catalog:new-home:4",
+          "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "revision": 4,
+          "generation": 7
+        },
+        "trust_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "trust:settings-follow:4",
+          "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "revision": 4,
+          "generation": 7
+        },
+        "copy_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "history_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "old_writer_fence_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "lease-revocation:lost-home:7",
+          "source_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+          "revision": 4,
+          "generation": 7
+        },
+        "preview_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "idempotency_key": "idempotency:settings-home:promotion-apply:1",
+        "person_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "human:home-choice:1",
+          "source_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "revision": 4,
+          "generation": 7
+        },
+        "return_context_ref": "return:settings:servers:1",
+        "schema_id": "pm.server.settings_home.promotion_request.v1",
+        "schema_version": "1.0.0",
+        "recovery_kind": "lost_home_promotion",
+        "last_known_copy_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "last-known-copy:new-home:4",
+          "source_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "revision": 4,
+          "generation": 7
+        },
+        "copy_as_of_utc": "2026-11-03T10:45:00Z",
+        "loss_acknowledgement_evidence": {
+          "schema_id": "pm.server.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Server_System.md#SRV-016",
+          "source_ref": "human:acknowledged-loss-window:1",
+          "source_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "revision": 4,
+          "generation": 7
+        }
+      }
     }
   ],
   "invalid": [
@@ -3900,6 +4174,54 @@
         "args.native_local_claim_authorized": true
       },
       "expected_error": "Initial owner-claim authority is an owner-verified tuple, not raw code or a caller flag"
+    },
+    {
+      "name": "wonder-settings-home-apply-null-old_writer_fence_evidence",
+      "base_valid": "wonder-settings-home-apply",
+      "patch": {
+        "old_writer_fence_evidence": null
+      },
+      "expected_error": "Apply requires non-null original preview and old-writer fence evidence."
+    },
+    {
+      "name": "wonder-settings-home-apply-missing-old_writer_fence_evidence",
+      "base_valid": "wonder-settings-home-apply",
+      "remove": [
+        "old_writer_fence_evidence"
+      ],
+      "expected_error": "Apply requires non-null original preview and old-writer fence evidence."
+    },
+    {
+      "name": "wonder-settings-home-apply-null-preview_sha256",
+      "base_valid": "wonder-settings-home-apply",
+      "patch": {
+        "preview_sha256": null
+      },
+      "expected_error": "Apply requires non-null original preview and old-writer fence evidence."
+    },
+    {
+      "name": "wonder-settings-home-apply-missing-preview_sha256",
+      "base_valid": "wonder-settings-home-apply",
+      "remove": [
+        "preview_sha256"
+      ],
+      "expected_error": "Apply requires non-null original preview and old-writer fence evidence."
+    },
+    {
+      "name": "wonder-settings-home-promotion-rejects-null-fence",
+      "base_valid": "wonder-settings-home-promotion-apply",
+      "patch": {
+        "old_writer_fence_evidence": null
+      },
+      "expected_error": "Lost-home promotion requires verifiable old-writer fencing too."
+    },
+    {
+      "name": "wonder-settings-home-promotion-rejects-unnamed-copy",
+      "base_valid": "wonder-settings-home-promotion-preview",
+      "remove": [
+        "last_known_copy_evidence"
+      ],
+      "expected_error": "Promotion must name the exact last-known copy."
     }
   ],
   "projects_refresh_cases": [
@@ -5426,6 +5748,920 @@
       ],
       "native_runtime_executed": false,
       "owner_source_id": "fd-ssh-install-existing-strong-source"
+    },
+    {
+      "case_id": "sweep-l3-home-preview-commitment",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-preview-null-preview_ref",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": null,
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-preview-null-preview_sha256",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": null,
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-preview-null-preview_expires_at_utc",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-preview-no-effect-copy_verification_evidence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-preview-no-effect-writer_switch_evidence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-moved-evidence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "moved",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "writer_switch_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-moved-null-copy_verification_evidence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "moved",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-moved-null-writer_switch_evidence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "moved",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a",
+        "schema_id": "pm.server.settings_home.move_result.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "preview_expires_at_utc": "2026-11-04T18:05:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-historical-preview-reader",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result_legacy_v1",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-historical-preview-not-current",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "previewed",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": null,
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-settled-v1-evidence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "moved",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "writer_switch_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-home-settled-v1-null-switch",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/settings_home_move_result",
+      "record": {
+        "operation_id": "fixture-a",
+        "status": "moved",
+        "home_server_id": "fixture-a",
+        "home_generation": 0,
+        "copy_verification_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "writer_switch_evidence": null,
+        "join_undo_deadline_utc": null,
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-replace-cas",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-replace-null-expected_trust_revision",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": null,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-replace-null-expected-trust_revision",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": null,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-replace-not-absence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "replace",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": "absence-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-add-absence-cas",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": null,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "add",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": null,
+        "trust_absence_ref": "absence-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-add-missing-absence",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": null,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "add",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": null,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-add-not-revision-expected_trust_revision",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": null,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "add",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": 1,
+        "trust_absence_ref": "absence-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-add-not-revision-expected-trust_revision",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "apply",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": 1,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": "preview-a",
+        "human_decision_ref": "decision-a",
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "add",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": null,
+        "trust_absence_ref": "absence-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-ssh-preview-no-apply-proof",
+      "schema_ref": "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
+      "record": {
+        "schema_id": "pm.server.ssh_host_trust.request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.server.ssh.trust",
+        "phase": "preview",
+        "operation_id": "operation-a",
+        "command_instance_id": "command-a",
+        "idempotency_key": "idempotency-a",
+        "actor": "human_gui",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "target_ref": "target-a",
+        "expected": {
+          "target_generation": 1,
+          "topology_generation": 1,
+          "trust_revision": null,
+          "auth_session_generation": 1,
+          "permission_generation": 1,
+          "stop_epoch": 1,
+          "public_key_revision": null,
+          "authorized_keys_revision": null
+        },
+        "permission_snapshot_ref": "permission-a",
+        "preview_ref": null,
+        "human_decision_ref": null,
+        "protected_input_ref": null,
+        "return_context": {
+          "client_id": "client-a",
+          "invocation_token": "invocation-a",
+          "caller_scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "context_revision": 1,
+          "route": "route-a",
+          "focus": "focus-a",
+          "continuation_generation": 1
+        },
+        "trust_action": "add",
+        "host_key_observation_ref": "observation-a",
+        "expected_trust_revision": null,
+        "trust_absence_ref": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
     }
   ],
   "ssh_owner_sources": {

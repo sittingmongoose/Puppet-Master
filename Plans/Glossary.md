@@ -2534,7 +2534,8 @@ acceptance_criteria:
 - Help uses each term consistently and points to its semantic owner.
 - Vocabulary adds no new runtime level, engine, authority or native claim.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
 risk_class: terminology_or_scope_conflation
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -2597,7 +2598,8 @@ acceptance_criteria:
 - Help uses each term consistently and points to its semantic owner.
 - Vocabulary adds no new runtime level, engine, authority or native claim.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: terminology_or_scope_conflation
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -2652,7 +2654,8 @@ acceptance_criteria:
 - Help uses each term consistently and points to its semantic owner.
 - Vocabulary adds no new runtime level, engine, authority or native claim.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: terminology_or_scope_conflation
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

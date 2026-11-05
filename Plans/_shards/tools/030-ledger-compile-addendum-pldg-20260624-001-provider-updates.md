@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L2620-L11156
 
-Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
+Source SHA256: `62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd`
 
 ---
 
@@ -4957,8 +4957,8 @@ canonical_text: >-
   Durable permissions consume the Everywhere library rules, Computer-local rules and optional Project
   TOML rules from Permissions_System. Existing global ~/.config/puppet-master/permissions.toml and
   Project .puppet-master/permissions.toml are owner-managed sources/projections; Computer rules use
-  D's exact admitted key/path. redb tool_permissions in config:v1 remains a derived compatibility
-  view, never a second writer. That projection preserves backward compatibility.
+  the PS-144/SP-353 exact admitted key and sole writer. redb tool_permissions in config:v1 remains a derived
+  compatibility view, never a second writer. That projection preserves backward compatibility.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false

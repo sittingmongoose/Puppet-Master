@@ -239,7 +239,41 @@
             }
           ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.chat.plan.build",
+                  "cmd.chat.plan.build_with_crew"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "assistant_plan_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "plan_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "plan_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ]
     },
     "AssistantPlanCommandResultApplicationV1": {
       "type": "object",

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6605-L6988
+Source lines: L6611-L6982
 
-Source SHA256: `21e1d333c93b35fe546fd2a2e3fc88eaefd32aaadcddbf447b532daa50f266fa`
+Source SHA256: `389a72a0bc5714f2724e44823875a486b23e61d851475b3ae34137e471d5e37a`
 
 ---
 
@@ -211,16 +211,9 @@ canonical_text: >-
   per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (DL-177), a
   remembered view-only preference that is Live by default and holds no Settings-owned value. The product
   implementation stores these through the current storage and widget-layout owners, not through the PMConcept7
-  prototype localStorage keys. The redesigned concept (DL-173) keeps its view and layout in a prototype envelope
-  stored under the product's own key name `widget_layout:v1:usage` (WS-020) with the prototype schema id
-  `pm.usage.widget_layout.v1`, and its Live choice under `pm7:usage:live:v1`. Only that schema id and
-  `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage: the key name is the product's, and the
-  envelope's schema id is not a product schema (the product record is `UsageWidgetLayoutRecord`, WS-020). When that
-  envelope is absent it considers the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11
-  envelope, carrying room, detail, range, scope, more and hidden and dropping layout and order; a corrupt or
-  unknown envelope is set aside and the defaults apply without a second migration. `pm7:usage:v10:*` may be
-  considered only by the bounded legacy import when no valid current or prior envelope is admitted; neither those
-  prior envelopes nor `pm7:usage:v10:*` is a canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
+  prototype localStorage keys. Prototype envelopes do not define product migration inputs or continuing
+  read paths. The product layout record remains UsageWidgetLayoutRecord (WS-020), using
+  widget_layout:v1:usage. Visibility, order, supported geometry, and semantic size persist only after a committed widget
   operation; pointer-preview rectangles, ghosts, placeholders, animation state, and per-frame drafts never
   become durable state. Missing rooms, widgets, scopes, or unsupported geometry migrate or evict to the
   documented safe current default rather than leaving a dangling identity.
@@ -236,7 +229,7 @@ acceptance_criteria:
   - Visibility, order, supported geometry, and semantic size are written only for settled operations through existing widget-layout authorities.
   - No pointer-preview rectangle, ghost, placeholder, animation state, or per-frame draft is persisted.
   - Missing or retired room, widget, scope, or geometry references migrate or evict to a named safe current default.
-  - PMConcept7 prototype keys remain source-lineage/migration shims rather than canonical storage keys; the redesigned concept's pm.usage.widget_layout.v1 envelope and pm7:usage:live:v1 remain demo-only and noncanonical, the v12 envelope (else v11) is considered only as their prior one-time import source, and v10 import is bounded rather than becoming a continuing dual-read path.
+  - Prototype keys and schemas are non-product source lineage only; product persistence follows its actual storage owner.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
@@ -270,11 +263,6 @@ preserved_exact_tokens:
   - order
   - live
   - widget_layout:v1:usage
-  - pm.usage.widget_layout.v1
-  - pm7:usage:live:v1
-  - pm7:usage:prototype:workspace:v12
-  - pm7:usage:prototype:workspace:v11
-  - pm7:usage:v10:*
 negative_constraints:
   - Do not make a pointer move, held resize preview, ghost, placeholder, or animation frame durable.
   - Do not promote `pm7:usage:v10:*` prototype keys to canonical key names.

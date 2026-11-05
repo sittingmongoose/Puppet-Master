@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L1832-L1984
+Source lines: L1832-L1983
 
-Source SHA256: `b075a6bdaa47c419844faffa96ddcd921297c0cbdeb48300758aa14fb43d2948`
+Source SHA256: `d02f612daafb7aaf32e8f8113d22d32a51d780c289c1a2f15dd906be4412617d`
 
 ---
 
@@ -112,9 +112,8 @@ acceptance_criteria:
 - A saved Ask me first or task/scope Stop/pause blocks delayed YOLO work; direct-user exceptions preserve
   the pause record and unrelated latches.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

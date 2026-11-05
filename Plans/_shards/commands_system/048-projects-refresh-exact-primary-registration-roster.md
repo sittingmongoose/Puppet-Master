@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L9218-L10709
+Source lines: L9220-L10711
 
-Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
+Source SHA256: `1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82`
 
 ---
 
@@ -138,8 +138,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_settings
@@ -350,8 +350,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_projects
@@ -737,8 +737,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_no_project
@@ -1106,8 +1106,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_automation
@@ -1264,8 +1264,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_goal_crew
@@ -1425,8 +1425,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_plan_schedule

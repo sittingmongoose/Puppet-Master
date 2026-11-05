@@ -5810,9 +5810,10 @@ acceptance_criteria:
 - App setup has null Project and real scope/Computer; protected content remains unavailable to agents and Settings
   artifacts.
 validation_surfaces:
-- Plans/multi_account_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/multi_account_contracts.schema.json
+- Plans/multi_account_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: owner_scope_or_credential_authority_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ma_074
@@ -5821,7 +5822,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:

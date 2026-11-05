@@ -7669,8 +7669,8 @@
       "proposed_schema": "Plans/settings_system_contracts.schema.json#/$defs/settings_command_contract",
       "proposed_sole_handler": "handlers::settings::transaction_apply",
       "gui_consumers": [
-        "Settings > Projects > Copy Settings From",
-        "Projects duplicate/template flows"
+        "Settings > Settings Transfer > Use settings from",
+        "Projects duplicate/Saved setups flows"
       ],
       "availability_until_native_proof": "inherit exact target",
       "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success",
@@ -7731,8 +7731,8 @@
       "proposed_schema": "Plans/settings_system_contracts.schema.json#/$defs/settings_command_contract",
       "proposed_sole_handler": "handlers::settings::transaction_preview",
       "gui_consumers": [
-        "Settings > Projects > Copy Settings From",
-        "Projects duplicate/template flows"
+        "Settings > Settings Transfer > Use settings from",
+        "Projects duplicate/Saved setups flows"
       ],
       "availability_until_native_proof": "inherit exact target",
       "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success",
@@ -7793,8 +7793,8 @@
       "proposed_schema": "Plans/settings_system_contracts.schema.json#/$defs/settings_command_contract",
       "proposed_sole_handler": "handlers::settings::transaction_rollback",
       "gui_consumers": [
-        "Settings > Projects > Copy Settings From",
-        "Projects duplicate/template flows"
+        "Settings > Settings Transfer > Use settings from",
+        "Projects duplicate/Saved setups flows"
       ],
       "availability_until_native_proof": "inherit exact target",
       "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success",

@@ -798,8 +798,6 @@
         "status": {
           "enum": [
             "previewed",
-            "approved",
-            "revoked",
             "refused",
             "recovery_required"
           ]
@@ -867,7 +865,34 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "previewed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "preview_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "preview_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ]
     },
     "build_grant_approve_request": {
       "type": "object",
@@ -925,30 +950,17 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Required CAS discriminator: explicit null means create only if the exact grant key is absent; an integer means compare that existing revision. Missing this member is invalid. Neither branch permits an unconditional write."
         },
         "preview_ref": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
         },
         "preview_sha256": {
-          "anyOf": [
-            {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
         },
         "targets": {
           "type": "array",
@@ -1060,92 +1072,8 @@
       }
     },
     "build_grant_revoke_request": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "command_id",
-        "context",
-        "project_id",
-        "plan_id",
-        "plan_version",
-        "plan_sha256",
-        "build_id",
-        "expected_grant_revision",
-        "preview_ref",
-        "preview_sha256",
-        "targets"
-      ],
-      "properties": {
-        "command_id": {
-          "const": "cmd.build_grant.revoke"
-        },
-        "context": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
-        },
-        "project_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "plan_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "plan_version": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "plan_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "build_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "expected_grant_revision": {
-          "anyOf": [
-            {
-              "type": "integer",
-              "minimum": 0
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "preview_ref": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "preview_sha256": {
-          "anyOf": [
-            {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "targets": {
-          "type": "array",
-          "items": {
-            "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/resource_selector"
-          }
-        }
-      }
+      "description": "Current versioned grant-targeted revoke; build_grant_revoke_request_legacy_v1 preserves the original historical shape without current dispatch authority.",
+      "$ref": "#/$defs/build_grant_revoke_request_v2"
     },
     "build_grant_revoke_result": {
       "type": "object",
@@ -1951,7 +1879,98 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.permissions.create_global_rule",
+                  "cmd.permissions.create_project_rule",
+                  "cmd.permissions.create_computer_rule",
+                  "cmd.permissions.update_rule",
+                  "cmd.permissions.reorder_rule",
+                  "cmd.permissions.delete_rule",
+                  "cmd.permissions.revoke"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expected_owner_revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "expected_source_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.permissions.update_rule",
+                  "cmd.permissions.reorder_rule",
+                  "cmd.permissions.delete_rule",
+                  "cmd.permissions.revoke"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rule_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.permissions.create_global_rule",
+                  "cmd.permissions.create_project_rule",
+                  "cmd.permissions.create_computer_rule",
+                  "cmd.permissions.update_rule"
+                ]
+              },
+              "action": {
+                "const": "allow"
+              }
+            },
+            "required": [
+              "command_id",
+              "action"
+            ]
+          },
+          "then": {
+            "properties": {
+              "person_authority_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ],
+      "description": "PS-144 command-specific admission: validate_rule writes nothing; mutations CAS the actual owning collection revision/hash, and update/reorder/delete/revoke name a stable rule_id. Creating/updating a durable allow needs the explicit person choice, including in YOLO. Repository origin/loosening acceptance is rechecked from the actual source by the owner; non-repository rules need no fabricated repository acceptance and ordinary revoke/delete do not manufacture a human-only gate."
     },
     "permission_rule_command_result_v2": {
       "type": "object",
@@ -2034,6 +2053,158 @@
           "maxLength": 256
         }
       }
+    },
+    "build_grant_revoke_request_legacy_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "project_id",
+        "plan_id",
+        "plan_version",
+        "plan_sha256",
+        "build_id",
+        "expected_grant_revision",
+        "preview_ref",
+        "preview_sha256",
+        "targets"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.build_grant.revoke"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plan_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "build_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_grant_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/resource_selector"
+          }
+        }
+      }
+    },
+    "build_grant_revoke_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "project_id",
+        "plan_id",
+        "plan_version",
+        "plan_sha256",
+        "build_id",
+        "expected_grant_revision",
+        "schema_id",
+        "schema_version",
+        "grant_id"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.build_grant.revoke"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plan_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "build_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_grant_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "schema_id": {
+          "const": "pm.build_grant.revoke.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "grant_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "description": "PS-147 revoke targets the actual grant_id and expected revision under the current context actor/permission authority. It consumes no approval preview or replacement resource selection. Historical requests are retained separately for exact reading/replay only."
     }
   }
 }

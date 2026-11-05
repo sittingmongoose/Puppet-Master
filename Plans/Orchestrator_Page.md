@@ -2945,9 +2945,9 @@ acceptance_criteria:
 - No-project Orchestrator navigation gives the conversion/select-Project route; conversion alone starts no run.
 - Historical app and Project run-start inspection remains passive and cannot reactivate terminal work.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

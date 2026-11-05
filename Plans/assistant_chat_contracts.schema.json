@@ -2822,66 +2822,15 @@
       }
     },
     "ChatMoveUndoPreviewRequest": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "command_id",
-        "context",
-        "operation_id",
-        "preview_id",
-        "preview_sha256",
-        "manifest_sha256",
-        "expected_operation_revision",
-        "expected_cutover_generation",
-        "source_stop_epoch",
-        "destination_stop_epoch",
-        "authority"
-      ],
-      "properties": {
-        "command_id": {
-          "const": "cmd.chat.move.undo.preview"
+      "description": "Closed read-only preview union retaining the exact historical request plus the v2 edition that needs no apply authority or stop evidence. Neither shape authorizes Undo apply.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ChatMoveUndoPreviewRequestLegacyV1"
         },
-        "context": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
-        },
-        "operation_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "preview_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "preview_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "manifest_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "expected_operation_revision": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "expected_cutover_generation": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "source_stop_epoch": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "destination_stop_epoch": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "authority": {
-          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        {
+          "$ref": "#/$defs/ChatMoveUndoPreviewRequestV2"
         }
-      }
+      ]
     },
     "ChatMoveUndoApplyRequest": {
       "type": "object",
@@ -5524,6 +5473,114 @@
           "maxLength": 256
         }
       }
+    },
+    "ChatMoveUndoPreviewRequestLegacyV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "operation_id",
+        "preview_id",
+        "preview_sha256",
+        "manifest_sha256",
+        "expected_operation_revision",
+        "expected_cutover_generation",
+        "source_stop_epoch",
+        "destination_stop_epoch",
+        "authority"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.chat.move.undo.preview"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_operation_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_cutover_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "destination_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/automation_authority_contracts/1.0.0/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        }
+      }
+    },
+    "ChatMoveUndoPreviewRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "operation_id",
+        "manifest_sha256",
+        "expected_operation_revision",
+        "expected_cutover_generation",
+        "schema_id",
+        "schema_version"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.chat.move.undo.preview"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_operation_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_cutover_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "schema_id": {
+          "const": "pm.chat.move.undo.preview.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        }
+      },
+      "description": "Read-only inverse/eligibility preview of the captured original operation and manifest. It reads current stop/authority state through owners and grants no mutation. Fresh inverse preview commitment, stop epochs and effect authority are required later by ChatMoveUndoApplyRequest. context preserves exact return."
     }
   }
 }

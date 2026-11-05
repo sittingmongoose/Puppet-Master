@@ -157,7 +157,7 @@ Adjacent packet command candidates are retained without becoming aliases, primar
 | `cmd.auth_session.copy_device_code` | `deferred_noncanonical_candidate_blocked_protected_boundary` | Clipboard/content projection conflicts with the protected non-observation boundary; it cannot dispatch without a later owner decision that preserves that boundary. |
 | `cmd.credential_attachment.open_consumers`, `cmd.credential_attachment.open_details`, `cmd.credential_attachment.revoke`, `cmd.credential_attachment.revoke_active`, `cmd.credential_attachment.test`, `cmd.credential_attachment.transfer.preview`, `cmd.credential_attachment.transfer.apply` | `deferred_noncanonical_candidate` | Credential Broker ownership, redaction, active-use/revocation, transfer, permission, and native contracts are absent. |
 | `cmd.credential_source.add`, `cmd.credential_source.open_details`, `cmd.credential_source.remove`, `cmd.credential_source.test` | `deferred_noncanonical_candidate` | Credential source ownership, secret custody, provider, and native contracts are absent. |
-| `cmd.provider_binding.copy`, `cmd.provider_binding.resolve_on_destination` | `deferred_noncanonical_candidate` | MA-074/MACS-006 now define refs-only destination semantics as contributed Settings transaction subcontracts. These candidate spellings stay deferred/non-dispatchable until F freezes their exact existing-owner binding; they are not automatically new primaries. |
+| `cmd.provider_binding.copy`, `cmd.provider_binding.resolve_on_destination` | `deferred_noncanonical_candidate` | MA-074/MACS-006 now define refs-only destination semantics as contributed Settings transaction subcontracts. These candidate spellings stay deferred/non-dispatchable unless the Settings transaction and Multi-Account owners explicitly register their exact existing-owner binding; they are not automatically new primaries. |
 
 The eight closed auth-profile commands now require a non-secret return context and a result-side settlement. Sign-in binds exact profile, account, and verified installation selectors. Completed verification requires a current proof ref plus issued/expiry timestamps; blocked or failed verification requires a remediation ref. `submit_code` requires an exact-operation-bound protected-input contract with current/fresh status, one-use consume-and-zeroize policy, replay rejection, expiry timestamp, and no persistence; completion requires a consumed-and-zeroized disposition. Official-page handoff requires a current official-source proof. Profile selection requires both profile and installation eligibility proofs. None of these fields make AuthBrowserSession observable, recordable, inspectable, persistent, or available to agents/adapters/tools.
 
@@ -384,9 +384,10 @@ canonical_text: >-
   action remains human_gui/human_palette-only with exact active-Client one-use input, zeroize, no recording/inspection/capture/persistence,
   and receipt-only redacted lifecycle. YOLO/agents may use an already admitted chosen account but cannot call
   protected sign-in/profile selection or observe its content. cmd.provider_binding.copy and cmd.provider_binding.resolve_on_destination
-  remain deferred_noncanonical_candidate spellings until F freezes any missing exact owner suboperation/handler/schema
-  joins; their product semantics are decided here, not independent primary registrations. All new app variants
-  remain unavailable until the owner/central/handler/security evidence chain closes. MACS-002 and MACS-005 retain
+  remain deferred_noncanonical_candidate spellings unless the Settings transaction and Multi-Account owners explicitly
+  register their exact existing-owner suboperation/handler/schema joins; their product semantics are decided here,
+  not independent primary registrations. All new app variants remain unavailable until the owner/central/handler/security
+  evidence chain closes. MACS-002 and MACS-005 retain
   their original protected and selected-source contracts; only the blanket no-approved-app-route limitation is
   superseded.
 
@@ -412,9 +413,10 @@ acceptance_criteria:
   cannot be interchanged.
 - Agents/raw code injection/wrong Client/replayed input/stale proofs fail the protected boundary even in YOLO.
 validation_surfaces:
-- Plans/multi_account_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/multi_account_contracts.schema.json
+- Plans/multi_account_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: owner_scope_or_credential_authority_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_macs_006
@@ -423,7 +425,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -441,7 +443,8 @@ preserved_exact_tokens:
 - receipt-only
 negative_constraints:
 - Do not create an auth engine, generic no-Project primary or new credential store.
-- Do not turn provider-binding candidate spellings into dispatchable commands without F/owner contract freeze.
+- Do not turn provider-binding candidate spellings into dispatchable commands without explicit Settings transaction
+  and Multi-Account owner suboperation/handler/schema registration.
 - Do not remove pre-existing shared credentials/profile data on rollback or infer identity from labels/focus.
 owner_hints:
 - Plans/Multi-Account_Connection_Spec.md
