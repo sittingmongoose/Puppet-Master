@@ -12,13 +12,39 @@
 // What each click opens is found, not named: every floating box on screen after it that was not before is measured.
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
+import { decodePng, encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 const LOOKS = ['glass-dark', 'glass-light'];
 const THRESHOLD = 12;       // a channel change above this is the page reading through, even dimmed; a blur's mottle stays under it
 const MAX_SHARE = 0.002;    // at most 0.2 % of the surface's pixels may change that much (anti-aliased edges, a caret)
 
-async function shot(t, r) { const png = await t.page.screenshot({ clip: r }); return { ...decodePng(png), png }; }
+// The inset outline is an intrinsic paint of the target's box. Its pixels and the sampled
+// content come from ONE compositor screenshot; a DOM read before/after a screenshot is not a paint witness.
+export const MARKER = [1, 253, 97];
+// A translucent foreground glaze can tint the outline slightly. This tolerance locates
+// test instrumentation only; THRESHOLD/MAX_SHARE for backing pixels are unchanged.
+const isMarker = (data, i) => MARKER.every((v,k) => Math.abs(data[i+k]-v)<=16);
+export async function capturePaint(t, r, measured) {
+ const paintPng = await t.page.screenshot({});
+ const full = decodePng(paintPng), scale = measured.dpr;
+ let left = full.width, top = full.height, right = -1, bottom = -1, count = 0;
+ for (let y = 0, i = 0; y < full.height; y++) for (let x = 0; x < full.width; x++, i += 4) {
+  if (!isMarker(full.data,i)) continue;
+  left = Math.min(left, x); top = Math.min(top, y); right = Math.max(right, x); bottom = Math.max(bottom, y); count++;
+ }
+ const b = JSON.parse(measured.sourceRect);
+ const expected = { left: Math.ceil(b.left*scale), top: Math.ceil(b.top*scale), right: Math.floor(b.right*scale)-1, bottom: Math.floor(b.bottom*scale)-1 };
+ const bounds = count ? { left, top, right, bottom } : null;
+ const valid = !!bounds && Object.keys(expected).every(k => bounds[k] === expected[k]) && count >= (b.width+b.height)*scale/2;
+ const width = Math.round(r.width*scale), height = Math.round(r.height*scale), data = Buffer.alloc(width*height*4);
+ const x0 = Math.round(r.x*scale), y0 = Math.round(r.y*scale);
+ const inFrame = x0>=0 && y0>=0 && x0+width<=full.width && y0+height<=full.height;
+ if (inFrame) for (let y=0;y<height;y++) full.data.copy(data,y*width*4,((y0+y)*full.width+x0)*4,((y0+y)*full.width+x0+width)*4);
+ const im = {width,height,data};
+ const outline = new Uint8Array(width*height);
+ for(let i=0,p=0;i<data.length;i+=4,p++) if(isMarker(data,i)) outline[p]=1;
+ return {...im,outlineMask:grow(outline,width,height,2),png:encodePng(im),paintPng,capture:{bounds,expected,markerPixels:count,valid:valid&&inFrame}};
+}
 function changed(a, b, mask) {
 	let n = 0, mx = 0;
 	for (let i = 0, p = 0; i < a.data.length; i += 4, p++) {
@@ -33,12 +59,12 @@ function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; 
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
-export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMeasure = false, inputDir = null } = {}) {
+export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMeasure = false, moveDuringCaptures = false, inputDir = null } = {}) {
 	const measured = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
 		const b = e.getBoundingClientRect(), x = Math.max(0, b.left), y = Math.max(0, b.top);
 		const w = Math.min(b.right, innerWidth) - x, h = Math.min(b.bottom, innerHeight) - y;
-		return w >= 40 && h >= 40 && getComputedStyle(e).visibility !== 'hidden' ? { rect: { x: Math.round(x) + 2, y: Math.round(y) + 2, width: Math.round(w) - 4, height: Math.round(h) - 4 }, sourceRect: JSON.stringify(b.toJSON()) } : null;
+		return w >= 40 && h >= 40 && getComputedStyle(e).visibility !== 'hidden' ? { rect: { x: Math.round(x) + 2, y: Math.round(y) + 2, width: Math.round(w) - 4, height: Math.round(h) - 4 }, sourceRect: JSON.stringify(b.toJSON()), dpr: devicePixelRatio } : null;
 	}, sel);
 	if (!measured) return null;
 	const r = measured.rect;
@@ -51,16 +77,19 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		if (resize) e.style.width = '380px';
 		// The geometry must be the one that produced the screenshot clip, not a later second read.
 		e.__bcCapture = { rect: sourceRect, setupRect: JSON.stringify(e.getBoundingClientRect().toJSON()) };
+		e.style.setProperty('outline', '2px solid rgb(1, 253, 97)', 'important');
+		e.style.setProperty('outline-offset', '-2px', 'important');
 		e.setAttribute('data-bc-in', '');
 	}, [sel, measured.sourceRect, resizeAfterMeasure]);
 	try {
 		await f.waitForTimeout(400);
-		const a1 = await shot(t, r); await f.waitForTimeout(300); const a2 = await shot(t, r);
+		if (moveDuringCaptures) { await f.evaluate(s => { const e=document.querySelector(s);e.__bcCapture.beforeMove=e.style.left;e.style.left='140px'; },sel);await f.waitForTimeout(250); }
+		const a1 = await capturePaint(t, r, measured); await f.waitForTimeout(300); const a2 = await capturePaint(t, r, measured);
 		if (t.args.only === 'agents') await t.mark('backing original captured');
 		const mask = motionMask(a1, a2);
 		await f.evaluate((css) => { const st = document.createElement('style'); st.id = 'bc-own-reference'; st.textContent = css; document.head.appendChild(st); }, hideOwn);
 		await f.waitForTimeout(350);
-		const reference = await shot(t, r);
+		const reference = await capturePaint(t, r, measured);
 		if (t.args.only === 'agents') await t.mark('backing reference captured');
 		await f.evaluate(() => document.getElementById('bc-own-reference').remove());
 		await f.waitForTimeout(350);
@@ -78,28 +107,36 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		}, sel);
 		await f.waitForTimeout(350);
 		if (loseOwnInk) await f.evaluate(([s, css]) => { const e = document.querySelector(s); ['color', '-webkit-text-fill-color', 'text-shadow'].forEach((k) => e.style.removeProperty(k)); document.getElementById('bc-through').textContent += css; }, [sel, hideOwn]);
-		const b = await shot(t, r);
+		if (loseOwnInk) await f.waitForTimeout(250); // Fault injection only; the test also verifies its painted result.
+		const b = await capturePaint(t, r, measured);
 		if (t.args.only === 'agents') await t.mark('backing outside captured');
 		// the surface's own text: where it is drawn, its re-rasterised glyphs differ a little whatever is behind; those pixels
 		// (grown by 2 px) are not counted
 		await f.evaluate((s) => { const e = document.querySelector(s); ['color', '-webkit-text-fill-color', 'text-shadow'].forEach((k) => e.style.removeProperty(k)); document.getElementById('bc-through').textContent += ' [data-bc-in], [data-bc-in] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; }'; }, sel);
 		await f.waitForTimeout(350);
-		const c = await shot(t, r);
+		const c = await capturePaint(t, r, measured);
 		if (t.args.only === 'agents') await t.mark('backing all ink captured');
 		if (inputDir) {
 			await mkdir(inputDir, { recursive: true });
-			for (const [name, im] of Object.entries({ a1, a2, reference, b, c })) await writeFile(path.join(inputDir, `${name}.png`), im.png);
+			for (const [name, im] of Object.entries({ a1, a2, reference, b, c })) { await writeFile(path.join(inputDir, `${name}.png`), im.png); await writeFile(path.join(inputDir, `${name}-paint.png`), im.paintPng); }
 		}
+		// The witness and its antialias fringe are instrumentation, never backing evidence.
+		for (const im of [a1,a2,reference,b,c]) for(let i=0;i<mask.length;i++) if(im.outlineMask[i]) mask[i]=1;
 		const own = grow(motionMask(b, c), b.width, b.height, 2);
 		let expected = 0, covered = 0;
 		for (let i = 0; i < own.length; i++) if (expectedOwn[i] && !mask[i]) { expected++; if (own[i]) covered++; }
+		if (moveDuringCaptures) { await f.evaluate(s => { const e=document.querySelector(s);e.style.left=e.__bcCapture.beforeMove; },sel);await f.waitForTimeout(250); }
 		const stable = await f.evaluate((s) => {
 			const e = document.querySelector(s), old = e?.__bcCapture;
 			return { sourceRect: old?.rect, setupRect: old?.setupRect, endRect: e ? JSON.stringify(e.getBoundingClientRect().toJSON()) : null };
 		}, sel);
 		// No fixed percentage of a panel is assumed to be text. Its own reference is the contract.
-		const geometryStable = stable.sourceRect === stable.setupRect && stable.sourceRect === stable.endRect;
-		if (!geometryStable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${geometryStable}; own glyph exclusion ${covered}/${expected}`, rect: r, geometry: stable };
+		const captures = Object.entries({a1,a2,reference,b,c}).map(([name,im])=>({name,...im.capture}));
+		let retainedInk = 0; const residual = motionMask(b, reference);
+		for(let i=0;i<expectedOwn.length;i++) if(expectedOwn[i]&&!mask[i]&&residual[i]) retainedInk++;
+		const faults = { ownInkLoss: loseOwnInk ? expected>0 && retainedInk/expected<.05 : null };
+		const geometryStable = stable.sourceRect === stable.setupRect && stable.sourceRect === stable.endRect && captures.every(c=>c.valid);
+		if (!geometryStable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${geometryStable}; own glyph exclusion ${covered}/${expected}`, rect: r, geometry: stable, captures, faults };
 		// Exclude both captures' glyphs, including the few edge pixels that re-rasterised.
 		const referenceOwn = grow(expectedOwn, a2.width, a2.height, 2);
 		for (let i = 0; i < own.length; i++) if (own[i] || referenceOwn[i]) mask[i] = 1;
@@ -107,7 +144,7 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
 		if (counted < mask.length * 0.1) return { invalid: true, reason: `only ${counted}/${mask.length} unmasked pixels` };
 		const m = changed(a2, b, mask);
-		return { rect: r, geometry: stable, ownExpected: expected, ownCovered: covered, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+		return { rect: r, geometry: stable, captures, faults, ownExpected: expected, ownCovered: covered, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
 	} finally {
 	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.getElementById('bc-own-reference')?.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e && Object.prototype.hasOwnProperty.call(e, '__bcStyle')) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); delete e.__bcStyle; delete e.__bcCapture; } }, sel);
 	}

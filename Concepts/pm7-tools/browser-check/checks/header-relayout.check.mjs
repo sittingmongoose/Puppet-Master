@@ -6,6 +6,7 @@ export default async function(t) {
  await t.goto(/^[a-z][a-z0-9+.-]*:/i.test(page) ? page : pathToFileURL(page).href);
  await t.viewport(1024, 768);
  const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
+ await f.waitForFunction(() => window.O55?.S?.open && !!O55.S.sess);
  await f.evaluate(() => { O55.ui.applyLook('retro', 'dark'); O55.ui.go('name', { noHistory: true }); });
  await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="name"]'));
  await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="name"]').fill('First cancellation');
