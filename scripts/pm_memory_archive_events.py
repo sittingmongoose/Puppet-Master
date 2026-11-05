@@ -195,7 +195,9 @@ def append_current(before, value, event):
     """The adopted boundary with invariant-specific checks (no blanket equality hiding a schema defect)."""
     cutoff_gate(before)
     state = deepcopy(before); row = state['operation']; suffix = event.rsplit('.', 1)[1]
-    guard('commitment_numbers', core.numbers_supported(value), 'invalid_number')
+    core.require(core.storage_uint64_types(value), 'invalid_storage_uint64')
+    guard('commitment_numbers', core.numbers_supported({k: v for k, v in value.items()
+                                                      if k not in core.STORAGE_FIELDS}), 'invalid_number')
     guard('envelope_schema', core.envelope_validator().is_valid(value))
     if value['replay_policy'] == 'projector_replay_only' and _REMOVED != 'replay_policy':
         raise core.Refusal('replay_only_not_appendable')
@@ -504,9 +506,11 @@ def main():
     contexts = {f['event_type']: f for f in fixtures['families']}
     domains = core.boundary_domains().run(core, contexts, [c for f in fixtures['families'] for c in f['boundary_cases']], __import__('sys').modules[__name__])
     recipes = core.write_recipes().run(core, contexts, __import__('sys').modules[__name__])
+    metadata = core.storage_metadata().run(core, contexts)
     print(json.dumps({'status':'pass','families':paths,'guard_cases':len(fixtures['guard_cases']),
                       'guard_removal_table':guards,'canonical_history_cases':canonical_history,
                       'numeric_writer_cases':numeric_writers,'boundary_domains':domains,'write_recipes':recipes,
+                      'storage_uint64':metadata,
                       'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
                       'real_cutoffs':'ABSENT; numeric proposals in report only'},indent=2))
 

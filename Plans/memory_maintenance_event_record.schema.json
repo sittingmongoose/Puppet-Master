@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/memory_maintenance/event_record.v1.schema.json",
-  "description": "Current writers enforce the safe-integer subset. Both retained envelope editions use frozen integer-json-v1 (unbounded integral metadata), with identical commitment bytes on the writer subset. Edition dispatch is closed and has no caller recipe selector.",
+  "description": "Current Storage sequence_id adopts SP-236 exact uint64 independently of the producer safe-integer subset. Both retained envelope editions keep frozen integer-json-v1 and their unchanged reader definitions. Edition dispatch is closed and has no caller recipe selector.",
   "$defs": {
     "current": {
       "allOf": [
@@ -11,9 +11,7 @@
         {
           "properties": {
             "sequence_id": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 9007199254740991
+              "maximum": 18446744073709551615
             },
             "producer_sequence_id": {
               "anyOf": [

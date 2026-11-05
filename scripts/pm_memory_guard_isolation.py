@@ -487,9 +487,11 @@ class AlwaysValid:
 
 class WithoutStructure:
     """Remove a named structural schema guard while retaining the independent format guard."""
-    def __init__(self, validator): self.validator = validator
+    def __init__(self, validator, preserve_storage=False):
+        self.validator = validator; self.preserve_storage = preserve_storage
     def is_valid(self, value):
-        return not any(error.validator == 'format' or (
+        return not any((self.preserve_storage and list(error.path) == ['sequence_id']
+                        and error.validator in ('type', 'minimum', 'maximum')) or error.validator == 'format' or (
             error.validator == 'pattern' and 'format' in error.schema)
             for error in self.validator.iter_errors(value))
 
@@ -544,6 +546,85 @@ def numeric_schema_mutant(m):
     return validator
 
 
+STORAGE_GUARDS = {'storage_uint64_' + name for name in
+                  ('bool', 'float', 'str', 'NoneType', 'list', 'dict', 'minimum', 'maximum')}
+
+
+@contextmanager
+def storage_mutant(m, name, sites=None):
+    """Cut one SP-236 field predicate, preserving every peer predicate and every historical read.
+
+    Type exclusions are split per primitive kind; min/max are separate. Schema copies enforce the
+    same exclusion/bound at current admission and (where reached) freshly stored start custody.
+    A retained-history entry point is never changed by this current-writer proof.
+    """
+    sites = set(('runtime', 'current_schema', 'custody_schema') if sites is None else sites)
+    subtype = name.removeprefix('storage_uint64_')
+    types = {'bool': bool, 'float': float, 'str': str, 'NoneType': type(None), 'list': list, 'dict': dict}
+    real_type = m.storage_uint64_types; real_validator = m.validator; real_envelope = m.envelope_validator
+    class Proxy:
+        def __init__(self, validator, site): self.validator = validator; self.site = site
+        def is_valid(self, value):
+            # Frozen-reader validators are changed only when verifying a new current-writer start.
+            frame = inspect.currentframe().f_back
+            in_writer = False
+            while frame is not None:
+                if frame.f_code.co_name in ('_append_current', 'append_current'):
+                    in_writer = True; break
+                frame = frame.f_back
+            del frame
+            for error in self.validator.iter_errors(value):
+                if self.site in sites and (self.site == 'current_schema' or in_writer) and list(error.path) == ['sequence_id']:
+                    if subtype in ('minimum', 'maximum') and error.validator == subtype:
+                        continue
+                    if subtype in types and type(value['sequence_id']) is types[subtype] and error.validator == 'type':
+                        continue
+                return False
+            return True
+    try:
+        m._PURE_RESULTS.clear()
+        if subtype in types and 'runtime' in sites:
+            m.storage_uint64_types = lambda value: all(field not in value or type(value[field]) in (int, types[subtype])
+                                                       for field in m.STORAGE_UINT64_FIELDS)
+        m.envelope_validator = lambda: Proxy(real_envelope(), 'current_schema')
+        m.validator = lambda path, definition: (Proxy(real_validator(path, definition), 'custody_schema')
+            if path in ('Plans/event_record.schema.json', 'Plans/memory_maintenance_event_record.schema.json')
+            else real_validator(path, definition))
+        yield
+    finally:
+        m.storage_uint64_types = real_type; m.validator = real_validator; m.envelope_validator = real_envelope
+        m._PURE_RESULTS.clear()
+
+
+def prove_storage_sites(m, contexts):
+    """Witness each repeated site for each one-field SP-236 negative, then remove the whole set."""
+    rows = []
+    sites = {'runtime', 'current_schema', 'custody_schema'}
+    for case in m.storage_metadata().negative_cases(m, contexts):
+        assert case['positive']()[0] == 'ok'
+        baseline = case['negative'](); assert baseline[0] == 'refused'
+        alone_removed = {}; alone_retained = {}; enforcing = []
+        for site in sorted(sites):
+            with storage_mutant(m, case['guard'], {site}):
+                alone_removed[site] = case['negative']()
+            with storage_mutant(m, case['guard'], sites - {site}):
+                result = alone_retained[site] = case['negative']()
+            if result[0] == 'refused':
+                assert result[1] in ('invalid_storage_uint64', 'invalid_event_record', 'envelope_schema', 'start_receipt_missing'), result
+                enforcing.append(site)
+        with storage_mutant(m, case['guard'], sites):
+            assert case['negative']()[0] == 'ok', (case['name'], 'masked Storage invariant')
+        assert enforcing
+        for site in sites:
+            expected = 'ok' if enforcing == [site] else 'refused'
+            assert alone_removed[site][0] == expected, (case['name'], site, enforcing, alone_removed)
+        assert case['negative']() == baseline
+        rows.append({'case': case['name'], 'guard': case['guard'], 'enforcing_sites': enforcing,
+                     'remove_one': alone_removed, 'retain_one': alone_retained,
+                     'all_removed': 'ok', 'restored': True})
+    return rows
+
+
 @contextmanager
 def semantic_mutant(m,name):
     saved={}
@@ -562,9 +643,9 @@ def semantic_mutant(m,name):
             if name==guard:change(fn,lambda *args:True)
         if name=='envelope_schema':
             real_envelope=m.envelope_validator
-            change('envelope_validator',lambda:WithoutStructure(real_envelope()))
+            change('envelope_validator',lambda:WithoutStructure(real_envelope(), preserve_storage=True))
             real=m.validator
-            change('validator',lambda path,definition:WithoutStructure(real(path,definition)) if path in ('Plans/event_record.schema.json','Plans/memory_maintenance_event_record.schema.json') else real(path,definition))
+            change('validator',lambda path,definition:WithoutStructure(real(path,definition), preserve_storage=True) if path in ('Plans/event_record.schema.json','Plans/memory_maintenance_event_record.schema.json') else real(path,definition))
             change('historical_binding',replaced_function(m,'historical_binding',DropHistoryEditionConstants()))
         if name=='payload_schema':
             real=m.validator
@@ -649,8 +730,17 @@ def archive_mutant(archive, name):
             yield
             return
         with semantic_mutant(archive.core,name):
-            original=archive._original_accept
+            original=archive._original_accept; original_guard=archive.guard
             try:
+                if name == 'envelope_schema':
+                    # WithoutStructure removes the structural predicate while retaining the
+                    # independent Storage/format predicates. Do not then bypass that result
+                    # through the archive's older refusal-code-wide mutation switch.
+                    def guarded(guard_name, test, reason=None):
+                        if guard_name == 'envelope_schema':
+                            return archive._original_require(test, reason or guard_name)
+                        return original_guard(guard_name, test, reason)
+                    archive.guard = guarded
                 if name in BOUNDARY_GUARDS:
                     replacements=BOUNDARY_GUARDS[name]
                     if name=='admission':replacements={"not flag(context['admitted'], True)":False}
@@ -659,7 +749,7 @@ def archive_mutant(archive, name):
                     archive.core.accept=archive.accept
                 yield
             finally:
-                archive._original_accept=original
+                archive._original_accept=original; archive.guard=original_guard
 
 
 def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):
@@ -683,7 +773,9 @@ def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guard
     for guard in sorted(guards or {c['guard'] for c in corpus}):
         m.check_resources()
         flips=[];stayed=[]
-        if guard.startswith('custody_'):
+        if guard in STORAGE_GUARDS:
+            context=storage_mutant(m,guard)
+        elif guard.startswith('custody_'):
             context=custody_mutant(m,guard,archive)
         elif archive is not None:
             context=archive_mutant(archive,guard)
@@ -719,6 +811,7 @@ def sequential(out):
             'archive_cases':sum(r['archive_cases'] for r in results),
             'execution':'one family and one named guard/duplicate set at a time; no parallel jobs',
             'native':'NOT_RUN','admission':'ABSENT'}
+    merged['storage_uint64_site_proof'] = [row for result in results for row in result['storage_uint64_site_proof']]
     for key in ('maintenance_guard_table','archive_guard_table'):
         groups={}
         for result in results:
@@ -747,8 +840,8 @@ def main():
               'writer_states':next(w['states'] for w in f['writer_families'] if w['event_type']==c['event_type'])}
               for c in f['stateful_families']}
     prior=json.loads((ROOT/'reports/event-authority-20261104/DMEM-check11-guards.json').read_text())
-    mg=set(row['guard'] for row in prior['guard_tables']['maintenance'])|{'formats_enforced'}
-    ag=set(row['guard'] for row in prior['guard_tables']['archive'])|{'memory_flags','formats_enforced'}
+    mg=set(row['guard'] for row in prior['guard_tables']['maintenance'])|{'formats_enforced'}|STORAGE_GUARDS
+    ag=set(row['guard'] for row in prior['guard_tables']['archive'])|{'memory_flags','formats_enforced'}|STORAGE_GUARDS
     if args.family in contexts:
         contexts={args.family:contexts[args.family]};f=m.select_family(f,args.family);contracts={args.family:contracts[args.family]}
     else:
@@ -758,7 +851,9 @@ def main():
     semantic+=m.boundary_domains().domain_cases(m,contexts,f['cases'])
     semantic+=m.write_recipes().history_cases(m,contexts)+m.write_recipes().format_cases(m,contexts)
     semantic+=m.write_recipes().retry_cases(m,contexts)
+    semantic+=m.storage_metadata().negative_cases(m,contexts)
     matrix=cases_for_matrix(m,f,contracts,f['start_custody_matrix']['families'],contexts)
+    storage_sites = prove_storage_sites(m, contexts) if contexts else []
     rows,n=prove_complete(m,semantic,matrix,f,contracts,guards=mg) if contexts else ([],0)
     archive=module('_check11_archive','pm_memory_archive_events.py');am=archive.core
     af=am.load('Plans/memory_archive_event_fixtures.json')
@@ -811,10 +906,12 @@ def main():
     asemantic+=am.boundary_domains().domain_cases(am,actx,adapted['cases'],archive)
     asemantic+=am.write_recipes().history_cases(am,actx,archive)+am.write_recipes().format_cases(am,actx)
     asemantic+=am.write_recipes().retry_cases(am,actx,archive)
+    asemantic+=am.storage_metadata().negative_cases(am,actx)
+    storage_sites += prove_storage_sites(am, actx) if actx else []
     ar,an=prove_complete(am,asemantic,amatrix,adapted,ac,archive,guards=ag) if actx else ([],0)
     result={'status':'pass','families':sorted(set(contracts)|set(ac)),
             'custody_matrix_cases':len(matrix)+len(amatrix),'maintenance_cases':n,'archive_cases':an,
-            'maintenance_guard_table':rows,'archive_guard_table':ar,
+            'maintenance_guard_table':rows,'archive_guard_table':ar,'storage_uint64_site_proof':storage_sites,
             'absence_and_withdrawal_endpoint':'actual start_custody_gate; no fabricated missing bytes',
             'other_custody_endpoints':'complete phase/writer/boundary/reader entry points',
             'native':'NOT_RUN','admission':'ABSENT'}

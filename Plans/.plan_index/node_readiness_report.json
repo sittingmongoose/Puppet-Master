@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T03:31:19Z",
+  "generated_at_utc": "2026-11-05T04:56:57Z",
   "gui_related_units": {
     "count": 3796,
     "units": [
@@ -46117,7 +46117,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "3e6ac96e7962bf0e562972e00d258edd4bbc06737fa23cbba796b75b521e3930",
+        "expected": "2c20d659813c6dd9a0da1d34b0da3f1c2ca89dd92b78a4c3d5ac341c03610913",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46153,8 +46153,20 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "605f8185d957222830679784c73d128f0f9c4fa67dc985fe152596c52decc192",
+        "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/00-plans-index.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Architecture_Invariants.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46166,6 +46178,18 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Backup_Restore_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Collaborative_Workflows.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Commands_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Containers_Registry_and_Unraid.md"
       },
       {
@@ -46174,7 +46198,27 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Crosswalk.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/DRY_Rules.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Decision_Log.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Executor_Protocol.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileManager.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileSafe.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46182,7 +46226,39 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Forge_Integrations.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/GitLab_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Glossary.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Goal_Runtime_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Jujutsu_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/MCP_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Multi-Account.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Multi-Account_Connection_Spec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Orchestrator_Page.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46190,7 +46266,27 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Personas.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plan_Document_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Planning_Ledger_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Planning_Wizard.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plugins_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Project_Sync_and_Backbone.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46198,7 +46294,27 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Remote_Access_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Run_Modes.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Server_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46206,11 +46322,55 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Shared_Integration_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Skills_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Source_Control_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Spec_Lock.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Tools.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/UI_Wiring_Rules.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Widget_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Wiring_Matrix.production.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Working_Notebook.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/agent-rules-context.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46226,11 +46386,67 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant_chat_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/automation_authority_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/final_gui_interaction_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/glyph_catalog.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/guided_tour_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/human-in-the-loop.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/newtools.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/path_reference_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/pm7_canon.fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/pm7_control_bindings.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/product_onboarding_contract_fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/product_onboarding_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/projects_refresh_command_bindings.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/runtime_integration_disposition.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/server_command_gap_adjudication.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46251,6 +46467,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/touch_closure.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/usage-feature.md"
       },
       {
         "bulk_registration_allowed": false,

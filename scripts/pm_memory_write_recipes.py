@@ -161,7 +161,7 @@ def format_cases(m, contexts):
 def run(m, contexts, archive=None):
     counts = {'retained_old_recipe': 0, 'live_independent_old_recipe': 0, 'legacy_number_spellings': 0,
               'legacy_binary64_controls': 0, 'current_recipe_refusals': 0, 'forged_old_recipe': 0,
-              'legacy_retry_negatives': 0,
+              'legacy_retry_negatives': 0, 'current_storage_controls': 0,
               'format_negatives': 0, 'format_declarations': 0, 'format_positives': 0}
     for event, name, state in retained_states(m, contexts):
         assert read_probe(m,state,event)[0] == 'ok', (event,name)
@@ -202,7 +202,7 @@ def run(m, contexts, archive=None):
                 assert m.formatted_value_matches(path,pointer,value), (path,pointer,value)
                 counts['format_positives'] += 1
     # Writer recipe selection is fixed by the entry point; a supplied legacy recipe or edition
-    # cannot grant an out-of-range append. The isolated numeric/schema guards are proved separately.
+    # cannot bypass current envelope admission. Owner-valid uint64 Storage metadata needs no override. The isolated numeric/schema guards are proved separately.
     for event, context in contexts.items():
         before = context['writer_states']['before']
         for number in (2**53,2**53+1,2**60,2**64-1):
@@ -213,9 +213,12 @@ def run(m, contexts, archive=None):
                 try:
                     m.append_current(before,value,event)
                 except ValueError:
-                    pass
+                    assert override, (event,'writer refused owner-valid uint64',number)
                 else:
-                    raise AssertionError((event,'writer accepted legacy recipe',number,override))
+                    assert not override, (event,'writer accepted legacy recipe',number,override)
+                    counts['current_storage_controls'] += 1
+                    assert before == snapshot
+                    continue
                 assert before == snapshot
                 counts['current_recipe_refusals'] += 1
     assert counts['retained_old_recipe'] == sum(29 if '.index.' in event else 28 for event in contexts)

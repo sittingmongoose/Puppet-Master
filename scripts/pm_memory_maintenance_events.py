@@ -460,6 +460,13 @@ def envelope_validator():
 
 
 STORAGE_FIELDS = frozenset({'sequence_id', 'observed_at_utc', 'persisted_at_utc'})
+# SP-236 owns these exact uint64 metadata fields, independently of producer semantics (Contracts EventRecord section 1.2).
+STORAGE_UINT64_FIELDS = ('sequence_id',)
+
+
+def storage_uint64_types(value):
+    return all(field not in value or type(value[field]) is int for field in STORAGE_UINT64_FIELDS)
+
 
 
 def lawful_phases(row):
@@ -525,7 +532,8 @@ def append_current(before, value, event):
 
 def _append_current(before, value, event):
     state = deepcopy(before); row = state['operation']
-    require(numbers_supported(value), 'invalid_number')
+    require(storage_uint64_types(value), 'invalid_storage_uint64')
+    require(numbers_supported({k: v for k, v in value.items() if k not in STORAGE_FIELDS}), 'invalid_number')
     require(envelope_validator().is_valid(value), 'invalid_event_record')
     require(value['replay_policy'] != 'projector_replay_only', 'replay_only_not_appendable')
     require(value['replay_policy'] == 'dedupe_by_idempotency_key', 'replay_policy_mismatch')
@@ -561,7 +569,9 @@ def _append_current(before, value, event):
 
 
 def retained(value):
-    return {'full_value': deepcopy(value), 'full_value_sha256': digest(value), 'durability': 'full_flush'}
+    # Reuse the existing integral record encoding, which already preserves exact uint64 metadata.
+    # Producer-only numeric admission happens at the writer; no current cap reaches Storage fields.
+    return {'full_value': deepcopy(value), 'full_value_sha256': historical_digest(value), 'durability': 'full_flush'}
 
 
 def retained_shape(original):
@@ -1267,6 +1277,12 @@ def write_recipes():
     return result
 
 
+def storage_metadata():
+    spec = importlib.util.spec_from_file_location('_dmem_storage_metadata', ROOT / 'scripts/pm_memory_storage_metadata.py')
+    result = importlib.util.module_from_spec(spec); spec.loader.exec_module(result)
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(); parser.add_argument('--family'); args = parser.parse_args()
     check_resources()
@@ -1303,6 +1319,7 @@ def main():
     contexts = {f['event_type']: {**f, 'writer_states': next(w['states'] for w in fixtures['writer_families'] if w['event_type']==f['event_type'])} for f in fixtures['stateful_families']}
     domains = boundary_domains().run(__import__('sys').modules[__name__], contexts, fixtures['cases'])
     recipes = write_recipes().run(__import__('sys').modules[__name__], contexts)
+    metadata = storage_metadata().run(__import__('sys').modules[__name__], contexts)
     identifier_names = [case['name'] for case in fixtures['identifier_cases']]
     assert len(identifier_names) == len(set(identifier_names))
     assert {event.replace('.', '_') + ':' + name for event in families
@@ -1347,6 +1364,7 @@ def main():
                       'start_custody_matrix': matrix, 'history_cases': history,
                       'canonical_history_cases': canonical_history,
                       'numeric_writer_cases': numeric_writers, 'boundary_domains': domains, 'write_recipes': recipes,
+                      'storage_uint64': metadata,
                       'schema_reference_cases': references, 'registry_mirrors_reference_checked': mirrors,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 

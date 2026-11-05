@@ -55,18 +55,18 @@ def domain_cases(m, contexts, boundaries, archive=None):
                     changed = {**original,field:wrong['value']}
                     add(event,'permission_or_withdrawal','reader-'+mode+'-'+field+'-'+wrong['name'],lambda *a:m.read_canonical_history(*a),
                         (original,event),(changed,event))
-        # Current numbers use the strict writer recipe. Retained integral metadata is tested below
-        # against the frozen recipe, including values outside the current writer domain.
+        # The producer preflight is unchanged. Storage sequences have their own uint64 domain;
+        # an invalid producer number is tested at its actual preflight, never on Storage metadata.
         for number in fixtures['numeric_cases']:
             literal = number['literal']
             if not number['commitment_valid']:
                 guard = 'commitment_numbers' if number['valid_json'] else 'json_number_grammar'
                 add(event,guard,'parse-'+literal,lambda *a:m.parse_json_number(*a),('1',),(literal,))
-            if number['valid_json'] and not number['sequence_valid']:
-                invalid = {**value,'sequence_id':m.json_numbers(literal)}
-                if finite_positive(m,invalid['sequence_id']):
-                    add(event,'commitment_numbers','writer-number-'+literal,lambda *a:m.append_current(*a),
-                        (before,value,event),(before,invalid,event))
+            if number['valid_json'] and not number['commitment_valid']:
+                parsed = m.json_numbers(literal)
+                if finite_positive(m,parsed):
+                    add(event,'commitment_numbers','producer-number-'+literal,lambda n:m.numbers_supported(n),
+                        (1,),(parsed,))
         for mode,source in history[event]['states'].items():
             control = source['originals'][event]['full_value']
             for number in fixtures['numeric_cases']:
@@ -81,7 +81,8 @@ def domain_cases(m, contexts, boundaries, archive=None):
                     (r['name'],r['value']) for r in fixtures['wrong_boolean_values']
                     if type(r['value']) is not int and r['value'] is not None]:
                 bad = {**value,field:wrong}
-                add(event,'envelope_schema','numeric-type-'+field+'-'+label,
+                type_guard = 'storage_uint64_' + type(wrong).__name__ if field == 'sequence_id' else 'envelope_schema'
+                add(event,type_guard,'numeric-type-'+field+'-'+label,
                     lambda v:m.envelope_validator().is_valid(v),(value,),(bad,))
         if archive is not None:
             state = contexts[event]['states']['started']
@@ -135,14 +136,16 @@ def run(m, contexts, boundaries, archive=None):
                     assert m._CODEC.binding_bytes(m.canonical_numbers(number))==m._CODEC.binding_bytes(case['canonical']),literal
             counts['numeric_commitment_cases']+=1
             value=m.canonical_value(before['operation'],event.rsplit('.',1)[1]);value['sequence_id']=number
+            # sequence_valid in the preserved old fixture is the safe-producer control, not SP-236.
+            storage_sequence_valid = type(number) is int and 0 <= number <= 18446744073709551615
             if case['sequence_valid'] or finite_positive(m,number):
                 try:
                     after,output=m.append_current(before,value,event)
                 except (ValueError,TypeError):
-                    assert not case['sequence_valid'],(event,literal)
+                    assert not storage_sequence_valid,(event,literal)
                 else:
-                    assert case['sequence_valid'],(event,literal,'writer accepted')
-                    assert output==value and after['original']['full_value_sha256']==m.digest({**value,'sequence_id':case['canonical']})
+                    assert storage_sequence_valid,(event,literal,'writer accepted')
+                    assert output==value and after['original']['full_value_sha256']==m.historical_digest(value)
                 assert before==untouched
                 counts['numeric_writer_cases']+=1
             if not case['sequence_valid']:
