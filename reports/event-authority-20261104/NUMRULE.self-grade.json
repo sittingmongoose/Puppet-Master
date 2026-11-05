@@ -71,17 +71,17 @@
     }
   ],
   "corpus": {
-    "cases": 13372,
-    "positives": 6836,
-    "negatives": 6536,
-    "labelled_negatives": 6536,
-    "passed": 13372,
+    "cases": 13391,
+    "positives": 6846,
+    "negatives": 6545,
+    "labelled_negatives": 6545,
+    "passed": 13391,
     "owner_integration_checks": 287,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
     "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof.",
-    "labelled_cases": 13372,
+    "labelled_cases": 13391,
     "targeted_review_predicate_removals": 6,
     "round2_reviewed_fixture_replay": 370,
     "round4_reviewed_case_records_preserved": 1176,
@@ -89,7 +89,1399 @@
     "round5_reviewed_case_records_preserved": 2788,
     "round5_added_cases": 10584,
     "round5_one_defect_negatives": 5496,
-    "round5_bounded_cut_rows": 12
+    "round5_bounded_cut_rows": 12,
+    "number_scope_cases": {
+      "failures": {},
+      "negative": 162,
+      "outcomes": {
+        "app-binary": {
+          "outcome": "acceptance",
+          "output": "c4020102"
+        },
+        "app-float--0.0": {
+          "outcome": "acceptance",
+          "output": "cb8000000000000000"
+        },
+        "app-float-0.0": {
+          "outcome": "acceptance",
+          "output": "cb0000000000000000"
+        },
+        "app-float-0.5": {
+          "outcome": "acceptance",
+          "output": "cb3fe0000000000000"
+        },
+        "app-float-1.0": {
+          "outcome": "acceptance",
+          "output": "cb3ff0000000000000"
+        },
+        "app-float-1.7976931348623157e308": {
+          "outcome": "acceptance",
+          "output": "cb7fefffffffffffff"
+        },
+        "app-float-1e-7": {
+          "outcome": "acceptance",
+          "output": "cb3e7ad7f29abcaf48"
+        },
+        "app-float-1e20": {
+          "outcome": "acceptance",
+          "output": "cb4415af1d78b58c40"
+        },
+        "append-append_once": {
+          "outcome": "acceptance",
+          "output": "append_once"
+        },
+        "append-dedupe_by_event_id": {
+          "outcome": "acceptance",
+          "output": "dedupe_by_event_id"
+        },
+        "append-dedupe_by_idempotency_key": {
+          "outcome": "acceptance",
+          "output": "dedupe_by_idempotency_key"
+        },
+        "append-policy-type": {
+          "error": "replay_policy",
+          "outcome": "refusal"
+        },
+        "append-replay-only": {
+          "error": "replay_only_not_appendable",
+          "outcome": "refusal"
+        },
+        "append-unknown-policy": {
+          "error": "replay_policy",
+          "outcome": "refusal"
+        },
+        "bad-token-' 1'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'+1'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'-0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'-0.0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'01'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1.0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1\\n'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1e-7'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1e0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1e20'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'\u0661'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "binding-1": {
+          "outcome": "acceptance",
+          "output": "01"
+        },
+        "binding-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "cfffffffffffffffff"
+        },
+        "binding-bad-float": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "binding-bad-negative": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "binding-bad-overflow": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "bool-array": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-null": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-number": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-object": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-ok-False": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "bool-ok-True": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "bool-string": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-string-zero": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-zero": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "current-large-exact": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "current-nested-minuszero": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "decode-app-binary": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-app-float32": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-app-float64-1.0": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-app-float64-negative-zero": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-binary": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "decode-binding-binary": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-float32": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-float64": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-int64-min": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-map": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-binding-negative-fixint": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-nested-negative": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-uint": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-binding-uint64-max": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-duplicate-map": {
+          "error": "duplicate_key",
+          "outcome": "refusal"
+        },
+        "decode-extension": {
+          "error": "physical_tag",
+          "outcome": "refusal"
+        },
+        "decode-float-nonminimal": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-good-float": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-good-int": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-good-negative-zero": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-good-uint64": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-invalid-utf8": {
+          "error": "physical_decode",
+          "outcome": "refusal"
+        },
+        "decode-nan": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "decode-positive-signed": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-timestamp": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "decode-trailing": {
+          "error": "physical_decode",
+          "outcome": "refusal"
+        },
+        "decode-uint-nonminimal": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-unknown-profile": {
+          "error": "physical_profile",
+          "outcome": "refusal"
+        },
+        "decode-unordered-map": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "duplicate-json": {
+          "error": "duplicate_key",
+          "outcome": "refusal"
+        },
+        "full-value-container-array": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-boolean": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-integer": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-null": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-string": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-frozen-positive": {
+          "outcome": "acceptance",
+          "output": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "full-value-wrong-schema-id": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-wrong-version": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "history-ambiguous": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-caller_override": {
+          "error": "caller_recipe_override",
+          "outcome": "refusal"
+        },
+        "history-current-original": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-deleted": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-denied": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-downgrade": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-exponent": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-foreign-event_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-event_type": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-idempotency_key": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-owner_operation_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-project_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-scope_kind": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-server_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-source_commitment": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-storage_instance_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-forged_bytes_selfhash": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-forged_receipt": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-forged_result": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-hold_denied": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-integral_float": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-large_decimal": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-large_metadata": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-missing": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-negative_zero": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-rewritten_resources": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-self_authenticated_dict": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-string_record_bytes": {
+          "error": "original_bytes_type",
+          "outcome": "refusal"
+        },
+        "history-truthy_disclosure": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-unknown_recipe": {
+          "error": "recipe_unknown",
+          "outcome": "refusal"
+        },
+        "history-verified_string": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-false": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-integer": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-object": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-string": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-true": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-withdrawn": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "int-array": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-bool": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-decimal": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-false": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-float": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-null": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-object": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-string": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-string-false": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-string-zero": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "jcs--0": {
+          "outcome": "acceptance",
+          "output": "0"
+        },
+        "jcs--0.0": {
+          "outcome": "acceptance",
+          "output": "0"
+        },
+        "jcs--1152921504606846976": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs--9007199254740992": {
+          "outcome": "acceptance",
+          "output": "-9007199254740992"
+        },
+        "jcs-1": {
+          "outcome": "acceptance",
+          "output": "1"
+        },
+        "jcs-1.0": {
+          "outcome": "acceptance",
+          "output": "1"
+        },
+        "jcs-1152921504606846976": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-18446744073709551616": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-1e-7": {
+          "outcome": "acceptance",
+          "output": "1e-7"
+        },
+        "jcs-1e-9999": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-1e0": {
+          "outcome": "acceptance",
+          "output": "1"
+        },
+        "jcs-1e20": {
+          "outcome": "acceptance",
+          "output": "100000000000000000000"
+        },
+        "jcs-1e9999": {
+          "error": "jcs_binary64",
+          "outcome": "refusal"
+        },
+        "jcs-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "9007199254740991"
+        },
+        "jcs-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "9007199254740992"
+        },
+        "jcs-9007199254740993.0": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-9223372036854775808": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-binary64-only-10^23": {
+          "error": "jcs_binary64",
+          "outcome": "refusal"
+        },
+        "jcs-binary64-only-minus10^23": {
+          "error": "jcs_binary64",
+          "outcome": "refusal"
+        },
+        "jcs-decimal-kind-1.0": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-decimal-kind-1.25": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-decimal-undeclared": {
+          "error": "jcs_kind_undeclared",
+          "outcome": "refusal"
+        },
+        "jcs-declaration-decimal-declared": {
+          "outcome": "acceptance",
+          "output": "float"
+        },
+        "jcs-declaration-decimal-undeclared": {
+          "error": "jcs_kind_undeclared",
+          "outcome": "refusal"
+        },
+        "jcs-declaration-native-float": {
+          "outcome": "acceptance",
+          "output": "float"
+        },
+        "jcs-declaration-native-integer": {
+          "outcome": "acceptance",
+          "output": "integer"
+        },
+        "jcs-declaration-untyped-decimal": {
+          "outcome": "acceptance",
+          "output": null
+        },
+        "jcs-declared-decimal-kind-loss": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-inf": {
+          "error": "jcs_nonfinite",
+          "outcome": "refusal"
+        },
+        "jcs-integer-sign-loss": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-invalid-kind": {
+          "error": "jcs_numeric_kind",
+          "outcome": "refusal"
+        },
+        "jcs-kind-loss-current": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-kind-loss-exact": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-minusinf": {
+          "error": "jcs_nonfinite",
+          "outcome": "refusal"
+        },
+        "jcs-nan": {
+          "error": "jcs_nonfinite",
+          "outcome": "refusal"
+        },
+        "jcs-nonascii-order": {
+          "outcome": "acceptance",
+          "output": "{\"\ud800\udc00\":2,\"\ue000\":1}"
+        },
+        "jcs-parsed-kind-current-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-parsed-kind-current-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-parsed-kind-exact-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-parsed-kind-exact-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-sign-loss-current": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-sign-loss-exact": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-typed--0.0": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-typed-1.0": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-typed-current-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-current-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-typed-decimal-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-decimal-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-typed-exact-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-exact-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-typed-float-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-float-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "json-syntax-+1": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-01": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-1 2": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-[1,]": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-{\"a\":1,}": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "metadata-byte_offset-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "parse--Infinity": {
+          "error": "json_nonfinite",
+          "outcome": "refusal"
+        },
+        "parse-Infinity": {
+          "error": "json_nonfinite",
+          "outcome": "refusal"
+        },
+        "parse-NaN": {
+          "error": "json_nonfinite",
+          "outcome": "refusal"
+        },
+        "payload-id-trailing-lf": {
+          "error": "payload_id_type",
+          "outcome": "refusal"
+        },
+        "payload-inline-boundary": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "payload-inline-limit": {
+          "error": "payload_inline_limit",
+          "outcome": "refusal"
+        },
+        "payload-media": {
+          "error": "payload_media",
+          "outcome": "refusal"
+        },
+        "payload-reference-boundary": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "payload-same-size-different-bytes": {
+          "error": "payload_digest",
+          "outcome": "refusal"
+        },
+        "payload-size": {
+          "error": "payload_size",
+          "outcome": "refusal"
+        },
+        "payload-size-bool": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "payload-size-string": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "physical--inf": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "physical-binary": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "physical-decimal": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "physical-float--0.0": {
+          "outcome": "acceptance",
+          "output": "ca80000000"
+        },
+        "physical-float-0.0": {
+          "outcome": "acceptance",
+          "output": "ca00000000"
+        },
+        "physical-float-0.5": {
+          "outcome": "acceptance",
+          "output": "ca3f000000"
+        },
+        "physical-float-1.0": {
+          "outcome": "acceptance",
+          "output": "ca3f800000"
+        },
+        "physical-float-1.7976931348623157e308": {
+          "outcome": "acceptance",
+          "output": "cb7fefffffffffffff"
+        },
+        "physical-float-1e-7": {
+          "outcome": "acceptance",
+          "output": "cb3e7ad7f29abcaf48"
+        },
+        "physical-float-1e20": {
+          "outcome": "acceptance",
+          "output": "cb4415af1d78b58c40"
+        },
+        "physical-inf": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "physical-int--1": {
+          "outcome": "acceptance",
+          "output": "ff"
+        },
+        "physical-int--128": {
+          "outcome": "acceptance",
+          "output": "d080"
+        },
+        "physical-int--129": {
+          "outcome": "acceptance",
+          "output": "d1ff7f"
+        },
+        "physical-int--2147483648": {
+          "outcome": "acceptance",
+          "output": "d280000000"
+        },
+        "physical-int--2147483649": {
+          "outcome": "acceptance",
+          "output": "d3ffffffff7fffffff"
+        },
+        "physical-int--32": {
+          "outcome": "acceptance",
+          "output": "e0"
+        },
+        "physical-int--32768": {
+          "outcome": "acceptance",
+          "output": "d18000"
+        },
+        "physical-int--32769": {
+          "outcome": "acceptance",
+          "output": "d2ffff7fff"
+        },
+        "physical-int--33": {
+          "outcome": "acceptance",
+          "output": "d0df"
+        },
+        "physical-int--9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "d38000000000000000"
+        },
+        "physical-int-0": {
+          "outcome": "acceptance",
+          "output": "00"
+        },
+        "physical-int-1": {
+          "outcome": "acceptance",
+          "output": "01"
+        },
+        "physical-int-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "cf1000000000000000"
+        },
+        "physical-int-127": {
+          "outcome": "acceptance",
+          "output": "7f"
+        },
+        "physical-int-128": {
+          "outcome": "acceptance",
+          "output": "cc80"
+        },
+        "physical-int-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "cfffffffffffffffff"
+        },
+        "physical-int-255": {
+          "outcome": "acceptance",
+          "output": "ccff"
+        },
+        "physical-int-256": {
+          "outcome": "acceptance",
+          "output": "cd0100"
+        },
+        "physical-int-4294967295": {
+          "outcome": "acceptance",
+          "output": "ceffffffff"
+        },
+        "physical-int-4294967296": {
+          "outcome": "acceptance",
+          "output": "cf0000000100000000"
+        },
+        "physical-int-65535": {
+          "outcome": "acceptance",
+          "output": "cdffff"
+        },
+        "physical-int-65536": {
+          "outcome": "acceptance",
+          "output": "ce00010000"
+        },
+        "physical-int-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "cf001fffffffffffff"
+        },
+        "physical-int-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "cf0020000000000000"
+        },
+        "physical-int-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "cf0020000000000001"
+        },
+        "physical-int-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "cf8000000000000000"
+        },
+        "physical-nan": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "physical-overflow--9223372036854775809": {
+          "error": "physical_integer_range",
+          "outcome": "refusal"
+        },
+        "physical-overflow-18446744073709551616": {
+          "error": "physical_integer_range",
+          "outcome": "refusal"
+        },
+        "range--1": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "range-11": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "raw-preserved--0": {
+          "outcome": "acceptance",
+          "output": "-0"
+        },
+        "raw-preserved--0.0": {
+          "outcome": "acceptance",
+          "output": "-0.0"
+        },
+        "raw-preserved-1.0": {
+          "outcome": "acceptance",
+          "output": "1.0"
+        },
+        "raw-preserved-1e-7": {
+          "outcome": "acceptance",
+          "output": "1e-7"
+        },
+        "raw-preserved-1e-9999": {
+          "outcome": "acceptance",
+          "output": "1e-9999"
+        },
+        "raw-preserved-1e0": {
+          "outcome": "acceptance",
+          "output": "1e0"
+        },
+        "raw-preserved-1e20": {
+          "outcome": "acceptance",
+          "output": "1e20"
+        },
+        "raw-preserved-1e9999": {
+          "outcome": "acceptance",
+          "output": "1e9999"
+        },
+        "raw-preserved-9007199254740993.0": {
+          "outcome": "acceptance",
+          "output": "9007199254740993.0"
+        },
+        "recipe-hash-int": {
+          "error": "recipe_tuple",
+          "outcome": "refusal"
+        },
+        "recipe-hash-short": {
+          "error": "recipe_resource_hash",
+          "outcome": "refusal"
+        },
+        "recipe-hash-trailing-lf": {
+          "error": "recipe_resource_hash",
+          "outcome": "refusal"
+        },
+        "recipe-hash-upper": {
+          "error": "recipe_resource_hash",
+          "outcome": "refusal"
+        },
+        "recipe-hash-valid": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "recipe-type": {
+          "error": "recipe_tuple",
+          "outcome": "refusal"
+        },
+        "slot-+1": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "slot--0": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "slot--0.0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-01": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "slot-1.0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-1e0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-9.007199254740993e15": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-9007199254740993.0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-ok-0": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "slot-ok-1": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "slot-ok-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "slot-ok-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "surrogate-json": {
+          "error": "unicode_scalar",
+          "outcome": "refusal"
+        },
+        "token--1": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token--9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token--9223372036854775809": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-0": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-1": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-18446744073709551616": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-unbounded": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "uint64-overflow--1": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "uint64-overflow-18446744073709551616": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "uint64-type-bool": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "uint64-type-float": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "uint64-type-null": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "uint64-type-string": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "unknown-physical-profile": {
+          "error": "physical_profile",
+          "outcome": "refusal"
+        }
+      },
+      "positive": 183,
+      "postcondition_failures": {},
+      "total": 345
+    },
+    "number_scope_positives": 183,
+    "number_scope_negatives": 162,
+    "number_scope_integration_checks": 60
   },
   "failed_premise_checks": [],
   "owner_questions": [],
@@ -168,7 +1560,10 @@
     "B3_round10": "82e29fe59bebe69fbb8104fa551c183e750356a9",
     "B5_round12": "263a9970a8c6783c571d83ce38f68f436a87672f",
     "B6_round12": "263a9970a8c6783c571d83ce38f68f436a87672f",
-    "B7_round13": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3"
+    "B7_round13": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
+    "B1_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "B2_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "B3_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -1523,5 +2918,149 @@
     "family_grading": "N/A",
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13",
     "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change."
+  },
+  "number_scope_round1_validation": {
+    "round": "number scope 1",
+    "source_base": "55e4d716149f743ccc9e2aa3a3edc4d09f7d4248",
+    "implementation_commit": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "B1": "fixed; supported number-only mode imports no date-time code",
+    "B2": "fixed; declaration admission has its own bounded negative",
+    "B3": "fixed; profile-selected decoder positives and single-defect negatives",
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+    "number_only": {
+      "absent": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "positives": 183,
+        "negatives": 162,
+        "integration_checks": 60,
+        "datetime_modules_imported": []
+      },
+      "import_failing": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "datetime_modules_imported": []
+      },
+      "gate_failing": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "datetime_modules_imported": []
+      },
+      "identical_outcomes": true
+    },
+    "all_scope": {
+      "absent_exit": 1,
+      "import_failing_exit": 1,
+      "gate_failing": {
+        "exit_code": 1,
+        "status": "fail",
+        "case_passes": 0,
+        "case_execution": "NOT_RUN_ADMISSION_REFUSED"
+      }
+    },
+    "profile_loss": {
+      "in_process_status": "fail",
+      "failed_cases": [
+        "decode-app-float64-1.0",
+        "decode-app-float64-negative-zero",
+        "decode-app-binary",
+        "decode-app-float32",
+        "decode-binding-float32",
+        "decode-binding-float64",
+        "decode-binding-negative-fixint",
+        "decode-binding-int64-min",
+        "decode-binding-nested-negative",
+        "decode-binding-binary",
+        "decode-unknown-profile"
+      ],
+      "file_cli_exit": 1
+    },
+    "b2": {
+      "both_cut_route_control": {
+        "outcome": "acceptance",
+        "output": "1.5"
+      },
+      "declaration_cut": {
+        "jcs-decimal-undeclared": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-declaration-decimal-undeclared": {
+          "outcome": "acceptance",
+          "output": null
+        }
+      },
+      "preservation_cut_changes": [
+        "jcs-decimal-kind-1.0",
+        "jcs-decimal-kind-1.25",
+        "jcs-declared-decimal-kind-loss",
+        "jcs-kind-loss-current",
+        "jcs-kind-loss-exact",
+        "jcs-typed-1.0"
+      ],
+      "production_route_unchanged": {
+        "error": "jcs_kind_undeclared",
+        "outcome": "refusal"
+      }
+    },
+    "b3": {
+      "app_float32_cut": [
+        "decode-app-float32"
+      ],
+      "binding_float_cut": [
+        "decode-binding-float32",
+        "decode-binding-float64"
+      ],
+      "binding_negative_cut": [
+        "decode-binding-int64-min",
+        "decode-binding-negative-fixint"
+      ]
+    },
+    "mutations": {
+      "total": 29,
+      "failing_number_only": 29
+    },
+    "full_selftest": {
+      "status": "pass",
+      "cases": 13391,
+      "case_passes": 13391,
+      "positives": 6846,
+      "negatives": 6545,
+      "checks": 287,
+      "inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "storage_nodes": 133,
+        "other_owner_nodes": 79,
+        "wildcard_non_timestamp_nodes": 3,
+        "wildcard_non_timestamp_role_nodes": 18,
+        "unclassified_nodes": 0
+      }
+    },
+    "differential": {
+      "integer_boundary_values": 377,
+      "jcs_float_values": 1048,
+      "node_exit": 0,
+      "node_version": "v22.22.2",
+      "pass": true,
+      "physical_float_roundtrips": 2096
+    },
+    "rfc8785": {
+      "finite_vectors": 24,
+      "nonfinite_refusals": 2,
+      "pass": true,
+      "source": "https://www.rfc-editor.org/rfc/rfc8785.html#appendix-B"
+    },
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1",
+    "scope": "Number scope only. No date-time code, owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
   }
 }

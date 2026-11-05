@@ -178,5 +178,224 @@
   "guard_isolation": "SWEEP_PENDING",
   "family_grading": "N/A",
   "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13",
-  "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change."
+  "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change.",
+  "number_scope_round1": {
+    "round": "number scope 1",
+    "source_base": "55e4d716149f743ccc9e2aa3a3edc4d09f7d4248",
+    "implementation_commit": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "B1": "fixed; supported number-only mode imports no date-time code",
+    "B2": "fixed; declaration admission has its own bounded negative",
+    "B3": "fixed; profile-selected decoder positives and single-defect negatives",
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+    "number_only": {
+      "absent": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "positives": 183,
+        "negatives": 162,
+        "integration_checks": 60,
+        "datetime_modules_imported": []
+      },
+      "import_failing": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "datetime_modules_imported": []
+      },
+      "gate_failing": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "datetime_modules_imported": []
+      },
+      "identical_outcomes": true
+    },
+    "all_scope": {
+      "absent_exit": 1,
+      "import_failing_exit": 1,
+      "gate_failing": {
+        "exit_code": 1,
+        "status": "fail",
+        "case_passes": 0,
+        "case_execution": "NOT_RUN_ADMISSION_REFUSED"
+      }
+    },
+    "profile_loss": {
+      "in_process_status": "fail",
+      "failed_cases": [
+        "decode-app-float64-1.0",
+        "decode-app-float64-negative-zero",
+        "decode-app-binary",
+        "decode-app-float32",
+        "decode-binding-float32",
+        "decode-binding-float64",
+        "decode-binding-negative-fixint",
+        "decode-binding-int64-min",
+        "decode-binding-nested-negative",
+        "decode-binding-binary",
+        "decode-unknown-profile"
+      ],
+      "file_cli_exit": 1
+    },
+    "b2": {
+      "both_cut_route_control": {
+        "outcome": "acceptance",
+        "output": "1.5"
+      },
+      "declaration_cut": {
+        "jcs-decimal-undeclared": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-declaration-decimal-undeclared": {
+          "outcome": "acceptance",
+          "output": null
+        }
+      },
+      "preservation_cut_changes": [
+        "jcs-decimal-kind-1.0",
+        "jcs-decimal-kind-1.25",
+        "jcs-declared-decimal-kind-loss",
+        "jcs-kind-loss-current",
+        "jcs-kind-loss-exact",
+        "jcs-typed-1.0"
+      ],
+      "production_route_unchanged": {
+        "error": "jcs_kind_undeclared",
+        "outcome": "refusal"
+      }
+    },
+    "b3": {
+      "app_float32_cut": [
+        "decode-app-float32"
+      ],
+      "binding_float_cut": [
+        "decode-binding-float32",
+        "decode-binding-float64"
+      ],
+      "binding_negative_cut": [
+        "decode-binding-int64-min",
+        "decode-binding-negative-fixint"
+      ]
+    },
+    "mutations": {
+      "total": 29,
+      "failing_number_only": 29
+    },
+    "full_selftest": {
+      "status": "pass",
+      "cases": 13391,
+      "case_passes": 13391,
+      "positives": 6846,
+      "negatives": 6545,
+      "checks": 287,
+      "inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "storage_nodes": 133,
+        "other_owner_nodes": 79,
+        "wildcard_non_timestamp_nodes": 3,
+        "wildcard_non_timestamp_role_nodes": 18,
+        "unclassified_nodes": 0
+      }
+    },
+    "differential": {
+      "integer_boundary_values": 377,
+      "jcs_float_values": 1048,
+      "node_exit": 0,
+      "node_version": "v22.22.2",
+      "pass": true,
+      "physical_float_roundtrips": 2096
+    },
+    "rfc8785": {
+      "finite_vectors": 24,
+      "nonfinite_refusals": 2,
+      "pass": true,
+      "source": "https://www.rfc-editor.org/rfc/rfc8785.html#appendix-B"
+    },
+    "preservation": {
+      "owner_prose": {
+        "checked": 3774,
+        "changed": []
+      },
+      "pinned_product_schemas": {
+        "checked": 517,
+        "changed": []
+      },
+      "generated_shards_and_index": {
+        "checked": 3299,
+        "changed": []
+      },
+      "date_time_code_and_data": {
+        "checked": 8,
+        "changed": []
+      },
+      "number_inputs_kept": {
+        "checked": 5,
+        "changed": []
+      },
+      "governance_and_registry": {
+        "checked": 35,
+        "changed": []
+      },
+      "source_base": "55e4d716149f743ccc9e2aa3a3edc4d09f7d4248",
+      "head": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+      "changed_paths": [
+        "Plans/event_number_recipe_corpus.json",
+        "scripts/pm_event_datetime_exclusions.json",
+        "scripts/pm_event_numbers.py",
+        "scripts/pm_event_numbers_corpus.py"
+      ],
+      "outside_scope": [],
+      "exclusion_changes": [
+        [
+          "Plans/event_number_recipe_corpus.json",
+          [
+            "sha256"
+          ]
+        ]
+      ],
+      "corpus": {
+        "before": 13372,
+        "after": 13391,
+        "added": [
+          "decode-app-binary",
+          "decode-app-float32",
+          "decode-app-float64-1.0",
+          "decode-app-float64-negative-zero",
+          "decode-binding-binary",
+          "decode-binding-float32",
+          "decode-binding-float64",
+          "decode-binding-int64-min",
+          "decode-binding-map",
+          "decode-binding-negative-fixint",
+          "decode-binding-nested-negative",
+          "decode-binding-uint",
+          "decode-binding-uint64-max",
+          "decode-unknown-profile",
+          "jcs-declaration-decimal-declared",
+          "jcs-declaration-decimal-undeclared",
+          "jcs-declaration-native-float",
+          "jcs-declaration-native-integer",
+          "jcs-declaration-untyped-decimal"
+        ],
+        "removed": [],
+        "changed_existing": [
+          "jcs-decimal-undeclared"
+        ],
+        "other_sections_unchanged": true,
+        "undeclared_outcome_fields_unchanged": true
+      },
+      "status": "pass"
+    },
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1",
+    "scope": "Number scope only. No date-time code, owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
+  }
 }

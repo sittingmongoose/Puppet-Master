@@ -848,3 +848,78 @@ The literal old inputs also fail: original-sibling-full-gate, original-foreign-k
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle10-replay/evidence-attacks.json` | `7714a5e1b0fe325dd813c819d947fc14284adfa1570fa7acaea3b66e2ff174c4` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle10-replay/extended-gate-integrity.json` | `2a779fc98758786201e6a4904d89dd5444ebcafa1f33b4c62b79ea1b0c2d1365` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle10-replay/full-wildcard-gate.json` | `5ae3b6e3f6c96de9fa0bd79819335839dfd69eb2b44fc4c5b11464b75d4f0e01` |
+
+
+## Number scope, review round 1: findings and responses
+
+Scope: CV-1100, SP-1100, SP-1101, `scripts/pm_event_numbers.py`, the number corpus cases and the number sections of the adoption guide. The date-time gate stays required separately, and this round changes none of its code. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-astra-numbers.md`.
+
+**B1 — fixed in `9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65`.**
+- **Where:** `run_corpus` in `scripts/pm_event_numbers_corpus.py`, and the adoption guide.
+- **Why:** the only supported self-test imported and required the date-time gate before running any number case.
+- **Fix:** `python3 scripts/pm_event_numbers.py --self-test --scope numbers`. It selects cases by `NUMBER_OPS` with no `date_time_profile`, runs the number owner checks, and imports no `pm_event_datetime*` module. It also checks that itself. The default `--scope all` is unchanged and stays authoritative for date-time. The guide's new "Number-only adoption" section gives the exact imports, owner references, packages, files and command.
+
+| Date-time state | `--scope numbers` | `--scope all` |
+|---|---|---|
+| Modules absent | Exit 0, pass, 345/345 cases, 60 checks, none imported | Exit 1, `ModuleNotFoundError` |
+| Every module raises at import | Exit 0, pass, 345/345 cases, none imported | Exit 1, the injected error |
+| Gate imports and reports failure | Exit 0, pass, 345/345 cases, none imported | Exit 1, 0 cases passed, `NOT_RUN_ADMISSION_REFUSED` |
+
+Number outcomes are byte-identical across all three states. In-process, under a finder that raises on any date-time import, the same selection passes with no import attempt.
+
+**B2 — fixed in `9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65`.**
+- **Where:** `jcs-decimal-undeclared`, and `qualified_jcs` in `scripts/pm_event_numbers.py`.
+- **Why:** that case fails both declaration admission and kind preservation, so it could not prove either alone.
+- **Fix:** `_declared_numeric_kind` holds declaration admission with no behavior change, and the new `jcs_kind_declaration` fixture op tests it alone. Preservation is explicitly outside that boundary and is not reached. `jcs-decimal-undeclared` keeps its input and refusal, and is relabelled a full-route control naming both predicates. The six preservation negatives stay. No production refusal is weakened.
+
+| Cut | `jcs-declaration-decimal-undeclared` | `jcs-decimal-undeclared` | Preservation negatives |
+|---|---|---|---|
+| None | Refuses `jcs_kind_undeclared` | Refuses `jcs_kind_undeclared` | Refuse |
+| Declaration only | **Accepts** | Refuses `jcs_kind` | Refuse |
+| Preservation only | Refuses `jcs_kind_undeclared` | Refuses `jcs_kind_undeclared` | **6 accept** |
+| Both | Accepts | **Accepts `1.5`** | 6 accept |
+
+**B3 — fixed in `9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65`.**
+- **Where:** `decode_storage_value`, whose `profile=profile` had no corpus coverage.
+- **Why:** every decode case used the default EventRecord profile, so losing the profile argument changed no outcome.
+- **Fix:** 6 profile-selected decoder positives and 8 single-defect negatives covering app float64 versus float32, SP-278 numeric type and range, binding binary, and an unknown profile. The EventRecord minimal-width negatives and encoding vectors are unchanged.
+
+| Mutation | Number-only result | Cases that change |
+|---|---|---|
+| Decoder loses `profile=profile`, in memory | `fail`, 11 cases fail | `decode-app-float64-1.0`, `decode-app-float64-negative-zero`, `decode-app-binary`, `decode-app-float32`, `decode-binding-float32`, `decode-binding-float64`, `decode-binding-negative-fixint`, `decode-binding-int64-min`, `decode-binding-nested-negative`, `decode-binding-binary`, `decode-unknown-profile` |
+| Same edit in the file, through the real CLI | Exit 1, 334/345 cases pass | The same regression |
+| App float32 only | `fail` | `decode-app-float32` |
+| Binding negative integer only | `fail` | `decode-binding-int64-min`, `decode-binding-negative-fixint` |
+| Binding finite float only | `fail` | `decode-binding-float32`, `decode-binding-float64` |
+
+**Corpus counts.**
+
+| Selection | Cases | Positives | Negatives | Checks | Result |
+|---|---|---|---|---|---|
+| `--scope numbers` | 345 | 183 | 162 | 60 | 345/345 pass |
+| `--scope all` | 13391 | 6846 | 6545 | 287 | 13391/13391 pass |
+
+19 cases added (5 declaration, 14 decoder). One existing case relabelled, with its input and refusal unchanged. No case removed.
+
+**Other checks rerun from the review's probe.** All 29 recorded mutations now fail the number-only corpus. All 24 RFC 8785 Appendix B vectors pass, with 2 nonfinite refusals. A live Node comparison passes for 1048 binary64 values, with 2096 physical round-trips and 377 integer boundary values. This remains a bounded check, not exhaustive isolation across all 162 negatives: guard isolation stays SWEEP_PENDING.
+
+**Date-time gate after the corpus change.** Whole-tree gate `pass`: 233 nodes, 133 Storage + 79 other-owner + 3 automatic + 18 reviewed, 0 unclassified, across all 8,968 committed Plans blobs through the Path I/O adapter. A corpus edit requires one data update there: the corpus row's content pin in `scripts/pm_event_datetime_exclusions.json`. Nothing else in that file changed.
+
+**Limits.**
+- `--scope numbers` says nothing about date-time, and a retained verifier that selects a date-time profile needs both scopes.
+- The reference adapters are not native authority: native custody, durability and family admission remain NOT_RUN.
+- The owner units still name `--self-test`, which stays the complete test. They were not edited.
+
+**Scope.** Changed: `scripts/pm_event_numbers.py`, `scripts/pm_event_numbers_corpus.py`, the corpus, that one content pin and the report set. Unchanged by Git blob: 3774 owner Markdown files, 517 pinned product schemas, 3299 generated shard/index files, all date-time code and the inventory, the binding helper, the registry, and the governance inputs.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1/results.json` | `f34a1fde0d8e8cde3854c4054b652a2e645858f6513d65f8d0afb9cb9a576b76` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1/tested-implementation.json` | `f40bc3f0994bf09e7f7c1da11bb35221c526b9f3fe8b0b2162b9c71fa15094b7` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1/preservation.json` | `89b672b1a15349d30ef0448f2f27d0261e69cb97c16704ac77073d1f474e99a6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1/probe_numbers.py` | `b5a099dc4a65a2e017ae9087f5acd7ab1262c77ea8671fec35232a2faee8d55c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1/probe-results.json` | `c318ff4e5b2a394ad5d7d3769893fa4d1fe50fb0e3ca69e86643f89692e5a5ad` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1/full-selftest.json` | `723f915da4d9d86201d5c6a1b93601a7c9d6c52ab054b68ee1184195627cdda4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1/full-selftest-inventory.json` | `722bc301bfe0bb19664681d523d87698c824e96bc907119d7719c913df37d5a0` |
