@@ -251,8 +251,10 @@ async function surface(t, sandbox) {
 	t.log(`witness: ${w.recs.length} frames, ${vis.length} visible, cost p95 ${(p95 / 1000).toFixed(2)} ms, ${w.cals.filter((c) => c.ok).length} calibrations, log ${file}`);
 	for (const r of evaluateWitness(w)) await t.check(r.name, r.ok, r.detail);
 	for (const p of ['welcome', 'tiles', 'begin', 'smb'].filter((x) => phases.includes(x))) for (const r of evaluateWitness(w, { phase: p }).slice(1, 3)) await t.check(r.name, r.ok, r.detail);
-	/* the witness runs in every frame: kept small so it does not change what the page draws (the film's coverage shows
-	   whether the page still drew its frames) */
+	/* the witness runs in every frame and must not change what the page draws: under 15 % of the page's own frame
+	   (0.6 ms a frame on the RTX 3090 host, 1.7 ms on the P1000 VM, more on a loaded Nas1; one document.getAnimations()
+	   a frame is most of it, and nothing cheaper sees every animation in the frame it starts). The film's coverage
+	   shows whether the page still drew its frames */
 	await t.check(`the witness takes under 15 % of the page's frame (mean ${(mean / 1000).toFixed(2)} ms of a ${interval.toFixed(1)} ms frame, p95 ${(p95 / 1000).toFixed(2)} ms)`, mean / 1000 < 0.15 * interval, 'a heavy witness could change what the page paints');
 	const shown = [...new Set(vis.map((r) => S(r[w.F.look])))];
 	await t.check(`every requested look was shown (${looks.join(', ')})`, looks.every((l) => shown.includes(l)), `shown: ${shown.join(', ')}`);

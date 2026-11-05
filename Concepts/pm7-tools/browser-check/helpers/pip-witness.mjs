@@ -64,22 +64,6 @@ export function installWitness(cfg) {
 	};
 	const finiteRunning = (a) => { try { if (a.playState !== 'running' && !a.pending) return false; return Number.isFinite(a.effect.getComputedTiming().endTime); } catch (_) { return false; } };
 	const nameOf = (a, n) => `${a.animationName || a.transitionProperty || a.id || 'animation'}@${(n.getAttribute('class') || n.id || n.tagName).split(' ')[0]}`;
-	/* Running animations, kept cheaply: a CSS animation or transition on or above the stage, or inside it, joins the set
-	   by its own start event; everything the document runs (Web Animations started by script fire no event) joins at a
-	   full document.getAnimations() sweep every 30th frame (and the first). Finished and cancelled ones leave. One
-	   document.getAnimations() a frame cost 1-3 ms on the P1000 VM and Nas1. A late join can only make a frame judged
-	   that the page would have excused (a stricter scan), never the other way round. */
-	const live = new Set();
-	let sweepAge = 30, hostNow = null;
-	const near = (t) => !!(hostNow && t && t.nodeType === 1 && (t.contains(hostNow) || hostNow.contains(t)));
-	const grab = (e) => { const t = e.target; if (near(t)) for (const a of t.getAnimations()) live.add(a); };
-	['animationstart', 'transitionrun'].forEach((k) => doc.addEventListener(k, grab, true));
-	const animsNow = () => {
-		if (++sweepAge >= 30) { sweepAge = 0; for (const a of doc.getAnimations()) live.add(a); }
-		for (const a of live) if (a.playState === 'finished' || a.playState === 'idle' || !a.effect || !a.effect.target || !a.effect.target.isConnected) live.delete(a);
-		return live;
-	};
-	W.liveCount = () => live.size;
 	const classify = (host, S, anims) => {
 		const O5 = window.O55, r = doc.getElementById('pm-o55-onboarding');
 		if (!O5 || !O5.S || !O5.S.open || !r || !host || !S || S.dead || !S.gHead || !S.gHead.isConnected || !S.active || doc.hidden) return ['o', 'stage closed'];
@@ -133,8 +117,10 @@ export function installWitness(cfg) {
 		const S = host && window.O55 && window.O55.pipStage && window.O55.pipStage.of(host);
 		const P = W.prof, pt = () => performance.now();
 		let tp = pt();
-		hostNow = host;
-		const anims = animsNow();
+		/* every running animation, read in the frame itself: Web Animations started by script fire no event, and a CSS
+		   animation's start event arrives a frame after it first paints (Retro's tube power-on, squashed to a line on
+		   purpose, was judged as a lost Pip that way) */
+		const anims = doc.getAnimations();
 		let [cls, why] = classify(host, S, anims);
 		P.classify += pt() - tp;
 		/* calibration: a steady look only; aborted by anything the page declares, a rebuild or a look change */
@@ -173,7 +159,7 @@ export function installWitness(cfg) {
 		   rule, as the printer's did), or an animation of geometry or paint on the rig's own groups (Pip, head,
 		   controller, strings, glows). The face's own designed motion (NieR's and the thinking dots' hop) is not */
 		const groups = new Set([S.gPip, S.gHead, S.gCtl, ...S.pstrs, ...(S.pglow || [])]);
-		rec[F.rigAnim] = [...anims].filter((a) => { const n = a.effect && a.effect.target; if (!n || !S.gPip.contains(n) || !(a.playState === 'running' || a.pending)) return false; return (typeof CSSTransition !== 'undefined' && a instanceof CSSTransition) || (groups.has(n) && !!kindOf(a)); }).length;
+		rec[F.rigAnim] = anims.filter((a) => { const n = a.effect && a.effect.target; if (!n || !S.gPip.contains(n) || !(a.playState === 'running' || a.pending)) return false; return (typeof CSSTransition !== 'undefined' && a instanceof CSSTransition) || (groups.has(n) && !!kindOf(a)); }).length;
 		/* paint: the shared chain above Pip's group, then each part's own */
 		P.geom += pt() - tp; tp = pt();
 		let chainOp = 1, chainBlur = 0, chainDim = 1, chainShown = true, clip = [0, 0, innerWidth, innerHeight];
