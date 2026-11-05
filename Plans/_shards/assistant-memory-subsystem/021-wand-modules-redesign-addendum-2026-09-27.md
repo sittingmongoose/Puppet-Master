@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2690-L3311
+Source lines: L2690-L3312
 
-Source SHA256: `ca55ecad40a74cc0c5c86a37762f9fae52a58a1eaf3470d42d6f7d5798e097c3`
+Source SHA256: `44170d7d81a439d577265110d86a09037cc4a408f4efad6a125374eb86b2a38a`
 
 ---
 
@@ -478,8 +478,9 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.gist_state_changed@1.0.0, prepared
-  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
-  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2 and are
+  landed Decision Log entries; the per-name retention assignment is landed as Plans/Decision_Log.md#DL-401 (Case L-3,
+  Card 1 retention assignments), and the lineage pins stay in the DCN report. Per-family current-canon search and scoped negative
   evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
   RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,
   discard or automatic mutation, including save/import, claim/evidence currentness, decay/half-life, access count/time

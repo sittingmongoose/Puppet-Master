@@ -13369,8 +13369,9 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.created@1.0.0, prepared
-  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
-  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2 and are
+  landed Decision Log entries; the per-name retention assignment is landed as Plans/Decision_Log.md#DL-401 (Case L-3,
+  Card 1 retention assignments), and the lineage pins stay in the DCN report. Per-family current-canon search and scoped negative
   evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
   BrowserRuntimeService commits the new manual session for cmd.browser.open_workspace_preview or cmd.browser.open_detached_preview,
   then records its creation. revision_before=0, revision_after=1; previous class, takeover and lifecycle plus before_record_ref
@@ -13478,8 +13479,9 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.state_changed@1.0.0, prepared
-  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
-  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2 and are
+  landed Decision Log entries; the per-name retention assignment is landed as Plans/Decision_Log.md#DL-401 (Case L-3,
+  Card 1 retention assignments), and the lineage pins stay in the DCN report. Per-family current-canon search and scoped negative
   evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
   BrowserRuntimeService records an actual existing manual-session change by the two preview-open commands, cmd.browser.detach_browser_tab,
   cmd.browser.reopen or cmd.browser.retry. The source owner identifies the changed_fields and immutable before/after
@@ -13588,8 +13590,9 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.closed@1.0.0, prepared without
-  admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
-  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2 and are landed
+  Decision Log entries; the per-name retention assignment is landed as Plans/Decision_Log.md#DL-401 (Case L-3, Card 1
+  retention assignments), and the lineage pins stay in the DCN report. Per-family current-canon search and scoped negative
   evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
   BrowserRuntimeService records cmd.browser.keep_closed only after the existing open session is committed closed.
   previous_lifecycle_state=open, lifecycle_state=closed, and changed_fields contains lifecycle_state. Repeating
@@ -13696,8 +13699,9 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.promoted@1.0.0, prepared
-  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2; the unlanded
-  answer/retention commits must integrate before admission. Per-family current-canon search and scoped negative
+  without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2 and are
+  landed Decision Log entries; the per-name retention assignment is landed as Plans/Decision_Log.md#DL-401 (Case L-3,
+  Card 1 retention assignments), and the lineage pins stay in the DCN report. Per-family current-canon search and scoped negative
   evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
   BrowserRuntimeService records cmd.browser.promote_to_normal_browsing only after the session changes from an existing
   non-normal session_class to normal_browsing, with session_class in changed_fields. Workspace and browser_session_id
@@ -13805,8 +13809,9 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.takeover_state_changed@1.0.0,
-  prepared without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card
-  2; the unlanded answer/retention commits must integrate before admission. Per-family current-canon search and
+  prepared without admission. DL-405 (Browser) / DL-407 (memory) apply only as selected in the as-presented Card 2 and
+  are landed Decision Log entries; the per-name retention assignment is landed as Plans/Decision_Log.md#DL-401 (Case
+  L-3, Card 1 retention assignments), and the lineage pins stay in the DCN report. Per-family current-canon search and
   scoped negative evidence are recorded in reports/event-authority-20261104/DCN.md and its pinned external per-family-search.json.
   BrowserRuntimeService records an actual takeover_state change committed by cmd.browser.take_over, cmd.browser.pause_agent,
   cmd.browser.let_agent_continue or cmd.browser.stop_agent_keep_browser. The authenticated owner outcome, not the

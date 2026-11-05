@@ -29608,8 +29608,10 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
-  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as
+  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);
+  lineage pin 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults, its
+  source hash pinned in the DCN report. This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -29714,8 +29716,10 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
-  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as
+  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);
+  lineage pin 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults, its
+  source hash pinned in the DCN report. This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -29820,8 +29824,10 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
-  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as
+  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);
+  lineage pin 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults, its
+  source hash pinned in the DCN report. This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -29926,8 +29932,10 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
-  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as
+  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);
+  lineage pin 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults, its
+  source hash pinned in the DCN report. This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -30032,8 +30040,10 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
-  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as
+  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);
+  lineage pin 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults, its
+  source hash pinned in the DCN report. This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -30146,8 +30156,10 @@ canonical_text: 'Newly authored Storage owner contract for exactly memory.gist_s
   content or inline base64 is permitted, no truncation or enlarged inline ceiling, and no successor is required
   merely because a valid gist has more than sixteen evidence references.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
-  (Case L-3, Card 1 retention assignments: G03 exactly memory.gist_state_changed; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as
+  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G03 exactly memory.gist_state_changed);
+  lineage pin 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults, its
+  source hash pinned in the DCN report. This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
