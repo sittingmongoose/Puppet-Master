@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """DL-451 isolated input/receipt regressions; fixture trees stay outside the repo."""
 import argparse
+import ast
 import dis
 import types
 import copy
+import difflib
 import hashlib
 import importlib.util
 import json
@@ -16,10 +18,121 @@ import tempfile
 REL = 'Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py'
 COUNT = 'c53e4199ae94ca853a197354f3f9e7f296cf1efc'
 PREVIOUS = '5764ca809c0dcc8a161d4fcd45770abf6355f746'
+SEAL_BASE = '17c842445a2623bb0334ba8d6932e7a6bf088967'
+COVERAGE = 'reports/event-authority-20261105/CA-SEAL2-coverage.json'
 
 
 def sha(raw): return hashlib.sha256(raw).hexdigest()
 def encoded(doc): return (json.dumps(doc, indent=2) + '\n').encode()
+
+
+def predicate_sites(source, before):
+    """Astra 3 inventory rules, with touched functions/lines derived from the diff.
+
+    Keep wrappers and children distinct. Expand chains, receipt fields, nested
+    identities and call-instantiated authority requirements independently.
+    """
+    functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
+    previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
+    added_lines = set()
+    for tag, _, _, start, end in difflib.SequenceMatcher(
+            None, before.splitlines(), source.splitlines(), autojunk=False).get_opcodes():
+        if tag in {'insert', 'replace'}:
+            added_lines.update(range(start + 1, end + 1))
+    rows = {}
+    def add(function, node, expression, kind):
+        row = {'function': function, 'line': node.lineno, 'column': node.col_offset,
+               'expression': expression, 'kind': kind}
+        key = (function, node.lineno, node.col_offset, expression, kind)
+        rows[key] = row
+    touched = {}
+    for name, fn in functions.items():
+        old = previous.get(name)
+        if old is not None and ast.dump(old) == ast.dump(fn):
+            continue
+        touched[name] = fn
+        for n in ast.walk(fn):
+            if not hasattr(n, 'lineno'):
+                continue
+            # Astra includes the builder's returned record immediately after
+            # its inserted gate, since that gate changes this record's pass.
+            if old is not None and n.lineno not in added_lines and not (
+                    name == 'build_receipt' and isinstance(n, ast.Return)):
+                continue
+            if isinstance(n, ast.Compare):
+                for left, op, right in zip([n.left] + n.comparators[:-1], n.ops, n.comparators):
+                    add(name, n, ast.unparse(ast.Compare(left=left, ops=[op], comparators=[right])), 'comparison')
+            if isinstance(n, ast.If):
+                add(name, n.test, ast.unparse(n.test), 'branch')
+            if isinstance(n, ast.IfExp):
+                add(name, n.test, ast.unparse(n.test), 'conditional expression')
+            if isinstance(n, ast.BoolOp):
+                for child in n.values:
+                    if not isinstance(child, ast.BoolOp):
+                        add(name, child, ast.unparse(child), 'Boolean clause')
+            if (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                    and n.func.attr in {'fullmatch', 'search', 'isfinite', 'startswith',
+                                        'is_absolute', 'is_relative_to', 'is_file'}):
+                add(name, n, ast.unparse(n), 'predicate call')
+            if isinstance(n, ast.Return):
+                add(name, n, ast.unparse(n.value) if n.value else 'None', 'return')
+            # Astra's close_inventory adds this executable observer assignment.
+            if (isinstance(n, ast.Assign) and isinstance(n.value, ast.Call)
+                    and ast.unparse(n.value) == 'third_change_validator_pin()'):
+                add(name, n, ast.unparse(n), 'changed observer call')
+    syntax = sorted(rows.values(), key=lambda r: (r['line'], r['column'], r['kind']))
+    for row in syntax:
+        row['site_id'] = 'syntax:' + sha(json.dumps(row, sort_keys=True).encode())
+    semantic = []
+    def expand(label):
+        semantic.append({'site_id': 'semantic:' + label, 'predicate': label})
+    change = touched['recount_change_state']
+    expected = next(n.value for n in ast.walk(change) if isinstance(n, ast.Assign)
+                    and any(isinstance(t, ast.Name) and t.id == 'expected' for t in n.targets))
+    for key in expected.keys:
+        for clause in ['type', 'value']:
+            expand('field_' + key.value + '_' + clause)
+    authority = next(n for n in ast.walk(change) if isinstance(n, ast.Call)
+                     and isinstance(n.func, ast.Name) and n.func.id == 'decision_section_bytes')
+    for index, _ in enumerate(authority.args[2].elts):
+        expand('authority_required_token_' + str(index))
+    for key, value in zip(expected.keys, expected.values):
+        if isinstance(value, ast.Dict):
+            for clause in ['path', 'keys']:
+                expand('nested_' + key.value + '_' + clause)
+    flags = next(n for n in ast.walk(change) if isinstance(n, ast.GeneratorExp)
+                 and isinstance(n.generators[0].iter, ast.Tuple))
+    for flag in flags.generators[0].iter.elts:
+        expand(flag.value + ' is False')
+    for handler in (n for n in ast.walk(touched['recount_validation']) if isinstance(n, ast.ExceptHandler)):
+        issue = next(n for n in ast.walk(handler) if isinstance(n, ast.Dict))
+        error = next(value.value for key, value in zip(issue.keys, issue.values) if key.value == 'error')
+        expand('collect ' + error + ' before completion')
+    return syntax + semantic
+
+
+def check_coverage(repo, test_names):
+    before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
+    actual = predicate_sites((repo / REL).read_text(), before)
+    table = json.loads((repo / COVERAGE).read_bytes())
+    expected = {row['site_id']: row for row in actual}
+    rows = table['sites']
+    recorded = {row['site_id']: row for row in rows}
+    assert len(recorded) == len(rows), 'duplicate coverage site'
+    missing, stale = set(expected) - set(recorded), set(recorded) - set(expected)
+    assert not missing and not stale, ('coverage sites missing=' + repr(sorted(missing))
+                                       + ' stale=' + repr(sorted(stale)))
+    for site, identity in expected.items():
+        row = recorded[site]
+        assert all(row.get(k) == value for k, value in identity.items()), ('changed site', site)
+        assert row['evidence'], ('missing evidence', site)
+        if row['outcome'] == 'killed by':
+            assert row['killed_by'] and set(row['killed_by']) <= test_names, ('unknown test', site)
+            assert row['cut'], ('missing narrow cut', site)
+        else:
+            assert row['outcome'] in {'same-predicate duplicate', 'implied', 'frozen-input only', 'structural'}
+            assert row['reason'], ('missing survivor explanation', site)
+    assert len(table['prior_survivors']) == 84
 
 
 def run(repo, output, source_map, apply_cut=None):
@@ -214,6 +327,73 @@ def run(repo, output, source_map, apply_cut=None):
                        field in {'validator_before_sha256', 'validator_after_sha256'})
             put(v.RECOUNT_CHANGE, encoded(change))
             anchors()
+            # Astra 3 B01/B02: each parent passes; hashes follow changed bytes.
+            decision_path = root / 'Plans/Decision_Log.md'
+            decision_raw = decision_path.read_bytes()
+            section = v.decision_section_bytes(decision_path, 'DL-451')
+            authority_tokens = [b'i approve all of it', b'Approve a fourth recorded change',
+                                b'Keep every per-name decision',
+                                b'6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30']
+            try:
+                for index, token in enumerate(authority_tokens):
+                    decision_path.write_bytes(decision_raw)
+                    put(v.RECOUNT_CHANGE, encoded(change))
+                    anchors()
+                    v.recount_change_state()
+                    edited = section.replace(token, b'[removed requirement]')
+                    assert token not in edited
+                    decision_path.write_bytes(decision_raw.replace(section, edited))
+                    bad = copy.deepcopy(change)
+                    bad['authority_section_sha256'] = sha(edited)
+                    put(v.RECOUNT_CHANGE, encoded(bad))
+                    anchors()
+                    record('negative_authority_required_token_' + str(index), v.recount_change_state,
+                           True, 'DL-451 authority text missing or changed')
+            finally:
+                decision_path.write_bytes(decision_raw)
+                put(v.RECOUNT_CHANGE, encoded(change))
+                anchors()
+            for field in ['prior_receipt', 'recount_receipt', 'recount_list']:
+                for clause in ['path', 'keys']:
+                    put(v.RECOUNT_CHANGE, encoded(change))
+                    anchors()
+                    v.recount_change_state()
+                    bad = copy.deepcopy(change)
+                    if clause == 'path':
+                        bad[field]['path'] = 'reports/substituted-path.json'
+                    else:
+                        bad[field]['unexpected'] = 'extra'
+                    put(v.RECOUNT_CHANGE, encoded(bad))
+                    anchors()
+                    record('negative_nested_' + field + '_' + clause, v.recount_change_state,
+                           True, 'fourth amendment identity, authority')
+            put(v.RECOUNT_CHANGE, encoded(change))
+            anchors()
+            # B06: call the changed third semantic helper directly, from a
+            # fully finalized third/fourth fixture. Every byte observation follows.
+            third_raw = (root / v.MULTI_FAMILY_RECEIPT).read_bytes()
+            try:
+                third = json.loads(third_raw)
+                third['lander_task'] = 'fixture:third-lander'
+                third['seal_applier_forbidden_tasks'] = sorted({v.MULTI_FAMILY_AUTHOR, 'fixture:third-lander'})
+                def sync_third(doc):
+                    put(v.MULTI_FAMILY_RECEIPT, encoded(doc))
+                    fourth = copy.deepcopy(change)
+                    fourth['prior_receipt']['sha256'] = sha((root / v.MULTI_FAMILY_RECEIPT).read_bytes())
+                    put(v.RECOUNT_CHANGE, encoded(fourth))
+                    anchors()
+                sync_third(third)
+                v.multi_family_receipt_state()
+                v.recount_change_state()
+                bad = copy.deepcopy(third)
+                bad['validator_after_sha256'] = 'e' * 64
+                sync_third(bad)
+                record('negative_third_semantic_after_hash', v.multi_family_receipt_state, True,
+                       'multi-family step amendment receipt identity, authority or hash mismatch')
+            finally:
+                put(v.MULTI_FAMILY_RECEIPT, third_raw)
+                put(v.RECOUNT_CHANGE, encoded(change))
+                anchors()
             for label, raw, kind in [
                 ('duplicate_root', b'{"a":1,"a":2}', dict),
                 ('duplicate_nested', b'{"a":{"b":1,"b":2}}', dict),
@@ -428,6 +608,17 @@ def run(repo, output, source_map, apply_cut=None):
             finally:
                 decision_path.write_bytes(decision_raw)
 
+            outcomes(excluded, admitted_rest)
+            prefixed_section = own_section.replace(names[0].encode(), ('x' + names[0]).encode())
+            bad = copy.deepcopy(excluded)
+            bad['rows'][0]['decision_section_sha256'] = sha(prefixed_section)
+            try:
+                decision_path.write_bytes(decision_raw[:-len(own_section)] + prefixed_section)
+                record('negative_exclusion_decision_prefix', lambda: outcomes(bad, admitted_rest),
+                       True, 'decision fingerprint/name mismatch')
+            finally:
+                decision_path.write_bytes(decision_raw)
+
             # The relative spelling, bytes, digest, span and name remain valid.
             # Only the resolved evidence location moves outside Plans.
             outcomes(excluded, admitted_rest)
@@ -495,7 +686,7 @@ def run(repo, output, source_map, apply_cut=None):
             # a passing August result. Preserve the four production clauses and
             # their jumps; bypass only the earlier August computation and later
             # receipt I/O. No live approval run or executable file is changed.
-            def main_flags(complete):
+            def main_flags(complete, august_values=None):
                 code = v.main.__code__
                 instructions = list(dis.get_instructions(v.main))
                 start = next(i.offset for i in instructions if i.positions.lineno == 2241)
@@ -518,6 +709,7 @@ def run(repo, output, source_map, apply_cut=None):
                                       'seal_prerequisites_blocking_errors': []},
                             'overall_pass': True, 'complete_denominator_known': True,
                             'contract_depth_complete': True, 'failures': [], 'post_august_admitted': set()}
+                supplied.update(copy.deepcopy(august_values or {}))
                 for field, value in supplied.items():
                     args[code.co_varnames.index(field)] = value
                 old_recount = v.recount_validation
@@ -539,6 +731,19 @@ def run(repo, output, source_map, apply_cut=None):
                         raise ValueError('main refuses incomplete recount: ' + field)
                 record('negative_main_incomplete_' + field, refuses_incomplete, True)
 
+            for field in ['complete_denominator_known', 'contract_depth_complete', 'overall_pass', 'seal_prerequisites_met']:
+                def refuses_August_false(field=field):
+                    assert (main_flags(True)['named'][field] if field == 'seal_prerequisites_met'
+                            else main_flags(True)[field]) is True
+                    supplied = ({'named': {'seal_prerequisites_met': False,
+                                           'seal_prerequisites_blocking_errors': []}}
+                                if field == 'seal_prerequisites_met' else {field: False})
+                    flags = main_flags(True, supplied)
+                    result = flags['named'][field] if field == 'seal_prerequisites_met' else flags[field]
+                    if result is False:
+                        raise ValueError('main refuses false August input: ' + field)
+                record('negative_main_August_' + field, refuses_August_false, True)
+
             # The aggregate's positive uses the real frozen sources, coherent
             # fourth receipt and complete helper outcomes with prior admissions.
             os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
@@ -546,6 +751,18 @@ def run(repo, output, source_map, apply_cut=None):
             v.RECOUNT_RECEIPT_SHA = sha(frozen_receipt)
             put(v.RECOUNT_CHANGE, encoded(change))
             anchors()
+
+            outcomes(outcome_doc)
+            state, issues = v.recount_validation(set(names))
+            assert state['complete'] is True and issues == [], (state, issues)
+            bad = copy.deepcopy(outcome_doc)
+            bad['schema_id'] = 'wrong.schema'
+            put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(bad))
+            def refuses_aggregate_input_issue():
+                state, issues = v.recount_validation(set(names))
+                if state['complete'] is False and len(issues) == 1 and issues[0]['error'] == 'recount_input_or_outcome_invalid':
+                    raise ValueError('aggregate complete is false with its one input/outcome issue')
+            record('negative_aggregate_input_issue', refuses_aggregate_input_issue, True)
             outcomes(outcome_doc)
             state, issues = v.recount_validation(set(names))
             assert state['complete'] is True and issues == [], (state, issues)
@@ -570,6 +787,7 @@ def run(repo, output, source_map, apply_cut=None):
             for key, value in original_env.items():
                 if value is None: os.environ.pop(key, None)
                 else: os.environ[key] = value
+    record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}))
     summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
                'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
                'real_frozen_source_custody': custody, 'results': results,
