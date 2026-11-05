@@ -121,7 +121,7 @@ export default async function(t) {
      await f.evaluate(()=>{window.__tokenStyleReads=0;window.__nativeStyle=window.getComputedStyle;window.getComputedStyle=function(...args){if(new Error().stack.includes('tokRaw'))window.__tokenStyleReads++;return window.__nativeStyle.apply(this,args);};});
      await f.evaluate(()=>{
       window.__crewCommitPhases=[];
-      if(!window.__crewPhaseHook){window.__crewPhaseHook=true;PM56_EXT.slot('afterRender',(ctx,info)=>{const stack=new Error().stack;if(stack.includes('onAppClick'))window.__crewCommitPhases.push(info.phase==='app'&&info.scope?'app-scope':info.phase);});}
+      if(!window.__crewPhaseHook){window.__crewPhaseHook=true;PM56_EXT.slot('afterRender',(ctx,info)=>{const limit=Error.stackTraceLimit;Error.stackTraceLimit=40;const stack=new Error().stack;Error.stackTraceLimit=limit;if(stack.includes('onAppClick'))window.__crewCommitPhases.push(info.phase==='app'&&info.scope?'app-scope':info.phase);});}
      });
      try { await sample('crew-start-'+i,()=>btn.click(),2000);
       const phases=await f.evaluate(()=>window.__crewCommitPhases);
