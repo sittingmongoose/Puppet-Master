@@ -460,6 +460,10 @@ def historical_reader_cases(fixture, checkpoint, reader, observations=None):
         page = reader(boundary, expected)
         assert type(page['after_sequence_id']) is int and page['complete']
     maximum_request, maximum_original = copy.deepcopy(base), copy.deepcopy(expected)
+    # The independently declared compact publication leaves room for the wider
+    # frontier. An exact-cap publication cannot grow even by one encoded byte.
+    for publication in (maximum_request['checkpoint'], maximum_original['checkpoint']):
+        publication['index_read_token']['checkpoint_ref'] = fixture['history']['case_checkpoint_ref']
     maximum_request['checkpoint']['through_sequence_id'] = 18446744073709551615
     maximum_original['checkpoint']['through_sequence_id'] = 18446744073709551615
     maximum_request['after_sequence_id'] = 18446744073709551615
