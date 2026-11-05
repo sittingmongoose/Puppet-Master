@@ -2719,48 +2719,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     runAfterRender('app',{flips});
   }
 
-  /* Work projection changes the work islands, not the conversation or shell.
-     A layout change still belongs to renderApp (including the host ladder). */
-  function renderWorkSurfaces(){
-    const wasOpen=state.activity.open;
-    syncActivityDomain();
-    const stage=document.querySelector('#pmRoot .chat-stage');
-    if(!HOSTED||!stage||state.activity.open!==wasOpen||activityDocked()!==activityDockLayout||state.editorRevealed||state.dialog){ renderApp(); return false; }
-    const patch=(sel,html,parent)=>{
-      const live=document.querySelector('#pmRoot '+sel);
-      const tpl=document.createElement('template'); tpl.innerHTML=html;
-      const src=tpl.content.firstElementChild;
-      if(live&&src) pmPatchNode(live,src);
-      else if(live) live.remove();
-      else if(src&&parent) parent.appendChild(src);
-      return live||src;
-    };
-    patch('.chat-header',renderChatHeader(activeThread()));
-    patch('.chat-float',renderChatFloat(),stage);
-    // composerBelow includes the work dock provider (needs/live/scheduled).
-    // Refresh it in this same commit so dockCheck never repairs stale rows
-    // by requesting a later full conversation render.
-    patch('.composer',renderComposer());
-    if(state.activity.open){
-      const panel=document.querySelector('#pmRoot .activity-panel');
-      if(!panel){renderApp();return false;}
-      const scroll=panel.querySelector('[data-scroll-key="activity"]');
-      const before=scroll?scroll.scrollTop:null;
-      patch('.activity-panel',renderActivityPanel(activityDockLayout?'dock':'cover'));
-      if(before!=null) restoreScroll({activity:before},{post:{activity:scroll.scrollTop}});
-    }
-    // This transcript card reads the work projection; ordinary messages do not.
-    for(const live of document.querySelectorAll('#pmRoot [data-msg-type="live-agents"]')){
-      const tpl=document.createElement('template');tpl.innerHTML=renderLiveAgentsCard();
-      const src=tpl.content.firstElementChild;
-      for(const a of live.attributes) if(a.name!=='class') src.setAttribute(a.name,a.value);
-      patchScope(live,src.outerHTML);
-    }
-    syncHoverCard(); fitActivityTabs();
-    runAfterRender('scope',{scope:stage,flips:[]});
-    return true;
-  }
-
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
      before/after steps renderApp runs around a full patch -- height FLIPs,
      move FLIPs, rolling digits, scroll custody, hover retention -- so a caller
@@ -5543,6 +5501,48 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(a==='pm56-pop'){ closeMenu(); try{ if(SC.isFloating()) SC.dockBack(); else SC.popOut(); }catch(err){ console.error(err); } return true; }
     return false;
   }
+  /* Work projection changes the work islands, not the conversation or shell.
+     A layout change still belongs to renderApp (including the host ladder). */
+  function renderWorkSurfaces(){
+    const wasOpen=state.activity.open;
+    syncActivityDomain();
+    const stage=document.querySelector('#pmRoot .chat-stage');
+    if(!HOSTED||!stage||state.activity.open!==wasOpen||activityDocked()!==activityDockLayout||state.editorRevealed||state.dialog){ renderApp(); return false; }
+    const patch=(sel,html,parent)=>{
+      const live=document.querySelector('#pmRoot '+sel);
+      const tpl=document.createElement('template'); tpl.innerHTML=html;
+      const src=tpl.content.firstElementChild;
+      if(live&&src) pmPatchNode(live,src);
+      else if(live) live.remove();
+      else if(src&&parent) parent.appendChild(src);
+      return live||src;
+    };
+    patch('.chat-header',renderChatHeader(activeThread()));
+    patch('.chat-float',renderChatFloat(),stage);
+    // composerBelow includes the work dock provider (needs/live/scheduled).
+    // Refresh it in this same commit so dockCheck never repairs stale rows
+    // by requesting a later full conversation render.
+    patch('.composer',renderComposer());
+    if(state.activity.open){
+      const panel=document.querySelector('#pmRoot .activity-panel');
+      if(!panel){renderApp();return false;}
+      const scroll=panel.querySelector('[data-scroll-key="activity"]');
+      const before=scroll?scroll.scrollTop:null;
+      patch('.activity-panel',renderActivityPanel(activityDockLayout?'dock':'cover'));
+      if(before!=null) restoreScroll({activity:before},{post:{activity:scroll.scrollTop}});
+    }
+    // This transcript card reads the work projection; ordinary messages do not.
+    for(const live of document.querySelectorAll('#pmRoot [data-msg-type="live-agents"]')){
+      const tpl=document.createElement('template');tpl.innerHTML=renderLiveAgentsCard();
+      const src=tpl.content.firstElementChild;
+      for(const a of live.attributes) if(a.name!=='class') src.setAttribute(a.name,a.value);
+      patchScope(live,src.outerHTML);
+    }
+    syncHoverCard(); fitActivityTabs();
+    runAfterRender('scope',{scope:stage,flips:[]});
+    return true;
+  }
+
   /* The work projection (W6, DR-078): a change repaints the chat (the bar's Processes icon, its hover card, Activity
      Detail). The core's 1 s tick only moves times and output tails, so unless this thread's counts changed it patches
      those in place instead of rendering the chat each second; the core rests while hidden or dragging. */
