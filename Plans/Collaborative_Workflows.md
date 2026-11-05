@@ -3763,7 +3763,7 @@ Each family has its own contract in each owner: its semantics and producer here 
 The answers were re-read against today's text before they were applied:
 - **DL-090.** Its 17 names are the 17 names section 13 lists today, unchanged since `1e5d9b097b`: no rename, addition or removal. The four kinds, their shared run, transcript, participants and artifacts are still one runtime (section 2.1, CWR-001). CWR-045 and DL-292 since added application scope (`project_id` null) to all four kinds; that extends where the families occur, not which names exist, and DL-300 admitted none of them. The premise holds.
 - **DL-091.** `failed` is still one of the closed run states (section 2.1, section 12), and a limit stop is still `cancelled`, never `failed` (CWR-029). No event exists for a failed run, and `collaboration.failed` is added to section 13 below. The premise holds.
-- **DL-092.** "Every collaborative run belongs to a chat" still holds: the definition carries the thread (section 2.1, section 12, CWR-032), in an application chat as in a Project chat (CWR-045). DL-292 supersedes DL-092 in part: collaboration history also belongs to admitted application chats, and "the chat-lifetime/deletion/hold policy is unchanged and conversion cannot erase independently retained custody". No chat auto-archives (DL-287). The lifetime therefore applies as decided. The policy object is the open part: DL-092 names `RP-GOAL-THREAD-LIFETIME` subject to the Storage owner's reuse check, and that check, which materializes the Chat content class as `RP-CHAT-THREAD-LIFETIME@1.0.0` and assigns the 18 families to it, is on the unlanded branch `plans/ea-storage-retention-20261104`, not on `main`. Each family's contract names that object, and its retention stays blocked until that Storage landing; the separately recorded E-CARDS-1 item 1c option A (DL-404 on the answers branch) now supplies chat lifetime for run, participant, transcript, proposal and finding records in both scopes.
+- **DL-092.** "Every collaborative run belongs to a chat" still holds: the definition carries the thread (section 2.1, section 12, CWR-032), in an application chat as in a Project chat (CWR-045). DL-292 supersedes DL-092 in part: collaboration history also belongs to admitted application chats, and "the chat-lifetime/deletion/hold policy is unchanged and conversion cannot erase independently retained custody". No chat auto-archives (DL-287). The lifetime therefore applies as decided. DL-092 names `RP-GOAL-THREAD-LIFETIME` subject to the Storage owner's reuse check. That landed check materializes the Chat content class as `RP-CHAT-THREAD-LIFETIME@1.0.0` in `Plans/storage_value_registry.json`; each of the 18 prepared family contracts names that object. Landed DL-404 supplies chat lifetime for run, participant, transcript, proposal and finding records in both scopes. Event admission remains separate.
 
 ### CWR-105 - Shared rules of the collaborative workflow event families
 
@@ -3775,8 +3775,8 @@ The answers were re-read against today's text before they were applied:
 - **Scope.** Every family has two closed payload editions: project scope (`scope_kind` `project`, a real `project_id`) and application scope (`scope_kind` `application`, `project_id` null, the actual `server_id`) for the application chats of CWR-045 and DL-292. The scope is fixed when the run is admitted. This owner now explicitly adopts CV-366's application source graph for all 18 named families: the actual CollaborationRuntime commits the unchanged SP-351 typed owner and SP-460 prepared holder in one canonical transaction, appends only an admitted edition, resolves the original receipt and publishes the immutable result. Exact read/checkpoint/backup/restore/retention roles are SP-460, SP-278, SP-286 and BRS-033; application roots and Server joins are never inferred from Project context. Prepared payload versions retain the conservative `requires_owner_adoption` marker until their later admission validates this adoption; no event append is enabled here. Conversion (CWR-045's N25, CV-367) never re-scopes, moves or rewrites an event: a linked destination run records its own events, and the source run's events stay with the source chat.
 - **No text in events.** No event carries user or participant text: no definition name or purpose, message body, proposal, vote, finding, dissent, waiver reason, Plan text, provider error text or tool output. Events carry identities, closed codes, counts, hashes and references (section 13's "redacted source refs"). The text stays in the record that the event's reference names, under that record's own owner and lifetime.
 - **Envelope.** Section 13's envelope list maps as follows: project and thread to the EventRecord's `project_id` and `thread_id`; collaboration, run and participant identity, definition revision and currentness to the payload; the run also to the envelope's `run_id`, and a participant attempt to `attempt_id`; the actor to `actor_ref`, which names the command's actor for an event a command caused and `component:collaboration_runtime` otherwise; correlation and causation to `correlation_id` and `causation_event_id`; and the idempotency key to both (CV-460).
-- **Record lifetime answer.** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded on the answers branch as DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
-- **Retention.** Each family's records are kept as long as the run's chat exists (DL-092, with DL-292): the chat is the payload's `thread_id`, and deleting it removes the family's history under the chat deletion rule. The structured reference is `RP-CHAT-THREAD-LIFETIME@1.0.0`, pending the Storage retention landing (SP-460).
+- **Record lifetime answer.** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded in landed DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
+- **Retention.** Each family's records are kept as long as the run's chat exists (DL-092, with DL-292): the chat is the payload's `thread_id`, and deleting it removes the family's history under the chat deletion rule. The structured reference is `RP-CHAT-THREAD-LIFETIME@1.0.0`, materialized by the landed Storage retention contract (SP-460).
 - **Compatibility.** No family has an alias. The six Crew lifecycle families retired by DL-087 are never aliased, mapped or back-filled into these families. Migration (section 17, MIG-021) appends no event for converted, synthesized or unrecoverable state, and a run that ran before its families were admitted has no recorded history; none is synthesized afterwards.
 - **Precedence.** For the 18 names, CWR-106 to CWR-123 govern over earlier general text that names them (section 13's envelope sentence and the candidate inventory of Plans/Commands_System.md). They add no command, run state, run kind, setting or presentation.
 
@@ -3795,7 +3795,7 @@ canonical_text: >-
   has a project edition and an application edition; the application source graph is
   adopted explicitly here under CV-366 with SP-460 source custody; conversion never moves or rewrites events. Events
   carry no user or participant text. Records are kept as long as the run's chat exists under DL-092 and
-  DL-292, with RP-CHAT-THREAD-LIFETIME@1.0.0 pending its Storage landing. No alias, no back-fill of the
+  DL-292, with RP-CHAT-THREAD-LIFETIME@1.0.0 materialized in the Storage registry. No alias, no back-fill of the
   retired crew families and no event for migrated state. Original source facts join field by field under
   SP-460, including nested application instance/Server/thread, roster/requiredness, attempts and owner
   outputs. Explicit V2 physical wrappers preserve the logical codecs and closed V1 historical readers.
@@ -3857,7 +3857,7 @@ owner_hints:
 ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decision_Log.md#DL-091, ContractName:Plans/Decision_Log.md#DL-092, ContractName:Plans/Decision_Log.md#DL-292, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Automated_Testing_System.md#ATS-230, ContractName:Plans/Contracts_V0.md#CV-366
 
 <a id="collaboration-event-collaboration-created"></a>
-**Settled record custody:** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded on the answers branch as DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
+**Settled record custody:** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exists (Jared, E-CARDS-1 item 1c option A, recorded in landed DL-404). This replaces SP-351's app one-year rule. Chat deletion hides them immediately through the tombstone, purges unheld active bytes within 24 hours and backup bytes within 30 days; chat/legal holds postpone physical purge without restoring visibility. Shared artifacts and original receipts retain independent custody; deleting a card/message never deletes a shared artifact. The historical DL-092 quotation remains historical.
 
 ### CWR-106 - The collaboration.created event contract
 
@@ -3873,7 +3873,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decis
 
 **Withdrawal.** New Start admissions that would create a definition are refused while it is withdrawn; runs of existing definitions are unaffected. SP-461 states the fences.
 
-**Bindings.** Payload CV-461: `pm.collaboration_event.collaboration_created.v1` and `pm.collaboration_event.collaboration_created.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-461. Oracles ATS-231. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.created`.
+**Bindings.** Payload CV-461: `pm.collaboration_event.collaboration_created.v1` and `pm.collaboration_event.collaboration_created.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-461. Oracles ATS-231. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.created`.
 
 ```yaml
 plan_unit_id: CWR-106
@@ -3900,7 +3900,7 @@ canonical_text: >-
   both events after that commit and never inside it. The definition's name and purpose are user text and stay
   in the definition record; the event carries the identity, the admission source, the slot IDs and the
   coordinator kind only. Payload CV-461, persistence SP-461, oracles ATS-231; kept as long as the run's chat
-  exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -3971,7 +3971,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no run of any kind can be admitted, because every other run family needs a started run; existing runs keep their recorded history and continue only through the families still admitted. SP-462 states the fences.
 
-**Bindings.** Payload CV-462: `pm.collaboration_event.collaboration_started.v1` and `pm.collaboration_event.collaboration_started.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-462. Oracles ATS-232. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.started`.
+**Bindings.** Payload CV-462: `pm.collaboration_event.collaboration_started.v1` and `pm.collaboration_event.collaboration_started.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-462. Oracles ATS-232. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.started`.
 
 ```yaml
 plan_unit_id: CWR-107
@@ -3994,7 +3994,7 @@ canonical_text: >-
   receipt returns (MODAL-006..008: a card appears only after one run is durably admitted). The run's job text,
   topic and purpose are user text and stay in the definition and run records; the event carries identities,
   enums, refs and hashes only. Payload CV-462, persistence SP-462, oracles ATS-232; kept as long as the run's
-  chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4065,7 +4065,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn the runtime cannot record a pause, so `cmd.collaboration.pause` is unavailable with `owner_unavailable`; runs keep running. SP-463 states the fences.
 
-**Bindings.** Payload CV-463: `pm.collaboration_event.collaboration_paused.v1` and `pm.collaboration_event.collaboration_paused.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-463. Oracles ATS-233. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.paused`.
+**Bindings.** Payload CV-463: `pm.collaboration_event.collaboration_paused.v1` and `pm.collaboration_event.collaboration_paused.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-463. Oracles ATS-233. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.paused`.
 
 ```yaml
 plan_unit_id: CWR-108
@@ -4087,7 +4087,7 @@ canonical_text: >-
   appended, and CollaborationPauseResult reports the exact paused state only after the first receipt. The
   event carries no message, inbox or composer text; what the pause preserves stays in its own records. Payload
   CV-463, persistence SP-463, oracles ATS-233; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4158,7 +4158,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn a paused run cannot be resumed (`cmd.collaboration.resume` unavailable with `owner_unavailable`); it can still be cancelled. SP-464 states the fences.
 
-**Bindings.** Payload CV-464: `pm.collaboration_event.collaboration_resumed.v1` and `pm.collaboration_event.collaboration_resumed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-464. Oracles ATS-234. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.resumed`.
+**Bindings.** Payload CV-464: `pm.collaboration_event.collaboration_resumed.v1` and `pm.collaboration_event.collaboration_resumed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-464. Oracles ATS-234. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.resumed`.
 
 ```yaml
 plan_unit_id: CWR-109
@@ -4177,7 +4177,7 @@ canonical_text: >-
   owner commits the run record out of paused with the prepared event, the event is appended, and
   CollaborationResumeResult is committed only after the first receipt. No participant work is redelivered.
   Identities, enums and refs only. Payload CV-464, persistence SP-464, oracles ATS-234; kept as long as the
-  run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4248,7 +4248,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no run can be cancelled through the runtime, so new run admissions are refused (a run must be able to reach every ending); runs already active continue and can still complete or fail. SP-465 states the fences.
 
-**Bindings.** Payload CV-465: `pm.collaboration_event.collaboration_cancelled.v1` and `pm.collaboration_event.collaboration_cancelled.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-465. Oracles ATS-235. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.cancelled`.
+**Bindings.** Payload CV-465: `pm.collaboration_event.collaboration_cancelled.v1` and `pm.collaboration_event.collaboration_cancelled.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-465. Oracles ATS-235. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.cancelled`.
 
 ```yaml
 plan_unit_id: CWR-110
@@ -4270,7 +4270,7 @@ canonical_text: >-
   are returned only after the first receipt. Late results after the fence are retained by their owners as
   rejected or stale evidence and append nothing. Identities, enums, counts and refs only; the card,
   transcript, participants and artifacts are kept by their owners. Payload CV-465, persistence SP-465, oracles
-  ATS-235; kept as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  ATS-235; kept as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4341,7 +4341,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no run can complete through the runtime, so new run admissions are refused; active runs can still be cancelled or fail, and none is ever inferred complete. SP-466 states the fences.
 
-**Bindings.** Payload CV-466: `pm.collaboration_event.collaboration_completed.v1` and `pm.collaboration_event.collaboration_completed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-466. Oracles ATS-236. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.completed`.
+**Bindings.** Payload CV-466: `pm.collaboration_event.collaboration_completed.v1` and `pm.collaboration_event.collaboration_completed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-466. Oracles ATS-236. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.completed`.
 
 ```yaml
 plan_unit_id: CWR-111
@@ -4360,7 +4360,7 @@ canonical_text: >-
   first; then the owner commits the run record completed with the prepared event, the event is appended, and
   the completion result (or ChatRoomEndResult) is returned only after the first receipt. Identities, enums and
   refs only; result text stays in its artifact or Plan. Payload CV-466, persistence SP-466, oracles ATS-236;
-  kept as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  kept as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4433,7 +4433,7 @@ The required-slot set is retained from the definition/source snapshot committed 
 
 **Withdrawal.** While it is withdrawn no run can be recorded failed, so new run admissions are refused; an active run that cannot reach an admitted ending stays non-terminal in the projection and is never inferred failed. SP-467 states the fences.
 
-**Bindings.** Payload CV-467: `pm.collaboration_event.collaboration_failed.v1` and `pm.collaboration_event.collaboration_failed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-467. Oracles ATS-237. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.failed`.
+**Bindings.** Payload CV-467: `pm.collaboration_event.collaboration_failed.v1` and `pm.collaboration_event.collaboration_failed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-467. Oracles ATS-237. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.failed`.
 
 ```yaml
 plan_unit_id: CWR-112
@@ -4453,7 +4453,7 @@ canonical_text: >-
   failed with its reason and the prepared event, and the event is appended. Nothing reports the run failed
   before the first receipt. The reason is a closed code; no provider error text, prompt or output is carried.
   Any failure sentence is presentation of the code. Payload CV-467, persistence SP-467, oracles ATS-237; kept
-  as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4524,7 +4524,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no attempt can be admitted, so new run admissions are refused; open attempts can still close. SP-468 states the fences.
 
-**Bindings.** Payload CV-468: `pm.collaboration_event.collaboration_participant_started.v1` and `pm.collaboration_event.collaboration_participant_started.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-468. Oracles ATS-238. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.participant_started`.
+**Bindings.** Payload CV-468: `pm.collaboration_event.collaboration_participant_started.v1` and `pm.collaboration_event.collaboration_participant_started.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-468. Oracles ATS-238. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.participant_started`.
 
 ```yaml
 plan_unit_id: CWR-113
@@ -4545,7 +4545,7 @@ canonical_text: >-
   the prepared event, appends the event, and dispatches the participant's work only after the first receipt.
   Identities and refs only; the attempt's prompt, context slice and private working slice are never carried.
   Payload CV-468, persistence SP-468, oracles ATS-238; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4616,7 +4616,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no outcome can be recorded, so new attempts and new runs are refused; an open attempt stays open in the projection and is never inferred finished. SP-469 states the fences.
 
-**Bindings.** Payload CV-469: `pm.collaboration_event.collaboration_participant_completed.v1` and `pm.collaboration_event.collaboration_participant_completed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-469. Oracles ATS-239. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.participant_completed`.
+**Bindings.** Payload CV-469: `pm.collaboration_event.collaboration_participant_completed.v1` and `pm.collaboration_event.collaboration_participant_completed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-469. Oracles ATS-239. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.participant_completed`.
 
 ```yaml
 plan_unit_id: CWR-114
@@ -4639,7 +4639,7 @@ canonical_text: >-
   collaboration.cancelled. A waiver's reason is user text and stays in the disposition record; the event
   carries the waiver's actor and currentness only. No output, error text or transcript is carried. Payload
   CV-469, persistence SP-469, oracles ATS-239; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4710,7 +4710,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no message can be written through the runtime, so `cmd.collaboration.message` is unavailable and new runs are refused. SP-470 states the fences.
 
-**Bindings.** Payload CV-470: `pm.collaboration_event.collaboration_message_added.v1` and `pm.collaboration_event.collaboration_message_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-470. Oracles ATS-240. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.message_added`.
+**Bindings.** Payload CV-470: `pm.collaboration_event.collaboration_message_added.v1` and `pm.collaboration_event.collaboration_message_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-470. Oracles ATS-240. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.message_added`.
 
 ```yaml
 plan_unit_id: CWR-115
@@ -4733,7 +4733,7 @@ canonical_text: >-
   the message record's body, which body_ref names. Readers apply the blind-phase rules of CWR-013 at read
   time, so the event's existence is never disclosed to a participant the protocol has not released it to.
   Payload CV-470, persistence SP-470, oracles ATS-240; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4804,7 +4804,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no artifact can be attached, so new Review runs are refused (they must finalize an artifact) and other kinds continue without attaching. SP-471 states the fences.
 
-**Bindings.** Payload CV-471: `pm.collaboration_event.collaboration_artifact_added.v1` and `pm.collaboration_event.collaboration_artifact_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-471. Oracles ATS-241. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.artifact_added`.
+**Bindings.** Payload CV-471: `pm.collaboration_event.collaboration_artifact_added.v1` and `pm.collaboration_event.collaboration_artifact_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-471. Oracles ATS-241. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.artifact_added`.
 
 ```yaml
 plan_unit_id: CWR-116
@@ -4823,7 +4823,7 @@ canonical_text: >-
   result is returned after the first receipt. The artifact's bytes, versions and retention stay with the
   artifact owner; the event holds references only, so deleting the chat removes the event and never purges a
   shared artifact (section 2.4). Payload CV-471, persistence SP-471, oracles ATS-241; kept as long as the
-  run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4894,7 +4894,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn no revision after the first can be committed, so `cmd.collaboration.reconfigure` is unavailable (retry, replacement, waiver, added rounds and Grill Me mid-run with it) and re-running an existing collaboration is refused; new collaborations can still start. SP-472 states the fences.
 
-**Bindings.** Payload CV-472: `pm.collaboration_event.collaboration_configuration_changed.v1` and `pm.collaboration_event.collaboration_configuration_changed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-472. Oracles ATS-242. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.configuration_changed`.
+**Bindings.** Payload CV-472: `pm.collaboration_event.collaboration_configuration_changed.v1` and `pm.collaboration_event.collaboration_configuration_changed.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-472. Oracles ATS-242. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `collaboration.configuration_changed`.
 
 ```yaml
 plan_unit_id: CWR-117
@@ -4917,7 +4917,7 @@ canonical_text: >-
   receipts. For start_commit the run's collaboration.started follows in the same admission. A waiver's reason,
   a replacement's Persona text and any job text stay in the definition record; the event carries change kinds,
   slot IDs and refs only. Payload CV-472, persistence SP-472, oracles ATS-242; kept as long as the run's chat
-  exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -4988,7 +4988,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn new BrainStorm runs are refused; an active BrainStorm cannot normalize proposals and waits, never inferring a proposal. SP-473 states the fences.
 
-**Bindings.** Payload CV-473: `pm.collaboration_event.brainstorm_proposal_added.v1` and `pm.collaboration_event.brainstorm_proposal_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-473. Oracles ATS-243. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.proposal_added`.
+**Bindings.** Payload CV-473: `pm.collaboration_event.brainstorm_proposal_added.v1` and `pm.collaboration_event.brainstorm_proposal_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-473. Oracles ATS-243. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.proposal_added`.
 
 ```yaml
 plan_unit_id: CWR-118
@@ -5012,7 +5012,7 @@ canonical_text: >-
   under the chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A,
   and the event neither holds nor extends it. Readers disclose a proposal row only after the protocol releases
   it (CWR-013). Payload CV-473, persistence SP-473, oracles ATS-243; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -5083,7 +5083,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn new BrainStorm runs are refused; an active BrainStorm cannot record votes and never infers one. SP-474 states the fences.
 
-**Bindings.** Payload CV-474: `pm.collaboration_event.brainstorm_vote_added.v1` and `pm.collaboration_event.brainstorm_vote_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-474. Oracles ATS-244. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.vote_added`.
+**Bindings.** Payload CV-474: `pm.collaboration_event.brainstorm_vote_added.v1` and `pm.collaboration_event.brainstorm_vote_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-474. Oracles ATS-244. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.vote_added`.
 
 ```yaml
 plan_unit_id: CWR-119
@@ -5100,7 +5100,7 @@ canonical_text: >-
   event and appends the event; tallies count it only after the first receipt. The vote's reason and evidence
   are text and stay in the vote record; the event carries the position, confidence and constraint IDs only.
   Payload CV-474, persistence SP-474, oracles ATS-244; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -5171,7 +5171,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn new BrainStorm runs are refused; an active BrainStorm cannot record its Plan and cannot complete. SP-475 states the fences.
 
-**Bindings.** Payload CV-475: `pm.collaboration_event.brainstorm_plan_synthesized.v1` and `pm.collaboration_event.brainstorm_plan_synthesized.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-475. Oracles ATS-245. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.plan_synthesized`.
+**Bindings.** Payload CV-475: `pm.collaboration_event.brainstorm_plan_synthesized.v1` and `pm.collaboration_event.brainstorm_plan_synthesized.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-475. Oracles ATS-245. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `brainstorm.plan_synthesized`.
 
 ```yaml
 plan_unit_id: CWR-120
@@ -5190,7 +5190,7 @@ canonical_text: >-
   commits its synthesis binding with the prepared event and appends the event. The BrainStorm card keeps its
   place (section 8.7). The Plan's text belongs to the Plan owner; dissent and alternatives are counted, never
   quoted. Payload CV-475, persistence SP-475, oracles ATS-245; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -5261,7 +5261,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot normalize findings and cannot finalize. SP-476 states the fences.
 
-**Bindings.** Payload CV-476: `pm.collaboration_event.review_finding_added.v1` and `pm.collaboration_event.review_finding_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-476. Oracles ATS-246. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.finding_added`.
+**Bindings.** Payload CV-476: `pm.collaboration_event.review_finding_added.v1` and `pm.collaboration_event.review_finding_added.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-476. Oracles ATS-246. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.finding_added`.
 
 ```yaml
 plan_unit_id: CWR-121
@@ -5282,7 +5282,7 @@ canonical_text: >-
   stays in the finding record, which finding_record_ref names. Deleting the chat deletes the event under the
   chat-lifetime policy; the record and its text follow the same chat lifetime, holds and deletion deadlines under E-CARDS-1 1c A. Readers
   disclose a finding only after normalization releases it (CWR-013). Payload CV-476, persistence SP-476,
-  oracles ATS-246; kept as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  oracles ATS-246; kept as long as the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -5353,7 +5353,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot record dispositions and cannot finalize. SP-477 states the fences.
 
-**Bindings.** Payload CV-477: `pm.collaboration_event.review_finding_dispositioned.v1` and `pm.collaboration_event.review_finding_dispositioned.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-477. Oracles ATS-247. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.finding_dispositioned`.
+**Bindings.** Payload CV-477: `pm.collaboration_event.review_finding_dispositioned.v1` and `pm.collaboration_event.review_finding_dispositioned.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-477. Oracles ATS-247. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.finding_dispositioned`.
 
 ```yaml
 plan_unit_id: CWR-122
@@ -5372,7 +5372,7 @@ canonical_text: >-
   protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the
   event carries counts, the closed disposition and refs only. Its deletion follows the chat, and the record's
   text follows the chat lifetime, holds and deadlines under E-CARDS-1 1c A. Payload CV-477, persistence SP-477, oracles ATS-247; kept as long as
-  the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  the run's chat exists, RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -5443,7 +5443,7 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-105, ContractName
 
 **Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot finalize and cannot complete. SP-478 states the fences.
 
-**Bindings.** Payload CV-478: `pm.collaboration_event.review_artifact_finalized.v1` and `pm.collaboration_event.review_artifact_finalized.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-478. Oracles ATS-248. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` pending its Storage landing. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.artifact_finalized`.
+**Bindings.** Payload CV-478: `pm.collaboration_event.review_artifact_finalized.v1` and `pm.collaboration_event.review_artifact_finalized.application.v1` in `Plans/collaboration_event_payloads.schema.json`. Persistence SP-478. Oracles ATS-248. Retention: kept as long as the run's chat exists (DL-092, DL-292), `RP-CHAT-THREAD-LIFETIME@1.0.0` materialized in the Storage registry. Prepared registry row: `Plans/collaboration_event_admission.json`, row for `review.artifact_finalized`.
 
 ```yaml
 plan_unit_id: CWR-123
@@ -5462,7 +5462,7 @@ canonical_text: >-
   with the prepared event and appends this event; the thread summary links the artifact only after the first
   receipt. The artifact's text stays with the artifact owner; the event carries refs, hashes, counts and flags
   only. Payload CV-478, persistence SP-478, oracles ATS-248; kept as long as the run's chat exists,
-  RP-CHAT-THREAD-LIFETIME@1.0.0 pending.
+  RP-CHAT-THREAD-LIFETIME@1.0.0 materialized.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false

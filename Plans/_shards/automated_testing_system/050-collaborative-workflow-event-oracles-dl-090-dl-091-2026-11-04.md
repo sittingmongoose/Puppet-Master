@@ -2,21 +2,22 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7233-L8694
+Source lines: L7239-L8711
 
-Source SHA256: `2aab24e6016889e86a4b90bf88b9bc8c4a704c175659e689d20e5df5934a8e0c`
+Source SHA256: `47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e`
 
 ---
 
 ## Collaborative workflow event oracles (DL-090, DL-091, 2026-11-04)
 
-This is a **newly authored owner contract under DL-090** (DL-091 for `collaboration.failed`). It names the oracles of the 18 collaborative workflow families: `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.failed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`. Their contracts are CW-100 to CW-118, CV-460 to CV-478 and SP-460 to SP-478. Nothing here admits a family.
+This is a **newly authored owner contract under DL-090** (DL-091 for `collaboration.failed`). It names the oracles of the 18 collaborative workflow families: `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.failed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`. Their contracts are CWR-105 to CWR-123, CV-460 to CV-478 and SP-460 to SP-478. Nothing here admits a family.
 
 ### ATS-230 - Shared static and native oracles of the collaborative workflow families
 
 **Static oracles.** They run now and must pass:
-- The fixtures `Plans/collaboration_event_contract_fixtures.json`: 74 positive and 187 negative payloads with their first failing layer, 36 valid EventRecords (each family in both scopes) and 100 envelope join negatives, 54 identity vectors (each family in both scopes and under a new recovery epoch), 15 transition sequences with 178 steps and their expected results and final state, 11 valid and 15 invalid projection and checkpoint values, and 23 native obligations, all `NOT_RUN`.
-- The checker `python3 scripts/pm_collaboration_events.py` and its `--self-test`. The checker validates the payload schema against Collaborative Workflows' closed sets, the projection schema and its binding record against the SP-278 durable token, the admission ledger `Plans/collaboration_event_admission.json` and every prepared registry row against the registry schema and its SHA-256, each family's owner units, and every fixture expectation, running the transition sequences through its own reducer of SP-460 to SP-478. It fails when one of the 18 is in the event family registry while its ledger row is `prepared_not_admitted`, or when an admitted row differs from its prepared row. It reports the missing `RP-CHAT-THREAD-LIFETIME@1.0.0` as an admission blocker. The self-test plants one defect per scenario and requires the checker to find it.
+- The fixtures `Plans/collaboration_event_contract_fixtures.json`: 127 positive and 193 negative payloads with their first failing layer, plus 19,322 schema negatives and 276 valid schema counterparts, 36 valid EventRecords (each family in both scopes) and 100 envelope join negatives, 54 identity vectors (each family in both scopes and under a new recovery epoch), 15 transition sequences with 115 accepted/retry steps plus 117 independently captured refusal pre-states and their expected results and final state, 11 valid and 15 invalid projection and checkpoint values, and 23 native obligations, all `NOT_RUN`.
+- The checker `python3 scripts/pm_collaboration_events.py` and its `--self-test`. The checker validates the payload schema against Collaborative Workflows' closed sets, the projection schema and its binding record against the SP-278 durable token, the admission ledger `Plans/collaboration_event_admission.json` and every prepared registry row against the registry schema and its SHA-256, each family's owner units, and every fixture expectation, running the transition sequences through its own reducer of SP-460 to SP-478. It fails when one of the 18 is in the event family registry while its ledger row is `prepared_not_admitted`, or when an admitted row differs from its prepared row. It reports a missing or mismatched `RP-CHAT-THREAD-LIFETIME@1.0.0` as an admission blocker; the landed Storage registry supplies the current object. The self-test plants one defect per scenario and requires the checker to find it.
+- Whole-lane check 11 is `python3 scripts/pm_collaboration_events.py --guard-removal`: isolated in-memory decision, shape-invariant and integrity mutants; each row lists flipping negatives and the unchanged rejection manifest. Named duplicate assertions are removed as a group, never weakened in the installed checker. All oracles stay in this script; no test module is added.
 - A pass shows static contract consistency only. It proves no producer, append path, projector, reader, durability, deletion, readiness or seal.
 
 **Sequences.** Each sequence exercises Storage's append admission and the family transitions. A sibling appears in a sequence only as a transition partner, never as evidence for another family (DL-039). SP-460's activation gate, under which a kind appends nothing until every family it needs is admitted, is outside the sequences; `family_not_admitted_quarantined` covers the quarantine of a family that is not admitted.
@@ -31,7 +32,7 @@ This is a **newly authored owner contract under DL-090** (DL-091 for `collaborat
 | `COLLAB-RESTART-01` | A crash after an owner commit and before its event's first receipt | Restart finds the committed record's prepared event, resolves or retries only that original identity, and never mints a new one; an in-flight attempt gets exactly one terminal outcome |
 | `COLLAB-PAUSE-01` | Pause and resume of a running run, and a quota reset while paused | paused appends when the safe boundary is reached; resumed only on cmd.collaboration.resume; a quota reset or scheduled window never resumes it |
 | `COLLAB-CANCEL-01` | Cancel of a run with open attempts and a late participant result | Every open attempt closes canceled before collaboration.cancelled; the late result appends nothing and changes no card |
-| `COLLAB-COMPLETE-01` | A run whose last provider turn finished while a required slot is unresolved | No collaboration.completed until the required slot completes or is waived and the kind's output exists |
+| `COLLAB-COMPLETE-01` | A run whose last provider turn finished while a required slot is unresolved | Predicate-driven completion uses original-definition requiredness and settled outputs; explicit Chat Room End keeps CWR-031's exception without an invented waiver action |
 | `COLLAB-FAIL-01` | A run settled failed by its owner, and a coordinator failure | collaboration.failed with the section 11 reason for the run; a coordinator failure appends no run event and leaves the run in attention |
 | `COLLAB-ATTEMPT-01` | Two slots on the same model, a retry and a replacement | Distinct attempt IDs and started events; the retry keeps the assignment revision, the replacement raises it; each attempt gets one outcome |
 | `COLLAB-MESSAGE-01` | A streamed helper message that completes, one that is cancelled, and a replayed completion | One message_added for the written message with the next sequence; nothing for the cancelled one and no gap; the replay writes nothing |
@@ -49,6 +50,8 @@ This is a **newly authored owner contract under DL-090** (DL-091 for `collaborat
 | `COLLAB-DELETE-01` | Deletion of the chat a run belongs to, with and without a hold | Content-free tombstone at once; unheld active copies purged within 24 hours and deleted backup bytes within 30 days; a hold delays physical purge but never restores visibility; projection rows of that chat's runs are removed |
 | `COLLAB-APP-01` | An application-scope run before the owner adopts the app source graph | No application payload is appended (requires_owner_adoption); the Project path is unaffected |
 
+Round-two static obligations include coherent source contradictions through the full prepared-event path for all eighteen families; Start/Resume running/waiting/blocked counterparts; nested application contexts; definition roster and per-slot requiredness; original proposal/vote attempts and constraints; original Plan-create output; Review vote targets/counts; and exact remaining owner-control fields. Each of the four application wrappers has complete MessagePack boundary positives at 16,384 bytes, inline refusal at 16,385 and a valid SP-337 reference counterpart, plus missing/forged pack negatives. Number vectors include safe-integer boundaries, large decimal/exponent equivalence, negative zero, leading zeros and lossy-decimal refusal through identity and digest paths. Historical and retention controls test exact types, including string booleans/numbers, null, arrays and objects. Guard removal is sequential, one guard or named duplicate set at a time, with a 6 GB available-memory floor. Every row records its flipping negatives and the unchanged refusals; neither an isolated helper substitution nor a retained earlier proof replaces a fresh whole-lane run. All native obligations remain NOT_RUN.
+
 ```yaml
 plan_unit_id: ATS-230
 unit_type: verification_contract
@@ -62,10 +65,14 @@ canonical_text: >-
   with its prepared registry rows. The checker fails when a prepared family is in the registry or an admitted
   row differs from its prepared row, and reports the missing retention object as an admission blocker. Native
   obligations COLLAB-START-01 to COLLAB-APP-01 stay NOT_RUN. A pass proves static consistency only.
+  Whole-lane guard-removal proofs cover decision, shape and integrity gates with single-defect negatives
+  and named duplicates, including all family/scope replay-only writer refusals, retained compatibility
+  history, eager reference closure, physical bindings, source custody, checkpoint semantics, payload-store
+  boundaries, true-end lexical/type guards, numeric equivalents and owner-bound completion requirements.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [DL-090, CW-100, CV-460, SP-460]
+depends_on: [DL-090, CWR-105, CV-460, SP-460]
 unblocks: []
 acceptance_criteria:
   - "The checker passes with every family's positive and negative cases, joins, identity vectors and sequences."
@@ -110,7 +117,11 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/Collaborative_Workflows.md#CW-100
+ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Contracts_V0.md#CV-460, ContractName:Plans/Collaborative_Workflows.md#CWR-105
+
+**Round-1 full-lane oracles (B1–B8).** `scripts/pm_collaboration_events.py` owns every new oracle; no test file is added. Each family and scope exercises typed durable source custody, inline/reference payload parity and size boundaries, true-end identifiers, sibling/unknown family refusal, replay-only writer refusal and retained historical reads after live changes, with withdrawn/forged refusals. Checkpoint contexts supply independent source-token/frame/event joins. Completion tests authoritative requiredness and CWR-031 End. All schema references are resolved, including unused optional paths. `--guard-removal` runs isolated in-memory checker/schema mutants and publishes the check-11 table: guard, own negatives that become accepted, and every other negative that remains rejected for its original reason. An unexercised or masked guard fails the proof. Failure CLI expectations require nonzero, and all native obligations remain NOT_RUN.
+
+**Additional mandatory round-one probes.** Canonical numeric vectors cover `1`, `1.0`, `1e0`, `-0`, `-0.0`, illegal `01`, fractions, large exact integers and nonfinite forms; all 36 family/scope envelopes keep the same identity and digest under equivalent admitted numeric forms. Wrong-type vectors cover string booleans/numbers, nulls, arrays and nested objects. Retained replay-only compatibility originals are accepted after live changes through the historical reader, while current append/retry still refuses them. Full stored holder/projection/checkpoint encoded sizes are measured without treating the EventRecord 16 KiB inline boundary as a redb value cap.
 
 ### ATS-231 - Oracles of collaboration.created
 
@@ -143,7 +154,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-461, CV-461, CW-101]
+depends_on: [ATS-230, SP-461, CV-461, CWR-106]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.created exists in the fixtures and passes the checker."
@@ -219,7 +230,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-462, CV-462, CW-102]
+depends_on: [ATS-230, SP-462, CV-462, CWR-107]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.started exists in the fixtures and passes the checker."
@@ -294,7 +305,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-463, CV-463, CW-103]
+depends_on: [ATS-230, SP-463, CV-463, CWR-108]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.paused exists in the fixtures and passes the checker."
@@ -369,7 +380,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-464, CV-464, CW-104]
+depends_on: [ATS-230, SP-464, CV-464, CWR-109]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.resumed exists in the fixtures and passes the checker."
@@ -444,7 +455,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-465, CV-465, CW-105]
+depends_on: [ATS-230, SP-465, CV-465, CWR-110]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.cancelled exists in the fixtures and passes the checker."
@@ -520,7 +531,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-466, CV-466, CW-106]
+depends_on: [ATS-230, SP-466, CV-466, CWR-111]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.completed exists in the fixtures and passes the checker."
@@ -595,7 +606,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-467, CV-467, CW-107]
+depends_on: [ATS-230, SP-467, CV-467, CWR-112]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.failed exists in the fixtures and passes the checker."
@@ -671,7 +682,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-468, CV-468, CW-108]
+depends_on: [ATS-230, SP-468, CV-468, CWR-113]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.participant_started exists in the fixtures and passes the checker."
@@ -747,7 +758,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-469, CV-469, CW-109]
+depends_on: [ATS-230, SP-469, CV-469, CWR-114]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.participant_completed exists in the fixtures and passes the checker."
@@ -823,7 +834,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-470, CV-470, CW-110]
+depends_on: [ATS-230, SP-470, CV-470, CWR-115]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.message_added exists in the fixtures and passes the checker."
@@ -899,7 +910,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-471, CV-471, CW-111]
+depends_on: [ATS-230, SP-471, CV-471, CWR-116]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.artifact_added exists in the fixtures and passes the checker."
@@ -975,7 +986,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-472, CV-472, CW-112]
+depends_on: [ATS-230, SP-472, CV-472, CWR-117]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for collaboration.configuration_changed exists in the fixtures and passes the checker."
@@ -1050,7 +1061,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-473, CV-473, CW-113]
+depends_on: [ATS-230, SP-473, CV-473, CWR-118]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for brainstorm.proposal_added exists in the fixtures and passes the checker."
@@ -1125,7 +1136,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-474, CV-474, CW-114]
+depends_on: [ATS-230, SP-474, CV-474, CWR-119]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for brainstorm.vote_added exists in the fixtures and passes the checker."
@@ -1200,7 +1211,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-475, CV-475, CW-115]
+depends_on: [ATS-230, SP-475, CV-475, CWR-120]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for brainstorm.plan_synthesized exists in the fixtures and passes the checker."
@@ -1275,7 +1286,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-476, CV-476, CW-116]
+depends_on: [ATS-230, SP-476, CV-476, CWR-121]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for review.finding_added exists in the fixtures and passes the checker."
@@ -1350,7 +1361,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-477, CV-477, CW-117]
+depends_on: [ATS-230, SP-477, CV-477, CWR-122]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for review.finding_dispositioned exists in the fixtures and passes the checker."
@@ -1426,7 +1437,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
-depends_on: [ATS-230, SP-478, CV-478, CW-118]
+depends_on: [ATS-230, SP-478, CV-478, CWR-123]
 unblocks: []
 acceptance_criteria:
   - "Every case listed for review.artifact_finalized exists in the fixtures and passes the checker."
