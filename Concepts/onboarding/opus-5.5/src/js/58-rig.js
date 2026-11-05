@@ -546,15 +546,20 @@
         this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
-      } else if (pr.state === 'out' && pr.restOff) {
+      } else if (pr.state === 'out') {
         /* a prop that leaves keeps the way it was moved off the box and its neighbours at rest: dropping it at once made the
            prop jump up to 8 px in the frame it began to leave, into NieR's box at 740 (FO-34 kind) */
-        const o = pr.restOff; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
+        const o = pr.restOff || { dx: 0, dy: 0, g: 1 }; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
         /* ...and makes way, as a prop at rest does, for a speech box that cannot move: a bubble that found nowhere clear
            and claimed a place over it (Retro's 740 banner on Name > Safe: between Pip's face and the leaving sign there
            was no room, so the bubble claimed the sign's place and the sign faded out under it for 8-13 frames), or NieR's
            box. The move is kept for the rest of its way out, which holdUnder then keeps below the box */
-        if (this.keepOff && pr.op > .05) { const g = clear([this.keepOff]); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
+        const obs = [];
+        if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        const pk = this.pipKeep;
+        if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        // Keep each correction through the exit; releasing it on the next frame snaps the sign back into Pip.
+        if (obs.length) { const g = clear(obs); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
       }
       return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
     }
@@ -632,7 +637,7 @@
       return Math.max(Math.abs(x), R * Math.exp(-sg * t1) * Math.abs(Math.sin(wd * t1 + phi)));
     }
     /* how hard an idle swing may push Pip (dir: which way): the largest kick to the swing's speed whose swing, with the one
-       already under way, keeps the head's box off every prop that is not leaving, by more than fit()'s margin: where it
+       already under way, keeps the head's box off every prop still painted, by more than fit()'s margin: where it
        is drawn, where it will hang at rest (a prop still being lowered in counts at its place) and as far as its own
        swing carries it. Measured where a prop was drawn at the kick, Glass Light's forge on Online details at 860 was not
        counted while it was lowered in after the screen changed, or was counted swung away, and swung back under the head
@@ -641,7 +646,7 @@
       const ps = this.ps, F = this.fam, near = [];
       if (!ps || !this.pipKeep) return .5;
       this.props.forEach((p) => {
-        if (p.state === 'out' || !p.box) return;
+        if (!p.box || (p.state === 'out' && !(+p.el.getAttribute('opacity') > .05))) return;
         const b = p.box, tg = this.propTarget(p), len = Math.max(0, p.len), L = Math.max(0, tg.len);
         const dx = tg.ax - (p.ax + Math.sin(p.a) * len), dy = tg.len - Math.cos(p.a) * len;
         const sw = Math.sin(this.swingAmp(p.a, p.av, F.pw * Math.sqrt(170 / Math.max(30, L)), F.pdamp)) * L, m = 5;

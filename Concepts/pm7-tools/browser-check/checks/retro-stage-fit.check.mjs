@@ -66,7 +66,7 @@ const SAMPLE = async () => {
 		}
 		worst.pip = Math.max(worst.pip, out(pip, c));
 		worst.headFoot = Math.max(worst.headFoot, head.b - foot);
-		const props = [...st.props.values()].filter((p) => p.state !== 'out' && p.op > .95);
+		const props = [...st.props.values()].filter((p) => p.state === 'out' ? +p.el.getAttribute('opacity') > .05 : p.op > .95 && +p.el.getAttribute('opacity') > .95);
 		// Pip in its resting pose this frame (the hand's slow sway allowed): not mid idle wiggle or swing, a nod or a hop.
 		// FO-50 is about a resting prop over the resting head; those moments of life are counted, not judged
 		const pr0 = st.ps, poseRest = Math.abs(pr0.tilt - pr0.tiltT) < .02 && Math.abs(pr0.th) < .02 && Math.abs(pr0.dy) < 1;
@@ -441,15 +441,23 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	if (!st) return { err: 'no stage' };
 	const PH = O55.pipStage.h;
 	const R = (e, label) => geometry(e, label);
-	const out = { n: 0, validPairs: 0, validFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
+	const out = { n: 0, validPairs: 0, validFrames: 0, leavingPairs: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
 	let rnd = null, restoreN = 0, prevV = null;
 	const t0 = performance.now();
-	let tPrev = t0;
+	let tPrev = t0, previousPose = null;
+	// Only the head and hand's drawn SVG geometry; no stage/background or prop motion.
+	const pose = (s) => [s.gHead, s.gCtl].flatMap((e) => {
+		geometry(e, 'Pip pose');
+		const m = e.getScreenCTM(), b = e.getBBox();
+		return [[b.x,b.y], [b.x+b.width,b.y], [b.x,b.y+b.height], [b.x+b.width,b.y+b.height]].flatMap(([x,y]) => {
+			const q = new DOMPoint(x,y).matrixTransform(m); return [q.x,q.y];
+		});
+	});
 	while (performance.now() - t0 < ms) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
-		/* (each frame's time, at most 50 ms: a stall is not time Pip was seen moving) */
+		/* (each frame's time, at most 50 ms: a stall is not time Pip drawn head or hand changed for at least 200 ms) */
 		const tNow = performance.now(), dtF = Math.min(50, tNow - tPrev); tPrev = tNow;
 		const s2 = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 		if (!s2 || !s2.ps) { out.geometryError = 'stage or physics disappeared'; break; }
@@ -468,10 +476,14 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		if (rnd && out.n >= restoreN) { Math.random = rnd; rnd = null; out.forced.fired = s2.idleNext > s2.t; }
 		const nominal = !s2.reduced && !O55.motion.lowResource && PH.part('sway-and-physics') && PH.part('idle-life');
 		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : O55.motion.lowResource ? 'low-resource' : 'a Pip part off'; }
-		const props = [...s2.props.values()].filter((p) => p.state !== 'out' && p.op > .95);
+		const props = [...s2.props.values()].filter((p) => p.state === 'out' ? +p.el.getAttribute('opacity') > .05 : p.op > .95 && +p.el.getAttribute('opacity') > .95);
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
-		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) { out.moving++; out.movingMs += dtF; }
+		try {
+			const v = pose(s2);
+			if (previousPose && v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) { out.moving++; out.movingMs += dtF; }
+			previousPose = v;
+		} catch(e) { out.geometryError = e.message; break; }
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
 		if (!props.length) continue;
 		try {
@@ -488,10 +500,10 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 				// Invoke the shared reader even for disjoint boxes; coverage is independent of intersection.
 				const area = overlap(s2.gHead, p.el);
 				if (!Number.isFinite(area) || area < 0) throw new Error('ink reader: invalid area');
-				out.validPairs++;
+				out.validPairs++; if (p.state === 'out') out.leavingPairs++;
 				if (x1 <= x0 || y1 <= y0) continue;
 				out.boxFrames++; out.worstBox = Math.max(out.worstBox, Math.min(x1 - x0, y1 - y0));
-				if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), propA: Math.round(p.a * 100) / 100 };
+				if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), state: p.state, opacity: +p.el.getAttribute('opacity'), propA: Math.round(p.a * 100) / 100 };
 			}
 		} catch (e) { out.geometryError = `${e.message} at frame ${out.n}`; break; }
 	}
@@ -540,7 +552,7 @@ async function awakeMotion(t, mode) {
 				   at any frame rate; 20 frames were 435 ms at the VM's 46 fps, more than a nod, and 171 ms at Windows' 117 fps.
 				   NieR's c-ready has one idle wiggle or nod in 14 s, by design (no swing, no hop): 13-16 frames on the VM, 45-56 on
 				   Windows, retro-c4. 200 ms is stricter than 20 frames were on every Windows run, and below one nod) */
-				await t.check(`${tag}: Pip was seen moving`, r.movingMs >= 200, why);
+				await t.check(`${tag}: Pip drawn head or hand changed for at least 200 ms`, r.movingMs >= 200, why);
 				const okInk = r.worst <= 4;
 				await t.check(`${tag}: no painted overlap of Pip's head and a prop`, okInk, `${r.worst} px² painted; ${why}`);
 				if (!okInk) await t.crop(`awake-${mode}-${look}-${scr}-${w}x${h}`, '#pm-o55-onboarding .o55-stage', `${tag}: painted overlap ${r.worst} px²`);
@@ -605,6 +617,45 @@ async function swingAtChange(t, mode) {
 	t.log(`swing at a screen change totals: ${JSON.stringify(n)}`);
 	await t.check(`${mode}: pinned idle swings swung`, n.swung > 0, JSON.stringify(n));
 	await t.viewport(1920, 1080);
+}
+
+// Settled Name -> Safe catches the still-painted sign throughout its exit.
+async function leavingHead(t, mode) {
+	await t.viewport(860,768);
+	const f = await frameFor(t,mode);
+	await t.emulate({reducedMotion:'no-preference'});
+	await probeFixture(t,f,mode);
+	for(let rep=0; rep<Number(t.args.reps || 3); rep++) {
+		await lookAndName(t,f,'retro-dark'); await f.waitForTimeout(3000);
+		await t.mark(`${mode} leaving sign rep ${rep}`);
+		const watch=f.evaluate(`(${MOTION.toString()})(2500,${JSON.stringify(INK_OVERLAP.toString())},${JSON.stringify(GEOMETRY.toString())},"")`);
+		await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-foot .o55-primary').last().click();
+		const r=await watch, why=JSON.stringify(r);
+		await t.check(`${mode} ${rep}: reached Safe`,await f.evaluate(()=>O55.S.sess.screen==='safe'),why);
+		await t.check(`${mode} ${rep}: geometry valid`,!r.err&&!r.geometryError,why,{hard:true});
+		await t.check(`${mode} ${rep}: visible leaving pairs measured`,r.leavingPairs>0,why,{hard:true});
+		await t.check(`${mode} ${rep}: normal motion`,r.off===0,why);
+		await t.check(`${mode} ${rep}: leaving sign clears drawn head`,r.worst<=4,why);
+		t.log(why);
+	}
+}
+// Deliberately freeze only Pip's drawing while physics, props and background keep running.
+async function frozenDrawing(t,mode) {
+	await t.viewport(860,768); const f=await frameFor(t,mode);
+	await t.emulate({reducedMotion:'no-preference'}); await stageLook(t,f,'nier-light');
+	await f.evaluate(()=>O55.ui.open({fresh:true,screen:'c-ready'})); await f.waitForTimeout(3500);
+	const r=await f.evaluate(async ({m,i,g})=>{
+		const s=O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+		const nodes=[s.gHead,s.gCtl].flatMap(e=>[e,...e.querySelectorAll('*')]);
+		const saved=nodes.map(e=>[e,e.setAttribute]);
+		for(const [e] of saved) e.setAttribute=()=>{};
+		try { return await (0,eval)(`(${m})`)(14000,i,g,'',{at:60,r:.1}); }
+		finally { for(const [e,fn] of saved) e.setAttribute=fn; }
+	},{m:MOTION.toString(),i:INK_OVERLAP.toString(),g:GEOMETRY.toString()});
+	await t.check(`${mode}: frozen drawing retains valid visible geometry`,!r.err&&!r.geometryError&&r.validPairs>0,JSON.stringify(r));
+	await t.check(`${mode}: frozen drawing retains nominal physics`,r.off===0&&r.forced?.fired,JSON.stringify(r));
+	await t.check(`${mode}: frozen drawing rejected by 200 ms drawn-pose assertion`,r.movingMs<200,JSON.stringify(r));
+	t.log(JSON.stringify(r));
 }
 
 // --set film=1: for a recording (which refuses viewport changes), the page in one frame of the window, resized by its
@@ -680,6 +731,10 @@ async function filmRelayout(t, mode) {
 }
 
 export const tests = {
+	'leaving sign head normal': on('normal',leavingHead),
+	'leaving sign head sandbox': on('sandbox',leavingHead),
+	'frozen drawing negative normal': on('normal',frozenDrawing),
+	'frozen drawing negative sandbox': on('sandbox',frozenDrawing),
 	'ink overlap probe normal': on('normal', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
 	'ink overlap probe sandbox': on('sandbox', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
 	'retro stage fit normal': (t) => (t.args.film === 'relayout' ? on('normal', filmRelayout)(t) : t.args.film ? film(t) : on('normal', fit)(t)),
