@@ -6,7 +6,7 @@ const REASONS=['permission','offline','unsupported','verify','expired','signin',
 const HINTS=['works','offline','unsupported','permission','verify'];
 const list=(v,all)=>v?String(v).split(','):all;
 
-const scenario=code=>code==='installed'?'fresh':code==='expired'?'claudeExpired':code==='signinOffline'?'signedOut+aiOffline':code==='signin'?'signedOut':'cliMissing';
+const scenario=code=>code==='installed'?'returning':code==='expired'?'claudeExpired':code==='signinOffline'?'signedOut+aiOffline':code==='signin'?'signedOut':'cliMissing';
 async function freshRoute(t,f,code){
  await f.evaluate(fixture=>O55.studio.onboarding.screen('ai-all',fixture),scenario(code));
  await f.waitForFunction(()=>O55.S.sess&&O55.S.sess.screen==='ai-all');await t.settle();
@@ -30,6 +30,7 @@ async function fail(t,f,code){
   await f.waitForFunction(id=>O55.S.sess.ai.accounts[id]?.state==='signinFailed',id);await t.settle();return;
  }
  if(code==='connection'){
+  if(await f.locator('[data-o55-do="server"][data-arg="opencode-runtime"]').count()===0)await f.locator('[data-o55-do="all"]').click();
   await f.locator('[data-o55-do="server"][data-arg="opencode-runtime"]').click();
   await f.locator('[data-o55-do="ocMode"][data-arg="attached"]').click();
   await f.locator('#o55f-ocaddr').fill('http://192.168.1.99:4096');
@@ -102,7 +103,11 @@ export default async function(t){
        await t.check(`${route} ${code} ${look} ${w}x${h} Try again keyboard focus`,await btn.evaluate(e=>e.matches(':focus-visible')));}
       await scroller.evaluate((s,n)=>s.scrollTop=n,pos);await t.settle();
       await t.check(`${look} ${code} ${w} ${state} requested scroll restored`,Math.abs(await scroller.evaluate(s=>s.scrollTop)-pos)<=1);
-      if(state==='focus')await t.visible(row.locator('.o55-row > button:not(.o55-tipq)'), 'focused recovery action remains visible');
+      if(state==='focus'){
+       const action=row.locator('.o55-row > button:not(.o55-tipq)');
+       await t.visible(action, 'focused recovery action remains visible');
+       await t.check('restored action keeps visible keyboard focus',await action.evaluate(e=>{const s=getComputedStyle(e);return e.matches(':focus-visible')&&parseFloat(s.outlineWidth)>0&&s.outlineStyle!=='none';}));
+      }
       const boxes=await row.evaluate(e=>{
        const parts=[...e.querySelector('.o55-row').children];
        const rects=parts.map(n=>{const r=document.createRange();r.selectNodeContents(n);return {name:n.className,rects:[...r.getClientRects()].map(b=>({x:b.x,y:b.y,r:b.right,b:b.bottom}))};});
@@ -117,7 +122,7 @@ export default async function(t){
       measured++;
       const label=`${route} ${code} ${look} ${w}x${h} scroll ${before}/${range.max} ${state}`;
       t.log(JSON.stringify({label,count:p.count,minimum:p.minimum,brightest:p.brightest}));
-      await t.check(label+' retains scroll',before===after,`${before} -> ${after}`);
+      await t.check(label+' retains requested scroll',Math.abs(before-pos)<=1&&Math.abs(after-pos)<=1,`${pos}: ${before} -> ${after}`);
       await t.check(label+' failure status ink >=4.5',p.count>=3&&p.minimum>=4.5,`${p.minimum.toFixed(3)}:1 (${p.count} stems)`);
       if(p.minimum<lowest.contrast)lowest={contrast:p.minimum,label};
       if(route==='copied'&&code==='permission'&&look==='glass-dark'&&w===1024&&h===900&&state==='rest'&&pos===range.lo)
