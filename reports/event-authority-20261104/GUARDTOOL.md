@@ -390,3 +390,61 @@ Preflight: **110 GB disk available / 18 GiB RAM available**. Heavy checks ran on
 Scope is tool scripts, trap JSON, guide, generated Python census and compact reports only. No owner Markdown, registry, Decision Log, Spec Lock, auto-decisions, governance evidence, generated plan shards/index or .gitignore changes. No ids, subagents, pm-mail or main push.
 
 **Evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json`, SHA-256 `ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b`. The manifest fingerprints all 67 retained raw results, exact scripts, original/adapted outputs, adaptation diff, gate injections, source fingerprints, resource/command receipts, index-inheritance proof and scratch-cleanup receipt. Reproduction restores the four paths in `fix5/input-manifest.json` from `cfafa4f4ed471081bbf11f547903e94f95ea9a35` to its named scratch directory, then runs the copied cycle-5 scripts serially; the original scripts retain their historical expectations, while the explicit scratch adaptation verifies the corrected outcomes. Report, guide, compact self-test, census, checks and self-grade are copied to the requested drafts/GUARDTOOL folder.
+
+
+## Review round 6: findings and responses
+
+**C6-B1 — fixed.** Complete-path fix: `ff7fb58db46861b403abce778960b91301d2a83c`; zero-read opaque-expression follow-up: `ec841e41cf272c43c829d6a8996a101b735dec4b`. Reviewed base: `830dd79b2dbfe85630cae1861e3f7e39c50b75a4`. The current rule supersedes the round-5 claim about literal refusals: **a constant refusal always has zero own input atoms**, regardless of its control context. Overall capability remains **PARTIAL**; no family grade or admission changes, and no IDs used.
+
+| Finding / rule | Location, cause and fix | Verification |
+|---|---|---|
+| **C6-B1** | `scripts/pm_guard_isolation.py:1061, :1125`. Lexical ancestry missed the early successful return, then credited the constant suffix. `_preceding_exits` now scans preceding statements in every enclosing block. One simple successful-return branch supplies its negated fallthrough condition and separate input-atom cuts. | All 48 exact review cell/mode variants plus the minimal source's two attempts. Every available x cut has `[true,true,false]`; independent y cuts have `[true,false,true]`. Zero broad cuts, zero broad proved rows. |
+| **Zero-own-atom invariant** | `scripts/pm_guard_isolation.py:1209, :1234, :1259`. Constant assertions, raises, falsy returns, fixed accumulator writes and helper calls contribute zero atoms. Candidate credit requires a transparent test reading a checked parameter. Literal terminal success returns have count 0 and no cut. Zero-atom refusals remain unclassified; no fixed-refusal deletion cut is emitted. | 42 fixed/constant-only specimens refuse registration. Opaque no-argument calls in returned, asserted and helper predicates also refuse; lack of an explicit input read never certifies an unknown expression as constant. |
+| **Complete path or fail closed** | `scripts/pm_guard_isolation.py:1061`. Simple preceding rejecting exits have exact fallthrough tests, recorded as `retained_exit`; their original sites own those predicates and a suffix cut keeps them unchanged. Unknown exits, unconditional preceding exits and unsupported control contexts poison the suffix before registration. | Generated early raise, elif, continue, break, except-return and two-exit contexts; ten additional loop/while/try/finally/with/match/nested/opaque/unconditional suffix probes. Exiting assertions and declared predicate/refusal helpers are included in path discovery. |
+| **Generated regression and gates** | `scripts/pm_guard_isolation_traps.py:1138, :1172, :1231, :1347`. The cross-product now includes seven preceding-exit contexts for every refusal form and controlling form. Every credited vector is checked before the suite status. | Missing exit coverage fails before traps. An injected constant assertion cut fails with `[true,true,true]`, even though another obligation makes the suite FAIL. The prior census/kind/context gates and shared-entry poison checks still pass. |
+
+### Generated matrix at the final implementation commit
+
+**15 refusal forms × 21 contexts × 3 controlling forms = 945 cells**, covering all six refusal kinds. The three forms remain disjunction, negated conjunction and structured inequality. All original sources and both isolated defects execute; each supported target has two separate peer-preserving cuts. The earlier refusing exits remain in place. Credited target rows do not imply a whole-suite PASS when other source sites remain unclassified.
+
+| Context | Generated | Credited with per-atom cuts | Verified cuts | Unclassified |
+|---|---:|---:|---:|---:|
+| Original 14 lexical contexts | 630 | 24 | 48 | 606 |
+| Early successful return | 45 | 24 | 48 | 21 |
+| Early raise | 45 | 24 | 48 | 21 |
+| Elif chain | 45 | 0 | 0 | 45 |
+| Early continue | 45 | 0 | 0 | 45 |
+| Early break | 45 | 0 | 0 | 45 |
+| Return in except | 45 | 0 | 0 | 45 |
+| Two preceding exits | 45 | 0 | 0 | 45 |
+| **Total** | **945** | **72** | **144** | **873** |
+
+**201/201 traps caught:** all **148 old records are unchanged**, plus 48 exact C6-B1 cell/mode variants, one minimal-source trap with both attempts, one 42-cell zero-atom regression, one unknown-path/opaque-expression regression, and two exit-coverage/constant-cut gates. Single-negative attempts can prove the x atom while the held-out y still rejects. Truthful aggregate attempts cannot prove both field defects under one cut: only x flips and the aggregate row is unproved. All 12 fixed-refusal forms retain independent narrow source witnesses. The generated census remains **82 classes × 5 positions = 410 cells; 47 bounded supported / 363 fail closed** on CPython 3.14.4; its committed JSON matches runtime generation.
+
+### Sol cycle-5 and cycle-6 scratch reruns
+
+Both campaigns ran serially against fresh copies of the final implementation's four pinned inputs (**430,307 bytes**), under the reviewers' 1 GiB address-space limit and 1,536 MiB sampled RSS gate. Original producer scripts are retained byte-for-byte in `fix6/cycle5-original/` and `fix6/cycle6-original/`. Scratch-only adaptations and complete diffs are retained beside their results. They update revision/path pins, historical false-PASS assertions, candidate selection after atom decomposition, matrix totals and original-24-cell slice selection. They preserve checker sources, callbacks, controls, isolated defects and independent source cuts. No source outcome is manufactured.
+
+| Campaign / check | Exit / result |
+|---|---|
+| Cycle 5: exact cycle-4 counterexamples | **0**; 10 sources / 20 attempts FAIL/unproved; registrations refused |
+| Cycle 5: cycle-4 adversarial set | **0**; 29 complete; 11 valid positive-control PASS, 18 FAIL/unproved |
+| Cycle 5: census and CLI injections | **0**; 82 classes / 410 cells match; all three injected entries exit 1/FAIL before traps |
+| Cycle 5: all supported census cells | **0**; 47 complete, zero false PASS |
+| Cycle 5: four exact C5-B1 sources | **0**; eight single/aggregate attempts FAIL/unproved, all available x cuts preserve y |
+| Cycle 5 evidence auditor | **0**; **435 assertions PASS** |
+| Cycle 6: C5-B1 recheck | **0**; four exact sources / eight attempts remain FAIL/unproved |
+| Cycle 6: cross-product and shared-route poison | **0**; 945 cells, 144 verified cuts; all 15 forms become unregistrable when shared composition is poisoned |
+| Cycle 6: original 24 cells × seven fresh variants | **0**; 168 cases, zero broad cuts; 24 valid decomposed PASS controls, 144 FAIL/unproved |
+| Cycle 6: actual CLI coverage/semantic injections | **0**; all four injected entries exit 1/FAIL as required |
+| Cycle 6 evidence auditor | **0**; **5,145 assertions PASS** |
+| Cycle 6: early-success-return probe and blocker auditor | **0 / 0**; all 48 attempts have zero broad cuts; **515 assertions PASS**, including both minimal reports and 12 independent witness forms |
+| Independent final audit | **0**; **4,010 assertions PASS**; exact old corpus preservation, exact review sources, full Cartesian reconstruction, each cut vector and protected-scope invariance |
+
+### Scope, resources and remaining limits
+
+Python syntax and the example adapter pass. The 1 MiB RSS probe refuses as expected. Shards pass without regeneration. Plan-index validation exits **1**, parsed top-level `status=fail`, with **28 findings exactly matching fix5**; all 28 named/checker/index inputs match the reviewed base. `fix6/index-inheritance.json` records that comparison. No owner Markdown, registry, Decision Log, Spec Lock, governance evidence, generated shards/index or gitignore changed. No standard governance reseal or complete DG6B adoption is claimed.
+
+Preflight: **106 GB disk / 19 GiB available RAM**. Heavy checks ran one at a time. Review scripts kept fresh RAM samples, the six-GiB floor and their outer address-space limit. Self-test low-memory messages are synthetic resource regressions. A small subprocess launcher avoids inheriting the harness's unrelated RSS high-water mark; the RSS gate stays enabled. Unknown flow, dataflow, non-scalar expressions, helper/source closure and checked-input bindings retain the documented adapter/reviewer boundary.
+
+**Evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json`, SHA-256 `e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e`. The manifest fingerprints 118 retained raw scripts, results, adaptations, command/resource receipts, review/source fingerprints and cleanup records. Reproduction restores the four paths in `fix6/input-manifest.json` from `ec841e41cf272c43c829d6a8996a101b735dec4b` to its named scratch tree, then runs the copied scripts serially. Their original sources remain unchanged in the `*-original/` directories. Runtime scratch was hash-verified and removed. Report, self-grade, checks, compact self-test and census are copied to the requested `drafts/GUARDTOOL/` directory. The branch alone is pushed; main is never pushed.

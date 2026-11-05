@@ -12,12 +12,12 @@
       "grade": "PARTIAL"
     },
     {
-      "basis": "Every refusal uses one controller/own-test composition function and one target-based transformer. Constant refusals never replace controlling atoms. All 48 credited cuts in the generated 630-cell matrix retain the held-out peer; 606 unsupported compositions remain unclassified.",
+      "basis": "Constants always have zero own atoms. Complete-path discovery includes preceding exits; 144 peer-preserving cuts in 72 of 945 cells; 873 cells unclassified. All 48 C6-B1 review attempts have zero broad credited cuts.",
       "criterion": "predicate_cuts",
       "grade": "PARTIAL"
     },
     {
-      "basis": "82 live AST classes x five positions: 47 bounded support cells, 363 fail closed. Shared composition covers all six refusal kinds. Missing-kind/context coverage fails before traps; a broad assertion-cut injection fails the generated regression. Native/opaque/dataflow/nested control still requires explicit seams.",
+      "basis": "82 live AST classes x five positions: 47 bounded support / 363 fail closed. One shared composition function covers every refusal; unknown prefix paths and opaque zero-read expressions cannot register. Seven generated preceding-exit contexts are coverage-gated.",
       "criterion": "code_sites",
       "grade": "PARTIAL"
     },
@@ -42,7 +42,7 @@
       "grade": "PASS"
     },
     {
-      "basis": "148/148: all 141 unchanged existing traps, four exact C5-B1 sources with single/aggregate and independent witnesses, one generated 630-cell matrix and two new coverage gates. Sol\u2019s cycle-5 audit passes 435 assertions; final fix audit passes 1551.",
+      "basis": "201/201: all 148 old records unchanged, 48 exact C6-B1 cell/mode traps, minimal single/aggregate witness, zero-atom/unknown-path regressions and two semantic/coverage gates. Sol cycle-5 435, cycle-6 5145 + 515, independent final audit 4010 assertions PASS.",
       "criterion": "corpus",
       "grade": "PASS"
     },
@@ -58,8 +58,8 @@
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json",
-    "sha256": "ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
+    "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
   },
   "families": [],
   "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
@@ -68,10 +68,11 @@
     "Only allow-listed single-predicate cuts receive automatic credit. Unsupported grammar remains unclassified/unproved.",
     "No general chain normalizer or regex/format clause splitter. Pattern-bearing lanes cannot claim complete adoption from this tool alone.",
     "Callback invocation, root-to-input occurrences, dynamic subjects, helper/source closure, refusal translation and alias/duplicate declarations require independent reviewer judgment.",
-    "Round-3 real exercise was bounded retained history: 21 selected guards, all three suites FAIL. It was not rerun at round-5 head; no current family grade or admission.",
+    "Round-3 real exercise was bounded retained history: 21 selected guards, all three suites FAIL. It was not rerun at round-6 head; no current family grade or admission.",
     "28 inherited plan-index findings under current origin/main remain; all named inputs match the pinned base. Shards pass. No owner/derived/governance changes.",
     "Memory is sampled at fresh callback boundaries and resume, not hard allocation/child-process containment.",
-    "Two-deep/else paths, shared multi-statement controlling bodies, and controllers combined with nonconstant own tests remain unclassified; the cross-product exercises these boundaries without claiming support."
+    "Two-deep/else paths, shared multi-statement controlling bodies, and controllers combined with nonconstant own tests remain unclassified; the cross-product exercises these boundaries without claiming support.",
+    "Exact simple preceding exits are inventoried. Complex exits and multiple changing controllers require an atomic adapter; rejecting-prefix tests stay fixed and owned by their original sites."
   ],
   "review_round_1": {
     "after": {
@@ -111,7 +112,7 @@
       "total": 86
     }
   },
-  "self_assessment": "PARTIAL overall. All 148 traps pass, including a 630-cell refusal/control cross-product. Sol\u2019s cycle-5 sets complete with zero false PASS under documented scratch-only expectation updates. Unsupported compositions remain unclassified; no complete lane adoption or family grade.",
+  "self_assessment": "PARTIAL overall. 201/201 traps and all 945 generated cells pass the bounded invariant; zero broad cuts in the 48 exact C6-B1 attempts. Unsupported paths stay unclassified. No complete lane adoption or family grade.",
   "subject": "shared check-11 guard-isolation tool",
   "review_round_3": {
     "base_sha": "16bd9ccb0c52e557ef58b2b78b937308f1f28a03",
@@ -292,6 +293,77 @@
     },
     "before": "PARTIAL",
     "after": "PARTIAL",
+    "families": []
+  },
+  "review_round_6": {
+    "base_sha": "830dd79b2dbfe85630cae1861e3f7e39c50b75a4",
+    "core_fix_commit": "ff7fb58db46861b403abce778960b91301d2a83c",
+    "implementation_commit": "ec841e41cf272c43c829d6a8996a101b735dec4b",
+    "C6_B1": "fixed; constants have zero own atoms, exact preceding-exit conditions or unclassified",
+    "traps": 201,
+    "old_traps": 148,
+    "new_traps": 53,
+    "caught": 201,
+    "cross_product": {
+      "control_contexts": 21,
+      "controlling_forms": 3,
+      "credited_cuts": 144,
+      "credited_with_per_atom_cuts": 72,
+      "generated": 945,
+      "lexical_contexts": 14,
+      "preceding_exit_contexts": [
+        "early-success-return",
+        "early-raise",
+        "elif-chain",
+        "early-continue",
+        "early-break",
+        "except-return",
+        "two-preceding-exits"
+      ],
+      "refusal_forms": 15,
+      "refusal_kinds": 6,
+      "status": "PASS",
+      "unclassified": 873
+    },
+    "census": {
+      "status": "PASS",
+      "node_classes": 82,
+      "cells": 410,
+      "totals": {
+        "fail_closed": 363,
+        "supported": 47
+      },
+      "errors": []
+    },
+    "sol_cycle5": {
+      "status": "PASS",
+      "assertions": 435
+    },
+    "sol_cycle6": {
+      "status": "PASS",
+      "assertions": 5145,
+      "blocker_assertions": 515,
+      "early_success_attempts": 48,
+      "broad_cuts": 0,
+      "broad_proved_rows": 0
+    },
+    "final_audit_assertions": 4010,
+    "plan_index": {
+      "exit_code": 1,
+      "top_level_status": "fail",
+      "inherited_failures": 28,
+      "exact_match_prior_fix5": true
+    },
+    "shards_exit": 0,
+    "protected_scope_unchanged": true,
+    "dg6b_rerun": false,
+    "ids_used": [],
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
+      "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
+    },
+    "before": "PARTIAL with C6-B1 blocking",
+    "after": "PARTIAL; C6-B1 fixed in bounded grammar",
     "families": []
   }
 }

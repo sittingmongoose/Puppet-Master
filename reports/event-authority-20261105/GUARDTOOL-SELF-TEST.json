@@ -1,11 +1,12 @@
 {
   "status": "PASS",
-  "caught": 148,
-  "trap_count": 148,
-  "old": 141,
-  "new": 7,
-  "implementation_commit": "cfafa4f4ed471081bbf11f547903e94f95ea9a35",
-  "meaning": "Bounded synthetic regressions and census-driven composition cross-product; unsupported source grammar remains unclassified.",
+  "caught": 201,
+  "trap_count": 201,
+  "old": 148,
+  "new": 53,
+  "implementation_commit": "ec841e41cf272c43c829d6a8996a101b735dec4b",
+  "core_fix_commit": "ff7fb58db46861b403abce778960b91301d2a83c",
+  "meaning": "Bounded complete-path input-atom cuts; unknown paths and grammar stay unclassified.",
   "python_census": {
     "cells": 410,
     "errors": [],
@@ -17,6 +18,15 @@
       "comparison_operand",
       "refusal_value",
       "accumulator_write"
+    ],
+    "preceding_exit_contexts": [
+      "early-success-return",
+      "early-raise",
+      "elif-chain",
+      "early-continue",
+      "early-break",
+      "except-return",
+      "two-preceding-exits"
     ],
     "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
     "refusal_kinds": {
@@ -52,15 +62,25 @@
     }
   },
   "composition_cross_product": {
-    "control_contexts": 14,
+    "control_contexts": 21,
     "controlling_forms": 3,
-    "credited_cuts": 48,
-    "credited_with_per_atom_cuts": 24,
-    "generated": 630,
+    "credited_cuts": 144,
+    "credited_with_per_atom_cuts": 72,
+    "generated": 945,
+    "lexical_contexts": 14,
+    "preceding_exit_contexts": [
+      "early-success-return",
+      "early-raise",
+      "elif-chain",
+      "early-continue",
+      "early-break",
+      "except-return",
+      "two-preceding-exits"
+    ],
     "refusal_forms": 15,
     "refusal_kinds": 6,
     "status": "PASS",
-    "unclassified": 606
+    "unclassified": 873
   },
   "traps": [
     {
@@ -802,10 +822,285 @@
       "id": "C5-uncovered-context",
       "expected": "self-test fails before traps when new census support lacks generated composition coverage",
       "caught": true
+    },
+    {
+      "id": "C6-B1-cell-01-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-02-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-03-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-04-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-05-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-06-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-07-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-08-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-09-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-10-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-11-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-12-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-13-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-14-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-15-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-16-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-17-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-18-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-19-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-20-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-21-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-22-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-23-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-24-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-25-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-26-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-27-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-28-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-29-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-30-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-31-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-32-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-33-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-34-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-35-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-36-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-37-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-38-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-39-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-40-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-41-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-42-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-43-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-44-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-45-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-46-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-47-single",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-cell-48-aggregate",
+      "expected": "constant suffix has no own atom; each registered path cut preserves the other one-field defect",
+      "caught": true
+    },
+    {
+      "id": "C6-B1-minimal",
+      "expected": "one-argument callback catches only AssertionError; constant assertion is never a broad credited cut",
+      "caught": true
+    },
+    {
+      "id": "C6-zero-input-atoms",
+      "expected": "all fixed refusals and constant-only tests refuse registration",
+      "caught": true
+    },
+    {
+      "id": "C6-unknown-paths",
+      "expected": "unknown preceding exits make every later refusal unclassified",
+      "caught": true
+    },
+    {
+      "id": "C6-exit-coverage",
+      "expected": "missing generated preceding-exit context fails self-test before traps",
+      "caught": true
+    },
+    {
+      "id": "C6-constant-cut-gate",
+      "expected": "generated matrix rejects a credited constant cut even if the overall suite FAILs",
+      "caught": true
     }
   ],
+  "C6_B1": {
+    "attempts": 48,
+    "broad_cuts": 0,
+    "broad_proved_rows": 0,
+    "minimal": 2
+  },
+  "sol_cycle5_assertions": 435,
+  "sol_cycle6_assertions": 5145,
+  "sol_blocker_assertions": 515,
+  "final_audit_assertions": 4010,
   "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json",
-    "sha256": "ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
+    "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
   }
 }

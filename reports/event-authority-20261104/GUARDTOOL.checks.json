@@ -1623,5 +1623,73 @@
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     ]
+  },
+  "review_round_6": {
+    "base_sha": "830dd79b2dbfe85630cae1861e3f7e39c50b75a4",
+    "core_fix_commit": "ff7fb58db46861b403abce778960b91301d2a83c",
+    "implementation_commit": "ec841e41cf272c43c829d6a8996a101b735dec4b",
+    "C6_B1": "fixed; constants have zero own atoms, exact preceding-exit conditions or unclassified",
+    "traps": 201,
+    "old_traps": 148,
+    "new_traps": 53,
+    "caught": 201,
+    "cross_product": {
+      "control_contexts": 21,
+      "controlling_forms": 3,
+      "credited_cuts": 144,
+      "credited_with_per_atom_cuts": 72,
+      "generated": 945,
+      "lexical_contexts": 14,
+      "preceding_exit_contexts": [
+        "early-success-return",
+        "early-raise",
+        "elif-chain",
+        "early-continue",
+        "early-break",
+        "except-return",
+        "two-preceding-exits"
+      ],
+      "refusal_forms": 15,
+      "refusal_kinds": 6,
+      "status": "PASS",
+      "unclassified": 873
+    },
+    "census": {
+      "status": "PASS",
+      "node_classes": 82,
+      "cells": 410,
+      "totals": {
+        "fail_closed": 363,
+        "supported": 47
+      },
+      "errors": []
+    },
+    "sol_cycle5": {
+      "status": "PASS",
+      "assertions": 435
+    },
+    "sol_cycle6": {
+      "status": "PASS",
+      "assertions": 5145,
+      "blocker_assertions": 515,
+      "early_success_attempts": 48,
+      "broad_cuts": 0,
+      "broad_proved_rows": 0
+    },
+    "final_audit_assertions": 4010,
+    "plan_index": {
+      "exit_code": 1,
+      "top_level_status": "fail",
+      "inherited_failures": 28,
+      "exact_match_prior_fix5": true
+    },
+    "shards_exit": 0,
+    "protected_scope_unchanged": true,
+    "dg6b_rerun": false,
+    "ids_used": [],
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
+      "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
+    }
   }
 }
