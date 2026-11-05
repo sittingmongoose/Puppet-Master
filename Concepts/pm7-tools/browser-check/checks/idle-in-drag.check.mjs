@@ -258,7 +258,7 @@ export const tests = {
 		});
 		const keys = owners.map((o) => o.key);
 		await f.waitForFunction((ks) => { const p = window.__pmIdleRec.pending(); return ks.every((k) => p.some((j) => j.owner === k)); }, keys, { timeout: 15000 }).catch(() => {});
-		if (omit) {
+		if (omit && owners.some((o) => o.key === omit)) {   // only where that owner queues work (Glass: a Glass look)
 			const n = await f.evaluate(() => window.__pmIdleOmit?.count || 0);
 			t.log(`SELFTEST ${look}: ${n} real ${nameOf(omit)} requests suppressed at the shared admission`);
 			await t.check(`selftest ${look}: the ${nameOf(omit)} omission actually suppressed real requests`, n > 0, String(n));
