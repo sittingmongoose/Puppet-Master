@@ -4,13 +4,13 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L12411-L12451
 
-Source SHA256: `4899cfc4851357d6805dd15708b8b07b50fa8a86498f8391e25d753fb874112d`
+Source SHA256: `22c30c52ae216c73f03fff932e5d02f293665020870b69beb44c4f7992bf64fc`
 
 ---
 
 ## Terminal workgroup moved — original operation and passive history contract
 
-Superseded 2026-10-09 (DL-181), clarified 2026-11-05 (DL-449, deck 2 item 8.a): terminal workgroups are retired and `terminal.workgroup_moved` admits no new producer or new reader disclosure. The producer `terminal.workgroup_move_commit.v1` never activated; no operation was ever admitted. Any saved event retains its exact 1.0.0 meaning, original bytes and identities and `RP-AUTHORITY-INDEFINITE@1.0.0` lifetime. Its unchanged payload schema is selected by its own `payload_schema_id`; no event is rewritten, aliased to a layout event or fabricated again. Pending old moves are never reminted by upgrade, retry, recovery or SP-330 conversion. Current terminal-tab moves use CV-361's `workspace.layout_changed` / `tab_moved` and preserve the existing session.
+Superseded 2026-10-09 (DL-181), clarified 2026-11-05 (DL-449, deck 2 item 8.a): terminal workgroups are retired and `terminal.workgroup_moved` admits no new producer or new reader disclosure. The producer `terminal.workgroup_move_commit.v1` never activated; no operation was ever admitted. Any saved event retains its exact 1.0.0 meaning, original bytes and identities and `RP-AUTHORITY-INDEFINITE@1.0.0` lifetime. Its unchanged payload schema is selected by its own `payload_schema_id`; no event is rewritten, aliased to a layout event or fabricated again. The original semantics retain distinct source/target sections, complete distinct pane/session membership and preserved session identity, the actual original target-creation fact, and DL-070's empty reusable vacated source without any replacement or reseed. Pending old moves are never reminted by upgrade, retry, recovery or SP-330 conversion. Current terminal-tab moves use CV-361's `workspace.layout_changed` / `tab_moved` and preserve the existing session.
 
 DL-449 explicitly removes from this owner and SP-319 the obligation to build a new terminal-history view, saved viewing results, saved original-move/results records and obsolete original-move tests. The former `terminal.workgroup_move_history_read.v1@1.0.0` and `storage.terminal_workgroup_move.inspect_current.v1@1.0.0` are retired lineage. There is no operating family consumer, projector, checkpoint, view-result schema or original pending/result/custody companion to implement. Prior original-move, section-cap, rollback, sibling-settlement and lost-acknowledgement designs are source lineage only, not current acceptance requirements. Removing these obligations changes neither the interpretation nor lifetime of saved events and does not authorize deleting their evidence.
 

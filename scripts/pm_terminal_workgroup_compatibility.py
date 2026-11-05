@@ -41,6 +41,8 @@ def retained_errors(value, validator):
         errors.append('retention_changed')
     if not validator.is_valid(payload):
         errors.append('saved_payload_schema')
+    elif payload['source_terminal_section_id'] == payload['target_terminal_section_id']:
+        errors.append('saved_move_sections_not_distinct')
     return errors
 
 
@@ -97,6 +99,16 @@ def main():
         bad = copy.deepcopy(fixtures)
         bad['cases'][0]['value']['retention_policy'] = 'RP-CONFIG-CURRENT@1.0.0'
         assert run(bad, schema)['status'] == 'fail', 'invalid positive must fail the full checker'
+        from contextlib import redirect_stdout
+        from unittest.mock import patch
+        import io
+        import sys
+        original_read = Path.read_text
+        def bad_fixture_read(path, *args, **kwargs):
+            return json.dumps(bad) if path == ROOT / FIXTURES else original_read(path, *args, **kwargs)
+        with patch.object(Path, 'read_text', bad_fixture_read), patch.object(sys, 'argv', [__file__]), redirect_stdout(io.StringIO()):
+            assert main() == 1, 'invalid-positive CLI must exit 1'
+        result['invalid_positive_cli_exit_code'] = 1
         bad = copy.deepcopy(fixtures)
         negative = next(c for c in bad['cases'] if c['expected_errors'])
         negative['expected_errors'] = []
