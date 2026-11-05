@@ -90,6 +90,8 @@ def compaction_payload_errors(payload):
     return errors
 
 def compaction_event_errors(event, *, historical=False):
+    if type(historical) is not bool:
+        return ['historical_context_type']
     fixtures = load('Plans/context_compaction_completion_contract_fixtures.json')
     if not route.validator(load('Plans/event_record.schema.json')).is_valid(event):
         return ['envelope_schema']

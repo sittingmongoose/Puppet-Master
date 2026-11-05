@@ -35,16 +35,36 @@ def source_copy(slot, which, path, value):
     return changed
 
 
+def source_numeric_copy(slot,which,spelling):
+    """Preserve the supplied numeric lexeme in the captured original bytes."""
+    changed=copy.deepcopy(slot);source=which+'_layout_source_bytes'
+    data=base64.b64decode(changed[source]['bytes'])
+    original=slot[which+'_layout']['revision']
+    needle=('"revision":'+str(original)+',').encode()
+    assert data.count(needle)==1
+    replacement=('"revision":'+str(original)+spelling+',').encode()
+    data=data.replace(needle,replacement)
+    changed[source]['bytes']=base64.b64encode(data).decode()
+    changed[which+'_layout_sha256']=home.sha(data)
+    if which=='candidate' and changed['readback'] is not None:changed['readback']['layout_sha256']=home.sha(data)
+    return changed
+
+
 def build():
     suite = ds.Suite()
+    compaction=ds.load('Plans/context_compaction_completion_contract_fixtures.json')['valid_event']
+    for context in ('false','true',0,1,None,[],{}):
+        suite.negative('round4:compaction_historical_type:'+repr(context),'compaction_historical_type',
+                       lambda value=context:not ds.compaction_event_errors(compaction,historical=value))
+    suite.weakeners['compaction_historical_type']=lambda:patch.object(ds,'compaction_event_errors',
+        ds.source_without_guard(ds.compaction_event_errors,'type(historical)'))
     slot, event = d3.layout_base()
     checker = home.Checker(ds.ROOT)
     store = home.PayloadStore.from_fixture(ds.load(home.FIXTURES)['payload_store'])
     suite.positive('round4:home4_valid_source', lambda: not home_errors(checker, 'transaction_slot', slot, store))
     for which in ('prior', 'candidate'):
         for token in ('1.0', '1e0'):
-            original = slot[which + '_layout']['revision']
-            changed = source_copy(slot, which, ['revision'], json.loads(str(original) + token[1:]))
+            changed = source_numeric_copy(slot,which,token[1:])
             suite.negative('round4:source:' + which + ':revision:' + token,
                            'home4_typed_source_copy',
                            lambda v=changed: not home_errors(checker, 'transaction_slot', v, store))
@@ -53,6 +73,14 @@ def build():
         suite.negative('round4:source:' + which + ':boolean_as_integer',
                        'home4_typed_source_copy',
                        lambda v=changed: not home_errors(checker, 'transaction_slot', v, store))
+        for path in (['revision'],['tabs','dashboard:agents','pinned']):
+            current=slot[which+'_layout']
+            for key in path:current=current[key]
+            text=str(current).lower() if type(current) is bool else str(current)
+            for value in (text,None,[],{'nested':current}):
+                changed=source_copy(slot,which,path,value)
+                suite.negative('round4:source:'+which+':wrong_type:'+':'.join(path)+':'+repr(value),
+                    'home4_typed_source_copy',lambda v=changed:not home_errors(checker,'transaction_slot',v,store))
     suite.weakeners['home4_typed_source_copy'] = lambda: patch.object(home, 'source_bytes_check',
         ds.source_without_guard(home.source_bytes_check, 'not same_typed_value'))
 
@@ -131,6 +159,8 @@ def format_sweep():
             for value in malformed:
                 changed = copy.deepcopy(original)
                 changed[field] = value
+                if family=='context.compaction.completed' and field=='occurred_at_utc':
+                    changed['payload']['committed_at_utc']=value
                 errors = check(changed)
                 rows.append({'family': family, 'field': field, 'value': value, 'refused': bool(errors), 'errors': errors})
     schema_rows=[]

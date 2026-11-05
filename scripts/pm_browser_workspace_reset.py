@@ -90,8 +90,10 @@ def scope_partition(project_id):
 
 def reset_preflight_failures(event, request, result, transition, witness, *, root=ROOT, payload_store=None):
     """Check claimed resolved values; witness booleans are NOT native evidence."""
+    if not isinstance(witness, dict):
+        return ["reset_witness_missing"]
     gate = sibling("pm-browser-event-admission", root)
-    errors = gate.candidate_failures(event, witness.get("producer_component") if isinstance(witness, dict) else None,
+    errors = gate.candidate_failures(event, witness.get("producer_component"),
                                      gate.contract_context(), payload_store=payload_store)
     if errors:
         return errors
@@ -99,8 +101,6 @@ def reset_preflight_failures(event, request, result, transition, witness, *, roo
                         ("resolved_transition", transition)):
         if not validators(root)[name].is_valid(value):
             return [name + "_schema"]
-    if not isinstance(witness, dict):
-        return ["reset_witness_missing"]
     event, _ = body_route.resolved_event(event, payload_store)
     payload = event["payload"]
     context, facts = payload["context"], payload["facts"]

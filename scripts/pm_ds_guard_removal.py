@@ -19,8 +19,10 @@ import pm_home_layout_v2_slot_receipt as home
 import pm_browser_workspace_created as created
 import pm_browser_workspace_created_v2 as v2
 import pm_browser_workspace_reset as reset
+import pm_contract_formats as contract_formats
 
 ROOT=Path(__file__).resolve().parents[1]
+from pm_ds_resources import memory_floor
 INHERITED_SUMMARY={}
 POSITIVE_CONTROLS=[]
 
@@ -89,7 +91,7 @@ def cohort():
     # Every remaining checker conditional is inventoried, even when this lane has no executable
     # own-defect witness. Do not silently omit a guard to present check 11 as complete.
     seen={id(fn) for _,fn,_ in groups}
-    for module in (home,created,v2,reset,gate,round2,route):
+    for module in (home,created,v2,reset,gate,round2,route,contract_formats):
         for name,obj in vars(module).items():
             functions=[]
             if inspect.isfunction(obj) and obj.__module__==module.__name__: functions=[obj]
@@ -108,11 +110,31 @@ def cohort():
     cases=[(name,fn) for name,_,fn in targeted.negatives]
     # Feed new controls to every real checker they reach, selected by actual baseline traces below.
     groups.extend((module,fn,cases) for module,fn,_ in list(groups) if cases)
+    import pm_event_authority_ds_round4 as round4
+    cases=[(name,fn) for name,_,fn in round4.build().negatives]
+    import pm_ds_home4_isolating as home_isolated
+    cases.extend((r['id'],r['entry']) for r in home_isolated.cases())
+    import pm_ds_browser_isolating as browser_isolated
+    cases.extend((r['id'],r['entry']) for r in browser_isolated.cases() if r['kind']=='refusal')
+    import pm_ds_reset_isolating as reset_isolated
+    cases.extend((r['id'],r['entry']) for r in reset_isolated.cases() if r['kind']=='refusal')
+    import pm_ds_shared_runtime_controls as shared_runtime
+    cases.extend((r['id'],r['entry']) for r in shared_runtime.cases())
+    import pm_ds_v2_history_controls as v2_history
+    cases.extend((n,f) for n,f in v2_history.cases() if n.startswith('NEG-'))
+    import pm_ds_home4_physical as physical
+    cases.extend((r['id'],r['entry']) for r in physical.cases() if r['kind']=='refusal')
+    import pm_ds_format_controls as formats
+    cases.extend(formats.refusal_cases())
+    # Actual acceptance callbacks only. Structured/state/codec assertions stay
+    # separate; no caught exception can be counted as invalid input acceptance.
+    groups.extend((module,fn,cases) for module,fn,_ in list(groups))
     return groups
 
 def audit():
+    memory_floor()
     table=[];baseline_failures=[]
-    modules=[home,created,v2,reset,round2]
+    modules=[home,created,v2,reset,round2,contract_formats]
     source_hashes={str(Path(m.__file__).relative_to(ROOT)):__import__('hashlib').sha256(Path(m.__file__).read_bytes()).hexdigest() for m in modules}
     for relative in ('scripts/pm_ds_guard_removal.py','scripts/pm_ds_guard_cases.py','scripts/pm_event_authority_ds_round3.py','scripts/pm_event_payload_route.py','scripts/pm-browser-event-admission.py','scripts/pm-implementation-readiness.py'):
         source_hashes[relative]=__import__('hashlib').sha256((ROOT/relative).read_bytes()).hexdigest()
@@ -123,6 +145,7 @@ def audit():
     import pm_event_payload_route as route
     traces={}
     for ordinal,(name,test) in enumerate(all_cases.items()):
+        memory_floor()
         if ordinal%25==0:print('baseline '+str(ordinal)+'/'+str(len(all_cases)),flush=True)
         # Match the cold eager state used by mutations; warm caches cannot hide dependencies.
         route._eager_done.clear()
@@ -148,6 +171,7 @@ def audit():
             unrelated=sorted(set(all_cases)-{n for n,_ in cases})
             print('audit '+fn.__qualname__+' cases='+str(len(cases)),flush=True)
             for line,condition,tree in guards(fn):
+                memory_floor()
                 import pm_event_payload_route as route
                 route._eager_done.clear()
                 clear_contexts()
@@ -167,6 +191,7 @@ def audit():
                             stack.enter_context(patch.object(cls,'contract_failures',staticmethod(altered)))
                             aliases.append(class_name+'.contract_failures (same captured function)')
                     for name,test in cases:
+                        memory_floor()
                         try:(flipped if test() else stayed).append(name)
                         except Exception as exc:exceptions.append({'case':name,'exception':repr(exc)})
                 route._eager_done.clear()
