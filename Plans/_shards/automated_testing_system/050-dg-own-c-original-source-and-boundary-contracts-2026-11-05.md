@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7479-L7645
+Source lines: L7479-L7649
 
-Source SHA256: `27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514`
+Source SHA256: `7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d`
 
 ---
 
@@ -38,6 +38,8 @@ acceptance_criteria:
 - Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
   native runtime or governance proof.
 validation_surfaces:
+- python3 scripts/pm_goal_own_c_source_oracles.py
+- Plans/goal_own_c_contracts/source-witness-inputs.json
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
 risk_class: forged_original_authority_or_lost_pending_effect
@@ -92,6 +94,8 @@ acceptance_criteria:
 - Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
   native runtime or governance proof.
 validation_surfaces:
+- python3 scripts/pm_goal_own_c_source_oracles.py
+- Plans/goal_own_c_contracts/source-witness-inputs.json
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
 risk_class: forged_original_authority_or_lost_pending_effect

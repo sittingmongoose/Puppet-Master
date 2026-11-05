@@ -7506,6 +7506,8 @@ acceptance_criteria:
 - Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
   native runtime or governance proof.
 validation_surfaces:
+- python3 scripts/pm_goal_own_c_source_oracles.py
+- Plans/goal_own_c_contracts/source-witness-inputs.json
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
 risk_class: forged_original_authority_or_lost_pending_effect
@@ -7560,6 +7562,8 @@ acceptance_criteria:
 - Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
   native runtime or governance proof.
 validation_surfaces:
+- python3 scripts/pm_goal_own_c_source_oracles.py
+- Plans/goal_own_c_contracts/source-witness-inputs.json
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
 risk_class: forged_original_authority_or_lost_pending_effect

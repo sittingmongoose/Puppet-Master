@@ -22,7 +22,11 @@
       ],
       "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
       "inherited_full_tuple_coverage": "PARTIAL",
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": [
+        "scripts/pm_goal_own_c_source_oracles.py: complete retained Direct Save capture schema/custody; proposal/resolution storage and provider joins; original Goal snapshot semantics"
+      ]
     },
     {
       "event_type": "goal.cancelled",
@@ -47,7 +51,11 @@
       ],
       "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
       "inherited_full_tuple_coverage": "PARTIAL",
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": [
+        "scripts/pm_goal_own_c_source_oracles.py: original Goal outer image/receipt; ordered manifest and compact output transaction; no native binding/Stop installation"
+      ]
     },
     {
       "event_type": "goal_run.started",
@@ -69,7 +77,9 @@
       ],
       "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
       "inherited_full_tuple_coverage": "PARTIAL",
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": []
     },
     {
       "event_type": "goal_run.cancelled",
@@ -91,7 +101,9 @@
       ],
       "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
       "inherited_full_tuple_coverage": "PARTIAL",
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": []
     },
     {
       "event_type": "goal_run.certified",
@@ -116,7 +128,9 @@
       ],
       "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
       "inherited_full_tuple_coverage": "PARTIAL",
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": []
     }
   ]
 }
