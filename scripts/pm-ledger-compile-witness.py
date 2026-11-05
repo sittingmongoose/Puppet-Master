@@ -13,7 +13,9 @@ Witness 3, registry hygiene: every entry in an owner unit's preserved_exact_toke
 own text (the registry line itself excluded), for every unit the compile targets.
 
 All three witnesses are static text checks; they need no model and make no judgment about meaning.
-An empty owner-target scope is vacuous, never pass. --allow-empty explicitly permits only that empty result.
+Coverage is the set of atom-to-existing-owner mappings. When no atom reaches an owner, the result is vacuous, never pass,
+even if nominal targets exist and their registries were checked. --allow-empty explicitly permits only that empty result.
+A targeted owner unit with more than one independent definition, in one document or across documents, is a finding.
 Reviewed held/ledger-retired token exemptions live in records/compile_witness_exemptions.jsonl. Each needs a matching
 structured token_dispositions entry on the accepted ledger record it cites; missing, active or conflicting entries are refused.
 Exit 0 for pass or explicit --allow-empty, 2 for findings/vacuity, 1 for input/read errors.
@@ -27,17 +29,21 @@ import subprocess
 import sys
 from pathlib import Path
 
-UNIT_HEAD = re.compile(r"^(#{2,4})\s+([A-Z0-9][A-Za-z0-9]*-\d+)\s*[-–—:]\s+(.*)$")
-ANY_HEAD = re.compile(r"^#{1,6}\s")
-UNIT_ID = re.compile(r"\b([A-Z0-9][A-Za-z0-9]*-\d{3,})\b")
+# The one identifier grammar for owner headings, fenced declarations and repair sentences.
+UNIT_ID_FORM = r"[A-Z0-9][A-Za-z0-9]*-\d+"
+UNIT_HEAD = re.compile(r"^(#{2,4})\s+(" + UNIT_ID_FORM + r")\s*[-–—:]\s+(.*)$")
+ANY_HEAD = re.compile(r"^(#{1,6})\s")
+UNIT_ID = re.compile(r"\b(" + UNIT_ID_FORM + r")\b")
 CANDIDATE_ID = re.compile(r"\b([A-Z0-9]{2,5}-\d{2})\b")
 RECORD_HEAD = re.compile(r"^Records?\s+\d", re.I)
 REPAIRS = re.compile(r"\bRepairs\s+(.+?)(?:\.\s|\.$|,\s+which|,\s+whose|\s+and\s+section\b)", re.S)
 
 
-def load_jsonl(path: Path) -> list[dict]:
+def load_jsonl(path: Path, *, required=False) -> list[dict]:
     rows = []
     if not path.exists():
+        if required:
+            raise ValueError("required ledger input is missing: " + path.name)
         return rows
     for line in path.read_text(encoding="utf-8").splitlines():
         line = line.strip()
@@ -49,14 +55,31 @@ def load_jsonl(path: Path) -> list[dict]:
     return rows
 
 
-PLAN_UNIT_ID = re.compile(r"^\s*plan_unit_id:\s*([A-Z0-9][A-Za-z0-9]*-\d+)\s*$")
+PLAN_UNIT_ID = re.compile(r"^\s*plan_unit_id:\s*(" + UNIT_ID_FORM + r")\s*$")
 
 
-def units_in(text: str) -> dict[str, dict]:
-    """First block per unit id. A unit is either a '## ID - title' heading through the line before the next heading,
-    or, for units that carry no heading of their own, the fenced block that declares its plan_unit_id."""
+def definitions_in(text: str) -> list[dict]:
+    """Every independent definition occurrence, headings first, with its location.
+
+    A heading is its line through the line before the next heading. The first fence declaring that heading's own ID
+    inside its section (deeper subheadings included) is its metadata, not a second definition. Any other heading or
+    declaring fence is independent, and a fence that declares several IDs is marked so uniqueness can refuse it.
+    """
     lines = text.splitlines()
-    out: dict[str, dict] = {}
+    fences, fenced, i = [], set(), 0
+    while i < len(lines):
+        if not lines[i].strip().startswith("```"):
+            i += 1
+            continue
+        k = i + 1
+        while k < len(lines) and not lines[k].strip().startswith("```"):
+            k += 1
+        fenced.update(range(i, k + 1))
+        ids = [mm.group(1) for mm in (PLAN_UNIT_ID.match(l) for l in lines[i + 1:k]) if mm]
+        if ids:
+            fences.append((i, k, ids))
+        i = k + 1
+    found, sections = [], {}
     i = 0
     while i < len(lines):
         m = UNIT_HEAD.match(lines[i])
@@ -66,21 +89,29 @@ def units_in(text: str) -> dict[str, dict]:
         j = i + 1
         while j < len(lines) and not ANY_HEAD.match(lines[j]):
             j += 1
+        end = i + 1
+        while end < len(lines) and (end in fenced or not ANY_HEAD.match(lines[end]) or len(ANY_HEAD.match(lines[end]).group(1)) > len(m.group(1))):
+            end += 1
         block = "\n".join(lines[i:j]).rstrip()
-        out.setdefault(m.group(2), {"line_start": i + 1, "line_end": j, "text": block})
+        found.append({"unit": m.group(2), "form": "heading", "line_start": i + 1, "line_end": j, "text": block})
+        sections.setdefault(m.group(2), []).append([i, end, False])
         i = j
-    i = 0
-    while i < len(lines):
-        if not lines[i].strip().startswith("```"):
-            i += 1
-            continue
-        k = i + 1
-        while k < len(lines) and not lines[k].strip().startswith("```"):
-            k += 1
-        ids = [mm.group(1) for mm in (PLAN_UNIT_ID.match(l) for l in lines[i + 1:k]) if mm]
-        if ids and ids[0] not in out:
-            out[ids[0]] = {"line_start": i + 1, "line_end": min(k + 1, len(lines)), "text": "\n".join(lines[i:k + 1]).rstrip()}
-        i = k + 1
+    for start, stop, ids in fences:
+        for uid in ids:
+            own = next((s for s in sections.get(uid, ()) if s[0] < start and stop < s[1] and not s[2]), None) if len(ids) == 1 else None
+            if own is not None:
+                own[2] = True
+                continue
+            found.append({"unit": uid, "form": "fence" if len(ids) == 1 else "multi_id_fence", "line_start": start + 1,
+                          "line_end": min(stop + 1, len(lines)), "text": "\n".join(lines[start:stop + 1]).rstrip()})
+    return found
+
+
+def units_in(text: str) -> dict[str, dict]:
+    """First block per unit id, for text evidence. Uniqueness is validated from definitions_in, never from this view."""
+    out: dict[str, dict] = {}
+    for definition in definitions_in(text):
+        out.setdefault(definition["unit"], {key: definition[key] for key in ("line_start", "line_end", "text")})
     return out
 
 
@@ -272,7 +303,7 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
     if type(queue) is not dict or type(queue.get("items", [])) is not list:
         raise ValueError("compile queue must be an object with an items list")
     atoms = {}
-    for atom in load_jsonl(ledger_dir / "records/design_atoms.jsonl"):
+    for atom in load_jsonl(ledger_dir / "records/design_atoms.jsonl", required=True):
         aid = atom.get("atom_id")
         if type(aid) is not str or not aid or aid in atoms:
             raise ValueError("design atoms require unique nonempty atom_id values")
@@ -313,16 +344,21 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
             docs.update(strings([item["target_doc"]], qid + " target_doc"))
     docs = sorted(d for d in docs if d.endswith(".md"))
     declared = set().union(*(set(item["targets"]) for item in items.values()))
-    units, config_findings = {}, []
+    units, placed, config_findings = {}, {}, []
     for doc in docs:
         path = contained(root, doc)
         if not path.is_file():
             config_findings.append({"kind": "missing_owner_document", "path": doc})
             continue
-        for uid, block in units_in(path.read_text(encoding="utf-8")).items():
-            if uid in units and uid in declared:
-                config_findings.append({"kind": "ambiguous_owner_unit", "unit": uid})
-            units.setdefault(uid, block)
+        for definition in definitions_in(path.read_text(encoding="utf-8")):
+            uid = definition["unit"]
+            placed.setdefault(uid, []).append({"path": doc, **{key: definition[key] for key in ("form", "line_start", "line_end")}})
+            units.setdefault(uid, {key: definition[key] for key in ("line_start", "line_end", "text")})
+    for uid in sorted(declared & placed.keys()):
+        # DL-* units supply no owner evidence, and a Decision Log may carry a log entry and a PlanUnit under one number.
+        same_file_counts = not uid.startswith("DL-") and (len(placed[uid]) > 1 or placed[uid][0]["form"] == "multi_id_fence")
+        if same_file_counts or len({place["path"] for place in placed[uid]}) > 1:
+            config_findings.append({"kind": "ambiguous_owner_unit", "unit": uid, "definitions": placed[uid]})
     for uid in sorted(declared - units.keys()):
         config_findings.append({"kind": "missing_target_unit", "unit": uid})
     base_units = {}
@@ -340,10 +376,14 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
     for record in records_in(findings_md):
         linked = set().union(*(cand_atoms.get(cid, set()) for cid in record["candidate_ids"]))
         targets = set().union(*(atom_targets.get(aid, set()) for aid in linked))
-        not_targeted = sorted(set(record["named_units"]) - targets)
-        unchanged = [uid for uid in record["named_units"] if base and uid in units and uid in base_units and units[uid]["text"] == base_units[uid]["text"]]
+        # Ledger candidate IDs such as RT-01 share the short form, so a short ID names a unit only when one exists.
+        known = units.keys() | base_units.keys() | declared
+        unresolved_short = sorted(uid for uid in record["named_units"] if len(uid.rpartition("-")[2]) < 3 and uid not in known)
+        named_units = sorted(set(record["named_units"]) - set(unresolved_short))
+        not_targeted = sorted(set(named_units) - targets)
+        unchanged = [uid for uid in named_units if base and uid in units and uid in base_units and units[uid]["text"] == base_units[uid]["text"]]
         w1.append({"record": record["heading"], "candidate_ids": record["candidate_ids"], "atoms": sorted(linked),
-                   "queue_targets": sorted(targets), "named_units": record["named_units"], "named_documents": record["named_documents"],
+                   "queue_targets": sorted(targets), "named_units": named_units, "unresolved_short_ids": unresolved_short, "named_documents": record["named_documents"],
                    "named_but_not_targeted": not_targeted, "named_but_unchanged_since_base": unchanged,
                    "unmatched_record": not linked and bool(record["candidate_ids"]), "fires": bool(not_targeted or unchanged)})
     exemptions, exemption_records = token_exemptions(ledger_dir, items, atoms, units)
@@ -352,13 +392,14 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
         path = contained(root, output)
         if path.is_file() and path.suffix == ".json":
             companion_text += path.read_text(encoding="utf-8", errors="replace")
-    w2, uncompiled_atoms = [], []
+    w2, uncompiled_atoms, compiled_mappings = [], [], []
     for qid, item in items.items():
         for aid, targets in item["atom_targets"].items():
             owners = sorted(uid for uid in targets if not uid.startswith("DL-") and uid in units)
             if not owners:
                 uncompiled_atoms.append({"queue_id": qid, "atom": aid})
                 continue
+            compiled_mappings.append({"queue_id": qid, "atom": aid, "owner_units": owners})
             regs = {uid: registry(units[uid]["text"]) for uid in owners}
             bodies = {uid: prose(units[uid]["text"]) for uid in owners}
             for token in atoms[aid].get("exact_tokens", []):
@@ -387,7 +428,9 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
                    "absent_already_at_base": sorted(set(missing) & set(prior_missing)) if prior_missing is not None else None,
                    "fires": bool(missing)})
     fires1, fires2, fires3 = [[row for row in witness if row["fires"]] for witness in (w1, w2, w3)]
-    vacuous = not w3
+    # Coverage is what actually compiled. A nominal target or an empty hygiene row is not compilation evidence.
+    vacuous = not compiled_mappings
+    vacuity_reason = None if not vacuous else "no_owner_targets" if not declared else "no_atom_reaches_an_owner"
     findings = bool(config_findings or fires1 or fires2 or fires3)
     status = ("vacuous_with_findings" if vacuous else "findings") if findings else (
         "vacuous_allowed_by_--allow-empty" if allow_empty else "vacuous") if vacuous else "pass"
@@ -395,10 +438,12 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
     return {"schema_id": "pm.ledger_compile_witness.v2", "ledger_id": ledger_dir.name, "base": base, "documents": docs,
             "witness_repairs_vs_targets": w1, "witness_exact_tokens": w2, "witness_registry_hygiene": w3,
             "token_exemptions": exemption_records, "configuration_findings": config_findings,
-            "atoms_without_owner_targets": uncompiled_atoms, "vacuous": vacuous, "allow_empty": bool(allow_empty),
+            "atom_owner_mappings": compiled_mappings, "atoms_without_owner_targets": uncompiled_atoms,
+            "vacuous": vacuous, "vacuity_reason": vacuity_reason, "allow_empty": bool(allow_empty),
             "summary": {"records": len(w1), "records_firing": len(fires1), "named_but_not_targeted": sum(len(r["named_but_not_targeted"]) for r in w1),
                         "named_but_unchanged_since_base": sum(len(r["named_but_unchanged_since_base"]) for r in w1),
                         "declared_target_plan_units": len(declared), "registries_checked": len(w3),
+                        "atoms_reaching_an_owner": len({row["atom"] for row in compiled_mappings}),
                         "item_tokens": len(w2), "item_tokens_exempted": len(w2) - len(active),
                         "tokens_missing_from_prose": sum(not row["units_with_token_in_prose"] for row in active),
                         "tokens_missing_from_registry": sum(not row["units_with_token_in_registry"] for row in active),
@@ -450,7 +495,9 @@ def main(argv=None) -> int:
     else:
         s = report["summary"]
         print(f"{report['ledger_id']}: {report['status']}")
-        print(f"  coverage: {s['declared_target_plan_units']} declared targets; {s['registries_checked']} owner registries checked; {s['item_tokens_exempted']} item tokens explicitly exempted")
+        print(f"  coverage: {s['atoms_reaching_an_owner']} atoms reach an owner ({len(report['atoms_without_owner_targets'])} queue mappings do not); {s['declared_target_plan_units']} declared targets; {s['registries_checked']} owner registries checked; {s['item_tokens_exempted']} item tokens explicitly exempted")
+        if report["vacuous"]:
+            print(f"  vacuous: {report['vacuity_reason']}")
         for finding in report["configuration_findings"]:
             print("    - " + str(finding))
         print(f"  witness 1 repairs vs targets: {s['records_firing']} of {s['records']} records fire; named-but-not-targeted {s['named_but_not_targeted']}; named-but-unchanged {s['named_but_unchanged_since_base']}")

@@ -37,7 +37,8 @@ def exercise(g, *, scratch=None):
                 write(ledger / "state/compile_queue.json", fixture["queue"])
                 for name_, values in (("design_atoms", fixture["atoms"]), ("corrections", fixture["reviews"]),
                                       ("compile_witness_exemptions", fixture["exemptions"])):
-                    write(ledger / ("records/" + name_ + ".jsonl"), values, jsonl=True)
+                    if name_ != "design_atoms" or not fixture.get("omit_atoms"):
+                        write(ledger / ("records/" + name_ + ".jsonl"), values, jsonl=True)
                 if fixture.get("base"):
                     if fixture.get("base_owner") is not None:
                         write(root / "owners.md", fixture["base_owner"])
@@ -286,5 +287,117 @@ def exercise(g, *, scratch=None):
          verify=lambda r: r["witness_repairs_vs_targets"][0]["named_units"] == ["0PI-001"] and r["summary"]["named_but_unchanged_since_base"] == 1)
     case("invalid-base-is-read-error", flags=("--base", "unresolvable-revision"), status="error", exit_code=1)
     case("unknown-source-atom-is-read-error", lambda f: f["queue"]["items"][0].update(source_atom_ids=["absent"]), status="error", exit_code=1)
+
+    # Sol max cycle 6, C6-W1: coverage is actual atom-to-owner mappings; a nominal target is not compilation.
+    no_reach = "no_atom_reaches_an_owner"
+    def no_source_atoms(f):
+        f["queue"]["items"][0].update(source_atom_ids=[])
+        f.update(atoms=[], owner=owner("AA-001", "Ordinary body.", []))
+    def explicitly_uncompiled(f):
+        f["queue"]["items"][0].update(atom_target_plan_unit_ids={"atom-1": []})
+        f.update(owner=owner("AA-001", "Ordinary body.", []))
+    case("target-with-no-source-atoms-is-vacuous", no_source_atoms, status="vacuous", exit_code=2,
+         verify=lambda r: r["vacuity_reason"] == no_reach and r["summary"]["registries_checked"] == 1 and r["summary"]["atoms_reaching_an_owner"] == 0)
+    case("target-with-no-source-atoms-explicit-override", no_source_atoms, flags=("--allow-empty",), status="vacuous_allowed_by_--allow-empty",
+         verify=lambda r: r["vacuous"] and r["allow_empty"] and r["vacuity_reason"] == no_reach)
+    case("every-atom-explicitly-uncompiled-is-vacuous", explicitly_uncompiled, status="vacuous", exit_code=2,
+         verify=lambda r: r["vacuity_reason"] == no_reach and r["atoms_without_owner_targets"] == [{"queue_id": "q-1", "atom": "atom-1"}] and r["atom_owner_mappings"] == [])
+    case("every-atom-uncompiled-explicit-override", explicitly_uncompiled, flags=("--allow-empty",), status="vacuous_allowed_by_--allow-empty",
+         verify=lambda r: r["vacuous"] and r["atoms_without_owner_targets"] == [{"queue_id": "q-1", "atom": "atom-1"}])
+    def uncompiled_with_ghost(f):
+        explicitly_uncompiled(f)
+        f["owner"] = owner("AA-001", "Ordinary body.", ["ghost"])
+    case("registry-only-scope-keeps-its-hygiene-finding", uncompiled_with_ghost, status="vacuous_with_findings", exit_code=2,
+         verify=lambda r: r["witness_registry_hygiene"][0]["entries_absent_from_unit_text"] == ["ghost"])
+    case("allow-empty-cannot-waive-registry-only-finding", uncompiled_with_ghost, flags=("--allow-empty",), status="vacuous_with_findings", exit_code=2)
+    def decision_only(f):
+        f["queue"]["items"][0].update(target_plan_unit_ids=["DL-001"])
+        f["owner"] = "### DL-001 - Decision\n\nBody.\n"
+    case("decision-only-mapping-is-vacuous", decision_only, status="vacuous", exit_code=2, verify=lambda r: r["vacuity_reason"] == no_reach)
+    def mapped_to_missing(f):
+        f["queue"]["items"][0].update(target_plan_unit_ids=["AA-001", "ZZ-999"], atom_target_plan_unit_ids={"atom-1": ["ZZ-999"]})
+    case("atom-mapped-only-to-a-missing-owner", mapped_to_missing, status="vacuous_with_findings", exit_code=2,
+         verify=lambda r: any(x["kind"] == "missing_target_unit" for x in r["configuration_findings"]) and r["atom_owner_mappings"] == [])
+    def missing_atoms(f):
+        no_source_atoms(f)
+        f["omit_atoms"] = True
+    case("missing-required-atoms-file-is-input-error", missing_atoms, status="error", exit_code=1, verify=refused_because("design_atoms.jsonl"))
+    case("allow-empty-cannot-waive-missing-atoms-file", missing_atoms, flags=("--allow-empty",), status="error", exit_code=1, verify=refused_because("design_atoms.jsonl"))
+    case("present-empty-atoms-file-is-vacuous-not-missing", no_source_atoms, status="vacuous", exit_code=2, verify=lambda r: r["atoms_without_owner_targets"] == [])
+    def partial_scope(f):
+        f["atoms"].append({"atom_id": "atom-2", "exact_tokens": ["outside token"]})
+        f["queue"]["items"][0].update(source_atom_ids=["atom-1", "atom-2"], atom_target_plan_unit_ids={"atom-1": ["AA-001"], "atom-2": []})
+    case("partial-scope-stays-pass-and-disclosed-control", partial_scope,
+         verify=lambda r: not r["vacuous"] and r["summary"]["atoms_reaching_an_owner"] == 1 and r["atoms_without_owner_targets"] == [{"queue_id": "q-1", "atom": "atom-2"}])
+    case("compiled-atom-with-empty-token-list-control", lambda f: f["atoms"][0].update(exact_tokens=[]),
+         verify=lambda r: r["summary"]["item_tokens"] == 0 and r["summary"]["atoms_reaching_an_owner"] == 1 and r["vacuity_reason"] is None)
+    case("compiled-atom-without-token-field-control", lambda f: f["atoms"][0].pop("exact_tokens"),
+         verify=lambda r: r["summary"]["item_tokens"] == 0 and r["summary"]["atoms_reaching_an_owner"] == 1)
+
+    # Sol max cycle 6, C6-W2: uniqueness is validated from every occurrence, before any first-block view.
+    def fence(uid, body, tokens):
+        return "```yaml\nplan_unit_id: " + uid + "\ncanonical_text: " + body + "\npreserved_exact_tokens: " + json.dumps(tokens) + "\n```\n"
+    def ambiguous(*places):
+        def verify(r):
+            found = [x for x in r["configuration_findings"] if x["kind"] == "ambiguous_owner_unit" and x["unit"] == "AA-001"]
+            return len(found) == 1 and [(d["form"], d["line_start"]) for d in found[0]["definitions"]] == list(places)
+        return verify
+    clean = owner("AA-001", "Required live token.", ["live token"])
+    case("duplicate-heading-in-one-document", lambda f: f.update(owner=clean + "\n" + owner("AA-001", "Token is absent here.", [])),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("heading", 10)))
+    case("duplicate-heading-cannot-hide-a-registry-error", lambda f: f.update(owner=clean + "\n" + owner("AA-001", "Token is absent here.", ["ghost"])),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("heading", 10)))
+    case("duplicate-fence-in-one-document", lambda f: f.update(owner=fence("AA-001", "Required live token.", ["live token"]) + "\n" + fence("AA-001", "Unrelated.", ["ghost"])),
+         status="findings", exit_code=2, verify=ambiguous(("fence", 1), ("fence", 7)))
+    case("second-metadata-fence-under-one-heading", lambda f: f.update(owner=clean + "\n" + fence("AA-001", "Unrelated.", ["ghost"])),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("fence", 10)))
+    case("heading-and-a-fence-in-another-section", lambda f: f.update(owner=clean + "\n## Later notes\n\n" + fence("AA-001", "Unrelated.", [])),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("fence", 12)))
+    case("fence-before-its-heading-is-independent", lambda f: f.update(owner=fence("AA-001", "Earlier copy.", []) + "\n" + clean),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 7), ("fence", 1)))
+    case("multi-id-fence-is-ambiguous", lambda f: f.update(owner="```yaml\nplan_unit_id: AA-001\nplan_unit_id: BB-001\ncanonical_text: Required live token.\npreserved_exact_tokens: [\"live token\"]\n```\n"),
+         status="findings", exit_code=2, verify=ambiguous(("multi_id_fence", 1)))
+    def cross_document(f):
+        f["queue"]["canonical_plan_targets"].append("other.md")
+        write(f["root"] / "other.md", f["owner"])
+    case("cross-document-duplicate-names-both-places", cross_document, status="findings", exit_code=2,
+         verify=lambda r: [d["path"] for x in r["configuration_findings"] if x["kind"] == "ambiguous_owner_unit" for d in x["definitions"]] == ["other.md", "owners.md"])
+    def no_tokens(f, text):
+        f["atoms"][0]["exact_tokens"] = []
+        f["owner"] = text
+    no_ambiguity = lambda r: not r["configuration_findings"]
+    case("metadata-fence-under-a-deeper-subheading-control", lambda f: no_tokens(f, "## AA-001 — Owner\n\nBody.\n\n### Detail\n\nMore.\n\n" + fence("AA-001", "Body.", [])), verify=no_ambiguity)
+    case("hash-comment-in-a-fence-keeps-the-section-control", lambda f: no_tokens(f, "## AA-001 — Owner\n\n```sh\n# a comment, not a heading\n```\n\n" + fence("AA-001", "Body.", [])), verify=no_ambiguity)
+    case("single-heading-with-its-own-fence-control", verify=no_ambiguity)
+    case("single-headless-fence-control", lambda f: f.update(owner=fence("AA-001", "Required live token.", ["live token"])), verify=no_ambiguity)
+    def nested_other_unit(f):
+        f["queue"]["items"][0]["target_plan_unit_ids"].append("BB-001")
+        f["owner"] = clean + "\n" + fence("BB-001", "Second body.", [])
+    case("another-units-fence-inside-a-section-control", nested_other_unit, verify=no_ambiguity)
+    case("untargeted-duplicate-is-not-a-finding-control", lambda f: f.update(owner=clean + "\n" + owner("ZZ-001", "One.", []) + "\n" + owner("ZZ-001", "Two.", [])), verify=no_ambiguity)
+    def decision_number_reuse(f):
+        f["queue"]["items"][0]["target_plan_unit_ids"].append("DL-001")
+        f["queue"]["items"][0]["atom_target_plan_unit_ids"] = {"atom-1": ["AA-001"]}
+        f["owner"] = clean + "\n### DL-001: Log entry\n\nText.\n\n### DL-001 - Decision unit\n\nText.\n"
+    case("decision-log-number-reuse-control", decision_number_reuse, verify=no_ambiguity)
+
+    # Sol max cycle 6, C6-W3: one identifier grammar for owner and repair IDs.
+    case("unchanged-short-id-repair-is-not-a-pass", lambda f: repairs(f, uid="AA-01"), status="findings", exit_code=2,
+         verify=lambda r: r["witness_repairs_vs_targets"][0]["named_units"] == ["AA-01"] and r["summary"]["named_but_unchanged_since_base"] == 1)
+    case("changed-short-id-repair-control", lambda f: repairs(f, changed=True, uid="AA-01"),
+         verify=lambda r: r["witness_repairs_vs_targets"][0]["named_units"] == ["AA-01"])
+    case("one-digit-id-repair-is-not-skipped", lambda f: repairs(f, uid="AA-1"), status="findings", exit_code=2,
+         verify=lambda r: r["summary"]["named_but_unchanged_since_base"] == 1)
+    def short_untargeted(f):
+        f["owner"] = clean + "\n" + owner("BB-01", "Other unit.", [])
+        f["reviews"] = [{"correction_id": "corr-1", "finding_id": "RT-01", "source_atom_ids": ["atom-1"]}]
+        write(f["ledger"] / "source_shards/findings.md", "## Record 1 RT-01\nRepairs AA-001 and BB-01.\n")
+    case("short-id-named-but-not-targeted-fires", short_untargeted, status="findings", exit_code=2,
+         verify=lambda r: r["witness_repairs_vs_targets"][0]["named_but_not_targeted"] == ["BB-01"])
+    def candidate_in_sentence(f):
+        repairs(f, changed=True)
+        write(f["ledger"] / "source_shards/findings.md", "## Record 1 RT-01\nRepairs AA-001 for RT-01.\n")
+    case("unresolved-short-candidate-id-is-disclosed-control", candidate_in_sentence,
+         verify=lambda r: r["witness_repairs_vs_targets"][0]["named_units"] == ["AA-001"] and r["witness_repairs_vs_targets"][0]["unresolved_short_ids"] == ["RT-01"])
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}

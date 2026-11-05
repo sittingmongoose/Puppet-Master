@@ -36,10 +36,14 @@ Argument-parser errors also use 2. JSON reports use
 
 ## Empty coverage is explicit
 
-A queue with no `target_plan_unit_ids` cannot pass. Its status is `vacuous`
-(or `vacuous_with_findings` when other findings exist), and it exits 2. A target
-list that reaches no existing owner registry is likewise vacuous. Missing or
-ambiguous targeted units are findings; the checker cannot silently skip them.
+Coverage is the set of atom-to-existing-owner mappings, not the list of declared
+targets. When no atom reaches an existing owner unit, the status is `vacuous`
+(or `vacuous_with_findings` when other findings exist), and it exits 2. That holds
+for a queue with no `target_plan_unit_ids`, for targets with no source atoms, and
+for targets whose atoms are all mapped to `[]`. `vacuity_reason` says which:
+`no_owner_targets` or `no_atom_reaches_an_owner`. Registry hygiene still runs on
+any existing target, so a registry-only scope keeps its findings, but its clean
+result is not `pass`. The report lists `atom_owner_mappings`.
 
 ```sh
 python3 tools/pm-ledger-compile-witness.py ledgers/change-001 --root . --allow-empty --json
@@ -47,10 +51,26 @@ python3 tools/pm-ledger-compile-witness.py ledgers/change-001 --root . --allow-e
 
 Only an otherwise clean empty scope is permitted by this flag. Its status is
 `vacuous_allowed_by_--allow-empty`, never `pass`; `vacuous` remains true. The flag
-cannot waive token, repair, registry or configuration findings. Counters report
+cannot waive token, repair, registry or configuration findings, and it never waives
+a missing `state/compile_queue.json` or `records/design_atoms.jsonl`: those exit 1.
+A present, empty atoms file is not missing. Counters report atoms reaching an owner,
 declared target units, registries actually checked, item tokens and exemptions.
 `DL-*` decision units retain the existing format's exclusion from owner-token
 and owner-registry evidence; a decision-only scope is therefore vacuous.
+
+## One definition per targeted owner
+
+A targeted unit with more than one independent definition is an
+`ambiguous_owner_unit` finding that lists every definition's path, form and lines,
+in one document or across documents. The first fence declaring a heading's own ID
+inside that heading's section, deeper subheadings included, is its metadata and not
+a second definition. A second such fence, a repeated heading, a repeated headless
+fence, a declaring fence outside the section and a fence declaring several IDs are
+all independent definitions. Duplicates of an untargeted ID are not findings.
+
+`DL-*` units are the one same-document exception, because they supply no owner
+evidence and the Decision Log may carry a log entry and a PlanUnit under one number.
+Across documents they are still findings.
 
 ## Targets and exact-token scope
 
@@ -61,6 +81,13 @@ findings IDs to atoms; optional `source_shards/findings.md` supplies the existin
 `canonical_plan_targets`, `compiled_owner_docs`, or queue-item `target_docs` /
 `target_doc`. They contain `## AA-001 — Title` blocks or fenced blocks declaring
 `plan_unit_id: AA-001`. Numeric prefixes such as `0PI-001` are supported.
+
+Owner headings, fenced declarations and `Repairs` sentences share one identifier
+grammar: a letter-or-digit prefix, a hyphen and any number of digits. Ledger
+candidate IDs such as `RT-01` have the same shape, so an ID with fewer than three
+digits named in a `Repairs` sentence counts as a unit only when it is a declared
+target or has a definition in the owner documents or at the base revision. Other
+short IDs are listed under `unresolved_short_ids` and are not findings.
 
 ```json
 {
@@ -76,7 +103,9 @@ The optional per-atom mapping must name every source atom and use subsets of
 the item targets. Without it, every source atom maps to all item targets, as
 before. An explicit empty per-atom target list means that atom is not compiled
 in this scope and is listed under `atoms_without_owner_targets`; it receives
-no token witness. A pass covers the targeted owners, not the entire ledger.
+no token witness. A pass needs at least one atom compiled to an owner, and it
+covers the mapped owners, not the entire ledger. A compiled atom with an empty
+token list counts as compiled and has no token to witness.
 
 Each design atom has `atom_id` and an `exact_tokens` string list. Each required
 token must occur in one mapped owner's body and **that same owner's**
