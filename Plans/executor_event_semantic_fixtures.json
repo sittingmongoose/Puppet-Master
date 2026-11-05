@@ -2513,35 +2513,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "thread_id": "thread_id-001",
-                "node_id": "node_id-001",
-                "attempt_id": "attempt_id-001",
-                "replan_generation": 1,
-                "terminal_state": "failed",
-                "retry_count": 1,
-                "runtime_snapshot_ref": "runtime_snapshot_ref-001",
-                "verification_result_refs": [
-                  "verifier-001"
-                ],
-                "reviewer_result_refs": [
-                  "reviewer-001"
-                ],
-                "safe_point_id": "safe_point_id-001",
-                "remediation_root_id": "remediation_root_id-001",
-                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "failure_class": "verification_failed",
-                "backoff_until_utc": "2026-11-04T12:00:00Z"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "22c9dab9ae66dd0eae698f0b13e690f6d98155fda84e31d07fa18b93a2fc99bd"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "22c9dab9ae66dd0eae698f0b13e690f6d98155fda84e31d07fa18b93a2fc99bd"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "F5-compatibility-policy-current-append",
@@ -42747,31 +42755,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "thread_id": "thread_id-001",
-                "node_id": "node_id-001",
-                "attempt_id": "attempt_id-001",
-                "replan_generation": 1,
-                "scheduler_lane": "remediation",
-                "permission_snapshot_id": "permission_snapshot_id-001",
-                "requested_model_snapshot_id": "requested_model_snapshot_id-001",
-                "effective_model_snapshot_id": "effective_model_snapshot_id-001",
-                "runtime_snapshot_ref": "runtime_snapshot_ref-001",
-                "safe_point_id": "safe_point_id-001",
-                "remediation_root_id": "remediation_root_id-001",
-                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "requested_account_snapshot_id": "requested_account_snapshot_id-001",
-                "effective_account_snapshot_id": "effective_account_snapshot_id-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "442efb889498085a3ca09a6c088276eca6b40b41d03ff63b98db651e0dac61fb"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "442efb889498085a3ca09a6c088276eca6b40b41d03ff63b98db651e0dac61fb"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "omit-required-account-snapshot-from-source-requested_account_snapshot_id",
@@ -92909,39 +92929,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "thread_id": "thread_id-001",
-                "node_id": "node_id-001",
-                "replan_generation": 1,
-                "blocked_sequence": 1,
-                "blocked_reason_code": "auth_required",
-                "allowed_action_ids": [
-                  "open_details",
-                  "retry_now"
-                ],
-                "preserved_local_work": true,
-                "attempt_id": "attempt_id-001",
-                "detail_ref": "detail_ref-001",
-                "safe_point_id": "safe_point_id-001",
-                "anchor_ref": "anchor_ref-001",
-                "auth_realm": "provider-account",
-                "missing_scopes": [
-                  "read"
-                ],
-                "requires_safe_point_restore": true,
-                "failure_class": "auth_expired",
-                "timeout_class": "inactivity_timeout",
-                "wait_state_class": "approval_wait"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "f1c5d1f78b9cbe9f10224fcac3e18869b8a18635d6dc67871b643e2a88fe2f83"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "f1c5d1f78b9cbe9f10224fcac3e18869b8a18635d6dc67871b643e2a88fe2f83"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "coupled-omit-attempt-backed-episode",
@@ -125187,28 +125211,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "attempt_id": "attempt_id-001",
-                "replan_generation": 1,
-                "result_outcome": "done",
-                "evidence_refs": [
-                  "verifier-001"
-                ],
-                "artifact_refs": [
-                  "artifact-001"
-                ],
-                "runtime_snapshot_ref": "runtime_snapshot_ref-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "4fa1ebbef9315ac80a7ddb2470db3fca267d924eae042ea9e145708bdc1e974e"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "4fa1ebbef9315ac80a7ddb2470db3fca267d924eae042ea9e145708bdc1e974e"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "F5-compatibility-policy-current-append",
@@ -158978,22 +159017,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "attempt_id": "attempt_id-001",
-                "replan_generation": 1,
-                "execution_unit_context_ref": "execution_unit_context_ref-001",
-                "runtime_snapshot_ref": "runtime_snapshot_ref-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fda2536ea8933e18c12a12461400c4f27432da5a5151696d7738cc697cdb5679"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fda2536ea8933e18c12a12461400c4f27432da5a5151696d7738cc697cdb5679"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "F5-compatibility-policy-current-append",
@@ -192215,22 +192275,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "replan_generation": 1,
-                "blocked_sequence": 1,
-                "resolution": "approval_granted",
-                "attempt_id": "attempt_id-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "27550ab613a5a1ee624e7e8bc4108e49b5f3303489be20239e8ae21ce85ecd89"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "27550ab613a5a1ee624e7e8bc4108e49b5f3303489be20239e8ae21ce85ecd89"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "coupled-omit-attempt-backed-episode",
@@ -212533,21 +212614,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "source_stage": "source_stage-001",
-                "reason_code": "reason_code-001",
-                "original_shape": "original_shape-001",
-                "degraded_shape": "degraded_shape-001",
-                "evidence_ref": "evidence_ref-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "443836874412c25f88e2cb70155a5a8a34f9996a051a42f9833a31580eed2ca5"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "443836874412c25f88e2cb70155a5a8a34f9996a051a42f9833a31580eed2ca5"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "F5-compatibility-policy-current-append",
@@ -232828,25 +232931,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "child_attempt_id": "child_attempt_id-001",
-                "remediation_root_id": "remediation_root_id-001",
-                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "remediation_generation": 1,
-                "replan_generation": 1,
-                "finding_refs": [],
-                "resolution": "fixed"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5b6e24b92798ac7b3532b5173516867167b5a86e0aa72fe55bbf34bf5d4df70e"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5b6e24b92798ac7b3532b5173516867167b5a86e0aa72fe55bbf34bf5d4df70e"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "divergent-joined-generation-within-ceiling",
@@ -255089,25 +255210,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "child_attempt_id": "child_attempt_id-001",
-                "remediation_root_id": "remediation_root_id-001",
-                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "remediation_generation": 1,
-                "replan_generation": 1,
-                "finding_refs": [],
-                "parent_failure_class": "provider_transient"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5565df34958ed8472e8925d40d3ca053f1b4253e653ec46d0992bedfdf177217"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5565df34958ed8472e8925d40d3ca053f1b4253e653ec46d0992bedfdf177217"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "divergent-joined-generation-within-ceiling",
@@ -276952,21 +277091,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "replan_generation": 1,
-                "terminal_outcome": "terminal_outcome-001",
-                "usage_ref": "usage_ref-001",
-                "result_ref": "result_ref-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "9cafd6b1e1929f42e66834c3fd39a86392f93253fca3b32f2be13d6308cb1c43"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "9cafd6b1e1929f42e66834c3fd39a86392f93253fca3b32f2be13d6308cb1c43"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "F5-compatibility-policy-current-append",
@@ -299595,20 +299756,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "replan_generation": 1,
-                "reason_code": "reason_code-001",
-                "detail_ref": "detail_ref-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1234969c81fc1c5cb6956563541ab1e0d787b631e13be5e339d4d2f8b733f2b1"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1234969c81fc1c5cb6956563541ab1e0d787b631e13be5e339d4d2f8b733f2b1"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "F5-compatibility-policy-current-append",
@@ -319347,21 +319531,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:01.000Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "attempt_id": "attempt_id-001",
-                "replan_generation": 1,
-                "failure_class": "provider_transient"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7a6bc1f2fc908a6f26b5989194129645e1fcdaa77cc1b9369ddb6db7c9619188"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7a6bc1f2fc908a6f26b5989194129645e1fcdaa77cc1b9369ddb6db7c9619188"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "classified-policy-provider_transient-retry-1",
@@ -345599,23 +345805,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "attempt_id": "attempt_id-001",
-                "replan_generation": 1,
-                "failure_class": "provider_transient",
-                "backoff_until_utc": "2026-11-04T12:00:01Z",
-                "retry_count": 1
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "24268085f2bc4953f2428caf05f47f9a18adadc7b18e47ed3119cb3c60d617b7"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "24268085f2bc4953f2428caf05f47f9a18adadc7b18e47ed3119cb3c60d617b7"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "classified-policy-provider_transient-retry-1",
@@ -373933,21 +374159,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "replan_generation": 1,
-                "ready_since_utc": "2026-11-04T12:00:00Z",
-                "wake_reason": "prerequisite_resolved"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "21c6a1f1b61c9d52fb34d13f821bff54c321bf2caca6bcd67360a65db7978cc9"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "21c6a1f1b61c9d52fb34d13f821bff54c321bf2caca6bcd67360a65db7978cc9"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "F5-compatibility-policy-current-append",
@@ -392824,23 +393072,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "node_id": "node_id-001",
-                "prior_attempt_id": "prior_attempt_id-001",
-                "replan_generation": 1,
-                "retry_count": 1,
-                "failure_class": "provider_transient",
-                "safe_point_id": "safe_point_id-001"
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "eb4c417789cf257e51654006023bffe3bbc00858692f6d7295d4f563c74e54c9"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "eb4c417789cf257e51654006023bffe3bbc00858692f6d7295d4f563c74e54c9"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "classified-policy-provider_transient-retry-1",
@@ -424417,64 +424685,43 @@
               "value": "1.0.1"
             },
             {
-              "path": "capture/transition/observed_payload",
-              "value": {
-                "schema_version": "1.0.0",
-                "project_id": "project_id-001",
-                "event_sequence": 1,
-                "ts": "2026-11-04T12:00:00Z",
-                "run_id": "run_id-001",
-                "thread_id": "thread_id-001",
-                "replan_generation": 1,
-                "scheduler_pass_id": "scheduler_pass_id-001",
-                "wake_reason": "prerequisite_resolved",
-                "available_slots": 1,
-                "ready_nodes": [
-                  {
-                    "scheduler_lane": "remediation",
-                    "manual_priority": 1,
-                    "transitive_unblock_count": 2,
-                    "ready_since_utc": "2026-11-04T12:00:00Z",
-                    "node_id": "node-high"
-                  },
-                  {
-                    "scheduler_lane": "normal",
-                    "manual_priority": 1,
-                    "transitive_unblock_count": 2,
-                    "ready_since_utc": "2026-11-04T12:00:00Z",
-                    "node_id": "node-low"
-                  }
-                ],
-                "selected_nodes": [
-                  {
-                    "node_id": "node-high",
-                    "score_tuple": {
-                      "scheduler_lane": "remediation",
-                      "manual_priority": 1,
-                      "transitive_unblock_count": 2,
-                      "ready_since_utc": "2026-11-04T12:00:00Z",
-                      "node_id": "node-high"
-                    },
-                    "lane": "remediation"
-                  }
-                ],
-                "non_selected_nodes": [
-                  {
-                    "node_id": "node-low",
-                    "exclusion_reason_code": "capacity",
-                    "ready_state": "ready"
-                  }
-                ],
-                "wake_event_refs": [
-                  "wake-002"
-                ],
-                "coalesced_wake_reasons": [
-                  "capacity_available"
-                ]
-              }
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "58b43d731affdc9779bd554ef582b4ae19facc182575036bc781a6baea9623ed"
             }
           ],
-          "expected": "reject"
+          "expected": "reject",
+          "seed_changes": [],
+          "defect_changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/body/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "58b43d731affdc9779bd554ef582b4ae19facc182575036bc781a6baea9623ed"
+            }
+          ],
+          "defect": "unsupported schema-version domain only; all original/source/mirror copies and hashes agree"
         },
         {
           "case": "source-consistent-priority-0",
