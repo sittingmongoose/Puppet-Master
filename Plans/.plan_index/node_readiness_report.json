@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T17:55:49Z",
+  "generated_at_utc": "2026-11-05T22:12:11Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -46279,7 +46279,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "094a33cc85240d613c16983241f4beb291151d9a9fc44c8a9e94f76c9a1487a0",
+        "expected": "8135e9752f8799ebfcdb177bd765b913512d44d089cea146330d2c13486b9731",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46439,6 +46439,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/chain-wizard-flexibility.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/coordination_event_payloads.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
