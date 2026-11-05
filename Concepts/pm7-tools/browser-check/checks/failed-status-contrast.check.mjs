@@ -111,7 +111,8 @@ export default async function(t){
       const boxes=await row.evaluate(e=>{
        const parts=[...e.querySelector('.o55-row').children];
        const rects=parts.map(n=>{const r=document.createRange();r.selectNodeContents(n);return {name:n.className,rects:[...r.getClientRects()].map(b=>({x:b.x,y:b.y,r:b.right,b:b.bottom}))};});
-       const collisions=[];
+       const collisions=[],bounds=e.querySelector('.o55-row').getBoundingClientRect();
+       for(const part of rects)for(const b of part.rects)if(b.x<bounds.x-1||b.r>bounds.right+1||b.y<bounds.y-1||b.b>bounds.bottom+1)collisions.push([part.name,'outside row']);
        for(let i=0;i<rects.length;i++)for(let j=i+1;j<rects.length;j++)for(const a of rects[i].rects)for(const b of rects[j].rects)
         if(Math.min(a.r,b.r)-Math.max(a.x,b.x)>1&&Math.min(a.b,b.b)-Math.max(a.y,b.y)>1)collisions.push([rects[i].name,rects[j].name]);
        return collisions;
