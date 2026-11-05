@@ -1,89 +1,88 @@
-# DG6B — review round 7, prepared without admission
+# DG6B — review round 8, prepared without admission
 
-Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input: `6518f9106dc9f362a64bf0de579dd1b17b3979d5`. Fixed code/fixture commit: **`7df14a3015a78aadd39f360df4ea3049016cdbf5`**. Native execution: **NOT_RUN**. All eleven standing checks and all eleven Astra classes apply; this round began after both November 4 additions.
+Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input: `0c92d2e91ed2a34391d16b7796de7883c190a2a0`. Fix commit: **`ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`**. Native execution: **NOT_RUN**.
 
-**C7-B1 is fixed by redesigning the oracle/proof path.** Nineteen families recover C12 PARTIAL → PASS: **171 PASS / 38 PARTIAL / 19 ABSENT → 190 PASS / 19 PARTIAL / 19 ABSENT**. Prepared gate: **0/19 → 19/19**. Membership remains ABSENT, retention PARTIAL / PENDING_RETENTION_DECISION, disposition UNDISPOSITIONED.
+**C8-B1 and C8-B2 are fixed.** All nineteen C12 cells recover PARTIAL → PASS against the cycle-8 independent review: **171 PASS / 38 PARTIAL / 19 ABSENT → 190 PASS / 19 PARTIAL / 19 ABSENT**. Prepared gate: **0/19 → 19/19**. Membership remains ABSENT, retention PARTIAL / `PENDING_RETENTION_DECISION`, disposition UNDISPOSITIONED.
 
-## Review round 7: findings and responses
+## Review round 8: findings and responses
 
-| Finding | Where, cause and fix | Verification |
+| Finding | Where, why and fix | Verification |
 |---|---|---|
-| **C7-B1 — fixed (`7df14a3015a78aadd39f360df4ea3049016cdbf5`)** | The old `schema_guard_proof` validated captured schema instances after dropping the append callback. Its nineteen inline integer/boolean cases retained stale source copies. `pm_dg6b_full_oracles.py` now derives copies, transport and identities from valid source models before testing. `complete_append_contract` supplies the complete append/retry/physical-operation path; retained readers retain their separate at-write policy. `pm-dg6b-guard-proof.py` re-invokes the entire callback for every exact keyword/runtime-location removal. Thirty-eight append/history C7 cases are coherent. | 3,262 complete-path guard negatives, 734 removal sets, 128,633 matrix evaluations; zero masked targets, unrelated flips or changed refusals. Nineteen fresh unmodified full checkers pass after restoration. |
-| **C7-N1 — integration note retained** | This older lane lacks later main units, including DL-302. No PlanUnit or canonical Markdown changes in round 7. | Preserve later main units during integration; **22 unchanged failures; coverage passes, 7,447 PlanUnits retained.** |
-| **C7-N2 — integration note retained** | The existing Storage profile baseline is outside this repair. No profile/registry row changes. | **41 unchanged missing-profile errors.** No unrelated repair or baseline refresh. |
-| **C7-N3 — integration note retained** | No canonical Markdown changed, so no derived regeneration or clock restamping was required. | Shard verification runs read-only. |
-| **C7-N4 — boundary retained** | Generic SP-278 generation/publication authentication and the unpatterned dataset name remain adopted native prerequisites. | Static full-path success grants neither whole-token authentication nor native admission. |
+| **C8-B1 — fixed (`ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`)** | `scripts/pm_dg6b_full_oracles.py:191`: deletion's revision negative also changed its independent caller CAS precondition. The removed/result revision now changes alone; `expected_owner_revision` and its payload/request/frozen/inline copies stay integer. A second complete-path target changes only that precondition's type. | `persona.deleted:coherent_python_equal_bool/revision` and `persona.deleted:coherent_python_equal_bool/expected_owner_revision` flip under separate cuts; each peer stays refused. Every repeated type site has remove-one/retain-one proof. |
+| **C8-B2 — fixed (`ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`)** | `scripts/pm-dg6b-guard-proof.py:419`: intersection merging erased independent predicates. Groups now use exactly equal predicate cuts. `scripts/pm-dg6b-guard-proof.py:82` splits compound runtime clauses, boolean type/value, tuple comparisons, source-reference fields and keyed custody comparisons. Multi-field schema keywords keep their peers; nullable type alternatives are one allowed-domain site, never two duplicate sites. | 1467 guards; 3,398 complete negatives; 585 duplicate sets; **0 unproved**. 266,192 full complement evaluations; 9,032 duplicate-site evaluations across 1527 sites; all nineteen retained-string + authenticity-denial probes refuse. |
 
-Implementation locations: `scripts/pm_dg6b_full_oracles.py:19` (`rebuild`), `scripts/pm_dg6b_full_oracles.py:144` (`family_probes`), `scripts/pm-dg6b-event-contracts.py:797` (`complete_append_contract`), `scripts/pm-dg6b-guard-proof.py:170` (`discover`), `scripts/pm-dg6b-guard-proof.py:209` (`run_family`).
+Neither finding is disputed or stopped for Jared. Production checker predicates, physical codec, schemas, fixtures and owner prose are byte-identical to the input. No new number cap or serializer is introduced.
 
-No finding is disputed or stopped for Jared. No product, owner, retention or deletion choice is made.
+## Guard-removal table and independence
 
-## Rebuilt guard table and method
+Reproduce from the fix tree, one family at a time (repeat with every exact family name below):
 
-The shared constructor is used by both the normal family checker and the removal proof. Each proof input has an accepted pre-mutation control, a named source defect and an exported exact typed diff. Source payloads, frozen copies, owner request/result/resolution observations, event identities, keys and physical references are derived **before** the callback. Execution performs no repair and catches no refusal to continue.
+```sh
+python3 scripts/pm-dg6b-event-contracts.py --family persona.deleted
+python3 scripts/pm-dg6b-guard-proof.py --family persona.deleted --output /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix8/recheck-persona-deleted.json
+```
 
-A current callback validates original retry custody, the existing append path, caller-semantic retry comparison and physical operation custody in the family's checker order. A recovery callback runs the complete source append plus the actual physical recovery. Historical callbacks use the complete retained-reader path; current writer policy never reaches a historical original.
+[DG6B.guard-removal-summary.json](DG6B.guard-removal-summary.json) names every guard, exact runtime clause/schema cut, flipping target, complement selector, logical defect and per-site duplicate proof. The full table records every complement ID, stock refusal, accepted control and exact typed input diff:
 
-Runtime removal identifies **function and exact raise line**, not every occurrence of an error string. Schema removal edits exact keywords in the full validator definition, retaining other fields and constraints. The complete original callback then runs again. A second unrelated runtime guard or schema field fails discovery. Duplicate sets merge only when their exact enforcement sites overlap; a common diagnostic does not merge independent predicates. Examples include schema/type-shape/operation copies of one typed field, explicit boolean grants plus their schema types, the same current-writer policy at its repeated sites, and retry identity/semantic immutability.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix8/guard-removal-full.json.gz` — SHA-256 `85f911e800ef4bd6665bf03b76fd581e13a3e80100bf66e42275f0f49dba4272`; decompressed SHA-256 `56936a103e409f05ab51ef9b1f8b152f4aa11bf77da83e616acc7273a9957134`.
 
-Each family has an isolated oracle namespace and a full flip/stay matrix across all of its complete-path negatives. Other family namespaces remain unchanged. Every negative in the active family either flips for its own exact removal set or retains its exact stock refusal. Instance-validation results are never memoized. Only immutable schema construction, file parsing and meta-schema checks are cached. Source hashes are checked before/after; a fresh unmodified full checker then passes for that family.
+Each negative runs the entire append, retry, recovery or retained-history callback. No captured-instance validator, stage bypass, caught-refusal continuation, instance result cache or detached proof is used. Only immutable schema construction/parsing is cached. Raw and instrumented stock refusals agree for every target. Every mutant reruns every designated negative in its family. Its own targets accept; every other target retains its exact stock refusal. A new raw full family checker passes after restoration. Inputs are hash-pinned before and after each family.
 
-**Table totals:** 734 family-scoped removal sets; 58 distinct runtime sites; 500 exact schema keyword locations; **3,262 complete-path negatives** and the same number of accepted pre-mutation controls; **390 named duplicate sets**; **128,633 full-callback evaluations**. Detached schema proof evaluations: **0**. Unexpected results: **0**.
+A duplicate set represents one input invariant at repeated sites. Removing each one site alone leaves its target rejected; retaining only that site also rejects it; removing all sites accepts it. The table exports the exact site and all target outcomes for both partial cuts. Intersections do not union sets.
 
-[DG6B.guard-removal-summary.json](DG6B.guard-removal-summary.json) is the rebuilt table: each row names removed sites/keywords, every flipping negative and its exact stay complement. The full table includes every explicit stay ID and every valid-control diff:
+History's `retained`, `authentic`, `admitted_when_written`, reader/withdrawal and access/deletion predicates have separate type and value controls. Boolean type removal retains opposite-boolean refusal. Sol's combined `retained="false"` plus `authentic=false` probe still refuses as `historical_provenance` under the retained-type cut in all nineteen families. It is supplementary two-defect evidence, never counted as a single-defect target.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/guard-removal-full.json.gz` — SHA-256 `e1b6f91418b29329fdcc93c8d4c189c016190ee9a3cd9e4a73e5140f181cfbf3`; decompressed SHA-256 `614e45977ce443282b4398e2947822a4f2ec41b07f30092a0ffde785e99757ad`.
+Malformed general key syntax, a well-formed key of the wrong scope, a valid foreign key, forbidden auth Project scope and an empty original Server have independent cuts. Conditional patterns retain peer restrictions. Server nonempty cuts retain CR/LF refusal. Replay-only denial stays separate from other unsupported current policies. A source partition negative leaves the independently valid physical partition intact. Persona import source fields each get a one-field negative. These restrictions prevent the earlier merged rows from returning through broader schema or runtime sites.
 
-Earlier schema/byte/helper boundary checks and adversarial malformed-copy regressions remain supplementary evidence. Their counts are not used as independent guard proof. The former detached schema matrix and its 392 boundary-set claim are superseded.
+## Family grades and complete matrix
 
-## Family grades and matrix counts
+Before is cycle 8's independent grade. P=PASS, p=PARTIAL, A=ABSENT. Only C12 changes. All after grades describe static preparation, never admission or native certification.
 
-P=PASS, p=PARTIAL, A=ABSENT. Before is cycle 7's independent grade; only C12 changes. Every after grade is prepared static evidence, not admission or runtime certification.
-
-| Family | Before | After | Complete negatives | Guard sets | Duplicate sets | Full evaluations |
+| Family | Before | After | Negatives | Guards | Duplicate sets | Matrix evaluations |
 |---|---|---|---:|---:|---:|---:|
-| `auth.github.authenticated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 157 | 36 | 19 | 5,652 |
-| `auth.github.device_code.issued` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 154 | 34 | 19 | 5,236 |
-| `auth.github.disconnected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 154 | 34 | 19 | 5,236 |
-| `auth.github.failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 154 | 34 | 19 | 5,236 |
-| `auth.github.token.polling` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `plugin.hook.blocked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 157 | 36 | 20 | 5,652 |
-| `plugin.hook.error` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `plugin.hook.invoked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `plugin.load_failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `plugin.loaded` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `plugin.permission.override` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `plugin.tool.collision` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `plugin.tool.registered` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 155 | 35 | 19 | 5,425 |
-| `persona.created` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 204 | 46 | 23 | 9,384 |
-| `persona.deleted` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 207 | 46 | 25 | 9,522 |
-| `persona.exported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 200 | 45 | 20 | 9,000 |
-| `persona.imported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 207 | 46 | 25 | 9,522 |
-| `persona.selected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 221 | 51 | 25 | 11,271 |
-| `persona.updated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 207 | 46 | 24 | 9,522 |
+| `auth.github.authenticated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 164 | 73 | 29 | 11,972 |
+| `auth.github.device_code.issued` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 161 | 71 | 29 | 11,431 |
+| `auth.github.disconnected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 161 | 71 | 29 | 11,431 |
+| `auth.github.failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 161 | 71 | 29 | 11,431 |
+| `auth.github.token.polling` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 29 | 11,664 |
+| `plugin.hook.blocked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 164 | 73 | 29 | 11,972 |
+| `plugin.hook.error` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
+| `plugin.hook.invoked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
+| `plugin.load_failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
+| `plugin.loaded` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
+| `plugin.permission.override` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
+| `plugin.tool.collision` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
+| `plugin.tool.registered` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
+| `persona.created` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 211 | 86 | 34 | 18,146 |
+| `persona.deleted` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 215 | 89 | 37 | 19,135 |
+| `persona.exported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 207 | 82 | 31 | 16,974 |
+| `persona.imported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 216 | 90 | 36 | 19,440 |
+| `persona.selected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 228 | 97 | 42 | 22,116 |
+| `persona.updated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 214 | 88 | 35 | 18,832 |
 
-## Standing checks and Astra classes
+## Earlier findings and standing controls
 
-| Check/class | Fresh verification and preserved boundary |
+All eleven standing checks pass in their static scope. All Astra classes were rechecked. The following overlapping suites are reported separately; their counts are not added to the guard matrix.
+
+| Earlier finding/control | Round-8 result |
 |---|---|
-| **Standing 1–3** | Every family refuses current/retry replay-only, reconstructs complete CV-366 application keys, and preserves encoded Project positives or the five auth Project refusals. |
-| **Standing 4–5 / Astra 6** | Complete event bodies, operations and selected resolutions are measured independently; real oversized-inline/referenced controls and patterned LF refusals remain. The independent run measures 91 positive stored-part sets. |
-| **Standing 6–7 / Astra 2** | Metadata-only retries preserve caller semantics; independent historical Storage sequence/time substitutions refuse and matching independently selected records pass. UUID/checkpoint/source joins refuse substitutions. |
-| **Standing 8–9 / Astra 5** | An accepted complete append cannot satisfy a failure oracle; wrong reasons also fail. Dormant `$ref`/`$dynamicRef` controls refuse during complete preflight, and all 408 stock refs resolve. |
-| **Standing 10 / Astra 3** | All retained-policy and compatibility positives survive later live-state changes. Withdrawn, forged, unadmitted, inaccessible and deleted originals still refuse. |
-| **Standing 11 / Astra 8** | The table above reruns complete callbacks for exact keyword/runtime-site mutants. All C7 integer/boolean targets flip with only their named duplicate enforcers removed; custody joins stay enabled. |
-| **Astra 1, 4, 7** | Forged IDs/families/frozen source copies refuse. Complete retry validates its original; operation/resolution recovery validates original-result custody and typed byte equality. Native owner/frame authentication remains upstream. |
-| **Astra 9** | C12's recovery is based on the rebuilt full-callback table. Membership, pending retention and native NOT_RUN are preserved. Current source citations are checked by exact text. |
-| **Astra 10 — rechecked all nineteen** | Decimal/exponent integer aliases and leading-zero input refuse. Signed zero has the same accepted integer/bytes/digest as zero. Genuine nullable/integer alternatives are explicitly accepted controls. |
-| **Astra 11 — rechecked all nineteen** | String booleans/numbers, null, arrays, nested objects, boolean/integer aliases and actual inline-body type changes refuse at the typed complete path. Source/history/Storage/resolved boolean duplicate sets expose their own targets. Four malformed-positive CLI forms per family produce **76 required exit-1 refusals**, never a successful negative exit. |
+| Sol C1 B1/B2/B4; Astra 1 B3/B4 | Six Persona preparations, canonical names, actual scope/home/mirror/protected/CAS/reach boundaries, real lineage and hook pre/post behavior rerun in owner/scope and pattern suites. |
+| Sol C1 B3 | Nineteen individual CURRENT_WRITER disposition substitutions refuse; no admission or current-writer claim added. |
+| Astra 1 B1/B2; standing 1–9 | CV-366 UTF-8/max/malformed keys, source/receipt/envelope joins, encoded Project cases, byte boundaries, independently sized complete values, custody and checkpoint mismatches, failure-exit controls and dormant refs rerun. General runner: 726 probes, 57 required exit-1 processes. Its 42 old diagnostic changes match cycle 8 exactly; no acceptance. |
+| Astra 2 B1/B2; Sol C4 B1 | Exact uncovered conditional refs refuse; old 1189 negatives stay refused. Old synthetic size masks remain separate from actual byte-stage proof. The obsolete mixed-operation-plus-ref heuristic still exits 1 as a diagnostic; complete bounded wrappers and authenticated recovery pass. |
+| Sol C5 B1/B2 | Exact 57 Storage substitutions refuse; matching independently selected originals and nineteen replay-only retained originals pass. Current append/retry still refuse replay-only. |
+| Astra 3 B1/B2/B3/S2 | 274 direct controls; four required malformed-positive process exits; 118 original individual-keyword controls. Exact giant resolution/event/operation physical sizing and corrupt/inaccessible/non-durable references rerun. |
+| Astra 3 S1 | Whole-branch authority audit unchanged; source pins reverified. Canonical sources, premise/application pairs and six historical report pins retained. |
+| Sol C7 B1; C8 B1/B2 | Complete callbacks retained. Independent deletion types, per-predicate cuts and site-by-site duplicate proofs now discharge check 11 for all nineteen. |
+| Pattern/owner scope | 2597 pattern/Persona checks; 58 owner/scope checks; zero failures. |
+| Own invariants / standing types | 1528 invariant probes and 2399 complete standing/type probes; zero failures. 76 separate required exit-1 typed-positive processes. |
+| Astra 10/10a/11/12 | Numeric/history/format and coherent-copy regressions rerun. Existing integer encoding, at-write policy selection and exact retained timestamp bytes stay unchanged; wrong types/forged recipe or Storage claims refuse. Number-domain adoption remains the shared sweep's job. No new lane-local range or serializer. |
 
-Independent current run: **2,399 stock complete-path/standing/type probes**, zero failures. CLI form results and exact refusal tails are in `cli-types.json`. These overlapping regression counts are not added to the guard-matrix count.
+Forged identity/digest/frozen joins refuse; Storage metadata remains independently bound; history survives later live changes while forged/withdrawn/deleted originals refuse; types stay exact; every stock schema ref resolves eagerly; complete stored parts stay bounded; retry/recovery validates original custody. Existing number-domain outcomes, including the inherited RFC 8785 integer-domain refusals in `record_contract` and the coherent-number replay, are retained for the shared CV-1100/SP-1100/SP-1101 sweep. They are not changed or claimed as a new lane-local number rule. Existing native owner/frame and generic SP-278 generation/publication authentication prerequisites remain unexecuted.
 
-## Earlier fixes, authority and IDs
+## Authority, bindings and IDs
 
-Preservation against `6518f9106dc9f362a64bf0de579dd1b17b3979d5` verifies **38 documented C7 case repairs**, with every other fixture entry unchanged. **47 original predicate/helper functions** are AST-identical; only the existing `run`/`check_append_contract` harnesses change, plus new complete-path helpers. Production payload/operation schemas, all owner prose and the whole-branch authority audit remain byte-identical. This retains all prior B1/B2/B3, S1/S2, custody, replay, reference, size, source/owner and historical fixes.
-
-The authority audit remains [DG6B.authority-audit.json](DG6B.authority-audit.json), SHA-256 `ecbbf476bde5d41437637cfd526549ffbaa29cdb140eceb7bff7196b4faf4038`. Its per-family current-canon searches, negative evidence, exact reused definitions, newly authored bindings and DL-045/DL-076 premise/application pairs remain intact. No new binding or decision is applied in this round. Current integration must retain newer main text; this repair does not claim a rebase.
+The whole-branch authority record is unchanged: [DG6B.authority-audit.json](DG6B.authority-audit.json), SHA-256 `ecbbf476bde5d41437637cfd526549ffbaa29cdb140eceb7bff7196b4faf4038`. Per-family current-canon searches, negative evidence, exact reused definitions, newly authored bindings and DL-045/DL-076 premise/application pairs remain intact. This round adds no owner binding or product decision and does not claim a rebase onto newer main.
 
 | Family | New semantic / Storage owner | Existing behavior citation; exact-family search hits | New consumer |
 |---|---|---|---|
@@ -107,26 +106,13 @@ The authority audit remains [DG6B.authority-audit.json](DG6B.authority-audit.jso
 | `persona.selected` | `P-124` / `SP-672` | `Plans/Personas.md:82`; 6 hits | `consumer.persona_selected.history@1.0.0` |
 | `persona.updated` | `P-125` / `SP-672` | `Plans/Personas.md:82`; 6 hits | `consumer.persona_updated.history@1.0.0` |
 
-**IDs used on the whole branch:** GAAAF-077..081, PLUG-131..138, P-120..125, SP-670..672, CV-690..691, ATS-335..336 (**26**). **Minted in round 7: zero.**
 
-## Commands, scope and evidence
+**IDs used on the whole branch:** GAAAF-077..081, PLUG-131..138, P-120..125, SP-670..672, CV-690..691, ATS-335..336 (**26**). **Minted in round 8: zero.**
 
-The serial command log records 19 normal family checks and 19 full guard matrices, all exit 0; every matrix also restores and runs a fresh complete normal checker. `--family <exact-name>` is supported by both tools. No parallel checker jobs or subagents were used. Resource checks enforce the 6 GB available-memory floor; initial worktree creation passed the 50 GB disk rule. Fifteen ignored currentness files were copied and hash-verified for index verification.
+## Verification, integration and retained evidence
 
-| Additional command/check | Exit |
-|---|---:|
-| `standing-types` | 0 |
-| `cli-types` | 0 |
-| `preservation` | 0 |
-| `projects-refresh` | 0 |
-| `github-integration` | 0 |
-| `primary-catalog` | 0 |
-| `shard-check` | 0 |
-| `index-validate` | 1 |
-| `storage-profiles` | 1 |
-| `diff-check` | 0 |
-| `preservation-type-exact` | 0 |
+Nineteen family checkers, nineteen full matrices and nineteen restored raw family checkers pass, serially. Disk availability was 92 GB and available RAM 8 GB before worktree creation; every checker enforces the 6 GB floor. Interrupted attempts that stopped below that floor are excluded; only complete reruns are counted. The interruption log is retained in `fix8/resource-interruptions.json`. Fifteen currentness files were copied and hash-verified. No canonical Markdown changed, so no derived regeneration or clock restamping was required; shard verification remains read-only.
 
-Index validation returns top-level **fail with 22 failures** (coverage passes; 7,447 PlanUnits); Storage profiles return **fail with 41 missing-profile errors**. Both match the cycle-7 input findings. These remain integration items; raw outputs and summaries are retained in `integration-notes.json`. The preservation audit was rerun with typed JSON comparison after ordinary Python equality merged five boolean/integer differences; its exact final count is 38 documented case repairs. No validator, baseline, generated evidence, shard/index, registry/admission, Decision Log, Spec Lock, auto-decisions or governance lock is changed. No new test file or native implementation is added. No main push or landing is performed. Initial read-only mailbox queries preceded reading the no-mail lane brief; no registration, send, reply or later mailbox use occurred.
+Index validation: top-level **fail, 23 errors**, coverage passes and 7,447 PlanUnits remain. Storage profiles: **41 missing-profile errors**. Storage matches the reviewed 41-error baseline. Index retains all 22 reviewed failures and adds one `stale_generated_index_artifact` for `Plans/.plan_index/node_readiness_report.json`; the copied ignored currentness edition differs from round 7. The exact difference and currentness hashes are in `fix8/integration-notes.json`. This is recorded as integration staleness; no readiness artifact or governance lock is regenerated. Preserve newer main text during integration. No governance artifact, baseline, admission/registry row, Decision Log, test file or native implementation changes. No mail, subagent, main push, landing, browser or server was used.
 
-Evidence/reproduction directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/`. `serial-commands.json`, `extra-commands.json`, `standing-types.json`, `cli-types.json`, `preservation.json` and the full guard table are pinned by the final manifest. The report and self-grade are copied to the DG6B drafts root. The worker worktree is removed after its pushed result is recorded.
+All round-8 reproduction scripts and results live under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix8/`. Earlier round-7 report, self-grade, table and evidence remain under `fix7/`. The report, self-grade and summary table are copied to the DG6B drafts root; the compressed complete table is copied there as well. The worker worktree is removed with a literal path after its branch is pushed.
