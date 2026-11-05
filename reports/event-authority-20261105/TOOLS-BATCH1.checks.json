@@ -1,0 +1,464 @@
+{
+  "tool_batch": 1,
+  "branch": "plans/tools-batch1-20261105",
+  "base": "451738fc0b869f5958d205e96b513af5290f7e5f",
+  "implementation": "f2a7eb0c99c9959130606b34df0d5353426c6e31",
+  "status": "PASS_LOCAL_VERIFICATION",
+  "independent_review": "NOT_RUN",
+  "T9": {
+    "vacuous": "fixed",
+    "reviewed_token_exemptions": "fixed",
+    "per_atom_targets": "supported",
+    "existing_grs027_ledger": {
+      "status": "vacuous",
+      "exit": 2,
+      "targets": 0,
+      "records": 0,
+      "tokens": 0,
+      "registries_checked": 0
+    },
+    "explicit_empty_override": {
+      "status": "vacuous_allowed_by_--allow-empty",
+      "exit": 0
+    }
+  },
+  "T8": {
+    "guard_tool_head": "dec0a57dce93238ab33452f6b7ca1c759435b587",
+    "witness_flat_distribution": "PASS",
+    "mount_unavailable": "PASS",
+    "scratch_override": "PASS",
+    "dependencies": "Python standard library; Git for --base and self-test"
+  },
+  "regressions": {
+    "caught": 42,
+    "total": 42,
+    "normal": "pass",
+    "optimized": "pass",
+    "standalone": "pass"
+  },
+  "assertions": 63,
+  "tests": [
+    {
+      "id": "nonempty-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "api-relative-ledger-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "missing-target-list-is-vacuous",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "empty-queue-is-vacuous",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "explicit-allow-empty",
+      "expected_status": "vacuous_allowed_by_--allow-empty",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "unscoped-reference-copy-is-not-a-target-finding",
+      "expected_status": "vacuous_allowed_by_--allow-empty",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "missing-owner-is-not-a-pass",
+      "expected_status": "vacuous_with_findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "allow-empty-cannot-waive-findings",
+      "expected_status": "vacuous_with_findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "retired-token-without-review-still-fails",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "held-token-without-review-still-fails",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "reviewed-retired-token-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "reviewed-held-token-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-reason",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-reviewed_by",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-review_ref",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-disposition",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-token",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-atom_id",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-queue_id",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-target_plan_unit_ids",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-review_ref-escape",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-status",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-linked_atom_ids",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-exact_tokens",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-exact_tokens-string",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "overlapping-exemptions-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "canonical-self-review-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "record-cone-escape-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "retirement-cannot-waive-active-token",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "retirement-cannot-waive-registry-hygiene",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "registry-is-not-prose-inline",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "registry-is-not-prose-block",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "per-atom-targets-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "per-atom-targets-cannot-borrow-peer",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "exemption-is-not-token-wide",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "prose-and-registry-must-share-owner",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "unchanged-repair-is-not-a-pass",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "changed-repair-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "new-unit-repair-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "digit-prefix-repair-is-not-skipped",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "invalid-base-is-read-error",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "unknown-source-atom-is-read-error",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "self-test",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "--self-test",
+        "--json"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "exit": 0,
+      "seconds": 0.41,
+      "available_before": 6988226560,
+      "available_after": 6945103872,
+      "stderr": ""
+    },
+    {
+      "name": "self-test-optimized",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-O",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "--self-test",
+        "--json"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "exit": 0,
+      "seconds": 0.993,
+      "available_before": 6948528128,
+      "available_after": 6857609216,
+      "stderr": ""
+    },
+    {
+      "name": "grs027-current",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "--root",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1",
+        "--json"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "exit": 2,
+      "seconds": 0.544,
+      "available_before": 6861418496,
+      "available_after": 6931259392,
+      "stderr": ""
+    },
+    {
+      "name": "grs027-explicit-empty",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "--root",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1",
+        "--allow-empty",
+        "--json"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "exit": 0,
+      "seconds": 0.461,
+      "available_before": 6929960960,
+      "available_after": 6855823360,
+      "stderr": ""
+    },
+    {
+      "name": "grs027-current-base",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1/scripts/pm-ledger-compile-witness.py",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "--root",
+        "/home/sittingmongoose/pm-worktrees/tools-batch1",
+        "--base",
+        "origin/main",
+        "--json"
+      ],
+      "cwd": "/home/sittingmongoose/pm-worktrees/tools-batch1",
+      "exit": 2,
+      "seconds": 1.45,
+      "available_before": 6855065600,
+      "available_after": 7120969728,
+      "stderr": ""
+    },
+    {
+      "name": "standalone-mount-denied",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/portability-driver.py",
+        "/tmp/witness-distribution-lww1pqx0"
+      ],
+      "cwd": "/tmp/other-project-_yzlf74n",
+      "exit": 0,
+      "seconds": 0.458,
+      "available_before": 7121805312,
+      "available_after": 7028219904,
+      "stderr": "{\"portability_exit\": 0, \"denied_paths\": []}\n"
+    },
+    {
+      "name": "standalone-scratch",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/witness-distribution-lww1pqx0/pm-ledger-compile-witness.py",
+        "--self-test",
+        "--scratch",
+        "/tmp/witness-distribution-lww1pqx0/scratch",
+        "--json"
+      ],
+      "cwd": "/tmp/other-project-_yzlf74n",
+      "exit": 0,
+      "seconds": 0.479,
+      "available_before": 7030734848,
+      "available_after": 6947102720,
+      "stderr": ""
+    }
+  ],
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1",
+  "protected_paths_changed": [],
+  "live_ledger_changes": []
+}
