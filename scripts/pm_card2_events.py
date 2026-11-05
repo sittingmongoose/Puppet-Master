@@ -458,6 +458,7 @@ def memory_fact_bad(e, c, payload_key, fact_key, side):
     return not strict_equal(actual, expected)
 
 
+@proof_value
 def semantic_digest(e):
     """The adopted EventRecord RFC 8785 recipe, not a Python equality proxy."""
     return hashlib.sha256(rfc8785.dumps({k: e[k] for k in SEMANTIC_FIELDS})).hexdigest()
