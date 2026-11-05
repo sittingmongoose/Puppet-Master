@@ -1,22 +1,18 @@
-// FO-68: the red failure status word on a real failed-install row ("Install failed") reads 4.5:1 or more
-// against the ground painted under its own stems, in all ten looks. Rows are reached by real clicks on two
-// routes (the fresh AI screen, and Name -> Copy Tastebook settings -> Safe -> Review/Create -> AI), once per
-// failure reason. Glass is measured at every size, every visible pane scroll position (top/+80/middle/bottom),
-// with the pointer away, on the row and with keyboard focus on the row's Try again (the pointer and focus
-// states on the Permission row; the other reasons at rest); the other looks at a wide and a narrow size. Four-paint opaque glyph mask (helpers/painted-text.mjs), so only fully covered stems count.
+// FO-68/74: real failure routes, every requested look/size, painted ink and non-overlapping recovery.
 import {paintedText} from '../helpers/painted-text.mjs';
 const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
 const SIZES=[[740,900],[860,900],[1024,900],[1280,900],[1280,500],[1390,900],[1920,900]];
-const REASONS=['permission','offline','unsupported','verify'];
+const REASONS=['permission','offline','unsupported','verify','expired','signin','signinOffline','connection'];
 const HINTS=['works','offline','unsupported','permission','verify'];
 const list=(v,all)=>v?String(v).split(','):all;
 
-async function freshRoute(t,f){
- await f.evaluate(()=>O55.studio.onboarding.screen('ai-all','fresh'));
+const scenario=code=>code==='expired'?'claudeExpired':code==='signinOffline'?'signedOut+aiOffline':code==='signin'?'signedOut+antigravityOnce':'cliMissing';
+async function freshRoute(t,f,code){
+ await f.evaluate(fixture=>O55.studio.onboarding.screen('ai-all',fixture),scenario(code));
  await f.waitForFunction(()=>O55.S.sess&&O55.S.sess.screen==='ai-all');await t.settle();
 }
-async function copiedRoute(t,f){
- await f.evaluate(()=>O55.studio.onboarding.screen('name','returning+cliMissing'));
+async function copiedRoute(t,f,code){
+ await f.evaluate(fixture=>O55.studio.onboarding.screen('name','returning+'+fixture),scenario(code));
  const screen=async id=>{await f.waitForFunction(id=>O55.S.sess&&O55.S.sess.screen===id,id);await t.settle();};
  const next=async()=>f.locator('#pm-o55-onboarding [data-o55-do="next"]:visible').last().click();
  await screen('name');await f.locator('[data-o55-bind="name"]').fill('Failed status contrast check');await next();
@@ -26,6 +22,19 @@ async function copiedRoute(t,f){
  await t.check('copied route copies Tastebook settings',await f.evaluate(()=>{const d=O55.S.sess.drafts.main;return d.settings_transfer.mode==='copy_from_project'&&d.settings_transfer.source_project_id==='tastebook';}));
 }
 async function fail(t,f,code){
+ if(code==='expired')return;
+ if(code==='signin'||code==='signinOffline'){
+  const id=code==='signin'?'antigravity':'claude';
+  await f.locator(`[data-o55-do="signin"][data-arg="${id}"]`).click();
+  await f.waitForFunction(id=>O55.S.sess.ai.accounts[id]?.state==='signinFailed',id);await t.settle();return;
+ }
+ if(code==='connection'){
+  await f.locator('[data-o55-do="server"][data-arg="opencode-runtime"]').click();
+  await f.locator('[data-o55-do="ocMode"][data-arg="attached"]').click();
+  await f.locator('#o55f-ocaddr').fill('http://192.168.1.99:4096');
+  await f.locator('[data-o55-do="ocConnect"]').click();
+  await f.waitForFunction(()=>O55.S.sess.ai.accounts['opencode-runtime']?.state==='connectFailed');await t.settle();return;
+ }
  await f.locator('#pm-o55-onboarding [data-o55-do="install"][data-arg="claude"]').click();
  const hints=f.locator('[data-key="dh-install:claude"] button');
  await hints.nth(HINTS.indexOf(code)).click();
@@ -56,36 +65,56 @@ export default async function(t){
  await t.check(`motion ${on?'on':'reduced'} as asked`,await f.evaluate(on=>O55.motion.reduced()!==on,on));
  const looks=list(t.args.looks,LOOKS),routes=list(t.args.routes,['fresh','copied']),reasons=list(t.args.reasons,REASONS);
  const sizes=SIZES.filter(([w,h])=>!t.args.widths||String(t.args.widths).split(',').includes(String(w)));
+ await t.check('valid nonempty selection',sizes.length>0&&looks.length>0&&reasons.length>0&&reasons.every(x=>REASONS.includes(x))&&looks.every(x=>LOOKS.includes(x)));
  let lowest={contrast:Infinity};
  for(const route of routes)for(const code of reasons){
   await t.viewport(1390,900);
-  if(route==='fresh')await freshRoute(t,f);else await copiedRoute(t,f);
+  if(route==='fresh')await freshRoute(t,f,code);else await copiedRoute(t,f,code);
   await fail(t,f,code);
+  await f.evaluate(on=>O55.studio.looks.setReduced(!on),on);
   await t.check(`${route} ${code} motion still ${on?'on':'reduced'}`,await f.evaluate(on=>O55.motion.reduced()!==on,on));
-  const row=f.locator('#pm-o55-onboarding [data-key="pv-claude"]'),pill=row.locator('.o55-pill-fail');
+  const id=code==='connection'?'opencode-runtime':code==='signin'?'antigravity':'claude';
+  const row=f.locator(`#pm-o55-onboarding [data-key="pv-${id}"]`),pill=row.locator('.o55-pill-fail');
+  const expected=code==='expired'?'expired':code.startsWith('signin')?'signinFailed':code==='connection'?'connectFailed':'installFailed';
+  if(t.args.sabotage==='overlap')await row.evaluate(e=>e.querySelector('.o55-rowmeta').style.transform='translateY(25px)');
+  if(t.args.sabotage==='ink')await pill.evaluate(e=>e.style.setProperty('color','var(--text-secondary)','important'));
+  await pill.waitFor({state:'visible'});
   await t.check(`${route} ${code} row shows one failure status`,await pill.count()===1);
-  const reason=await f.evaluate(code=>O55.t('ai.installFailure.'+code),code);
+  const reason=await f.evaluate(code=>O55.t(code==='expired'?'ai.expired.title':code.startsWith('signin')?'ai.signinFail.title':code==='connection'?'ai.oc.failTitle':'ai.installFailure.'+code),code);
   await t.check(`${route} ${code} row keeps its reason`,(await row.innerText()).replace(/\s+/g,' ').includes(reason.replace(/\s+/g,' ')));
   if(await pill.count()!==1)continue;
   for(const look of looks){
    await applyLook(t,f,look);
-   await t.check(`${route} ${code} ${look} install still failed`,await f.evaluate(()=>O55.S.sess.ai.accounts.claude.state==='installFailed'));
+   await t.check(`${route} ${code} ${look} install still failed`,await row.getAttribute('data-state')===expected);
    const glass=look.startsWith('glass');
-   for(const [w,h] of (glass?sizes:sizes.filter(([w,h])=>(w===1390||w===740)&&h===900))){
+   for(const [w,h] of sizes){
+    let measured=0;
     await t.viewport(w,h);await t.page.mouse.move(1,1);await t.settle();
-    await pill.scrollIntoViewIfNeeded();await t.settle();
-    const {scroller,range}=await scrollRange(pill);
+    await row.locator('.o55-row').scrollIntoViewIfNeeded();await t.settle();
+    const {scroller,range}=await scrollRange(row.locator('.o55-row'));
     await t.check(`${route} ${code} ${look} ${w}x${h} status visible scroll range`,range.hi>=range.lo,JSON.stringify(range));
     const positions=glass?[...new Set([range.lo,Math.min(range.hi,range.lo+80),Math.round((range.lo+range.hi)/2),range.hi])]:[Math.round((range.lo+range.hi)/2)];
     for(const pos of positions){
      await scroller.evaluate((s,n)=>s.scrollTop=n,pos);
-     for(const state of (code!=='permission'?['rest']:glass?['rest','hover','focus']:['rest','hover'])){
+     for(const state of ['rest','hover','focus']){
       await t.page.mouse.move(1,1);await f.evaluate(()=>document.activeElement&&document.activeElement.blur&&document.activeElement.blur());
       if(state==='hover'){const b=await row.boundingBox();await t.page.mouse.move(b.x+b.width*0.5,b.y+b.height/2);}
-      if(state==='focus'){const btn=row.locator('[data-o55-do="install"][data-arg="claude"]');await t.page.keyboard.press('Tab');await btn.focus();
+      if(state==='focus'){const btn=row.locator('.o55-row > button:not(.o55-tipq)');await t.page.keyboard.press('Tab');await btn.focus();
        await t.check(`${route} ${code} ${look} ${w}x${h} Try again keyboard focus`,await btn.evaluate(e=>e.matches(':focus-visible')));}
-      await t.settle();
+      await scroller.evaluate((s,n)=>s.scrollTop=n,pos);await t.settle();
+      await t.check(`${look} ${code} ${w} ${state} requested scroll restored`,Math.abs(await scroller.evaluate(s=>s.scrollTop)-pos)<=1);
+      if(state==='focus')await t.visible(row.locator('.o55-row > button:not(.o55-tipq)'), 'focused recovery action remains visible');
+      const boxes=await row.evaluate(e=>{
+       const parts=[...e.querySelector('.o55-row').children];
+       const rects=parts.map(n=>{const r=document.createRange();r.selectNodeContents(n);return {name:n.className,rects:[...r.getClientRects()].map(b=>({x:b.x,y:b.y,r:b.right,b:b.bottom}))};});
+       const collisions=[];
+       for(let i=0;i<rects.length;i++)for(let j=i+1;j<rects.length;j++)for(const a of rects[i].rects)for(const b of rects[j].rects)
+        if(Math.min(a.r,b.r)-Math.max(a.x,b.x)>1&&Math.min(a.b,b.b)-Math.max(a.y,b.y)>1)collisions.push([rects[i].name,rects[j].name]);
+       return collisions;
+      });
+      await t.check(`${route} ${code} ${look} ${w}x${h} ${state} recovery has separate text boxes`,boxes.length===0,JSON.stringify(boxes));
       const before=await scroller.evaluate(s=>s.scrollTop),p=await paintedText(pill),after=await scroller.evaluate(s=>s.scrollTop);
+      measured++;
       const label=`${route} ${code} ${look} ${w}x${h} scroll ${before}/${range.max} ${state}`;
       t.log(JSON.stringify({label,count:p.count,minimum:p.minimum,brightest:p.brightest}));
       await t.check(label+' retains scroll',before===after,`${before} -> ${after}`);
@@ -95,8 +124,10 @@ export default async function(t){
        await t.crop('glass-dark-copied-permission-failure',row,'Glass Dark keeps its tinted material behind a legible Install failed status');
      }
     }
+    await t.check(`${route} ${code} ${look} ${w}x${h} measured painted cells`,measured>0);
    }
   }
  }
+ await t.check('selection measured at least one painted cell',Number.isFinite(lowest.contrast));
  t.log('LOWEST '+JSON.stringify(lowest));
 }

@@ -540,6 +540,19 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 .o55-labq { display: inline-flex; align-items: center; gap: 8px; }
 #pm-o55-onboarding .o55-row.o55-row-q { grid-template-columns: auto minmax(0, 1fr) auto auto auto; }
 .o55-row-q > .o55-tipq { grid-column: 5; }
+/* Provider rows follow the available pane, including split and short windows. Reserve
+   the prose line before fixed status/action widths can squeeze it out (FO-74). */
+.o55-provider { container-type: inline-size; container-name: o55-provider; }
+.o55-provider .o55-rowmeta { overflow: visible; overflow-wrap: anywhere; }
+@container o55-provider (max-width: 640px) {
+  #pm-o55-onboarding .o55-row.o55-row-q { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .o55-provider .o55-row > :first-child { grid-column: 1; grid-row: 1; }
+  .o55-provider .o55-row > .o55-rowtext { grid-column: 2; grid-row: 1; }
+  .o55-provider .o55-row > .o55-pill { grid-column: 2; grid-row: 2; }
+  .o55-provider .o55-row > button:not(.o55-tipq) { grid-column: 2; grid-row: 3; justify-self: start; }
+  .o55-provider .o55-row-q > .o55-tipq { grid-column: 3; grid-row: 1; }
+}
+
 /* a chosen card's ? stays readable on the chosen material (Retro's reverse video, NieR's ink stops short of it) */
 #pm-o55-onboarding[data-family="retro"] .o55-tipq { border-radius: 0; border-width: 2px; font-family: var(--display-font); }
 #pm-o55-onboarding[data-family="retro"] .o55-opt-on > .o55-card + .o55-tipq:not([aria-expanded="true"]) { color: var(--o55-on-accent); border-color: var(--o55-on-accent); }
