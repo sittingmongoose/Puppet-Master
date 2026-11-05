@@ -39,6 +39,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("round9_"):
+        return round9_probe(g, trap, memory)
     if kind.startswith("round8_"):
         return round8_probe(g, trap, memory)
     if kind.startswith("round7_"):
@@ -1375,6 +1377,8 @@ def round6_probe(g, trap, memory):
                 composition_cross_product(g, memory)
             except AssertionError as exc:
                 return {'matrix_rejected_injected_constant_cut': str(exc)}, 'True, True, True' in str(exc)
+            except g.IsolationError as exc:
+                return {'locality_verifier_rejected_injected_constant_cut': str(exc)}, 'cut atom' in str(exc)
             return {}, False
         finally:
             g.AstGuards._compose_refusal = original
@@ -1590,3 +1594,241 @@ def round8_probe(g, trap, memory):
         clone = module.clone(frozenset())
         return {'baseline': clone.check({'x': 0, 'y': 0})}, clone.check({'x': 0, 'y': 0}) == 0
     raise ValueError('unknown round8 trap ' + trap['kind'])
+
+
+def round9_probe(g, trap, memory):
+    """Exact cycle-9 sources/inputs plus structural clone-boundary regressions."""
+    import ast
+    import dis
+    import math
+    import struct
+    import types
+    import warnings
+    warnings.filterwarnings('ignore', category=SyntaxWarning)
+    plain = 'def check(v):\n    if v["x"] < 0:\n        raise ValueError("bad")\n    if v["y"] < 0:\n        raise ValueError("bad")\n    return True\n'
+    inputs = trap.get('inputs', [{'x': 0, 'y': 0}, {'x': -1, 'y': 0}, {'x': 0, 'y': -1}])
+    def compile_env(source, level=0):
+        env = {}; exec(compile(source, '<round9-original>', 'exec', optimize=level, dont_inherit=True), env)
+        return env
+    def outcome(fn, value, zero=False):
+        try: result = fn(value)
+        except (AssertionError, ValueError) as exc: return g.Outcome.refuse(str(exc))
+        return g.Outcome.accept() if (type(result) is int and result == 0 if zero else result is True) else g.Outcome.refuse('bad')
+    def vector(fn, values=inputs, zero=False):
+        return [outcome(fn, v, zero).accepted for v in values]
+    def target(module, function='check'):
+        return next(c for c in module.candidates() if c['function'] == function and c['expression'] == "v['x'] < 0")
+    def register(module, function='check'):
+        return module.register(target(module, function), 'bad', g.Invariant('/x', 'nonnegative'))
+    def replace_constant(env, predicate, value):
+        fn = env['check']; values = list(fn.__code__.co_consts)
+        indices = [i for i, v in enumerate(values) if predicate(v)]
+        assert len(indices) == 1, (indices, values)
+        values[indices[0]] = value; fn.__code__ = fn.__code__.replace(co_consts=tuple(values))
+
+    if trap['kind'] == 'round9_review_probe':
+        label, source = trap['label'], trap['source']
+        env = compile_env(source)
+        zero = label.startswith('post-construction-optimize-')
+        if label == 'different-defaults': env['check'].__defaults__ = (0,)
+        if label == 'different-kwdefaults': env['check'].__kwdefaults__ = {'y_floor': 0}
+        if label == 'different-function-globals':
+            env['FLOOR'] = 0; env = dict(env); env['FLOOR'] = -1
+        if label.startswith(('observable-', 'nonreflective-')):
+            field = label.split('-', 1)[1]
+            values = dict(co_filename='<patched-original>', co_firstlineno=700, co_linetable=b'', co_qualname='outer.<locals>.check')
+            env['check'].__code__ = env['check'].__code__.replace(**{field: values[field]})
+        if label == 'sibling-refusal-function-attributes': env['peer'].enforce_y = True
+        if label == 'decorated-code-mismatch-keeps-refusal':
+            other = compile_env(source.replace('if v["y"] < 0:', 'if not (v["y"] >= 0):'))
+            env['peer'] = types.FunctionType(other['peer'].__code__, env, 'peer')
+        if label == 'sibling-original-alias-control': env['alias'] = env['guarded']
+        if label == 'tuple-int-versus-bool': replace_constant(env, lambda v: type(v) is tuple and v == (1,), (True,))
+        if label == 'frozenset-int-versus-bool': replace_constant(env, lambda v: type(v) is frozenset, frozenset({True, 2}))
+        if label == 'negative-zero-versus-positive-zero': replace_constant(env, lambda v: type(v) is float and struct.pack('>d', v).hex() == '8000000000000000', 0.0)
+        if label == 'scalar-float-versus-bool': replace_constant(env, lambda v: type(v) is float and v == 1.0, True)
+        if label in ('nan-sign', 'nan-payload', 'nan-sign-and-payload'):
+            bits = {'nan-sign': '7ff8000000000000', 'nan-payload': 'fff8000000000001', 'nan-sign-and-payload': '7ff8000000000042'}[label]
+            env.update(struct=struct, NAN_BYTES=bytes.fromhex(bits))
+            replace_constant(env, lambda v: type(v) is float and math.isnan(v), struct.unpack('>d', bytes.fromhex(bits))[0])
+        if label.startswith('equal-'):
+            kind = {'equal-tuple-distinct-identity': tuple, 'equal-frozenset-distinct-identity': frozenset, 'equal-nan-bits-distinct-identity': float}[label]
+            env['MARKER'] = next(c for c in env['check'].__code__.co_consts if type(c) is kind)
+        if label == 'undecorated-closure-original':
+            factory = 'def factory(floor):\n' + ''.join('    ' + line + '\n' for line in source.splitlines()) + '    return check\n'
+            factory_env = compile_env(factory); env = {'check': factory_env['factory'](0), 'floor': 0}
+        if label == 'decorated-refusing-closure-cell': env['peer'].__closure__[0].cell_contents = 0
+        stage = 'construction'
+        try:
+            module = g.AstGuards(trap['id'], source, env)
+            if label == 'post-construction-rebind': env['check'] = types.FunctionType(compile_env(plain)['check'].__code__, env, 'check')
+            if label == 'post-construction-code-replace': env['check'].__code__ = compile_env(plain)['check'].__code__
+            if zero:
+                level = int(label.rsplit('-', 1)[1]); env['check'] = types.FunctionType(compile_env(source, level)['check'].__code__, env, 'check')
+            stage = 'registration-or-clone'
+            gid = register(module, 'guarded' if label == 'sibling-original-alias-control' else 'check')
+            baseline = vector(module.clone(frozenset()).check, zero=zero)
+            cut = module.clone(frozenset({gid})); cut_vector = vector(cut.check, zero=zero)
+            actual = vector(env['check'], zero=zero)
+            assert baseline == actual == [True, False, False], (label, baseline, actual)
+            assert cut_vector == ([True, False, False] if label == 'sibling-original-alias-control' else [True, True, False]), (label, cut_vector)
+            fields = ('x',) if trap['mode'] == 'single' else ('x', 'y')
+            dispositions = {c['id']: g.Classification(c['id'], 'selector', 'unconditional terminal success') for c in module.candidates() if c['expression'] == 'True' and c.get('predicate_count') == 0}
+            suite = g.Suite(trap['id'], lambda v, state: outcome(state.modules[module.name].check, v, zero),
+                            [g.Control('valid', inputs[0], 'synthetic')],
+                            [g.Negative(f, inputs[1 if f == 'x' else 2], gid, 'bad', 'valid', 'only /' + f) for f in fields],
+                            modules=[module], code_dispositions=dispositions)
+            report = g.run(suite, memory=memory)
+            row = next(r for r in report['rows'] if r['id'] == gid)
+            assert row['proved'] == (trap['mode'] == 'single' and label != 'sibling-original-alias-control')
+            assert all(c['identical'] for c in report['original_baseline_controls'])
+            return {'baseline': baseline, 'cut_vector': cut_vector, 'report': report}, True
+        except g.IsolationError as exc:
+            # The seven nonreflective/default/sibling controls must stay usable.
+            must_cut = label in ('different-defaults', 'different-kwdefaults', 'ordinary-sibling-rebind-control', 'sibling-original-alias-control') or label.startswith('nonreflective-')
+            return {'refused_at': stage, 'reason': str(exc)}, not must_cut
+
+    if trap['kind'] == 'round9_state_boundaries':
+        rows = []
+        mutations = {
+            'rebind': lambda env: env.update(check=types.FunctionType(env['check'].__code__, env)),
+            'code': lambda env: setattr(env['check'], '__code__', env['check'].__code__.replace()),
+            'defaults': lambda env: setattr(env['check'], '__defaults__', (1,)),
+            'kwdefaults': lambda env: setattr(env['check'], '__kwdefaults__', {'floor': 1}),
+            'attributes': lambda env: env['check'].state.append(1),
+            'name': lambda env: setattr(env['check'], '__name__', 'changed'),
+            'qualname': lambda env: setattr(env['check'], '__qualname__', 'changed'),
+            'module': lambda env: setattr(env['check'], '__module__', 'changed'),
+            'doc': lambda env: setattr(env['check'], '__doc__', 'changed'),
+            'annotations': lambda env: env['check'].__annotations__.update(returned='changed'),
+            'annotate': lambda env: setattr(env['check'], '__annotate__', lambda fmt: {}),
+            'type-params': lambda env: setattr(env['check'], '__type_params__', ('changed',)),
+            'nested-default': lambda env: env['check'].__defaults__[0].append(1),
+            'nested-kwdefault': lambda env: env['check'].__kwdefaults__['floor'].append(1),
+        }
+        for label, mutate in mutations.items():
+            env = compile_env(plain); env['check'].state = []
+            env['check'].__defaults__ = ([],); env['check'].__kwdefaults__ = {'floor': []}
+            module = g.AstGuards('state/' + label, plain, env); gid = register(module)
+            mutate(env)
+            refused = []
+            for cuts in (frozenset(), frozenset({gid})):
+                try: module.clone(cuts)
+                except g.IsolationError: refused.append(True)
+                else: refused.append(False)
+            assert all(refused), label
+            rows.append({'state': label, 'uncut_and_cut_refused': refused})
+        for label in ('alias-rebind', 'alias-state', 'closure-cell'):
+            source = plain if label != 'closure-cell' else 'def identity(fn):\n    return fn\n\n@identity\n' + plain
+            env = compile_env(source)
+            if label == 'closure-cell':
+                def helper_factory():
+                    floor = 0
+                    def require(ok, code):
+                        if not ok and floor == 0: raise ValueError(code)
+                    return require
+                env['require'] = helper_factory()
+            else: env['alias'] = env['check']
+            module = g.AstGuards('state/' + label, source, env)
+            if label == 'alias-rebind': env['alias'] = types.FunctionType(env['check'].__code__, env)
+            elif label == 'alias-state': env['alias'].changed = True
+            else: env['require'].__closure__[0].cell_contents = 1
+            try: module.clone(frozenset())
+            except g.IsolationError: rows.append({'state': label, 'uncut_refused': True})
+            else: raise AssertionError(label)
+        return {'states': rows}, True
+
+    if trap['kind'] == 'round9_full_state_locality':
+        source = plain.replace('def check(v):', 'def check(v, floor=-1, *, other=-1):').replace('v["y"] < 0', 'v["y"] < floor')
+        source = source.replace('    return True', '    if v["y"] in (1000,) or v["y"] in {2000, 3000}:\n        raise ValueError("unused")\n    ignored = 1e999-1e999\n    return True')
+        env = compile_env(source); fn = env['check']
+        fn.__defaults__, fn.__kwdefaults__ = (0,), {'other': 0}
+        fn.flag = ['retained']; fn.__qualname__ = 'custom.check'; fn.__module__ = 'custom'; fn.__doc__ = 'runtime doc'
+        fn.__annotations__ = {'return': 'bool'}; fn.__type_params__ = ('parameter-marker',)
+        module = g.AstGuards('state-copy', source, env); gid = register(module)
+        clones = [module.clone(cuts).check for cuts in (frozenset(), frozenset({gid}))]
+        for clone in clones:
+            assert clone.__defaults__ is fn.__defaults__ and clone.__kwdefaults__ is fn.__kwdefaults__ and clone.__closure__ is fn.__closure__
+            assert clone.__dict__ == fn.__dict__ and clone.flag is fn.flag
+            for attr in ('__name__', '__qualname__', '__module__', '__doc__', '__annotations__', '__type_params__'):
+                assert getattr(clone, attr) == getattr(fn, attr), attr
+            assert all(a is b for a, b in zip(fn.__code__.co_consts, clone.__code__.co_consts))
+            assert clone.__code__.co_linetable == fn.__code__.co_linetable
+        assert clones[0].__code__ is fn.__code__
+        assert vector(clones[0]) == [True, False, False] and vector(clones[1]) == [True, True, False]
+        # Every changed byte is in the original first scalar comparison, and
+        # every code field other than instructions/constant append is identical.
+        atom = next(n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Compare))
+        spans = []
+        instructions = list(dis.get_instructions(fn))
+        for i, ins in enumerate(instructions):
+            p = ins.positions
+            if p.lineno == atom.lineno and p.col_offset is not None and atom.col_offset <= p.col_offset and p.end_col_offset <= atom.end_col_offset and ins.opcode not in dis.hasjump and ins.opname != 'NOT_TAKEN':
+                spans.extend(range(ins.offset, instructions[i + 1].offset))
+        changed = [i for i, (a, b) in enumerate(zip(fn.__code__.co_code, clones[1].__code__.co_code)) if a != b]
+        assert changed and set(changed) <= set(spans)
+        for attr in dir(fn.__code__):
+            if attr.startswith('co_') and attr not in ('co_code', 'co_consts', 'co_lnotab') and not callable(getattr(fn.__code__, attr)):
+                assert getattr(fn.__code__, attr) == getattr(clones[1].__code__, attr), attr
+        # Preserve lazy annotation machinery without evaluating source defaults
+        # or annotations in the clone's namespace; source future flags stay local.
+        for prefix in ('', 'from __future__ import annotations\n'):
+            annotated = prefix + plain.replace('def check(v):', 'def check(v: dict) -> bool:')
+            annotated_env = compile_env(annotated)
+            backend = g.AstGuards('annotated/' + str(bool(prefix)), annotated, annotated_env)
+            cut_id = register(backend); original = annotated_env['check']
+            cloned = backend.clone(frozenset({cut_id})).check
+            assert getattr(cloned, '__annotate__', None) is getattr(original, '__annotate__', None)
+            assert cloned.__annotations__ == original.__annotations__
+            assert vector(cloned) == [True, True, False]
+        return {'changed_instruction_bytes': changed, 'cut_span': sorted(set(spans)), 'vectors': [vector(c) for c in clones], 'annotation_modes': 2}, True
+
+    if trap['kind'] == 'round9_source_subset':
+        import inspect
+        expressions = ['check.__code__', 'check.__defaults__', 'check.__kwdefaults__', 'check.__globals__', 'check.__dict__', 'check.__closure__',
+                       'inspect.currentframe()', 'sys._getframe()', 'traceback.extract_stack()', 'id(v)', 'globals()', 'locals()', 'vars()',
+                       '(1000,) is MARKER', 'v is not MARKER', 'identity_alias(v)', 'frame_alias()', 'getattr(check, "__code__")']
+        rows = []
+        for expression in expressions:
+            source = plain.replace('return True', 'unused = ' + expression + '\n    return True')
+            env = compile_env(source); env.update(inspect=inspect, sys=sys, MARKER=(1000,), identity_alias=id, frame_alias=sys._getframe)
+            module = g.AstGuards('subset/' + expression, source, env)
+            assert not any(c.get('cut') for c in module.candidates() if c['function'] == 'check')
+            try: register(module)
+            except g.IsolationError as exc: rows.append({'expression': expression, 'refused': str(exc)})
+            else: raise AssertionError(expression)
+        for singleton in ('None', 'True', 'False'):
+            source = plain.replace('if v["y"] < 0:', 'if v["y"] < 0 and MARKER is ' + singleton + ':')
+            env = compile_env(source); env['MARKER'] = eval(singleton)
+            module = g.AstGuards('singleton/' + singleton, source, env); register(module)
+        return {'refusals': rows, 'singleton_controls': 3}, True
+
+    if trap['kind'] == 'round9_original_baseline_gate':
+        source = 'def peer(v):\n    if v["y"] < 0 and peer.enforce_y:\n        raise ValueError("bad")\n    return True\n\n' + plain.replace('    if v["y"] < 0:\n        raise ValueError("bad")\n    return True', '    return peer(v)')
+        env = compile_env(source); env['peer'].enforce_y = True
+        module = g.AstGuards('baseline-gate', source, env)
+        def runner(v, state): return outcome(state.modules[module.name].check, v)
+        suite = g.Suite('baseline-gate', runner, [g.Control('valid', inputs[0], 'synthetic'), g.Control('y', inputs[2], 'synthetic')], [], modules=[module])
+        copy_function = g._copy_function
+        def lose_state(original, code, namespace):
+            clone = copy_function(original, code, namespace)
+            if original is env['peer']: clone.enforce_y = False
+            return clone
+        try:
+            g._copy_function = lose_state
+            report = g.run(suite, memory=memory)
+        finally: g._copy_function = copy_function
+        assert report['status'] == 'FAIL' and not report['rows']
+        assert any(not c['identical'] for c in report['original_baseline_controls'])
+        return report, True
+
+    if trap['kind'] == 'round9_physical_complex':
+        values = [struct.unpack('>d', bytes.fromhex(bits))[0] for bits in ('fff8000000000000', '7ff8000000000000', 'fff8000000000001', '7ff8000000000042')]
+        for wrap in (lambda x: x, lambda x: complex(x, -0.0), lambda x: (frozenset({x}), complex(0.0, x))):
+            assert len({g._constant_fingerprint(wrap(v)) for v in values}) == 4
+        assert g._constant_fingerprint(complex(-0.0, 0.0)) != g._constant_fingerprint(complex(0.0, -0.0))
+        try: g._constant_fingerprint(object())
+        except g.IsolationError: pass
+        else: raise AssertionError('unsupported constant fingerprint accepted')
+        return {'physical_nan_variants': 4, 'recursive_wrappers': 3, 'unsupported_refused': True}, True
+    raise ValueError('unknown round9 trap ' + trap['kind'])

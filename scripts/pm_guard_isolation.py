@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import ast
 import copy
+import dis
 from dataclasses import asdict, dataclass, field, replace
 import hashlib
 import importlib.util
@@ -1019,26 +1020,80 @@ class CodeSite:
     target: dict = field(default_factory=dict)
 
 
-def _code_fingerprint(code):
-    """Semantic identity of a code object, recursively (review C8-B1).
+def _constant_fingerprint(value):
+    """Exact type/physical value, including nested NaN payloads. Never repr()."""
+    kind = type(value)
+    if kind is types.CodeType:
+        return ("code", _code_fingerprint(value))
+    if kind in (tuple, frozenset):
+        items = [_constant_fingerprint(item) for item in value]
+        return (kind.__name__, tuple(sorted(items) if kind is frozenset else items))
+    if kind is slice:
+        return ("slice", tuple(_constant_fingerprint(v) for v in (value.start, value.stop, value.step)))
+    if kind is float:
+        return ("float", struct.pack(">d", value))
+    if kind is complex:
+        return ("complex", struct.pack(">dd", value.real, value.imag))
+    if kind in (type(None), bool, int, str, bytes) or value is Ellipsis:
+        return (kind.__name__, value if value is not Ellipsis else "ellipsis")
+    raise IsolationError("unsupported code constant type: " + kind.__name__)
 
-    Covers the instructions and every table they index: constants (with their
-    exact types and values, so True/False, 0/0.0/-0.0 and strings differ),
-    names, locals, free and cell variables, argument counts, flags and the
-    exception table. Only source positions are excluded (file name, first line
-    and line table), because the same source compiled whole or alone differs
-    there and nowhere else.
-    """
-    def constant(value):
-        if isinstance(value, types.CodeType):
-            return ("code", _code_fingerprint(value))
-        if isinstance(value, (tuple, frozenset)):
-            items = [constant(item) for item in value]
-            return (type(value).__name__, tuple(sorted(items, key=repr) if isinstance(value, frozenset) else items))
-        return (type(value).__name__, repr(value))
-    return (code.co_name, code.co_code, tuple(constant(c) for c in code.co_consts), code.co_names,
+
+def _code_fingerprint(code):
+    """Executable source identity; positional differences require the subset below."""
+    return (code.co_name, code.co_code, tuple(_constant_fingerprint(c) for c in code.co_consts), code.co_names,
             code.co_varnames, code.co_freevars, code.co_cellvars, code.co_argcount,
-            code.co_posonlyargcount, code.co_kwonlyargcount, code.co_flags, code.co_exceptiontable)
+            code.co_posonlyargcount, code.co_kwonlyargcount, code.co_flags, code.co_exceptiontable,
+            code.co_stacksize, code.co_nlocals)
+
+
+def _state_token(value, seen=None):
+    """Immutable snapshot of supported state, with object identity and container contents."""
+    seen = set() if seen is None else seen
+    kind = type(value)
+    if id(value) in seen:
+        return ("cycle", id(value))
+    seen = seen | {id(value)}
+    if kind in (dict, list, tuple, set, frozenset):
+        items = (tuple((_state_token(k, seen), _state_token(v, seen)) for k, v in value.items())
+                 if kind is dict else tuple(_state_token(v, seen) for v in value))
+        return (kind.__name__, id(value), frozenset(items) if kind in (set, frozenset) else items)
+    if kind is types.FunctionType:
+        return ("function", id(value), _function_state(value, seen))
+    if kind is types.CodeType:
+        return ("code", id(value), _code_fingerprint(value), value.co_filename, value.co_firstlineno,
+                value.co_qualname, value.co_linetable)
+    if kind is type and (value.__module__ == "builtins" or issubclass(value, BaseException)):
+        return ("type", id(value))
+    if kind in (type(None), bool, int, float, complex, str, bytes, slice) or value is Ellipsis:
+        return ("value", id(value), _constant_fingerprint(value))
+    # Opaque values in defaults/attributes cannot be certified by an id alone.
+    raise IsolationError("unsupported function state type: " + kind.__name__)
+
+
+def _function_state(fn, seen=None):
+    seen = (set() if seen is None else seen) | {id(fn)}
+    annotate = getattr(fn, "__annotate__", None)
+    return (id(fn.__globals__), tuple(_state_token(v, seen) for v in (
+        fn.__code__, fn.__defaults__, fn.__kwdefaults__, fn.__dict__, fn.__name__, fn.__qualname__,
+        fn.__module__, fn.__doc__, annotate,
+        None if annotate is not None else fn.__annotations__, getattr(fn, "__type_params__", ()))),
+        tuple((id(cell), _state_token(cell.cell_contents, seen)) for cell in fn.__closure__ or ()))
+
+
+def _copy_function(original, code, namespace):
+    clone = types.FunctionType(code, namespace, original.__name__, original.__defaults__, original.__closure__)
+    clone.__kwdefaults__ = original.__kwdefaults__
+    clone.__dict__.update(original.__dict__)
+    clone.__qualname__, clone.__module__, clone.__doc__ = original.__qualname__, original.__module__, original.__doc__
+    annotate = getattr(original, "__annotate__", None)
+    if annotate is not None:
+        clone.__annotate__ = annotate
+    else:
+        clone.__annotations__ = original.__annotations__
+    if hasattr(original, "__type_params__"):
+        clone.__type_params__ = original.__type_params__
+    return clone
 
 
 def _future_flags(tree):
@@ -1102,12 +1157,99 @@ class AstGuards:
             # source does not describe; it cannot be verified against the cut.
             raise IsolationError(f"{name}: a module-level __getattr__ export is unsupported; bind each checked function directly")
         self.future_flags = _future_flags(self.tree)
+        self.tree_snapshot = ast.dump(self.tree, include_attributes=True)
+        self.originals, self.snapshots = {}, {}
         for function_name, node in self.functions.items():
             if not node.decorator_list:
                 _require_matching_original(name, function_name, self.tree, namespace.get(function_name))
+            original = namespace.get(function_name)
+            if isinstance(original, types.FunctionType):
+                if original.__globals__ is not namespace:
+                    raise IsolationError(f"{name}.{function_name}: original function globals are not the supplied namespace")
+                self.originals[function_name] = original
+        self.bound_functions = {key: value for key, value in namespace.items() if isinstance(value, types.FunctionType)}
+        self.snapshots = {key: _function_state(value) for key, value in self.bound_functions.items()}
         # Call name -> index of its acceptance predicate. Only the predicate
         # argument is cut; the helper, its code and other arguments remain.
         self.call_predicates = {"require": 0} if call_predicates is None else dict(call_predicates)
+        self.subset_reasons = self._source_subset()
+
+    def _source_subset(self):
+        """Refuse observations of code, frames, identities, or opaque callable state.
+
+        This barrier applies to every candidate in the observing function and
+        transitively to its callers, rather than just the selected refusal.
+        External predicate helpers remain an explicit adapter trust boundary.
+        """
+        forbidden = {"__code__", "__defaults__", "__kwdefaults__", "__globals__", "__dict__", "__closure__",
+                     "__builtins__", "__getattribute__", "_getframe", "currentframe", "f_code", "f_lineno",
+                     "f_locals", "f_globals", "f_back", "tb_frame", "tb_lineno", "gi_frame", "cr_frame"}
+        reflective = {"id", "globals", "locals", "vars", "getattr", "setattr", "delattr", "eval", "exec", "compile"}
+        reasons, dependencies = {}, {}
+        parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
+        for name, fn in self.functions.items():
+            reasons[name] = "decorated function requires an explicit faithful adapter" if fn.decorator_list else ""
+            dependencies[name] = set()
+            for node in ast.walk(fn):
+                if isinstance(node, (ast.Import, ast.ImportFrom)):
+                    modules = ([node.module] if isinstance(node, ast.ImportFrom) else [a.name for a in node.names])
+                    if any(m and m.split(".")[0] in ("inspect", "traceback", "sys", "builtins") for m in modules):
+                        reasons[name] = "unsupported reflective import"
+                if isinstance(node, ast.Attribute) and node.attr in forbidden:
+                    reasons[name] = "unsupported observation of function/code/frame state: " + node.attr
+                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+                    if node.id in reflective | {"inspect", "traceback", "__builtins__"}:
+                        reasons[name] = "unsupported reflection/identity access: " + node.id
+                    bound = self.namespace.get(node.id)
+                    if isinstance(bound, types.ModuleType) and bound.__name__ in ("inspect", "traceback", "sys", "builtins"):
+                        reasons[name] = "unsupported reflective module: " + bound.__name__
+                    if node.id in self.functions:
+                        dependencies[name].add(node.id)
+                    elif isinstance(bound, types.FunctionType) and bound in self.originals.values():
+                        dependencies[name].update(n for n, f in self.originals.items() if f is bound)
+                    elif isinstance(bound, types.FunctionType) and bound.__module__ in ("inspect", "traceback"):
+                        reasons[name] = "unsupported reflective function alias: " + node.id
+                    elif isinstance(bound, types.FunctionType) and node.id not in self.call_predicates and node.id not in ("refuse", "reject", "fail"):
+                        reasons[name] = "external function source requires an explicit atomic adapter: " + node.id
+                    elif isinstance(bound, types.BuiltinFunctionType) and bound.__name__ in reflective | {"_getframe"}:
+                        reasons[name] = "unsupported reflective builtin alias: " + node.id
+                    elif callable(bound) and not isinstance(bound, (types.FunctionType, types.BuiltinFunctionType, type)):
+                        reasons[name] = "stateful callable requires a faithful adapter: " + node.id
+                    if isinstance(bound, types.FunctionType):
+                        parent = parents.get(node)
+                        if not ((isinstance(parent, ast.Call) and parent.func is node) or isinstance(parent, ast.Attribute)):
+                            reasons[name] = "function identity/escape observation requires an explicit adapter: " + node.id
+                if isinstance(node, ast.Compare):
+                    operands = [node.left, *node.comparators]
+                    for i, op in enumerate(node.ops):
+                        if isinstance(op, (ast.Is, ast.IsNot)) and not any(
+                                isinstance(x, ast.Constant) and (x.value is None or type(x.value) is bool)
+                                for x in operands[i:i + 2]):
+                            reasons[name] = "identity comparisons are supported only against None, True or False"
+        changed = True
+        while changed:
+            changed = False
+            for name, peers in dependencies.items():
+                if not reasons[name] and any(reasons[p] for p in peers):
+                    reasons[name] = "unsupported sibling dependency: " + next(p for p in sorted(peers) if reasons[p])
+                    changed = True
+        return reasons
+
+    def _verify_live(self):
+        if ast.dump(self.tree, include_attributes=True) != self.tree_snapshot:
+            raise IsolationError("verified source AST changed before clone")
+        for name in self.functions:
+            original = self.originals.get(name)
+            if original is None:
+                raise IsolationError(f"{self.name}.{name}: source function absent from the verified namespace")
+        current = {key: value for key, value in self.namespace.items() if isinstance(value, types.FunctionType)}
+        if current.keys() != self.bound_functions.keys():
+            raise IsolationError(f"{self.name}: verified function bindings changed before clone")
+        for name, original in self.bound_functions.items():
+            if self.namespace.get(name) is not original or _function_state(original) != self.snapshots[name]:
+                raise IsolationError(f"{self.name}.{name}: verified original binding/code/function state changed before clone")
+        if self._source_subset() != self.subset_reasons:
+            raise IsolationError(f"{self.name}: supported source binding context changed before clone")
 
     @staticmethod
     def _leaves(test, path=()):
@@ -1405,9 +1547,14 @@ class AstGuards:
         for row in result:
             gid = row["id"]; counts[gid] = counts.get(gid, 0) + 1
             row["id"] += ":" + str(counts[gid])
+        for candidate in result:
+            reason = self.subset_reasons.get(candidate["function"], "")
+            if reason:
+                candidate.update(action="unsupported", predicate_count=None, cut="", reason=reason)
         return result
 
     def register(self, candidate: dict, code: str, invariant: Invariant, *, evidence="") -> str:
+        self._verify_live()
         actual = next((c for c in self.candidates() if c["id"] == candidate["id"]), None)
         if actual != candidate:
             raise IsolationError("stale/substituted AST candidate")
@@ -1428,12 +1575,7 @@ class AstGuards:
         return gid
 
     def clone(self, cuts: frozenset[str]):
-        # Review C8-B2: every undecorated source function must be directly bound
-        # to its verified original, or the baseline is not the code being cut.
-        for function_name, node in self.functions.items():
-            if not node.decorator_list and not isinstance(self.namespace.get(function_name), types.FunctionType):
-                raise IsolationError(f"{self.name}.{function_name}: the source function is absent from the supplied "
-                                     "namespace; its baseline cannot be verified against the cut source")
+        self._verify_live()
         module = types.ModuleType(self.name)
         namespace = module.__dict__
         namespace.update(self.namespace)
@@ -1444,17 +1586,14 @@ class AstGuards:
                 except (TypeError, ValueError, RecursionError):
                     continue
                 namespace[name] = copy.deepcopy(value)
-        # Rebind sibling functions so calls cannot escape to pristine globals.
-        for name, fn in self.namespace.items():
-            if isinstance(fn, types.FunctionType) and fn.__globals__ is self.namespace:
-                clone = types.FunctionType(fn.__code__, namespace, fn.__name__, fn.__defaults__, fn.__closure__)
-                clone.__kwdefaults__ = copy.copy(fn.__kwdefaults__)
-                namespace[name] = clone
         selected = [self.sites[g] for g in cuts if g in self.sites]
+        codes = {}
         for name in sorted({s.function for s in selected}):
-            tree = copy.deepcopy(self.functions[name])
+            if self.subset_reasons[name]:
+                raise IsolationError(self.subset_reasons[name])
+            tree = copy.deepcopy(self.tree)
             sites = [s for s in selected if s.function == name]
-            hit = set()
+            hit, atoms = set(), []
             class Cut(ast.NodeTransformer):
                 def generic_visit(self, node):
                     # Discovery supplies one explicit target for every kind.
@@ -1478,6 +1617,7 @@ class AstGuards:
 
                 def atom(self, expression, path, accepting):
                     if not path:
+                        atoms.append((expression, accepting))
                         return ast.copy_location(ast.Constant(accepting), expression) if expression is not None else ast.Constant(accepting)
                     step, *rest = path
                     if step == "not" and isinstance(expression, ast.UnaryOp) and isinstance(expression.op, ast.Not):
@@ -1490,11 +1630,121 @@ class AstGuards:
             tree = Cut().visit(tree)
             if hit != {s.guard.id for s in sites}:
                 raise IsolationError(f"AST cuts did not match exactly: {name}")
-            tree.decorator_list = []        # do not rerun import-time decorators/caches
-            exec(compile(ast.fix_missing_locations(ast.Module(body=[tree], type_ignores=[])),
-                         f"<guard-isolation:{self.name}:{self.source_hash}>", "exec", optimize=0,
-                         flags=self.future_flags, dont_inherit=True), namespace)
+            original = self.originals[name].__code__
+            # Compile the WHOLE module with positions intact. Never execute it:
+            # defaults, decorators and annotations are runtime original state.
+            compiled = compile(ast.fix_missing_locations(tree), original.co_filename, "exec", optimize=0,
+                               flags=self.future_flags, dont_inherit=True)
+            proposed = next(c for c in compiled.co_consts if type(c) is types.CodeType and c.co_name == name)
+            proposed = proposed.replace(co_filename=original.co_filename, co_name=original.co_name,
+                                        co_qualname=original.co_qualname, co_firstlineno=original.co_firstlineno)
+            pool = {}
+            def remember(value):
+                pool.setdefault(_constant_fingerprint(value), value)
+                if type(value) in (tuple, frozenset):
+                    for child in value:
+                        remember(child)
+            for value in original.co_consts:
+                remember(value)
+            def reuse(value):
+                key = _constant_fingerprint(value)
+                if key in pool:
+                    return pool[key]
+                if type(value) is tuple:
+                    return tuple(reuse(v) for v in value)
+                if type(value) is frozenset:
+                    return frozenset(reuse(v) for v in value)
+                return value
+            proposed = proposed.replace(co_consts=tuple(reuse(v) for v in proposed.co_consts))
+            codes[name] = self._local_cut(name, original, proposed, atoms)
+        # The same builder for cut and uncut siblings, with all supported state.
+        for name, fn in self.namespace.items():
+            if isinstance(fn, types.FunctionType) and fn.__globals__ is self.namespace:
+                namespace[name] = _copy_function(fn, codes.get(name, fn.__code__), namespace)
         return module
+
+    def _local_cut(self, name, original, proposed, atoms):
+        """Keep the original layout instead of accepting compiler-wide folding.
+
+        The compiled proposal supplies a checked source transformation. Its
+        optimizer can relocate peers or delete a whole branch; neither is used
+        as permission to rewrite peers. Emit the Boolean replacement in the
+        original atom's straight-line instruction span, padded with NOPs. All
+        branch targets, exception ranges, line entries and constant indices
+        outside that span stay byte-for-byte identical to the original.
+        """
+        if sys.implementation.name != "cpython":
+            raise IsolationError("local code cuts require CPython wordcode")
+        for attr in ("co_argcount", "co_posonlyargcount", "co_kwonlyargcount", "co_flags",
+                     "co_varnames", "co_freevars", "co_cellvars"):
+            if getattr(original, attr) != getattr(proposed, attr):
+                raise IsolationError("compiled cut changes function layout: " + attr)
+        reference = _reference_code(self.tree, name)
+        instructions = list(dis.get_instructions(reference, adaptive=False))
+        data, constants, allowed = bytearray(original.co_code), list(original.co_consts), set()
+        targets = {i.argval for i in instructions if i.opcode in dis.hasjump}
+        for atom, accepting in atoms:
+            start_pos = (atom.lineno, atom.col_offset)
+            end_pos = (atom.end_lineno, atom.end_col_offset)
+            members = []
+            for instruction in instructions:
+                pos = instruction.positions
+                if pos.lineno is None or pos.end_lineno is None:
+                    continue
+                if start_pos <= (pos.lineno, pos.col_offset) and (pos.end_lineno, pos.end_col_offset) <= end_pos:
+                    if instruction.opcode in dis.hasjump or instruction.opname in (
+                            "RETURN_VALUE", "RETURN_CONST", "NOT_TAKEN", "POP_TOP", "COPY", "SWAP"):
+                        continue
+                    members.append(instruction)
+            if not members:
+                raise IsolationError("cut atom has no isolated instruction span")
+            # CPython widens the comparison's position to its enclosing `not`.
+            # Its operands still locate it uniquely; retain the enclosing NOT.
+            if isinstance(atom, ast.Compare) and not any(i.opname in ("COMPARE_OP", "IS_OP", "CONTAINS_OP") for i in members):
+                next_index = instructions.index(members[-1]) + 1
+                if next_index < len(instructions) and instructions[next_index].opname in ("COMPARE_OP", "IS_OP", "CONTAINS_OP"):
+                    members.append(instructions[next_index])
+            start = members[0].offset
+            last_index = instructions.index(members[-1])
+            end = instructions[last_index + 1].offset if last_index + 1 < len(instructions) else len(data)
+            inside = [i for i in instructions if start <= i.offset < end]
+            if inside != members or any(start < offset < end for offset in targets):
+                raise IsolationError("cut atom is not a straight-line isolated span")
+            # A scalar expression consumes no outside stack and leaves one
+            # value. This rejects fused instructions sharing peer operands.
+            depth = 0
+            for instruction in inside:
+                depth += dis.stack_effect(instruction.opcode, instruction.arg)
+                if depth < 0:
+                    raise IsolationError("cut atom consumes a peer stack value")
+            if depth != 1:
+                raise IsolationError("cut atom does not produce exactly one value")
+            index = next((i for i, v in enumerate(constants) if v is accepting), len(constants))
+            if index == len(constants):
+                constants.append(accepting)
+            argument, prefix = index, []
+            while argument > 255:
+                argument >>= 8
+                prefix.insert(0, argument & 255)
+            replacement = bytearray()
+            for value in prefix:
+                replacement.extend((dis.opmap["EXTENDED_ARG"], value))
+            replacement.extend((dis.opmap["LOAD_CONST"], index & 255))
+            if len(replacement) > end - start or allowed.intersection(range(start, end)):
+                raise IsolationError("cut spans overlap or cannot hold a Boolean replacement")
+            replacement.extend(bytes((dis.opmap["NOP"], 0)) * ((end - start - len(replacement)) // 2))
+            data[start:end] = replacement
+            allowed.update(range(start, end))
+        result = original.replace(co_code=bytes(data), co_consts=tuple(constants))
+        if any(a != b and i not in allowed for i, (a, b) in enumerate(zip(original.co_code, result.co_code))):
+            raise IsolationError("cut changed an instruction outside the declared atoms")
+        if len(result.co_code) != len(original.co_code) or any(
+                getattr(result, attr) != getattr(original, attr) for attr in dir(original)
+                if attr.startswith("co_") and attr not in ("co_code", "co_consts", "co_lnotab") and not callable(getattr(original, attr))):
+            raise IsolationError("cut changed a code field outside the declared atoms")
+        if any(a is not b for a, b in zip(original.co_consts, result.co_consts)):
+            raise IsolationError("cut changed an original constant identity")
+        return result
 
 
 @dataclass
@@ -1548,6 +1798,15 @@ class Suite:
                 elif isinstance(value, types.ModuleType) and id(vars(value)) in originals:
                     setattr(module, name, originals[id(vars(value))])
         return State(self.schema.mutated(cuts) if self.schema else None, modules, cuts)
+
+    def original_state(self):
+        modules = {}
+        for backend in self.modules:
+            backend._verify_live()
+            module = types.ModuleType(backend.name)
+            module.__dict__.update(backend.namespace)
+            modules[backend.name] = module
+        return State(self.schema.mutated(frozenset()) if self.schema else None, modules, frozenset())
 
 
 class MemoryGate:
@@ -1721,15 +1980,28 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None) -> dic
                              reason="add the actually consumed entry to SchemaCatalog.roots before proof")
                     undeclared_entries.update(state.schema.undeclared_entries)
                 gate.check()
+        original = suite.original_state() if suite.modules else None
         baseline = suite.state()
         baseline_outcomes = {}
+        report["original_baseline_controls"] = []
+        def compare_original(case, got):
+            if original is None:
+                return
+            actual = evaluate(case.value, original)
+            same = actual == got
+            report["original_baseline_controls"].append({"case": case.id, "original": actual,
+                                                        "uncut": got, "identical": same})
+            if not same:
+                raise IsolationError("original and uncut baseline differ on case " + case.id)
         for c in controls.values():
             got = evaluate(c.value, baseline)
+            compare_original(c, got)
             report["controls"].append({"id": c.id, "boundary": c.boundary, "outcome": got, "input_sha256": digest(c.value)})
             if got != asdict(Outcome.accept()):
                 fail("control_refused", control=c.id, actual=got)
         for n in negatives.values():
             got = evaluate(n.value, baseline)
+            compare_original(n, got)
             baseline_outcomes[n.id] = got
             report["negatives"].append({"id": n.id, "target": n.target, "code": n.code,
                 "control": n.control, "defect": n.defect, "boundary": controls[n.control].boundary,

@@ -3132,6 +3132,1256 @@
       "id": "C8-matching-original-runs",
       "kind": "round8_matching_original_runs",
       "expected": "the exact optimize=0 original is accepted and its baseline runs"
+    },
+    {
+      "id": "C9-different-defaults-single",
+      "kind": "round9_review_probe",
+      "label": "different-defaults",
+      "mode": "single",
+      "source": "def check(v, y_floor=-1):\n    if v[\"x\"] < 0 or v[\"y\"] < y_floor:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-different-defaults-aggregate",
+      "kind": "round9_review_probe",
+      "label": "different-defaults",
+      "mode": "aggregate",
+      "source": "def check(v, y_floor=-1):\n    if v[\"x\"] < 0 or v[\"y\"] < y_floor:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-different-kwdefaults-single",
+      "kind": "round9_review_probe",
+      "label": "different-kwdefaults",
+      "mode": "single",
+      "source": "def check(v, *, y_floor=-1):\n    if v[\"x\"] < 0 or v[\"y\"] < y_floor:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-different-kwdefaults-aggregate",
+      "kind": "round9_review_probe",
+      "label": "different-kwdefaults",
+      "mode": "aggregate",
+      "source": "def check(v, *, y_floor=-1):\n    if v[\"x\"] < 0 or v[\"y\"] < y_floor:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-different-function-globals-single",
+      "kind": "round9_review_probe",
+      "label": "different-function-globals",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < FLOOR:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-different-function-globals-aggregate",
+      "kind": "round9_review_probe",
+      "label": "different-function-globals",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < FLOOR:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-rebind-single",
+      "kind": "round9_review_probe",
+      "label": "post-construction-rebind",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < -1:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-rebind-aggregate",
+      "kind": "round9_review_probe",
+      "label": "post-construction-rebind",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < -1:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-code-replace-single",
+      "kind": "round9_review_probe",
+      "label": "post-construction-code-replace",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < -1:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-code-replace-aggregate",
+      "kind": "round9_review_probe",
+      "label": "post-construction-code-replace",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < -1:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-optimize-1-single",
+      "kind": "round9_review_probe",
+      "label": "post-construction-optimize-1",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0 or v[\"y\"] > __debug__:\n        raise ValueError(\"bad\")\n    return 0\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": 1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-optimize-1-aggregate",
+      "kind": "round9_review_probe",
+      "label": "post-construction-optimize-1",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0 or v[\"y\"] > __debug__:\n        raise ValueError(\"bad\")\n    return 0\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": 1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-optimize-2-single",
+      "kind": "round9_review_probe",
+      "label": "post-construction-optimize-2",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0 or v[\"y\"] > __debug__:\n        raise ValueError(\"bad\")\n    return 0\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": 1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-post-construction-optimize-2-aggregate",
+      "kind": "round9_review_probe",
+      "label": "post-construction-optimize-2",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0 or v[\"y\"] > __debug__:\n        raise ValueError(\"bad\")\n    return 0\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": 1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_filename-single",
+      "kind": "round9_review_probe",
+      "label": "observable-co_filename",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_filename == '<patched-original>':\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_filename-aggregate",
+      "kind": "round9_review_probe",
+      "label": "observable-co_filename",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_filename == '<patched-original>':\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nonreflective-co_filename-single",
+      "kind": "round9_review_probe",
+      "label": "nonreflective-co_filename",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_firstlineno-single",
+      "kind": "round9_review_probe",
+      "label": "observable-co_firstlineno",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_firstlineno == 700:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_firstlineno-aggregate",
+      "kind": "round9_review_probe",
+      "label": "observable-co_firstlineno",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_firstlineno == 700:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nonreflective-co_firstlineno-single",
+      "kind": "round9_review_probe",
+      "label": "nonreflective-co_firstlineno",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_linetable-single",
+      "kind": "round9_review_probe",
+      "label": "observable-co_linetable",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_linetable == b'':\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_linetable-aggregate",
+      "kind": "round9_review_probe",
+      "label": "observable-co_linetable",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_linetable == b'':\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nonreflective-co_linetable-single",
+      "kind": "round9_review_probe",
+      "label": "nonreflective-co_linetable",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_qualname-single",
+      "kind": "round9_review_probe",
+      "label": "observable-co_qualname",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_qualname == 'outer.<locals>.check':\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-observable-co_qualname-aggregate",
+      "kind": "round9_review_probe",
+      "label": "observable-co_qualname",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_qualname == 'outer.<locals>.check':\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nonreflective-co_qualname-single",
+      "kind": "round9_review_probe",
+      "label": "nonreflective-co_qualname",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-sibling-refusal-function-attributes-single",
+      "kind": "round9_review_probe",
+      "label": "sibling-refusal-function-attributes",
+      "mode": "single",
+      "source": "def peer(v):\n    if v[\"y\"] < 0 and peer.__dict__.get(\"enforce_y\", False):\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-decorated-refusal-function-attributes-single",
+      "kind": "round9_review_probe",
+      "label": "decorated-refusal-function-attributes",
+      "mode": "single",
+      "source": "def marker(fn):\n    fn.enforce_y=True\n    return fn\n\n@marker\ndef peer(v):\n    if v[\"y\"] < 0 and peer.__dict__.get(\"enforce_y\", False):\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-decorated-direct-cut-refused-single",
+      "kind": "round9_review_probe",
+      "label": "decorated-direct-cut-refused",
+      "mode": "single",
+      "source": "def identity(fn):\n    return fn\n\n@identity\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-ordinary-sibling-rebind-control-single",
+      "kind": "round9_review_probe",
+      "label": "ordinary-sibling-rebind-control",
+      "mode": "single",
+      "source": "def peer(v):\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-ordinary-sibling-rebind-control-aggregate",
+      "kind": "round9_review_probe",
+      "label": "ordinary-sibling-rebind-control",
+      "mode": "aggregate",
+      "source": "def peer(v):\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-decorated-wrapper-refusal-control-single",
+      "kind": "round9_review_probe",
+      "label": "decorated-wrapper-refusal-control",
+      "mode": "single",
+      "source": "def wrapper(fn):\n    def run(v):\n        return fn(v)\n    return run\n\n@wrapper\ndef peer(v):\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-decorated-code-mismatch-keeps-refusal-single",
+      "kind": "round9_review_probe",
+      "label": "decorated-code-mismatch-keeps-refusal",
+      "mode": "single",
+      "source": "def identity(fn):\n    return fn\n\n@identity\ndef peer(v):\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-sibling-original-alias-control-single",
+      "kind": "round9_review_probe",
+      "label": "sibling-original-alias-control",
+      "mode": "single",
+      "source": "def guarded(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    return alias(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "design-probes.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-tuple-int-versus-bool-single",
+      "kind": "round9_review_probe",
+      "label": "tuple-int-versus-bool",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] in (1,):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-frozenset-int-versus-bool-single",
+      "kind": "round9_review_probe",
+      "label": "frozenset-int-versus-bool",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] in {1,2}:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-negative-zero-versus-positive-zero-single",
+      "kind": "round9_review_probe",
+      "label": "negative-zero-versus-positive-zero",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < -0.0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-scalar-float-versus-bool-single",
+      "kind": "round9_review_probe",
+      "label": "scalar-float-versus-bool",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 1.0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nan-sign-single",
+      "kind": "round9_review_probe",
+      "label": "nan-sign",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and struct.pack(\">d\", 1e999-1e999) == NAN_BYTES:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nan-sign-aggregate",
+      "kind": "round9_review_probe",
+      "label": "nan-sign",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and struct.pack(\">d\", 1e999-1e999) == NAN_BYTES:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nan-payload-single",
+      "kind": "round9_review_probe",
+      "label": "nan-payload",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and struct.pack(\">d\", 1e999-1e999) == NAN_BYTES:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nan-payload-aggregate",
+      "kind": "round9_review_probe",
+      "label": "nan-payload",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and struct.pack(\">d\", 1e999-1e999) == NAN_BYTES:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nan-sign-and-payload-single",
+      "kind": "round9_review_probe",
+      "label": "nan-sign-and-payload",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and struct.pack(\">d\", 1e999-1e999) == NAN_BYTES:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-nan-sign-and-payload-aggregate",
+      "kind": "round9_review_probe",
+      "label": "nan-sign-and-payload",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and struct.pack(\">d\", 1e999-1e999) == NAN_BYTES:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-equal-tuple-distinct-identity-single",
+      "kind": "round9_review_probe",
+      "label": "equal-tuple-distinct-identity",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and (1000,) is MARKER:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-equal-tuple-distinct-identity-aggregate",
+      "kind": "round9_review_probe",
+      "label": "equal-tuple-distinct-identity",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and (1000,) is MARKER:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-equal-frozenset-distinct-identity-single",
+      "kind": "round9_review_probe",
+      "label": "equal-frozenset-distinct-identity",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_consts[-1] is MARKER:\n        raise ValueError(\"bad\")\n    return v[\"z\"] in {1000,2000}\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 1000
+        },
+        {
+          "x": -1,
+          "y": 0,
+          "z": 1000
+        },
+        {
+          "x": 0,
+          "y": -1,
+          "z": 1000
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-equal-frozenset-distinct-identity-aggregate",
+      "kind": "round9_review_probe",
+      "label": "equal-frozenset-distinct-identity",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and check.__code__.co_consts[-1] is MARKER:\n        raise ValueError(\"bad\")\n    return v[\"z\"] in {1000,2000}\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 1000
+        },
+        {
+          "x": -1,
+          "y": 0,
+          "z": 1000
+        },
+        {
+          "x": 0,
+          "y": -1,
+          "z": 1000
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-equal-nan-bits-distinct-identity-single",
+      "kind": "round9_review_probe",
+      "label": "equal-nan-bits-distinct-identity",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and (1e999-1e999) is MARKER:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-equal-nan-bits-distinct-identity-aggregate",
+      "kind": "round9_review_probe",
+      "label": "equal-nan-bits-distinct-identity",
+      "mode": "aggregate",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and (1e999-1e999) is MARKER:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-undecorated-closure-original-single",
+      "kind": "round9_review_probe",
+      "label": "undecorated-closure-original",
+      "mode": "single",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < floor:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-decorated-refusing-closure-cell-single",
+      "kind": "round9_review_probe",
+      "label": "decorated-refusing-closure-cell",
+      "mode": "single",
+      "source": "def decorate(fn):\n    floor=-1\n    def wrapper(v):\n        if v[\"y\"] < floor:\n            raise ValueError(\"bad\")\n        return fn(v)\n    return wrapper\n\n@decorate\ndef peer(v):\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-decorated-refusing-closure-cell-aggregate",
+      "kind": "round9_review_probe",
+      "label": "decorated-refusing-closure-cell",
+      "mode": "aggregate",
+      "source": "def decorate(fn):\n    floor=-1\n    def wrapper(v):\n        if v[\"y\"] < floor:\n            raise ValueError(\"bad\")\n        return fn(v)\n    return wrapper\n\n@decorate\ndef peer(v):\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "review_source": "constants-closures.json",
+      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+    },
+    {
+      "id": "C9-state-boundaries",
+      "kind": "round9_state_boundaries",
+      "expected": "changes to every supported function state are refused before cloning"
+    },
+    {
+      "id": "C9-full-state-locality",
+      "kind": "round9_full_state_locality",
+      "expected": "cut and uncut functions preserve runtime state, original constants, peer instructions and line tables"
+    },
+    {
+      "id": "C9-source-subset",
+      "kind": "round9_source_subset",
+      "expected": "reflection and identity observations poison every dependent candidate before registration"
+    },
+    {
+      "id": "C9-original-baseline-gate",
+      "kind": "round9_original_baseline_gate",
+      "expected": "an injected state-losing uncut clone is rejected before any credit"
+    },
+    {
+      "id": "C9-physical-complex",
+      "kind": "round9_physical_complex",
+      "expected": "recursive float and complex fingerprints preserve sign and NaN payloads and reject unknown constants"
     }
   ]
 }
