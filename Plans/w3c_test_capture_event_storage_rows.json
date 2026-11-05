@@ -40,9 +40,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -233,9 +234,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -426,9 +428,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -619,9 +622,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -812,9 +816,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -1005,9 +1010,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -1198,9 +1204,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -1391,9 +1398,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -1584,9 +1592,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -1777,9 +1786,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -1970,9 +1980,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -2163,9 +2174,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -2356,9 +2368,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -2549,9 +2562,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -2742,9 +2756,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -2935,9 +2950,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -3128,9 +3144,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -3321,9 +3338,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -3514,9 +3532,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -3707,9 +3726,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -3900,9 +3920,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -4093,9 +4114,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -4286,9 +4308,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -4479,9 +4502,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -4672,9 +4696,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -4865,9 +4890,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -5058,9 +5084,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -5251,9 +5278,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -5444,9 +5472,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -5637,9 +5666,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -5830,9 +5860,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -6023,9 +6054,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -6216,9 +6248,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -6409,9 +6442,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -6602,9 +6636,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -6795,9 +6830,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -6988,9 +7024,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -7181,9 +7218,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -7374,9 +7412,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -7567,9 +7606,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",
@@ -7760,9 +7800,10 @@
         "nullable_fields": [
           "first_append",
           "outcome_record",
-          "original_event"
+          "original_event",
+          "producer_semantics"
         ],
-        "replay_behavior": "Resolve the immutable original intent/outcome/full-value AppendReceipt; uncertain prior action is fenced, never repeated.",
+        "replay_behavior": "Compare the immutable original request first; pending operations reconcile actual action evidence without repeating uncertain effects. After outcome_committed, verify the frozen outcome and producer preimage; after event_committed resolve the original full value/receipt. No canonical or external effects on replay.",
         "migration": "StorageMigrationCoordinator installs the exact reviewed family/schema version; no backfill or inferred native availability.",
         "migration_disposition": {
           "mode": "store_coordinator",

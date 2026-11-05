@@ -28,6 +28,24 @@
           "schema_id": "pm.event_payload.artifacts.capture_provenance.inspected.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspectedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original provenance-inspection request with the exact subject and candidate identities before inspection",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.artifacts.capture_provenance.inspected.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.artifacts.capture_provenance.inspected.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected_requestApplicationV1"
+        }
       }
     },
     {
@@ -56,6 +74,24 @@
         "application": {
           "schema_id": "pm.event_payload.artifacts.demonstration_video.created.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_createdApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original cmd.artifacts.create_demonstration_video request, raw span refs, privacy review and confirmation before encoding",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.created.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_created_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.created.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_created_requestApplicationV1"
         }
       }
     },
@@ -86,6 +122,24 @@
           "schema_id": "pm.event_payload.artifacts.demonstration_video.failed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original cmd.artifacts.create_demonstration_video request, raw span refs, privacy review and confirmation before encoding",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.failed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.failed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed_requestApplicationV1"
+        }
       }
     },
     {
@@ -114,6 +168,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.bookmarked.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarkedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original bookmark command with session identity and requested source position before bookmark commitment",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.bookmarked.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.bookmarked.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked_requestApplicationV1"
         }
       }
     },
@@ -144,6 +216,24 @@
           "schema_id": "pm.event_payload.testing.capture.clip_saved.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_savedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original save-clip command with exact admitted raw span refs before derivation",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.clip_saved.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_saved_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.clip_saved.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_saved_requestApplicationV1"
+        }
       }
     },
     {
@@ -172,6 +262,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.effective_quality_changed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original quality observation and prior session/quality snapshot before committing effective quality",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.effective_quality_changed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.effective_quality_changed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed_requestApplicationV1"
         }
       }
     },
@@ -202,6 +310,24 @@
           "schema_id": "pm.event_payload.testing.capture.health_degraded.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degradedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original health observation and prior health/session snapshot before committing degradation",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.health_degraded.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.health_degraded.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded_requestApplicationV1"
+        }
       }
     },
     {
@@ -230,6 +356,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.health_recovered.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recoveredApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original health observation and prior health/session snapshot before committing recovery",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.health_recovered.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.health_recovered.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered_requestApplicationV1"
         }
       }
     },
@@ -260,6 +404,24 @@
           "schema_id": "pm.event_payload.testing.capture.interrupted.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interruptedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original interruption trigger, boundary and reason with the prior session before the interruption transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.interrupted.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.interrupted.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted_requestApplicationV1"
+        }
       }
     },
     {
@@ -288,6 +450,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.paused.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_pausedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original pause command and prior active session before the pause transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.paused.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.paused.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused_requestApplicationV1"
         }
       }
     },
@@ -318,6 +498,24 @@
           "schema_id": "pm.event_payload.testing.capture.provenance_rejected.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejectedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original provenance-selection input with exact subject, candidates and verification inputs before committing the rejected disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_rejected.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejected_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_rejected.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejected_requestApplicationV1"
+        }
       }
     },
     {
@@ -346,6 +544,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.provenance_verified.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verifiedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original provenance-selection input with exact subject, candidates and verification inputs before committing the verified disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_verified.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verified_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_verified.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verified_requestApplicationV1"
         }
       }
     },
@@ -376,6 +592,24 @@
           "schema_id": "pm.event_payload.testing.capture.redaction_applied.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_appliedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original retained-redaction request, reviewed mask/selection and original artifact refs before applying redaction",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.redaction_applied.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_applied_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.redaction_applied.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_applied_requestApplicationV1"
+        }
       }
     },
     {
@@ -404,6 +638,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.resumed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original resume command and prior paused session before the resume transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.resumed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.resumed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed_requestApplicationV1"
         }
       }
     },
@@ -434,6 +686,24 @@
           "schema_id": "pm.event_payload.testing.capture.segment_corrupt.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corruptApplicationV1"
         }
+      },
+      "pre_effect_input": "the original segment recovery observation and prior manifest before committing the corrupt disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.segment_corrupt.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.segment_corrupt.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt_requestApplicationV1"
+        }
       }
     },
     {
@@ -462,6 +732,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.segment_finalized.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalizedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original segment sealing input, segment identity and captured span refs before finalization",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.segment_finalized.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalized_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.segment_finalized.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalized_requestApplicationV1"
         }
       }
     },
@@ -492,6 +780,24 @@
           "schema_id": "pm.event_payload.testing.capture.segment_recovered.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recoveredApplicationV1"
         }
+      },
+      "pre_effect_input": "the original segment recovery observation and prior manifest before committing the recovered disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.segment_recovered.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recovered_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.segment_recovered.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recovered_requestApplicationV1"
+        }
       }
     },
     {
@@ -520,6 +826,24 @@
         "application": {
           "schema_id": "pm.event_payload.testing.capture.started.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_startedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original start command and admitted capture target/request before starting capture",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.started.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.started.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started_requestApplicationV1"
         }
       }
     },
@@ -550,6 +874,24 @@
           "schema_id": "pm.event_payload.testing.capture.stopped.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stoppedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original stop command and prior active session before the stop transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.stopped.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.stopped.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped_requestApplicationV1"
+        }
       }
     },
     {
@@ -579,6 +921,24 @@
           "schema_id": "pm.event_payload.testing.capture.target_changed.application.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changedApplicationV1"
         }
+      },
+      "pre_effect_input": "the original target-update command, requested target and prior session/target before the switch",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.target_changed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.target_changed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed_requestApplicationV1"
+        }
       }
     },
     {
@@ -603,6 +963,20 @@
         "project": {
           "schema_id": "pm.event_payload.testing.runtime_enabled_for_adapter.v1",
           "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_runtime_enabled_for_adapter"
+        }
+      },
+      "pre_effect_input": "the original adapter-readiness evaluation input, exact adapter/target, owner-selected prerequisite refs and prior disabled state before enablement",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.runtime_enabled_for_adapter.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_runtime_enabled_for_adapter_request"
         }
       }
     }

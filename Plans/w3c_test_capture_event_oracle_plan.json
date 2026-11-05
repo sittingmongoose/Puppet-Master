@@ -66,7 +66,7 @@
         },
         {
           "guard_id": "artifacts_capture_provenance_inspected.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original artifacts.capture_provenance.inspected at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -87,7 +87,7 @@
         },
         {
           "guard_id": "artifacts_capture_provenance_inspected.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original artifacts.capture_provenance.inspected at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -196,6 +196,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -204,7 +232,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -285,7 +315,7 @@
         },
         {
           "guard_id": "artifacts_demonstration_video_created.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original artifacts.demonstration_video.created at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -306,7 +336,7 @@
         },
         {
           "guard_id": "artifacts_demonstration_video_created.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original artifacts.demonstration_video.created at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -422,6 +452,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -430,7 +488,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -511,7 +571,7 @@
         },
         {
           "guard_id": "artifacts_demonstration_video_failed.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original artifacts.demonstration_video.failed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -532,7 +592,7 @@
         },
         {
           "guard_id": "artifacts_demonstration_video_failed.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original artifacts.demonstration_video.failed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -648,6 +708,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -656,7 +744,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -737,7 +827,7 @@
         },
         {
           "guard_id": "testing_capture_bookmarked.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.bookmarked at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -758,7 +848,7 @@
         },
         {
           "guard_id": "testing_capture_bookmarked.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.bookmarked at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -867,6 +957,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -875,7 +993,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -956,7 +1076,7 @@
         },
         {
           "guard_id": "testing_capture_clip_saved.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.clip_saved at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -977,7 +1097,7 @@
         },
         {
           "guard_id": "testing_capture_clip_saved.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.clip_saved at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1086,6 +1206,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -1094,7 +1242,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -1175,7 +1325,7 @@
         },
         {
           "guard_id": "testing_capture_effective_quality_changed.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.effective_quality_changed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1196,7 +1346,7 @@
         },
         {
           "guard_id": "testing_capture_effective_quality_changed.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.effective_quality_changed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1305,6 +1455,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -1313,7 +1491,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -1394,7 +1574,7 @@
         },
         {
           "guard_id": "testing_capture_health_degraded.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.health_degraded at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1415,7 +1595,7 @@
         },
         {
           "guard_id": "testing_capture_health_degraded.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.health_degraded at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1524,6 +1704,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -1532,7 +1740,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -1613,7 +1823,7 @@
         },
         {
           "guard_id": "testing_capture_health_recovered.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.health_recovered at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1634,7 +1844,7 @@
         },
         {
           "guard_id": "testing_capture_health_recovered.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.health_recovered at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1743,6 +1953,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -1751,7 +1989,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -1832,7 +2072,7 @@
         },
         {
           "guard_id": "testing_capture_interrupted.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.interrupted at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1853,7 +2093,7 @@
         },
         {
           "guard_id": "testing_capture_interrupted.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.interrupted at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -1962,6 +2202,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -1970,7 +2238,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -2051,7 +2321,7 @@
         },
         {
           "guard_id": "testing_capture_paused.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.paused at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2072,7 +2342,7 @@
         },
         {
           "guard_id": "testing_capture_paused.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.paused at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2181,6 +2451,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_paused.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_paused.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_paused.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_paused.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -2189,7 +2487,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -2270,7 +2570,7 @@
         },
         {
           "guard_id": "testing_capture_provenance_rejected.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.provenance_rejected at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2291,7 +2591,7 @@
         },
         {
           "guard_id": "testing_capture_provenance_rejected.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.provenance_rejected at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2400,6 +2700,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -2408,7 +2736,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -2489,7 +2819,7 @@
         },
         {
           "guard_id": "testing_capture_provenance_verified.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.provenance_verified at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2510,7 +2840,7 @@
         },
         {
           "guard_id": "testing_capture_provenance_verified.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.provenance_verified at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2619,6 +2949,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -2627,7 +2985,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -2708,7 +3068,7 @@
         },
         {
           "guard_id": "testing_capture_redaction_applied.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.redaction_applied at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2729,7 +3089,7 @@
         },
         {
           "guard_id": "testing_capture_redaction_applied.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.redaction_applied at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2845,6 +3205,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -2853,7 +3241,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -2934,7 +3324,7 @@
         },
         {
           "guard_id": "testing_capture_resumed.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.resumed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -2955,7 +3345,7 @@
         },
         {
           "guard_id": "testing_capture_resumed.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.resumed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3064,6 +3454,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_resumed.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_resumed.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_resumed.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_resumed.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -3072,7 +3490,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -3153,7 +3573,7 @@
         },
         {
           "guard_id": "testing_capture_segment_corrupt.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_corrupt at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3174,7 +3594,7 @@
         },
         {
           "guard_id": "testing_capture_segment_corrupt.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_corrupt at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3283,6 +3703,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -3291,7 +3739,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -3372,7 +3822,7 @@
         },
         {
           "guard_id": "testing_capture_segment_finalized.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_finalized at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3393,7 +3843,7 @@
         },
         {
           "guard_id": "testing_capture_segment_finalized.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_finalized at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3502,6 +3952,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -3510,7 +3988,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -3591,7 +4071,7 @@
         },
         {
           "guard_id": "testing_capture_segment_recovered.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_recovered at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3612,7 +4092,7 @@
         },
         {
           "guard_id": "testing_capture_segment_recovered.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.segment_recovered at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3721,6 +4201,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -3729,7 +4237,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -3810,7 +4320,7 @@
         },
         {
           "guard_id": "testing_capture_started.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.started at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3831,7 +4341,7 @@
         },
         {
           "guard_id": "testing_capture_started.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.started at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -3947,6 +4457,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_started.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_started.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_started.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_started.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -3955,7 +4493,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -4036,7 +4576,7 @@
         },
         {
           "guard_id": "testing_capture_stopped.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.stopped at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4057,7 +4597,7 @@
         },
         {
           "guard_id": "testing_capture_stopped.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.stopped at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4173,6 +4713,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_stopped.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_stopped.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_stopped.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_stopped.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -4181,7 +4749,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -4262,7 +4832,7 @@
         },
         {
           "guard_id": "testing_capture_target_changed.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.capture.target_changed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4283,7 +4853,7 @@
         },
         {
           "guard_id": "testing_capture_target_changed.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.capture.target_changed at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4399,6 +4969,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -4407,7 +5005,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
@@ -4488,7 +5088,7 @@
         },
         {
           "guard_id": "testing_runtime_enabled_for_adapter.identity_recipe",
-          "predicate": "Event ID, scoped idempotency identity and caller semantic digest recompute from the original captured intent, using Contracts EventRecord/CV-366 recipes.",
+          "predicate": "Event ID and scoped operation identity recompute from the original request reservation under the existing owners; the EventRecord caller semantic digest is frozen only when the genuine outcome is bound, excluding Storage metadata.",
           "positive_plan": "Use independently source-backed valid original testing.runtime_enabled_for_adapter at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4509,7 +5109,7 @@
         },
         {
           "guard_id": "testing_runtime_enabled_for_adapter.retry",
-          "predicate": "Same identity/same caller semantic digest resolves the original full value/result; different semantics conflicts; unavailable authoritative dedupe refuses without a new effect.",
+          "predicate": "Compare the complete original request before outcome binding; same request pending reconciles the original action without repeating uncertainty, different request conflicts. After binding compare only the frozen EventRecord caller preimage and resolve original full value/receipt; authoritative dedupe unavailable refuses.",
           "positive_plan": "Use independently source-backed valid original testing.runtime_enabled_for_adapter at the selected schema/recipe edition and actual Storage identity.",
           "negative_plan": "One negative per predicate/field/enforcement site: start from a valid original, change only this predicate; rebuild all dependent copies, hashes, keys and state so every unrelated guard still passes.",
           "proof_plan": "Phase 2: inventory concrete assertion sites with shared pm_guard_isolation; weaken exactly this predicate and observe its negative pass. Same-field/same-predicate duplicate sites are proved singly and together; never merge distinct predicates."
@@ -4639,6 +5239,34 @@
           "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
           "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
           "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.pending_request",
+          "predicate": "Pending request is encodable before any effect with no completed outcome, producer preimage, original event or append receipt.",
+          "positive_plan": "In every scope, persist the genuine original request and pre-state before the encoder/owner action; all four post-effect custody fields are null. Include both demonstration possible-outcome reservations without predicting success/failure.",
+          "negative_plan": "Separate schema-shape cases add only one post-effect custody field to pending (one case per field); each is a well-formed value and unrelated request/source identity guards pass. Separately make only the stored pre-effect request ref unavailable, keeping all fields and other custody valid.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.outcome_binding",
+          "predicate": "CAS pending -> outcome_committed binds the genuine source outcome and complete EventRecord caller preimage atomically once; neither can change after that boundary.",
+          "positive_plan": "Commit the real owner result, freeze both refs and append only that input; outcome_committed has null original_event and first_append. Use the actual encoder output or actual failure, never anticipated bytes.",
+          "negative_plan": "Separate cases: one missing outcome field at this phase; one missing preimage field; one well-formed but unrelated source outcome with its actual valid hash/copies coherent; one preimage whose source outcome is internally valid but belongs to a different original request; one forbidden replacement of a previously bound outcome. Keep schema/type/receipt and all peer invariants valid per case.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.uncertain_action_fence",
+          "predicate": "Recovery after action but before outcome binding verifies original action evidence and never repeats an uncertain encoder/owner effect.",
+          "positive_plan": "Crash immediately after the action, before outcome binding; recover the real result via the original command/action identity, bind once and append once. Also keep a genuinely unknown action pending/unavailable.",
+          "negative_plan": "From valid recoveries, separately attempt one repeated uncertain action, select one unrelated but internally valid action-result identity, or replace an unknown action with an unsupported completion; no stale copy or second defect.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.phase_cas_publication",
+          "predicate": "Complete-row/head predecessor CAS guards each phase and original full-value custody precedes terminal publication.",
+          "positive_plan": "Recover after outcome binding before append, and after append before event_committed publication; use only frozen input and original receipt. Withdrawal preserves the already bound row.",
+          "negative_plan": "Separate cases: a stale predecessor CAS with otherwise current row; publication before receipt resolution with genuine receipt evidence intact; clearing one already-bound value during withdrawal with all remaining values coherent. Cut each schema null/type implication independently, never the entire phase keyword.",
+          "proof_plan": "Phase 2 shared-tool per-field/per-predicate/per-site removal. One negative has exactly one defect; recompute dependent copies, digests, keys and source facts. Same-field/same-predicate duplicate sites are removed singly and together; keep every peer clause enabled."
         }
       ],
       "additional_positive_plans": [
@@ -4647,7 +5275,9 @@
         "Valid retained compatibility/projector_replay_only original never invokes current-writer guards.",
         "Authenticated older numeric/format recipe original remains readable; current writer uses its own owner recipe.",
         "Oversized event AND operation/outcome/projection individually externalized with durable SP-337 refs.",
-        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts."
+        "Empty filtered result with complete same-Storage generic coverage; checkpoint CAS retry with original receipts.",
+        "Valid pre-effect request without video/error/committed source, then genuine outcome_committed and first original receipt in every applicable scope.",
+        "Recovery after action before outcome commitment, after outcome before append, and after append before publication; no second effect and no predicted payload."
       ],
       "additional_negative_plans": [
         "Separate current-writer and current-retry projector_replay_only cases.",
