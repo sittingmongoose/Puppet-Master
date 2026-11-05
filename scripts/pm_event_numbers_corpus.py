@@ -5,28 +5,101 @@ authenticate a native store, register a family, or run the other drafting lanes.
 
 scope="numbers" selects the number cases and number owner checks and imports no
 date-time module. Date-time code here stays lazy, on date-time routes only.
+
+Every positive of an API that returns a value carries "returns": the exact
+type-aware value, transcribed independently of the helper and compared through
+typed() below. run_mutations() replays a committed mutation set against the
+number scope; each mutation must make it fail.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from contextlib import contextmanager
+from dataclasses import dataclass, fields as dataclass_fields, is_dataclass, replace
 from decimal import Decimal
 from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
 import sys
+import types
 
 # Corpus operations that execute no date-time code. A history case selects a
 # date-time profile only through date_time_profile, so number_case excludes it.
 NUMBER_OPS = frozenset(("token", "slot", "integer", "boolean", "parse_token", "parse", "current_json",
-                        "jcs", "jcs_value", "jcs_kind_declaration", "physical", "uint64", "decode",
-                        "append_policy", "history", "payload", "recipe_constructor",
-                        "full_value_commitment"))
+                        "current_json_slot", "jcs", "jcs_value", "jcs_kind_declaration", "physical",
+                        "uint64", "decode", "append_policy", "history", "payload", "recipe_constructor",
+                        "binding_constructor", "json_number", "producer", "full_value_commitment"))
+# Operations whose API returns a value beyond the output string. Each of their
+# positives must carry an independent "returns" oracle.
+RETURNING_OPS = frozenset(("token", "slot", "integer", "uint64", "boolean", "parse", "parse_token",
+                           "current_json", "current_json_slot", "decode", "payload",
+                           "recipe_constructor", "binding_constructor", "json_number"))
 SCOPES = ("all", "numbers")
+MUTATION_CLASSES = ("value_rounding", "type_coercion", "dropped_qualification", "substituted_serializer",
+                    "wrong_hash", "removed_refusal", "off_by_one_boundary")
 
 
 def number_case(case):
     return case["op"] in NUMBER_OPS and not case.get("date_time_profile")
+
+
+def _decimal_string(n):
+    """Exact decimal digits of an int, independent of Python's str() digit limit."""
+    negative = n < 0
+    n = -n if negative else n
+    chunks = []
+    while True:
+        n, low = divmod(n, 1_000_000_000)
+        chunks.append(low)
+        if not n:
+            break
+    text = str(chunks[-1]) + "".join("%09d" % c for c in reversed(chunks[:-1]))
+    return "-" + text if negative else text
+
+
+def typed(value):
+    """Exact type-aware encoding of an API's returned value: the oracle side.
+
+    It never calls pm_event_numbers. Exact built-in types only: a float, bool or
+    int subclass where an int is expected does not match. Helper carriers are
+    recognised by class name and checked for their documented base type.
+    """
+    t = type(value)
+    name = t.__name__
+    if value is None or t is str:
+        return value
+    if t is bool:
+        return {"@bool": value}
+    if t is int:
+        return {"@int": _decimal_string(value)}
+    if t is float:
+        return {"@float": repr(value)}
+    if t is bytes:
+        return {"@binary": value.hex()}
+    if t is Decimal:
+        return {"@decimal": str(value)}
+    if name == "ParsedDecimal" and isinstance(value, Decimal):
+        return {"@parsed_decimal": str(value), "kind": typed(getattr(value, "numeric_kind", None))}
+    if name == "JsonNumber" and is_dataclass(value):
+        return {"@json_number": typed(value.token), "integer": typed(value.integer)}
+    if t is list:
+        return [typed(v) for v in value]
+    if t is dict and all(type(k) is str for k in value):
+        return {"@object": {k: typed(v) for k, v in value.items()}}
+    if is_dataclass(value) and not isinstance(value, type):
+        return {"@record": name, "fields": {f.name: typed(getattr(value, f.name)) for f in dataclass_fields(value)}}
+    return {"@unknown": name, "repr": repr(value)[:200]}
+
+
+def _json_native(value):
+    return type(value) in (str, bool, int, float, type(None), list, dict)
+
+
+@dataclass
+class Returned:
+    """Executor output plus the API's actual return value, for the returns oracle."""
+    output: object
+    value: object
 
 
 @dataclass
@@ -36,16 +109,46 @@ class RetainedObservation:
     calls: list
 
 
-def success_errors(result):
+def success_errors(result, case=None):
     """Test postconditions, deliberately outside admission evaluation."""
-    if not isinstance(result, RetainedObservation):
-        return []
     errors = []
+    if case is not None and case["op"] in RETURNING_OPS:
+        if "returns" not in case:
+            errors.append("missing independent returns oracle")
+        else:
+            actual = typed(result.value if isinstance(result, Returned) else result)
+            if actual != case["returns"]:
+                text = json.dumps(actual, sort_keys=True)
+                errors.append("returned " + (text if len(text) <= 300 else text[:300] + "..."))
+    if not isinstance(result, RetainedObservation):
+        return errors
     if len(result.calls) != 1:
         errors.append("expected exactly one frozen verifier")
     if result.returned != result.observed:
         errors.append("retained bytes/result/receipt changed")
     return errors
+
+
+def _paths(rows):
+    return {tuple(p) for p in rows}
+
+
+def _qualification(spec):
+    """Corpus JSON paths (lists) to the helper's tuple paths."""
+    out = {}
+    if "type_sensitive_paths" in spec:
+        out["type_sensitive_paths"] = _paths(spec["type_sensitive_paths"])
+    if "sign_sensitive_paths" in spec:
+        out["sign_sensitive_paths"] = _paths(spec["sign_sensitive_paths"])
+    if "numeric_kinds" in spec:
+        out["numeric_kinds"] = {tuple(p): kind for p, kind in spec["numeric_kinds"]}
+    return out
+
+
+def _at(tree, path):
+    for key in path:
+        tree = tree[key]
+    return tree
 
 
 def _value(value):
@@ -288,31 +391,55 @@ def _validate_envelope_datetime(event, route, *, profile="event_record", resourc
 def execute(m, case, corpus):
     op = case["op"]
     if op == "token":
-        m.current_integer_token(case["raw"], **case.get("bounds", {}))
-        return "accepted"
+        return Returned("accepted", m.current_integer_token(case["raw"], **case.get("bounds", {})))
     if op == "slot":
         tree = m.loads_exact('{"nested":{"number":' + case["raw"] + '}}')
-        m.current_integer(tree["nested"]["number"], **case.get("bounds", {}))
-        return "accepted"
+        return Returned("accepted", m.current_integer(tree["nested"]["number"], **case.get("bounds", {})))
     if op == "integer":
-        m.current_integer(_value(case["value"]), **case.get("bounds", {}))
-        return "accepted"
+        return Returned("accepted", m.current_integer(_value(case["value"]), **case.get("bounds", {})))
     if op == "uint64":
-        m.storage_uint64(_value(case["value"]))
-        return "accepted"
+        return Returned("accepted", m.storage_uint64(_value(case["value"])))
     if op == "boolean":
-        m.exact_boolean(_value(case["value"]))
-        return "accepted"
+        return Returned("accepted", m.exact_boolean(_value(case["value"])))
     if op == "append_policy":
         return m.current_append_policy(case["value"])
     if op == "parse":
-        m.loads_exact(case["raw"])
-        return "accepted"
+        raw = bytes.fromhex(case["raw_hex"]) if "raw_hex" in case else case["raw"]
+        return Returned("accepted", m.loads_exact(raw))
     if op == "parse_token":
-        return m.loads_exact(case["raw"]).token
+        value = m.loads_exact(case["raw"])
+        return Returned(value.token, value)
     if op == "current_json":
-        m.loads_current_json(case["raw"])
-        return "accepted"
+        kinds = {tuple(p): kind for p, kind in case["numeric_kinds"]} if "numeric_kinds" in case else None
+        return Returned("accepted", m.loads_current_json(case["raw"], numeric_kinds=kinds))
+    if op == "current_json_slot":
+        # The documented sequence: parse, then current_integer at the schema
+        # integer slot with that slot's bounds. Bounds sit on either side of the
+        # exact value, so a rounded or float materialization changes the result.
+        tree = m.loads_current_json(case["raw"])
+        return Returned("accepted", m.current_integer(_at(tree, case["path"]), **case.get("bounds", {})))
+    if op == "json_number":
+        number = m.JsonNumber(case["token"], case["integer"])
+        return Returned("accepted", {"number": number, "exact": number.exact()})
+    if op == "binding_constructor":
+        values = dict(storage_instance_id="store-A", scope_kind="application", server_id="server-A",
+                      project_id=None, event_type="fixture.number", event_id="original-event",
+                      idempotency_key="original-key", owner_operation_id="original-operation",
+                      source_commitment="a" * 64)
+        values.update(case["changes"])
+        return Returned("accepted", m.OriginalBinding(**values))
+    if op == "producer":
+        # Actual public wrappers over the frozen base event. Expected bytes and
+        # digests are independent vectors (ECMAScript serializer), not helper output.
+        root = Path(__file__).resolve().parents[1]
+        event = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+        event.update(_value(case.get("changes", {})))
+        for field in case.get("remove", []):
+            del event[field]
+        qualification = _qualification(case.get("qualification", {}))
+        if case["route"] == "digest":
+            return m.producer_semantic_digest(event, **qualification)
+        return m.producer_semantic_bytes(event, **qualification).decode("utf-8")
     if op == "jcs":
         parser = m.loads_current_json if case.get("parser") == "current" else m.loads_exact
         return m.qualified_jcs(parser(case["raw"]),
@@ -381,15 +508,14 @@ def execute(m, case, corpus):
     if op == "physical":
         return m.storage_value_bytes(_value(case["value"]), profile=case.get("profile", m.EVENT_VALUE)).hex()
     if op == "decode":
-        m.decode_storage_value(bytes.fromhex(case["hex"]), profile=case.get("profile", m.EVENT_VALUE))
-        return "accepted"
+        return Returned("accepted", m.decode_storage_value(bytes.fromhex(case["hex"]),
+                                                           profile=case.get("profile", m.EVENT_VALUE)))
     if op == "history":
         return _retained(m, case, corpus)
     if op == "recipe_constructor":
         values = ["fixture"] * 13 + ["a" * 64]
         values[case.get("field_index", 13)] = case["value"]
-        m.RecipeTuple(*values)
-        return "accepted"
+        return Returned("accepted", m.RecipeTuple(*values))
     if op == "payload":
         import blake3
         raw = (case.get("raw", "x") * case["length"]).encode()
@@ -397,10 +523,11 @@ def execute(m, case, corpus):
         descriptor = {"byte_size": len(original), "id": blake3.blake3(original).hexdigest(),
                       "media_type": "application/json"}
         descriptor.update(case.get("descriptor", {}))
-        m.verify_payload_bytes(raw, byte_size=descriptor["byte_size"], payload_id=descriptor["id"],
-                               media_type=descriptor["media_type"], expected_media_type="application/json",
-                               inline=case.get("route", "inline") == "inline")
-        return "accepted"
+        inline = _value(case["inline"]) if "inline" in case else case.get("route", "inline") == "inline"
+        return Returned("accepted", m.verify_payload_bytes(
+            raw.decode() if case.get("raw_as_text") else raw, byte_size=descriptor["byte_size"],
+            payload_id=descriptor["id"], media_type=descriptor["media_type"],
+            expected_media_type="application/json", inline=inline))
     raise AssertionError("Unknown corpus operation: " + op)
 
 
@@ -412,46 +539,67 @@ def evaluate(m, case, corpus):
         return {"outcome": "refusal", "error": error.reason}, None
     except Exception as error:
         return {"outcome": "exception", "exception": type(error).__name__, "message": str(error)}, None
-    output = "original-returned-with-zero-effects" if isinstance(result, RetainedObservation) else result
+    output = ("original-returned-with-zero-effects" if isinstance(result, RetainedObservation) else
+              result.output if isinstance(result, Returned) else result)
+    if not _json_native(output):
+        output = typed(output)  # A wrong output type never equals a JSON expectation.
     return {"outcome": "acceptance", "output": output}, result
 
 
+def _attempt(m, fn):
+    """("acceptance", value), ("refusal", reason) or ("exception", name): never raises."""
+    try:
+        return ("acceptance", fn())
+    except m.Refusal as error:
+        return ("refusal", error.reason)
+    except Exception as error:
+        return ("exception", type(error).__name__)
+
+
 def number_integration_checks(m, root):
-    """Real unchanged owner vectors, not self-generated expected bytes. No date-time code."""
+    """Real unchanged owner vectors, not self-generated expected bytes. No date-time code.
+
+    Each check compares an attempted call, so a helper that raises fails its
+    check instead of aborting the run.
+    """
     wire = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())
     frame = bytes.fromhex(wire["base_frame_hex"])
     header_length = int.from_bytes(frame[9:11], "little")
     original_payload = frame[48 + header_length:]
+    accepted = lambda fn: _attempt(m, fn)
     checks = {
-        "frozen_complete_event_bytes": m.storage_value_bytes(wire["base_event"]) == original_payload,
-        "frozen_complete_event_decode": m.decode_storage_value(original_payload) == wire["base_event"],
+        "frozen_complete_event_bytes": accepted(lambda: m.storage_value_bytes(wire["base_event"])) == (
+            "acceptance", original_payload),
+        "frozen_complete_event_decode": accepted(lambda: m.decode_storage_value(original_payload)) == (
+            "acceptance", wire["base_event"]),
     }
     # These full-route endpoints exercise more than one required exactness
     # predicate. They are controls, not purported single-predicate negatives.
     for value, reason in (((1 << 53) + 1, "jcs_binary64"), ((1 << 64) - 1, "jcs_binary64")):
-        try:
-            m.qualified_jcs(value)
-            checks["full_jcs_endpoint_refusal_" + str(value)] = False
-        except m.Refusal as error:
-            checks["full_jcs_endpoint_refusal_" + str(value)] = error.reason == reason
+        checks["full_jcs_endpoint_refusal_" + str(value)] = accepted(lambda: m.qualified_jcs(value)) == (
+            "refusal", reason)
     full = json.loads((root / "Plans/event_append_receipt_full_value_fixtures.json").read_text())
-    checks["frozen_full_value_commitment"] = m.full_value_commitment(full["base_original_event"]) == full["commitment_sha256"]
+    checks["frozen_full_value_commitment"] = accepted(lambda: m.full_value_commitment(full["base_original_event"])) == (
+        "acceptance", full["commitment_sha256"])
     event = wire["base_event"]
-    producer = m.producer_semantic_digest(event)
+    producer = accepted(lambda: m.producer_semantic_digest(event))
+    full_value = accepted(lambda: m.full_value_commitment(event))
     for field, val in (("sequence_id", (1 << 64) - 1), ("observed_at_utc", "2099-01-01T00:00:00Z"),
                        ("persisted_at_utc", "2099-01-01T00:00:00Z")):
         changed = dict(event, **{field: val})
-        checks["producer_excludes_" + field] = m.producer_semantic_digest(changed) == producer
-        checks["full_value_includes_" + field] = m.full_value_commitment(changed) != m.full_value_commitment(event)
+        checks["producer_excludes_" + field] = producer[0] == "acceptance" and accepted(
+            lambda: m.producer_semantic_digest(changed)) == producer
+        changed_full = accepted(lambda: m.full_value_commitment(changed))
+        checks["full_value_includes_" + field] = (full_value[0] == changed_full[0] == "acceptance"
+                                                  and changed_full != full_value)
     for field in m.PRODUCER_FIELDS:
         changed = dict(event, **{field: "changed-caller-value"})
-        checks["producer_includes_" + field] = m.producer_semantic_digest(changed) != producer
+        changed_producer = accepted(lambda: m.producer_semantic_digest(changed))
+        checks["producer_includes_" + field] = (producer[0] == changed_producer[0] == "acceptance"
+                                                and changed_producer != producer)
         omitted = {k: v for k, v in event.items() if k != field}
-        try:
-            m.producer_semantic_digest(omitted)
-            checks["producer_requires_present_" + field] = False
-        except m.Refusal as error:
-            checks["producer_requires_present_" + field] = error.reason == "producer_projection"
+        checks["producer_requires_present_" + field] = accepted(lambda: m.producer_semantic_digest(omitted)) == (
+            "refusal", "producer_projection")
     from pm_projects_refresh_contracts import semantic_hash
     for left, right in ((1, 1.0), (0.0, -0.0), (True, 1)):
         checks["app_typed_" + repr(left) + "_vs_" + repr(right)] = semantic_hash("accepted_source", left) != semantic_hash("accepted_source", right)
@@ -552,7 +700,7 @@ def run_corpus(path, *, scope="all"):
         if actual != expected:
             failures.append({"id": c["id"], "expected": expected, "actual": actual})
         elif "output" in c:
-            for error in success_errors(result):
+            for error in success_errors(result, c):
                 failures.append({"id": c["id"], "postcondition": error})
         if not c.get("target_predicate"):
             failures.append({"id": c["id"], "missing_target_predicate": True})
@@ -566,7 +714,7 @@ def run_corpus(path, *, scope="all"):
         if not ok:
             failures.append({"integration_check": name})
     return {"status": "fail" if failures else "pass", "corpus_cases": len(cases),
-            "case_passes": len(cases) - sum("id" in f for f in failures),
+            "case_passes": len(cases) - len({f["id"] for f in failures if "id" in f}),
             "positives": sum("output" in c for c in cases),
             "negatives": sum("error" in c for c in cases),
             "labelled_cases": sum(bool(c.get("target_predicate")) for c in cases),
@@ -584,3 +732,150 @@ def run_corpus(path, *, scope="all"):
             "scope": ("Shared adapter/corpus only; no complete lane checker or family admission." if scope == "all" else
                       "Number recipes only; CV-1101 date-time stays a separately required gate. "
                       "No complete lane checker or family admission.")}
+
+
+# The committed mutation set. Each entry is one exact source edit to a number
+# helper, applied in memory to a fresh module; files are never written. The
+# number corpus must fail under every mutation, except declared survivors,
+# whose reasons a reviewer checks.
+
+def _load_module(name, source, file):
+    module = types.ModuleType(name)
+    module.__file__ = file
+    sys.modules[name] = module  # dataclasses resolve their module through sys.modules
+    exec(compile(source, file, "exec"), module.__dict__)
+    return module
+
+
+@contextmanager
+def _installed(mutation, sources):
+    """Swap the mutant in for pm_event_numbers for one corpus run, then restore."""
+    names = ("pm_event_numbers", "pm_event_index_binding")
+    saved = {name: sys.modules.get(name) for name in names}
+    try:
+        target = mutation["module"]
+        text, file = sources[target]
+        mutated = text.replace(mutation["find"], mutation["replace"])
+        if target == "pm_event_index_binding":
+            _load_module(target, mutated, file)
+            numbers_text, numbers_file = sources["pm_event_numbers"]
+            yield _load_module("pm_event_numbers", numbers_text, numbers_file)
+        else:
+            yield _load_module(target, mutated, file)
+    finally:
+        for name, module in saved.items():
+            if module is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = module
+
+
+@contextmanager
+def _time_limit(seconds):
+    """Bound a mutant that loops. Uses SIGALRM where the platform has it."""
+    import signal
+
+    def expire(signum, frame):
+        raise TimeoutError("mutation run exceeded %d s" % seconds)
+    try:
+        previous = signal.signal(signal.SIGALRM, expire)
+    except (AttributeError, ValueError):
+        yield
+        return
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, previous)
+
+
+def run_mutations(corpus_path, mutation_path, *, time_limit=120):
+    """Replay the committed mutation set against the number scope.
+
+    Pass means: the intact corpus passes; every (API, class) cell has a mutation
+    or a reasoned not-applicable entry; every mutation applies exactly once and
+    fails the number corpus; and every declared survivor really survives.
+    """
+    import pm_event_numbers as intact
+    import pm_event_index_binding as binding
+    spec = json.loads(Path(mutation_path).read_text(), object_pairs_hook=intact._unique_object)
+    sources = {name: (Path(module.__file__).read_text(), module.__file__)
+               for name, module in (("pm_event_numbers", intact), ("pm_event_index_binding", binding))}
+    problems = []
+    baseline = run_corpus(corpus_path, scope="numbers")
+    if baseline["status"] != "pass":
+        problems.append("intact number corpus does not pass")
+    classes = MUTATION_CLASSES + tuple(spec.get("extra_classes", ()))
+    ids = [mutation["id"] for mutation in spec["mutations"]]
+    if len(ids) != len(set(ids)):
+        problems.append("duplicate mutation ids")
+    matrix = {}
+    for api, entry in spec["apis"].items():
+        if not hasattr(intact, api):
+            problems.append("API not exported by pm_event_numbers: " + api)
+        cells = {}
+        for cls in MUTATION_CLASSES:
+            hits = [m["id"] for m in spec["mutations"] if m["api"] == api and m["class"] == cls]
+            reason = entry.get("not_applicable", {}).get(cls)
+            if hits and reason:
+                problems.append("%s/%s has both mutations and a not-applicable reason" % (api, cls))
+            if not hits and not reason:
+                problems.append("%s/%s has no mutation and no not-applicable reason" % (api, cls))
+            cells[cls] = hits if hits else ("N/A: " + reason if reason else "MISSING")
+        for cls in classes[len(MUTATION_CLASSES):]:
+            hits = [m["id"] for m in spec["mutations"] if m["api"] == api and m["class"] == cls]
+            if hits:
+                cells[cls] = hits
+        matrix[api] = cells
+    results = []
+    for mutation in spec["mutations"]:
+        row = {key: mutation[key] for key in ("id", "api", "class", "module")}
+        if mutation.get("source"):
+            row["source"] = mutation["source"]
+        if mutation["api"] not in spec["apis"] or mutation["class"] not in classes:
+            problems.append(mutation["id"] + ": unknown API or class")
+        count = sources[mutation["module"]][0].count(mutation["find"]) if mutation["module"] in sources else 0
+        if count != 1 or mutation["find"] == mutation["replace"]:
+            row.update(result="not_applied", find_occurrences=count)
+            problems.append(mutation["id"] + ": find text must occur exactly once and differ from replace")
+            results.append(row)
+            continue
+        try:
+            with _time_limit(time_limit), _installed(mutation, sources):
+                outcome = run_corpus(corpus_path, scope="numbers")
+            failed = sorted({f["id"] for f in outcome["failures"] if "id" in f})
+            checks = [f["integration_check"] for f in outcome["failures"] if "integration_check" in f]
+            row.update(caught=outcome["status"] == "fail", failed_cases=len(failed),
+                       failed_case_ids=failed[:12], failed_checks=checks[:12])
+        except Exception as error:  # The CLI would also fail; recorded distinctly.
+            row.update(caught=True, runner_exception=type(error).__name__ + ": " + str(error)[:200])
+        survives = mutation.get("survives")
+        if survives:
+            row["declared_survivor"] = survives
+            if row["caught"]:
+                problems.append(mutation["id"] + ": declared survivor is now caught; update the set")
+        elif not row["caught"]:
+            problems.append(mutation["id"] + ": mutation survived the number corpus")
+        row["result"] = "caught" if row["caught"] else "survives"
+        results.append(row)
+    review = [r for r in results if r.get("source") == "review"]
+    totals = {
+        "apis": len(spec["apis"]),
+        "mutations": len(results),
+        "caught": sum(r.get("result") == "caught" for r in results),
+        "survivors": sum(r.get("result") == "survives" for r in results),
+        "declared_survivors": sum("declared_survivor" in r for r in results),
+        "not_applied": sum(r.get("result") == "not_applied" for r in results),
+        "runner_exceptions": sum("runner_exception" in r for r in results),
+        "not_applicable_cells": sum(type(v) is str and v.startswith("N/A: ") for cells in matrix.values()
+                                    for v in cells.values()),
+        "review_mutations": len(review),
+        "review_mutations_caught": sum(r.get("result") == "caught" for r in review),
+    }
+    return {"status": "fail" if problems else "pass", "mutation_set": spec["schema_id"],
+            "intact": {key: baseline[key] for key in ("status", "corpus_cases", "case_passes",
+                                                       "positives", "negatives")} |
+                      {"owner_integration_checks": len(baseline["owner_integration_checks"])},
+            "totals": totals, "problems": problems, "matrix": matrix, "mutations": results,
+            "self_test_scope": "numbers", "native_authority": "NOT_RUN"}

@@ -1,0 +1,1194 @@
+{
+  "schema_id": "pm.event_number_mutation_set.v1",
+  "purpose": "Fixed mutation set for the number corpus. Each entry is one exact source edit to a number helper, applied in memory to a fresh module; the number corpus must fail under it. Declared survivors carry a reason for review. Run: python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations",
+  "classes": [
+    "value_rounding",
+    "type_coercion",
+    "dropped_qualification",
+    "substituted_serializer",
+    "wrong_hash",
+    "removed_refusal",
+    "off_by_one_boundary"
+  ],
+  "extra_classes": [
+    "substituted_identifier"
+  ],
+  "api_source": "The import block of reports/event-authority-20261105/NUMRULE-ADOPTION.md, Number-only adoption.",
+  "apis": {
+    "current_integer_token": {
+      "not_applicable": {
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "current_integer": {
+      "not_applicable": {
+        "substituted_serializer": "Parses nothing itself: token parsing is current_integer_token's, mutated there.",
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "storage_uint64": {
+      "not_applicable": {
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "exact_boolean": {
+      "not_applicable": {
+        "value_rounding": "No numeric value is computed here.",
+        "dropped_qualification": "Takes no qualification or profile argument.",
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Computes no hash.",
+        "off_by_one_boundary": "Has no numeric, length or position boundary."
+      }
+    },
+    "current_append_policy": {
+      "not_applicable": {
+        "value_rounding": "No numeric value is computed here.",
+        "dropped_qualification": "Takes no qualification or profile argument.",
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Computes no hash.",
+        "off_by_one_boundary": "Has no numeric, length or position boundary."
+      }
+    },
+    "loads_exact": {
+      "not_applicable": {
+        "wrong_hash": "Computes no hash.",
+        "off_by_one_boundary": "No numeric or length boundary: token grammar boundaries belong to JsonNumber and current_integer_token, mutated there."
+      }
+    },
+    "loads_current_json": {
+      "not_applicable": {
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "qualified_jcs": {
+      "not_applicable": {
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "producer_semantic_bytes": {
+      "not_applicable": {
+        "wrong_hash": "Computes no hash. The digest wrapper's hash is mutated under producer_semantic_digest."
+      }
+    },
+    "producer_semantic_digest": {
+      "not_applicable": {
+        "value_rounding": "Hashes bytes; numeric rounding belongs to the bytes route, mutated under producer_semantic_bytes."
+      }
+    },
+    "storage_value_bytes": {
+      "not_applicable": {
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "decode_storage_value": {
+      "not_applicable": {
+        "wrong_hash": "Computes no hash.",
+        "off_by_one_boundary": "Width boundaries are the encoder's, mutated under storage_value_bytes; the decoder compares bytes exactly."
+      }
+    },
+    "full_value_commitment": {
+      "not_applicable": {
+        "value_rounding": "Numeric bytes come from storage_value_bytes, whose rounding is mutated there."
+      }
+    },
+    "verify_payload_bytes": {
+      "not_applicable": {
+        "value_rounding": "No numeric value is computed here.",
+        "substituted_serializer": "Compares the owner's bytes as given; serializes nothing."
+      }
+    },
+    "JsonNumber": {
+      "not_applicable": {
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "ParsedDecimal": {
+      "not_applicable": {
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Computes no hash.",
+        "removed_refusal": "Has no refusal of its own.",
+        "off_by_one_boundary": "Has no numeric, length or position boundary."
+      }
+    },
+    "RecipeTuple": {
+      "not_applicable": {
+        "value_rounding": "No numeric value is computed here.",
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Checks SHA-256 syntax only; computes no hash."
+      }
+    },
+    "OriginalBinding": {
+      "not_applicable": {
+        "value_rounding": "No numeric value is computed here.",
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Computes no hash."
+      }
+    },
+    "RetainedDispatcher": {
+      "not_applicable": {
+        "value_rounding": "No numeric value is computed here.",
+        "substituted_serializer": "Serializes and parses nothing.",
+        "wrong_hash": "Computes no hash: the frozen verifier owns commitments."
+      }
+    },
+    "Refusal": {
+      "not_applicable": {
+        "value_rounding": "Exception carrier: only its reason is behaviour, mutated as dropped_qualification.",
+        "type_coercion": "Exception carrier: only its reason is behaviour, mutated as dropped_qualification.",
+        "substituted_serializer": "Exception carrier: only its reason is behaviour, mutated as dropped_qualification.",
+        "wrong_hash": "Exception carrier: only its reason is behaviour, mutated as dropped_qualification.",
+        "removed_refusal": "Exception carrier: only its reason is behaviour, mutated as dropped_qualification.",
+        "off_by_one_boundary": "Exception carrier: only its reason is behaviour, mutated as dropped_qualification."
+      }
+    },
+    "OriginalCustody": {
+      "not_applicable": {
+        "value_rounding": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "type_coercion": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "dropped_qualification": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "substituted_serializer": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "wrong_hash": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "removed_refusal": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "off_by_one_boundary": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher."
+      }
+    },
+    "FrozenRecipe": {
+      "not_applicable": {
+        "value_rounding": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "type_coercion": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "dropped_qualification": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "substituted_serializer": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "wrong_hash": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "removed_refusal": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher.",
+        "off_by_one_boundary": "Frozen field carrier with no logic; its use is mutated through RetainedDispatcher."
+      }
+    },
+    "EVENT_VALUE": {
+      "not_applicable": {
+        "value_rounding": "Profile identifier string; mutated as substituted_identifier.",
+        "type_coercion": "Profile identifier string; mutated as substituted_identifier.",
+        "dropped_qualification": "Profile identifier string; mutated as substituted_identifier.",
+        "substituted_serializer": "Profile identifier string; mutated as substituted_identifier.",
+        "wrong_hash": "Profile identifier string; mutated as substituted_identifier.",
+        "removed_refusal": "Profile identifier string; mutated as substituted_identifier.",
+        "off_by_one_boundary": "Profile identifier string; mutated as substituted_identifier."
+      }
+    },
+    "APP_PHYSICAL": {
+      "not_applicable": {
+        "value_rounding": "Profile identifier string; mutated as substituted_identifier.",
+        "type_coercion": "Profile identifier string; mutated as substituted_identifier.",
+        "dropped_qualification": "Profile identifier string; mutated as substituted_identifier.",
+        "substituted_serializer": "Profile identifier string; mutated as substituted_identifier.",
+        "wrong_hash": "Profile identifier string; mutated as substituted_identifier.",
+        "removed_refusal": "Profile identifier string; mutated as substituted_identifier.",
+        "off_by_one_boundary": "Profile identifier string; mutated as substituted_identifier."
+      }
+    },
+    "INDEX_BINDING": {
+      "not_applicable": {
+        "value_rounding": "Profile identifier string; mutated as substituted_identifier.",
+        "type_coercion": "Profile identifier string; mutated as substituted_identifier.",
+        "dropped_qualification": "Profile identifier string; mutated as substituted_identifier.",
+        "substituted_serializer": "Profile identifier string; mutated as substituted_identifier.",
+        "wrong_hash": "Profile identifier string; mutated as substituted_identifier.",
+        "removed_refusal": "Profile identifier string; mutated as substituted_identifier.",
+        "off_by_one_boundary": "Profile identifier string; mutated as substituted_identifier."
+      }
+    }
+  },
+  "mutations": [
+    {
+      "id": "review-current-parser-rounded-int",
+      "api": "loads_current_json",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "source": "review",
+      "find": "current_integer(value) if value.integer else",
+      "replace": "int(float(current_integer(value))) if value.integer else"
+    },
+    {
+      "id": "review-current-parser-float",
+      "api": "loads_current_json",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "source": "review",
+      "find": "current_integer(value) if value.integer else",
+      "replace": "float(current_integer(value)) if value.integer else"
+    },
+    {
+      "id": "review-producer-json",
+      "api": "producer_semantic_bytes",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "source": "review",
+      "find": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS}, **qualification)",
+      "replace": "return json.dumps({k: event[k] for k in PRODUCER_FIELDS}, sort_keys=True, separators=(\",\", \":\")).encode()"
+    },
+    {
+      "id": "review-producer-sha512",
+      "api": "producer_semantic_digest",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "source": "review",
+      "find": "hashlib.sha256(producer_semantic_bytes(event, **qualification))",
+      "replace": "hashlib.sha512(producer_semantic_bytes(event, **qualification))"
+    },
+    {
+      "id": "review-producer-drops-qualification",
+      "api": "producer_semantic_bytes",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "source": "review",
+      "find": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS}, **qualification)",
+      "replace": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS})"
+    },
+    {
+      "id": "review-decoder-profile-loss",
+      "api": "decode_storage_value",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "source": "review",
+      "note": "The review's sixth CLI mutation; first fixed in number scope round 1.",
+      "find": "if storage_value_bytes(value, profile=profile) != raw:",
+      "replace": "if storage_value_bytes(value) != raw:"
+    },
+    {
+      "id": "token-rounds-through-binary64",
+      "api": "current_integer_token",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(_integer_digits(token), minimum=minimum, maximum=maximum)",
+      "replace": "    return current_integer(int(float(_integer_digits(token))), minimum=minimum, maximum=maximum)"
+    },
+    {
+      "id": "token-returns-float",
+      "api": "current_integer_token",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(_integer_digits(token), minimum=minimum, maximum=maximum)",
+      "replace": "    return float(current_integer(_integer_digits(token), minimum=minimum, maximum=maximum))"
+    },
+    {
+      "id": "token-drops-bounds",
+      "api": "current_integer_token",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(_integer_digits(token), minimum=minimum, maximum=maximum)",
+      "replace": "    return current_integer(_integer_digits(token))"
+    },
+    {
+      "id": "token-int-parser",
+      "api": "current_integer_token",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "note": "Python int() parsing in place of the chunked exact parser: limited by the process digit limit.",
+      "find": "    return current_integer(_integer_digits(token), minimum=minimum, maximum=maximum)",
+      "replace": "    return current_integer(int(token), minimum=minimum, maximum=maximum)"
+    },
+    {
+      "id": "token-no-grammar",
+      "api": "current_integer_token",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if type(token) is not str or INTEGER_TOKEN.fullmatch(token) is None:\n        _refuse(\"integer_token\")",
+      "replace": "    if type(token) is not str:\n        _refuse(\"integer_token\")"
+    },
+    {
+      "id": "token-grammar-leading-zero",
+      "api": "current_integer_token",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "note": "First-digit range [1-9] widened to [0-9].",
+      "find": "INTEGER_TOKEN = re.compile(r\"(?:0|-?[1-9][0-9]*)\", re.ASCII)",
+      "replace": "INTEGER_TOKEN = re.compile(r\"(?:0|-?[0-9][0-9]*)\", re.ASCII)"
+    },
+    {
+      "id": "token-chunk-width",
+      "api": "current_integer_token",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "note": "Exact digit chunking off by one: digits are dropped.",
+      "find": "        chunk = digits[start:start + 9]",
+      "replace": "        chunk = digits[start:start + 8]"
+    },
+    {
+      "id": "integer-rounds-through-binary64",
+      "api": "current_integer",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "        _refuse(\"integer_range\")\n    return value\n",
+      "replace": "        _refuse(\"integer_range\")\n    return int(float(value))\n"
+    },
+    {
+      "id": "integer-isinstance",
+      "api": "current_integer",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "note": "Admits bool as an integer.",
+      "find": "    if type(value) is not int:\n        _refuse(\"integer_type\")",
+      "replace": "    if not isinstance(value, int):\n        _refuse(\"integer_type\")"
+    },
+    {
+      "id": "integer-returns-float",
+      "api": "current_integer",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "        _refuse(\"integer_range\")\n    return value\n",
+      "replace": "        _refuse(\"integer_range\")\n    return float(value)\n"
+    },
+    {
+      "id": "integer-json-number-drops-bounds",
+      "api": "current_integer",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        return current_integer_token(value.token, minimum=minimum, maximum=maximum)",
+      "replace": "        return current_integer_token(value.token)"
+    },
+    {
+      "id": "integer-no-fraction-type-refusal",
+      "api": "current_integer",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if not value.integer:\n            _refuse(\"integer_type\")\n",
+      "replace": ""
+    },
+    {
+      "id": "integer-no-minimum",
+      "api": "current_integer",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if minimum is not None and value < minimum:\n        _refuse(\"integer_range\")\n",
+      "replace": ""
+    },
+    {
+      "id": "integer-maximum-exclusive",
+      "api": "current_integer",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "    if maximum is not None and value > maximum:",
+      "replace": "    if maximum is not None and value >= maximum:"
+    },
+    {
+      "id": "integer-minimum-exclusive",
+      "api": "current_integer",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "    if minimum is not None and value < minimum:",
+      "replace": "    if minimum is not None and value <= minimum:"
+    },
+    {
+      "id": "uint64-rounds-through-binary64",
+      "api": "storage_uint64",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(value, minimum=0, maximum=UINT64_MAX)",
+      "replace": "    return int(float(current_integer(value, minimum=0, maximum=UINT64_MAX)))"
+    },
+    {
+      "id": "uint64-returns-float",
+      "api": "storage_uint64",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(value, minimum=0, maximum=UINT64_MAX)",
+      "replace": "    return float(current_integer(value, minimum=0, maximum=UINT64_MAX))"
+    },
+    {
+      "id": "uint64-drops-bounds",
+      "api": "storage_uint64",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(value, minimum=0, maximum=UINT64_MAX)",
+      "replace": "    return current_integer(value)"
+    },
+    {
+      "id": "uint64-no-upper-refusal",
+      "api": "storage_uint64",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(value, minimum=0, maximum=UINT64_MAX)",
+      "replace": "    return current_integer(value, minimum=0)"
+    },
+    {
+      "id": "uint64-maximum-minus-one",
+      "api": "storage_uint64",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(value, minimum=0, maximum=UINT64_MAX)",
+      "replace": "    return current_integer(value, minimum=0, maximum=UINT64_MAX - 1)"
+    },
+    {
+      "id": "uint64-minimum-one",
+      "api": "storage_uint64",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "    return current_integer(value, minimum=0, maximum=UINT64_MAX)",
+      "replace": "    return current_integer(value, minimum=1, maximum=UINT64_MAX)"
+    },
+    {
+      "id": "boolean-isinstance-int",
+      "api": "exact_boolean",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "    if type(value) is not bool:\n        _refuse(\"boolean_type\")",
+      "replace": "    if not isinstance(value, int):\n        _refuse(\"boolean_type\")"
+    },
+    {
+      "id": "boolean-returns-int",
+      "api": "exact_boolean",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "note": "Caught only by the returns oracle: admission outcomes are unchanged.",
+      "find": "        _refuse(\"boolean_type\")\n    return value\n",
+      "replace": "        _refuse(\"boolean_type\")\n    return int(value)\n"
+    },
+    {
+      "id": "boolean-no-refusal",
+      "api": "exact_boolean",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if type(value) is not bool:\n        _refuse(\"boolean_type\")",
+      "replace": "    pass"
+    },
+    {
+      "id": "append-policy-no-replay-only-refusal",
+      "api": "current_append_policy",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if value == \"projector_replay_only\":\n        _refuse(\"replay_only_not_appendable\")\n",
+      "replace": ""
+    },
+    {
+      "id": "append-policy-no-membership",
+      "api": "current_append_policy",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if type(value) is not str or value not in (\n        \"append_once\", \"dedupe_by_event_id\", \"dedupe_by_idempotency_key\",\n    ):",
+      "replace": "    if type(value) is not str:"
+    },
+    {
+      "id": "append-policy-returns-bytes",
+      "api": "current_append_policy",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "        _refuse(\"replay_policy\")\n    return value\n",
+      "replace": "        _refuse(\"replay_policy\")\n    return value.encode()\n"
+    },
+    {
+      "id": "append-policy-no-type-check",
+      "api": "current_append_policy",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "    if type(value) is not str or value not in (",
+      "replace": "    if value not in (",
+      "survives": "Equivalent at every JSON-expressible input: membership in a tuple of exact str values already refuses every non-str JSON value with the same replay_policy reason. Only a str subclass instance distinguishes the two, and the JSON corpus cannot express one."
+    },
+    {
+      "id": "parse-int-rounds-through-binary64",
+      "api": "loads_exact",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "parse_int=lambda t: JsonNumber(t, True),",
+      "replace": "parse_int=lambda t: JsonNumber(str(int(float(t))), True),"
+    },
+    {
+      "id": "parse-float-native",
+      "api": "loads_exact",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "parse_float=lambda t: JsonNumber(t, False),",
+      "replace": "parse_float=float,"
+    },
+    {
+      "id": "parse-drops-duplicate-hook",
+      "api": "loads_exact",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "                            object_pairs_hook=_unique_object)\n    except json.JSONDecodeError:",
+      "replace": "                            )\n    except json.JSONDecodeError:"
+    },
+    {
+      "id": "parse-drops-nonfinite-hook",
+      "api": "loads_exact",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "                            parse_constant=lambda t: _refuse(\"json_nonfinite\"),\n",
+      "replace": ""
+    },
+    {
+      "id": "parse-latin1-decoder",
+      "api": "loads_exact",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "            raw = raw.decode(\"utf-8\", errors=\"strict\")",
+      "replace": "            raw = raw.decode(\"latin-1\")"
+    },
+    {
+      "id": "parse-no-scalar-walk",
+      "api": "loads_exact",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if type(value) is str:\n            _scalar_string(value)\n",
+      "replace": "        if type(value) is str:\n            pass\n"
+    },
+    {
+      "id": "parse-keys-not-walked",
+      "api": "loads_exact",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "            stack.extend(value.keys())\n",
+      "replace": ""
+    },
+    {
+      "id": "current-drops-numeric-kinds",
+      "api": "loads_current_json",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "ParsedDecimal(value.token, (numeric_kinds or {}).get(path, \"float\")))",
+      "replace": "ParsedDecimal(value.token, \"float\"))"
+    },
+    {
+      "id": "current-plain-json-parser",
+      "api": "loads_current_json",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "    return materialize(loads_exact(raw))",
+      "replace": "    return materialize(json.loads(raw))"
+    },
+    {
+      "id": "current-no-integer-token-refusal",
+      "api": "loads_current_json",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "current_integer(value) if value.integer else",
+      "replace": "value.exact() if value.integer else"
+    },
+    {
+      "id": "current-array-path-off-by-one",
+      "api": "loads_current_json",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "            return [materialize(v, path + (i,)) for i, v in enumerate(value)]",
+      "replace": "            return [materialize(v, path + (i + 1,)) for i, v in enumerate(value)]"
+    },
+    {
+      "id": "jcs-output-rounds-15-digits",
+      "api": "qualified_jcs",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "        return f\n",
+      "replace": "        return float(\"%.15g\" % f)\n"
+    },
+    {
+      "id": "jcs-boolean-as-integer",
+      "api": "qualified_jcs",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "        if v is None or type(v) is bool:\n            return v\n",
+      "replace": "        if v is None:\n            return v\n        if type(v) is bool:\n            return int(v)\n"
+    },
+    {
+      "id": "jcs-drops-numeric-kinds",
+      "api": "qualified_jcs",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        kind = _declared_numeric_kind(v, path, type_sensitive_paths=type_sensitive_paths,\n                                      numeric_kinds=numeric_kinds)",
+      "replace": "        kind = _declared_numeric_kind(v, path, type_sensitive_paths=type_sensitive_paths,\n                                      numeric_kinds=None)"
+    },
+    {
+      "id": "jcs-drops-sign-paths",
+      "api": "qualified_jcs",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        if path in type_sensitive_paths or path in sign_sensitive_paths:",
+      "replace": "        if path in type_sensitive_paths:"
+    },
+    {
+      "id": "jcs-python-json",
+      "api": "qualified_jcs",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "    return rfc8785.dumps(adapt(value))",
+      "replace": "    return json.dumps(adapt(value), sort_keys=True, separators=(\",\", \":\"), ensure_ascii=False).encode()"
+    },
+    {
+      "id": "jcs-no-decimal-refusal",
+      "api": "qualified_jcs",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if exact is not None and Decimal(token.decode(\"ascii\")) != exact:\n            _refuse(\"jcs_decimal\")\n",
+      "replace": ""
+    },
+    {
+      "id": "jcs-no-binary64-refusal",
+      "api": "qualified_jcs",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if source_integer and int(f) != v:\n            _refuse(\"jcs_binary64\")\n",
+      "replace": ""
+    },
+    {
+      "id": "jcs-binary64-tolerance-one",
+      "api": "qualified_jcs",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "        if source_integer and int(f) != v:",
+      "replace": "        if source_integer and abs(int(f) - v) > 1:"
+    },
+    {
+      "id": "producer-rounds-integers",
+      "api": "producer_semantic_bytes",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS}, **qualification)",
+      "replace": "return qualified_jcs({k: (float(event[k]) if type(event[k]) is int else event[k]) for k in PRODUCER_FIELDS}, **qualification)"
+    },
+    {
+      "id": "producer-stringifies-integers",
+      "api": "producer_semantic_bytes",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS}, **qualification)",
+      "replace": "return qualified_jcs({k: (str(event[k]) if type(event[k]) is int else event[k]) for k in PRODUCER_FIELDS}, **qualification)"
+    },
+    {
+      "id": "producer-drops-sign-qualification",
+      "api": "producer_semantic_bytes",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS}, **qualification)",
+      "replace": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS}, **{k: v for k, v in qualification.items() if k != \"sign_sensitive_paths\"})"
+    },
+    {
+      "id": "producer-no-projection-refusal",
+      "api": "producer_semantic_bytes",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if type(event) is not dict or any(k not in event for k in PRODUCER_FIELDS):\n        _refuse(\"producer_projection\")\n",
+      "replace": ""
+    },
+    {
+      "id": "producer-drops-last-field",
+      "api": "producer_semantic_bytes",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS}, **qualification)",
+      "replace": "return qualified_jcs({k: event[k] for k in PRODUCER_FIELDS[:-1]}, **qualification)"
+    },
+    {
+      "id": "digest-returns-bytes",
+      "api": "producer_semantic_digest",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()",
+      "replace": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).digest()"
+    },
+    {
+      "id": "digest-drops-qualification",
+      "api": "producer_semantic_digest",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()",
+      "replace": "    return hashlib.sha256(producer_semantic_bytes(event)).hexdigest()"
+    },
+    {
+      "id": "digest-python-json",
+      "api": "producer_semantic_digest",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()",
+      "replace": "    return hashlib.sha256(json.dumps({k: event[k] for k in PRODUCER_FIELDS}, sort_keys=True, separators=(\",\", \":\")).encode()).hexdigest()"
+    },
+    {
+      "id": "digest-sha3-256",
+      "api": "producer_semantic_digest",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "note": "Same 64-hex length as SHA-256.",
+      "find": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()",
+      "replace": "    return hashlib.sha3_256(producer_semantic_bytes(event, **qualification)).hexdigest()"
+    },
+    {
+      "id": "digest-blake2s",
+      "api": "producer_semantic_digest",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "note": "Same 64-hex length as SHA-256.",
+      "find": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()",
+      "replace": "    return hashlib.blake2s(producer_semantic_bytes(event, **qualification)).hexdigest()"
+    },
+    {
+      "id": "digest-swallows-refusal",
+      "api": "producer_semantic_digest",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()",
+      "replace": "    try:\n        return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()\n    except Refusal:\n        return hashlib.sha256(b\"\").hexdigest()"
+    },
+    {
+      "id": "digest-truncated",
+      "api": "producer_semantic_digest",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()",
+      "replace": "    return hashlib.sha256(producer_semantic_bytes(event, **qualification)).hexdigest()[:63]"
+    },
+    {
+      "id": "physical-lossy-float32",
+      "api": "storage_value_bytes",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "                    if restored == v and math.copysign(1, restored) == math.copysign(1, v):",
+      "replace": "                    if abs(restored - v) <= abs(v) * 1e-6 and math.copysign(1, restored) == math.copysign(1, v):"
+    },
+    {
+      "id": "physical-bool-as-integer",
+      "api": "storage_value_bytes",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "            result.append(b\"\\xc3\" if v else b\"\\xc2\")",
+      "replace": "            result.append(binding_bytes(int(v)))"
+    },
+    {
+      "id": "physical-float32-ignores-profile",
+      "api": "storage_value_bytes",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "            if profile == EVENT_VALUE:\n                try:",
+      "replace": "            if True:\n                try:"
+    },
+    {
+      "id": "physical-binary-ignores-profile",
+      "api": "storage_value_bytes",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        elif type(v) is bytes and profile == APP_PHYSICAL:",
+      "replace": "        elif type(v) is bytes:"
+    },
+    {
+      "id": "physical-msgpack-packb",
+      "api": "storage_value_bytes",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "    result = []\n    pending = [value]\n",
+      "replace": "    import msgpack\n    return msgpack.packb(value, use_bin_type=True)\n    result = []\n    pending = [value]\n"
+    },
+    {
+      "id": "physical-insertion-order-maps",
+      "api": "storage_value_bytes",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "            keys = sorted(v, key=lambda k: _scalar_string(k).encode(\"utf-8\"))",
+      "replace": "            keys = list(v)"
+    },
+    {
+      "id": "physical-no-integer-range-refusal",
+      "api": "storage_value_bytes",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "            if not -(1 << 63) <= v <= UINT64_MAX:\n                _refuse(\"physical_integer_range\")\n",
+      "replace": ""
+    },
+    {
+      "id": "physical-negative-fixint-boundary",
+      "api": "storage_value_bytes",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "            elif v >= -32:",
+      "replace": "            elif v >= -33:"
+    },
+    {
+      "id": "physical-int8-boundary",
+      "api": "storage_value_bytes",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "(-128, 0xd0, 1)",
+      "replace": "(-129, 0xd0, 1)"
+    },
+    {
+      "id": "binding-fixstr-boundary",
+      "api": "storage_value_bytes",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_index_binding",
+      "note": "The SP-278 helper's string header boundary, used by every profile.",
+      "find": "        if length < 32:",
+      "replace": "        if length <= 32:"
+    },
+    {
+      "id": "decode-rounds-floats",
+      "api": "decode_storage_value",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "note": "Caught only by the returns oracle for decoded floats.",
+      "find": "        _refuse(\"physical_noncanonical\")\n    return value\n",
+      "replace": "        _refuse(\"physical_noncanonical\")\n    return round(value) if type(value) is float else value\n"
+    },
+    {
+      "id": "decode-raw-strings",
+      "api": "decode_storage_value",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "value = msgpack.unpackb(raw, raw=False, strict_map_key=True,",
+      "replace": "value = msgpack.unpackb(raw, raw=True, strict_map_key=True,"
+    },
+    {
+      "id": "decode-msgpack-canonical-check",
+      "api": "decode_storage_value",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "if storage_value_bytes(value, profile=profile) != raw:",
+      "replace": "if msgpack.packb(value, use_bin_type=True) != raw:"
+    },
+    {
+      "id": "decode-no-canonical-refusal",
+      "api": "decode_storage_value",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if storage_value_bytes(value, profile=profile) != raw:\n        _refuse(\"physical_noncanonical\")\n",
+      "replace": ""
+    },
+    {
+      "id": "decode-no-ext-refusal",
+      "api": "decode_storage_value",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "                                object_pairs_hook=_unique_object,\n                                ext_hook=lambda c, d: _refuse(\"physical_tag\"))",
+      "replace": "                                object_pairs_hook=_unique_object)"
+    },
+    {
+      "id": "full-value-returns-bytes",
+      "api": "full_value_commitment",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "    ])).hexdigest()",
+      "replace": "    ])).digest()"
+    },
+    {
+      "id": "full-value-drops-profile-id",
+      "api": "full_value_commitment",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        \"pm.storage.original_event_value_commitment.v1\", \"1.0.0\", EVENT_VALUE,",
+      "replace": "        \"pm.storage.original_event_value_commitment.v1\", \"1.0.0\","
+    },
+    {
+      "id": "full-value-msgpack-packb",
+      "api": "full_value_commitment",
+      "class": "substituted_serializer",
+      "module": "pm_event_numbers",
+      "find": "    return hashlib.sha256(storage_value_bytes([\n",
+      "replace": "    return hashlib.sha256(__import__(\"msgpack\").packb([\n"
+    },
+    {
+      "id": "full-value-sha512",
+      "api": "full_value_commitment",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "find": "    return hashlib.sha256(storage_value_bytes([\n",
+      "replace": "    return hashlib.sha512(storage_value_bytes([\n"
+    },
+    {
+      "id": "full-value-no-edition-refusal",
+      "api": "full_value_commitment",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if type(event) is not dict or event.get(\"schema_id\") != \"pm.event.v0\" or event.get(\"schema_version\") != \"2.0.0\":",
+      "replace": "    if type(event) is not dict:"
+    },
+    {
+      "id": "full-value-preimage-position",
+      "api": "full_value_commitment",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "note": "Preimage tuple positions shifted by one.",
+      "find": "        event[\"schema_id\"], event[\"schema_version\"], event,",
+      "replace": "        event[\"schema_version\"], event[\"schema_id\"], event,"
+    },
+    {
+      "id": "payload-inline-coerced",
+      "api": "verify_payload_bytes",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "    exact_boolean(inline)\n",
+      "replace": "    inline = bool(inline)\n"
+    },
+    {
+      "id": "payload-size-drops-minimum",
+      "api": "verify_payload_bytes",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "    size = current_integer(byte_size, minimum=0)",
+      "replace": "    size = current_integer(byte_size)"
+    },
+    {
+      "id": "payload-sha256",
+      "api": "verify_payload_bytes",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "find": "    if bytes.fromhex(payload_id) != blake3.blake3(raw).digest():",
+      "replace": "    if bytes.fromhex(payload_id) != hashlib.sha256(raw).digest():"
+    },
+    {
+      "id": "payload-no-media-refusal",
+      "api": "verify_payload_bytes",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if type(media_type) is not str or media_type != expected_media_type:\n        _refuse(\"payload_media\")\n",
+      "replace": ""
+    },
+    {
+      "id": "payload-no-bytes-type-refusal",
+      "api": "verify_payload_bytes",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "    if type(raw) is not bytes:\n        _refuse(\"payload_bytes_type\")\n",
+      "replace": ""
+    },
+    {
+      "id": "payload-inline-limit-inclusive",
+      "api": "verify_payload_bytes",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "    if inline and len(raw) > 16384:",
+      "replace": "    if inline and len(raw) >= 16384:"
+    },
+    {
+      "id": "json-number-exact-rounds",
+      "api": "JsonNumber",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "        return _integer_digits(self.token) if self.integer else Decimal(self.token)",
+      "replace": "        return int(float(self.token)) if self.integer else Decimal(self.token)"
+    },
+    {
+      "id": "json-number-exact-float",
+      "api": "JsonNumber",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "        return _integer_digits(self.token) if self.integer else Decimal(self.token)",
+      "replace": "        return _integer_digits(self.token) if self.integer else float(self.token)"
+    },
+    {
+      "id": "json-number-ignores-integer-flag",
+      "api": "JsonNumber",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        grammar = r\"-?(?:0|[1-9][0-9]*)\" if self.integer else",
+      "replace": "        grammar = r\"-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\" if self.integer else"
+    },
+    {
+      "id": "json-number-no-float-marker-refusal",
+      "api": "JsonNumber",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if not self.integer and not any(c in self.token for c in \".eE\"):\n            _refuse(\"json_number_token\")\n",
+      "replace": ""
+    },
+    {
+      "id": "json-number-leading-zero",
+      "api": "JsonNumber",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "        grammar = r\"-?(?:0|[1-9][0-9]*)\" if self.integer else",
+      "replace": "        grammar = r\"-?[0-9]+\" if self.integer else"
+    },
+    {
+      "id": "parsed-decimal-rounds",
+      "api": "ParsedDecimal",
+      "class": "value_rounding",
+      "module": "pm_event_numbers",
+      "find": "        value = super().__new__(cls, token)",
+      "replace": "        value = super().__new__(cls, repr(float(token)))"
+    },
+    {
+      "id": "parsed-decimal-float-base",
+      "api": "ParsedDecimal",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "class ParsedDecimal(Decimal):",
+      "replace": "class ParsedDecimal(float):"
+    },
+    {
+      "id": "parsed-decimal-drops-kind",
+      "api": "ParsedDecimal",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        value.numeric_kind = numeric_kind",
+      "replace": "        value.numeric_kind = \"float\""
+    },
+    {
+      "id": "recipe-no-type-check",
+      "api": "RecipeTuple",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "        if any(type(getattr(self, f.name)) is not str or not getattr(self, f.name) for f in fields(self)):",
+      "replace": "        if any(not getattr(self, f.name) for f in fields(self)):"
+    },
+    {
+      "id": "recipe-hash-prefix-match",
+      "api": "RecipeTuple",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "note": "Full-match anchoring dropped.",
+      "find": "        if re.fullmatch(r\"[0-9a-f]{64}\", self.resource_manifest_sha256) is None:",
+      "replace": "        if re.match(r\"[0-9a-f]{64}\", self.resource_manifest_sha256) is None:"
+    },
+    {
+      "id": "recipe-no-hash-refusal",
+      "api": "RecipeTuple",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if re.fullmatch(r\"[0-9a-f]{64}\", self.resource_manifest_sha256) is None:\n            _refuse(\"recipe_resource_hash\")\n",
+      "replace": ""
+    },
+    {
+      "id": "recipe-hash-length-63",
+      "api": "RecipeTuple",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "find": "r\"[0-9a-f]{64}\", self.resource_manifest_sha256",
+      "replace": "r\"[0-9a-f]{63,64}\", self.resource_manifest_sha256"
+    },
+    {
+      "id": "binding-no-type-check",
+      "api": "OriginalBinding",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "            if f.name != \"project_id\" and (type(v) is not str or not v):",
+      "replace": "            if f.name != \"project_id\" and not v:"
+    },
+    {
+      "id": "binding-application-ignores-project",
+      "api": "OriginalBinding",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        if not ((self.scope_kind == \"application\" and self.project_id is None) or",
+      "replace": "        if not ((self.scope_kind == \"application\") or"
+    },
+    {
+      "id": "binding-no-field-refusal",
+      "api": "OriginalBinding",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "            if f.name != \"project_id\" and (type(v) is not str or not v):\n                _refuse(\"original_binding\")\n",
+      "replace": "            pass\n"
+    },
+    {
+      "id": "binding-no-scope-refusal",
+      "api": "OriginalBinding",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "                (self.scope_kind == \"project\" and type(self.project_id) is str and self.project_id)):\n            _refuse(\"original_scope\")\n",
+      "replace": "                (self.scope_kind == \"project\" and type(self.project_id) is str and self.project_id)):\n            pass\n"
+    },
+    {
+      "id": "binding-project-empty-boundary",
+      "api": "OriginalBinding",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "note": "Empty-string project boundary admitted.",
+      "find": "(self.scope_kind == \"project\" and type(self.project_id) is str and self.project_id)",
+      "replace": "(self.scope_kind == \"project\" and type(self.project_id) is str)"
+    },
+    {
+      "id": "dispatcher-truthy-verifier",
+      "api": "RetainedDispatcher",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "        if recipe.verify_original(original) is not True:",
+      "replace": "        if not recipe.verify_original(original):"
+    },
+    {
+      "id": "dispatcher-truthy-disclosure",
+      "api": "RetainedDispatcher",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "find": "        if disclose(original.binding) is not True:",
+      "replace": "        if not disclose(original.binding):"
+    },
+    {
+      "id": "dispatcher-skips-disclosure",
+      "api": "RetainedDispatcher",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        if disclose(original.binding) is not True:",
+      "replace": "        if False:"
+    },
+    {
+      "id": "dispatcher-ignores-original-recipe",
+      "api": "RetainedDispatcher",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        recipe = self._recipes.get(original.recipe)",
+      "replace": "        recipe = next(iter(self._recipes.values()))"
+    },
+    {
+      "id": "dispatcher-no-override-refusal",
+      "api": "RetainedDispatcher",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if recipe_override is not None:\n            _refuse(\"caller_recipe_override\")\n",
+      "replace": ""
+    },
+    {
+      "id": "dispatcher-no-binding-join",
+      "api": "RetainedDispatcher",
+      "class": "removed_refusal",
+      "module": "pm_event_numbers",
+      "find": "        if type(original.binding) is not OriginalBinding or original.binding != expected:",
+      "replace": "        if type(original.binding) is not OriginalBinding:"
+    },
+    {
+      "id": "dispatcher-verifies-twice",
+      "api": "RetainedDispatcher",
+      "class": "off_by_one_boundary",
+      "module": "pm_event_numbers",
+      "note": "Verifier call count off by one; caught by the exactly-one-verifier postcondition.",
+      "find": "        if recipe.verify_original(original) is not True:",
+      "replace": "        if recipe.verify_original(original) is not True or recipe.verify_original(original) is not True:"
+    },
+    {
+      "id": "refusal-drops-reason",
+      "api": "Refusal",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "find": "        self.reason = reason",
+      "replace": "        self.reason = \"refused\""
+    },
+    {
+      "id": "event-value-identifier",
+      "api": "EVENT_VALUE",
+      "class": "substituted_identifier",
+      "module": "pm_event_numbers",
+      "find": "EVENT_VALUE = \"pm.seglog_frame_v2.event_value.canonical_msgpack.v1\"",
+      "replace": "EVENT_VALUE = \"pm.seglog_frame_v2.event_value.canonical_msgpack.v2\""
+    },
+    {
+      "id": "app-physical-identifier",
+      "api": "APP_PHYSICAL",
+      "class": "substituted_identifier",
+      "module": "pm_event_numbers",
+      "find": "APP_PHYSICAL = \"pm.application.physical_messagepack.v1\"",
+      "replace": "APP_PHYSICAL = \"pm.application.physical_messagepack.v2\""
+    },
+    {
+      "id": "index-binding-identifier",
+      "api": "INDEX_BINDING",
+      "class": "substituted_identifier",
+      "module": "pm_event_numbers",
+      "find": "INDEX_BINDING = \"pm.event_index.binding.msgpack_sha256.v1\"",
+      "replace": "INDEX_BINDING = \"pm.event_index.binding.msgpack_sha256.v2\""
+    },
+    {
+      "id": "app-physical-swapped-for-event-value",
+      "api": "APP_PHYSICAL",
+      "class": "substituted_identifier",
+      "module": "pm_event_numbers",
+      "note": "Profile identifiers collapse: the app profile selects EventRecord float widths.",
+      "find": "APP_PHYSICAL = \"pm.application.physical_messagepack.v1\"",
+      "replace": "APP_PHYSICAL = \"pm.seglog_frame_v2.event_value.canonical_msgpack.v1\""
+    }
+  ]
+}

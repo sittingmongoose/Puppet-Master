@@ -8,6 +8,8 @@ its frozen validators; no request, boolean or self-hash authenticates it.
 
 --self-test --scope numbers runs the number cases and number owner checks with
 no date-time code imported. The default --scope all adds the date-time gate.
+--self-test --scope numbers --mutations also replays the committed mutation set
+(pm_event_numbers_mutations.json), in memory; each mutation must fail the corpus.
 """
 from __future__ import annotations
 
@@ -554,8 +556,18 @@ def main() -> int:
     parser.add_argument("--corpus", type=Path, default=Path(__file__).resolve().parents[1] / "Plans/event_number_recipe_corpus.json")
     parser.add_argument("--scope", choices=("all", "numbers"), default="all",
                         help="numbers: number cases and owner checks only, importing no date-time code")
+    parser.add_argument("--mutations", action="store_true",
+                        help="with --scope numbers: replay the mutation set; each mutation must fail the corpus")
+    parser.add_argument("--mutation-set", type=Path,
+                        default=Path(__file__).resolve().parent / "pm_event_numbers_mutations.json")
     args = parser.parse_args()
-    result = self_test(args.corpus, scope=args.scope)
+    if args.mutations:
+        if args.scope != "numbers":
+            parser.error("--mutations runs with --scope numbers")
+        from pm_event_numbers_corpus import run_mutations
+        result = run_mutations(args.corpus, args.mutation_set)
+    else:
+        result = self_test(args.corpus, scope=args.scope)
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0 if result["status"] == "pass" else 1
 
