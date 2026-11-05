@@ -2,7 +2,7 @@ import { onboardingApp } from '../helpers/onboarding-fields.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 const L = '.o55-pane > .o55-layer:not(.o55-out) ';
 export default async function(t) {
- const A=onboardingApp(t); await A.boot(); const f=A.frame();
+ const A=onboardingApp(t); await A.boot({scenario:'fresh+homeNasPm'}); const f=A.frame();
  await A.click('pick','this'); await A.click('next',undefined,'begin');
  await A.click('pick','existing'); await A.click('sub','device'); await A.click('next',undefined,'nas-find');
  await A.waitFor(()=>!!document.querySelector('.o55-card[data-arg="nas-home"]'));
