@@ -258,7 +258,7 @@ def type_sweep():
             results.append({'family':'workspace.layout_changed','location':flag,'value':value,'refused':bool(ds.layout_event_errors(event,binding=slot['binding'],historical=True,historical_source=ds.layout_history_observation(event)['historical_source'],custody={**ds.layout_history_observation(event)['custody'],flag:value}))})
         results.append({'family':'context.compaction.completed','location':'verified','value':value,'refused':ds.compaction_history(comp,verified=value,withdrawn=False,deleted=False,live_revision=999)=='unavailable'})
         results.append({'family':'terminal.workgroup_moved','location':'retained_schema_boolean','value':value,'refused':all(not route.StrictValidator(s).is_valid(value) for s in bools)})
-    return {'status':'pass' if all(r['refused'] for r in results) else 'fail','cases':results,'terminal_runtime':'NOT_RUN; held owner question unchanged'}
+    return {'status':'pass' if all(r['refused'] for r in results) else 'fail','cases':results,'terminal_runtime':'NOT_RUN; DL-449 compatibility only; complete guard isolation remains part 2'}
 
 
 def main():

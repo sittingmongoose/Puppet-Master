@@ -76,7 +76,12 @@ def cases():
     for field, value in [('producer_sequence_id', 10)]:
         add('U004', field, slot, event_field(field, value))
     for field in ('prior_layout_revision', 'new_layout_revision'):
-        add('U004', field, slot, payload_field(field, 6 if field.startswith('prior') else 10))
+        def revision_edge(v, field=field):
+            value = 6 if field.startswith('prior') else 10
+            v['event_semantics']['payload'][field] = value
+            if field == 'new_layout_revision':
+                v['event_semantics']['producer_sequence_id'] = value
+        add('U004', field, slot, revision_edge)
     add('U005', 'envelope_correlation', slot, event_field('correlation_id', 'correlation:foreign'))
     for field in ('correlation_id', 'interaction_transaction_id'):
         add('U005', field, slot, payload_field(field, 'correlation:foreign'))
