@@ -48,7 +48,8 @@ export default async function(t) {
    await openAt(t,f,'ai');
    await wording(t,f,mode);
    const row = '[data-key="pv-cursor"] ';
-   await click(t,f,row+'[data-o55-do="key"]');
+   await f.locator(LAYER+' '+row+'[data-o55-do="key"]').waitFor({state:'visible'});
+   await t.check('key entry opens after provider detection',await click(t,f,row+'[data-o55-do="key"]'),'',{hard:true});
    async function key(v) { await f.locator('#o55f-key-cursor').fill(v); await click(t,f,row+'[data-o55-do="keyCheck"]'); }
    await key('short-key');
    await f.waitForFunction(()=>Object.values(O55.S.sess.ops).some(x=>x.state==='failed'));
