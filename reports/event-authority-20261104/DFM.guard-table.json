@@ -1,6 +1,6 @@
 {
   "assessed_content_commit": "cadf31fcb5596671fe1ad3a6db14bfdd14c28154",
-  "status": "PASS_WITH_PREPARATION_QUALIFICATIONS",
+  "status": "HISTORICAL_PART2_REQUIRED",
   "source_hashes": {
     "scripts/pm-filemanager-event-contracts.py": "02c2b058cac3d13ab3a68e9f014218e32494065475bc9b4aae8cf01010511b7a",
     "Plans/filemanager_event_contract_fixtures.json": "b43f475cbed9b0b466e1bf382cfa4647962e24a2b4c451b1269bb448da856223"
@@ -26999,5 +26999,11 @@
     "folder.renamed/round7:settlement-header:project_id",
     "folder.renamed/round7:settlement-header:operation_id",
     "folder.renamed/round7:settlement-header:receipt_ref"
+  ],
+  "current_assessment_note": "The body retains the round-7 results at assessed_content_commit, not current sweep proof. B4 restoration reintroduces schema_id.type; the seven non-string schema_id cases currently reject by type while their old const-only removal entries cannot prove them. Adopt the shared guard tables/tool in part 2; do not interpret historical PROVED rows or summary counts as current clearance.",
+  "part2_locations": [
+    "Plans/event_record.schema.json#/properties/schema_id/type",
+    "Plans/event_record.schema.json#/properties/schema_id/const",
+    "Plans/filemanager_event_contract_fixtures.json: rule:event_record.schema:type:b478fbf0 and its six wrong-type variants"
   ]
 }

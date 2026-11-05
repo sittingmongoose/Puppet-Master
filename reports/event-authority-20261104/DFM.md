@@ -1,74 +1,63 @@
-# DFM — review round 7: completed settlement, location and withdrawal fixes
+# DFM — sweep part 1: B4 repaired; part 2 remains open
 
-Branch `plans/ea-w2-filemanager-20261104`; assessed implementation `cadf31fcb5596671fe1ad3a6db14bfdd14c28154`; incoming head `f70cb3ad5a883de839c27012c90a2b8ee156149a`. **PASS as prepared, with shared sweep/index qualifications.** Membership remains **ABSENT**, retention **PARTIAL / PENDING_RETENTION_DECISION for Jared**, native execution and native alias authentication **NOT_RUN**. This report follows in a report-only commit.
+Branch `plans/ea-w2-filemanager-20261104`; tested implementation `acbb0d2a4aedce8d015b3f31a9748608c8d5dccb`. Incoming reviewed head `68fe8e3479b376d0165a67c18eded0b9e02d7d15`; rebase base `origin/main` at `d5ec2f70c0`. **NOT_READY: shared part-2 work and its reviews remain required.** Membership is ABSENT, event-history retention is PARTIAL / PENDING_RETENTION_DECISION, native execution and native filesystem-alias authentication are NOT_RUN.
 
-## Review round 7: findings and responses
+## Sweep part 1: findings and responses
 
-1. **B1 — fixed (4b7228c0777218d5b9cf830290c8b9ba3b6a8f96; final implementation cadf31fcb5596671fe1ad3a6db14bfdd14c28154).** Where: `scripts/pm-filemanager-event-contracts.py:782` and `:773`, used by effect settlement and complete retained delivery. Why: effect settlement omitted original accepted inputs, payload completion time and copy-result identity. Fix: share the command/source/destination/container/deletion-mode and timestamp joins, and the copy/create identity predicates. All twelve have accepting complete CAS controls and isolated time/input/header negatives; copy/create families also have coherent equality negatives. Project/OperationId receipt observations are recomputed so a second header clause cannot mask the tested join. Both times in the completion-time negative are valid UTC strings; this equality repair is separate from SWEEP-12.
-2. **B2 — fixed (cadf31fcb5596671fe1ad3a6db14bfdd14c28154).** Where: `validate_snapshot_subjects`, `scripts/pm-filemanager-event-contracts.py:677`, F-150/F-153/F-154/F-156/F-159/F-160; SP-560, `Plans/storage-plan.md:29541`. Why: unequal opaque handles could resolve to the same original location. Fix: validate the represented `(computer_id, root_identity_ref, relative_components)` relation after the original subject and accepted/settled joins. Remove the redundant handle-only refusal. Six families independently reject coherent same-location effects and current/historical reads. Coordinate-wise distinct positive controls and later-live-relocation/deletion history controls accept. Today's live path is never compared with the historical location. Existing rename parent/basename checks remain.
-3. **B3 — fixed (4b7228c0777218d5b9cf830290c8b9ba3b6a8f96; final implementation cadf31fcb5596671fe1ad3a6db14bfdd14c28154).** Where: `validate_control_transition`, `scripts/pm-filemanager-event-contracts.py:827`; SP-560, `Plans/storage-plan.md:29586`. Why: drain arguments were interpreted by truthiness and the drain edge could retire readers. Fix: require an exact list before value operations, exact string/reference members, and preserve readers on active-to-draining. All twelve refuse `""`, `false`, `0`, `null`, `{}` and the additional wrong-type forms. Reference-member negatives use same-state controls, keeping nonempty withdrawal/drain membership from becoming a second defect. Reader-toggle negatives have their own accepting controls and removal witnesses.
-
-## Whole-lane check 11 and guard table
-
-[DFM.guard-table.json](DFM.guard-table.json) lists each predicate/schema/lookup guard, exact family/case IDs that flip, and the complement that stays rejected. **7246 authored outcomes = 468 positives + 6778 negatives.** API/schema/transition negatives additionally execute their accepting controls. **All 6778 unique negatives have accepting guard-removal witnesses; zero residuals.** Restoration refuses them again.
-
-| Proof class | Completed total |
-|---|---:|
-| Complete family checker / guard / predicate / lookup runs | 12 / 12 / 12 / 12 |
-| Explicit refusal sites, all covered | 97 |
-| Narrow runtime predicate groups | 171 |
-| Schema removal groups | 609 |
-| Exact lookup groups / implicit negatives | 5 / 72 |
-| Independent site-by-site duplicate witnesses | 6 |
-| Narrow harness witnesses | 16 |
-| Actual false-success checker subprocesses, expected exit 1 | 12 |
-| Old/new schema-language boundary outcomes, zero mismatches | 7155 |
-
-The 03:56Z definition is applied per field/clause. Runtime cuts leave peer predicates enabled. Required-field cuts remove only the missing member; closure cuts permit only the tested unknown field. The remaining duplicates are one input field and one identical predicate: every single-site removal still rejects at a named remaining site; joint removal accepts; restoration rejects. Other negatives retain their unchanged first-refusal prefix or complete schema-error tree, with every affected schema candidate rerun. This is a causal complement proof, not a claim of executing the entire suite for every cut. No product validator is stubbed.
-
-Older retry tuple, original root-slot, control family/cutoff, snapshot coverage, terminal original and missing-reference controls are repaired to carry one defect. Wrong-key controls retain a row under the wrong key, separating raw-key identity from lookup absence. Missing-table/pack tests remove one source and preserve other referents and final/backup observations. Lookup proofs disable only the exact missing lookup; identity predicates remain live.
-
-Schema factoring preserves accepted domains: identifier grammars imply the removed nonempty/short reference bounds; operation-key grammar implies length 97; the EventRecord constant implies string type. Retention keeps its exact nullable scope enum; the non-null-cap branch requires string and the null-cap branch requires null. Their intersections retain exactly the previous allowed complete objects, while the reused general field fragment retains its domain. Independent boundary comparison and formal implications are pinned in `schema-language-check.json`. The two existing Storage companions carry identical updated embedded definitions. No row is appended. Invalid-value diagnostic keywords can change; no accepted value, policy, number range, serializer or physical bytes changes.
-
-## Earlier findings and standing controls
-
-All earlier Sol/Astra controls rerun: original command/root/path custody; full-value and first-receipt proofs; SP-337 body/whole-value boundaries and profiles; copy/create identity; cutoff/withdrawal; checkpoint identity; valid and invalid effect settlement; current replay-only refusal versus valid retained compatibility/replay-only reads; exact lexical tails and missing packs; unvisited schema references; exact types and historical modes. Original Sol cycles 1–3, expanded Astra, the 72-fault schema graph, numeric/type/history and actual harness/process drivers complete. The exact 48 earlier complete-validator schema-rule witnesses also rerun, with one predicate removed and restored in each family. Native execution is not inferred from these synthetic canonical-source models.
-
-Astra's `probes.py` and `followups.py` rerun against the fixes: B1–B3 counterexamples now refuse and their controls accept. Expected SWEEP-NUM/SWEEP-12 acceptances remain disclosed. No failure oracle accepts successful return 0: twelve genuine family processes exit 1 at their exact injected writer-negative assertion. All other actual validators remain enabled.
+- **Cycle-8 B4 — fixed (`acbb0d2a4aedce8d015b3f31a9748608c8d5dccb`).** Where: `Plans/event_record.schema.json:40`, `scripts/pm-filemanager-event-contracts.py:1196`, and `scripts/pm-implementation-readiness.py:793`. Why: removing `schema_id.type` changed the exact bytes pinned by the goal realm, and the DFM family filter hid its 28 unresolved references. Fix: restore the complete original file, SHA-256 `bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353`, and enforce every aggregate registry failure. The removal existed only for redundant assertion accounting; no DFM schema/resource replacement is needed. The two existing goal-realm pins and their owner contracts are unchanged.
+- **B4's filtered count diagnostics — fixed in the same commit.** Where: `scripts/pm-implementation-readiness.py:795`. The lane already has exactly two SP-560 companion values, both materialized and later_gui_or_feature_projection. Strict expected counts now match them: families 344 → 346, materialized 320 → 322, later tier 273 → 275. No row is added by this sweep, no check is bypassed, and no Event registry membership is changed. Before: 31 failures (28 reference failures plus these three stale count expectations). After: zero aggregate registry-data failures. The readiness self-tests pass, including census-drift refusal cases.
+- **B4 regression — fixed in the same commit.** Where: `scripts/pm-filemanager-registry-regression.py:19`. Verify with `python3 scripts/pm-filemanager-registry-regression.py` in a Python environment containing `blake3` and `jsonschema`. The unchanged full family checker accepts its valid control (1,134 cases). An in-memory byte substitution removes only the original `schema_id.type` line, restoring the exact bad hash `8a744b68f3bb1c1c4235c060fdbf7d906ddbcd5edf47eb7f40dae0d14cdfbf2b`. The actual resolver emits exactly 28 goal_cancel_progress reference failures, and the full checker refuses all 28. Restoration gives zero failures. Resource pins and registry rows stay fixed; every instance validator remains enabled.
+- **Restored-schema diagnostic fixtures — fixed in the same commit.** Where: `Plans/filemanager_event_contract_fixtures.json:37028` and the six corresponding wrong-type variants. Seven non-string schema_id fixtures now expect the restored schema's first `type` diagnostic. Their inputs and valid controls are preserved. Const/type assertion proof accounting remains part 2; the historical table is explicitly marked HISTORICAL_PART2_REQUIRED.
+- **Astra 2 B1/B2/B3 — already fixed; reverified.** The existing settlement joins, represented-location relation and exact drain-domain/reader fences remain intact. The unmodified cycle-8 driver executes 478 control/refusal/removal/restoration witnesses with zero failures at this implementation. All twelve complete suites pass. No other non-number, non-proof blocker remains listed in cycle 8.
+- **Deck-2 items — none assigned to DFM in this task.** No Decision Log answer is extended. The rebase includes the landed DL-400..452 answers. DL-045's existing scope and SP-310's exact hash-pinned reference rule are preserved; the current SP-560 rows still explicitly leave event-history retention pending.
 
 ## Family grades before and after
 
-Before is Astra's binding Q downgrade. Q alone upgrades after completed execution; the other 132 statuses retain their current normative support. Counts are PASS / PARTIAL / ABSENT. All 300 self-grade source citations are checked against current files.
+Before is the binding cycle-8 independent grade. Counts are PASS / PARTIAL / ABSENT. Q remains PARTIAL because part 2 is unfinished; B4 closure alone does not make a lane READY. The other 132 statuses retain their current support. The twelve F units and SP-560/CV-560/ATS-280 are byte-identical to the reviewed head; 324 current citations are rechecked and relocated in the self-grade.
 
-| Family | Own unit | Before | After | Checker outcomes |
+| Family | Own unit | Before | After | Passing family cases |
 |---|---|---|---|---:|
-| file.copied | F-150 | 9 / 2 / 1 | 10 / 1 / 1 | 1134 |
-| file.created | F-151 | 9 / 2 / 1 | 10 / 1 / 1 | 549 |
-| file.deleted | F-152 | 9 / 2 / 1 | 10 / 1 / 1 | 540 |
-| file.exported | F-153 | 9 / 2 / 1 | 10 / 1 / 1 | 554 |
-| file.moved | F-154 | 9 / 2 / 1 | 10 / 1 / 1 | 557 |
-| file.renamed | F-155 | 9 / 2 / 1 | 10 / 1 / 1 | 549 |
-| folder.copied | F-156 | 9 / 2 / 1 | 10 / 1 / 1 | 562 |
-| folder.created | F-157 | 9 / 2 / 1 | 10 / 1 / 1 | 548 |
-| folder.deleted | F-158 | 9 / 2 / 1 | 10 / 1 / 1 | 555 |
-| folder.exported | F-159 | 9 / 2 / 1 | 10 / 1 / 1 | 569 |
-| folder.moved | F-160 | 9 / 2 / 1 | 10 / 1 / 1 | 569 |
-| folder.renamed | F-161 | 9 / 2 / 1 | 10 / 1 / 1 | 560 |
+| file.copied | F-150 | 9 / 2 / 1 | 9 / 2 / 1 | 1134 |
+| file.created | F-151 | 9 / 2 / 1 | 9 / 2 / 1 | 549 |
+| file.deleted | F-152 | 9 / 2 / 1 | 9 / 2 / 1 | 540 |
+| file.exported | F-153 | 9 / 2 / 1 | 9 / 2 / 1 | 554 |
+| file.moved | F-154 | 9 / 2 / 1 | 9 / 2 / 1 | 557 |
+| file.renamed | F-155 | 9 / 2 / 1 | 9 / 2 / 1 | 549 |
+| folder.copied | F-156 | 9 / 2 / 1 | 9 / 2 / 1 | 562 |
+| folder.created | F-157 | 9 / 2 / 1 | 9 / 2 / 1 | 548 |
+| folder.deleted | F-158 | 9 / 2 / 1 | 9 / 2 / 1 | 555 |
+| folder.exported | F-159 | 9 / 2 / 1 | 9 / 2 / 1 | 569 |
+| folder.moved | F-160 | 9 / 2 / 1 | 9 / 2 / 1 | 569 |
+| folder.renamed | F-161 | 9 / 2 / 1 | 9 / 2 / 1 | 560 |
 
-**108 PASS / 24 PARTIAL / 12 ABSENT → 120 PASS / 12 PARTIAL / 12 ABSENT.** Retention remains Jared's exact open choice; no family is admitted.
+**108 PASS / 24 PARTIAL / 12 ABSENT → 108 PASS / 24 PARTIAL / 12 ABSENT.** No admission or retention decision is claimed.
 
-## Sweep items and integration qualifications
+## Part 2 items
 
-- **SWEEP-NUM:** original review locations `scripts/pm-filemanager-event-contracts.py:234–235,273–274,869–872`; current producer-digest sites `:229`, `:276`, `:945–948`, and historical entrypoints `:876`, `:911`. Adopt shared CV-1100/SP-1100/SP-1101 and authenticated written-recipe dispatch in the cross-lane sweep. The producer `2**60` discrepancy remains reproduced. Storage uint64 encoding remains uncapped; physical floats/signed zero are unchanged. No lane-local number cap or serializer is added.
-- **SWEEP-12:** `scripts/pm-filemanager-event-contracts.py:80–84`, own payload `properties.ts` and companion timestamps. The interpreter's date-time capability remains unresolved; the shared sweep must enforce the owner's grammar and supported authenticated history. The repeated 144-outcome format diagnostic still accepts 108 malformed timestamps; no date-time PASS is claimed.
-- **Index/currentness:** final top-level index validation is **fail / exit 1**, explicitly retained in `index-after.json`. The three configured JSON source groups (event_record.schema, storage_value_registry.schema and storage_value_registry) were regenerated and committed; all other document shards remain unchanged. A fresh extraction reproduces all 3,302 committed shard files exactly. Timestamp/currentness-dependent index differences are recorded in `derived-results.json`; they are not hidden or committed as a reseal. The earlier ledger/DL-302 and aggregate registry/profile integration notes remain separate from this lane's passing family gates. No all-green governance or landing claim is made.
+- **SWEEP-NUM:** `scripts/pm-filemanager-event-contracts.py:228`, `:275`, `:945`, identity `:981`/`:1001`, and historical entrypoints `:876`/`:911`. Adopt shared CV-1100/CV-1101 and SP-1100/SP-1101 plus the shared helper across producer digests, identity inputs and authenticated write-time recipe dispatch. Preserve Storage uint64, physical float bytes and signed zero. Add no lane-local cap or serializer. The prior 2**60 counterexample remains open; it is not retested or claimed repaired here.
+- **SWEEP-12:** `scripts/pm-filemanager-event-contracts.py:80`, `Plans/event_payloads/file_manager/file_copied.schema.json:94` and each sibling's ts field; companion formats at `Plans/filemanager_operation_contracts.schema.json:185`, `:254`, `:730`. Enforce the owner's date-time grammar or an asserted available format checker. Cover zone/separator/calendar/LF/fraction/leap-second boundaries and supported authenticated history. No malformed-date repair or PASS is claimed here.
+- **SWEEP-GUARD:** `reports/event-authority-20261104/DFM.guard-table.json`, existing lane proof drivers, and especially `Plans/event_record.schema.json#/properties/schema_id/type` / `#/properties/schema_id/const`. Adopt `scripts/pm_guard_isolation.py` and named guard tables after the shared tool passes. The seven restored non-string cases cannot use their old const-only removal witnesses. Their old table is retained as historical evidence, not restamped as current proof. No proof driver or guard-table refactor is implemented in part 1.
+- **Review boundary:** Sol and Astra review after part 2, as SWEEP-P1 requires. This report does not downgrade an Astra NOT_READY.
 
-## Scope, resources, evidence and IDs
+## Verification and integration
 
-F-150–F-161, SP-560, CV-560 and ATS-280 remain the owners. Canonical Markdown, Decision Log, event registry, Spec Lock and governance artifacts are unchanged. No new binding, owner decision, admission, retention/deletion answer or PlanUnit is authored. Existing source/premise support is not extended to settle event-history retention. All twelve base payloads and traces are byte-identical to the incoming head. Shared companion edits are only the documented schema factoring and the two matching embedded definitions.
+| Check | Result |
+|---|---|
+| Full family checker, serial, all twelve | 12 exits 0; 7,246 cases = 468 positives + 6,778 negatives |
+| B4 complete-checker byte regression | Exit 0; 28 bad references refused; restoration zero failures |
+| Existing cycle-8 B1/B2/B3 driver | Exit 0; 478 witnesses, zero failures |
+| Readiness self-tests | Exit 0; top-level pass, no failures |
+| Shard generation / check | Exit 0 / 0; expected DFM owner/schema/registry groups only |
+| Plan-index generation / validation | Exit 0 / 0; top-level pass, zero failures |
+| Source citations / unchanged reviewed owner units | 324 exact citations / 15 identical units |
+| git diff --check | Exit 0 |
 
-Initial preflight passed (**89 GB disk / 13 GiB available RAM**). Resource-floor stops are retained but never counted as completed runs; affected audits restart from complete family baselines once capacity recovers. All authoritative jobs are serial. Completed jobs are reused only at identical consumed family rows, fixture header/family set, checker/schema and Storage-registry fingerprints; the two move refusal-label repairs invalidate their own family jobs. The original whole-input fingerprints and exact reuse proof remain pinned. No worker, pm-mail, admission, registry append, Decision Log, main push, browser or server is used. The temporary extraction and sparse worktree are removed after publication.
+The rebase resolved generated-artifact conflicts by deferring their bodies to regeneration; canonical owner text merged without conflict. Regeneration touches only the four DFM Markdown owner groups, restored EventRecord schema and Storage registry group. No unrelated owner is repaired. The first regeneration scope assertion misspelled the expected event_record.schema directory; inspecting the actual source/group mapping cleared that setup error before the checks continued. Currentness edition: 15 files copied from the prescribed shared edition and SHA-256 matched before index generation. Its index result is passing; node readiness still says blocked_runtime_certification_incomplete. No full governance/landing gate or standalone all-profile aggregate was run or claimed.
 
-**IDs used:** F-150–F-161, SP-560, CV-560, ATS-280. **New PlanUnit IDs: none.** The compact table enumerates all 371 new `round7:*` case IDs. The previous resource-stopped report is superseded by this completed assessment.
+Initial disk availability was 499 GB; available memory 11 GiB at preflight. Recorded serial-check availability stayed at or above 13 GiB. No memory pause was needed. Heavy jobs ran one at a time. The two briefing memory files were absent from the prescribed Nas1 paths and were not found locally; no ID allocation depended on them because no IDs were minted.
 
-Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DFM/fix7/evidence-manifest.json`, SHA-256 `fd750760035f892d1ccfbbd2356904e644921238826a6790135289adefe88fff`. It pins the completed results, resource diagnostics and reproduction helpers by absolute path and SHA-256. Report, self-grade and compact table are copied to `fix7/` and the DFM drafts root.
+## Scope, IDs and evidence
+
+**IDs retained:** F-150–F-161, SP-560, CV-560, ATS-280. **New IDs / bindings / PlanUnits:** none. No canonical Markdown is changed by the part-1 fix itself; the four existing lane owner additions are preserved through rebase. No event registry append, admission, Decision Log edit, ignore edit, Spec Lock, auto-decision, frozen validator or governance reseal is performed. No pm-mail, subagent, main push, browser or server is used.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DFM/sweep-p1/evidence-manifest.json`, SHA-256 `9ec703a0f62d37fa9329e7a6cf3b92301cdeda9b1c2d82c28238e82321413f69`. It pins the serial commands/results, exact source and currentness hashes, B4 before/after regression, unchanged owner units, fixture diagnostic list and reproduction helpers. The self-grade and historical guard table are report artifacts in this branch; publication copies and final head are pinned separately in publication.json. The worktree and temporary Python environment are removed after publication.
