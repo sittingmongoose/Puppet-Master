@@ -1,6 +1,6 @@
 # CA-SEAL2 — fourth recorded seal-check input change
 
-**ROUND 1 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX1 (Codex), stream E, VM, 2026-11-05. Branch `plans/ea-seal-check-recount-20261105`, fixed from reviewed head `1f98f81de9d6939e78da819ebc2441cda3a4454a`, on CA-SEAL FIX8 `17c842445a2623bb0334ba8d6932e7a6bf088967`. Implementation and compact regression evidence: `60913cb906590662c97696146edcb10960c2ed09`. This file is both the change record and branch report; the final documentation head and cleanup are recorded in external `fix1/DELIVERY.json`. Coordinated landing and independent review remain required.
+**ROUND 2 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX2 (Codex), stream E, VM, 2026-11-05. Branch `plans/ea-seal-check-recount-20261105`, round-2 fixes from reviewed head `1362ee57d6026b546df3f80831dcf91332cd2bf2`, on CA-SEAL FIX8 `17c842445a2623bb0334ba8d6932e7a6bf088967`. All three round-2 coverage fixes: `616c1a7a275153f1850010976a1b3f1c884ecafa`. Round-1 implementation remains `60913cb906590662c97696146edcb10960c2ed09`. This file is both the change record and branch report; the final documentation head, push and cleanup are recorded in external `fix2/DELIVERY.json`. Coordinated landing and independent review remain required.
 
 ## Design in five lines
 
@@ -129,7 +129,7 @@ Exact **new fourth-receipt** entry template:
 
 The existing DL-412 entry/template remains separately required exactly as CA-SEAL specifies; there is no new DL-077 entry. Later changes to the new receipt require its authorized byte anchor to follow the final bytes.
 
-**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
+**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
 
 ## Scope, resources and open items
 
@@ -157,3 +157,105 @@ All references below are full paths under `/mnt/Cursor/PuppetMaster-Evidence/eve
 | `index-comparison.json` | `54dc3fb8864cf0d934215373391be0d166194deb85b3e6a2871daff50f5b0613` |
 | `currentness-copy.json` | `a41214c87f05c437202a163475beac4a79847ea18f880707b79f25d7981ca9b7` |
 | `review-evidence-audit.json` | `71ad4ff393d4a4e227b35457b641b259a109bc0df41e2dab07acab2af6e55f8f` |
+
+## Review round 2: findings and responses
+
+Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-cycle2.md`, including its independent one-defect controls. All 90 retained evidence manifest entries from both review editions match their SHA-256; all JSON evidence decodes completely. **CA2-C2-01, CA2-C2-02 and CA2-C2-03 are fixed in `616c1a7a275153f1850010976a1b3f1c884ecafa`; none is disputed or stopped for an owner choice.**
+
+The committed corpus is now `reports/event-authority-20261105/CA-SEAL2-checks.py`: the unchanged 99 round-1 checks plus exactly three negatives. Every new case first calls `recount_change_state()` successfully on the same valid complete parent, then introduces one semantic defect. Each negative calls the actual product helper, with no observer assertion standing in for a refusal. The original external `fix1/` corpus and results remain historical evidence.
+
+| Finding | Where / cause | Fix and verification |
+|---|---|---|
+| **CA2-C2-01 — anchor hash** | Validator `recount_anchor`: equality at line 853 had no negative. | Corpus line 227 changes only the fourth anchor's digest to canonical `"0" * 64`. Receipt, code, third anchor, digest representation and all executable pins remain valid. Removing only that equality makes `negative_wrong_fourth_anchor_digest` accept; all 101 peer results, including 75 other refusals, remain identical. |
+| **CA2-C2-02 — nonblank lander** | Validator line 895: the null/type case did not exercise `not lander.strip()`. | Corpus line 217 changes the valid lander to one space, synchronizes its required exclusion-list observation and refreshes the whole-receipt anchor. Only the nonblank predicate is cut; exact string type, list equality and all byte links stay enabled. Exactly `negative_blank_lander` accepts; all 101 peers retain their results/reasons. The original null/type negative remains. |
+| **CA2-C2-03 — checked exclusions** | Validator line 896: no independent exclusion-list defect. | Corpus line 220 removes only the valid actual lander from the list. Author, actual lander, all flags/pins and the valid third anchor stay fixed; the whole-receipt anchor follows the changed bytes. Only the list equality is cut. Exactly `negative_missing_lander_from_seal_applier_list` accepts; all 101 peers retain their results/reasons. |
+
+**Validator SHA-256 unchanged:** `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`. Every named guard is reachable, so no product behavior, executable bytes, spec or receipt is changed. The existing receipt after-pin still matches. Relative to the round-2 reviewed head, no `Plans/` path changes; all 1,467 protected files, including all August history, both change receipts, Spec Lock, evidence locks and registry, are byte-identical. The original before-pin remains `319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91`. The final-anchor template and combined-run scope ruling above remain unchanged, with pm7-build's attribution preserved.
+
+### Round-2 tests and limits
+
+| Check | Exit / result |
+|---|---|
+| Expanded committed corpus | **0; 102/102 pass**, including 76 negative product calls. All 597 actual frozen source fingerprints/lengths verify. All original 99 results and refusal strings are identical to round 1. |
+| Guard removal and restoration | **0; 30 variants × 102 checks = 3,060 cells**. All 27 earlier rows plus the three new narrow cuts pass their exact acceptance-set and peer-result assertions. Fresh restored corpus **102/102 pass**. |
+| Consecutive default-path CLI witness | **0 for witness; actual base/new/new exits 1/1/1**. Four historical receipt identities resolve from Git after the two writes. The ten original August failures, checks, pins and computation prefix remain; two pending recount failures stay visible. |
+| Shard check | **0; pass**, 99 sources / 3,092 shards. |
+| Index validation | **1; top-level fail**. Exactly the review's same 23 failure records, compared as full arrays: 21 ledger record-shape failures, missing newer-main DL-302, stale untouched readiness. Zero introduced. |
+| Evidence / protected-byte audit | **0; pass**. 90 review evidence entries verified; 1,467 protected files identical; receipt after-pin and CRLF correct. |
+| Currentness edition | 15 files copied without metadata operations and compared byte-for-byte. They remain distinct from the saved recount source editions. |
+| Whitespace | **0**, staged corpus `git -c core.whitespace=cr-at-eol diff --cached --check`; final report/result diff checked before push. |
+| Full approval / governance / landing | Not performed; preparation still earns no final approval. |
+
+### Round-2 guard-removal table
+
+Every row replays all 102 checks. The last column counts peer negatives that retain their exact baseline refusal; all peer positives retain their full baseline results too. Zero-flip direct-only rows retain their named same-field bridge duplicate. For each before/after pin separately, the actual product results remain **[reject, reject, reject, accept]** for [baseline, direct-only cut, bridge-only cut, both same-field cuts].
+
+| Guard / site removed | Negatives that start accepting | Other negatives still reject |
+|---|---|---:|
+| `R02_exact_source_event_token` | `negative_exclusion_dotted_sibling`, `negative_exclusion_prefix`, `negative_exclusion_suffix` | 73 |
+| `R03_fourth_anchor_only` | `negative_missing_fourth_anchor` | 75 |
+| `R03_source_member_count_only` | `negative_missing_source_member` | 75 |
+| `R03_path_control_only` | `negative_unsafe_source_path_control` | 75 |
+| `R04_receipt_complete_byte_pin` | `negative_one_changed_receipt_byte` | 75 |
+| `R04_source_byte_count_only` | `negative_wrong_source_byte_count` | 75 |
+| `R04_validator_before_sha256_direct_only` | None; same-field bridge still rejects | 76 |
+| `R04_validator_before_sha256_bridge_only` | `legacy_predicate_preserved_under_validator_before_sha256` | 75 |
+| `R04_validator_before_sha256_both_same_predicate_sites` | `legacy_predicate_preserved_under_validator_before_sha256`, `negative_change_validator_before_sha256` | 74 |
+| `R04_validator_after_sha256_direct_only` | None; same-field bridge still rejects | 76 |
+| `R04_validator_after_sha256_bridge_only` | `legacy_predicate_preserved_under_validator_after_sha256` | 75 |
+| `R04_validator_after_sha256_both_same_predicate_sites` | `legacy_predicate_preserved_under_validator_after_sha256`, `negative_change_validator_after_sha256` | 74 |
+| `R04_schema_id_value_only` | `negative_change_schema_id` | 75 |
+| `R04_authority_ref_value_only` | `negative_change_authority_ref` | 75 |
+| `R04_authority_section_sha256_value_only` | `negative_change_authority_section_sha256` | 75 |
+| `R04_validator_path_value_only` | `negative_change_validator_path` | 75 |
+| `R04_validator_id_value_only` | `negative_change_validator_id` | 75 |
+| `R04_prior_receipt_value_only` | `negative_change_prior_receipt` | 75 |
+| `R04_recount_receipt_value_only` | `negative_change_recount_receipt` | 75 |
+| `R04_recount_list_value_only` | `negative_change_recount_list` | 75 |
+| `R04_certification_scope_value_only` | `negative_change_certification_scope` | 75 |
+| `R04_author_task_value_only` | `negative_change_author_task` | 75 |
+| `R04_seal_authorized_only` | `negative_change_seal_authorized` | 75 |
+| `R04_admission_authorized_only` | `negative_change_admission_authorized` | 75 |
+| `R04_definition_writing_authorized_only` | `negative_change_definition_writing_authorized` | 75 |
+| `R04_app_recording_authorized_only` | `negative_change_app_recording_authorized` | 75 |
+| `R04_contract_depth_complete_only` | `negative_change_contract_depth_complete` | 75 |
+| `CA2-C2-01_fourth_anchor_digest` | `negative_wrong_fourth_anchor_digest` | 75 |
+| `CA2-C2-02_nonblank_lander` | `negative_blank_lander` | 75 |
+| `CA2-C2-03_seal_applier_list` | `negative_missing_lander_from_seal_applier_list` | 75 |
+
+The finite round-1 runner is reused with the three additional predicate cuts and current paths. No executable file is rewritten; AST substitutions are local to disposable imported modules, leaving complete-byte observations real. All cuts are restored by loading a fresh module for the final corpus. The full shared-tool inventory/adoption remains **S1, separate sweep scope**; this table does not claim a replacement generic proof engine.
+
+### Round-2 recurring defect classes and grades
+
+The added mutations directly cover a forged complete-byte observation, blank identity with coherent dependent observations, and an incomplete custody/exclusion list. The rerun also exercises source recomputation, contradictory snapshots, historical/current separation, exact JSON representations/types, lengths, custody and the earlier masking repairs. No runtime metadata, payload externalization, schema-reference/format contract, new number cap or serializer is introduced; number-domain and shared-tool adoption remain sweep scope. No new product behavior or permission is authored.
+
+**Family grades before → after: N/A → N/A.** No families, admissions, bindings or PlanUnit/Decision IDs are authored. Fixture-only DL-998 remains inside disposable trees. The three named finding cells are self-assessed repaired with direct guard-isolation proof, pending independent re-review. The broader author/actual-lander/lead/all-fix-worker procedural seal exclusion includes **CA-SEAL2-FIX2** in addition to the checked author/lander list.
+
+Round-2 resources: 107 GB free disk and 9 GB available RAM before sparse-worktree creation. Recorded guard-row available memory never fell below 12 GB; no resource stop was triggered. A later sample was 116 GB / 10 GB. All checkers ran one at a time. No mailbox, subagent, admission, registry edit, August re-stamp, Spec Lock/evidence/auto-decision edit, seal or main push occurred. No owner or generated Plans file changed, so regeneration was unnecessary. Runtime trees self-delete; final literal-path forced worktree removal follows the final branch push and evidence export. `fix2/DELIVERY.json` records that result.
+
+**Stopped question: none.** Coordinated stack assembly, actual landers/anchors, real outcomes/depth, unchanged August prerequisites, independent review, the index findings and S1 remain integration work, without any waiver or final approval.
+
+### Retained evidence — round 2
+
+All full paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix2/`. The compact committed bundle is `reports/event-authority-20261105/CA-SEAL2-fix2-results.json`. `README.md` gives replay commands; `SHA256SUMS` inventories the retained package after delivery/cleanup. Older evidence is preserved unchanged.
+
+| File | SHA-256 |
+|---|---|
+| `CA-SEAL2-checks.py` | `bb2d3f260af6d32d161c40adaa832c7a490c5c3734257758ff62bde49c6ab694` |
+| `guard_removal.py` | `abc0d475815dc5eb8562d8080f02d21d4aa89673a2c1892e600e9c3cf1fa06cb` |
+| `default_entrypoint.py` | `eb8c54eb02dac6f76bbd419f7935d1491fc4a32bf9a13b5e752d17e15f6e8c47` |
+| `audit_evidence.py` | `b078d02196e47136db4297238478ed3d607f6070e3f1971e06089a336f945d6b` |
+| `check-results.json` | `35d82c450d6c6503a2be16abda0bb1117d3a07dc7459e1e1cf6c0cdd2093cd67` |
+| `restored-check-results.json` | `35d82c450d6c6503a2be16abda0bb1117d3a07dc7459e1e1cf6c0cdd2093cd67` |
+| `guard-removal-results.json` | `62c9cd35aeb81b0805b5ec5b3f8feb8e192077de32f920f68b5a7a97a9cb798f` |
+| `snapshot-default-path-results.json` | `6b680e7436c9ae80343a9d2e356089ddfc04cc07f61fb845542488c8db68fe75` |
+| `legacy-differential.json` | `f4afcf78f2175320e398c63cd6c85a694eb69ef475bbb6bcf809ccf949a6d2e8` |
+| `scope-and-pins.json` | `03a137e621c76d8596101a1055ed786faf02d64912e51977f637846a78921f02` |
+| `original-corpus-comparison.json` | `eb2e5f1214f86f235bdcb3a6474241ff934dd36e02392df8c8a2bbb7f5401429` |
+| `index-comparison.json` | `8842639a51c4c357875316b765364721ca952b33e435097298578c2ff7c3eb7e` |
+| `currentness-copy.json` | `daf80cdc1395935c791eed463d54ff4d0405f90ce97f39f12e10fbb0a547f8ac` |
+| `review-evidence-audit.json` | `2a9e22ee209a99755f70bb8d0d555b22794ed02cbc6fda8ca5dd3e43711b0d09` |
+| `shard-check.json` | `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21` |
+| `index-validate.json` | `debc4588403411f5b023c704b846e9c155722a191b414d3a339fcdf4044aea13` |
+| `commands.json` | `0b29503bb1697a4ea3dc7685a0d503801c484d8483b89d76d6714a04eb7331b2` |
+| `CA-SEAL2-fix2-results.json` | `3671027326f31f8ea870649dbd43f60da456e03b826ac201077678a4773b2f37` |
