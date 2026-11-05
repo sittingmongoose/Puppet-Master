@@ -168,7 +168,7 @@
     "payload_reference": {
       "allOf": [
         {
-          "$ref": "event_record.schema.json#/$defs/non_empty_string"
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
         },
         {
           "type": "string"
@@ -347,7 +347,7 @@
           "$ref": "#/$defs/source_ref"
         },
         "enabled_at_utc": {
-          "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
         },
         "reason_code": {
           "$ref": "#/$defs/id"
@@ -393,7 +393,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -466,7 +466,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -515,7 +515,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -554,7 +554,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -680,7 +680,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -711,7 +711,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -767,7 +767,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -829,7 +829,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -907,7 +907,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -956,7 +956,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -995,7 +995,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -1121,7 +1121,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -1152,7 +1152,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -1208,7 +1208,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -1270,7 +1270,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -1343,7 +1343,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -1392,7 +1392,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -1431,7 +1431,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -1557,7 +1557,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -1588,7 +1588,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -1644,7 +1644,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -1705,7 +1705,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -1775,7 +1775,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -1824,7 +1824,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -1863,7 +1863,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -1989,7 +1989,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -2020,7 +2020,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -2076,7 +2076,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -2139,7 +2139,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -2215,7 +2215,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -2264,7 +2264,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -2303,7 +2303,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -2429,7 +2429,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -2460,7 +2460,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -2516,7 +2516,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -2577,7 +2577,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -2647,7 +2647,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -2696,7 +2696,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -2735,7 +2735,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -2861,7 +2861,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -2892,7 +2892,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -2948,7 +2948,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -3009,7 +3009,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -3079,7 +3079,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -3128,7 +3128,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -3167,7 +3167,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -3293,7 +3293,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -3324,7 +3324,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -3380,7 +3380,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -3441,7 +3441,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -3511,7 +3511,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -3560,7 +3560,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -3599,7 +3599,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -3725,7 +3725,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -3756,7 +3756,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -3812,7 +3812,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -3874,7 +3874,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -3947,7 +3947,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -3996,7 +3996,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -4035,7 +4035,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -4161,7 +4161,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -4192,7 +4192,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -4248,7 +4248,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -4309,7 +4309,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -4379,7 +4379,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -4428,7 +4428,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -4467,7 +4467,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -4593,7 +4593,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -4624,7 +4624,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -4680,7 +4680,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -4741,7 +4741,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -4811,7 +4811,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -4860,7 +4860,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -4899,7 +4899,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -5025,7 +5025,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -5056,7 +5056,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -5112,7 +5112,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -5174,7 +5174,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -5247,7 +5247,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -5296,7 +5296,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -5335,7 +5335,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -5461,7 +5461,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -5492,7 +5492,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -5548,7 +5548,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -5610,7 +5610,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -5683,7 +5683,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -5732,7 +5732,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -5771,7 +5771,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -5897,7 +5897,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -5928,7 +5928,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -5984,7 +5984,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -6045,7 +6045,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -6115,7 +6115,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -6164,7 +6164,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -6203,7 +6203,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -6329,7 +6329,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -6360,7 +6360,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -6416,7 +6416,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -6477,7 +6477,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -6547,7 +6547,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -6596,7 +6596,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -6635,7 +6635,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -6761,7 +6761,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -6792,7 +6792,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -6848,7 +6848,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -6909,7 +6909,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -6979,7 +6979,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -7028,7 +7028,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -7067,7 +7067,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -7193,7 +7193,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -7224,7 +7224,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -7280,7 +7280,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -7342,7 +7342,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -7415,7 +7415,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -7464,7 +7464,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -7503,7 +7503,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -7629,7 +7629,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -7660,7 +7660,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -7716,7 +7716,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -7777,7 +7777,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -7847,7 +7847,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -7896,7 +7896,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -7935,7 +7935,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -8061,7 +8061,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -8092,7 +8092,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -8148,7 +8148,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -8209,7 +8209,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -8279,7 +8279,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -8328,7 +8328,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -8367,7 +8367,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -8493,7 +8493,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -8524,7 +8524,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -8580,7 +8580,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -8641,7 +8641,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -8711,7 +8711,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -8760,7 +8760,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -8799,7 +8799,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -8925,7 +8925,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -8956,7 +8956,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -9012,7 +9012,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -9077,7 +9077,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -9108,7 +9108,7 @@
           "$ref": "#/$defs/id"
         },
         "enabled_at_utc": {
-          "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
         },
         "reason_code": {
           "$ref": "#/$defs/id"
@@ -9170,7 +9170,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -9219,7 +9219,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -9258,7 +9258,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -9384,7 +9384,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -9415,7 +9415,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -9471,7 +9471,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -9533,7 +9533,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -9606,7 +9606,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -9655,7 +9655,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -9694,7 +9694,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -9820,7 +9820,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -9851,7 +9851,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -9907,7 +9907,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -9969,7 +9969,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -10047,7 +10047,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -10096,7 +10096,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -10135,7 +10135,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -10261,7 +10261,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -10292,7 +10292,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -10348,7 +10348,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -10410,7 +10410,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -10483,7 +10483,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -10532,7 +10532,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -10571,7 +10571,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -10697,7 +10697,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -10728,7 +10728,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -10784,7 +10784,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -10845,7 +10845,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -10915,7 +10915,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -10964,7 +10964,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -11003,7 +11003,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -11129,7 +11129,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -11160,7 +11160,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -11216,7 +11216,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -11279,7 +11279,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -11355,7 +11355,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -11404,7 +11404,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -11443,7 +11443,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -11569,7 +11569,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -11600,7 +11600,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -11656,7 +11656,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -11717,7 +11717,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -11787,7 +11787,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -11836,7 +11836,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -11875,7 +11875,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -12001,7 +12001,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -12032,7 +12032,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -12088,7 +12088,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -12149,7 +12149,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -12219,7 +12219,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -12268,7 +12268,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -12307,7 +12307,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -12433,7 +12433,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -12464,7 +12464,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -12520,7 +12520,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -12581,7 +12581,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -12651,7 +12651,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -12700,7 +12700,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -12739,7 +12739,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -12865,7 +12865,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -12896,7 +12896,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -12952,7 +12952,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -13014,7 +13014,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -13087,7 +13087,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -13136,7 +13136,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -13175,7 +13175,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -13301,7 +13301,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -13332,7 +13332,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -13388,7 +13388,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -13449,7 +13449,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -13519,7 +13519,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -13568,7 +13568,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -13607,7 +13607,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -13733,7 +13733,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -13764,7 +13764,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -13820,7 +13820,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -13881,7 +13881,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -13951,7 +13951,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -14000,7 +14000,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -14039,7 +14039,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -14165,7 +14165,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -14196,7 +14196,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -14252,7 +14252,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -14314,7 +14314,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -14387,7 +14387,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -14436,7 +14436,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -14475,7 +14475,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -14601,7 +14601,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -14632,7 +14632,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -14688,7 +14688,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -14750,7 +14750,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -14823,7 +14823,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -14872,7 +14872,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -14911,7 +14911,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -15037,7 +15037,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -15068,7 +15068,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -15124,7 +15124,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -15185,7 +15185,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -15255,7 +15255,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -15304,7 +15304,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -15343,7 +15343,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -15469,7 +15469,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -15500,7 +15500,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -15556,7 +15556,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -15617,7 +15617,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -15687,7 +15687,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -15736,7 +15736,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -15775,7 +15775,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -15901,7 +15901,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -15932,7 +15932,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -15988,7 +15988,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -16049,7 +16049,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -16119,7 +16119,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -16168,7 +16168,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -16207,7 +16207,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -16333,7 +16333,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -16364,7 +16364,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -16420,7 +16420,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -16482,7 +16482,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -16555,7 +16555,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -16604,7 +16604,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -16643,7 +16643,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -16769,7 +16769,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -16800,7 +16800,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -16856,7 +16856,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -16917,7 +16917,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -16987,7 +16987,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -17036,7 +17036,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -17075,7 +17075,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -17201,7 +17201,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -17232,7 +17232,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -17288,7 +17288,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -17349,7 +17349,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -17419,7 +17419,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -17468,7 +17468,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -17507,7 +17507,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -17633,7 +17633,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -17664,7 +17664,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -17720,7 +17720,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"
@@ -17781,7 +17781,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "source_record": {
           "$ref": "#/$defs/source_ref"
@@ -17851,7 +17851,7 @@
           "$ref": "#/$defs/id"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "intent": {
           "oneOf": [
@@ -17900,7 +17900,7 @@
         "first_append": {
           "anyOf": [
             {
-              "$ref": "event_append_receipt_contracts.schema.json#/$defs/full_value_result"
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
             },
             {
               "type": "null"
@@ -17939,7 +17939,7 @@
                       "const": "inline"
                     },
                     "value": {
-                      "$ref": "event_record.schema.json"
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
                     }
                   }
                 },
@@ -18065,7 +18065,7 @@
           "format": "uuid"
         },
         "scope": {
-          "$ref": "shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
         },
         "subject_id": {
           "$ref": "#/$defs/id"
@@ -18096,7 +18096,7 @@
         "last_sequence_id": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/sequence_id"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id"
             },
             {
               "type": "null"
@@ -18152,7 +18152,7 @@
         "first_retired_at_utc": {
           "anyOf": [
             {
-              "$ref": "event_record.schema.json#/properties/occurred_at_utc"
+              "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
             },
             {
               "type": "null"

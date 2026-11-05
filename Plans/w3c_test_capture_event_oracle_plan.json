@@ -189,6 +189,13 @@
           "positive_plan": "The exact requested subject and candidate identities were inspected and a provenance selection result was committed; inspection does not assert that provenance was accepted.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_capture_provenance_inspected.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -408,6 +415,13 @@
           "positive_plan": "A distinct immutable demonstration artifact and its derivation manifest were committed from exact admitted raw spans after privacy review and confirmation.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_created.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -627,6 +641,13 @@
           "positive_plan": "The original demonstration operation ended in a typed failure; no successful demonstration output is claimed.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "artifacts_demonstration_video_failed.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -839,6 +860,13 @@
           "positive_plan": "The exact session received a durable bookmark at the requested service clock position, with its safe label reference.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_bookmarked.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -1051,6 +1079,13 @@
           "positive_plan": "A separately identified immutable clip was saved with exact source raw identity and span lineage; raw media was not trimmed in place.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_clip_saved.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -1263,6 +1298,13 @@
           "positive_plan": "The service committed a real requested/effective capture-quality change under the RuntimeResourceGovernor permit without degrading already retained evidence.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_effective_quality_changed.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -1475,6 +1517,13 @@
           "positive_plan": "A detector observation committed a worsening health interval and preserved its thresholds and evidence, without claiming a root cause.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_degraded.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -1687,6 +1736,13 @@
           "positive_plan": "The service committed recovery of a previously degraded health interval, preserving the earlier interval and any gaps.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_health_recovered.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -1899,6 +1955,13 @@
           "positive_plan": "Capture continuity was interrupted by crash, disconnection or producer loss, with the original gap and recoverable/partial outcome retained.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_interrupted.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -2111,6 +2174,13 @@
           "positive_plan": "An authorized pause committed the exact existing capture session into paused state.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_paused.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -2323,6 +2393,13 @@
           "positive_plan": "The exact provenance request committed rejected_identity_mismatch, rejected_continuity_unverified, original_missing or no_candidate, with no accepted-source claim.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_rejected.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -2535,6 +2612,13 @@
           "positive_plan": "Exact subject identity, original availability and continuity checks committed a selected original capture.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_provenance_verified.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -2754,6 +2838,13 @@
           "positive_plan": "A source or encoder masking operation was applied and receipted against exact retained/exported spans under the existing privacy policy.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_redaction_applied.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -2966,6 +3057,13 @@
           "positive_plan": "An authorized resume committed the same paused capture session back to recording with truthful continuity.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_resumed.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -3178,6 +3276,13 @@
           "positive_plan": "The service detected a corrupt/incomplete segment and committed quarantine/discard/gap truth without presenting playable finalized evidence.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_corrupt.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -3390,6 +3495,13 @@
           "positive_plan": "A new immutable structurally complete raw Matroska segment was atomically finalized and its exact bytes and manifest were committed.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_finalized.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -3602,6 +3714,13 @@
           "positive_plan": "Recovery atomically finalized a structurally complete interrupted segment as recovered_finalized, preserving original bytes and gaps.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_segment_recovered.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -3821,6 +3940,13 @@
           "positive_plan": "The shared TestCaptureService began recording the exact permitted target with a governor permit and one declared encoder stream per admitted target stream.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_started.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -4040,6 +4166,13 @@
           "positive_plan": "The explicit stop operation finalized its capture session with the exact complete, partial_with_gaps, failed_no_media, cancelled_with_evidence or interrupted_recoverable result.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_stopped.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -4259,6 +4392,13 @@
           "positive_plan": "An explicit generation-aware target switch was committed with old/new target, exact clock anchors and continuity disposition.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_capture_target_changed.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
@@ -4492,6 +4632,13 @@
           "positive_plan": "The Project-bound testing adapter changed from runtime-disabled to runtime-enabled after all five existing owner prerequisites were proven.",
           "negative_plan": "Separate one-defect case for EACH clause above; keep source joins/digests/copies coherent so only the selected clause fails.",
           "proof_plan": "Shared tool predicate-level removal, keeping every peer clause enabled."
+        },
+        {
+          "guard_id": "testing_runtime_enabled_for_adapter.schema_reference_closure",
+          "predicate": "Every schema reference resolves eagerly with its declared $id through the unchanged Corpus offline registry, including all unvisited branches and external targets; no filename fallback or additional aliases.",
+          "positive_plan": "Resolve every $ref in both W3C schema documents and their reachable documents using the registered canonical/absolute repository URI, before fixture selection in each applicable scope.",
+          "negative_plan": "For each external-resource and fragment form, substitute one $ref in a valid schema corpus with a single missing URI or fragment in an otherwise unvisited branch. Keep all instance data and other schema refs unchanged; eager closure alone refuses. Each substitution is a separate case.",
+          "proof_plan": "Phase 2 shared guard-isolation tool removes only eager reference validation; that case is unvisited by its valid fixture, so it then passes while all unrelated negatives still reject."
         }
       ],
       "additional_positive_plans": [
