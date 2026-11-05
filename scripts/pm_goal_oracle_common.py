@@ -15,6 +15,8 @@ import hashlib
 import json
 import re
 import math
+import multiprocessing
+import os
 import sys
 from pathlib import Path
 from urllib.parse import urldefrag, unquote
@@ -344,6 +346,39 @@ class Gates:
         self.errors.update(schema_guards(v, value, prefix, self.disabled))
 
 
+_GUARD_AUDIT_NEGATIVES = ()
+
+
+def _guard_removal_row(guard):
+    """Run one complete mutant in this process, with exactly one disabled id.
+
+    Fork workers inherit the validators and case closures after the baseline.
+    Each has its own schema context and reference loader; no process removes a
+    second guard except the explicitly recorded duplicate set for this id.
+    """
+    flips, stays, masked, failures = [], [], [], []
+    for name, evaluate, value, errors in _GUARD_AUDIT_NEGATIVES:
+        weakened = evaluate(value, {guard})
+        if not weakened:
+            flips.append(name)
+        else:
+            stays.append(name)
+        if guard in errors and weakened:
+            masked.append(name)
+        if guard not in errors and not weakened:
+            failures.append(f"{guard}: unrelated negative {name} passed")
+    if not flips or masked:
+        failures.append(f"{guard}: surviving guard mutant; masked={masked}")
+    row = {"guard": guard, "schema_location": _SCHEMA_LOCATIONS.get(guard),
+           "removed_together": sorted(_SCHEMA_DUPLICATES.get(guard, {guard})),
+           "removed_schema_assertions": sorted({location
+               for member in _SCHEMA_DUPLICATES.get(guard, {guard})
+               for location in _SCHEMA_ASSERTION_LOCATIONS.get(member, ())}),
+           "negatives_that_flip": flips,
+           "negatives_that_stay_rejected": stays, "masked": masked}
+    return row, failures
+
+
 class Audit:
     """Check negatives and actually rerun the complete corpus with each guard off."""
     def __init__(self):
@@ -446,29 +481,28 @@ class Audit:
         if '--guard-table' in sys.argv:
             print(f'{self.suite}: {len(negatives)} negatives, {len(guards)} guard rows; '
                   f'{len(self.failures)} baseline failures, {len(missing)} unproved guards', file=sys.stderr, flush=True)
-        for index, guard in enumerate(guards):
-            if '--guard-table' in sys.argv and index % 25 == 0:
-                print(f'{self.suite}: guard row {index + 1}/{len(guards)}', file=sys.stderr, flush=True)
-            flips, stays, masked = [], [], []
-            for name, evaluate, value, errors in negatives:
-                weakened = evaluate(value, {guard})
-                if not weakened:
-                    flips.append(name)
-                else:
-                    stays.append(name)
-                if guard in errors and weakened:
-                    masked.append(name)
-                if guard not in errors and not weakened:
-                    self.failures.append(f"{guard}: unrelated negative {name} passed")
-            if not flips or masked:
-                self.failures.append(f"{guard}: surviving guard mutant; masked={masked}")
-            table.append({"guard": guard, "schema_location":_SCHEMA_LOCATIONS.get(guard),
-                          "removed_together": sorted(_SCHEMA_DUPLICATES.get(guard, {guard})),
-                          "removed_schema_assertions": sorted({location
-                              for member in _SCHEMA_DUPLICATES.get(guard, {guard})
-                              for location in _SCHEMA_ASSERTION_LOCATIONS.get(member, ())}),
-                          "negatives_that_flip": flips,
-                          "negatives_that_stay_rejected": stays, "masked": masked})
+        workers = int(os.environ.get('PM_GOAL_AUDIT_WORKERS', '1'))
+        if workers < 1:
+            raise ValueError('PM_GOAL_AUDIT_WORKERS must be positive')
+        global _GUARD_AUDIT_NEGATIVES
+        _GUARD_AUDIT_NEGATIVES = negatives
+        pool = None
+        try:
+            if workers > 1:
+                pool = multiprocessing.get_context('fork').Pool(workers)
+                rows = pool.imap(_guard_removal_row, guards, chunksize=1)
+            else:
+                rows = map(_guard_removal_row, guards)
+            for index, (row, failures) in enumerate(rows):
+                if '--guard-table' in sys.argv and index % 25 == 0:
+                    print(f'{self.suite}: guard row {index + 1}/{len(guards)}', file=sys.stderr, flush=True)
+                table.append(row)
+                self.failures.extend(failures)
+        finally:
+            if pool is not None:
+                pool.close()
+                pool.join()
+            _GUARD_AUDIT_NEGATIVES = ()
         return {"status": "fail" if self.failures else "pass", "cases": len(self.cases),
                 "negative_cases": len(negatives), "guard_removal": table, "unproved_guards":sorted(missing),
                 "schema_type_inventory": _SCHEMA_TYPES,
