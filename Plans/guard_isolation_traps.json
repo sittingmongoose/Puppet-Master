@@ -3955,6 +3955,56 @@
         "infrastructure_or_declaration"
       ],
       "error_contains": "factory mutated the frozen fixture"
+    },
+    {
+      "id": "B4-uncertified-builtin-binding",
+      "kind": "code",
+      "expected": "A noncanonical builtin binding in a dormant predicate path fails purity certification, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef mutate(value):\n    value['x'] = 1\n    return 0\n\ndef px(value, context):\n    if value['special']:\n        len(value)\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "builtin_override": {
+        "name": "len",
+        "function": "mutate"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "mutate",
+          "kind": "mutation_or_error_write",
+          "source": "value['x'] = 1",
+          "reason": "Explicit fixture helper write; this allowance must not certify calls from a predicate as pure."
+        },
+        {
+          "path": "subject.py",
+          "function": "mutate",
+          "kind": "return",
+          "source": "return 0",
+          "reason": "Return helper data; predicate call effects still require certification."
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "predicate_purity_uncertified"
     }
   ]
 }

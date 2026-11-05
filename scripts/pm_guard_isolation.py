@@ -74,10 +74,19 @@ def evidence_value(value):
     raise IsolationError("unsupported case fingerprint type: " + kind.__name__ + "; supply reifiable fixture data")
 
 
-@dataclass(frozen=True)
 class _DataSnapshot:
-    signature: tuple
-    keepalive: tuple = field(compare=False, repr=False)
+    # Source-backed methods keep our own instrumentation inside the engine's
+    # trace boundary even when cwd is the repository root. No synthetic-code
+    # exemption is granted to lane code.
+    __slots__ = ('signature', 'keepalive')
+
+    def __init__(self, signature, keepalive):
+        self.signature, self.keepalive = signature, keepalive
+
+    def __eq__(self, other):
+        if type(other) is not _DataSnapshot:
+            return NotImplemented
+        return self.signature == other.signature
 
 
 def _data_snapshot(*roots):
@@ -1152,7 +1161,8 @@ def static_scan(suite, table):
     pending = [(root / p).resolve() for p in suite.checker_modules]
     if not pending:
         raise IsolationError('checker_modules must name the complete source closure')
-    predicate_keys = {_function_key(fn) for fn in _predicate_functions(table)}
+    predicate_functions = {_function_key(fn): fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)}
+    predicate_keys = set(predicate_functions)
     located_predicates = set()
     files, sites, imports, errors = {}, [], [], []
     allowed = {}
@@ -1313,20 +1323,20 @@ def static_scan(suite, table):
                             changed = True
             if not changed:
                 break
-        pure_calls = {'len', 'isinstance', 'type', 'str', 'int', 'bool', 'bytes', 'dict', 'list', 'tuple', 'set', 'frozenset', 'abs', 'all', 'any', 'min', 'max', 'sum'}
+        pure_builtins = {fn.__name__: fn for fn in (len, isinstance, type, str, int, bool, bytes, dict, list, tuple, set, frozenset, abs, all, any, min, max, sum)}
         pure_methods = {'get', 'keys', 'values', 'items', 'copy', 'count', 'index', 'startswith', 'endswith', 'isdigit', 'isdecimal', 'isnumeric', 'isascii', 'isalpha', 'isalnum', 'isspace', 'lower', 'upper', 'strip', 'lstrip', 'rstrip', 'split', 'rsplit', 'join', 'find', 'rfind', 'replace', 'hex'}
         shadowed = {part.name for part in ast.walk(tree) if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))}
         shadowed.update(part.id for part in ast.walk(tree) if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store))
         shadowed.update(part.arg for part in ast.walk(tree) if isinstance(part, ast.arg))
-        def data_expression(part, names):
+        def data_expression(part, names, calls):
             if isinstance(part, ast.Name):
                 return part.id in names
             if isinstance(part, ast.Subscript):
-                return data_expression(part.value, names)
+                return data_expression(part.value, names, calls)
             if isinstance(part, ast.Constant):
                 return True
             if isinstance(part, ast.Call):
-                return isinstance(part.func, ast.Name) and part.func.id in pure_calls - shadowed and not origins(part.func) and all(data_expression(a, names) for a in part.args)
+                return isinstance(part.func, ast.Name) and part.func.id in calls - shadowed and not origins(part.func) and all(data_expression(a, names, calls) for a in part.args)
             return False
         exempt = set()
         predicate_data = {}
@@ -1336,9 +1346,12 @@ def static_scan(suite, table):
                 key = (str(path), first, owners[node])
                 if key in predicate_keys:
                     located_predicates.add(key)
+                    function = predicate_functions[key]
+                    certified_calls = {name for name, binding in pure_builtins.items()
+                                       if function.__globals__.get(name, function.__builtins__.get(name)) is binding}
                     data_names = {a.arg for a in [*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs]}
                     for part in ast.walk(node):
-                        if isinstance(part, ast.Assign) and data_expression(part.value, data_names):
+                        if isinstance(part, ast.Assign) and data_expression(part.value, data_names, certified_calls):
                             data_names.update(t.id for t in part.targets if isinstance(t, ast.Name))
                     # Only the predicate body; defaults/decorators are not predicates.
                     def predicate_body(part):
@@ -1346,7 +1359,7 @@ def static_scan(suite, table):
                             errors.append({'kind': 'nested_predicate_code', 'path': _relative(path, root), 'line': part.lineno})
                             return
                         exempt.add(part)
-                        predicate_data[part] = data_names
+                        predicate_data[part] = (data_names, certified_calls)
                         for child in ast.iter_child_nodes(part):
                             predicate_body(child)
                     for statement in node.body:
@@ -1393,8 +1406,9 @@ def static_scan(suite, table):
                         origin.split('.')[0] in ('importlib', 'runpy') or any(token in sensitive for token in origin.split('.')) for origin in bindings):
                     errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
                 if node in exempt:
-                    safe = (isinstance(node.func, ast.Name) and node.func.id in pure_calls - shadowed and not bindings or
-                            isinstance(node.func, ast.Attribute) and node.func.attr in pure_methods and data_expression(node.func.value, predicate_data[node]))
+                    data_names, certified_calls = predicate_data[node]
+                    safe = (isinstance(node.func, ast.Name) and node.func.id in certified_calls - shadowed and not bindings or
+                            isinstance(node.func, ast.Attribute) and node.func.attr in pure_methods and data_expression(node.func.value, data_names, certified_calls))
                     if not safe:
                         errors.append({'kind': 'predicate_purity_uncertified', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node),
                                        'reason': 'call binding/effects require an explicit reviewed seam; inline supported pure data operations'})

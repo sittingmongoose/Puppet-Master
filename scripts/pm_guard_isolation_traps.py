@@ -5,6 +5,7 @@ Every negative test names its required failure kind; an unrelated FAIL is not a 
 """
 from __future__ import annotations
 import ast
+import builtins
 from dataclasses import replace
 import importlib.util
 import json
@@ -13,9 +14,11 @@ import sys
 import tempfile
 
 
-def _load(path, name):
+def _load(path, name, private_builtins=False):
     spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
+    if private_builtins:
+        module.__dict__['__builtins__'] = dict(vars(builtins))
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
@@ -33,7 +36,10 @@ def _code_suite(g, trap, root):
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(source)
     sys.path[:0] = [str(root / p) for p in trap.get('extra_paths', [])] + [str(root)]
-    module = _load(path, '_method_b_subject')
+    module = _load(path, '_method_b_subject', bool(trap.get('builtin_override')))
+    if trap.get('builtin_override'):
+        override = trap['builtin_override']
+        module.__dict__['__builtins__'][override['name']] = vars(module)[override['function']]
     if trap.get('remove_extra_paths_after_import'):
         for extra in trap.get('extra_paths', []):
             sys.path.remove(str(root / extra))
