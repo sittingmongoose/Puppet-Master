@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L5895-L21722
 
-Source SHA256: `51d9444cb4abb3da6c0e40a6c9cec43f65b9bba2f89f7c4b1c0d9940ddc1024e`
+Source SHA256: `6df9b16a4ff070f3cc38b4c4c4ef532776fc8c59b48026d61963f4b21cef1823`
 
 ---
 
@@ -1530,7 +1530,7 @@ canonical_text: '**Card item:** E-CARDS-2 **1.f**. **Question:** How is a no-pro
   to an app action; model-list refresh means checking which models are available.
 
 
-  **Sources:** `ANS:Plans/Decision_Log.md:4491-4491`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/UI_Command_Catalog.md:8579-8579`;
+  **Sources:** `ANS:Plans/Decision_Log.md:4491-4491`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/UI_Command_Catalog.md:8578-8578`;
   `evidence:reviews/CA-RET-sol/REVIEW.md:116-116`.
 
 
@@ -3419,7 +3419,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.b**. **Question:** Who records and
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8574-8574`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8573-8573`;
   `evidence:reviews/DG6A-sol/REVIEW.md:27-27`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
   `MAIN:Plans/Orchestrator_Page.md:60-60`.
 
@@ -3516,7 +3516,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.c**. **Question:** Who may add evi
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8577-8577`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8576-8576`;
   `evidence:reviews/DG6A-sol/REVIEW.md:29-29`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 
@@ -3614,7 +3614,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.d**. **Question:** Who may promote
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8578-8578`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8577-8577`;
   `evidence:reviews/DG6A-sol/REVIEW.md:30-30`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 
@@ -3709,7 +3709,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.e**. **Question:** Who reopens a r
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8576-8576`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8575-8575`;
   `evidence:reviews/DG6A-sol/REVIEW.md:31-31`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 
@@ -3813,7 +3813,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.f**. **Question:** Who may resolve
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8575-8575`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8574-8574`;
   `evidence:reviews/DG6A-sol/REVIEW.md:32-32`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
   `MAIN:Plans/Orchestrator_Page.md:60-60`; `MAIN:Plans/Orchestrator_Page.md:168-168`; `MAIN:Plans/Orchestrator_Page.md:273-275`.
 
@@ -3917,9 +3917,9 @@ canonical_text: '**Card item:** E-CARDS-2 **5.g**. **Question:** Who records ass
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8573-8573`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8572-8572`;
   `evidence:reviews/DG6A-sol/REVIEW.md:33-33`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
-  `MAIN:Plans/UI_Command_Catalog.md:8573-8578`.
+  `MAIN:Plans/UI_Command_Catalog.md:8572-8577`.
 
 
   **Supersession and boundaries:** Limits this answer to severity, category or authority assessments that neither
@@ -4423,7 +4423,7 @@ canonical_text: '**Card item:** E-CARDS-2 **7.a**. **Question:** For ordinary ap
   until adoption; keep original Project bytes and scope joins exact.
 
 
-  **Sources:** `MAIN:Plans/Contracts_V0.md:24237-24239`; `MAIN:Plans/Goal_Runtime_System.md:8213-8237`; `MAIN:Plans/Decision_Log.md:1613-1637`;
+  **Sources:** `MAIN:Plans/Contracts_V0.md:24237-24239`; `MAIN:Plans/Goal_Runtime_System.md:8211-8235`; `MAIN:Plans/Decision_Log.md:1613-1637`;
   `DG:reports/event-authority-20261104/DG.md:108-108`; `evidence:reviews/DG-sol/REVIEW.md:116-125`; `evidence:surveys/A1/ANSWERS.jsonl:41-41`.
 
 
@@ -5171,10 +5171,10 @@ canonical_text: '**Card item:** E-CARDS-2 **9.a**. **Question:** May the owners 
   |---|---|---|
 
   | `goal.paused` | An existing Goal paused under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`;
-  `MAIN:Plans/Goal_Runtime_System.md:6864-6864` |
+  `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
 
   | `goal.resumed` | A paused Goal resumed under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`;
-  `MAIN:Plans/Goal_Runtime_System.md:6864-6864` |
+  `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
 
 
   **Testing readiness — 1 name**
@@ -5230,7 +5230,7 @@ canonical_text: '**Card item:** E-CARDS-2 **9.a**. **Question:** May the owners 
   `MAIN:Plans/Permissions_System.md:9069-9069`; `MAIN:Plans/Backup_Restore_System.md:793-795`; `MAIN:Plans/Back_Seat_Driver.md:371-371`;
   `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730`; `MAIN:Plans/Contracts_V0.md:18551-18559`;
   `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`; `MAIN:Plans/External_Research.md:715-719`;
-  `MAIN:Plans/Forge_Integrations.md:632-666`; `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6864-6864`;
+  `MAIN:Plans/Forge_Integrations.md:632-666`; `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6862-6862`;
   `MAIN:Plans/Working_Notebook.md:872-876`; `MAIN:Plans/Contracts_V0.md:21402-21408`; `MAIN:Plans/Remote_Access_System.md:653-660`;
   `MAIN:Plans/Wiring_Matrix.md:335-337`; `MAIN:Plans/Executor_Protocol.md:903-905`; `MAIN:Plans/Server_System.md:1004-1012`;
   `MAIN:Plans/Contracts_V0.md:20438-20450`; `MAIN:Plans/Source_Control_System.md:395-413`; `MAIN:Plans/Automated_Testing_System.md:2590-2590`;
