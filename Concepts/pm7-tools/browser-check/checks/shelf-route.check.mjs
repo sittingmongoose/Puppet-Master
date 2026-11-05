@@ -21,7 +21,7 @@ export default async function (t) {
       await t.check(target+' shelf '+id+' opens its menu',await trigger.getAttribute('aria-expanded')==='true','',{hard:true});
       const menu=f.locator('.pmr-menu.is-open');
       await menu.waitFor({state:'visible',timeout:5000});
-      await t.check(target+' shelf '+id+' has menu items',await menu.locator('[role="menuitem"]').count()>0,'',{hard:true});
+      await t.check(target+' shelf '+id+' has menu items',await menu.locator('[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]').count()>0,'',{hard:true});
       await t.page.keyboard.press('Escape');
       await t.check(target+' shelf '+id+' closes on Escape',await trigger.getAttribute('aria-expanded')==='false','');reached++;
     }
