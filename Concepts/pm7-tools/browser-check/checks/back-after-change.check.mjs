@@ -482,7 +482,7 @@ const pickOther = async (A, which = 'first', revealed = false) => {
 const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.map(canon) : v && typeof v === 'object' ? Object.keys(v).sort().reduce((o, k) => { o[k] = canon(v[k]); return o; }, {}) : v);
   const d = canon(S.sess.drafts.main); delete d.project_draft_revision; const n = S.sess.nas || {}, r = S.sess.restore || {}, ol = S.sess.online || {}, b = S.sess.backup || {}, u = S.sess.ui || {};
   const c = S.sess.connect || {}, cn = canon(S.sess.drafts.connect || {}); delete cn.project_draft_revision;
-  return { draft: d, connect: [c.manual || false, c.addr || '', JSON.stringify(cn)], nasTyped: [n.manual || false, n.addr || '', n.port == null ? null : String(n.port)], addresses: JSON.stringify(canon((S.sess.online || {}).addresses || {})),
+  return { draft: d, connect: [c.manual || false, c.addr || '', c.openProject || null, JSON.stringify(cn)], nasTyped: [n.manual || false, n.addr || '', n.port == null ? null : String(n.port)], addresses: JSON.stringify(canon((S.sess.online || {}).addresses || {})),
     facts: JSON.stringify(canon({ hosts: S.env.here.knownHosts || {}, auth: (S.env.devices || []).map((x) => [x.id, (x.authorized || []).slice().sort()]), nasFacts: S.sess.nasFacts || {} })),
     nas: [n.device || null, n.method || null, n.share || null, n.volume || null, n.at || null, n.profile || null, !!n.trusted, !!n.installed, n.choice ? n.choice.id : null],
     restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
@@ -490,7 +490,7 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
     nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
-const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview', 's-ready', 'c-pair']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* NO_PICK only after completion: these owner screens replace their form with a success banner.
    Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm, token on online-signin. */
 const NO_PICK_DONE = (screen) => {
@@ -508,8 +508,9 @@ const NO_PICK_DONE = (screen) => {
    place, the backup place and access from away). With judged ({ stale }), each screen is also judged exactly as walkBack
    judges it, before its pick (generic, judge, toReviewOk): row 20's Back walk is this walk, so rows 20 and 21 share one
    missing-pick guard (SW-41) */
-const BACK_SIG = () => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
-  return JSON.stringify([!!document.querySelector('.o55-sheet[data-open="true"]'), l ? l.innerText : '', l ? l.querySelectorAll('[data-o55-do], input, textarea').length : 0]); };
+/* Retry only a verified dismissal, never arbitrary text/control churn. */
+const BACK_DISMISS = () => ({ sheet: !!document.querySelector('.o55-sheet[data-open="true"]'),
+  menu: !!O55.S.lookOpen });
 async function pickBackWalk(A, bad, label, judged = null) {
   const seq = [], picked = [], run = []; let s = await look(A);
   for (let i = 0; i < 40; i++) {
@@ -526,10 +527,20 @@ async function pickBackWalk(A, bad, label, judged = null) {
       if (!did) bad.push(`${label} ${s.screen}: nothing to pick or type on this Back-walk screen, so nothing was checked`);
       const now = (await A.snap()).screen; if (now !== s.screen) { bad.push(`${label} ${s.screen}: ${did} went on to ${now} without Continue`); break; }
     }
-    /* (the first Back closes an open sheet. Judged, as in walkBack, a Back that changes nothing on the screen went nowhere:
-       a second press only follows a first that visibly undid something, a sheet or what the pick revealed) */
-    const pre = judged ? await A.frame().evaluate(BACK_SIG) : null;
-    await pressBack(A); let n = await look(A); if (n.screen === s.screen && (!judged || pre !== await A.frame().evaluate(BACK_SIG))) { await pressBack(A); n = await look(A); }
+    /* A swallowed Back plus an unrelated title refresh must still fail at this screen. */
+    if (s.screen === 'where' && (SELFTEST === 'ignoreback' || SELFTEST === 'ignoreback-text')) {
+      await A.frame().evaluate((churn) => { document.addEventListener('click', function swallow(e) {
+        if (!e.target.closest('[data-o55-do="back"]')) return;
+        document.removeEventListener('click', swallow, true); e.preventDefault(); e.stopImmediatePropagation();
+        if (churn) document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-title').textContent += ' refreshed';
+      }, true); }, SELFTEST === 'ignoreback-text');
+    }
+    const pre = await A.frame().evaluate(BACK_DISMISS);
+    await pressBack(A); let n = await look(A);
+    if (n.screen === s.screen) {
+      const post = await A.frame().evaluate(BACK_DISMISS);
+      if ((pre.sheet && !post.sheet) || (pre.menu && !post.menu)) { await pressBack(A); n = await look(A); }
+    }
     if (n.screen === s.screen) { bad.push(`${label} Back#${i}: Back on ${s.screen} went nowhere`); break; }
     if (judged) toReviewOk(s, n, i, run, label, bad);
     if (did) { picked.push(s.screen + ' ' + did); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
