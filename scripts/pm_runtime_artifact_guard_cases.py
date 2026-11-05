@@ -181,6 +181,9 @@ def cases(m, excluded=()):
             ('C01','route',lambda r,o,b:r.update(checkpoint_key='foreign-root')),
             ('C02','schema',lambda r,o,b:b['checkpoint'].update(extra=True)),
             ('C03','storage',lambda r,o,b:b['checkpoint'].update(storage_instance_id='22222222-2222-4222-8222-222222222222')),
+            # Keep the map key, token and dataset as the independent correct
+            # identity; only the selected node's copied generation is wrong.
+            ('C04','node_generation_copy',lambda r,o,b:node(b).update(generation_id='eig_'+'0'*64)),
             ('C04','verified',lambda r,o,b:b['selected_source'].update(verified=False)),
             ('C04','snapshot',lambda r,o,b:b['selected_source'].update(redb_snapshot_id='other')),
             ('C05','token_commitment',lambda r,o,b:b['read_token'].update(frontier_sha256='0'*64)),
@@ -188,6 +191,9 @@ def cases(m, excluded=()):
             ('C07','partition',lambda r,o,b:b['selected_source'].update(scope_partition=full['project_id'])),
             ('C08','current_bytes',lambda r,o,b:b['selected_source']['current'].update(fixture_kind='changed')),
             ('C08','manifest_bytes',lambda r,o,b:b['selected_source']['manifest'].update(fixture_kind='changed')),
+            # The source still contains one event. Two is a valid integer with
+            # one semantic defect, independent of number spelling/type rules.
+            ('C09','anchor_retained_event_count',lambda r,o,b:node(b)['anchor'].update(retained_event_count=2)),
             ('C09','coverage',lambda r,o,b:node(b)['frontier']['coverage'].update(retained_event_prefix_sha256='0'*64)),
             ('C10','last_frame',lambda r,o,b:node(b)['frontier']['coverage']['last_frame'].update(last_event_id='other')),
             ('C11','segment',lambda r,o,b:segment_fault(m,b)),
@@ -196,6 +202,9 @@ def cases(m, excluded=()):
             ('C14','row_set_digest',lambda r,o,b:node(b)['frontier'].update(index_row_set_sha256='0'*64)),
         ]:
             r,o,b=copy.deepcopy((row,original,bundle));edit(r,o,b)
+            if name=='anchor_retained_event_count':
+                # This digest observes the altered anchor; it is not the fault.
+                b['read_token']['generation_anchor_sha256']=m.binding_digest(node(b)['anchor'])
             if guard in ('C09','C10','C13','C14'):
                 b['read_token']['frontier_sha256']=m.binding_digest(node(b)['frontier'])
             add(guard,family,name,cp(row,original,bundle),cp(r,o,b))

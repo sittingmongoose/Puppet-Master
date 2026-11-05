@@ -3350,6 +3350,7 @@
     "DL-016",
     "DL-084",
     "GRS-064",
+    "ATS-260",
     "DL-409",
     "DL-448",
     "DL-089",
@@ -6206,6 +6207,25 @@
     "SP-300",
     "SP-302",
     "SP-303",
+    "SP-520",
+    "SP-521",
+    "SP-522",
+    "SP-523",
+    "SP-524",
+    "SP-525",
+    "SP-526",
+    "SP-527",
+    "SP-528",
+    "SP-529",
+    "SP-530",
+    "SP-531",
+    "SP-532",
+    "SP-533",
+    "SP-534",
+    "SP-535",
+    "SP-536",
+    "SP-537",
+    "SP-538",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -6247,6 +6267,25 @@
     "RGV-019",
     "UF-102",
     "SP-269",
+    "RAP-100",
+    "RAP-101",
+    "RAP-102",
+    "RAP-103",
+    "RAP-104",
+    "RAP-105",
+    "RAP-106",
+    "RAP-107",
+    "RAP-108",
+    "RAP-109",
+    "RAP-110",
+    "RAP-111",
+    "RAP-112",
+    "RAP-113",
+    "RAP-114",
+    "RAP-115",
+    "RAP-116",
+    "RAP-117",
+    "RAP-118",
     "ACD-087",
     "CV-336",
     "PS-134",
@@ -6382,6 +6421,25 @@
     "SP-277",
     "GRS-075",
     "SP-281",
+    "CV-520",
+    "CV-521",
+    "CV-522",
+    "CV-523",
+    "CV-524",
+    "CV-525",
+    "CV-526",
+    "CV-527",
+    "CV-528",
+    "CV-529",
+    "CV-530",
+    "CV-531",
+    "CV-532",
+    "CV-533",
+    "CV-534",
+    "CV-535",
+    "CV-536",
+    "CV-537",
+    "CV-538",
     "SMPFS-036",
     "SMPFS-101",
     "SP-280",
@@ -15592,6 +15650,16 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-260",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-260",
+      "to": "DL-075"
     },
     {
       "edge_type": "depends_on",
@@ -25997,6 +26065,291 @@
       "edge_type": "depends_on",
       "from": "CV-368",
       "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-520",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-520",
+      "to": "RAP-100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-520",
+      "to": "SP-520"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-521",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-521",
+      "to": "RAP-101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-521",
+      "to": "SP-521"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-522",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-522",
+      "to": "RAP-102"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-522",
+      "to": "SP-522"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-523",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-523",
+      "to": "RAP-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-523",
+      "to": "SP-523"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-524",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-524",
+      "to": "RAP-104"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-524",
+      "to": "SP-524"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-525",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-525",
+      "to": "RAP-105"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-525",
+      "to": "SP-525"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-526",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-526",
+      "to": "RAP-106"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-526",
+      "to": "SP-526"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-527",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-527",
+      "to": "RAP-107"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-527",
+      "to": "SP-527"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-528",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-528",
+      "to": "RAP-108"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-528",
+      "to": "SP-528"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-529",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-529",
+      "to": "RAP-109"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-529",
+      "to": "SP-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-530",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-530",
+      "to": "RAP-110"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-530",
+      "to": "SP-530"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-531",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-531",
+      "to": "RAP-111"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-531",
+      "to": "SP-531"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-532",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-532",
+      "to": "RAP-112"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-532",
+      "to": "SP-532"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-533",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-533",
+      "to": "RAP-113"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-533",
+      "to": "SP-533"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-534",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-534",
+      "to": "RAP-114"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-534",
+      "to": "SP-534"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-535",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-535",
+      "to": "RAP-115"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-535",
+      "to": "SP-535"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-536",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-536",
+      "to": "RAP-116"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-536",
+      "to": "SP-536"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-537",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-537",
+      "to": "RAP-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-537",
+      "to": "SP-537"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-538",
+      "to": "ATS-260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-538",
+      "to": "RAP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-538",
+      "to": "SP-538"
     },
     {
       "edge_type": "depends_on",
@@ -63270,6 +63623,291 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RAP-100",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-100",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-100",
+      "to": "SP-520"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-101",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-101",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-101",
+      "to": "SP-521"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-102",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-102",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-102",
+      "to": "SP-522"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-103",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-103",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-103",
+      "to": "SP-523"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-104",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-104",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-104",
+      "to": "SP-524"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-105",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-105",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-105",
+      "to": "SP-525"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-106",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-106",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-106",
+      "to": "SP-526"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-107",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-107",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-107",
+      "to": "SP-527"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-108",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-108",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-108",
+      "to": "SP-528"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-109",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-109",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-109",
+      "to": "SP-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-110",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-110",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-110",
+      "to": "SP-530"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-111",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-111",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-111",
+      "to": "SP-531"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-112",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-112",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-112",
+      "to": "SP-532"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-113",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-113",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-113",
+      "to": "SP-533"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-114",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-114",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-114",
+      "to": "SP-534"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-115",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-115",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-115",
+      "to": "SP-535"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-116",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-116",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-116",
+      "to": "SP-536"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-117",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-117",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-117",
+      "to": "SP-537"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-118",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-118",
+      "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-118",
+      "to": "SP-538"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RAS-001",
       "to": "PDS-003"
     },
@@ -82562,6 +83200,196 @@
       "edge_type": "depends_on",
       "from": "SP-353",
       "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-520",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-520",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-521",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-521",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-522",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-522",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-523",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-523",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-524",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-524",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-525",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-525",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-526",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-526",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-527",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-527",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-528",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-528",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-529",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-529",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-530",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-530",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-531",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-531",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-532",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-532",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-533",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-533",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-534",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-534",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-535",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-535",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-536",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-536",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-537",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-537",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-538",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-538",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -117789,7 +118617,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T13:57:35Z",
+  "generated_at_utc": "2026-11-05T17:10:55Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131902,6 +132730,23 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-260",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "ATS-260 — DR artifact event contract oracles",
+        "heading_level": 3,
+        "heading_line": 7241,
+        "line": 7243,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -144939,6 +145784,329 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-520",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-520 — runtime_artifact.api_web_call",
+        "heading_level": 3,
+        "heading_line": 24487,
+        "line": 24489,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-521",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-521 — runtime_artifact.artifact_version",
+        "heading_level": 3,
+        "heading_line": 24523,
+        "line": 24525,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-522",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-522 — runtime_artifact.before_after_snapshot",
+        "heading_level": 3,
+        "heading_line": 24559,
+        "line": 24561,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-523",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-523 — runtime_artifact.browser_recording",
+        "heading_level": 3,
+        "heading_line": 24595,
+        "line": 24597,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-524",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-524 — runtime_artifact.code_diff",
+        "heading_level": 3,
+        "heading_line": 24632,
+        "line": 24634,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-525",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-525 — runtime_artifact.context_snapshot",
+        "heading_level": 3,
+        "heading_line": 24668,
+        "line": 24670,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-526",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-526 — runtime_artifact.cost_usage",
+        "heading_level": 3,
+        "heading_line": 24704,
+        "line": 24706,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-527",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-527 — runtime_artifact.document",
+        "heading_level": 3,
+        "heading_line": 24742,
+        "line": 24744,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-528",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-528 — runtime_artifact.evidence",
+        "heading_level": 3,
+        "heading_line": 24778,
+        "line": 24780,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-529",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-529 — runtime_artifact.failed_attempts",
+        "heading_level": 3,
+        "heading_line": 24814,
+        "line": 24816,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-530",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-530 — runtime_artifact.hitl_approval",
+        "heading_level": 3,
+        "heading_line": 24850,
+        "line": 24852,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-531",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-531 — runtime_artifact.implementation_plan",
+        "heading_level": 3,
+        "heading_line": 24886,
+        "line": 24888,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-532",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-532 — runtime_artifact.reasoning_summary",
+        "heading_level": 3,
+        "heading_line": 24922,
+        "line": 24924,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-533",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-533 — runtime_artifact.restore_point",
+        "heading_level": 3,
+        "heading_line": 24958,
+        "line": 24960,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-534",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-534 — runtime_artifact.screenshot",
+        "heading_level": 3,
+        "heading_line": 24995,
+        "line": 24997,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-535",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-535 — runtime_artifact.subagent_lineage",
+        "heading_level": 3,
+        "heading_line": 25031,
+        "line": 25033,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-536",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-536 — runtime_artifact.suggested_next_steps",
+        "heading_level": 3,
+        "heading_line": 25067,
+        "line": 25069,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-537",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-537 — runtime_artifact.tool_llm_trace",
+        "heading_level": 3,
+        "heading_line": 25103,
+        "line": 25105,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-538",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "CV-538 — runtime_artifact.validation_test",
+        "heading_level": 3,
+        "heading_line": 25141,
+        "line": 25143,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -216996,8 +218164,8 @@
       "source_location": {
         "heading": "RAP-052 - Retention, Pin, And Tombstone Surface",
         "heading_level": 3,
-        "heading_line": 2606,
-        "line": 2608,
+        "heading_line": 2609,
+        "line": 2611,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -217013,8 +218181,8 @@
       "source_location": {
         "heading": "RAP-053 - Debug Adapter Model Deferral Closure",
         "heading_level": 3,
-        "heading_line": 2670,
-        "line": 2672,
+        "heading_line": 2673,
+        "line": 2675,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -217047,8 +218215,8 @@
       "source_location": {
         "heading": "Notebook Artifact Reference Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2813,
-        "line": 2817,
+        "heading_line": 2816,
+        "line": 2820,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -217064,8 +218232,8 @@
       "source_location": {
         "heading": "RAP-056 — Existing Recording Playback and Watch Bindings",
         "heading_level": 2,
-        "heading_line": 2850,
-        "line": 2884,
+        "heading_line": 2853,
+        "line": 2887,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -217081,8 +218249,8 @@
       "source_location": {
         "heading": "RAP-058 — Deleted restore-point evidence admission",
         "heading_level": 3,
-        "heading_line": 3029,
-        "line": 3031,
+        "heading_line": 3032,
+        "line": 3034,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -217098,8 +218266,8 @@
       "source_location": {
         "heading": "RAP-059 — Restore-point created consumers",
         "heading_level": 3,
-        "heading_line": 2928,
-        "line": 2930,
+        "heading_line": 2931,
+        "line": 2933,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -217115,8 +218283,8 @@
       "source_location": {
         "heading": "RAP-060 — Expired restore-point evidence admission",
         "heading_level": 3,
-        "heading_line": 3091,
-        "line": 3093,
+        "heading_line": 3094,
+        "line": 3096,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -217132,8 +218300,331 @@
       "source_location": {
         "heading": "RAP-065 - The Artifact Viewer Tab",
         "heading_level": 3,
-        "heading_line": 3158,
-        "line": 3160,
+        "heading_line": 3161,
+        "line": 3163,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-100",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-100 — runtime_artifact.api_web_call",
+        "heading_level": 3,
+        "heading_line": 3273,
+        "line": 3275,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-101",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-101 — runtime_artifact.artifact_version",
+        "heading_level": 3,
+        "heading_line": 3313,
+        "line": 3315,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-102",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-102 — runtime_artifact.before_after_snapshot",
+        "heading_level": 3,
+        "heading_line": 3353,
+        "line": 3355,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-103",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-103 — runtime_artifact.browser_recording",
+        "heading_level": 3,
+        "heading_line": 3393,
+        "line": 3395,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-104",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-104 — runtime_artifact.code_diff",
+        "heading_level": 3,
+        "heading_line": 3435,
+        "line": 3437,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-105",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-105 — runtime_artifact.context_snapshot",
+        "heading_level": 3,
+        "heading_line": 3475,
+        "line": 3477,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-106",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-106 — runtime_artifact.cost_usage",
+        "heading_level": 3,
+        "heading_line": 3515,
+        "line": 3517,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-107",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-107 — runtime_artifact.document",
+        "heading_level": 3,
+        "heading_line": 3558,
+        "line": 3560,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-108",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-108 — runtime_artifact.evidence",
+        "heading_level": 3,
+        "heading_line": 3598,
+        "line": 3600,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-109",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-109 — runtime_artifact.failed_attempts",
+        "heading_level": 3,
+        "heading_line": 3638,
+        "line": 3640,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-110",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-110 — runtime_artifact.hitl_approval",
+        "heading_level": 3,
+        "heading_line": 3678,
+        "line": 3680,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-111",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-111 — runtime_artifact.implementation_plan",
+        "heading_level": 3,
+        "heading_line": 3719,
+        "line": 3721,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-112",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-112 — runtime_artifact.reasoning_summary",
+        "heading_level": 3,
+        "heading_line": 3759,
+        "line": 3761,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-113",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-113 — runtime_artifact.restore_point",
+        "heading_level": 3,
+        "heading_line": 3800,
+        "line": 3802,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-114",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-114 — runtime_artifact.screenshot",
+        "heading_level": 3,
+        "heading_line": 3843,
+        "line": 3845,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-115",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-115 — runtime_artifact.subagent_lineage",
+        "heading_level": 3,
+        "heading_line": 3883,
+        "line": 3885,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-116",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-116 — runtime_artifact.suggested_next_steps",
+        "heading_level": 3,
+        "heading_line": 3923,
+        "line": 3925,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-117",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-117 — runtime_artifact.tool_llm_trace",
+        "heading_level": 3,
+        "heading_line": 3963,
+        "line": 3965,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-118",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "RAP-118 — runtime_artifact.validation_test",
+        "heading_level": 3,
+        "heading_line": 4005,
+        "line": 4007,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -229765,6 +231256,329 @@
         "heading_level": 3,
         "heading_line": 29519,
         "line": 29521,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-520",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-520 — runtime_artifact.api_web_call",
+        "heading_level": 3,
+        "heading_line": 29592,
+        "line": 29594,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-521",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-521 — runtime_artifact.artifact_version",
+        "heading_level": 3,
+        "heading_line": 29630,
+        "line": 29632,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-522",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-522 — runtime_artifact.before_after_snapshot",
+        "heading_level": 3,
+        "heading_line": 29668,
+        "line": 29670,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-523",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-523 — runtime_artifact.browser_recording",
+        "heading_level": 3,
+        "heading_line": 29706,
+        "line": 29708,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-524",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-524 — runtime_artifact.code_diff",
+        "heading_level": 3,
+        "heading_line": 29744,
+        "line": 29746,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-525",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-525 — runtime_artifact.context_snapshot",
+        "heading_level": 3,
+        "heading_line": 29782,
+        "line": 29784,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-526",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-526 — runtime_artifact.cost_usage",
+        "heading_level": 3,
+        "heading_line": 29820,
+        "line": 29822,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-527",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-527 — runtime_artifact.document",
+        "heading_level": 3,
+        "heading_line": 29858,
+        "line": 29860,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-528",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-528 — runtime_artifact.evidence",
+        "heading_level": 3,
+        "heading_line": 29896,
+        "line": 29898,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-529",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-529 — runtime_artifact.failed_attempts",
+        "heading_level": 3,
+        "heading_line": 29934,
+        "line": 29936,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-530",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-530 — runtime_artifact.hitl_approval",
+        "heading_level": 3,
+        "heading_line": 29972,
+        "line": 29974,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-531",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-531 — runtime_artifact.implementation_plan",
+        "heading_level": 3,
+        "heading_line": 30010,
+        "line": 30012,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-532",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-532 — runtime_artifact.reasoning_summary",
+        "heading_level": 3,
+        "heading_line": 30048,
+        "line": 30050,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-533",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-533 — runtime_artifact.restore_point",
+        "heading_level": 3,
+        "heading_line": 30086,
+        "line": 30088,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-534",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-534 — runtime_artifact.screenshot",
+        "heading_level": 3,
+        "heading_line": 30125,
+        "line": 30127,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-535",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-535 — runtime_artifact.subagent_lineage",
+        "heading_level": 3,
+        "heading_line": 30163,
+        "line": 30165,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-536",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-536 — runtime_artifact.suggested_next_steps",
+        "heading_level": 3,
+        "heading_line": 30201,
+        "line": 30203,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-537",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-537 — runtime_artifact.tool_llm_trace",
+        "heading_level": 3,
+        "heading_line": 30239,
+        "line": 30241,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DR",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-538",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_and_replay",
+      "source_location": {
+        "heading": "SP-538 — runtime_artifact.validation_test",
+        "heading_level": 3,
+        "heading_line": 30277,
+        "line": 30279,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -245077,10 +246891,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 19003,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22213,
+    "node_count": 7545,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0

@@ -222,6 +222,21 @@ def cases(m, rows, fixtures):
                 for field in ('usage_event_ref','usage_record_id'):
                     control['type_payload'][field]=None;control['type_payload']['refs'][field]=None;control['type_payload']['settlement'][field]=None
                 agreement_case(m,result,row,control,('type_payload','flags','usage_observed'),False,'usage_artifact_observed')
+                # Activate each quota source independently. Each negative only
+                # changes the flag; agreement_case rebuilds actual pack bytes.
+                for quota_source in ('quota_artifact_ref','quota_refs'):
+                    control=copy.deepcopy(payload)
+                    trace=control['type_payload']
+                    trace['settlement']['quota_artifact_ref']=None
+                    trace['refs'].pop('quota_refs',None)
+                    if quota_source=='quota_artifact_ref':
+                        trace['settlement']['quota_artifact_ref']='artifact-quota-001'
+                    else:
+                        trace['refs']['quota_refs']=['quota-observation-001']
+                    trace['flags']['quota_observed']=True
+                    for label,value in (('false',False),('null',None)):
+                        agreement_case(m,result,row,control,('type_payload','flags','quota_observed'),
+                            value,'quota_'+quota_source+'_'+label)
                 agreement_case(m,result,row,payload,('type_payload','retry','parent_trace_ref'),'trace-parent-foreign','retry_parent')
                 control=copy.deepcopy(payload);control['type_payload']['retry'].update(relation='retry_of',parent_trace_ref='trace-parent')
                 agreement_case(m,result,row,control,('type_payload','retry','parent_trace_ref'),None,'retry_missing_parent')

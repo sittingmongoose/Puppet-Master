@@ -1,52 +1,53 @@
 # Shard Index: Plans/Runtime_Artifacts_Panel.md
 
-Generated: 2026-11-04T18:52:55Z
+Generated: 2026-11-05T16:56:21Z
 
-Source SHA256: `8aff2bd6a2752c1623fa0b8dea793189a10d3523646fbca327e2e9b2172a6749`
+Source SHA256: `581154d1f10393c49adfb766c1e7d16a4170985f2d785c8b5a23ccd2d5b9a870`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `776edebf927f6a1cbaf878384ab4221355c25bff46e4ead911844ca5bde4a731`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L16 `9630b20aedacf524524da91e4a4edfd953859d24fce87916320f297439ff247d`
-- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L18-L45 `de907d126693fe0b79f8d91d810663965a6bccd78878ef448026b86a84632ec1`
-- [004 - 3. Mechanism: one event type per artifact type](004-3.-mechanism-one-event-type-per-artifact-type.md) L46-L72 `ab3e84fe550c569a5d7f2acaeaf951be995e2216bb48315dfe8ee0e17a8dd3e8`
-- [005 - 4. redb key and projector](005-4.-redb-key-and-projector.md) L74-L191 `50432ad24dc5b1b09a7a1fa5def075c5576c70a5bf9396cd95538c73d8ad9497`
-- [006 - 5A. Debug investigation grouping, manifests, and exports](006-5a.-debug-investigation-grouping-manifests-and-exports.md) L193-L262 `59a44397b22a13a899e91298608b958957fc60ed938562796ee4322cc84fc92c`
-- [007 - 6. reasoning_tokens and cost_usage](007-6.-reasoning_tokens-and-cost_usage.md) L264-L289 `471551dc9e6d696083b327a1a063b27bf31c8020a922eb1f65911b5a0dd0fd91`
-- [008 - 7. JSON schemas (all required)](008-7.-json-schemas-all-required.md) L290-L324 `4dd75c7afc7daddfa67841cb4c23f8826f7da21b2aff161f4dad1406833890f5`
-- [009 - 8. Browser recordings](009-8.-browser-recordings.md) L326-L360 `d2f29275d04fc04a84efc0a8bb22fe0e96d7be933c7d3885bff4a0cc547bf4b4`
-- [010 - 9. All differentiators MVP](010-9.-all-differentiators-mvp.md) L362-L366 `f29d3fef842aad20ab7b3a734bf4a4bcacbbe689f7f74b01bf8ef1edad3ba95f`
-- [011 - 10. References](011-10.-references.md) L368-L374 `9237ea9c62fba52817053714cda62255079e8bae8ed2b138a853b724e608f1ae`
-- [012 - Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)](012-cross-surface-operation-receipt-linkage-addendum-2026-03-12.md) L376-L406 `fd53915289792b71f5bdb1fd3092cacb9374368ab4b414de2ad603ce83bd23d8`
-- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L408-L412 `677797bea89173cf3de45ec9a4a010937ad213b77254939c300f3240ef5db7f1`
-- [014 - PlanUnits](014-planunits.md) L414-L420 `ebdf21e3a5f7e5fb412bf2796e3da3ef847f6efb59959cb25287c3287a31d7bb`
-- [015 - Known-37 recovery artifact projection - 2026-07-18](015-known-37-recovery-artifact-projection-2026-07-18.md) L422-L426 `ce9c089b22767983ba29d253bfa25c0c8d9ea7e006baf26f22b1374e5918ac7c`
-- [016 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L428-L653 `9e5b283255af7f0f7fe90a3873d50d37af459efb8767a7bab8aa8ba574d60b5b`
-- [017 - Migration Coverage](017-migration-coverage.md) L655-L665 `e958c006562677a9fa17b83a820d1f983b6c310eadf97850ae134dabb11a7a53`
-- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L667-L704 `c62596a8b0e954f2db03b5044a3c4970e3aea19b0069054318c4dca40d3e7516`
-- [019 - Ledger Compile Addendum - pldg-20260614-002](019-ledger-compile-addendum-pldg-20260614-002.md) L706-L758 `b4e2aa34587ab9d6c828a81508aa6ff9d483deb7242b3f9abbc9473d7b52e894`
-- [020 - Ledger Compile Addendum - pldg-20260616-002](020-ledger-compile-addendum-pldg-20260616-002.md) L760-L839 `c16504cea46cf89f7772423ed0d9c15ffee67d6e9dfb4201b7e7a643f2216b92`
-- [021 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L841-L904 `f3de5191c9861812266c370a32a889d9e7510614de4d841c766fbe263e8bab80`
-- [022 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L907-L964 `41823b564b22217ee6120f0da431f7c4ab21dffd5b1eda82dc353e722bbf0426`
-- [023 - Ledger Compile Addendum - pldg-20260622-001-fff](023-ledger-compile-addendum-pldg-20260622-001-fff.md) L966-L1011 `b24bfacaf9969e526382d22ea8c9637463e723eef7e8af6c6e756f9f6b059ee0`
-- [024 - Ledger Compile Addendum - pldg-20260626-001-feature-name](024-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1014-L1424 `f548bc2f0f0fe26c37944dd5fed1ab3781816091bbf7cb611ea8df9439a1958e`
-- [025 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](025-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1426-L1617 `9ef4deacb7d1a7ecc217994e8ea6fc29b1450bd36a5966cce38b425e4a1d3d27`
-- [026 - Ledger Compile Addendum - pldg-20260629-001-feature-name](026-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L1619-L1736 `bbeb3219902c61ae94c0081b73a72c355c089173863b83d2d236ed10487e6da6`
-- [027 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](027-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1738-L1833 `8a3be9389a7d50b247ad1b6733c4bb08d81d82ded9ee0d0573de302f846c6eea`
-- [028 - Usage Artifact Schema Strictness Addendum - 2026-07-09](028-usage-artifact-schema-strictness-addendum-2026-07-09.md) L1835-L1919 `deca837a93469fee5c840d7762bffecefc69f305d03b58a5dc78968f0e9d0a6f`
-- [029 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](029-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1921-L1940 `9cb9b62a67c903cfc273c81779df4d3bb5bdda42c6a8edb51c03d092377731f2`
-- [030 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](030-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1941-L1947 `11337e980241249e6bc9247d7d7114d97ada6c094ceb2015c48c384faf021702`
-- [031 - Usage GUI Propagation Addendum - 2026-07-09](031-usage-gui-propagation-addendum-2026-07-09.md) L1949-L2026 `69761342249f29964673e728dbef9a723255e3425e95d096ad9e32f657c60b64`
-- [032 - Case L Durable-State Consumer Addendum - 2026-07-17](032-case-l-durable-state-consumer-addendum-2026-07-17.md) L2028-L2237 `3676506fde9e0bcc473ed9945abf18ce7949f2a75442f02737cde70e8846b361`
-- [033 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](033-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L2239-L2484 `d62fc08458279f2bd68eb2c692fcdef626578cfc9b68fb27ffa39af2c727989a`
-- [034 - Runtime Artifact Event Authority Owner Contract - 2026-09-01](034-runtime-artifact-event-authority-owner-contract-2026-09-01.md) L2486-L2664 `5dbf678ca4f4872dbd09f697ff29ada66f19e267e539bd3e02bcadc4bd3986b5`
-- [035 - Run & Debug Revival Addendum - 2026-07-27](035-run-debug-revival-addendum-2026-07-27.md) L2666-L2718 `26433f77843d8340b6fe8f684e40113ce653c1a117cff3e3dc2fb60dbf6a89c7`
-- [036 - Additive Correction v4 — Plan Revisions, Embeds, And Execution Reports (2026-09-03)](036-additive-correction-v4-plan-revisions-embeds-and-execution-repor.md) L2720-L2811 `e282bfadc8b94402f1f7f81a9438ecd55d8ceec94f1bdd7f6763f519e56740b6`
-- [037 - Notebook Artifact Reference Addendum (2026-09-05)](037-notebook-artifact-reference-addendum-2026-09-05.md) L2813-L2848 `ff026baeeb61688c15218e1898377d1097ce67252ef01b34e068ee5bfe73959d`
-- [038 - RAP-056 — Existing Recording Playback and Watch Bindings](038-rap-056-existing-recording-playback-and-watch-bindings.md) L2850-L2909 `38ce1f7215e60dc6b753d635c89a7fc0ebd157a9d0106d260f46dc5edb10cc16`
-- [039 - Restore-point created passive record reader](039-restore-point-created-passive-record-reader.md) L2912-L3016 `79c6287f3845b2639ed0ffad79ecdc87cb9769efd713c7188e0509d57ec8623e`
-- [040 - Deleted restore-point evidence admission](040-deleted-restore-point-evidence-admission.md) L3019-L3082 `76b6496e159107c132ea348a6e6631c9e30340ce0f245423e6eeef29dbd60d3e`
-- [041 - Expired restore-point evidence admission](041-expired-restore-point-evidence-admission.md) L3085-L3145 `06e6b1b9918c3e98454ba05b5c3c894211d32ccf88ebcda46c1ed4261859e9d3`
-- [042 - DL-180 to DL-185 — The Artifact Viewer Is A Tab Kind (2026-10-09)](042-dl-180-to-dl-185-the-artifact-viewer-is-a-tab-kind-2026-10-09.md) L3147-L3265 `d71fbb737b456cb9bf7527020c48db30c8f8e81771a56c7a6d32739f721128c2`
+- [001 - Preamble](001-preamble.md) L1-L1 `fca4df6c98d68b460d525bb9186baa53482b933a0f080e5715a41f610cc4ded8`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L16 `8148026e3c04061935fbe9704b1e2005f1201496728a794f61e8769802cf8b13`
+- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L18-L45 `05d61907abb5c673ac93b0b86158bd592a8ac160dbdaa9035ce5e2ecf48d4e9a`
+- [004 - 3. Mechanism: one event type per artifact type](004-3.-mechanism-one-event-type-per-artifact-type.md) L46-L72 `cba28787df0f7062f6eb3f6beb65cdbb8a3734102903424b914e3ae4d2573594`
+- [005 - 4. redb key and projector](005-4.-redb-key-and-projector.md) L74-L191 `04625aa928f09fa058a089f7ef56434e28401b699d299ff8f0f9df360494903c`
+- [006 - 5A. Debug investigation grouping, manifests, and exports](006-5a.-debug-investigation-grouping-manifests-and-exports.md) L193-L262 `97acdc3497810c08434d7a062edd4cac31f233f3082c042711f81005a6b42cbb`
+- [007 - 6. reasoning_tokens and cost_usage](007-6.-reasoning_tokens-and-cost_usage.md) L264-L289 `4e94e78669f57ff8eb42afa267ac02468b6f0a927904eb1c20519d11b36d3a21`
+- [008 - 7. JSON schemas (all required)](008-7.-json-schemas-all-required.md) L290-L324 `0754dffc380095769257cb76ed3d45e2afbb01f099cbb7b0d8b3400c66f987fc`
+- [009 - 8. Browser recordings](009-8.-browser-recordings.md) L326-L360 `25196c390dfe9a4ad567d306a36050c5772269a37dafc9ad68d3d313dbd9c14b`
+- [010 - 9. All differentiators MVP](010-9.-all-differentiators-mvp.md) L362-L366 `be193868c36cd9f206402e9bf8b487a95df4dd94de9291ec5eafef2d6bb110c9`
+- [011 - 10. References](011-10.-references.md) L368-L374 `ee9bab647df766ce5a536ba1ad494698000d79e972bf510c0666f0ed0e06e684`
+- [012 - Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)](012-cross-surface-operation-receipt-linkage-addendum-2026-03-12.md) L376-L406 `03ffedbfe6717130f7d89c993dadf4bdc0e7cd5c075f25ed8ecbcf57a7810217`
+- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L408-L412 `c86c48125e00e441e7b7c3acf0185b0bc5693b7c3634518fc90273043ee20e3e`
+- [014 - PlanUnits](014-planunits.md) L414-L420 `26889960be0ff06ff105ba71ad6a886a10f4b34a33df16152bf2fe596766fc70`
+- [015 - Known-37 recovery artifact projection - 2026-07-18](015-known-37-recovery-artifact-projection-2026-07-18.md) L422-L426 `e17a1d2f6d660a00a28708d3ddb98acc8ac6151823c48a9941c66333c954db76`
+- [016 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L428-L653 `6ef631f3fc9579a09363ddac288a900327fa989cde19b63f34d6d3a235fbf74b`
+- [017 - Migration Coverage](017-migration-coverage.md) L655-L665 `ed406c7db5e4b9979fee1981f2c25008c92ffaa6939ae8c624f5ca0c1f9e8b00`
+- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L667-L704 `e9fc700e6001e393482d584f3e9c8aec021950d96dcb272404031af4b837b2fc`
+- [019 - Ledger Compile Addendum - pldg-20260614-002](019-ledger-compile-addendum-pldg-20260614-002.md) L706-L758 `98602a179d272fdfe0f682f248d3fecfe2a5ed2567d07a4d3ae4df85d6514fd9`
+- [020 - Ledger Compile Addendum - pldg-20260616-002](020-ledger-compile-addendum-pldg-20260616-002.md) L760-L839 `85d532eb60d5b4e7aa19c49d57b4713ecf9ee31320b534c5f32b60fbecbe40cf`
+- [021 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L841-L904 `53e83ebde9be6a1ea5ee2fe0cf9a52c5375fe01bdecc685acdd6629737e575ea`
+- [022 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L907-L964 `8a348a7bb86946feaa5c66b79b67e54464a3344f13e243655ae6a42b3cf42a9f`
+- [023 - Ledger Compile Addendum - pldg-20260622-001-fff](023-ledger-compile-addendum-pldg-20260622-001-fff.md) L966-L1011 `46ef9d5c22a4f13889df9e8d7feac99a19a70b2ea192f0c19ba67b0369c57fff`
+- [024 - Ledger Compile Addendum - pldg-20260626-001-feature-name](024-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1014-L1424 `aee60e677119836cfd4e836fbf46fc4eed7476439a66336304fddaefe54d381e`
+- [025 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](025-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1426-L1617 `165fe4250634f2204d168681f73ea167add7124504dd4bef14214ea34fc04fc2`
+- [026 - Ledger Compile Addendum - pldg-20260629-001-feature-name](026-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L1619-L1736 `5617f684a2a74f67548d2e9593b8b66346a27aad0e58310076d9390f6899c58c`
+- [027 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](027-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1738-L1833 `b86ed396fe78cbc63a05bdbe514f93749bb66b97c969b0db3bfcb084ef0e58c5`
+- [028 - Usage Artifact Schema Strictness Addendum - 2026-07-09](028-usage-artifact-schema-strictness-addendum-2026-07-09.md) L1835-L1919 `b3dffd1cb0e789ec70ea758e48048f05c0e9d783c9aaf6b6e9e4bca3558b033d`
+- [029 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](029-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1921-L1940 `880da218ba2e004600284b45c285e542125e24d9483ed26062d36966c2c4fbc3`
+- [030 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](030-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1941-L1947 `ca442ae5ced1dd148f3a8a225de779e8d60caaa0f50c95af1acde609e5a935b3`
+- [031 - Usage GUI Propagation Addendum - 2026-07-09](031-usage-gui-propagation-addendum-2026-07-09.md) L1949-L2026 `5600f36c1813433b87fd58e0bf4e031558952efed0045ee165de209c5af3af86`
+- [032 - Case L Durable-State Consumer Addendum - 2026-07-17](032-case-l-durable-state-consumer-addendum-2026-07-17.md) L2028-L2237 `11fde06d100ff9fa4119ac4cd52949805b74ce90c65f7985b210c8aea88236ff`
+- [033 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](033-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L2239-L2484 `67c5ab2a1c149e26871368ccad1b38cfdadf62f903999110d470f0981974d442`
+- [034 - Runtime Artifact Event Authority Owner Contract - 2026-09-01](034-runtime-artifact-event-authority-owner-contract-2026-09-01.md) L2486-L2667 `e07f551a44aaceabe6c14895813cf72ce444b44a0c7fb2fd5c613f1633f772e0`
+- [035 - Run & Debug Revival Addendum - 2026-07-27](035-run-debug-revival-addendum-2026-07-27.md) L2669-L2721 `cfc1ca3257b9a7b9057b8227a0a002b7ea7f37e662d7764281f5ce8ad8c56b6a`
+- [036 - Additive Correction v4 — Plan Revisions, Embeds, And Execution Reports (2026-09-03)](036-additive-correction-v4-plan-revisions-embeds-and-execution-repor.md) L2723-L2814 `5e378b1762c2d108a8db5698f0ed7efc336519f251df6a79536cdb9823c0819a`
+- [037 - Notebook Artifact Reference Addendum (2026-09-05)](037-notebook-artifact-reference-addendum-2026-09-05.md) L2816-L2851 `60791dc3f4ef4395bdf9e6b3357cea2cdc749b684edee4991d6d3233cc5c7eb0`
+- [038 - RAP-056 — Existing Recording Playback and Watch Bindings](038-rap-056-existing-recording-playback-and-watch-bindings.md) L2853-L2912 `b98f59cd31aa5c17d2e5020e7bb5759f9a8d0940ae4cd2e9ae7f959f23b8d6c5`
+- [039 - Restore-point created passive record reader](039-restore-point-created-passive-record-reader.md) L2915-L3019 `a07d2352b745d8cab8c9df3e9c8d77a5948de6bce2f4aada848bb65a82147a69`
+- [040 - Deleted restore-point evidence admission](040-deleted-restore-point-evidence-admission.md) L3022-L3085 `8640540429361a50da1b76ea1334c2991395ba392b08d8a62d52ad6b345453a0`
+- [041 - Expired restore-point evidence admission](041-expired-restore-point-evidence-admission.md) L3088-L3148 `4d39006f2965dc71570adb76ef6cbc0a76a278fa2c8eede875bf9059cda58010`
+- [042 - DL-180 to DL-185 — The Artifact Viewer Is A Tab Kind (2026-10-09)](042-dl-180-to-dl-185-the-artifact-viewer-is-a-tab-kind-2026-10-09.md) L3150-L3268 `e035bf632b8765ab7e56a78304db0899860701b74c60f64e1c457088f8c2d803`
+- [043 - Runtime artifact event contracts prepared without admission — 2026-11-04](043-runtime-artifact-event-contracts-prepared-without-admission-2026.md) L3271-L4042 `257424ae1268039be41d1951b84e2401660914c3cc432ab57a03e37c6f43c84a`

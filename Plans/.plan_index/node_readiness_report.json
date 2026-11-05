@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 19003,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22213,
+    "node_count": 7545,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T13:57:36Z",
+  "generated_at_utc": "2026-11-05T17:10:56Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -31614,8 +31614,8 @@
         "source_location": {
           "heading": "RAP-052 - Retention, Pin, And Tombstone Surface",
           "heading_level": 3,
-          "heading_line": 2606,
-          "line": 2608,
+          "heading_line": 2609,
+          "line": 2611,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -31625,8 +31625,8 @@
         "source_location": {
           "heading": "RAP-058 — Deleted restore-point evidence admission",
           "heading_level": 3,
-          "heading_line": 3029,
-          "line": 3031,
+          "heading_line": 3032,
+          "line": 3034,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -31636,8 +31636,8 @@
         "source_location": {
           "heading": "RAP-059 — Restore-point created consumers",
           "heading_level": 3,
-          "heading_line": 2928,
-          "line": 2930,
+          "heading_line": 2931,
+          "line": 2933,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -31647,8 +31647,8 @@
         "source_location": {
           "heading": "RAP-060 — Expired restore-point evidence admission",
           "heading_level": 3,
-          "heading_line": 3091,
-          "line": 3093,
+          "heading_line": 3094,
+          "line": 3096,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -31658,8 +31658,8 @@
         "source_location": {
           "heading": "RAP-065 - The Artifact Viewer Tab",
           "heading_level": 3,
-          "heading_line": 3158,
-          "line": 3160,
+          "heading_line": 3161,
+          "line": 3163,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -41967,10 +41967,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7487,
+  "plan_unit_count": 7545,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2806,
+      "high": 2864,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -43185,6 +43185,7 @@
       "event_authority_checkpoint_drift": 2,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
+      "event_authority_identity_and_replay": 58,
       "event_authority_landing_granularity_drift": 1,
       "event_authority_payload_depth_drift": 1,
       "event_authority_registration_checkpoint_drift": 1,
@@ -46116,7 +46117,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7326,
       "retired": 196,
       "superseded": 23
     },
@@ -46186,7 +46187,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5622,
+      "requirement": 5680,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46313,7 +46314,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "40c214f92a4de0bf0f2c44aca08503e2b274ee56edc9f6a1eb34aaa7dc062784",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46364,6 +46365,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Contracts_V0.md"
       },
       {
@@ -46409,6 +46414,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Run_Modes.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Runtime_Artifacts_Panel.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
