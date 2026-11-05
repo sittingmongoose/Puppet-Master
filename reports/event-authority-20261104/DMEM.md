@@ -1,3 +1,235 @@
+# DMEM fix round 7 — cycle-6 B1, S1 and S2
+
+Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source commit: `9646eb4e66bc7097068f1cb1588b8daac0cd2f9e`. Reviewed head: `77323e87d65908dbce2ea655ee344b6185a13ff1`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-cycle6.md`.
+
+Twelve exact families prepared without admission, pending independent review. Membership remains ABSENT; retention PARTIAL; native execution NOT_RUN. The first-start custody gate, withdrawal choice, every `failed_terminal_saved` snapshot, Card 1b application and report-only cutoff proposal are preserved.
+
+## Review round 7: findings and responses
+
+- **B1 — fixed (`9646eb4e66bc7097068f1cb1588b8daac0cd2f9e`). Where:** `json_numbers`, `canonical_numbers`, the lane envelope/operation/target schemas and registry mirrors; own SP-630–639/CV-658–659 paragraphs and ATS-315. **Cause:** binary64 parsing rounded decimal/exponent spellings before normalization. **Fix:** decode decimal/exponent tokens exactly, normalize supported mathematical integers, and refuse fractions/nonfinite values or |n| > 9007199254740991. Existing nonnegative domains retain their lower bounds. Every identity/idempotency/result/target/full-value digest uses this same normalization; encoded-size inputs normalize too. The lane schema inherits all current and frozen compatibility-envelope rules without changing the generic envelope schema. Boundary cases cover ±(2^53−1), ±2^53, ±2^60, all review spellings, near-integer fractions, 1.0, 1e0, -0 and invalid 01. Two old cap fixtures are coherently rebuilt with safe byte lengths, preserving their encoded sizes and refusal targets. Verify the complete per-family checkers, `independent-probes.json`, restored numeric-parser defects and the `commitment_numbers` duplicate-set row.
+- **S1 — fixed (`9646eb4e66bc7097068f1cb1588b8daac0cd2f9e`). Where:** `flag`, all writer/access/withdrawal and boundary receipt/source/acceptance conditions. **Cause:** truthiness granted authority to non-Boolean fields. **Fix:** exact Boolean type precedes value evaluation; strings, numeric 0/1, null, arrays and nested objects refuse. The same checks cover phase effects/recovery and reduced/canonical history; history still ignores current admission/cutoffs. Every malformed authority value has an intact typed control and a complete-entry guard witness. Verify each family's domain corpus and restored authority defect (12/12 nonzero checker exits).
+- **S2 — fixed (`9646eb4e66bc7097068f1cb1588b8daac0cd2f9e`). Where:** `memory_flags`, `archive_candidate`, `archive_validate`. **Cause:** malformed pinned/archive values were used as memory state. **Fix:** validate every resolved input/output memory's exact Boolean fields before selection and post-state validation. All selected, unselected and pinned originals have wrong-type settlement cases; coherent before/after copies prove post-state refusal without a stale preservation copy. Typed pin/archive policy is unchanged. Verify the four per-family `memory_flags` rows and restored memory-type defects (4/4 nonzero exits).
+
+No finding is disputed or stopped for a new product decision. The cutoff question remains only in the unchanged proposal below; DL-403 keeps those jobs unavailable until approved cutoff records exist.
+
+## Family grades before and after
+
+PASS/PARTIAL/ABSENT, static preparation only. The independent cycle-6 oracle grade is PARTIAL; only that cell upgrades to PASS.
+
+| Exact family | Before P/Q/A | After P/Q/A |
+|---|---:|---:|
+| `memory.dedup_sweep.completed` | 9/2/1 | 10/1/1 |
+| `memory.dedup_sweep.started` | 9/2/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.completed` | 9/2/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.started` | 9/2/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.completed` | 9/2/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.started` | 9/2/1 | 10/1/1 |
+| `memory.monthly_summary.completed` | 9/2/1 | 10/1/1 |
+| `memory.monthly_summary.started` | 9/2/1 | 10/1/1 |
+| `memory.prune_archive.completed` | 9/2/1 | 10/1/1 |
+| `memory.prune_archive.started` | 9/2/1 | 10/1/1 |
+| `memory.verification_sweep.completed` | 9/2/1 | 10/1/1 |
+| `memory.verification_sweep.started` | 9/2/1 | 10/1/1 |
+
+Totals: **108 PASS / 24 PARTIAL / 12 ABSENT → 120 PASS / 12 PARTIAL / 12 ABSENT**. All 144 cells have exact source citations; 532 quotations resolve at the assessed commit. There is no admission or native execution claim.
+
+## Complete guard table
+
+**112 named guards/duplicate sets; 19,502 negatives; 1,068,648 guard/case evaluations; 13,062 preserved custody-matrix cases.** Each family runs in its own sequential process. Every guard for its checker is removed once in every family, including families where it has zero own cases; merging the per-family lists therefore preserves the complete lane complement. Every own negative flips, every other negative keeps its exact refusal, and restoration rechecks the own negatives. No parallel checker/guard jobs or whole-gate bypasses.
+
+The numeric duplicate set names the actual canonical-number refusal/numeric preflights plus integer/safe-upper-bound schema enforcement. Required fields, structural and nonnumeric type checks and existing lower bounds remain enabled. JSON grammar removal suppresses only JSONDecodeError, retaining numeric-domain validation. Authority/receipt groups name flag's exact-type and Boolean-identity checks at every repeated fence site. Existing named custody/producer/schema duplicate sets are preserved. `memory_flags` names its input-selection and input/output-validation sites.
+
+Presence/withdrawal witnesses use the actual common gate without manufacturing absent bytes. Complete phase/writer/boundary/reader entry points cover the other custody and authority cases. Numeric grammar/hash/schema preflight witnesses use their actual predicates: unsupported fractions receive no fabricated retained commitment. Supported numeric forms also run complete writers and all four historical readers. Physical custody, transaction/flush/race and native behavior remain NOT_RUN.
+
+### maintenance checker
+
+Corpus: 12,684 negatives.
+
+| Guard or named duplicate set | Flip | Stay rejected | Restored |
+|---|---:|---:|---|
+| `action` | 8 | 12,676 | yes |
+| `admission` | 192 | 12,492 | yes |
+| `artifacts` | 4 | 12,680 | yes |
+| `boundary_acceptance` | 48 | 12,636 | yes |
+| `boundary_payload` | 8 | 12,676 | yes |
+| `boundary_receipts` | 144 | 12,540 | yes |
+| `boundary_request` | 8 | 12,676 | yes |
+| `boundary_scope` | 24 | 12,660 | yes |
+| `boundary_snapshot` | 192 | 12,492 | yes |
+| `boundary_terminal` | 4 | 12,680 | yes |
+| `checkpoint_event` | 8 | 12,676 | yes |
+| `checkpoint_key` | 8 | 12,676 | yes |
+| `checkpoint_storage` | 8 | 12,676 | yes |
+| `commitment_numbers` | 688 | 11,996 | yes |
+| `custody_binding` | 4,726 | 7,958 | yes |
+| `custody_digest` | 1,054 | 11,630 | yes |
+| `custody_flush` | 958 | 11,726 | yes |
+| `custody_presence` | 934 | 11,750 | yes |
+| `custody_shape` | 958 | 11,726 | yes |
+| `effect_count` | 4 | 12,680 | yes |
+| `effect_once` | 16 | 12,668 | yes |
+| `envelope_schema` | 200 | 12,484 | yes |
+| `history_event` | 40 | 12,644 | yes |
+| `inline_cap` | 8 | 12,676 | yes |
+| `json_number_grammar` | 56 | 12,628 | yes |
+| `operation_cas` | 8 | 12,676 | yes |
+| `operation_receipt` | 8 | 12,676 | yes |
+| `operation_result_digest` | 8 | 12,676 | yes |
+| `operation_result_ref` | 8 | 12,676 | yes |
+| `operation_schema` | 8 | 12,676 | yes |
+| `original_input` | 8 | 12,676 | yes |
+| `outcome` | 8 | 12,676 | yes |
+| `partition` | 8 | 12,676 | yes |
+| `payload_schema` | 40 | 12,644 | yes |
+| `permission_or_withdrawal` | 2,154 | 10,530 | yes |
+| `phase` | 8 | 12,676 | yes |
+| `prior_selector` | 4 | 12,680 | yes |
+| `producer_join` | 40 | 12,644 | yes |
+| `references_resolve` | 8 | 12,676 | yes |
+| `replay_policy` | 8 | 12,676 | yes |
+| `request` | 8 | 12,676 | yes |
+| `selected_target` | 4 | 12,680 | yes |
+| `selector_cas` | 4 | 12,680 | yes |
+| `selector_schema` | 4 | 12,680 | yes |
+| `selector_scope` | 4 | 12,680 | yes |
+| `source` | 8 | 12,676 | yes |
+| `target_identity` | 4 | 12,680 | yes |
+| `target_manifest` | 4 | 12,680 | yes |
+| `target_order` | 4 | 12,680 | yes |
+| `target_schema` | 4 | 12,680 | yes |
+| `target_source` | 4 | 12,680 | yes |
+| `terminal_custody` | 8 | 12,676 | yes |
+
+### archive checker
+
+Corpus: 6,818 negatives.
+
+| Guard or named duplicate set | Flip | Stay rejected | Restored |
+|---|---:|---:|---|
+| `action` | 4 | 6,814 | yes |
+| `admission` | 100 | 6,718 | yes |
+| `boundary_acceptance` | 24 | 6,794 | yes |
+| `boundary_payload` | 4 | 6,814 | yes |
+| `boundary_receipts` | 72 | 6,746 | yes |
+| `boundary_request` | 4 | 6,814 | yes |
+| `boundary_scope` | 12 | 6,806 | yes |
+| `boundary_snapshot` | 96 | 6,722 | yes |
+| `boundary_terminal` | 2 | 6,816 | yes |
+| `checkpoint_event` | 4 | 6,814 | yes |
+| `checkpoint_key` | 8 | 6,810 | yes |
+| `checkpoint_storage` | 8 | 6,810 | yes |
+| `commitment_numbers` | 344 | 6,474 | yes |
+| `custody_digest` | 824 | 5,994 | yes |
+| `custody_flush` | 402 | 6,416 | yes |
+| `custody_presence` | 390 | 6,428 | yes |
+| `custody_shape` | 398 | 6,420 | yes |
+| `cutoff_commitment` | 4 | 6,814 | yes |
+| `cutoff_record` | 4 | 6,814 | yes |
+| `cutoff_reference` | 4 | 6,814 | yes |
+| `cutoff_scope` | 8 | 6,810 | yes |
+| `cutoff_unique` | 4 | 6,814 | yes |
+| `cutoffs_unavailable` | 328 | 6,490 | yes |
+| `effect_once` | 12 | 6,806 | yes |
+| `envelope_schema` | 104 | 6,714 | yes |
+| `evidence_preserved` | 4 | 6,814 | yes |
+| `history_event` | 20 | 6,798 | yes |
+| `inline_cap` | 4 | 6,814 | yes |
+| `json_number_grammar` | 28 | 6,790 | yes |
+| `memory_flags` | 352 | 6,466 | yes |
+| `no_extra_memories` | 4 | 6,814 | yes |
+| `no_prune_summary` | 2 | 6,816 | yes |
+| `operation_cas` | 8 | 6,810 | yes |
+| `operation_receipt` | 4 | 6,814 | yes |
+| `operation_result_digest` | 4 | 6,814 | yes |
+| `operation_result_ref` | 4 | 6,814 | yes |
+| `operation_schema` | 8 | 6,810 | yes |
+| `original_input` | 4 | 6,814 | yes |
+| `originals_preserved` | 4 | 6,814 | yes |
+| `outcome` | 4 | 6,814 | yes |
+| `partition` | 8 | 6,810 | yes |
+| `payload_schema` | 98 | 6,720 | yes |
+| `permission_or_withdrawal` | 1,012 | 5,806 | yes |
+| `phase` | 4 | 6,814 | yes |
+| `pins_preserved` | 4 | 6,814 | yes |
+| `references_resolve` | 8 | 6,810 | yes |
+| `replay_policy` | 8 | 6,810 | yes |
+| `request` | 8 | 6,810 | yes |
+| `selected_archived` | 4 | 6,814 | yes |
+| `selected_fields_preserved` | 12 | 6,806 | yes |
+| `selection_exists` | 4 | 6,814 | yes |
+| `selection_kind` | 2 | 6,816 | yes |
+| `selection_pinned` | 4 | 6,814 | yes |
+| `selection_unique` | 4 | 6,814 | yes |
+| `semantic_binding` | 1,994 | 4,824 | yes |
+| `source` | 8 | 6,810 | yes |
+| `summary_provenance` | 2 | 6,816 | yes |
+| `terminal_custody` | 8 | 6,810 | yes |
+| `unselected_preserved` | 4 | 6,814 | yes |
+| `versions_preserved` | 4 | 6,814 | yes |
+
+## All eleven standing checks
+
+| # | Evidence and limits |
+|---|---|
+| 1 | All twelve complete writer suites retain fresh/retry replay-only refusals. Historical replay-only positives remain separate. |
+| 2 | Project-only editions refuse exact CV-366 Application attempts; no Application writer or bucket is invented. |
+| 3 | Encoded project~ positives and raw/foreign/padded partition refusals remain. |
+| 4 | Entire payload and separate operation cap checks remain; both existing size-only operation controls keep safe byte lengths and their original encoded sizes. SP-337 remains authoritative. |
+| 5 | All original identifier cases are covered by the union of --family runs; full-input/LF guards and registry mirrors remain. |
+| 6 | Three caller-only Storage metadata changes per family return the unchanged original; semantic conflicts remain. Independent probes reproduce 36/36. |
+| 7 | Generic SP-278 storage/key/event identity joins remain, with actual matching storage UUIDs. Native inclusion is not claimed. |
+| 8 | Restoring the lossy parser, truthiness authority or malformed-memory acceptance makes the actual complete checker exit 1 in 28/28 sequential processes, with the expected oracle assertion. |
+| 9 | Eager offline walking now includes the inherited lane envelope document and every compatibility branch. Dormant reference mutations still fail. |
+| 10 | All original 1,104 complete historical cases and reduced history remain; supported numeric forms add four-mode positives. Current live state/admission/cutoffs do not gate old originals; current access, withdrawal, custody and forgery still do. |
+| 11 | Complete table above: own flips, exact complete complements and restoration; no missing-field exemptions, reconstructed inputs or whole-gate replacement. |
+
+## All eleven Astra defect classes
+
+| Item | Own mutation / disposition |
+|---|---|
+| 1 Forged/contradictory inputs | Independently rehashed foreign event ids refuse in every exact reader; the full earlier foreign/cutoff join corpus remains. |
+| 2 Storage metadata from payload | Independent sequence/observed/persisted caller-only changes return the unchanged resolved original in 36/36 probes. Physical receipt authentication remains native. |
+| 3 Historical readers both ways | All four modes survive unrelated live state and malformed ignored current admission; typed permission denial/withdrawal and forged/missing originals refuse. |
+| 4 One field read two ways | Integer-for-hex payload probes refuse. Typed authority checks and exact decimal ingestion remove the two reported ambiguous interpretations. |
+| 5 Dormant refs | Own unvisited payload ref mutations fail offline walking for every family; the new schema's inherited current/compatibility refs resolve eagerly. |
+| 6 Partial sizes | Whole-value oversize probes refuse. The two rebuilt size fixtures preserve encoded lengths and target cap-only defects; no hidden oversize inline route is introduced. |
+| 7 Custody on every path | Independent missing-start advances for succeeded and failed terminal rows refuse; all earlier full custody matrices remain. |
+| 8 Masked negatives | Full guard proof removes exact predicates/declared numeric duplicates. Numeric/history type probes avoid stale or fictitious commitments; post-state flag copies are coherent before evaluation. |
+| 9 Inflated grades | Only twelve oracle cells upgrade after all checkers, the whole guard table and restored-defect controls pass. Membership, retention and native limits remain explicit. |
+| 10 Numeric spellings | Independent signed safe boundaries, exact large equivalent spellings, 2^60, near-integer fractions, 1.0/1e0/-0 and grammar controls reproduce the repaired result. |
+| 11 Types confused | String booleans/numbers, 0/1, null, arrays and objects refuse across writer/boundary/four-mode history, plus every archive flag role. The new type guards have their own flipping negatives. |
+
+## Checks, preservation, resources and remaining work
+
+- **Complete family checkers:** 12/12 exit 0. New domain corpus: {'isolated_negative_cases': 4000, 'numeric_writer_cases': 312, 'numeric_reader_cases': 624, 'numeric_commitment_cases': 396}. All existing family suites remain enabled.
+- **Restored defects:** 28/28 complete checker processes exit 1 for their intended assertions (12 numeric, 12 authority, 4 archive-memory).
+- **Independent probes:** all twelve families pass; custody, writer Storage metadata, live historical independence, refs, cap, exact types and numeric boundaries are independently exercised.
+- **Derived outputs:** shard generate/check and index generate pass; top-level statuses are parsed. Index validate exits 1 / top-level fail with 22 failures, all reproduced by the unmodified retention subcheck on the untouched starting revision's index against current origin/main; no PlanUnit ids changed. It reports the missing baseline DL-302 plus 21 pre-existing legacy ledger-record errors. No failure file was edited by this lane. See index-baseline-equivalence.json; this integration issue remains open. Only the edited owner documents' and registry's shards change; normal index clocks are regenerated. Currentness edition: 15/15 copied files SHA-256 matched before generation.
+- **Preservation/scope:** `scope-preservation.json` verifies old states (including every failed_terminal_saved), archive fixtures/contracts, registry non-lane values/profiles, the unchanged cutoff proposal and all original per-family case/identifier coverage. No generic envelope schema, admission/event-family registry, Decision Log, .gitignore, Spec Lock, auto-decisions, generated governance evidence or frozen validator edit.
+- **Resources:** sparse local worktree; initial disk 83 GB and RAM 9 GiB available. Every family/guard is sequential and checks the 6 GiB RAM gate. No threshold pause occurred. Setup made read-only inbox/who calls before reading the fix brief; no messages or later mailbox calls followed. No subagent, browser, server, landing or main push.
+- **IDs:** no new PlanUnit ids. Edited existing SP-630–639, CV-658–659 and ATS-315; all other AMS/CV/ATS adoption ids and reservations are preserved. New companion schema/fixture ids are `https://puppetmaster.local/schemas/memory_maintenance/event_record.v1.schema.json` and `pm.memory.maintenance.boundary_fixtures.v1`.
+- **Remaining:** reconcile the pre-existing current-main/index-retention mismatch at integration; independent review, per-family admission, pending operation/result retention and cited unlanded decision/retention integration, Jared's cutoff choice, native receipt/transaction/flush/crash/backup/GUI/race evidence. The original dedup survivor/disposition question stays open.
+
+## Evidence
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/check11.json` — SHA-256 `0980fbb06a945e7d74c3fbc9f111e94b25f4a4005f03595cb0bd0e41e043768f`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/checker-summary.json` — SHA-256 `45fd02e4741c405f22fba34e42ef3ee5b5b895eae5fc38813520556e4b02e6aa`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/independent-probes.json` — SHA-256 `8faf23d47c629d4460d848866be85bbb48069f50aebc3c4ff514188763a2f6a6`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/restored-defects.json` — SHA-256 `347de583baba36240adbc3e1b36432e7528fbf1dd3889523ea06939d4176098a`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/scope-preservation.json` — SHA-256 `9decc18bc3bc8ea8abce941c9e9258e0760cbfaa10e0137d014bbf121743dc82`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/regrade-validation.json` — SHA-256 `390657dafadd7149a439b033e7116fad861196fe00e3ff93a9987de0f5652111`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/currentness-copy.json` — SHA-256 `bd97b1839000f89f22e7760affc41fc37fb11fb1d07382b3b8e7aa4595f8e8d1`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/shard-check.json` — SHA-256 `a471f4cd29bb5aeac3bf0eb27f14f6ee4baeec39bd3cb3a866aea09768adca69`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/index-validate.json` — SHA-256 `dfc2d23e60931bb1bbc4c954053981ee1d286f0b12b7db7f94b4ec3aa6f0b143`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/index-baseline-equivalence.json` — SHA-256 `457c201b8dab9d2ae4784d87f61c52b8c99bcd5afd58972c6cba416c58f631a4`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/verification-summary.json` — SHA-256 `ea558f0910566aaf7644b0bbf30c4ab8f4d97f3337578dfd06290c872cade965`.
+
+Complete ids and complements are in check11.json; the committed compact table pins their counts, examples and id-list hashes. Final source/checker/evidence files are pinned by evidence-sha256.json. Report and self-grade copies are in the parent drafts/DMEM directory. The worktree is removed after both source and report commits are pushed.
+
+---
+
+Earlier source-pinned reports follow as lineage; the cutoff proposal is unchanged.
+
 # DMEM fix round 6 — technical round 1 of 2
 
 Branch: `plans/ea-w2-memory-maintenance-20261104`. Source head: `a997e62c4bb70ae858e9c7eee78cb8efc6018f94`. Reviewed base: `b50da70b3d7d4e382717c12135ccff26c8230c05`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-cycle5.md`.

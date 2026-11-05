@@ -1,18 +1,18 @@
 {
   "status": "pass",
-  "source_commit": "a997e62c4bb70ae858e9c7eee78cb8efc6018f94",
-  "full_proof_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix6/check11.json",
-  "full_proof_sha256": "9e1ad6df7b81a5f8593dcec670e2f8442f521f2ff827b4c09d6115d805b579c2",
+  "source_commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+  "full_proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix7/check11.json",
+  "full_proof_sha256": "0980fbb06a945e7d74c3fbc9f111e94b25f4a4005f03595cb0bd0e41e043768f",
   "custody_matrix_cases": 13062,
-  "maintenance_cases": 10252,
-  "archive_cases": 5250,
+  "maintenance_cases": 12684,
+  "archive_cases": 6818,
   "guard_tables": {
     "maintenance": [
       {
         "guard": "action",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:unknown-action",
           "memory.dedup_sweep.started:guard:unknown-action",
@@ -24,33 +24,35 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "7dfabb9afe4996171b1da458d3881832858ef3b61ef8a498fbcbc115e5ec803c",
-        "stay_ids_sha256": "f9fbfb22a2901dc1ed015bef93fbd21383ee7cd708653ce8d7359bf79aa1094a",
+        "stay_ids_sha256": "6107fdeebff8d4887333092612714705eb0eaaf153a7d88fe11f0e95a92af875",
         "restored": true
       },
       {
         "guard": "admission",
-        "named_duplicate_sites": [],
-        "flips": 16,
-        "stays": 10236,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 192,
+        "stays": 12492,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:admitted",
           "memory.dedup_sweep.completed:guard:boundary-admitted",
-          "memory.dedup_sweep.started:guard:admitted"
+          "memory.dedup_sweep.completed:domains:writer-admitted-0"
         ],
         "staying_examples": [
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn",
           "memory.dedup_sweep.completed:guard:dedupe_key"
         ],
-        "flip_ids_sha256": "c6e0ee60561dabb2b453d3f1d0da74b74af89b9bdc8172210a6e76739af36119",
-        "stay_ids_sha256": "8f4961f929e88dfc6eeaaa8dd0af8900dddc70d10856c36c876c57454fb541fb",
+        "flip_ids_sha256": "77fe4a126c9ec3c1de230e14a5527cbe935ba274061f78d2619938fa13620a3c",
+        "stay_ids_sha256": "fd8f02af7e7ff32ef377b7e1f16ce552a79a32918f7c4bc16339cf01153af795",
         "restored": true
       },
       {
         "guard": "artifacts",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:artifact-custody",
           "memory.index.lexical.rebuild.started:guard:artifact-custody",
@@ -62,33 +64,35 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "fc8c6e985f72e7e9a4ccf282927d223c88d4849de08f0bf1ace8d87e51f11bb2",
-        "stay_ids_sha256": "a30e30029df968b702b142089a909b7ec5f6b06612b76b951cbf8790587b0eb9",
+        "stay_ids_sha256": "84aca52dd1fceb6e3b2e295ae75c2b875be2f366d57c959794e1f8e6928bede8",
         "restored": true
       },
       {
         "guard": "boundary_acceptance",
-        "named_duplicate_sites": [],
-        "flips": 4,
-        "stays": 10248,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 48,
+        "stays": 12636,
         "flipping_examples": [
           "memory.dedup_sweep.started:guard:boundary-acceptance_durable",
-          "memory.index.lexical.rebuild.started:guard:boundary-acceptance_durable",
-          "memory.index.semantic.rebuild.started:guard:boundary-acceptance_durable"
+          "memory.dedup_sweep.started:domains:boundary-acceptance_durable-0",
+          "memory.dedup_sweep.started:domains:boundary-acceptance_durable-1"
         ],
         "staying_examples": [
           "memory.dedup_sweep.completed:guard:admitted",
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "3c1e77dd648c2e3150dcf89d5acfad6f6a46dad21a341c4977d1cd9bcf2987f7",
-        "stay_ids_sha256": "23d1d6f7be8fb9eed5cc894c91f72120c24196ed1a1caf92ea688aef8c21cf2a",
+        "flip_ids_sha256": "03e615ffd1b1bc79c070b9944062d71160115ad4a4bc2f7f02cf995cb192814c",
+        "stay_ids_sha256": "00ce11f3eb8f1f06bfc72130fd12bd16f2b562ed60c26b292110a578c6be1542",
         "restored": true
       },
       {
         "guard": "boundary_payload",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:boundary-payload-join",
           "memory.dedup_sweep.started:guard:boundary-payload-join",
@@ -100,14 +104,16 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "197979a75f112844aff333b605f569ca73d73bb9a9c1bd303897942aa42ff01f",
-        "stay_ids_sha256": "5d6b254c3ad984685a5c751307befd9ff14c97757775aed4adabe9f4e8dab29e",
+        "stay_ids_sha256": "a6bb03b6a7c54e38f3e0a7cdb39d401dd685bd94e8f1b03d29c43b856512e30d",
         "restored": true
       },
       {
         "guard": "boundary_receipts",
-        "named_duplicate_sites": [],
-        "flips": 12,
-        "stays": 10240,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 144,
+        "stays": 12540,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:boundary-started_receipt",
           "memory.dedup_sweep.completed:guard:boundary-effect_settled",
@@ -118,15 +124,15 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "dcc663463db2bfc4ac19c7244d6cbd3df684db9b91919c5630ee189e58aa8746",
-        "stay_ids_sha256": "2c8e3269e4f92a1428cba5bec441c10addacc77668faa7817447c2d1c048daa8",
+        "flip_ids_sha256": "cb9a692000dbf17d33775fc2474d373c92d0911d3d14b7b4ea79c1a2647775b1",
+        "stay_ids_sha256": "6c8a45bce0c8dda8341dc72436bb7b099ab2b5e04cf3c2d48cc4e92b3898eed0",
         "restored": true
       },
       {
         "guard": "boundary_request",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:boundary-request-hash",
           "memory.dedup_sweep.started:guard:boundary-request-hash",
@@ -138,14 +144,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "cfb15cd4707673a0e2b00971c2625587323cc7b1bcaaf1ac506b992155bd3205",
-        "stay_ids_sha256": "5444cf61c3fb4977995ef1a8e5c0a5ba3cbe41f0ee97288600724acb636c3612",
+        "stay_ids_sha256": "13fb41e86a0d3b76edebc6a0358567b86109c7992304c3c12cf4325feb6f3d32",
         "restored": true
       },
       {
         "guard": "boundary_scope",
         "named_duplicate_sites": [],
         "flips": 24,
-        "stays": 10228,
+        "stays": 12660,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:boundary-project_id",
           "memory.dedup_sweep.completed:guard:boundary-operation_id",
@@ -157,33 +163,35 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "7fbee7176002125c3f5cdff3fb90142a5ee41ba78635a3ef050423a8aa492460",
-        "stay_ids_sha256": "d5c5473eeb48cb753d402ab9268da1039042cfa6cbf731edd192f7e5485c7741",
+        "stay_ids_sha256": "1697b3595922aa2ec031add3ea0266234caf2bea638208c7b76716ad0e6c75b8",
         "restored": true
       },
       {
         "guard": "boundary_snapshot",
-        "named_duplicate_sites": [],
-        "flips": 16,
-        "stays": 10236,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 192,
+        "stays": 12492,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:boundary-request_matches",
           "memory.dedup_sweep.completed:guard:boundary-current_source",
-          "memory.dedup_sweep.started:guard:boundary-request_matches"
+          "memory.dedup_sweep.completed:domains:boundary-request_matches-0"
         ],
         "staying_examples": [
           "memory.dedup_sweep.completed:guard:admitted",
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "a076bb16de9de26c67347beaab615dc914c8330dc4a69251f71f51cb9fb09e8b",
-        "stay_ids_sha256": "c701fcd7c5f0c130b7ea4138cc3475c0b4446b3c21c79578ddbc766d9793f4b5",
+        "flip_ids_sha256": "81c4833c93e717f7e32c7254795db39a7f3532e54ba7c55f18032f27f4ddec77",
+        "stay_ids_sha256": "e0e30c696aa210159cbc182c1f863f1931b38b72b39891c35dc79e11003d20a0",
         "restored": true
       },
       {
         "guard": "boundary_terminal",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:boundary-terminal-missing",
           "memory.index.lexical.rebuild.completed:guard:boundary-terminal-missing",
@@ -195,14 +203,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "651192aebaaa6ee6756531d8294cd16605d9f58fd4a662980ddbde0ed61afd29",
-        "stay_ids_sha256": "01a08e4718237d0e4c2105bc2e70fa3e68b2e9471e014b7d99e934253d3b0afb",
+        "stay_ids_sha256": "c1810ca544e40d43c3c14954b0d8d140478c6870685343dae1936eb2f0ae3eca",
         "restored": true
       },
       {
         "guard": "checkpoint_event",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:checkpoint-foreign-event-identity",
           "memory.dedup_sweep.started:guard:checkpoint-foreign-event-identity",
@@ -214,14 +222,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "6c224b09fd38802bccb238779f3dbc73588a4b7eb29b1f0b68378ba1caacb936",
-        "stay_ids_sha256": "f99c1f4017fcbaf776ec3485f298c0e0f0e7456eb8c98f5943ca13b1ea02c720",
+        "stay_ids_sha256": "2ac2e00c7a155c767a6d23ccf807e3e1e8ccce2fa6aec63a18d642a8ecb4def6",
         "restored": true
       },
       {
         "guard": "checkpoint_key",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:checkpoint-foreign-key",
           "memory.dedup_sweep.started:guard:checkpoint-foreign-key",
@@ -233,14 +241,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "c61fd416072752657aacac902c42ca84df98232a495caa5edf47c2e09776f070",
-        "stay_ids_sha256": "ac972d07338a4205b2e51d731e65dab474a8bbf43821fa4f0be5474093290f91",
+        "stay_ids_sha256": "d3ab34a8e8ac58545ec44392f08edc8d663e33dc4c37bf00927a1a4354437636",
         "restored": true
       },
       {
         "guard": "checkpoint_storage",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:checkpoint-foreign-storage",
           "memory.dedup_sweep.started:guard:checkpoint-foreign-storage",
@@ -252,14 +260,17 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "66d3966412c4a67c203258c44a06d39f509d5abf1b7625066a7b9c534f59d414",
-        "stay_ids_sha256": "38def06222955253bffd13c657f32e0fd019dafc5c70d996c3d9baa153007992",
+        "stay_ids_sha256": "8c166afe2a3a5a09ffbf29827e697460eeee3a928d459e9297931a90a3b9e89d",
         "restored": true
       },
       {
         "guard": "commitment_numbers",
-        "named_duplicate_sites": [],
-        "flips": 24,
-        "stays": 10228,
+        "named_duplicate_sites": [
+          "canonical_numbers refusal at identity/digest/encoding and numeric preflights",
+          "integer and safe-maximum schema rules in inherited envelope/owned operation/target definitions; lower bounds and structural/type rules remain enabled"
+        ],
+        "flips": 688,
+        "stays": 11996,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:number-fraction",
           "memory.dedup_sweep.completed:guard:number-infinity",
@@ -270,8 +281,8 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "16d51480a138ac53e964f65e0290804e84907c8de8700b71c059f2ec41c6bcc9",
-        "stay_ids_sha256": "ee587140d59bf809c2e63b5408cf8fcb5c52bda1bb5ae300d3f8bbf230b20777",
+        "flip_ids_sha256": "084b6072570f96cd0f1d98aa2b65055254be77ec87f3ec053ba441c599b0dbd9",
+        "stay_ids_sha256": "0734b80c2666fe346e54407ea5ee7bc5787e4c580a4f8cc1ce19d9dbbc1cff74",
         "restored": true
       },
       {
@@ -280,7 +291,7 @@
           "retained_binding at repeated retained-value joins"
         ],
         "flips": 4726,
-        "stays": 5526,
+        "stays": 7958,
         "flipping_examples": [
           "memory.dedup_sweep.completed:canonical-history:forged-rehashed-value",
           "memory.dedup_sweep.completed:canonical-history:foreign-project",
@@ -291,15 +302,15 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "4c5e19345ed906059ff6996691327d00866a8c264b4a2681f932843d42030913",
-        "stay_ids_sha256": "7b696944835e18faf44d39c575b64816dd129ac3a07be6b0ea19f54c5512491f",
+        "flip_ids_sha256": "4ad9b185b816134013b43eef7a875cd269bb7755a32989b1883fded69a5861ef",
+        "stay_ids_sha256": "2ab805e85848f0a86a0f3edbf1ee955865e210e7ac03b3eabd9b8eae9848bd6c",
         "restored": true
       },
       {
         "guard": "custody_digest",
         "named_duplicate_sites": [],
         "flips": 1054,
-        "stays": 9198,
+        "stays": 11630,
         "flipping_examples": [
           "memory.dedup_sweep.completed:canonical-history:forged-commitment",
           "memory.dedup_sweep.completed:canonical-history:numeric-spelling-commitment-1.0",
@@ -310,15 +321,15 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "73f0e0ba4674807451943ee80727661a780f558dc866b8d17ac1bd391a1e8cfc",
-        "stay_ids_sha256": "2d9581c46a04ab70c2ae1c46249d22d224be624e5d9ef3875da5298290323750",
+        "flip_ids_sha256": "e75981593e77d920ad846eddb609095a50cd88b3385e9c203acabf0f71876c40",
+        "stay_ids_sha256": "da6ab3076c9f1eaa690aad53f3834ea1d66d4c2fb06bdec927515537f73753a7",
         "restored": true
       },
       {
         "guard": "custody_flush",
         "named_duplicate_sites": [],
         "flips": 958,
-        "stays": 9294,
+        "stays": 11726,
         "flipping_examples": [
           "memory.dedup_sweep.completed:canonical-history:record-not-flushed",
           "memory.dedup_sweep.completed:canonical-history:record-not-flushed-replay",
@@ -329,15 +340,15 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "e5e8f8a99d6be2c38dc48ef857ac87f2eeae38fab22ad7649680934fdb43ec27",
-        "stay_ids_sha256": "beced5bd801a105d795aa6258351b512c614d45ca281735ee1eb904530d93830",
+        "flip_ids_sha256": "6a58b1235b915653f05bb94d5f27c0b6a63c2fbd2eebf785c10d4a95705ac80a",
+        "stay_ids_sha256": "f602554e0bd6386cd7ea1e239c9fafdf2a681ead437fc16504439c46bcc5f992",
         "restored": true
       },
       {
         "guard": "custody_presence",
         "named_duplicate_sites": [],
         "flips": 934,
-        "stays": 9318,
+        "stays": 11750,
         "flipping_examples": [
           "memory.dedup_sweep.completed:canonical-history:missing-start",
           "memory.dedup_sweep.completed:canonical-history:missing-start-replay",
@@ -348,15 +359,15 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "874507ac607b09c807ceea9f0e628c25ecfc74512a915e778516d8861daa9297",
-        "stay_ids_sha256": "bf045f49006c2ae66fc8dc706af13a1edeb9ee91e69ee831869d83f30566662d",
+        "flip_ids_sha256": "248f2560b96855a09b6e653724489ebed10c5876081346c005b474c2a6c12667",
+        "stay_ids_sha256": "c84010d8d48dc1374b409bb5423151567007cafd2ad3aa09e9f024218168a0a3",
         "restored": true
       },
       {
         "guard": "custody_shape",
         "named_duplicate_sites": [],
         "flips": 958,
-        "stays": 9294,
+        "stays": 11726,
         "flipping_examples": [
           "memory.dedup_sweep.completed:canonical-history:record-shape",
           "memory.dedup_sweep.completed:canonical-history:record-shape-replay",
@@ -367,15 +378,15 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "7952f1c344b1fb7d2c42efe2df585d9f2ba12299ffd9acfdacdd1ccf2182672f",
-        "stay_ids_sha256": "1b54821fcb997cfaa1dff8e90787d5663a3ddfc71d86c1d2b0481618be5ba341",
+        "flip_ids_sha256": "53a2e62a0c3bd28ee2fa6f3047dc82b1155b9b0cdf1aa4febed3eecea6ec601a",
+        "stay_ids_sha256": "40820078783d56fb89fd779bfb3b0cc2d58387d9c24c013a097b8500e6ebe4db",
         "restored": true
       },
       {
         "guard": "effect_count",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:effect-count",
           "memory.index.lexical.rebuild.started:guard:effect-count",
@@ -387,14 +398,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "8b84afc1c9bc38d67475809fc839a3b31b43b1aa076106860e52dfa07c171ae2",
-        "stay_ids_sha256": "5fc1c375671e4876f75860899e758fa534cffeeefb656c15dfae573707368c78",
+        "stay_ids_sha256": "5c765fe1c0eff07e1a823c8cdb4b6f9469616ebc5fb5f1b7da8d065698e35af4",
         "restored": true
       },
       {
         "guard": "effect_once",
         "named_duplicate_sites": [],
         "flips": 16,
-        "stays": 10236,
+        "stays": 12668,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:effect-once",
           "memory.dedup_sweep.completed:guard:committed-effect-cannot-fail",
@@ -406,7 +417,7 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "feb31019a64d9aefbd76b1996bf5890811d86f8a9d64939bc50b5098fdc6a68b",
-        "stay_ids_sha256": "fe6442def96c6e85a0ce71480a492e30556f4cfcd0e19c3f8020b004d544049e",
+        "stay_ids_sha256": "e40e3e82f832a8d5eaf520401cbaf14f764918114d14a9105c5ab38e282629c2",
         "restored": true
       },
       {
@@ -415,46 +426,46 @@
           "selected 2.0.0 envelope schema",
           "selected frozen 1.0.0 compatibility-reader schema"
         ],
-        "flips": 40,
-        "stays": 10212,
+        "flips": 200,
+        "stays": 12484,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:envelope-schema",
-          "memory.dedup_sweep.started:guard:envelope-schema",
-          "memory.index.lexical.rebuild.completed:guard:envelope-schema"
+          "memory.dedup_sweep.completed:canonical-history:envelope-extra",
+          "memory.dedup_sweep.completed:canonical-history:envelope-extra-replay"
         ],
         "staying_examples": [
           "memory.dedup_sweep.completed:guard:admitted",
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "70431716094737e983525eb53e38d56655e0e785f4c41e622ee5988afa9a67a2",
-        "stay_ids_sha256": "942c945f68b89c1f9b7d3ef3bf8708c97623013745d38ae153cfebc49640799c",
+        "flip_ids_sha256": "06a614a90f4bbe60b5f9a6e3e13db04e8891b119c6e1f8af453e0b68ac7f645f",
+        "stay_ids_sha256": "d6a2387b52b0d99952d6426034be98e6b1a18185cb44d0a14b5ac3276e6d655d",
         "restored": true
       },
       {
         "guard": "history_event",
         "named_duplicate_sites": [],
         "flips": 40,
-        "stays": 10212,
+        "stays": 12644,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:history-family",
-          "memory.dedup_sweep.started:guard:history-family",
-          "memory.index.lexical.rebuild.completed:guard:history-family"
+          "memory.dedup_sweep.completed:canonical-history:foreign-family",
+          "memory.dedup_sweep.completed:canonical-history:foreign-family-replay"
         ],
         "staying_examples": [
           "memory.dedup_sweep.completed:guard:admitted",
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "4185f5a7772ccada723b34800f205ca95c887b608f262924b35737154771eb45",
-        "stay_ids_sha256": "c19170db699c0ad4c2026c1cf8ba50a577c75f9955e28d72128ae251b577f08d",
+        "flip_ids_sha256": "54967bf17a50e317c18648223b4fdf823b58202a6faf36c8e237a6597b995579",
+        "stay_ids_sha256": "e6984f2ae73d230a5ef9fe08e546321b673ed552cbe6e69287686bebd467fec4",
         "restored": true
       },
       {
         "guard": "inline_cap",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:inline-cap",
           "memory.dedup_sweep.started:guard:inline-cap",
@@ -466,14 +477,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "41d6b0e0404923651138469268f09581a3bff0a4debc2df3b5413182cc4281ee",
-        "stay_ids_sha256": "a6ce8c382bd0d63f8da5c963147d6b14bbac471eee66e41f70d41ea2aef7c8ed",
+        "stay_ids_sha256": "46259e3c43b6a67449e90a7147d658c113143db68f08bd24232c10b23c2258b9",
         "restored": true
       },
       {
         "guard": "json_number_grammar",
         "named_duplicate_sites": [],
-        "flips": 32,
-        "stays": 10220,
+        "flips": 56,
+        "stays": 12628,
         "flipping_examples": [
           "memory.dedup_sweep.completed:canonical-history:numeric-01",
           "memory.dedup_sweep.completed:canonical-history:numeric-01-replay",
@@ -484,15 +495,15 @@
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "626e14610a0e4d4d9682576002d1d78204c999f426a7e8e4b7797d4c63f34168",
-        "stay_ids_sha256": "c15cb4c01f1557fae435e3d79d874ed9f79c3ebc1b3edc8cdc76515a55020f24",
+        "flip_ids_sha256": "70855cb2b778a3883ad988e3753d5c2abdc381da7af409624c58303118abd36f",
+        "stay_ids_sha256": "2d35e5cc65c19ff3b716f458aae2e3d0f58a1b6914420adf154b10472d335977",
         "restored": true
       },
       {
         "guard": "operation_cas",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:cas",
           "memory.dedup_sweep.started:guard:cas",
@@ -504,14 +515,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "850d7870765bac89cf8c8ed48d50e791b3e068d5b7b68f2315ea341d954902b2",
-        "stay_ids_sha256": "97df3e219bd31dc0c4dfe770689fad754f34978672e3049a22ef9269662affec",
+        "stay_ids_sha256": "9e084984306ca07f4825fa2656605190bde8c444dc572c5d2f45e1eb6a3f6a11",
         "restored": true
       },
       {
         "guard": "operation_receipt",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:started_event_id",
           "memory.dedup_sweep.started:guard:started_event_id",
@@ -523,14 +534,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "c81f1e4f67edfbc35fc3a06deacfe5c15c364be3add815ae26f7d8aa7965314e",
-        "stay_ids_sha256": "0c31a2c2be762717df4b0c9ef4e81cc271ea036e45a94c9e7aaa75baee098662",
+        "stay_ids_sha256": "f38043110cd80d25b6e3740ab4a0d2d7788f34037f28fc09bc097fbfa107ec06",
         "restored": true
       },
       {
         "guard": "operation_result_digest",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:result_sha256",
           "memory.dedup_sweep.started:guard:result_sha256",
@@ -542,14 +553,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "7b4aef5f32b5a3e0939b479b30af2f126b1b71029da0e05d0cc883c0a9594c59",
-        "stay_ids_sha256": "47116a896b5ff0437eb8d8adc3134e06f566cc4151270ba7a20b12a907d680ad",
+        "stay_ids_sha256": "b102b3ef4099b8e550221df76f0af631d896a00c2a1724a360bb6987502cb447",
         "restored": true
       },
       {
         "guard": "operation_result_ref",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:result_ref",
           "memory.dedup_sweep.started:guard:result_ref",
@@ -561,14 +572,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "e21e5e1517569028d1963d3c1541687925ef1efe1918e21c0312dd213ba74495",
-        "stay_ids_sha256": "7df4cd3c34786d3c81544f6ff355ee40c16e45a6d1b9b09fdeeeb4556f481c3d",
+        "stay_ids_sha256": "f67760631cf8230e283f8f605fa60f39781857bc7fe77e104d0987706c565423",
         "restored": true
       },
       {
         "guard": "operation_schema",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:operation-schema",
           "memory.dedup_sweep.started:guard:operation-schema",
@@ -580,14 +591,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "3890032b8f331f77325477df8af6be629b0e992a0fe71c5af868368cd4cbaf96",
-        "stay_ids_sha256": "396d30f8fde5d2dd762b67ed3392ef2575134244eb1d5bcf8e0942ef5d95a542",
+        "stay_ids_sha256": "c050af680670aecc9d4bc4bb64ffcb03936a7110783f9b5c1486c7f38399923b",
         "restored": true
       },
       {
         "guard": "original_input",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:append-original-value",
           "memory.dedup_sweep.started:guard:append-original-value",
@@ -599,7 +610,7 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "a8b90d6382de0eb77ac759a50434c900204e39677ec9072e82c7d17202693e22",
-        "stay_ids_sha256": "d33dc5802dc5713c2f044348019ca9566faf81dc2d2489d2ba9c65b39812b1b8",
+        "stay_ids_sha256": "d4f2a5126e56436f2f6d7f1bdbb5048242c891c608939da2d988c492c6ee72f6",
         "restored": true
       },
       {
@@ -609,7 +620,7 @@
           "operation schema status enums in the applicable phase"
         ],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:unknown-outcome",
           "memory.dedup_sweep.started:guard:unknown-outcome",
@@ -621,14 +632,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "b42c885cdb45384cde4faf27893ccee23533ed236def377abdbaa7f27e0f03d5",
-        "stay_ids_sha256": "9c17048cf561f0cd4f9e653898b8896a19d12574b9d64cb18d335719cfa5f7a7",
+        "stay_ids_sha256": "627b88fceda3670ca4e0dd10a84c12629e272a29119ebdec1c3fdd59b8e6857e",
         "restored": true
       },
       {
         "guard": "partition",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:dedupe_key",
           "memory.dedup_sweep.started:guard:dedupe_key",
@@ -640,7 +651,7 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "cd6af56ae164b389c2ca8ec08a9acfb82e9daf41ea6cbbb55245bee3c53eec04",
-        "stay_ids_sha256": "20c75fe1e858400f51913b808ad6e387eb35b495dd71840886035eae663c1412",
+        "stay_ids_sha256": "cbc91426bda1c644e289992756fd3e869f03fbe6f41b3ea93bef1dd15be91374",
         "restored": true
       },
       {
@@ -649,28 +660,29 @@
           "exact-family closed payload schema at all caller/retained sites"
         ],
         "flips": 40,
-        "stays": 10212,
+        "stays": 12644,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:payload-schema",
-          "memory.dedup_sweep.started:guard:payload-schema",
-          "memory.index.lexical.rebuild.completed:guard:payload-schema"
+          "memory.dedup_sweep.completed:canonical-history:payload-extra",
+          "memory.dedup_sweep.completed:canonical-history:payload-extra-replay"
         ],
         "staying_examples": [
           "memory.dedup_sweep.completed:guard:admitted",
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "f5321a705d53541c763dee5547f1f306960a90c4b871cd91b9ee16d9b970af5a",
-        "stay_ids_sha256": "0712d5d7323c48dedb94af14e8a6cba59363c3a7fb382f42b6cd00cf22b1b264",
+        "flip_ids_sha256": "98493f7637a12f676fbe898165bb4299ed1d8043fdc809f54e2f7f0ad27d0f07",
+        "stay_ids_sha256": "f77691a4733772a53510c32b0afdad97e949510003ca8a255856f05eb7949b34",
         "restored": true
       },
       {
         "guard": "permission_or_withdrawal",
         "named_duplicate_sites": [
-          "access/withdrawal invariant at repeated read, writer and commit sites"
+          "access/withdrawal invariant at repeated read, writer and commit sites",
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
         ],
-        "flips": 1098,
-        "stays": 9154,
+        "flips": 2154,
+        "stays": 10530,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn",
@@ -681,15 +693,15 @@
           "memory.dedup_sweep.completed:guard:dedupe_key",
           "memory.dedup_sweep.completed:guard:producer-actor"
         ],
-        "flip_ids_sha256": "a534d380b425b35bb5460f6f553c7eb484dfe011c8ac8bedc424669538e23e29",
-        "stay_ids_sha256": "8a2299e510ecadeaa3627ea8d2f3abc2394c1bfd4094f7a0309424160f8ae601",
+        "flip_ids_sha256": "fa7c343b3a68165a2eded6aaed6ac8b7ab57248472d8cd6bdbab395bd77f727c",
+        "stay_ids_sha256": "afa75e8cb8e4a1e74c548a03b88ad70934ad1532b86e19d63b8a055b0d8d7431",
         "restored": true
       },
       {
         "guard": "phase",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:append-phase",
           "memory.dedup_sweep.started:guard:append-phase",
@@ -701,14 +713,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "007d8c083452f9d8da74cf3a6aaa6ca368b488e7a016926d5668836b9f29646a",
-        "stay_ids_sha256": "ee56f8dbb8c13e81ea9b02e2815133ab4c98065e0bbb8221880d500b04f4d68c",
+        "stay_ids_sha256": "d2c5aeb69669f2ebabc14d8601dd414bfce317292323f779e5f297ca624c52c4",
         "restored": true
       },
       {
         "guard": "prior_selector",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:prior-selector",
           "memory.index.lexical.rebuild.started:guard:prior-selector",
@@ -720,7 +732,7 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "c20be2faa0e327ac58acdcb7db13623971d9c541e46474d7895f19bccb47aea1",
-        "stay_ids_sha256": "64ffff57234bf63a20dbb3b30f34fa4f090e43bf5667103b76f0d395d7088169",
+        "stay_ids_sha256": "442cc2bcf3166a6aa58574c18d7e3ac6d22efbd73ca3b13ecf731f4448a2afce",
         "restored": true
       },
       {
@@ -731,26 +743,26 @@
           "canonical-history producer predicate"
         ],
         "flips": 40,
-        "stays": 10212,
+        "stays": 12644,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:producer-actor",
-          "memory.dedup_sweep.started:guard:producer-actor",
-          "memory.index.lexical.rebuild.completed:guard:producer-actor"
+          "memory.dedup_sweep.completed:canonical-history:foreign-producer",
+          "memory.dedup_sweep.completed:canonical-history:foreign-producer-replay"
         ],
         "staying_examples": [
           "memory.dedup_sweep.completed:guard:admitted",
           "memory.dedup_sweep.completed:guard:permission",
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
-        "flip_ids_sha256": "bd1cb76b7684888db0d4b4fa35d7afe2decc2ccb6c5f4c4f1272aef6a9ec77e7",
-        "stay_ids_sha256": "3b3d81df2da5b735141c55bda20eb829724b55bf42ef8cc2984d792b584e031b",
+        "flip_ids_sha256": "89c12bfe592319de466c272c11012ca25b926c9d491477e443893db7bebeef0a",
+        "stay_ids_sha256": "403da47f83935c2c6f4cc8486032deeb9c2d34f533e0192f0855f384f8dc8a9a",
         "restored": true
       },
       {
         "guard": "references_resolve",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:references",
           "memory.dedup_sweep.started:guard:references",
@@ -762,7 +774,7 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "93e598cbeeda76337ff12af3cc37151e2b41e9c9dc57b16ec4caa4a5d37bc968",
-        "stay_ids_sha256": "903cdb475a30d95fd22fceb5496d7a28c3c4d5a92d781b755a9dc66ca560ff28",
+        "stay_ids_sha256": "d1c663acdeeb8c0b60a3791b034b7fa6ca4da9876ddd3354312ca1c9b49f6f71",
         "restored": true
       },
       {
@@ -772,7 +784,7 @@
           "repeated retained/caller replay-policy join"
         ],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:replay-only",
           "memory.dedup_sweep.started:guard:replay-only",
@@ -784,14 +796,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "76e812529a9e21a1bbf92c5f9b8aac10b27c3d02151e3f408d8f2678829dbea8",
-        "stay_ids_sha256": "7d09a6aa7658a343d8b061ed33cf3633779c0d471bae6f63337ccb61bc093e3b",
+        "stay_ids_sha256": "da3675c76f552d9cebf5e77a33cb82a9c73c507ed59273ecbc472b8a22c18c10",
         "restored": true
       },
       {
         "guard": "request",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:request",
           "memory.dedup_sweep.started:guard:request",
@@ -803,14 +815,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "9b2d1305b1a63acf165865ea6c305fff6f0081b9901893f3458ae933914ff767",
-        "stay_ids_sha256": "cd3e7779c85c012b8b130c5bd00bf6ed9cd8c3ffaa7f5e61299d818e999073e4",
+        "stay_ids_sha256": "ae429ca4f8566476f6f7cea86c71b64f64269d8b26c6b414b367b75b2b6d7a5a",
         "restored": true
       },
       {
         "guard": "selected_target",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:selected-target",
           "memory.index.lexical.rebuild.started:guard:selected-target",
@@ -822,14 +834,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "f5a7e7844f8a5f1aaaf91a6553b9877c946e6f63f5aa777e394a62fb26a7772c",
-        "stay_ids_sha256": "26dbba0f5d7f397d0b7548d7bf9dd73c4df489e1cc228f07700f08f4eaee059b",
+        "stay_ids_sha256": "7d07ad2eae6239fa98064e443f9a3ca4d56064c0532e73754037ba73af3a2057",
         "restored": true
       },
       {
         "guard": "selector_cas",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:selector-cas",
           "memory.index.lexical.rebuild.started:guard:selector-cas",
@@ -841,14 +853,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "600a443a07f64cf5d586bc6b78a8e9ef2d5da7a5cdf7902215d7cba50c9ab429",
-        "stay_ids_sha256": "24d61de5eea98a0e20c4746907b2fdf8edcfbaadf60f6cfbaf95e2d1af70d4a5",
+        "stay_ids_sha256": "dbfd32527a3dbea02c6a7cc63113f3754ac6441b8a6336a496c670c7031b5c75",
         "restored": true
       },
       {
         "guard": "selector_schema",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:selector-schema",
           "memory.index.lexical.rebuild.started:guard:selector-schema",
@@ -860,14 +872,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "b9553200ecda89cc7b6a9482a55207aae258a6a08624cbf8592d090bed75d03e",
-        "stay_ids_sha256": "34da4f19480e01cad2f33d4f54892ddda6ffb3a9ddf34c828754087ac53e4c87",
+        "stay_ids_sha256": "e58359b6128a0e756f1847aabba91dc3db99833d68138c929af27bf73045ab4a",
         "restored": true
       },
       {
         "guard": "selector_scope",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:selector-scope",
           "memory.index.lexical.rebuild.started:guard:selector-scope",
@@ -879,14 +891,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "8df2e5d1b11dac9038069c862a61441d6cdcc146d4968b6db06879b531843f01",
-        "stay_ids_sha256": "15de859d75f7d4f466a0e6e96260a3f67054cabc9f00f53604453362e7e37c29",
+        "stay_ids_sha256": "2fba94c4b84509a33ea5e5d4fb601a8d5402dcde576470020e5193bf8e438c1e",
         "restored": true
       },
       {
         "guard": "source",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:source",
           "memory.dedup_sweep.started:guard:source",
@@ -898,14 +910,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "b3daebcaf121d10cd5af6fa2b8b608e36ce450e026c37a15297cb6733efb7cfd",
-        "stay_ids_sha256": "4403f21ee955ab24c3c290ac1c9eedf131e38a983bf8e3d4cc5ff95a0faa2c1d",
+        "stay_ids_sha256": "bade9d08286e4d6963a460cfa130bb380ba74cfd67bf7918e79f46ac19460bdf",
         "restored": true
       },
       {
         "guard": "target_identity",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:target_identity",
           "memory.index.lexical.rebuild.started:guard:target_identity",
@@ -917,14 +929,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "86f60ce0eaeaa68bba7ab33c51183e0b9311a0e8c946da3c8544c51ef98a430c",
-        "stay_ids_sha256": "4c934b9cb7b14ae8d5bf0ad1b8065a2f49ff1eb1b8025d254c7727d9485e2475",
+        "stay_ids_sha256": "5a191d128ce3b64e70de72008d81273e373287f4bbb87651bd5d49d1dd8a5599",
         "restored": true
       },
       {
         "guard": "target_manifest",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:target_manifest",
           "memory.index.lexical.rebuild.started:guard:target_manifest",
@@ -936,14 +948,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "33060290fef24230a591afe8c5f91016e3d831eaa5537a574e655a9b8fb51977",
-        "stay_ids_sha256": "12b5104a1f719065c99f31b589d01b239d710acc5108bbdb136a4bf2bbb4b7c6",
+        "stay_ids_sha256": "03102a1ef2dcacd05901f65a42d765499ca7c3a589a76ddc9c4ef91fbf001fcb",
         "restored": true
       },
       {
         "guard": "target_order",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:target_order",
           "memory.index.lexical.rebuild.started:guard:target_order",
@@ -955,14 +967,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "436afb0a0ab92393abef5594fffd731422d621d40400b6991547596db20d5cfb",
-        "stay_ids_sha256": "a605d1190cc488b3e65c6f7bb64d6f1256271c1a95c3d0d25f2a53732aa41567",
+        "stay_ids_sha256": "3fc334dd4aa9df7efcb1776fe519ef9573197cf3f5c57c46f976200e7ba44bd4",
         "restored": true
       },
       {
         "guard": "target_schema",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:target-schema",
           "memory.index.lexical.rebuild.started:guard:target-schema",
@@ -974,14 +986,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "f8df10dfaf35d595c2a63f55b3074a3a814e12e6a047083025163dd6a631ac91",
-        "stay_ids_sha256": "38f0a72ec2ba20f04419942b2cbbf71441fb4b60984ba51f8f7282f95f84d5ba",
+        "stay_ids_sha256": "4846fc2d222a75d5b287c0464200fbc5a32fc174eb77c6eefe262d685632a52a",
         "restored": true
       },
       {
         "guard": "target_source",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 10248,
+        "stays": 12680,
         "flipping_examples": [
           "memory.index.lexical.rebuild.completed:guard:target_source",
           "memory.index.lexical.rebuild.started:guard:target_source",
@@ -993,14 +1005,14 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "697a016cc8dff77d1347d89586a9053c7f7b74170c7ad61dec63b4e46e46a230",
-        "stay_ids_sha256": "e53d1f2aa469e092b38ec55f07c7d2924bd6407157925b7671710a4667224718",
+        "stay_ids_sha256": "a2ead524aa657ce8e772d898d7c3bb6692dfb82e942e14bc9ba38299e199bcf2",
         "restored": true
       },
       {
         "guard": "terminal_custody",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 10244,
+        "stays": 12676,
         "flipping_examples": [
           "memory.dedup_sweep.completed:guard:terminal-receipt",
           "memory.dedup_sweep.started:guard:terminal-receipt",
@@ -1012,7 +1024,7 @@
           "memory.dedup_sweep.completed:guard:withdrawn"
         ],
         "flip_ids_sha256": "523086aa8b79b1af775d945ab79738372a2f2f64bfac24d0c95312f245a4a66e",
-        "stay_ids_sha256": "a8cbdc75f15639236d29655222b7f8c3d3d963077d60a8b542cbf724fdd105dc",
+        "stay_ids_sha256": "cf352d2aa1625d19ccc6378aaece62721c8ed64d4b49811052e8f75b28dd4dc1",
         "restored": true
       }
     ],
@@ -1021,7 +1033,7 @@
         "guard": "action",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:unknown-action",
           "memory.monthly_summary.started:guard:unknown-action",
@@ -1033,51 +1045,56 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "1d70c3cc1cc352ce2f47760699d0bfea0e71dfd1c25d80380669452ea2d02e70",
-        "stay_ids_sha256": "5513f349dcbe63f67c6b34b891b1d5954a78a4048b16b3c284166040ac36a4f1",
+        "stay_ids_sha256": "7fa7dcc632e089cca036db1e843828d5c2877e3d485e82874b16545c7b3a1f89",
         "restored": true
       },
       {
         "guard": "admission",
-        "named_duplicate_sites": [],
-        "flips": 12,
-        "stays": 5238,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 100,
+        "stays": 6718,
         "flipping_examples": [
           "memory.monthly_summary.completed:not-admitted",
-          "memory.monthly_summary.started:not-admitted",
-          "memory.prune_archive.completed:not-admitted"
+          "memory.monthly_summary.completed:guard:admitted",
+          "memory.monthly_summary.completed:guard:boundary-admitted"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "f4c91b3eb2161c395c0c3538a81e34f9bfa16e989f22a4571d39d4391adcbff6",
-        "stay_ids_sha256": "83f726e902b7f2c46f849b82ce2eec13fa5d4ab504d31cfd072ba2f5ff101423",
+        "flip_ids_sha256": "5f0525acadbea4847cc46ec52ff8f6ed61f792e2741d4aedfce5c526e32f841b",
+        "stay_ids_sha256": "82a413feec3660c306930085dbf8daf5dcc42cbc5ffbd832d361901fb4314ab1",
         "restored": true
       },
       {
         "guard": "boundary_acceptance",
-        "named_duplicate_sites": [],
-        "flips": 2,
-        "stays": 5248,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 24,
+        "stays": 6794,
         "flipping_examples": [
           "memory.monthly_summary.started:guard:boundary-acceptance_durable",
-          "memory.prune_archive.started:guard:boundary-acceptance_durable"
+          "memory.monthly_summary.started:domains:boundary-acceptance_durable-0",
+          "memory.monthly_summary.started:domains:boundary-acceptance_durable-1"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "1b3ac55649f00e2f73eb120feb65957bca034827f8d22230491a8e0e9005b14f",
-        "stay_ids_sha256": "43c83365fc60a84f5a22fd422effb72faff046b0e3aab8fe475617100e300774",
+        "flip_ids_sha256": "d9cac7203a7cf1e09476b745d3a9eeb660d53355993e9a9c40c0455eef4f3976",
+        "stay_ids_sha256": "106c06765331111bd7e6d38e98a8ee2a396aa8241747ac87cacc61ce23ada420",
         "restored": true
       },
       {
         "guard": "boundary_payload",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:boundary-payload-join",
           "memory.monthly_summary.started:guard:boundary-payload-join",
@@ -1089,14 +1106,16 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "e112899fb1641b6d2dd8dccde3319481185de58b3354e12f315f5f006d495de9",
-        "stay_ids_sha256": "b5546660740c0fa3c7f4ae41d27a2c8a6843b1d5bbcc1f34ea814facd2cc9641",
+        "stay_ids_sha256": "91f327614a506c1bd35508f1858a0f5a6fee6c42ed8ba9584e38d4821df4c4e2",
         "restored": true
       },
       {
         "guard": "boundary_receipts",
-        "named_duplicate_sites": [],
-        "flips": 6,
-        "stays": 5244,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 72,
+        "stays": 6746,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:boundary-started_receipt",
           "memory.monthly_summary.completed:guard:boundary-effect_settled",
@@ -1107,15 +1126,15 @@
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "900e1069a20cdd0d1e9c794eaba2214be139f3ea66ae337f8540ad7815fee2ac",
-        "stay_ids_sha256": "12324d8252dd487297b7ac5af36a234f91f50d5b991259c92b0aa829a30ef9c2",
+        "flip_ids_sha256": "6ec3ab282431649cb0cb3df46be85eacd6193bc760e9768dd6e818ac47943b89",
+        "stay_ids_sha256": "327305ac5f161d827fb3333cf8884f90e83f4d257b1cb04bea27a8d5a7aa4d5e",
         "restored": true
       },
       {
         "guard": "boundary_request",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:boundary-request-hash",
           "memory.monthly_summary.started:guard:boundary-request-hash",
@@ -1127,14 +1146,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "7ba2dbb59a574a665a150bbe8674374bd71310dec79c48d8c459450d3f388139",
-        "stay_ids_sha256": "60cb64c820bea5f8e2b26082dfb750b67e52e61213038b8b5ee799cad1925741",
+        "stay_ids_sha256": "5a75f8f6919fd2b37dcea701b8e7758836b25e529c1ae4ce001c2929ab590c93",
         "restored": true
       },
       {
         "guard": "boundary_scope",
         "named_duplicate_sites": [],
         "flips": 12,
-        "stays": 5238,
+        "stays": 6806,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:boundary-project_id",
           "memory.monthly_summary.completed:guard:boundary-operation_id",
@@ -1146,33 +1165,35 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "f16564e0460e8c387ab42901372bf48cfa0939804d2804d5badf646777d327bd",
-        "stay_ids_sha256": "624fc7f88beff55a7955034a3d06dae799909af7091e1a1141379506bb155c17",
+        "stay_ids_sha256": "d263dabd792cc051e624a33bef4820bf8d46193dc51a92e6e6564e8272b97fbb",
         "restored": true
       },
       {
         "guard": "boundary_snapshot",
-        "named_duplicate_sites": [],
-        "flips": 8,
-        "stays": 5242,
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 96,
+        "stays": 6722,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:boundary-request_matches",
           "memory.monthly_summary.completed:guard:boundary-current_source",
-          "memory.monthly_summary.started:guard:boundary-request_matches"
+          "memory.monthly_summary.completed:domains:boundary-request_matches-0"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "2dcd1351e3636d66699e07fbbd0bad8a95b5b8ea832a4963292cd4cdaac64206",
-        "stay_ids_sha256": "b8f43ce9ee3ae0d3972efc142e4f6deb2b557cda92b645b5f8811b357f28ce0a",
+        "flip_ids_sha256": "81711453580de390107faa1c73f23734e173de2e66d1f0560415da2eef5bebf3",
+        "stay_ids_sha256": "e2d64fb02a667109d52e8e165a9700615c62b201c7b065341a176f8484824074",
         "restored": true
       },
       {
         "guard": "boundary_terminal",
         "named_duplicate_sites": [],
         "flips": 2,
-        "stays": 5248,
+        "stays": 6816,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:boundary-terminal-missing",
           "memory.prune_archive.completed:guard:boundary-terminal-missing"
@@ -1183,14 +1204,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "b7ae348451cd30df13e8a4133e162746d369b4be6e988c20524839afb08ba7ca",
-        "stay_ids_sha256": "9ea80bb9529beb2766bdfc529b813b0b3cff285406d0e975cbaf21a1abb185cf",
+        "stay_ids_sha256": "606c71756cd63af849c56cabf94a175f666f6c595e000bde202bbc6c68d082cc",
         "restored": true
       },
       {
         "guard": "checkpoint_event",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:checkpoint-foreign-event-identity",
           "memory.monthly_summary.started:guard:checkpoint-foreign-event-identity",
@@ -1202,52 +1223,55 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "66c874df8ebdab968e18b81c63716fc52f20b8c8d42a0bfa25cd1a6609d6e99b",
-        "stay_ids_sha256": "908818cde5fd19edc8009442896ec4e2bf8a95f23e3132845aa3a99eaa18704a",
+        "stay_ids_sha256": "32dfc60eebbaa194a1bf99b5c3154bf8cefbdf4e03c1aaa48fba5d79084b0029",
         "restored": true
       },
       {
         "guard": "checkpoint_key",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:checkpoint-checkpoint_key",
-          "memory.monthly_summary.started:checkpoint-checkpoint_key",
-          "memory.prune_archive.completed:checkpoint-checkpoint_key"
+          "memory.monthly_summary.completed:guard:checkpoint-foreign-key",
+          "memory.monthly_summary.started:checkpoint-checkpoint_key"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "aee04fa764b917ffd5e5239c5a6add8e755c97ead00aa00caf97f8679411f70c",
-        "stay_ids_sha256": "a38d5ed16cc380513e28b0bb5e8010c51ce2cb0cf1ccfb0fd1600cffe7e059db",
+        "flip_ids_sha256": "29e95bc8fa9fa962c424aabd25ef739478a69ca15dcf5935227121f17dc5bddd",
+        "stay_ids_sha256": "6f8cb26087ae908f82be5e12db8e7b274ae550c33513c8f4065b74a0d8761b0a",
         "restored": true
       },
       {
         "guard": "checkpoint_storage",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:checkpoint-storage_instance_id",
-          "memory.monthly_summary.started:checkpoint-storage_instance_id",
-          "memory.prune_archive.completed:checkpoint-storage_instance_id"
+          "memory.monthly_summary.completed:guard:checkpoint-foreign-storage",
+          "memory.monthly_summary.started:checkpoint-storage_instance_id"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "335d7829da7a0f11d13593efcec8c68222348eeee6d2cbdc347fbf8b5585ff97",
-        "stay_ids_sha256": "5ee7fac67fa3735ac4b49352762a32107755a89932910f529d4b2009b82613ef",
+        "flip_ids_sha256": "ddcff9431ce7dcf93405dcb39599dfa8b418e712215115e76218272231573329",
+        "stay_ids_sha256": "0118b61f18c8525855bd9358cbcd5c83e9ec0da8f1361b4430278c90ceb881b0",
         "restored": true
       },
       {
         "guard": "commitment_numbers",
-        "named_duplicate_sites": [],
-        "flips": 12,
-        "stays": 5238,
+        "named_duplicate_sites": [
+          "canonical_numbers refusal at identity/digest/encoding and numeric preflights",
+          "integer and safe-maximum schema rules in inherited envelope/owned operation/target definitions; lower bounds and structural/type rules remain enabled"
+        ],
+        "flips": 344,
+        "stays": 6474,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:number-fraction",
           "memory.monthly_summary.completed:guard:number-infinity",
@@ -1258,72 +1282,72 @@
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "ae336aa17a5dd59129a8cf61dc752817df8a37a09db1431076d459b557fe6da1",
-        "stay_ids_sha256": "d57077e939c10be5bebe16b1c0aea6aa7b43d1f22b6ae69aa5afdb9528086973",
+        "flip_ids_sha256": "946ef8faae596efbbecc200e099d0ce96b5d3888c12a2a061dc9eebe934e1325",
+        "stay_ids_sha256": "3b7f0dfdc86bde3c2a3ca45fcee4f667ff65999b911b5e014f47ab3d1423f340",
         "restored": true
       },
       {
         "guard": "custody_digest",
         "named_duplicate_sites": [],
         "flips": 824,
-        "stays": 4426,
+        "stays": 5994,
         "flipping_examples": [
           "memory.monthly_summary.completed:start-custody-digest",
-          "memory.monthly_summary.started:start-custody-digest",
-          "memory.prune_archive.completed:start-custody-digest"
+          "memory.monthly_summary.completed:history-forged-digest",
+          "memory.monthly_summary.completed:path-memory.monthly_summary.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "5f6801876f317e9df6796a3db34ca9ae6ed274fcdcde774723bd43a2ac400476",
-        "stay_ids_sha256": "7e474a52df7c56e0b450a35a9707f9f70db40c3dbad963d8da677a60de4c8522",
+        "flip_ids_sha256": "066f8c471381daeb9060c87519f5d31d4bd8fe62585f4547454c2387af2a20d8",
+        "stay_ids_sha256": "b43fab71c8476028bbbdd228b47cd765976542d8c8b96a44cbb84f60b433c69e",
         "restored": true
       },
       {
         "guard": "custody_flush",
         "named_duplicate_sites": [],
         "flips": 402,
-        "stays": 4848,
+        "stays": 6416,
         "flipping_examples": [
           "memory.monthly_summary.completed:start-custody-not-flushed",
-          "memory.monthly_summary.started:start-custody-not-flushed",
-          "memory.prune_archive.completed:start-custody-not-flushed"
+          "memory.monthly_summary.completed:canonical-history:record-not-flushed",
+          "memory.monthly_summary.completed:canonical-history:record-not-flushed-replay"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "3a136ec2774afa7fa49956ae4824295266e3a76ce2bf3f4fd962f29ca314514f",
-        "stay_ids_sha256": "19bd397d96c90368475ae296900f0fca054fc770f55a27f8ee1ce9ea76a1e937",
+        "flip_ids_sha256": "efc9bf2472c296eb8c5f7ebd0dbbd716fa3e4f4a3f2219824ac00ac27df58109",
+        "stay_ids_sha256": "ae1bbef13af1fb5a8a31705c65b455453b98e44c32cf0c5c4d73023f989b7790",
         "restored": true
       },
       {
         "guard": "custody_presence",
         "named_duplicate_sites": [],
         "flips": 390,
-        "stays": 4860,
+        "stays": 6428,
         "flipping_examples": [
           "memory.monthly_summary.completed:start-custody-missing",
-          "memory.monthly_summary.started:start-custody-missing",
-          "memory.prune_archive.completed:start-custody-missing"
+          "memory.monthly_summary.completed:canonical-history:missing-start",
+          "memory.monthly_summary.completed:canonical-history:missing-start-replay"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "6c62130518300365c6e7a201989a2b39b3634d780fe604f477aeae17a602dc46",
-        "stay_ids_sha256": "3417271916582f522bad0069d32336ab97d5967fdd433f5c325854d1f728612d",
+        "flip_ids_sha256": "ea89f63242f315957ee123c4e958201b677f78c2d5e233a415c431b8ca89b4db",
+        "stay_ids_sha256": "4d34e163bf36df5f0e409041a6c076337157a42f54135c099ede23348b630efd",
         "restored": true
       },
       {
         "guard": "custody_shape",
         "named_duplicate_sites": [],
         "flips": 398,
-        "stays": 4852,
+        "stays": 6420,
         "flipping_examples": [
           "memory.monthly_summary.completed:canonical-history:record-shape",
           "memory.monthly_summary.completed:canonical-history:record-shape-replay",
@@ -1334,15 +1358,15 @@
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "2b25bc8ae2d0b7b8b6b224fd5a61f3efb08bf809dffabac0407a3ce2919c401c",
-        "stay_ids_sha256": "0bfcf80bd367c4e19e78c195893af9cff95ca8d93dfcae29a7ef55a2e1114456",
+        "flip_ids_sha256": "013c2193a157f77c8f0c86ecbb4ea72f5e63fcc063a56c003caf2f7044114c4d",
+        "stay_ids_sha256": "1b6d42c6e0d81a9b5d054ea99d7ec397c1fe9ec968a836da8adcca5b9997f4e6",
         "restored": true
       },
       {
         "guard": "cutoff_commitment",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:cutoff-changed-hash",
           "memory.monthly_summary.started:cutoff-changed-hash",
@@ -1354,14 +1378,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "c94512865958d28c13d74e4ce1481e59e8e88f9fcc277b26cf9e7bbfa4a114e9",
-        "stay_ids_sha256": "d8dd6ecb6eaea092b8a957d69c94b176bcf3e16291e738c2a89137249dc3b167",
+        "stay_ids_sha256": "3f7592b573d0c25044bfafbf3155862d6cf6e9411996310f42e7b93fb10a46f4",
         "restored": true
       },
       {
         "guard": "cutoff_record",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:cutoff-boolean-is-not-authority",
           "memory.monthly_summary.started:cutoff-boolean-is-not-authority",
@@ -1373,14 +1397,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "a2af3afdf3c04276abe45c98889ac5326663e80e790584e237f724571166457c",
-        "stay_ids_sha256": "23f50d26302d86053b370f65829f487a362393510aac913479a7c3e70568f919",
+        "stay_ids_sha256": "80fb6173a116bb3af1c7f8fd03bbc5c5a42c947e83cfbcc757f6cec2231d139c",
         "restored": true
       },
       {
         "guard": "cutoff_reference",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:cutoff-self-reference",
           "memory.monthly_summary.started:cutoff-self-reference",
@@ -1392,14 +1416,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "550aa6d20edc39d511c0e98aee61a163dd92dfa1095e7e1b5b3391bedf1e07bd",
-        "stay_ids_sha256": "9372b3669f662366b1c0e5084047f6fdf49b5803253a3fd5014d172d1dfd1add",
+        "stay_ids_sha256": "f4688264e2d6cca55608f5ddb61377fe7ebb9bba041bb451b741e26dce469f52",
         "restored": true
       },
       {
         "guard": "cutoff_scope",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:cutoff-other-job",
           "memory.monthly_summary.completed:cutoff-other-project",
@@ -1411,14 +1435,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "68db3f904d61f4aedb74c01315627bf3dd3a99d312c7e95cf39d7b709b89706f",
-        "stay_ids_sha256": "f2a82fd2d2cc69cebe1f7dd330ebe9ba36bf558633b214136b9b086431432ad9",
+        "stay_ids_sha256": "7a48721d1ff81c7a974b596acbc24be37680a946214009b81e5dc2f7c340b326",
         "restored": true
       },
       {
         "guard": "cutoff_unique",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:cutoff-duplicate-reference",
           "memory.monthly_summary.started:cutoff-duplicate-reference",
@@ -1430,14 +1454,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "3901d59615c423ae6f308eb5130dfd53390f5eb42c707bc223aca7c6998e4d83",
-        "stay_ids_sha256": "2674024bd3930eb0473081acf2778f47a2de85523bd4313c2eaffc554c779946",
+        "stay_ids_sha256": "0f5c730c04a765b593ed2615eebf922543c777744c7dc2e798c78edbcf3a8f70",
         "restored": true
       },
       {
         "guard": "cutoffs_unavailable",
         "named_duplicate_sites": [],
         "flips": 328,
-        "stays": 4922,
+        "stays": 6490,
         "flipping_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
@@ -1448,27 +1472,27 @@
           "memory.monthly_summary.completed:cutoff-other-project",
           "memory.monthly_summary.completed:cutoff-boolean-is-not-authority"
         ],
-        "flip_ids_sha256": "02bda8f7a7596a761bfdb43a9d7bfb49631a452f6736cd74461a9aea37efb829",
-        "stay_ids_sha256": "cac08c2bddec1a1e45c025599edb105d0fdf8ebdd5c86d45f02aa812e2243947",
+        "flip_ids_sha256": "7f9018fd8e2161b458a47432a6106d60e074bb7eae7f34e2cbca2bfb37e5927b",
+        "stay_ids_sha256": "15736b98c99369c23485da13c76807ee20a37161299d99400d92243f12cc1453",
         "restored": true
       },
       {
         "guard": "effect_once",
         "named_duplicate_sites": [],
         "flips": 12,
-        "stays": 5238,
+        "stays": 6806,
         "flipping_examples": [
           "memory.monthly_summary.completed:repeated-effect",
-          "memory.monthly_summary.started:repeated-effect",
-          "memory.prune_archive.completed:repeated-effect"
+          "memory.monthly_summary.completed:guard:effect-once",
+          "memory.monthly_summary.completed:guard:committed-effect-cannot-fail"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "66be1149cfc93eb4940a3c0f77b990fa4c3a07cf3dfc8b71cd9b49619a4c58f8",
-        "stay_ids_sha256": "b7eb51ef3ace32258fea6771d0863bd81d847b70db308672087ab9f14b79bb2a",
+        "flip_ids_sha256": "3bde09251398b615b9db17bf85e290b09f2e8734ad7ab75d668a14ca1e56e35c",
+        "stay_ids_sha256": "db017b5c6cee3c5d55a60d023c54378cc79d8624b8b111718d3cdc5770b6c02f",
         "restored": true
       },
       {
@@ -1477,27 +1501,27 @@
           "selected 2.0.0 envelope schema",
           "selected frozen 1.0.0 compatibility-reader schema"
         ],
-        "flips": 24,
-        "stays": 5226,
+        "flips": 104,
+        "stays": 6714,
         "flipping_examples": [
           "memory.monthly_summary.completed:unknown-envelope-field",
-          "memory.monthly_summary.started:unknown-envelope-field",
-          "memory.prune_archive.completed:unknown-envelope-field"
+          "memory.monthly_summary.completed:guard:envelope-schema",
+          "memory.monthly_summary.completed:canonical-history:envelope-extra"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "d8e160bd33641d5f87c9029b20a5e38458ffc95a52e59253331e1bb4aa06d8e2",
-        "stay_ids_sha256": "155fb9f3bd38206ec699e3e8f72764078cd1d66e7056b5d03b15fad6b7fa0b48",
+        "flip_ids_sha256": "e5dd38805d16ae0cd032435ff8b3f58d6bbbe6e763bc2fd1aae7c0a8e4c0fe96",
+        "stay_ids_sha256": "84e209d1c4b4b6ce4aa048824853e0ba1d04f15f4689a2a66ed52a9e81233f2c",
         "restored": true
       },
       {
         "guard": "evidence_preserved",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:evidence-lost",
           "memory.monthly_summary.started:evidence-lost",
@@ -1509,33 +1533,33 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "1a74a03a783eaa89af32c053a3189eb139f7313b8a80cccbe16fa6d97b6e739e",
-        "stay_ids_sha256": "0d08187f0cd89b3e17f5fe8aaf271a964b22e9d4a29223b6c5673289d09923db",
+        "stay_ids_sha256": "3055de54ee57c7ffdc8a350020e146c7f3fbef6ce6a5bebe938e6ae3594b91e3",
         "restored": true
       },
       {
         "guard": "history_event",
         "named_duplicate_sites": [],
         "flips": 20,
-        "stays": 5230,
+        "stays": 6798,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:history-family",
-          "memory.monthly_summary.started:guard:history-family",
-          "memory.prune_archive.completed:guard:history-family"
+          "memory.monthly_summary.completed:canonical-history:foreign-family",
+          "memory.monthly_summary.completed:canonical-history:foreign-family-replay"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "97386033021b2529c72207b5a90d124b05cc0909b4fb8eafeb2026a04d5af7b9",
-        "stay_ids_sha256": "42e97634ce053860e10ad6edbf08fd0c0a71c1c4eb9c1038f2e0d77396c07d5c",
+        "flip_ids_sha256": "4d570b4ee5c8d60ec68c7e28b6ce73c2ee44fce877d688e772bd3bf749f788bd",
+        "stay_ids_sha256": "57ddd580ecffc0cc656c51b7932ab93860151417c916cde1d39c68fd0763a4fc",
         "restored": true
       },
       {
         "guard": "inline_cap",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:inline-cap",
           "memory.monthly_summary.started:guard:inline-cap",
@@ -1547,14 +1571,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "a402089c45b3ecddf3b5fdc8c9c6734bbbf2d594256175054a1878421ab32f99",
-        "stay_ids_sha256": "8295bbcccbc5402f0674a36bfb15f220da742d7e5d41570a40f4b22d66a5b6f7",
+        "stay_ids_sha256": "2fd2f1a5a4b38db899809bdaadaa5e4407f36b85c62f24c21738b2659af14201",
         "restored": true
       },
       {
         "guard": "json_number_grammar",
         "named_duplicate_sites": [],
-        "flips": 16,
-        "stays": 5234,
+        "flips": 28,
+        "stays": 6790,
         "flipping_examples": [
           "memory.monthly_summary.completed:canonical-history:numeric-01",
           "memory.monthly_summary.completed:canonical-history:numeric-01-replay",
@@ -1565,15 +1589,37 @@
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "bac06e7364a7bf34f8161800ae45083b9740d6eaa034cd6e2d95913666deee11",
-        "stay_ids_sha256": "88198bacf16ced6680fb22365fda43e47e97ec2aaa7d25d3254ceedb6314bb15",
+        "flip_ids_sha256": "d1e161a7246bc878b4f89ddbd8ffb99e18f4d0e3cd25d92ee1d98b097f7e4b87",
+        "stay_ids_sha256": "1142757fe90a22fd0f2bce4d8749db0c3b6acb3003c98fda5e6a4b5bf998991d",
         "restored": true
+      },
+      {
+        "guard": "memory_flags",
+        "flips": 352,
+        "stays": 6466,
+        "restored": true,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:domains:settle-old-note-pinned-0",
+          "memory.monthly_summary.completed:domains:settle-old-note-pinned-1",
+          "memory.monthly_summary.completed:domains:settle-old-note-pinned-2"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "d6b6b4deb906778fb2ccc5b986ed614683e8bbb1d03535eb0adfa7f1267e09a9",
+        "stay_ids_sha256": "777976e9bf01defe938237d358208b1482d6cbdcf8b2378c9a38bccbbbb7feeb",
+        "named_duplicate_sites": [
+          "exact memory Boolean types before selection",
+          "same exact types for input and output in archive_validate"
+        ]
       },
       {
         "guard": "no_extra_memories",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:extra-memory",
           "memory.monthly_summary.started:extra-memory",
@@ -1585,14 +1631,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "e2138ace3bf7bbf2671d8764bc161370b85a12564aebaeec7cb3e022adfd48f4",
-        "stay_ids_sha256": "c11d92d8ce35975fd90267e8429501c0ca80e16b5b3643c8cc27dc4b5426a519",
+        "stay_ids_sha256": "9f22b47a20f5f64b121365ea6791f99493148fdc9d03bd8f5b0d5c9622a43555",
         "restored": true
       },
       {
         "guard": "no_prune_summary",
         "named_duplicate_sites": [],
         "flips": 2,
-        "stays": 5248,
+        "stays": 6816,
         "flipping_examples": [
           "memory.prune_archive.completed:prune-invented-summary",
           "memory.prune_archive.started:prune-invented-summary"
@@ -1603,33 +1649,33 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "1df6e0f5176ed29860c1335e441ec7d71ef14ecfbfa11382027efe1685a04ebc",
-        "stay_ids_sha256": "3044ab23dcee60a1461b268cfc6d0866a7b85dd98d62d9d29ac1508a91f933ab",
+        "stay_ids_sha256": "252accd9aa7e69c0ac2b136aa5878f8edb9d268922ae8dc73b4a190432c0a72a",
         "restored": true
       },
       {
         "guard": "operation_cas",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:stale-cas",
-          "memory.monthly_summary.started:stale-cas",
-          "memory.prune_archive.completed:stale-cas"
+          "memory.monthly_summary.completed:guard:cas",
+          "memory.monthly_summary.started:stale-cas"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "ec60668e899b40cfa4d5ff604e8b03b145488fac1b09f24e15573411aef4c173",
-        "stay_ids_sha256": "d23e3ab4478af29b038eef105b44bdc550e730b212df825f8c4e86d472d8a394",
+        "flip_ids_sha256": "2501732c1c5c28c5ab5d1c1c9133abb311361bfb28b6f783f80be58c548164f9",
+        "stay_ids_sha256": "6f22a2c1027167963a038be63b063cb022c792406a4e20a68649ecbc99d51a52",
         "restored": true
       },
       {
         "guard": "operation_receipt",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:started_event_id",
           "memory.monthly_summary.started:guard:started_event_id",
@@ -1641,14 +1687,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "ded18fc928cd821ca1b3b9c8dd36018c6b9db8eb58498ecb8a585ff31c9e5c27",
-        "stay_ids_sha256": "ad9e5cd989d7a1fce1bcd0b8843cbe187f7aac403fb4c204706f1d1234113a6f",
+        "stay_ids_sha256": "73ba90054d36894dd1bf0397de534bc1877f170b9754ba3af80f95034b4745b0",
         "restored": true
       },
       {
         "guard": "operation_result_digest",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:result_sha256",
           "memory.monthly_summary.started:guard:result_sha256",
@@ -1660,14 +1706,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "2a1ad9e48ca67d1cfe7f947fb3d024372f76a96e4d33fea854ae7c0684dbdc69",
-        "stay_ids_sha256": "1500d47e92787c8ab0856e55e488f5da0176cc27ebcb4ea9b1bac7090c134e6d",
+        "stay_ids_sha256": "7ff48b0e9ecf5af9f643b68effa15d0d6ef380f2ade1ebbe84f283fcf774e8d7",
         "restored": true
       },
       {
         "guard": "operation_result_ref",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:result_ref",
           "memory.monthly_summary.started:guard:result_ref",
@@ -1679,33 +1725,33 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "a856192c14040ccb029ac4802a5523ccc91bf0df5020a87cff4f2e18ed3c6702",
-        "stay_ids_sha256": "0daecf0363361f860592d848e2e8b459b1891c0d3c48667a3dd49665aa22ff55",
+        "stay_ids_sha256": "54d96728a5303d040276ef540c4cef637644dc14e2ab8871e89f0502dfe5070c",
         "restored": true
       },
       {
         "guard": "operation_schema",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:unknown-operation-field",
-          "memory.monthly_summary.started:unknown-operation-field",
-          "memory.prune_archive.completed:unknown-operation-field"
+          "memory.monthly_summary.completed:guard:operation-schema",
+          "memory.monthly_summary.started:unknown-operation-field"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "033542da18e12722d611502dcb0120d59c9e724ce40ab5371df5920960979b90",
-        "stay_ids_sha256": "68f22211150a25ee874fe2a75628db59ed26270ac3fa20b634f3dd5c91e12878",
+        "flip_ids_sha256": "0287805b0d4ea1696451a35b88d0135c63a4ec3aa8349bf308c1d9bc126cc4a1",
+        "stay_ids_sha256": "b206104b7903c788743327ea0eb945994171b7052054ec80ec992c2aaa4e7b64",
         "restored": true
       },
       {
         "guard": "original_input",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:append-original-value",
           "memory.monthly_summary.started:guard:append-original-value",
@@ -1717,14 +1763,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "2b873a919cd82cc6933a8f6e9f54fcb29e7ded2352cb1522197d310735e5fd8f",
-        "stay_ids_sha256": "5f834f99c80e09dcd1891200907ed065c9a5fce9683dfa8721d6ee6f5b6086fd",
+        "stay_ids_sha256": "38a8028f0b3aeef3a642d3132d1c914313bbd86d0eb63c81bd1103af88d3cba5",
         "restored": true
       },
       {
         "guard": "originals_preserved",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:original-deleted",
           "memory.monthly_summary.started:original-deleted",
@@ -1736,7 +1782,7 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "b88f14e402c477351d602d769cd6f29ee396ce941a24aac4e675a95c40623f42",
-        "stay_ids_sha256": "45673e04921492bd6735abc4561a193ea65f9a49aadd8c3fe81f25999c87238d",
+        "stay_ids_sha256": "54fdf170816232048dc935bf008fa405c9b10f6d2a425002985f372f4b120f66",
         "restored": true
       },
       {
@@ -1746,7 +1792,7 @@
           "operation schema status enums in the applicable phase"
         ],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:unknown-outcome",
           "memory.monthly_summary.started:guard:unknown-outcome",
@@ -1758,26 +1804,26 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "e10471d98c3036b884d867bc3baf0d2555bcf2b27575dc66e2d0ed57eea60989",
-        "stay_ids_sha256": "3ba3b0e24145465fa42819021f041932331234fd2d574bf84ac74f4160218f54",
+        "stay_ids_sha256": "1354b6dce9de7ab66b84f641860a6e6a010babdced0a5ff24720eeed467583ce",
         "restored": true
       },
       {
         "guard": "partition",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:raw-project-partition",
-          "memory.monthly_summary.started:raw-project-partition",
-          "memory.prune_archive.completed:raw-project-partition"
+          "memory.monthly_summary.completed:guard:dedupe_key",
+          "memory.monthly_summary.started:raw-project-partition"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "b03ca9a57e969ac7d9b444fc5a3fa822b5703e4c7e29dd3cc893be0061b3dc57",
-        "stay_ids_sha256": "a8a9c73e7133f487f0a755bc9de4fde96d4edb7ae581ca655f0829b1b3c353ef",
+        "flip_ids_sha256": "048d51e4ca260721cc1dbd2fe5586639eb48d00722bcbb2e27fac0713dee22c5",
+        "stay_ids_sha256": "e38f8d884adda59aed947c7ca7651c919f413df0e67cc5b0bf63780a56a23f3a",
         "restored": true
       },
       {
@@ -1786,7 +1832,7 @@
           "exact-family closed payload schema at all caller/retained sites"
         ],
         "flips": 98,
-        "stays": 5152,
+        "stays": 6720,
         "flipping_examples": [
           "memory.monthly_summary.completed:payload-extra",
           "memory.monthly_summary.completed:payload-missing-schema_version",
@@ -1797,36 +1843,37 @@
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "3bcf155affba27f4f861e79caaf9b2532f71e145a66075a12ba067681420ab04",
-        "stay_ids_sha256": "af2426168e6d3c938c737962c6368c22084b6d92fddecf88f2fd3adf0023b3d6",
+        "flip_ids_sha256": "6539e05e8e162366ec038a3f1a2b01a0742956d46d83ae7b4a3f34d2ceb3277a",
+        "stay_ids_sha256": "4d8cab1740823d710eab8410a7b3e877ec225000a21f9e7ccf1136a15f3a2928",
         "restored": true
       },
       {
         "guard": "permission_or_withdrawal",
         "named_duplicate_sites": [
-          "access/withdrawal invariant at repeated read, writer and commit sites"
+          "access/withdrawal invariant at repeated read, writer and commit sites",
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
         ],
-        "flips": 484,
-        "stays": 4766,
+        "flips": 1012,
+        "stays": 5806,
         "flipping_examples": [
           "memory.monthly_summary.completed:no-permission",
           "memory.monthly_summary.completed:withdrawn",
-          "memory.monthly_summary.started:no-permission"
+          "memory.monthly_summary.completed:history-withdrawn"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "02614758372c455078ed50ee285485a889aacd85028b027241cc8de693c82aa7",
-        "stay_ids_sha256": "dc0b158ab7a5e496b46fa30b866a253812217a8fb09ede1063478df4e208a383",
+        "flip_ids_sha256": "dd503e5ad0083c9df6d7df8198cb63fa4687410c22cb5af435902adeffd6c84d",
+        "stay_ids_sha256": "4e2879e855b2aeb85d82b8b6c5c468f0a6d8b8c18a735474c2cf52683fe89c66",
         "restored": true
       },
       {
         "guard": "phase",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:guard:append-phase",
           "memory.monthly_summary.started:guard:append-phase",
@@ -1838,14 +1885,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "199beb2747abb4f8bd831bd1a44174910243902bcfe71747aec961a9a13bb725",
-        "stay_ids_sha256": "b63098b80719f32ab6a87152248e111b6a00f62021102ed41ade7627b42538ba",
+        "stay_ids_sha256": "fbb468dec033ffce24d6eb1b54f0bb1e45ade493e03a2469630ec3d3fa08d3eb",
         "restored": true
       },
       {
         "guard": "pins_preserved",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:pin-archived",
           "memory.monthly_summary.started:pin-archived",
@@ -1857,26 +1904,26 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "217f3f644005ea27eb8a43a899ec2e017e5cbcac7dae9c0d86bab89a850f1c2f",
-        "stay_ids_sha256": "0540c69615b9e2a0fa68e4d2d1df15f4e7d1d313e0a51d6616b3b2ec2ab98408",
+        "stay_ids_sha256": "1e3ddb6b7b0b8fdc3d3e2783231d5371f8b3de63d0fc0470ced51cbd50d614f4",
         "restored": true
       },
       {
         "guard": "references_resolve",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:dormant-unresolved-ref",
-          "memory.monthly_summary.started:dormant-unresolved-ref",
-          "memory.prune_archive.completed:dormant-unresolved-ref"
+          "memory.monthly_summary.completed:guard:references",
+          "memory.monthly_summary.started:dormant-unresolved-ref"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "37e7df4d61b8e6a26bba0ba86eb28a4057fc34caad01ac21acb5cf977f48b147",
-        "stay_ids_sha256": "6e6038d6acea2637cacf16558775614fb6489d0844d1768ba9e19a967efa40c7",
+        "flip_ids_sha256": "6dad028555ee72b6009e15f25f5ba3fba7730843155a2f3322f728f50f8438c5",
+        "stay_ids_sha256": "c905815b9b9fca5501b868d64456e9d26781c357ea07d57e49f2daf5c86ca678",
         "restored": true
       },
       {
@@ -1886,45 +1933,45 @@
           "repeated retained/caller replay-policy join"
         ],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:replay-only",
-          "memory.monthly_summary.started:replay-only",
-          "memory.prune_archive.completed:replay-only"
+          "memory.monthly_summary.completed:guard:replay-only",
+          "memory.monthly_summary.started:replay-only"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "695d32f74dcd386b8ca9cfefc759366c90a1de24fb2e36289e38eb093244c3d5",
-        "stay_ids_sha256": "870fa35db94b3ba7ddb59ec9e8da8c6589c77986ab5ddc5d3834430ed0936543",
+        "flip_ids_sha256": "5ea777ae9f2bb371fa3587016fb9f6e280ce8c36525441a2eb2fc67b1c55a290",
+        "stay_ids_sha256": "9c513081d5c5ff21d43916c551914894866862c1dbe86d992ba9427fc2ac47eb",
         "restored": true
       },
       {
         "guard": "request",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:request-changed",
-          "memory.monthly_summary.started:request-changed",
-          "memory.prune_archive.completed:request-changed"
+          "memory.monthly_summary.completed:guard:request",
+          "memory.monthly_summary.started:request-changed"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "652368b8ce5f07053403d364e48bb28d7aae01ebf1c67456965b1146f825b1d1",
-        "stay_ids_sha256": "8d97d1ee37fcd9fb2b97a4368de47883cd4faf759eb0e8f631c2cec4968e11ba",
+        "flip_ids_sha256": "ce4ec69b308403c89f81b316f5255d071e36d8980af498d622215cd3f0fc68bf",
+        "stay_ids_sha256": "6e29d38e0fce3ab61380c48cbb7ab524738fb174da359f1400b33c5b119b9329",
         "restored": true
       },
       {
         "guard": "selected_archived",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:selected-not-archived",
           "memory.monthly_summary.started:selected-not-archived",
@@ -1936,14 +1983,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "25428d6870831e94c6b36548a2da4f5eccf60be5e8ada5ec4aebba5cf2a81851",
-        "stay_ids_sha256": "65a3b2bd8fbaceaef8e1c2b913ddad324b4b00268b90cac06c3f6a4af2070cdc",
+        "stay_ids_sha256": "4c57151cbd787819323968dd7a01f5b4c368f6d46c8d2fefe30c1eb7c9e592b8",
         "restored": true
       },
       {
         "guard": "selected_fields_preserved",
         "named_duplicate_sites": [],
         "flips": 12,
-        "stays": 5238,
+        "stays": 6806,
         "flipping_examples": [
           "memory.monthly_summary.completed:selected-rewrite-kind",
           "memory.monthly_summary.completed:selected-rewrite-pinned",
@@ -1955,14 +2002,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "68655100ce190e839b8fe558725908cd4209644a4ab73718d83356d45a418671",
-        "stay_ids_sha256": "c63016a05b2079fcf89c722bc4934695ffdfbb14c614096c10846a2a85408a79",
+        "stay_ids_sha256": "f0e212c5d4242e66a1c9ab225dc9f1aaa51b1e6167cfb49fc741714ae68b1131",
         "restored": true
       },
       {
         "guard": "selection_exists",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:missing-selection",
           "memory.monthly_summary.started:missing-selection",
@@ -1974,14 +2021,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "955c00801e946ee989f681f994b9070aee10b3696c4ac5ad7d8c44a238d1f83e",
-        "stay_ids_sha256": "e75fd4e8f15505059a25165a44b1b48003e184a148fb3e1179b05c8a441ddc08",
+        "stay_ids_sha256": "4ef9a7ea68095946b01dcd644651214609b5dd4c17f7d5e40a7f4e1874b4bd6d",
         "restored": true
       },
       {
         "guard": "selection_kind",
         "named_duplicate_sites": [],
         "flips": 2,
-        "stays": 5248,
+        "stays": 6816,
         "flipping_examples": [
           "memory.monthly_summary.completed:non-note-summary",
           "memory.monthly_summary.started:non-note-summary"
@@ -1992,14 +2039,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "e24452b251dc7480a12609e0e63dd3e89e201b9b048d60b1393a32556c10f396",
-        "stay_ids_sha256": "f04e47426bb1ffd3dc4f8f8d4a7e31aab355e6dade42f4f1791dc571be95cd68",
+        "stay_ids_sha256": "567dae5fd24b428122e2ee23ac068ab5b3f908dc6e3c5058e8c582b91601fae1",
         "restored": true
       },
       {
         "guard": "selection_pinned",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:pinned-selection",
           "memory.monthly_summary.started:pinned-selection",
@@ -2011,14 +2058,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "7c866bb9c61b1912baedec840117dd268aca9914671298c170e82df859eb6ec2",
-        "stay_ids_sha256": "ec0446de2806a0a95dc2c1e3b625fae7f06076e959dc2f7b4f5f374787024252",
+        "stay_ids_sha256": "bfaae63ce34cc42c80b5cdbefc5e7849e7d42a0d527302bee041f0b02fe0ef6e",
         "restored": true
       },
       {
         "guard": "selection_unique",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:duplicate-selection",
           "memory.monthly_summary.started:duplicate-selection",
@@ -2030,7 +2077,7 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "5e83b9302192d2257fdc61b3dc3ba4a793c9284161d8fc6e3949a4fb74b67fdf",
-        "stay_ids_sha256": "3cb96da92fe849c43d46cb15475d57a1a9c707a06f59074839cf1cd804a66877",
+        "stay_ids_sha256": "e705111fac0ab0143b31c44a7e5516a0208e720b285c281e412166b7e7645c41",
         "restored": true
       },
       {
@@ -2041,7 +2088,7 @@
           "start-custody payload event_type and command_id constants only"
         ],
         "flips": 1994,
-        "stays": 3256,
+        "stays": 4824,
         "flipping_examples": [
           "memory.monthly_summary.completed:producer-actor",
           "memory.monthly_summary.completed:payload-source",
@@ -2052,34 +2099,34 @@
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "d709322f6179b169846527bb421bf7bea267f62f67d6db048021e3a86e708e5e",
-        "stay_ids_sha256": "2926a233b03a0cfebce0694f89223288d5029b5a34e29291944512f9486ae2d9",
+        "flip_ids_sha256": "2605b6148a1f3c297898b9d99341767020ada7503767d632626ab0194b7216c8",
+        "stay_ids_sha256": "04340fe14d97c460f7f665fb4d1d2fa9e18b0e8994f5c1d921e2a4b03728055b",
         "restored": true
       },
       {
         "guard": "source",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:source-changed",
-          "memory.monthly_summary.started:source-changed",
-          "memory.prune_archive.completed:source-changed"
+          "memory.monthly_summary.completed:guard:source",
+          "memory.monthly_summary.started:source-changed"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "534e57c613602e2464ea85c7cddbbc2f9f72d678ebe84eb23e5109ec2a9492be",
-        "stay_ids_sha256": "010633db2bbb8b64d449bf606dfe71ffbaf6e0969fa38e0e4e895d961aa3ec26",
+        "flip_ids_sha256": "5c5ba9141c9e11cb55affcc81a61d39d29ef29e4ada18ccf39a78280d21b9a32",
+        "stay_ids_sha256": "1c7d2abf40ba94a1c57c572556bc0f37262a81d5576bfcbe78184e3d99d32234",
         "restored": true
       },
       {
         "guard": "summary_provenance",
         "named_duplicate_sites": [],
         "flips": 2,
-        "stays": 5248,
+        "stays": 6816,
         "flipping_examples": [
           "memory.monthly_summary.completed:summary-lost-evidence",
           "memory.monthly_summary.started:summary-lost-evidence"
@@ -2090,33 +2137,33 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "d576ea6a5c9777f81b950dee2c76a7cb045ef11ded1eceedc0b76344c05fdb9e",
-        "stay_ids_sha256": "f3af5b50eb03bb296f6a3ec59eff9d068e83881351608d6d360f494b0b15deb9",
+        "stay_ids_sha256": "9723a96e18fee7cc4458d33f7f49d7ff0c4a80772292052beac4f9c427c8f070",
         "restored": true
       },
       {
         "guard": "terminal_custody",
         "named_duplicate_sites": [],
         "flips": 8,
-        "stays": 5242,
+        "stays": 6810,
         "flipping_examples": [
           "memory.monthly_summary.completed:terminal-custody",
-          "memory.monthly_summary.started:terminal-custody",
-          "memory.prune_archive.completed:terminal-custody"
+          "memory.monthly_summary.completed:guard:terminal-receipt",
+          "memory.monthly_summary.started:terminal-custody"
         ],
         "staying_examples": [
           "memory.monthly_summary.completed:automatic-cutoffs-absent",
           "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
-        "flip_ids_sha256": "3fd1e09e1c32ef1c33a10417d80c7b7682ff364e4695d2a216835497567e1284",
-        "stay_ids_sha256": "c18084d136d8b98028dfc90fcf9bffa7159cb859b78084e1c624e8be56b94ade",
+        "flip_ids_sha256": "583a9ac533a4d83cd8c1350aa1336d28d967fd8210ebd7526de2e488d895c14d",
+        "stay_ids_sha256": "231b059710cb936affcb2e5dc3cbc965294bb0dd126664fae709125eeb8d493e",
         "restored": true
       },
       {
         "guard": "unselected_preserved",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:unselected-changed",
           "memory.monthly_summary.started:unselected-changed",
@@ -2128,14 +2175,14 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "9eeb8409f91ab7449eb43c82b470dff13c8db05b4270a821d417f8376598d489",
-        "stay_ids_sha256": "10c54efb0d0b3ef78e4d3c931ed6637ef311571f06eae81fcd3a77db05e5cd23",
+        "stay_ids_sha256": "46c9dcfcd1e935d385b3b47509dbaad14f5d8c000827fb207764031cd8e2b07e",
         "restored": true
       },
       {
         "guard": "versions_preserved",
         "named_duplicate_sites": [],
         "flips": 4,
-        "stays": 5246,
+        "stays": 6814,
         "flipping_examples": [
           "memory.monthly_summary.completed:version-lost",
           "memory.monthly_summary.started:version-lost",
@@ -2147,9 +2194,10 @@
           "memory.monthly_summary.completed:direct-cutoffs-absent"
         ],
         "flip_ids_sha256": "f5e7320a992453b0e862846c4b596b61a3ddda82c16dff6f7b15305859ae6602",
-        "stay_ids_sha256": "70c1b1c30b0476c42daa12138557eab54731515b5f2b896d8d32bb15a8122458",
+        "stay_ids_sha256": "b5eabbd97111f2d3de72211dc4d624fade5246e1fdc3aca07a542e7f5f1bd7bf",
         "restored": true
       }
     ]
-  }
+  },
+  "ids_hash_encoding": "SHA-256 of UTF-8 json.dumps(ids, separators=(comma, colon), ensure_ascii=True), no newline"
 }
