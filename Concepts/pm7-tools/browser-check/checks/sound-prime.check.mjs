@@ -24,21 +24,19 @@ const probe=()=>{
 };
 export default async function(t){
  const target=new URL(t.args.page,'file://');target.searchParams.set('o55','off');target.searchParams.set('cb',String(Date.now()));
- const cdp=await t.page.context().newCDPSession(t.page),contexts=new Set();
+ const sandbox=String(t.args.sandbox)==='1';
+ if(sandbox)await t.openInSandbox(target.href);
+ // Opaque app frames can be separate Chrome targets (OOPIFs). Observe the
+ // actual app target so Runtime contexts and fresh-document hooks reach it.
+ const cdp=await t.page.context().newCDPSession(sandbox?t.root:t.page),contexts=new Set();
  cdp.on('Runtime.executionContextCreated',({context})=>{if(context.auxData?.isDefault)contexts.add(context.id);});
  cdp.on('Runtime.executionContextDestroyed',({executionContextId})=>contexts.delete(executionContextId));
  cdp.on('Runtime.executionContextsCleared',()=>contexts.clear());
  await cdp.send('Runtime.enable');await cdp.send('Page.enable');
- if(String(t.args.sandbox)==='1')await t.openInSandbox(target.href);
  await cdp.send('Page.addScriptToEvaluateOnNewDocument',{source:'('+probe.toString()+')()'});
- if(String(t.args.sandbox)==='1'){
-  // HTTP sandbox wrappers are temporary routed documents: reloading the
-  // wrapper loses its route. Navigate only its existing sandboxed app frame.
-  const {frameTree}=await cdp.send('Page.getFrameTree');
-  const app=frameTree.childFrames?.find(x=>new URL(x.frame.url).pathname===target.pathname);
-  if(!app)throw new Error('native sound probe needs the approved sandbox app frame');
-  await cdp.send('Page.navigate',{url:target.href,frameId:app.frame.id});
- }else await cdp.send('Page.navigate',{url:target.href});
+ // Navigate the app target only; the approved wrapper and its flags stay.
+ const {frameTree}=await cdp.send('Page.getFrameTree');
+ await cdp.send('Page.navigate',{url:target.href,frameId:frameTree.frame.id});
  let R=null;const deadline=Date.now()+60000;
  while(Date.now()<deadline&&!R){
   for(const contextId of contexts){
