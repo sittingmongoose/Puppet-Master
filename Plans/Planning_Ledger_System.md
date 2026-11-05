@@ -1635,7 +1635,8 @@ canonical_text: The per-audit closure check of scripts/pm-audit-closure.py appli
   get the full rules. For those directories only, it reports these format and
   schema-evolution errors as one warning per directory instead of as errors - missing or empty audit_id, ledger_id,
   baseline_ref, subject_ref or observation_ref; an absent audit_scope_manifest.jsonl or repair_impact_matrix.jsonl,
-  and the scope manifest's family coverage while that file is absent; audit-finding and closure-matrix row fields
+  and the scope manifest's family coverage while that file is absent, but only while every report and source
+  artifact the check reads is frozen; audit-finding and closure-matrix row fields
   that came with the newer schema (finding_family, the identity lists, repair_required, finding_level, finding_key)
   when the row lacks them; finding keys built by the older key algorithm (for a closure-matrix row, only when its
   identity fields give the same deterministic key as the identity fields of the registry closure it links to); an
