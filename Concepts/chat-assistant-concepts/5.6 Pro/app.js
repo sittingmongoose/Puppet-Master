@@ -2743,6 +2743,33 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     runAfterRender('scope',{scope:live,flips:[]});
   }
 
+  /* SW-36: a resize that only moves open Activity Detail between docked beside the messages and covering them moves
+     that one panel and the grid's class, as renderApp would draw them, before the frame at the new size. renderApp
+     there rebuilt the transcript and restyled the whole chat first, and in an opaque iframe the parent kept showing the
+     old frame clipped meanwhile. false when anything else changed too, or standalone, where the editor's width follows
+     the dock: the caller renders the app. */
+  function moveActivityPanel(docked){
+    const grid=HOSTED&&document.querySelector('#pmRoot .assistant-grid'), stage=grid&&grid.querySelector(':scope > .chat-stage');
+    const old=stage&&(docked?stage.querySelector(':scope > .activity-panel.cover'):grid.querySelector(':scope > .activity-panel:not(.cover)'));
+    if(!old||!state.activity.open||grid.classList.contains('history-closed')===(state.historyMode==='pinned'&&!isNarrow())) return false;
+    const tpl=document.createElement('template');tpl.innerHTML=renderActivityPanel(docked?'dock':'cover');
+    const panel=tpl.content.firstElementChild; if(!panel) return false;
+    const scroll=old.querySelector('[data-scroll-key="activity"]'), top=scroll?scroll.scrollTop:0;
+    old.remove();
+    grid.classList.toggle('activity-pinned',docked);
+    if(docked) grid.insertBefore(panel,stage); else stage.appendChild(panel);
+    /* it was open already: it moves, it does not enter again. New nodes replay their entrances (styles.css panel-pin on
+       the panel, the selected record's card), so the first frame at the new size showed the messages through a faded
+       panel. Finite ones only: a running mark keeps its loop. */
+    for(const a of panel.getAnimations({subtree:true})) if(a.effect&&a.effect.getComputedTiming().endTime!==Infinity) a.finish();
+    activityDockLayout=docked;
+    if(top) restoreScroll({activity:top},{});
+    fitActivityTabs();
+    if(state.menu||state.hover){ renderOverlays(); retainHoverAfterRender(); }
+    runAfterRender('scope',{scope:panel,flips:[]});
+    return true;
+  }
+
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
      before/after steps renderApp runs around a full patch -- height FLIPs,
      move FLIPs, rolling digits, scroll custody, hover retention -- so a caller
@@ -5310,8 +5337,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
       state.dialog.geom=clampDemoGeom(state.dialog.geom);lastDemoGeom={...state.dialog.geom};
       applyDemoGeomStyles(document.querySelector('.demo-dialog'),state.dialog.geom);
     }
-    if(state.menu||state.hover)renderOverlays();if(phoneChanged||activityPinChanged||(isNarrow()&&state.historyMode==='pinned'))renderApp();
-    else { syncJumpBottom(); fitActivityTabs(); }
+    if(state.menu||state.hover)renderOverlays();
+    const full=phoneChanged||(isNarrow()&&state.historyMode==='pinned');
+    if(full||(activityPinChanged&&!moveActivityPanel(nextActivityPin)))renderApp();
+    else { syncJumpBottom(); if(!activityPinChanged) fitActivityTabs(); }
   });
 
   // Public deterministic concept API used by the Demo Studio and automated inspection.
@@ -5571,7 +5600,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       // another rAF would let the narrowed, still-docked panel paint first.
       const n=isNarrow(), p=activityDocked();
       /* renderApp keeps activityDockLayout, so a column it already widened for Activity Detail is not drawn twice */
-      if(n!==lastNarrow||p!==activityDockLayout){ lastNarrow=n; renderApp(); }
+      if(n!==lastNarrow||p!==activityDockLayout){ const moved=n===lastNarrow&&moveActivityPanel(p); lastNarrow=n; if(moved) syncJumpBottom(); else renderApp(); }
       else if(document.body && document.body.classList.contains('pm-resizing')){
         // Mid-drag the frame resizes every frame; fitActivityTabs toggles a class and reads rects each
         // time (forced layouts). Tab fit and the jump pill may lag one cadence; a trailing pass lands

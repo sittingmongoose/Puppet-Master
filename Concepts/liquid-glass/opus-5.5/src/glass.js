@@ -551,7 +551,13 @@
     if (e.__lgFy !== fy) { e.__lgFy = fy; e.style.setProperty('--lg-fy', fy); }
     return lp;
   }
-  function viewportVars() { vpKey = innerWidth + 'x' + innerHeight; root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
+  /* Only the frost's painters read the window's size (glass.css: the sheets and the onboarding scrim, and a crossfade's
+     ::after), so it goes on their two rules, as the frost does (applyFrost). On html's inline style it restyled the whole
+     app on every resize in every look: 300-400 ms on the VM before the first frame at the new size (SW-36). */
+  function viewportVars() {
+    vpKey = innerWidth + 'x' + innerHeight;
+    [0, 2].forEach(function (i) { var r = wallpaperPaintRule(i); r.setProperty('--lg-vw', innerWidth + 'px'); r.setProperty('--lg-vh', innerHeight + 'px'); });
+  }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } }, FROST_SCALE = 1 / 3;
   var wallpaperPaintStyle = null;
