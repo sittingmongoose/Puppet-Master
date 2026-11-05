@@ -3070,8 +3070,10 @@ def legacy_audit_state(audit_dir: Path) -> dict[str, Any] | None:
     symlink in any component below the repository root, and the given path resolves to it), the
     name is on LEGACY_AUDIT_DIRS, the pinned inventory lists it, and every inventoried file is a
     regular file with its frozen bytes; repair_closure_matrix.jsonl may extend its frozen bytes
-    with appended lines. The state gives `historical_matrix_lines`: how many matrix rows are
-    historical (None when the directory had no matrix)."""
+    with appended lines. The state gives `historical_matrix_lines` (how many matrix rows are
+    historical; None when the directory had no matrix) and `frozen_files` (the inventoried file
+    names). Files that are not inventoried, such as a source artifact or report added later, get
+    the full rules."""
     audit_dir = audit_dir if audit_dir.is_absolute() else ROOT / audit_dir
     name = audit_dir.name
     if name not in LEGACY_AUDIT_DIRS:
@@ -3107,7 +3109,7 @@ def legacy_audit_state(audit_dir: Path) -> dict[str, Any] | None:
             historical_matrix_lines = lines
         elif hashlib.sha256(data).hexdigest() != frozen.get("sha256"):
             return None
-    return {"historical_matrix_lines": historical_matrix_lines}
+    return {"historical_matrix_lines": historical_matrix_lines, "frozen_files": sorted(entry["files"])}
 
 
 def _legacy_field_list(text: str) -> list[str] | None:
@@ -3140,11 +3142,13 @@ def classify_legacy_format_errors(
     deterministic key as the identity fields of the registry closure they link to; a finding-key
     message about a matrix row is demoted only for those rows."""
     prefix = rel(audit_dir) + "/"
+    frozen = {prefix + name for name in context.get("frozen_files") or ()}
     matrix_file = prefix + "repair_closure_matrix.jsonl"
     report_file = prefix + "audit_report.json"
-    source_files = {prefix + name for name in context.get("source_artifacts", [])}
-    row_files = source_files | {matrix_file}
-    ref_files = row_files | {report_file}
+    # Only inventoried (frozen) files can carry a demotable row or field message.
+    source_files = {prefix + name for name in context.get("source_artifacts", [])} & frozen
+    row_files = source_files | ({matrix_file} & frozen)
+    ref_files = row_files | ({report_file} & frozen)
     historical_lines = context.get("historical_matrix_lines")
     identity_agrees = set(context.get("matrix_identity_agrees") or ())
 
@@ -3174,9 +3178,9 @@ def classify_legacy_format_errors(
 
     for message, m in parsed:
         kind = None
-        if message == f"missing {prefix}{SCOPE_MANIFEST}":
+        if message == f"missing {prefix}{SCOPE_MANIFEST}" and prefix + SCOPE_MANIFEST not in frozen:
             kind = "artifact_predates_schema"
-        elif message == f"missing required {prefix}{IMPACT_MATRIX}":
+        elif message == f"missing required {prefix}{IMPACT_MATRIX}" and prefix + IMPACT_MATRIX not in frozen:
             kind = "artifact_predates_schema"
         elif m:
             file, label, body = m.group("file"), m.group("file") + (m.group("loc") or ""), m.group("body")
@@ -3208,14 +3212,14 @@ def classify_legacy_format_errors(
                 if file != matrix_file or label in identity_agrees:
                     kind = "finding_key_predates_algorithm"
             elif file == prefix + SCOPE_MANIFEST and body.startswith("missing required check_family coverage "):
-                if not context.get("scope_manifest_exists"):
+                if not context.get("scope_manifest_exists") and file not in frozen:
                     kind = "artifact_predates_schema"
-            elif file == report_file and re.fullmatch(r"repair_required_count None does not match computed \d+", body):
+            elif file == report_file and file in frozen and re.fullmatch(r"repair_required_count None does not match computed \d+", body):
                 kind = "report_field_predates_schema"
-            elif file == report_file and any(p.fullmatch(body) for p in _LEGACY_STATUS_BODIES):
+            elif file == report_file and file in frozen and any(p.fullmatch(body) for p in _LEGACY_STATUS_BODIES):
                 if not context.get("report_has_status"):
                     kind = "report_field_predates_schema"
-            elif file == matrix_file and re.fullmatch(r"closure rows present for \d+ non-actionable source rows", body):
+            elif file == matrix_file and file in frozen and re.fullmatch(r"closure rows present for \d+ non-actionable source rows", body):
                 if context.get("extra_coverage_all_inferred"):
                     kind = "inferred_actionability_over_coverage"
         if kind is None:
@@ -3287,6 +3291,7 @@ def validate_audit_dir(
     legacy_context: dict[str, Any] = {
         "legacy_state": legacy_state,
         "historical_matrix_lines": (legacy_state or {}).get("historical_matrix_lines"),
+        "frozen_files": (legacy_state or {}).get("frozen_files") or [],
         "matrix_identity_agrees": set(),
         "source_artifacts": list(requested_artifacts),
         "report_has_status": isinstance(audit_report, dict) and "status" in audit_report,
@@ -3428,8 +3433,10 @@ def validate_audit_dir(
     if extra_coverage:
         errors.append(f"{rel(matrix_path)}: closure rows present for {len(extra_coverage)} non-actionable source rows")
         historical = legacy_context["historical_matrix_lines"]
+        frozen_names = set(legacy_context["frozen_files"])
         legacy_context["extra_coverage_all_inferred"] = isinstance(historical, int) and all(
-            key in inferred_rows and all(0 < line <= historical for line in cover_lines.get(key, [0]))
+            key in inferred_rows and key[0] in frozen_names
+            and all(0 < line <= historical for line in cover_lines.get(key, [0]))
             for key in extra_coverage
         )
 
@@ -5000,8 +5007,9 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             for d in (legacy_dir, second_dir, july):
                 write_fixture(d, historical)
             freeze(legacy_dir, second_dir)
-            check("legacy_state_for_frozen_real_dir", legacy_audit_state(legacy_dir) == {"historical_matrix_lines": 2}
-                  and legacy_audit_state(Path(rel(legacy_dir))) == {"historical_matrix_lines": 2})
+            frozen_names = ["audit_report.json", "repair_closure_matrix.jsonl", "semantic_risks.jsonl"]
+            check("legacy_state_for_frozen_real_dir", legacy_audit_state(legacy_dir) == {"historical_matrix_lines": 2, "frozen_files": frozen_names}
+                  and legacy_audit_state(Path(rel(legacy_dir))) == {"historical_matrix_lines": 2, "frozen_files": frozen_names})
             check("legacy_state_unlisted_name_is_none", legacy_audit_state(july) is None)
             external = tmp / "elsewhere" / legacy_name
             write_fixture(external, historical)
@@ -5042,10 +5050,11 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             # row is never historical.
             appended = matrix_row(3, ident_b, key_a, "closure-A")
             mpath.write_bytes((historical + appended).encode())
-            check("legacy_state_appended_matrix_keeps_history", legacy_audit_state(legacy_dir) == {"historical_matrix_lines": 2})
+            check("legacy_state_appended_matrix_keeps_history", (legacy_audit_state(legacy_dir) or {}).get("historical_matrix_lines") == 2)
 
             lp = rel(legacy_dir) + "/"
             ctx = {"legacy_state": {"historical_matrix_lines": 10}, "historical_matrix_lines": 10,
+                   "frozen_files": ["audit_report.json", "semantic_risks.jsonl", "validator_results.json", "repair_closure_matrix.jsonl"],
                    "matrix_identity_agrees": {lp + "repair_closure_matrix.jsonl:7"},
                    "source_artifacts": ["semantic_risks.jsonl", "validator_results.json"], "report_has_status": False,
                    "scope_manifest_exists": False, "extra_coverage_all_inferred": True}
@@ -5158,6 +5167,34 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                                     source_artifacts=["semantic_risks.jsonl", "validator_results.json"], registry_path=legacy_registry)
             check("legacy_rule_duplicate_result_name_with_stated_level_is_not_inferred",
                   any("non-actionable source rows" in e for e in vr["errors"]), vr["errors"])
+            # Files written after the freeze get the full rules, even in a frozen directory (Sol r2).
+            kept_new, _ = classify_legacy_format_errors(legacy_dir, list(demotable), dict(ctx, frozen_files=["repair_closure_matrix.jsonl"]))
+            check("legacy_rule_unfrozen_files_get_full_rules", all(
+                (m in kept_new) == ("semantic_risks.jsonl" in m or "audit_report.json" in m or "validator_results.json" in m)
+                for m in demotable if "missing" not in m.split(":")[0] and "scope_manifest" not in m and "impact_matrix" not in m), kept_new)
+            (legacy_dir / "validator_results.json").unlink()
+            (legacy_dir / "repair_closure_matrix.jsonl").write_text(historical, encoding="utf-8")
+            freeze(legacy_dir)
+            late = legacy_dir / "owner_routing_findings.jsonl"
+            late.write_text(json.dumps({"severity": "low", "summary": "added after the freeze", "finding_key": "not-sfk"}) + "\n", encoding="utf-8")
+            late_report = validate_audit_dir(legacy_dir, require_matrix=True, require_effective_status=False,
+                                             source_artifacts=["semantic_risks.jsonl", "owner_routing_findings.jsonl"], registry_path=legacy_registry)
+            late_demoted = [m for ms in late_report["legacy_format_rule"]["examples"].values() for m in ms]
+            check("legacy_rule_new_source_file_gets_full_rules", legacy_audit_state(legacy_dir) is not None
+                  and any("owner_routing_findings.jsonl:1: finding_key must use deterministic" in e for e in late_report["errors"])
+                  and any("owner_routing_findings.jsonl:1: audit finding missing required fields" in e for e in late_report["errors"])
+                  and not any("owner_routing_findings.jsonl" in m for m in late_demoted), late_report["errors"])
+            late.unlink()
+            third = audits / sorted(LEGACY_AUDIT_DIRS)[2]
+            write_fixture(third, historical)
+            (third / "audit_report.json").unlink()
+            freeze(third)
+            (third / "audit_report.json").write_text("{}", encoding="utf-8")
+            third_report = validate_audit_dir(third, require_matrix=True, require_effective_status=False,
+                                              source_artifacts=["semantic_risks.jsonl"], registry_path=legacy_registry)
+            check("legacy_rule_new_report_gets_full_rules", legacy_audit_state(third) is not None
+                  and any("audit_report.json: baseline_ref must be a non-empty string" in e for e in third_report["errors"])
+                  and any("audit_report.json: repair_required_count None does not match" in e for e in third_report["errors"]), third_report["errors"])
         finally:
             LEGACY_INVENTORY_SHA256 = saved_pin
             _LEGACY_INVENTORY_CACHE.clear()
