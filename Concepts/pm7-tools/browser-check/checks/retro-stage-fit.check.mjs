@@ -457,8 +457,8 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	while (performance.now() - t0 < ms) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
-		/* (each frame's time, at most 50 ms: a stall is not time Pip drawn head or hand changed for at least 200 ms) */
-		const tNow = performance.now(), dtF = Math.min(50, tNow - tPrev); tPrev = tNow;
+		// Retro holds each distinct drawn pose for 50 ms; unchanged rAF samples contribute no motion.
+		const tNow = performance.now();
 		const s2 = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 		if (!s2 || !s2.ps) { out.geometryError = 'stage or physics disappeared'; break; }
 		const ps = s2.ps;
