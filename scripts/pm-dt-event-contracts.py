@@ -984,6 +984,26 @@ def schema_type_cases(c, f, schemas):
                 yield definition, label, changed
 
 
+def captured_scope_case(f):
+    """One captured-scope fact, with its schema/metadata/commitment copies.
+
+    The Project event stays unchanged. Changing the captured source role to a
+    valid application role must refresh its carrier schema id and required
+    application metadata; leaving those stale would mask the scope join.
+    """
+    app = next((variant for variant in f['positive_variants'] if variant['event']['scope_kind'] == 'application'), None)
+    if app is None:
+        return None
+    prepared, completed, event = copy.deepcopy([f[key] for key in ['prepared_source', 'completed_source', 'event_record']])
+    for record, observation in [(prepared, app['prepared']), (completed, app['completed'])]:
+        record['envelope_context']['scope_kind'] = 'application'
+        record['schema_id'] = observation['schema_id']
+        for field in ['application_scope', 'owner_operation_id', 'original_owner_operation_id']:
+            record[field] = copy.deepcopy(observation[field])
+    completed['prepared_sha256'] = hashlib.sha256(source_bytes(prepared)).hexdigest()
+    return prepared, completed, event
+
+
 def round6_corpus(c, f, schemas):
     """One-defect numeric, boolean-authority and typed-envelope controls."""
     name = c['event_type']; slug = name.replace('.', '_'); cases = []
@@ -1145,6 +1165,13 @@ def round6_corpus(c, f, schemas):
                       lambda mode=mode: source_valid(c, a, b, e, schemas, historical=mode), 'accepted'))
     for value in [True, '0', None, [], {}, -1, 1.25]:
         cases.append(('type/unsigned_integer/' + repr(value), lambda value=value: unsigned_integer_valid(value), True))
+    scope_case = captured_scope_case(f)
+    if scope_case is not None:
+        assert source_valid(c, a, b, e, schemas) == 'accepted'
+        source_schema = schemas[slug + '_application_source']
+        assert all(Draft202012Validator(source_schema, format_checker=FormatChecker()).is_valid(stage) for stage in scope_case[:2])
+        cases.append(('scope/captured_source_kind',
+                      lambda scope_case=scope_case: source_valid(c, *scope_case, schemas), 'accepted'))
     return cases
 
 
@@ -1152,7 +1179,10 @@ def round6_checks(c, f, schemas, check):
     name = c['event_type']; slug = name.replace('.', '_')
     for label, call, accepting in round6_corpus(c, f, schemas):
         actual = call()
-        check(actual not in accepting if isinstance(accepting, set) else actual != accepting, name + ': round6 ' + label)
+        if label == 'scope/captured_source_kind':
+            check(actual == 'scope_refused', name + ': isolated captured source scope')
+        else:
+            check(actual not in accepting if isinstance(accepting, set) else actual != accepting, name + ': round6 ' + label)
     for definition, label, value in schema_type_cases(c, f, schemas):
         check(not Draft202012Validator(schemas[definition], format_checker=FormatChecker()).is_valid(value), name + ': numeric/boolean schema ' + label)
 
