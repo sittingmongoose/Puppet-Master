@@ -36393,7 +36393,7 @@ acceptance_criteria:
   it lands on the route chooser, never on a premature Review summary or a redundant Use nearby devices/Find one I already
   use pre-step.
 - The bounded look choice appears at welcome before Project/infrastructure choices. It offers five ordered families
-  (Basic, Friendly, Retro, Glass and NieR) plus one Light/Dark/Auto control, the same single scheme control as SSYS-010
+  (Basic, Friendly, Glass, Retro and NieR) plus one Light/Dark/Auto control, the same single scheme control as SSYS-010
   (DL-301, DL-340). Auto follows the system appearance live, including changes while onboarding is open. A prior Auto
   choice from Settings or the header is retained unless the person chooses Light or Dark; the draft and look-choice
   payload retain theme_mode auto, and Back restores that selected mode rather than its resolved Light/Dark appearance.
