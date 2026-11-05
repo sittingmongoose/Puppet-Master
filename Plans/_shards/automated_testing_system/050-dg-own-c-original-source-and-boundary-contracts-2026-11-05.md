@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7479-L7655
+Source lines: L7479-L7658
 
-Source SHA256: `da5505f2141a29b8c507df10d0f656e547d428f38d435315a86d53ba4f17364d`
+Source SHA256: `bb88308334fa58c38d787bdaa07aeb1504a4b8faf3c0db7d4df66c42ecc8976a`
 
 ---
 
@@ -38,6 +38,9 @@ acceptance_criteria:
 - Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
   native runtime or governance proof.
 validation_surfaces:
+- python3 scripts/pm_goal_own_c3_w12a_p2_oracles.py --captures <raw-evidence-directory> --output <result.json>
+- Plans/goal_own_c_contracts/w12a-corpus.v2.json
+- Plans/goal_own_c_contracts/w12a-successor-v3/protocol.md
 - python3 scripts/pm_goal_own_c3_w12a_oracles.py --captures <raw-evidence-directory> --output <result.json>
 - Plans/goal_own_c_contracts/w12a-corpus.v1.json
 - python3 scripts/pm_goal_own_c3_w12_successor_oracles.py
@@ -66,7 +69,7 @@ negative_constraints:
 - No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
 ```
 
-The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval and complete original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12a's original-owner corpus and explicit remaining W1 obligations are selected by `Plans/goal_own_c_contracts/w12a-corpus.v1.json`; a bounded assertion pass returns exit 2 while whole-root closure is incomplete. No full W1 PASS follows from these captures.
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval and complete original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12a part 2 selects its newly authored current physical/source edition and exact remaining obligations through `Plans/goal_own_c_contracts/w12a-corpus.v2.json` and `Plans/goal_own_c_contracts/w12a-successor-v3/protocol.md`; the v1 corpus and its JSON selection remain history. A bounded whole-corpus assertion pass returns exit 2 while W1 closure is incomplete. No full W1 PASS follows from these captures.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
 
