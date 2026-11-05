@@ -36,7 +36,7 @@ This lane's own review of its timestamp fields is interim only until the shared 
 **Owner text:** ATS-315 and ATS-316 state the rule (`Plans/Automated_Testing_System.md:7271`, `:7328`). Shards and the index are regenerated.
 
 **Verify:**
-- `fixture-pass/one-field-type-probes.txt`: 660 dedup output mutations, 0 accepted, 0 raised. 218 monthly and 176 prune output mutations leave only the fields listed in Part 2 unaffected. Inputs still accepted are fields the job never reads (`updated_at`, `versions`, unselected originals), which `same()` then preserves exactly.
+- `fixture-pass/one-field-type-probes.txt`: 660 dedup, 218 monthly and 176 prune output mutations: 0 accepted, 0 raised. Input mutations still accepted are valid values (a null edit or access falls back to creation; a lower score) or fields the job never reads (dedup `updated_at`, `versions` and unselected originals; archive `version_ref`, input `summary`, prune `kind`), which `same()` then preserves exactly. Selected `created_at` is Part 2 item 3.
 - `fixture-pass/full-process-probes.json`: complete `--family` processes, one at a time, for the six policy families. Controls exit 0. Wrong Boolean expected results: 6 of 6 exit 1. Restored `==`: 6 of 6 exit 1. Every removed new guard: exit 1.
 
 ### B2: fractional seconds
