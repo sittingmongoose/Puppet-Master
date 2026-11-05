@@ -2214,6 +2214,37 @@ def load_json_object(path: Path, errors: list[str], *, required: bool = True) ->
     return data
 
 
+class AuditDiagnostics(list):
+    """The error messages of one audit-directory validation, each paired with the structure its
+    producer recorded: the exact path object it read, the row, the kind and the field data (or
+    None when a producer records nothing). The messages are exactly the text the validator always
+    printed. The legacy format rule reads only the structure, never the text, so no file name or
+    message content can steer it."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.meta: list[dict[str, Any] | None] = []
+
+    def append(self, message: str) -> None:  # noqa: D401 - list API
+        super().append(message)
+        self.meta.append(None)
+
+    def extend(self, messages: Any) -> None:
+        for message in messages:
+            self.append(message)
+
+    def add(self, message: str, **meta: Any) -> None:
+        super().append(message)
+        self.meta.append(meta)
+
+
+def _diag(errors: list[str], message: str, **meta: Any) -> None:
+    if isinstance(errors, AuditDiagnostics):
+        errors.add(message, **meta)
+    else:
+        errors.append(message)
+
+
 def validate_ref_fields(
     row: dict[str, Any],
     expected: dict[str, str],
@@ -2222,15 +2253,19 @@ def validate_ref_fields(
     *,
     require: bool,
     allow_row_scoped_refs: bool = False,
+    origin: Path | None = None,
+    row_key: Any = None,
 ) -> None:
     for field, expected_value in expected.items():
         value = row.get(field)
         if value is None:
             if require:
-                errors.append(f"{path_label}: missing required ref field {field}")
+                _diag(errors, f"{path_label}: missing required ref field {field}",
+                      origin=origin, row=row_key, kind="ref_missing", field=field)
             continue
         if not isinstance(value, str) or not value.strip():
-            errors.append(f"{path_label}: {field} must be a non-empty string")
+            _diag(errors, f"{path_label}: {field} must be a non-empty string",
+                  origin=origin, row=row_key, kind="ref_empty", field=field)
             continue
         if allow_row_scoped_refs and field in ROW_SCOPED_REF_FIELDS:
             continue
@@ -2248,7 +2283,8 @@ def load_audit_report(audit_dir: Path, errors: list[str]) -> tuple[dict[str, Any
     for field in AUDIT_REF_FIELDS:
         value = report.get(field)
         if not isinstance(value, str) or not value.strip():
-            errors.append(f"{label}: {field} must be a non-empty string")
+            _diag(errors, f"{label}: {field} must be a non-empty string",
+                  origin=report_path, row=None, kind="ref_empty", field=field)
             refs[field] = ""
         else:
             refs[field] = value
@@ -2272,14 +2308,18 @@ def validate_source_finding_row(
     path_label: str,
     refs: dict[str, str],
     errors: list[str],
+    origin: Path | None = None,
+    row_key: Any = None,
 ) -> None:
     if not is_finding_row(row, artifact):
         return
     row = normalized_audit_finding_row(row)
     missing = sorted(AUDIT_SOURCE_FINDING_REQUIRED_FIELDS - set(row))
     if missing:
-        errors.append(f"{path_label}: audit finding missing required fields {missing}")
-    validate_ref_fields(row, refs, path_label, errors, require=False, allow_row_scoped_refs=True)
+        _diag(errors, f"{path_label}: audit finding missing required fields {missing}",
+              origin=origin, row=row_key, kind="finding_missing_fields", fields=list(missing))
+    validate_ref_fields(row, refs, path_label, errors, require=False, allow_row_scoped_refs=True,
+                        origin=origin, row_key=row_key)
     for field in AUDIT_SOURCE_FINDING_LIST_FIELDS:
         if field in row and not isinstance(row.get(field), list):
             errors.append(f"{path_label}: {field} must be a list")
@@ -2288,13 +2328,16 @@ def validate_source_finding_row(
     finding_key = row.get("finding_key")
     if isinstance(finding_key, str):
         if not finding_key.startswith("sfk-"):
-            errors.append(f"{path_label}: finding_key must use deterministic sfk-* form, got {finding_key!r}")
+            _diag(errors, f"{path_label}: finding_key must use deterministic sfk-* form, got {finding_key!r}",
+                  origin=origin, row=row_key, kind="key_algorithm")
         if audit_id and (finding_key.startswith(audit_id) or f"{audit_id}::" in finding_key or "::" in finding_key):
-            errors.append(f"{path_label}: finding_key must not contain audit-specific identity {finding_key!r}")
+            _diag(errors, f"{path_label}: finding_key must not contain audit-specific identity {finding_key!r}",
+                  origin=origin, row=row_key, kind="key_algorithm")
         if row.get("schema_id") != "pm.semantic_risk.v1":
             expected_key = compute_finding_key(row)
             if finding_key != expected_key:
-                errors.append(f"{path_label}: finding_key {finding_key} does not match deterministic {expected_key}")
+                _diag(errors, f"{path_label}: finding_key {finding_key} does not match deterministic {expected_key}",
+                      origin=origin, row=row_key, kind="key_algorithm")
 
 
 def validate_source_jsonl_artifact(path: Path, artifact: str, refs: dict[str, str], errors: list[str]) -> int:
@@ -2303,10 +2346,11 @@ def validate_source_jsonl_artifact(path: Path, artifact: str, refs: dict[str, st
     finding_count = 0
     for row in read_jsonl(path, errors, required=True):
         label = f"{rel(path)}:{row.get('_line_no')}"
-        validate_ref_fields(row, refs, label, errors, require=False, allow_row_scoped_refs=True)
+        line_no = row.get("_line_no")
+        validate_ref_fields(row, refs, label, errors, require=False, allow_row_scoped_refs=True, origin=path, row_key=line_no)
         if is_finding_row(row, artifact):
             finding_count += 1
-            validate_source_finding_row(row, artifact, label, refs, errors)
+            validate_source_finding_row(row, artifact, label, refs, errors, origin=path, row_key=line_no)
     return finding_count
 
 
@@ -2314,7 +2358,7 @@ def validate_source_json_artifact(path: Path, artifact: str, refs: dict[str, str
     data = load_json_object(path, errors, required=False)
     if data is None:
         return 0
-    validate_ref_fields(data, refs, rel(path), errors, require=True, allow_row_scoped_refs=True)
+    validate_ref_fields(data, refs, rel(path), errors, require=True, allow_row_scoped_refs=True, origin=path, row_key="$")
     finding_count = 0
     for field in ("warnings", "findings", "semantic_risks"):
         values = data.get(field)
@@ -2324,10 +2368,11 @@ def validate_source_json_artifact(path: Path, artifact: str, refs: dict[str, str
             if not isinstance(item, dict):
                 continue
             label = f"{rel(path)}:{field}[{index}]"
-            validate_ref_fields(item, refs, label, errors, require=False, allow_row_scoped_refs=True)
+            validate_ref_fields(item, refs, label, errors, require=False, allow_row_scoped_refs=True,
+                                origin=path, row_key=f"{field}[{index}]")
             if is_finding_row(item, artifact):
                 finding_count += 1
-                validate_source_finding_row(item, artifact, label, refs, errors)
+                validate_source_finding_row(item, artifact, label, refs, errors, origin=path, row_key=f"{field}[{index}]")
     return finding_count
 
 
@@ -2349,7 +2394,11 @@ def validate_source_artifacts(
 
 def validate_scope_manifest(audit_dir: Path, refs: dict[str, str], errors: list[str]) -> dict[str, Any]:
     path = audit_dir / SCOPE_MANIFEST
-    rows = read_jsonl(path, errors, required=True)
+    if not path.exists():
+        _diag(errors, f"missing {rel(path)}", origin=path, kind="artifact_absent")
+        rows: list[dict[str, Any]] = []
+    else:
+        rows = read_jsonl(path, errors, required=True)
     check_ids: set[str] = set()
     families: set[str] = set()
     classified_rows = 0
@@ -2415,7 +2464,8 @@ def validate_scope_manifest(audit_dir: Path, refs: dict[str, str], errors: list[
             finding_keys.add(key)
     missing_families = sorted(SCOPE_REQUIRED_FAMILIES - families)
     if missing_families:
-        errors.append(f"{rel(path)}: missing required check_family coverage {missing_families}")
+        _diag(errors, f"{rel(path)}: missing required check_family coverage {missing_families}",
+              origin=path, kind="scope_coverage", manifest_exists=path.exists())
     return {
         "path": rel(path),
         "row_count": len(rows),
@@ -2457,7 +2507,7 @@ def validate_repair_impact_matrix(
     path = audit_dir / IMPACT_MATRIX
     if not path.exists():
         if actionable_rows:
-            errors.append(f"missing required {rel(path)}")
+            _diag(errors, f"missing required {rel(path)}", origin=path, kind="artifact_absent")
         return {
             "path": rel(path),
             "row_count": 0,
@@ -2532,19 +2582,23 @@ def validate_audit_report_status(
 ) -> None:
     if audit_report is None:
         return
-    label = rel(audit_dir / "audit_report.json")
+    origin = audit_dir / "audit_report.json"
+    label = rel(origin)
     reported_count = audit_report.get("repair_required_count")
     if reported_count != repair_required_count:
-        errors.append(
-            f"{label}: repair_required_count {reported_count!r} does not match computed {repair_required_count}"
-        )
+        _diag(errors, f"{label}: repair_required_count {reported_count!r} does not match computed {repair_required_count}",
+              origin=origin, kind="report_count", reported_absent=reported_count is None)
     status = str(audit_report.get("status", "")).upper()
+    status_stated = "status" in audit_report
     if repair_required_count > 0 and status != "BLOCKED":
-        errors.append(f"{label}: status must be BLOCKED when repair_required_count is {repair_required_count}")
+        _diag(errors, f"{label}: status must be BLOCKED when repair_required_count is {repair_required_count}",
+              origin=origin, kind="report_status", status_stated=status_stated)
     if repair_required_count == 0 and status == "BLOCKED":
-        errors.append(f"{label}: status must not be BLOCKED when repair_required_count is 0")
+        _diag(errors, f"{label}: status must not be BLOCKED when repair_required_count is 0",
+              origin=origin, kind="report_status", status_stated=status_stated)
     if repair_required_count == 0 and finding_count > 0 and status == "PASS":
-        errors.append(f"{label}: status should be PASS_WITH_WARNINGS when non-actionable findings exist")
+        _diag(errors, f"{label}: status should be PASS_WITH_WARNINGS when non-actionable findings exist",
+              origin=origin, kind="report_status", status_stated=status_stated)
 
 
 def validate_terminal_state_projection(
@@ -3034,18 +3088,6 @@ LEGACY_MATRIX_CLOSURE_FIELDS = frozenset({
 })
 LEGACY_MATRIX_EVOLUTION_FIELDS = frozenset(MATRIX_REQUIRED_FIELDS - LEGACY_MATRIX_CLOSURE_FIELDS)
 LEGACY_LIST_FIELDS = frozenset({"source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"})
-LEGACY_REF_ALT = "|".join(sorted(AUDIT_REF_FIELDS))
-_LEGACY_REST = re.compile(r"(?P<loc>:[^\s:]+)?: (?P<body>.+)", re.S)
-# A Python repr of a string, exactly as the validator's {value!r} writes it: the whole tail of the
-# message must be that one literal, so nothing can follow it.
-_LEGACY_REPR = r"(?:'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\")"
-_LEGACY_STATUS_BODIES = (
-    re.compile(r"^status must be BLOCKED when repair_required_count is \d+$"),
-    re.compile(r"^status must not be BLOCKED when repair_required_count is 0$"),
-    re.compile(r"^status should be PASS_WITH_WARNINGS when non-actionable findings exist$"),
-)
-
-
 _LEGACY_INVENTORY_CACHE: dict[str, Any] = {}
 
 
@@ -3115,147 +3157,94 @@ def legacy_audit_state(audit_dir: Path) -> dict[str, Any] | None:
     return {"historical_matrix_lines": historical_matrix_lines, "frozen_files": sorted(entry["files"])}
 
 
-def _legacy_field_list(text: str) -> list[str] | None:
-    import ast  # noqa: PLC0415
-
-    try:
-        value = ast.literal_eval(text)
-    except (ValueError, SyntaxError):
-        return None
-    if isinstance(value, list) and value and all(isinstance(item, str) for item in value):
-        return value
-    return None
-
-
 def classify_legacy_format_errors(
     audit_dir: Path,
     errors: list[str],
     context: dict[str, Any],
 ) -> tuple[list[str], dict[str, list[str]]]:
-    """Split `errors` of a legacy audit dir into (kept errors, demoted messages by kind).
+    """Split the errors of a legacy audit dir into (kept errors, demoted messages by kind).
 
-    `context` carries what the messages alone cannot say: the source artifacts the run
-    covered (`source_artifacts`), whether audit_report.json states a status
-    (`report_has_status`), whether the scope manifest exists (`scope_manifest_exists`), and
-    whether every non-actionable source row a closure row covers was judged by the
-    compatibility inference rather than by an explicit field, from a historical closure row
-    (`extra_coverage_all_inferred`). `historical_matrix_lines` bounds the matrix rows that are
-    historical: a message about a later (appended) matrix row is never demoted.
-    `matrix_identity_agrees` holds the matrix row labels whose identity fields give the same
-    deterministic key as the identity fields of the registry closure they link to; a finding-key
-    message about a matrix row is demoted only for those rows."""
-    prefix = rel(audit_dir) + "/"
-    frozen = {prefix + name for name in context.get("frozen_files") or ()}
-    matrix_file = prefix + "repair_closure_matrix.jsonl"
-    report_file = prefix + "audit_report.json"
-    # Only inventoried (frozen) files can carry a demotable row or field message.
-    source_files = {prefix + name for name in context.get("source_artifacts", [])} & frozen
-    row_files = source_files | ({matrix_file} & frozen)
-    ref_files = row_files | ({report_file} & frozen)
+    It reads only the structure each producer recorded with its message (AuditDiagnostics.meta):
+    the exact path object the producer read, the row, the kind and the field data. The message
+    text is never parsed, so a file name or message content cannot steer it; an error without
+    recorded structure is kept. `context` says which files are frozen (`frozen_files`), how many
+    matrix rows are historical (`historical_matrix_lines`), which matrix rows' identity agrees
+    with their registry closure (`matrix_identity_agrees`, by line), which source artifacts the
+    run read (`source_artifacts`), whether any input read is new (`unfrozen_inputs`) or a
+    symbolic link (`symlinked_inputs`, which keeps every error), and whether every
+    non-actionable row a historical closure covers was judged by the compatibility inference
+    (`extra_coverage_all_inferred`)."""
+    meta = list(getattr(errors, "meta", None) or [])
+    if len(meta) != len(errors) or context.get("symlinked_inputs"):
+        return list(errors), {}
+    frozen = set(context.get("frozen_files") or ())
     historical_lines = context.get("historical_matrix_lines")
     identity_agrees = set(context.get("matrix_identity_agrees") or ())
+    requested = set(context.get("source_artifacts") or ())
+    inputs_frozen = not context.get("unfrozen_inputs")
+    matrix_name, report_name = "repair_closure_matrix.jsonl", "audit_report.json"
 
-    def historical_matrix_row(loc: str | None) -> bool:
-        if not loc:
-            return True
-        number = loc[1:]
-        return number.isdigit() and isinstance(historical_lines, int) and int(number) <= historical_lines
-
-    # A message is attributed to the one known input path it starts with, matched in full; a
-    # message that starts with no known path, or with more than one, keeps its error. A requested
-    # artifact whose name could itself spell a label (a colon or line break) disables the rule for
-    # the directory, so no file name can impersonate another file's diagnostic.
-    names = list(context.get("source_artifacts") or [])
-    if any(not isinstance(n, str) or any(ch in n for ch in ":\n\r") for n in names):
-        return list(errors), {}
-    known = {prefix + n for n in names} | {matrix_file, report_file, prefix + SCOPE_MANIFEST, prefix + IMPACT_MATRIX}
-
-    class _Label:
-        def __init__(self, file: str, loc: str | None, body: str) -> None:
-            self._groups = {"file": file, "loc": loc, "body": body}
-
-        def group(self, key: str) -> Any:
-            return self._groups[key]
-
-    def attribute(message: str) -> "_Label | None":
-        hits = [path for path in known if message.startswith(path + ":")]
-        if len(hits) != 1:
+    def own_name(origin: Any) -> str | None:
+        """The file name if `origin` is a regular, non-symlinked file directly in this audit dir."""
+        if not isinstance(origin, Path) or origin.parent != audit_dir:
             return None
-        rest = _LEGACY_REST.fullmatch(message[len(hits[0]):])
-        return _Label(hits[0], rest.group("loc"), rest.group("body")) if rest else None
+        try:
+            if origin.is_symlink():
+                return None
+            contained_path(ROOT, f"Plans/.audits/{audit_dir.name}/{origin.name}")
+        except (AnchorError, OSError):
+            return None
+        return origin.name
 
-    parsed: list[tuple[str, Any]] = [(e, attribute(e)) for e in errors]
-    missing_by_label: dict[str, set[str]] = {}
-    for _, m in parsed:
-        if not m or m.group("file") not in row_files:
-            continue
-        body = m.group("body")
-        for head in ("missing required fields ", "audit finding missing required fields "):
-            if body.startswith(head):
-                fields = _legacy_field_list(body[len(head):])
-                if fields:
-                    missing_by_label.setdefault(m.group("file") + (m.group("loc") or ""), set()).update(fields)
+    def historical_row(row: Any) -> bool:
+        return isinstance(row, int) and not isinstance(row, bool) and isinstance(historical_lines, int) and 0 < row <= historical_lines
 
     kept: list[str] = []
     demoted: dict[str, list[str]] = {}
-
-    def demote(kind: str, message: str) -> None:
-        demoted.setdefault(kind, []).append(message)
-
-    # An absent newer artifact is a historical-format fact only while everything the run read is
-    # historical: once a new report or source artifact appears, the directory holds new audit
-    # content, and the newer artifacts are required of it.
-    inputs_frozen = not context.get("unfrozen_inputs")
-    for message, m in parsed:
+    for message, info in zip(errors, meta):
         kind = None
-        if message == f"missing {prefix}{SCOPE_MANIFEST}" and prefix + SCOPE_MANIFEST not in frozen and inputs_frozen:
-            kind = "artifact_predates_schema"
-        elif message == f"missing required {prefix}{IMPACT_MATRIX}" and prefix + IMPACT_MATRIX not in frozen and inputs_frozen:
-            kind = "artifact_predates_schema"
-        elif m:
-            file, label, body = m.group("file"), m.group("file") + (m.group("loc") or ""), m.group("body")
-            if file == matrix_file and not historical_matrix_row(m.group("loc")):
-                pass  # an appended matrix row meets the full rules
-            elif file in ref_files and re.fullmatch(rf"missing required ref field (?:{LEGACY_REF_ALT})", body):
-                kind = "reference_field_predates_schema"
-            elif file in ref_files and re.fullmatch(rf"(?:{LEGACY_REF_ALT}) must be a non-empty string", body):
-                kind = "reference_field_predates_schema"
-            elif file == matrix_file and body.startswith("missing required fields "):
-                fields = _legacy_field_list(body[len("missing required fields "):])
-                if fields and set(fields) <= LEGACY_MATRIX_EVOLUTION_FIELDS:
+        if isinstance(info, dict):
+            name, k = own_name(info.get("origin")), info.get("kind")
+            frozen_source = name is not None and name in frozen and name in requested
+            frozen_matrix_row = name == matrix_name and name in frozen and historical_row(info.get("row"))
+            if k in ("ref_missing", "ref_empty") and info.get("field") in AUDIT_REF_FIELDS:
+                if frozen_source or frozen_matrix_row or (name == report_name and name in frozen):
+                    kind = "reference_field_predates_schema"
+            elif k == "finding_missing_fields":
+                if frozen_source and info.get("fields") and set(info["fields"]) <= AUDIT_SOURCE_FINDING_REQUIRED_FIELDS:
                     kind = "row_field_predates_schema"
-            elif file in source_files and body.startswith("audit finding missing required fields "):
-                fields = _legacy_field_list(body[len("audit finding missing required fields "):])
-                if fields and set(fields) <= AUDIT_SOURCE_FINDING_REQUIRED_FIELDS:
+            elif k == "matrix_missing_fields":
+                if frozen_matrix_row and info.get("fields") and set(info["fields"]) <= LEGACY_MATRIX_EVOLUTION_FIELDS:
                     kind = "row_field_predates_schema"
-            elif file in row_files and (lm := re.fullmatch(r"(\w+) must be a list", body)):
-                if lm.group(1) in LEGACY_LIST_FIELDS and lm.group(1) in missing_by_label.get(label, set()):
+            elif k == "matrix_list_type":
+                if frozen_matrix_row and info.get("absent") is True and info.get("field") in LEGACY_LIST_FIELDS:
                     kind = "row_field_predates_schema"
-            elif file == matrix_file and body == "finding_key must be non-empty":
-                if "finding_key" in missing_by_label.get(label, set()):
+            elif k == "matrix_key_empty":
+                if frozen_matrix_row and info.get("absent") is True:
                     kind = "row_field_predates_schema"
-            elif file in row_files and (
-                re.fullmatch(r"finding_key \S+ does not match deterministic sfk-[0-9a-f]{24}", body)
-                or re.fullmatch(r"finding_key must use deterministic sfk-\* form, got " + _LEGACY_REPR, body)
-                or re.fullmatch(r"finding_key must not contain audit-specific identity " + _LEGACY_REPR, body)
-            ):
-                if file != matrix_file or label in identity_agrees:
+            elif k == "key_algorithm":
+                if frozen_source or (frozen_matrix_row and info.get("row") in identity_agrees):
                     kind = "finding_key_predates_algorithm"
-            elif file == prefix + SCOPE_MANIFEST and body.startswith("missing required check_family coverage "):
-                if not context.get("scope_manifest_exists") and file not in frozen and inputs_frozen:
+            elif k == "artifact_absent":
+                if name in (SCOPE_MANIFEST, IMPACT_MATRIX) and name not in frozen and inputs_frozen \
+                        and not info["origin"].exists():
                     kind = "artifact_predates_schema"
-            elif file == report_file and file in frozen and re.fullmatch(r"repair_required_count None does not match computed \d+", body):
-                kind = "report_field_predates_schema"
-            elif file == report_file and file in frozen and any(p.fullmatch(body) for p in _LEGACY_STATUS_BODIES):
-                if not context.get("report_has_status"):
+            elif k == "scope_coverage":
+                if name == SCOPE_MANIFEST and name not in frozen and inputs_frozen and info.get("manifest_exists") is False:
+                    kind = "artifact_predates_schema"
+            elif k == "report_count":
+                if name == report_name and name in frozen and info.get("reported_absent") is True:
                     kind = "report_field_predates_schema"
-            elif file == matrix_file and file in frozen and re.fullmatch(r"closure rows present for \d+ non-actionable source rows", body):
-                if context.get("extra_coverage_all_inferred"):
+            elif k == "report_status":
+                if name == report_name and name in frozen and info.get("status_stated") is False:
+                    kind = "report_field_predates_schema"
+            elif k == "over_coverage":
+                if name == matrix_name and name in frozen and context.get("extra_coverage_all_inferred"):
                     kind = "inferred_actionability_over_coverage"
         if kind is None:
             kept.append(message)
         else:
-            demote(kind, message)
+            demoted.setdefault(kind, []).append(message)
     return kept, demoted
 
 
@@ -3263,7 +3252,7 @@ def apply_legacy_format_rule(audit_dir: Path, report: dict[str, Any], context: d
     """Apply the legacy format rule to a finished audit-dir report (in place)."""
     if context.get("legacy_state") is None:
         return report
-    kept, demoted = classify_legacy_format_errors(audit_dir, list(report.get("errors", [])), context)
+    kept, demoted = classify_legacy_format_errors(audit_dir, report.get("errors", []), context)
     counts = {kind: len(messages) for kind, messages in sorted(demoted.items())}
     report["errors"] = kept
     report["legacy_format_rule"] = {
@@ -3291,7 +3280,7 @@ def validate_audit_dir(
     source_artifacts: list[str] | None,
     registry_path: Path,
 ) -> dict[str, Any]:
-    errors: list[str] = []
+    errors: list[str] = AuditDiagnostics()
     warnings: list[str] = []
     audit_dir = audit_dir if audit_dir.is_absolute() else ROOT / audit_dir
     matrix_path = audit_dir / "repair_closure_matrix.jsonl"
@@ -3328,6 +3317,12 @@ def validate_audit_dir(
         ),
         "matrix_identity_agrees": set(),
         "source_artifacts": list(requested_artifacts),
+        # Any input the run reads that is a symbolic link disqualifies the directory: what a
+        # diagnostic names is then not the file that was read.
+        "symlinked_inputs": sorted(
+            name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX}
+            if (audit_dir / name).is_symlink()
+        ),
         "report_has_status": isinstance(audit_report, dict) and "status" in audit_report,
         "scope_manifest_exists": (audit_dir / SCOPE_MANIFEST).exists(),
         "extra_coverage_all_inferred": False,
@@ -3390,10 +3385,13 @@ def validate_audit_dir(
 
     for row in rows:
         label = f"{rel(matrix_path)}:{row.get('_line_no')}"
+        line_no = row.get("_line_no")
         missing = sorted(MATRIX_REQUIRED_FIELDS - set(row))
         if missing:
-            errors.append(f"{label}: missing required fields {missing}")
-        validate_ref_fields(row, audit_refs, label, errors, require=True, allow_row_scoped_refs=True)
+            _diag(errors, f"{label}: missing required fields {missing}",
+                  origin=matrix_path, row=line_no, kind="matrix_missing_fields", fields=list(missing))
+        validate_ref_fields(row, audit_refs, label, errors, require=True, allow_row_scoped_refs=True,
+                            origin=matrix_path, row_key=line_no)
         status = str(row.get("closure_status", ""))
         status_counts[status] = status_counts.get(status, 0) + 1
         if status not in ALLOWED_STATUSES:
@@ -3411,12 +3409,15 @@ def validate_audit_dir(
             )
         finding_key = row.get("finding_key")
         if not isinstance(finding_key, str) or not finding_key.strip():
-            errors.append(f"{label}: finding_key must be non-empty")
+            _diag(errors, f"{label}: finding_key must be non-empty",
+                  origin=matrix_path, row=line_no, kind="matrix_key_empty", absent="finding_key" not in row)
         elif finding_key != compute_finding_key(row):
-            errors.append(f"{label}: finding_key {finding_key} does not match deterministic {compute_finding_key(row)}")
+            _diag(errors, f"{label}: finding_key {finding_key} does not match deterministic {compute_finding_key(row)}",
+                  origin=matrix_path, row=line_no, kind="key_algorithm")
         for field in ("source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"):
             if not isinstance(row.get(field), list):
-                errors.append(f"{label}: {field} must be a list")
+                _diag(errors, f"{label}: {field} must be a list",
+                      origin=matrix_path, row=line_no, kind="matrix_list_type", field=field, absent=field not in row)
         closure_reason = row.get("closure_reason")
         if not isinstance(closure_reason, str) or not closure_reason.strip():
             errors.append(f"{label}: closure_reason must be non-empty")
@@ -3428,7 +3429,7 @@ def validate_audit_dir(
         else:
             registry_row = registry_by_id[registry_closure_id]
             if compute_finding_key(row) == compute_finding_key(registry_row):
-                legacy_context["matrix_identity_agrees"].add(label)
+                legacy_context["matrix_identity_agrees"].add(line_no)
             if registry_row.get("finding_key") != finding_key:
                 errors.append(f"{label}: registry row finding_key does not match matrix finding_key")
             if registry_row.get("closure_status") != status:
@@ -3465,7 +3466,8 @@ def validate_audit_dir(
 
     extra_coverage = sorted(covered - actionable_rows)
     if extra_coverage:
-        errors.append(f"{rel(matrix_path)}: closure rows present for {len(extra_coverage)} non-actionable source rows")
+        _diag(errors, f"{rel(matrix_path)}: closure rows present for {len(extra_coverage)} non-actionable source rows",
+              origin=matrix_path, kind="over_coverage")
         historical = legacy_context["historical_matrix_lines"]
         frozen_names = set(legacy_context["frozen_files"])
         legacy_context["extra_coverage_all_inferred"] = isinstance(historical, int) and all(
@@ -5087,73 +5089,80 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check("legacy_state_appended_matrix_keeps_history", (legacy_audit_state(legacy_dir) or {}).get("historical_matrix_lines") == 2)
 
             lp = rel(legacy_dir) + "/"
+            P = lambda name: legacy_dir / name  # noqa: E731
             ctx = {"legacy_state": {"historical_matrix_lines": 10}, "historical_matrix_lines": 10,
                    "frozen_files": ["audit_report.json", "semantic_risks.jsonl", "validator_results.json", "repair_closure_matrix.jsonl"],
-                   "unfrozen_inputs": [],
-                   "matrix_identity_agrees": {lp + "repair_closure_matrix.jsonl:7"},
-                   "source_artifacts": ["semantic_risks.jsonl", "validator_results.json"], "report_has_status": False,
-                   "scope_manifest_exists": False, "extra_coverage_all_inferred": True}
-            demotable = {
-                f"missing {lp}audit_scope_manifest.jsonl": "artifact_predates_schema",
-                f"missing required {lp}repair_impact_matrix.jsonl": "artifact_predates_schema",
-                f"{lp}audit_scope_manifest.jsonl: missing required check_family coverage ['compile_target']": "artifact_predates_schema",
-                f"{lp}repair_closure_matrix.jsonl:3: missing required ref field subject_ref": "reference_field_predates_schema",
-                f"{lp}semantic_risks.jsonl:2: missing required ref field observation_ref": "reference_field_predates_schema",
-                f"{lp}audit_report.json: baseline_ref must be a non-empty string": "reference_field_predates_schema",
-                f"{lp}validator_results.json:results.v1: missing required ref field audit_id": "reference_field_predates_schema",
-                f"{lp}repair_closure_matrix.jsonl:4: missing required fields ['detail_keys', 'finding_key']": "row_field_predates_schema",
-                f"{lp}repair_closure_matrix.jsonl:4: detail_keys must be a list": "row_field_predates_schema",
-                f"{lp}repair_closure_matrix.jsonl:4: finding_key must be non-empty": "row_field_predates_schema",
-                f"{lp}semantic_risks.jsonl:5: audit finding missing required fields ['finding_level', 'repair_required']": "row_field_predates_schema",
-                f"{lp}semantic_risks.jsonl:6: finding_key must use deterministic sfk-* form, got 'old-key'": "finding_key_predates_algorithm",
-                f"{lp}semantic_risks.jsonl:6: finding_key must not contain audit-specific identity 'a::b'": "finding_key_predates_algorithm",
-                f"{lp}repair_closure_matrix.jsonl:7: finding_key sfk-aaaaaaaaaaaaaaaaaaaaaaaa does not match deterministic sfk-bbbbbbbbbbbbbbbbbbbbbbbb": "finding_key_predates_algorithm",
-                f"{lp}audit_report.json: repair_required_count None does not match computed 3": "report_field_predates_schema",
-                f"{lp}audit_report.json: status must be BLOCKED when repair_required_count is 3": "report_field_predates_schema",
-                f"{lp}audit_report.json: status should be PASS_WITH_WARNINGS when non-actionable findings exist": "report_field_predates_schema",
-                f"{lp}repair_closure_matrix.jsonl: closure rows present for 2 non-actionable source rows": "inferred_actionability_over_coverage",
-            }
-            kept_always = [
-                f"{lp}repair_closure_matrix.jsonl: missing closure rows for 1 source rows",
-                f"{lp}repair_closure_matrix.jsonl:3: missing required fields ['closure_reason', 'finding_key']",
-                f"{lp}repair_closure_matrix.jsonl:3: closure_reason must be non-empty",
-                f"{lp}repair_closure_matrix.jsonl:3: registry_closure_id must be non-empty",
-                f"{lp}repair_closure_matrix.jsonl:3: closure_evidence must be a non-empty list",
-                f"{lp}repair_closure_matrix.jsonl:3: source_row must be a non-empty string or integer",
-                f"{lp}repair_closure_matrix.jsonl:3: missing evidence ref Plans/gone.md",
-                f"{lp}repair_closure_matrix.jsonl:3: registry row closed_by_audit_id does not match {legacy_name}",
-                f"{lp}repair_closure_matrix.jsonl:3: registry row finding_key does not match matrix finding_key",
-                f"{lp}repair_closure_matrix.jsonl:3: invalid closure_status open",
-                f"{lp}repair_closure_matrix.jsonl:8: owner_docs must be a list",
-                f"{lp}repair_closure_matrix.jsonl:9: finding_key must be non-empty",
-                f"{lp}repair_closure_matrix.jsonl:8: finding_key sfk-aaaaaaaaaaaaaaaaaaaaaaaa does not match deterministic sfk-bbbbbbbbbbbbbbbbbbbbbbbb",
-                f"{lp}repair_closure_matrix.jsonl:11: missing required ref field subject_ref",
-                f"{lp}repair_closure_matrix.jsonl:11: missing required fields ['detail_keys']",
-                f"{lp}semantic_risks.jsonl:2: subject_ref 'x' does not match audit_report 'y'",
-                f"{lp}semantic_risks.jsonl:2: repair_required must be a boolean",
-                f"{lp}repair_impact_matrix.jsonl: missing impact rows for 2 source rows",
-                f"{lp}repair_impact_matrix.jsonl:1: missing required ref field subject_ref",
-                f"{lp}audit_scope_manifest.jsonl:1: missing required fields ['check_id']",
-                f"{lp}audit_report.json: repair_required_count 2 does not match computed 3",
-                f"{lp}effective_status.json: effective_status 'PASS' does not match computed 'BLOCKED'",
-                f"missing {lp}audit_report.json",
-                f"missing required {lp}repair_closure_matrix.jsonl",
-                "Plans/.audits/audit-20260801-001-other/semantic_risks.jsonl:2: missing required ref field observation_ref",
-                f"{lp}closure_reuse.jsonl:2: missing required ref field observation_ref",
-                "an unnamed message",
+                   "unfrozen_inputs": [], "symlinked_inputs": [], "matrix_identity_agrees": {7},
+                   "source_artifacts": ["semantic_risks.jsonl", "validator_results.json"], "extra_coverage_all_inferred": True}
+            M = "repair_closure_matrix.jsonl"
+            demotable = [
+                ("artifact_predates_schema", dict(origin=P(SCOPE_MANIFEST), kind="artifact_absent")),
+                ("artifact_predates_schema", dict(origin=P(IMPACT_MATRIX), kind="artifact_absent")),
+                ("artifact_predates_schema", dict(origin=P(SCOPE_MANIFEST), kind="scope_coverage", manifest_exists=False)),
+                ("reference_field_predates_schema", dict(origin=P(M), row=3, kind="ref_missing", field="subject_ref")),
+                ("reference_field_predates_schema", dict(origin=P("semantic_risks.jsonl"), row=2, kind="ref_missing", field="observation_ref")),
+                ("reference_field_predates_schema", dict(origin=P("audit_report.json"), row=None, kind="ref_empty", field="baseline_ref")),
+                ("reference_field_predates_schema", dict(origin=P("validator_results.json"), row="$", kind="ref_missing", field="audit_id")),
+                ("row_field_predates_schema", dict(origin=P(M), row=4, kind="matrix_missing_fields", fields=["detail_keys", "finding_key"])),
+                ("row_field_predates_schema", dict(origin=P(M), row=4, kind="matrix_list_type", field="detail_keys", absent=True)),
+                ("row_field_predates_schema", dict(origin=P(M), row=4, kind="matrix_key_empty", absent=True)),
+                ("row_field_predates_schema", dict(origin=P("semantic_risks.jsonl"), row=5, kind="finding_missing_fields", fields=["finding_level", "repair_required"])),
+                ("finding_key_predates_algorithm", dict(origin=P("semantic_risks.jsonl"), row=6, kind="key_algorithm")),
+                ("finding_key_predates_algorithm", dict(origin=P(M), row=7, kind="key_algorithm")),
+                ("report_field_predates_schema", dict(origin=P("audit_report.json"), kind="report_count", reported_absent=True)),
+                ("report_field_predates_schema", dict(origin=P("audit_report.json"), kind="report_status", status_stated=False)),
+                ("inferred_actionability_over_coverage", dict(origin=P(M), kind="over_coverage")),
             ]
-            kept, demoted = classify_legacy_format_errors(legacy_dir, list(demotable) + kept_always, ctx)
+            kept_cases = [
+                dict(origin=P(M), row=11, kind="ref_missing", field="subject_ref"),            # appended matrix row
+                dict(origin=P(M), row=11, kind="matrix_missing_fields", fields=["detail_keys"]),
+                dict(origin=P(M), row=3, kind="matrix_missing_fields", fields=["closure_reason", "finding_key"]),
+                dict(origin=P(M), row=8, kind="matrix_list_type", field="owner_docs", absent=False),
+                dict(origin=P(M), row=9, kind="matrix_key_empty", absent=False),
+                dict(origin=P(M), row=8, kind="key_algorithm"),                                # identity disagrees
+                dict(origin=P("semantic_risks.jsonl"), row=2, kind="ref_missing", field="not_a_ref_field"),
+                dict(origin=P("semantic_risks.jsonl"), row=5, kind="finding_missing_fields", fields=["summary"]),
+                dict(origin=P("audit_report.json"), kind="report_count", reported_absent=False),
+                dict(origin=P("audit_report.json"), kind="report_status", status_stated=True),
+                dict(origin=P("audit_report.json"), kind="missing_closure_rows"),               # unnamed kind
+                dict(origin=P("closure_reuse.jsonl"), row=2, kind="ref_missing", field="observation_ref"),   # not read / not frozen
+                dict(origin=tmp / "Plans/.audits/audit-20260801-001-other/semantic_risks.jsonl", row=2, kind="ref_missing", field="observation_ref"),
+                dict(origin=None, kind="ref_missing", field="subject_ref"),
+                dict(origin=str(P("semantic_risks.jsonl")), row=2, kind="ref_missing", field="observation_ref"),  # not a Path
+            ]
+            diag = AuditDiagnostics()
+            for i, (kind, info) in enumerate(demotable):
+                diag.add(f"demotable message {i}", **info)
+            for i, info in enumerate(kept_cases):
+                diag.add(f"kept message {i}", **info)
+            # Text that impersonates a demotable diagnostic, recorded without structure.
+            diag.append(f"{lp}semantic_risks.jsonl:1: audit finding missing required fields ['repair_required']")
+            diag.append(f"missing {lp}audit_scope_manifest.jsonl")
+            kept, demoted = classify_legacy_format_errors(legacy_dir, diag, ctx)
             demoted_flat = {m: k for k, ms in demoted.items() for m in ms}
-            check("legacy_rule_demotes_each_named_kind", demoted_flat == demotable,
-                  {"not_demoted": [m for m in demotable if m not in demoted_flat], "wrong": {m: k for m, k in demoted_flat.items() if demotable.get(m) != k}})
-            check("legacy_rule_keeps_substantive_later_and_unnamed", kept == kept_always, [m for m in kept_always if m not in kept])
-            ctx_strict = dict(ctx, report_has_status=True, scope_manifest_exists=True, extra_coverage_all_inferred=False)
-            conditional = [m for m, k in demotable.items() if "status" in m or "check_family" in m or "non-actionable source rows" in m]
-            kept2, _ = classify_legacy_format_errors(legacy_dir, conditional, ctx_strict)
-            check("legacy_rule_conditions_hold", kept2 == conditional, kept2)
-            kept3, _ = classify_legacy_format_errors(legacy_dir, list(demotable), dict(ctx, historical_matrix_lines=None))
+            check("legacy_rule_demotes_each_named_kind", demoted_flat == {f"demotable message {i}": k for i, (k, _) in enumerate(demotable)},
+                  {"got": demoted_flat})
+            check("legacy_rule_keeps_substantive_later_unnamed_and_unstructured",
+                  kept == [f"kept message {i}" for i in range(len(kept_cases))] + list(diag[-2:]), kept)
+            strict = dict(ctx, extra_coverage_all_inferred=False, unfrozen_inputs=["new_findings.jsonl"])
+            conditional = AuditDiagnostics()
+            for info in (dict(origin=P(SCOPE_MANIFEST), kind="artifact_absent"), dict(origin=P(IMPACT_MATRIX), kind="artifact_absent"),
+                         dict(origin=P(SCOPE_MANIFEST), kind="scope_coverage", manifest_exists=False), dict(origin=P(M), kind="over_coverage")):
+                conditional.add("conditional", **info)
+            check("legacy_rule_conditions_hold", classify_legacy_format_errors(legacy_dir, conditional, strict)[0] == ["conditional"] * 4)
             check("legacy_rule_no_matrix_history_demotes_no_matrix_row", all(
-                bool(re.search(r"repair_closure_matrix\.jsonl:\d", m)) == (m in kept3) for m in demotable), kept3)
+                (m in classify_legacy_format_errors(legacy_dir, diag, dict(ctx, historical_matrix_lines=None))[0])
+                == (info.get("origin") == P(M) and info.get("row") is not None)
+                for (_, info), m in zip(demotable, [f"demotable message {i}" for i in range(len(demotable))])))
+            check("legacy_rule_symlinked_input_keeps_everything",
+                  classify_legacy_format_errors(legacy_dir, diag, dict(ctx, symlinked_inputs=["new_findings.jsonl"])) == (list(diag), {}))
+            check("legacy_rule_plain_list_keeps_everything",
+                  classify_legacy_format_errors(legacy_dir, list(diag), ctx) == (list(diag), {}))
+            only_matrix = classify_legacy_format_errors(legacy_dir, diag, dict(ctx, frozen_files=[M]))[1]
+            check("legacy_rule_unfrozen_files_get_full_rules", all(
+                not (str(info.get("origin", "")).endswith(("semantic_risks.jsonl", "audit_report.json", "validator_results.json")))
+                for (_, info), m in zip(demotable, [f"demotable message {i}" for i in range(len(demotable))])
+                if m in {x for ms in only_matrix.values() for x in ms}), only_matrix)
 
             # Through validate_audit_dir: the same bytes under a listed and a July name.
             (july / "repair_closure_matrix.jsonl").write_bytes(mpath.read_bytes())
@@ -5203,10 +5212,6 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check("legacy_rule_duplicate_result_name_with_stated_level_is_not_inferred",
                   any("non-actionable source rows" in e for e in vr["errors"]), vr["errors"])
             # Files written after the freeze get the full rules, even in a frozen directory (Sol r2).
-            kept_new, _ = classify_legacy_format_errors(legacy_dir, list(demotable), dict(ctx, frozen_files=["repair_closure_matrix.jsonl"]))
-            check("legacy_rule_unfrozen_files_get_full_rules", all(
-                (m in kept_new) == ("semantic_risks.jsonl" in m or "audit_report.json" in m or "validator_results.json" in m)
-                for m in demotable if "missing" not in m.split(":")[0] and "scope_manifest" not in m and "impact_matrix" not in m), kept_new)
             (legacy_dir / "validator_results.json").unlink()
             (legacy_dir / "repair_closure_matrix.jsonl").write_text(historical, encoding="utf-8")
             freeze(legacy_dir)
@@ -5230,24 +5235,40 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check("legacy_rule_new_input_requires_newer_artifacts",
                   any(e.endswith("audit_scope_manifest.jsonl") and e.startswith("missing ") for e in third_report["errors"])
                   and any("missing required check_family coverage" in e for e in third_report["errors"]), third_report["errors"])
-            # A file name that spells another file's diagnostic cannot borrow its exceptions (Sol r3).
+            check("legacy_rule_new_report_gets_full_rules", legacy_audit_state(third) is not None
+                  and any("audit_report.json: baseline_ref must be a non-empty string" in e for e in third_report["errors"])
+                  and any("audit_report.json: repair_required_count None does not match" in e for e in third_report["errors"]), third_report["errors"])
+            # File names cannot steer the rule: it never reads message text (Sol r3, r4).
             evil = "semantic_risks.jsonl:1: finding_key must use deterministic sfk-* form, got added.jsonl"
-            kept_evil, demoted_evil = classify_legacy_format_errors(legacy_dir, list(demotable), dict(ctx, source_artifacts=["semantic_risks.jsonl", evil]))
-            check("legacy_rule_colon_artifact_name_disables_rule", kept_evil == list(demotable) and not demoted_evil, demoted_evil)
-            forged = f"{lp}{evil}:1: finding_key sfk-aaaaaaaaaaaaaaaaaaaaaaaa does not match deterministic sfk-bbbbbbbbbbbbbbbbbbbbbbbb"
-            kept_forged, _ = classify_legacy_format_errors(legacy_dir, [forged], dict(ctx, source_artifacts=["semantic_risks.jsonl"]))
-            check("legacy_rule_unknown_label_path_keeps_error", kept_forged == [forged], kept_forged)
             (third / evil).write_text(json.dumps({"severity": "high", "repair_required": True, "finding_level": "blocker",
                                                    "summary": "new finding B", "finding_key": "sfk-" + "a" * 24}) + "\n", encoding="utf-8")
             evil_report = validate_audit_dir(third, require_matrix=True, require_effective_status=False,
                                              source_artifacts=["semantic_risks.jsonl", evil], registry_path=legacy_registry)
-            check("legacy_rule_colon_file_gets_full_rules", "legacy_format_rule" in evil_report
-                  and evil_report["legacy_format_rule"]["demoted_count"] == 0
-                  and any("does not match deterministic" in e and evil in e for e in evil_report["errors"]), evil_report["errors"])
+            evil_demoted = [m for ms in evil_report["legacy_format_rule"]["examples"].values() for m in ms]
+            check("legacy_rule_diagnostic_named_file_gets_full_rules",
+                  any("does not match deterministic" in e and evil in e for e in evil_report["errors"])
+                  and not any(evil in m for m in evil_demoted), evil_report["errors"])
             (third / evil).unlink()
-            check("legacy_rule_new_report_gets_full_rules", legacy_audit_state(third) is not None
-                  and any("audit_report.json: baseline_ref must be a non-empty string" in e for e in third_report["errors"])
-                  and any("audit_report.json: repair_required_count None does not match" in e for e in third_report["errors"]), third_report["errors"])
+            fourth = audits / sorted(LEGACY_AUDIT_DIRS)[3]
+            write_fixture(fourth, "")
+            (fourth / "repair_closure_matrix.jsonl").unlink()
+            freeze(fourth)
+            forged = "semantic_risks.jsonl:1: audit finding missing required fields ['repair_required'] # added.jsonl"
+            (fourth / forged).write_text("", encoding="utf-8")
+            (fourth / "repair_closure_matrix.jsonl").symlink_to(fourth / forged)
+            symlink_report = validate_audit_dir(fourth, require_matrix=True, require_effective_status=False,
+                                                source_artifacts=["semantic_risks.jsonl"], registry_path=legacy_registry)
+            check("legacy_rule_symlinked_matrix_keeps_missing_closure",
+                  any("missing closure rows for 2 source rows" in e for e in symlink_report["errors"])
+                  and symlink_report.get("legacy_format_rule", {}).get("demoted_count", 0) == 0, symlink_report["errors"])
+            (fourth / "repair_closure_matrix.jsonl").unlink()
+            (fourth / "new_findings.jsonl").symlink_to(fourth / forged)
+            src_link_report = validate_audit_dir(fourth, require_matrix=True, require_effective_status=False,
+                                                 source_artifacts=["semantic_risks.jsonl", "new_findings.jsonl"], registry_path=legacy_registry)
+            check("legacy_rule_symlinked_source_keeps_everything",
+                  src_link_report.get("legacy_format_rule", {}).get("demoted_count", 0) == 0, src_link_report)
+            (fourth / "new_findings.jsonl").unlink()
+            (fourth / forged).unlink()
         finally:
             LEGACY_INVENTORY_SHA256 = saved_pin
             _LEGACY_INVENTORY_CACHE.clear()
