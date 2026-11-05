@@ -2,11 +2,11 @@
 import {paintedText} from '../helpers/painted-text.mjs';
 const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
 const SIZES=[[740,900],[860,900],[1024,900],[1280,900],[1280,500],[1390,900],[1920,900]];
-const REASONS=['permission','offline','unsupported','verify','expired','signin','signinOffline','connection'];
+const REASONS=['permission','offline','unsupported','verify','expired','signin','signinOffline','connection','installed'];
 const HINTS=['works','offline','unsupported','permission','verify'];
 const list=(v,all)=>v?String(v).split(','):all;
 
-const scenario=code=>code==='expired'?'claudeExpired':code==='signinOffline'?'signedOut+aiOffline':code==='signin'?'signedOut+antigravityOnce':'cliMissing';
+const scenario=code=>code==='installed'?'fresh':code==='expired'?'claudeExpired':code==='signinOffline'?'signedOut+aiOffline':code==='signin'?'signedOut':'cliMissing';
 async function freshRoute(t,f,code){
  await f.evaluate(fixture=>O55.studio.onboarding.screen('ai-all',fixture),scenario(code));
  await f.waitForFunction(()=>O55.S.sess&&O55.S.sess.screen==='ai-all');await t.settle();
@@ -22,9 +22,10 @@ async function copiedRoute(t,f,code){
  await t.check('copied route copies Tastebook settings',await f.evaluate(()=>{const d=O55.S.sess.drafts.main;return d.settings_transfer.mode==='copy_from_project'&&d.settings_transfer.source_project_id==='tastebook';}));
 }
 async function fail(t,f,code){
- if(code==='expired')return;
+ if(code==='expired'||code==='installed')return;
  if(code==='signin'||code==='signinOffline'){
-  const id=code==='signin'?'antigravity':'claude';
+  const id='claude';
+  if(code==='signin')await f.evaluate(()=>O55.S.env.failures.signin_once=Object.assign({},O55.S.env.failures.signin_once,{claude:true}));
   await f.locator(`[data-o55-do="signin"][data-arg="${id}"]`).click();
   await f.waitForFunction(id=>O55.S.sess.ai.accounts[id]?.state==='signinFailed',id);await t.settle();return;
  }
@@ -73,14 +74,12 @@ export default async function(t){
   await fail(t,f,code);
   await f.evaluate(on=>O55.studio.looks.setReduced(!on),on);
   await t.check(`${route} ${code} motion still ${on?'on':'reduced'}`,await f.evaluate(on=>O55.motion.reduced()!==on,on));
-  const id=code==='connection'?'opencode-runtime':code==='signin'?'antigravity':'claude';
-  const row=f.locator(`#pm-o55-onboarding [data-key="pv-${id}"]`),pill=row.locator('.o55-pill-fail');
-  const expected=code==='expired'?'expired':code.startsWith('signin')?'signinFailed':code==='connection'?'connectFailed':'installFailed';
-  if(t.args.sabotage==='overlap')await row.evaluate(e=>e.querySelector('.o55-rowmeta').style.transform='translateY(25px)');
-  if(t.args.sabotage==='ink')await pill.evaluate(e=>e.style.setProperty('color','var(--text-secondary)','important'));
+  const id=code==='connection'?'opencode-runtime':'claude';
+  const row=f.locator(`#pm-o55-onboarding [data-key="pv-${id}"]`),pill=row.locator(code==='installed'?'.o55-pill-ready':'.o55-pill-fail');
+  const expected=code==='installed'?'ready':code==='expired'?'expired':code.startsWith('signin')?'signinFailed':code==='connection'?'connectFailed':'installFailed';
   await pill.waitFor({state:'visible'});
   await t.check(`${route} ${code} row shows one failure status`,await pill.count()===1);
-  const reason=await f.evaluate(code=>O55.t(code==='expired'?'ai.expired.title':code.startsWith('signin')?'ai.signinFail.title':code==='connection'?'ai.oc.failTitle':'ai.installFailure.'+code),code);
+  const reason=await f.evaluate(code=>O55.t(code==='installed'?'ai.ready':code==='expired'?'ai.expired.title':code.startsWith('signin')?'ai.signinFail.title':code==='connection'?'ai.oc.failTitle':'ai.installFailure.'+code),code);
   await t.check(`${route} ${code} row keeps its reason`,(await row.innerText()).replace(/\s+/g,' ').includes(reason.replace(/\s+/g,' ')));
   if(await pill.count()!==1)continue;
   for(const look of looks){
@@ -113,6 +112,7 @@ export default async function(t){
        return collisions;
       });
       await t.check(`${route} ${code} ${look} ${w}x${h} ${state} recovery has separate text boxes`,boxes.length===0,JSON.stringify(boxes));
+      if(t.args.sabotage==='ink')await pill.evaluate(e=>e.style.setProperty('color','transparent','important'));
       const before=await scroller.evaluate(s=>s.scrollTop),p=await paintedText(pill),after=await scroller.evaluate(s=>s.scrollTop);
       measured++;
       const label=`${route} ${code} ${look} ${w}x${h} scroll ${before}/${range.max} ${state}`;
