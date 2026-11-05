@@ -30,7 +30,7 @@ async function run(t) {
    await f.evaluate(m=>document.documentElement.setAttribute('data-motion',m==='attribute'?'reduced':'full'),motion);
    for(const screen of screens) {
     await t.page.mouse.move(2,2);await f.evaluate(s=>O55.ui.go(s,{noHistory:true}),screen);await f.waitForTimeout(1800);
-    const sel=L+(screen==='look'?'.o55-tile':'.o55-card'),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
+    const sel=L+(screen==='look'?'.o55-tile':'.o55-card'),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}${t.args.width?` ${t.args.width}x${t.args.height||1080}`:''}`;
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
     const misses=[],moved=[],scaled=[],flat=[];let presses=0,feedback=0;
     for(let i=0;i<count;i++) {
@@ -72,7 +72,7 @@ async function run(t) {
      }
     }
     await t.page.mouse.move(2,2);
-    await t.check(`FO-49 press activates at every edge ${tag}`,count>0&&!misses.length,`${count} choices, ${presses} held presses; misses ${JSON.stringify(misses.slice(0,6))}${misses.length>6?` (+${misses.length-6})`:''}`);
+    await t.check(`FO-49 press activates at every edge ${tag}`,count>0&&!misses.length,`${t.args.first?Math.min(count,1):count} sampled choices of ${count}, ${presses} held presses; misses ${JSON.stringify(misses.slice(0,6))}${misses.length>6?` (+${misses.length-6})`:''}`);
     await t.check(`FO-49 pressed target stays at rest box ${tag}`,!moved.length,JSON.stringify(moved.slice(0,3)));
     if(motion!=='no-preference')await t.check(`FO-49 no press scale with Reduced Motion ${tag}`,!scaled.length,JSON.stringify(scaled.slice(0,3)));
     else if(look.startsWith('friendly'))await t.check(`FO-49 Friendly press feedback kept on content ${tag}`,feedback===presses,`${feedback}/${presses} holds showed a content scale; without: ${JSON.stringify(flat.slice(0,4))}`);
