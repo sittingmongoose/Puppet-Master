@@ -15,8 +15,10 @@
 //   drive    Begin › Existing › Home NAS › already connected › its drive › Continue: checking, then the done line.
 //   nfs      Choose another drive › NFS › its share › Continue: checking, then the done line.
 //   install  Adding the key (SSH install) from its row: the install line, then the done line.
-// Motion is on (Pip types) unless --set motion=reduced. Both surfaces with --set sandbox=0/1. --set only=smb,drive
-// narrows the routes. About 10 minutes a surface.
+// Motion is on (Pip types) unless --set motion=reduced, which emulates Reduce Motion before the page loads; either way
+// each route first asserts the page's media preference and the rig's own state (O55.motion.reduced() and the stage's
+// data-reduced) match the motion asked for. Both surfaces with --set sandbox=0/1. --set only=smb,drive narrows the
+// routes. About 10 minutes a surface.
 import { LOOKS } from '../browser-check.config.mjs';
 
 const ROOT = '#pm-o55-onboarding';
@@ -113,12 +115,30 @@ async function typeIn(t, f, bind, text) {
 	await t.page.keyboard.type(text, { delay: 20 });
 }
 const primaryDo = (f) => f.evaluate((L) => { const p = document.querySelector(L + ' .o55-primary'); return p ? p.getAttribute('data-o55-do') + (p.disabled || p.getAttribute('aria-disabled') === 'true' ? ':off' : ':on') : null; }, LAYER);
-async function begin(t, f, look, mode, screen) {
+/* the motion asked for: Reduce Motion with --set motion=reduced, else none (Pip types). Set before the first load (the
+   preference holds on the page across loads, and t.goto re-applies it) and again on each route. */
+const REDUCED = (t) => t.args.motion === 'reduced';
+const setMotion = (t) => t.emulate({ reducedMotion: REDUCED(t) ? 'reduce' : 'no-preference' });
+/* the route really runs in that motion: the app frame's media preference, the onboarding's motion clock and Pip's stage
+   (58-rig.js setReduced, from 60-ui-core.js stageOf) all say so once the stage is up; a miss stops the route */
+async function motionHolds(t, f, tag) {
+	const want = REDUCED(t);
+	await f.waitForFunction((r) => !!document.querySelector(r + ' .o55-stage.pst'), ROOT, { timeout: 15000 }).catch(() => {});
+	const got = await f.evaluate((r) => ({
+		media: matchMedia('(prefers-reduced-motion: reduce)').matches,
+		clock: !!(window.O55.motion && window.O55.motion.reduced()),
+		stages: [...document.querySelectorAll(r + ' .o55-stage.pst')].map((s) => s.dataset.reduced)
+	}), ROOT);
+	const ok = got.media === want && got.clock === want && got.stages.length > 0 && got.stages.every((d) => d === (want ? '1' : '0'));
+	return t.check(`${tag}: ${want ? 'Reduce Motion is on' : 'motion is on'} (media preference, motion clock, Pip's stage)`, ok, JSON.stringify(got), { hard: true });
+}
+async function begin(t, f, look, mode, screen, tag) {
 	await t.app.look(look);
-	if (t.args.motion !== 'reduced') await t.emulate({ reducedMotion: 'no-preference' });
+	await setMotion(t);
 	await arm(f);
 	if (!(await openAt(t, f, screen))) return false;
 	await settled(f, screen);
+	await motionHolds(t, f, tag);
 	if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
 	await t.page.waitForTimeout(300);
 	await take(f);
@@ -129,11 +149,12 @@ export default async function (t) {
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	const only = t.args.only ? String(t.args.only).split(',') : ['smb', 'drive', 'nfs', 'install'];
 	const combos = looks.flatMap((look) => [[look, 0], [look, 1]]);
+	await setMotion(t);
 	for (const [i, [look, mode]] of combos.entries()) {
 		const tag = `${look} w${mode}`;
 		if (only.includes('smb')) await t.step(`${tag} · smb`, async () => {
 			const f = await t.app.open();
-			if (!(await begin(t, f, look, mode, 'nas-smb'))) return t.check(`${tag}: Sign in to the shared folder opens`, false, 'not opened from its row', { hard: true });
+			if (!(await begin(t, f, look, mode, 'nas-smb', `${tag} smb`))) return t.check(`${tag}: Sign in to the shared folder opens`, false, 'not opened from its row', { hard: true });
 			const wrong = await f.evaluate(() => (window.O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password');
 			const cheer = await tx(f, 'pip.cheer.nas.smb.wrong');
 			/* 1. quick Check access (typed and pressed at once), then the account edited after the pass */
@@ -194,7 +215,7 @@ export default async function (t) {
 		});
 		if (only.includes('drive') || only.includes('nfs')) await t.step(`${tag} · drive, nfs`, async () => {
 			const f = await t.app.open();
-			if (!(await begin(t, f, look, mode, 'begin'))) return t.check(`${tag}: Begin opens`, false, 'not opened from its row', { hard: true });
+			if (!(await begin(t, f, look, mode, 'begin', `${tag} drive`))) return t.check(`${tag}: Begin opens`, false, 'not opened from its row', { hard: true });
 			await clickIn(f, '[data-o55-do="pick"][data-arg="existing"]');
 			await clickIn(f, '[data-o55-do="sub"][data-arg="device"]');
 			await clickIn(f, '.o55-primary'); await settled(f, 'nas-find');
@@ -224,9 +245,10 @@ export default async function (t) {
 		if (only.includes('install')) await t.step(`${tag} · install`, async () => {
 			const f = await t.app.open();
 			await t.app.look(look);
-			if (t.args.motion !== 'reduced') await t.emulate({ reducedMotion: 'no-preference' });
+			await setMotion(t);
 			await arm(f);
 			if (!(await openAt(t, f, 'nas-install'))) return t.check(`${tag}: Adding the key opens`, false, 'not opened from its row', { hard: true });
+			await motionHolds(t, f, `${tag} install`);
 			if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
 			await t.check(`${tag} install: the install passes`, await checkIs(f, 'nas-install', 'done'), await primaryDo(f));
 			await t.page.waitForTimeout(900);
