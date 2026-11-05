@@ -10,7 +10,7 @@ import datetime
 import copy
 import sys
 from pathlib import Path
-from pm_goal_oracle_common import Audit, Gates, ROOT, load, validator, schema_registry, sha, semantic_digest, print_result, materialize_cases
+from pm_goal_oracle_common import Audit, Gates, ROOT, load, validator, schema_registry, sha, semantic_digest, print_result, materialize_cases, integer_number, same_json_value
 
 PLANS = ROOT / 'Plans'
 OUT_SCHEMA = PLANS / 'goal_history_reader_outputs.schema.json'
@@ -35,7 +35,7 @@ def joins(answer, g):
  if not isinstance(ev,dict): return
  sel,p,t = answer['selector'],ev['payload'],answer['read_token']
  for field in ('project_id','event_id','sequence_id'):
-  g.require('join/selector/'+field, sel.get(field)==ev.get(field))
+  g.require('join/selector/'+field, same_json_value(sel.get(field),ev.get(field)))
  if 'goal_id' in sel: g.require('join/selector/goal_id',sel['goal_id']==p.get('goal_id'))
  for outer,inner in [('event_type','event_name'),('payload_schema_id','schema_version'),('project_id','project_id'),('thread_id','thread_id'),('actor_ref','actor_ref'),('requested_account_ref','requested_account_ref'),('effective_account_ref','effective_account_ref'),('occurred_at_utc','occurred_at_utc'),('correlation_id','correlation_id'),('idempotency_key','idempotency_key')]:
   if inner in p: g.require('join/envelope/'+outer,ev.get(outer)==p[inner])
@@ -62,7 +62,7 @@ def history_guards(case,pv,av,disabled=()):
  g.schema(pv,ev['payload'],pv.schema['$id']+'/protocol_payload');joins(a,g)
  s=case['source']; p=ev['payload']; old=case['original']; token=a['read_token']
  for field in ('authorized','retained','reader_available','secret_safe','frame_verified','translation_verified'):
-  g.require('source/'+field,s[field])
+  g.require('source/'+field,s[field] is True)
  part='project~'+base64.urlsafe_b64encode(ev['project_id'].encode()).decode().rstrip('=')
  g.require('source/index_key',s['index_key']==f"event_record_index.v2:{part}:{ev['sequence_id']:020d}:{ev['event_id']}")
  receipt=old['first_receipt']; admission=old['admission']
@@ -73,22 +73,22 @@ def history_guards(case,pv,av,disabled=()):
   g.require('original/admission/'+field,admission[field]==value)
  g.require('original/checkpoint',admission['registry_checkpoint']==receipt['registry_checkpoint'])
  g.require('original/owner_unit',admission['owner_unit']==receipt['writer_owner_unit'])
- g.require('original/revision_cas',old['predecessor']['goal_revision']==p['expected_goal_revision'])
+ g.require('original/revision_cas',integer_number(old['predecessor']['goal_revision']) and old['predecessor']['goal_revision']==p['expected_goal_revision'])
  g.require('original/revision_step',p['goal_revision']==p['expected_goal_revision']+1)
  for field in ('goal_id','project_id'):
   g.require('original/predecessor/'+field,old['predecessor'][field]==p[field])
  # Original evidence is resolved with its owner/identity/currentness-at-append,
  # independently of today's live Goal state (which is never consulted).
  for role,record in old['resolved_records'].items():
-  g.require('original/record/'+role,record['requested_ref']==record['resolved_ref'] and record['owner_ref']==record['resolved_owner_ref'] and record['revision_at_append']==record['accepted_revision'])
+  g.require('original/record/'+role,record['requested_ref']==record['resolved_ref'] and record['owner_ref']==record['resolved_owner_ref'] and same_json_value(record['revision_at_append'],record['accepted_revision']))
  for field in ('actor_ref','execution_role','requested_provider_ref','effective_provider_ref','requested_model_ref','effective_model_ref','requested_account_ref','effective_account_ref'):
   g.require('original/runtime/'+field,old['runtime'][field]==p[field])
  g.require('original/semantic_digest',old['producer_digest']==semantic_digest(ev))
  original_row_guards(ev,p,old,g)
  # The complete disclosure predicate follows every returning validation/hash helper.
  current=case['source']
- g.require('source/unchanged_event',ev==current['event'])
- g.require('source/actual_token',token==current['token'])
+ g.require('source/unchanged_event',same_json_value(ev,current['event']))
+ g.require('source/actual_token',same_json_value(token,current['token']))
  g.require('source/final_fence',s['captured_fence']==current['final_fence'])
  return g.errors
 
@@ -114,7 +114,7 @@ def original_row_guards(ev,p,old,g):
   if pre in {'blocked','stopped'}:g.require('row/scheduled_recovery',bool(facts['recovery_receipt_ref']))
   if b['next_action']=='dispatch':
    g.require('row/scheduled_time',datetime.datetime.fromisoformat(b['eligible_at_utc'].replace('Z','+00:00'))<=datetime.datetime.fromisoformat(ev['observed_at_utc'].replace('Z','+00:00')))
-   g.require('row/scheduled_budget',facts['remaining_budget']>0)
+   g.require('row/scheduled_budget',type(facts['remaining_budget']) in (int,float) and facts['remaining_budget']>0)
    g.require('row/scheduled_permission',facts['permission_decision']=='allow')
    g.require('row/scheduled_writer',facts['storage_posture']=='writer')
    g.require('row/scheduled_recovery_truth',facts['recovery_status']=='resolved')
@@ -170,7 +170,7 @@ def original_row_guards(ev,p,old,g):
 def append_guards(case,disabled=()):
  g=Gates(disabled)
  # Prohibition is scope-independent and precedes dedupe even on an equal retry.
- g.require('current_writer/prohibited',case['mode']!='append')
+ g.require('current_writer/prohibited',case['mode']=='read')
  return g.errors
 
 def main():
@@ -198,6 +198,11 @@ def main():
     if not g.errors:joins(value,g)
    return g.errors
   for c in fx['schema_cases']:audit.case(f'{key}/schema/{c["id"]}',payload,c['value'],c['valid'])
+  for c in fx.get('token_schema_cases', []):
+   tv=validator({'$ref':load(CKPT_SCHEMA)['$id']+'#/$defs/read_token'},reg)
+   def token_shape(value,disabled,tv=tv,key=key):
+    g=Gates(disabled);g.schema(tv,value,key+'/read_token');return g.errors
+   audit.case(f'{key}/read_token/{c["id"]}',token_shape,c['value'],c['valid'])
   for c in fx['reader_output_cases']:
    if c.get('boundary')=='event_record_schema':
     def event_shape(value,disabled,evv=evv,key=key):

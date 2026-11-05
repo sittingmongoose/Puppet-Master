@@ -14,6 +14,8 @@ import datetime
 import hashlib
 import json
 import re
+import math
+import sys
 from pathlib import Path
 from urllib.parse import urldefrag, unquote
 
@@ -44,17 +46,110 @@ def strict_pattern(validator, pattern, value, schema):
 
 
 _SCHEMA_LOCATIONS = {}
+_SCHEMA_ASSERTION_LOCATIONS = {}
+_SCHEMA_TYPES = {}
+_SCHEMA_DUPLICATES = {}
+_SCHEMA_SITES = {}
+_INVENTORIED_VALIDATORS = set()
+_SCHEMA_VALIDATOR_GUARDS = {}
+_SCHEMA_INACTIVE_TYPES = {}
+_SCHEMA_REGISTRY_PATHS = []
 _SCHEMA_CONTEXT = contextvars.ContextVar('goal_schema_guards', default=('', frozenset()))
+
+
+def schema_guard(schema, keyword):
+    location = schema.get('x-pm-oracle-id')
+    if location is None:
+        location = json.dumps(schema, sort_keys=True)
+    name = 'closed_members' if keyword in ('additionalProperties', 'unevaluatedProperties') else keyword
+    ident = 'schema/' + hashlib.sha256(location.encode()).hexdigest()[:16] + '/' + name
+    _SCHEMA_LOCATIONS[ident] = location + '/' + name
+    _SCHEMA_ASSERTION_LOCATIONS.setdefault(ident, set()).add(location + '/' + keyword)
+    return ident
+
+
+def guard_for_location(location):
+    node, keyword = location.rsplit('/', 1)
+    return schema_guard({'x-pm-oracle-id': node}, keyword)
+
+
+def schema_type_inventory(v):
+    """Walk validation schemas and resolved refs, independently of instance errors.
+
+    Definitions are entered through refs, not by guessing which name is live.
+    An `if` subschema selects a branch; its assertions do not reject instances.
+    Both validation branches are inventoried, even if no fixture visits them.
+    """
+    if id(v) in _INVENTORIED_VALIDATORS:
+        return
+    _INVENTORIED_VALIDATORS.add(id(v))
+    visited = set()
+    guards = set()
+    def selectors(schema):
+        if not isinstance(schema, dict):
+            return
+        guards.update(schema_guard(schema, key) for key in schema if key in _KEYWORDS)
+        for key in ('properties', 'patternProperties'):
+            for child in schema.get(key, {}).values(): selectors(child)
+        for key in ('not', 'if', 'then', 'else', 'items'):
+            selectors(schema.get(key))
+        for key in ('allOf', 'anyOf', 'oneOf', 'prefixItems'):
+            for child in schema.get(key, []): selectors(child)
+    def visit(schema, resolver, empty_domain=None):
+        if not isinstance(schema, dict):
+            return
+        location = schema.get('x-pm-oracle-id')
+        if location is None:
+            location = json.dumps(schema, sort_keys=True)
+        if location in visited:
+            return
+        visited.add(location)
+        guards.update(schema_guard(schema, key) for key in schema if key in _KEYWORDS)
+        selectors(schema.get('if'))
+        if 'type' in schema:
+            ident = schema_guard(schema, 'type')
+            _SCHEMA_TYPES[ident] = {'location': _SCHEMA_LOCATIONS[ident], 'type': schema['type']}
+            if empty_domain is not None:
+                _SCHEMA_INACTIVE_TYPES[ident] = {'reason':'items cannot occur in any schema-valid array',
+                    'dominating_schema_guard':empty_domain, 'proof':'ancestor maxItems is exactly zero'}
+            # Enum/const deliberately also enforce the type at this same node.
+            duplicates = {schema_guard(schema, k) for k in ('enum', 'const') if k in schema}
+            if duplicates:
+                _SCHEMA_DUPLICATES[ident] = frozenset({ident} | duplicates | set(_SCHEMA_DUPLICATES.get(ident, ())))
+        if '$ref' in schema:
+            resolved = resolver.lookup(schema['$ref'])
+            visit(resolved.contents, resolved.resolver)
+        for key in ('properties', 'patternProperties', 'dependentSchemas'):
+            for child in schema.get(key, {}).values():
+                visit(child, resolver)
+        for key in ('items', 'additionalProperties', 'unevaluatedProperties', 'contains', 'propertyNames', 'then', 'else', 'unevaluatedItems', 'additionalItems', 'contentSchema'):
+            visit(schema.get(key), resolver, schema_guard(schema, 'maxItems') if key == 'items' and schema.get('maxItems') == 0 else empty_domain)
+        for key in ('allOf', 'anyOf', 'oneOf', 'prefixItems'):
+            for child in schema.get(key, []):
+                visit(child, resolver)
+    visit(v.schema, v._resolver)
+    # A nullable declaration may be deliberately refined by both branches of
+    # a conditional at the same property. Name those exact duplicate type
+    # assertions together; never combine constraints on different properties.
+    for name, prop in v.schema.get('properties', {}).items():
+        branch_types = {schema_guard(branch['properties'][name], 'type')
+            for clause in v.schema.get('allOf', []) for branch in (clause.get('then', {}), clause.get('else', {}))
+            if 'type' in branch.get('properties', {}).get(name, {})}
+        if branch_types:
+            for alternative in prop.get('anyOf', []):
+                if 'type' in alternative:
+                    ident = schema_guard(alternative, 'type')
+                    _SCHEMA_DUPLICATES[ident] = frozenset({ident} | branch_types | set(_SCHEMA_DUPLICATES.get(ident, ())))
+    _SCHEMA_VALIDATOR_GUARDS[id(v)] = guards
+
+
+def expanded_guards(disabled):
+    return set(disabled) | {member for guard in disabled for member in _SCHEMA_DUPLICATES.get(guard, ())}
 
 def _keyword_guard(keyword, function):
     def guarded(v, expected, value, schema):
         prefix, disabled = _SCHEMA_CONTEXT.get()
-        # Semantically duplicate closure keywords are one closed-member rule.
-        name = 'closed_members' if keyword in ('additionalProperties','unevaluatedProperties') else keyword
-        location=schema.get('x-pm-oracle-id')
-        if location is None:location=json.dumps(schema,sort_keys=True)
-        ident = prefix + '/schema/' + hashlib.sha256(location.encode()).hexdigest()[:16] + '/' + name
-        _SCHEMA_LOCATIONS[ident]=location+'/'+name
+        ident = schema_guard(schema, keyword)
         if ident in disabled:
             return
         for error in function(v, expected, value, schema):
@@ -74,8 +169,57 @@ def load(path):
 
 
 def canonical(value):
-    # These fixtures use string keys, integers and strings, no non-JCS floats.
-    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()
+    # Preserve historical numeric values, but give equal JSON numbers one form.
+    # In particular, integral floats/exponents and negative zero cannot fork a
+    # digest. This bounded oracle is not a general RFC 8785 binary64 codec.
+    def normalize(item):
+        if isinstance(item, float):
+            if not math.isfinite(item):
+                raise ValueError('non-finite JSON number')
+            return int(item) if item.is_integer() else item
+        if isinstance(item, dict):
+            return {key: normalize(child) for key, child in item.items()}
+        if isinstance(item, list):
+            return [normalize(child) for child in item]
+        return item
+    return json.dumps(normalize(value), sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode()
+
+
+def revision_text(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or int(value) != value:
+        raise ValueError('revision must be an integer JSON number')
+    return str(int(value))
+
+
+def integer_number(value):
+    return (not isinstance(value, bool) and isinstance(value, (int, float))
+            and math.isfinite(value) and int(value) == value)
+
+
+def same_json_value(left, right):
+    # Python equates True with 1, including inside lists/dicts. JSON does not.
+    return canonical(left) == canonical(right)
+
+
+def number_codec_checks():
+    """Raw JSON spelling vectors exercise the real digest/identity codecs."""
+    failures = []
+    for spelling, expected in [('1', b'1'), ('1.0', b'1'), ('1e0', b'1'),
+                               ('-0', b'0'), ('-0.0', b'0'), ('0', b'0')]:
+        value = json.loads(spelling)
+        if canonical(value) != expected:
+            failures.append('numeric canonical bytes: ' + spelling)
+        if canonical({'nested': [value]}) != b'{"nested":[' + expected + b']}':
+            failures.append('numeric nested digest bytes: ' + spelling)
+        if revision_text(value) != expected.decode():
+            failures.append('numeric identity text: ' + spelling)
+    try:
+        json.loads('01')
+    except json.JSONDecodeError:
+        pass
+    else:
+        failures.append('invalid JSON number 01 accepted')
+    return failures
 
 
 def sha(value):
@@ -84,6 +228,7 @@ def sha(value):
 
 def schema_registry(paths, disabled=()):
     """Eagerly resolve every reference, including unused definitions. No network."""
+    _SCHEMA_REGISTRY_PATHS[:] = list(paths)
     docs = [load(p) for p in paths]
     by_id = {d["$id"]: d for d in docs}
     by_name = {Path(p).name: d for p, d in zip(paths, docs)}
@@ -136,8 +281,13 @@ def validator(schema, registry=None):
 
 _SCHEMA_CACHE = {}
 def schema_guards(v, value, prefix, disabled=()):
-    relevant=frozenset(g for g in disabled if g.startswith(prefix+'/schema/'))
-    key=(id(v),sha(value),prefix,relevant)
+    schema_type_inventory(v)
+    _SCHEMA_SITES[(id(v), prefix)] = v
+    relevant=frozenset(expanded_guards(disabled)&_SCHEMA_VALIDATOR_GUARDS[id(v)])
+    # Cache instance bytes, not the normalized semantic digest: 1 and 1.0 may
+    # have different schema/type observations even when their digests agree.
+    encoded=json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)
+    key=(id(v),hashlib.sha256(encoded.encode()).digest(),prefix,relevant)
     if key in _SCHEMA_CACHE:return set(_SCHEMA_CACHE[key])
     def errors_without(disabled):
         token=_SCHEMA_CONTEXT.set((prefix,frozenset(disabled)))
@@ -146,17 +296,30 @@ def schema_guards(v, value, prefix, disabled=()):
     errors=errors_without(relevant)
     if not errors:
         _SCHEMA_CACHE[key]=frozenset();return set()
+    if relevant:
+        # A removal run needs the actual rejection stream, not a second causal
+        # search with additional guards disabled. The full validator above ran
+        # with exactly the requested guard/set off. Baseline runs below still
+        # prove each negative's independently sufficient removal witnesses.
+        out={error.oracle_guard for error in errors}
+        _SCHEMA_CACHE[key]=frozenset(out)
+        return out
     def candidates(error,depth=0):
         for child in error.context:yield from candidates(child,depth+1)
         if hasattr(error,'oracle_guard'):yield (depth,error.oracle_guard)
-    # Identify the deepest actual predicate whose removal makes this input valid.
-    # If none alone suffices, preserve all errors and flag the masked negative.
+    # Record every independently sufficient leaf removal. Union alternatives
+    # can provide several witnesses for the same one-field defect.
     options=sorted(set(x for e in errors for x in candidates(e)),reverse=True)
     causal=[]
     for depth,guard in options:
         if not errors_without(relevant|{guard}):causal.append((depth,guard))
+    for guard, members in _SCHEMA_DUPLICATES.items():
+        if members.intersection(g for _,g in options) and not errors_without(relevant|members):
+            causal.append((1,guard))
     if causal:
-        out={causal[0][1]}
+        # Composition keywords delegate rejection to their child assertions.
+        out={g for _,g in causal if not g.endswith(('/anyOf','/oneOf'))}
+        if not out:out={causal[0][1]}
     else:
         out={e.oracle_guard for e in errors}
     _SCHEMA_CACHE[key]=frozenset(out)
@@ -187,18 +350,76 @@ class Audit:
         self.cases = []
         self.failures = []
         source=Path(inspect.currentframe().f_back.f_code.co_filename)
+        self.suite = source.stem
+        fixture_path = ROOT / 'Plans/goal_oracle_schema_type_fixtures.json'
+        self.explicit_duplicates = []
+        if fixture_path.exists():
+            self.explicit_duplicates = load(fixture_path).get('suites', {}).get(self.suite, {}).get('duplicate_sets', [])
+            for pair in self.explicit_duplicates:
+                target = guard_for_location(pair['type_location'])
+                members = {target} | {guard_for_location(loc) for loc in pair['duplicate_locations']}
+                _SCHEMA_DUPLICATES[target] = frozenset(members | set(_SCHEMA_DUPLICATES.get(target, ())))
         self.literal_guards=set()
-        if source.is_file():
-            tree=ast.parse(source.read_text())
-            self.literal_guards={node.args[0].value for node in ast.walk(tree)
+        for guard_source in (source, Path(__file__)):
+            if not guard_source.is_file():
+                continue
+            tree=ast.parse(guard_source.read_text())
+            self.literal_guards.update(node.args[0].value for node in ast.walk(tree)
                 if isinstance(node,ast.Call) and isinstance(node.func,ast.Attribute)
                 and node.func.attr=='require' and node.args
-                and isinstance(node.args[0],ast.Constant) and isinstance(node.args[0].value,str)}
+                and isinstance(node.args[0],ast.Constant) and isinstance(node.args[0].value,str))
+            uses_append = guard_source == source or 'append_result' in source.read_text()
+            self.literal_guards.update(node.left.value for node in ast.walk(tree)
+                if isinstance(node, ast.Compare) and isinstance(node.left, ast.Constant)
+                and isinstance(node.left.value, str) and '/' in node.left.value
+                and (uses_append or not node.left.value.startswith('append/'))
+                and any(isinstance(rhs, ast.Name) and rhs.id == 'disabled' for rhs in node.comparators))
 
     def case(self, name, evaluate, value, valid, *, base=None):
         self.cases.append((name, evaluate, copy.deepcopy(value), valid, copy.deepcopy(base)))
 
     def run(self):
+        self.failures.extend(number_codec_checks())
+        paths = list(_SCHEMA_REGISTRY_PATHS)
+        if paths:
+            original_schema = load(paths[0]); reference_cache = {}
+            def references(document, disabled):
+                key = (sha(document), 'schema/references' in disabled)
+                if key not in reference_cache:
+                    original_load = globals()['load']
+                    try:
+                        globals()['load'] = lambda path: document if Path(path) == Path(paths[0]) else original_load(path)
+                        try:
+                            schema_registry(paths, disabled); errors = set()
+                        except ValueError:
+                            errors = {'schema/references'}
+                    finally:
+                        globals()['load'] = original_load
+                    reference_cache[key] = errors
+                return reference_cache[key]
+            self.case('schema/eager_refs_valid', references, original_schema, True)
+            dangling = copy.deepcopy(original_schema)
+            dangling.setdefault('$defs', {})['unused_type_audit_dangling_ref'] = {'$ref':'#/$defs/DOES_NOT_EXIST'}
+            self.case('schema/eager_refs_unused_dangling', references, dangling, False, base=original_schema)
+        # Register schemas from the ordinary cases first; fixture witnesses use
+        # exactly these full validators, including their actual ref registry.
+        for _, evaluate, value, valid, _ in self.cases:
+            if valid:
+                evaluate(value, set())
+        fixture_path = ROOT / 'Plans/goal_oracle_schema_type_fixtures.json'
+        if fixture_path.exists():
+            fixtures = load(fixture_path).get('suites', {}).get(self.suite, {})
+            for case in fixtures.get('cases', []):
+                site = next((v for (_, prefix), v in _SCHEMA_SITES.items() if prefix == case['site']), None)
+                if site is None:
+                    self.failures.append('unknown schema fixture site: ' + case['site'])
+                    continue
+                baseline = fixtures['bases'][case['base_id']]
+                values = materialize_cases([{'id':'base', 'valid':True, 'input':baseline},
+                    {'id':case['id'], 'base_id':'base', 'changes':case['changes'], 'valid':False}])
+                def schema_case(value, disabled, v=site, prefix=case['site']):
+                    g = Gates(disabled); g.schema(v, value, prefix); return g.errors
+                self.case(case['id'], schema_case, values[1]['input'], False, base=baseline)
         negatives = []
         seen=set()
         seen_token=_SEEN_GUARDS.set(seen)
@@ -207,16 +428,27 @@ class Audit:
             if bool(errors) == valid:
                 self.failures.append(f"{name}: expected valid={valid}, guards={sorted(errors)}")
             if not valid:
-                if len(errors) != 1:
-                    self.failures.append(f"{name}: masked negative ({len(errors)} guards): {sorted(errors)}")
                 if base is not None and evaluate(base, set()):
                     self.failures.append(f"{name}: negative's baseline is invalid")
                 negatives.append((name, evaluate, value, errors))
         _SEEN_GUARDS.reset(seen_token)
-        missing=(seen|self.literal_guards)-{g for _,_,_,errors in negatives for g in errors}
+        inventory=seen|self.literal_guards|(set(_SCHEMA_TYPES)-set(_SCHEMA_INACTIVE_TYPES))
+        actual_schema_guards = set().union(*_SCHEMA_VALIDATOR_GUARDS.values())
+        for pair in self.explicit_duplicates:
+            target = guard_for_location(pair['type_location'])
+            members = {target} | {guard_for_location(loc) for loc in pair['duplicate_locations']}
+            if target not in _SCHEMA_TYPES or not members <= actual_schema_guards:
+                self.failures.append('unknown actual schema assertion in named duplicate set: ' + pair['type_location'])
+        missing=inventory-{g for _,_,_,errors in negatives for g in errors}
         if missing:self.failures.append("guards without isolated negatives: "+", ".join(sorted(missing)))
         table = []
-        for guard in sorted({g for _, _, _, errors in negatives for g in errors}):
+        guards = sorted(inventory|{g for _, _, _, errors in negatives for g in errors})
+        if '--guard-table' in sys.argv:
+            print(f'{self.suite}: {len(negatives)} negatives, {len(guards)} guard rows; '
+                  f'{len(self.failures)} baseline failures, {len(missing)} unproved guards', file=sys.stderr, flush=True)
+        for index, guard in enumerate(guards):
+            if '--guard-table' in sys.argv and index % 25 == 0:
+                print(f'{self.suite}: guard row {index + 1}/{len(guards)}', file=sys.stderr, flush=True)
             flips, stays, masked = [], [], []
             for name, evaluate, value, errors in negatives:
                 weakened = evaluate(value, {guard})
@@ -224,16 +456,23 @@ class Audit:
                     flips.append(name)
                 else:
                     stays.append(name)
-                if errors == {guard} and weakened:
+                if guard in errors and weakened:
                     masked.append(name)
                 if guard not in errors and not weakened:
                     self.failures.append(f"{guard}: unrelated negative {name} passed")
             if not flips or masked:
                 self.failures.append(f"{guard}: surviving guard mutant; masked={masked}")
-            table.append({"guard": guard, "schema_location":_SCHEMA_LOCATIONS.get(guard), "negatives_that_flip": flips,
+            table.append({"guard": guard, "schema_location":_SCHEMA_LOCATIONS.get(guard),
+                          "removed_together": sorted(_SCHEMA_DUPLICATES.get(guard, {guard})),
+                          "removed_schema_assertions": sorted({location
+                              for member in _SCHEMA_DUPLICATES.get(guard, {guard})
+                              for location in _SCHEMA_ASSERTION_LOCATIONS.get(member, ())}),
+                          "negatives_that_flip": flips,
                           "negatives_that_stay_rejected": stays, "masked": masked})
         return {"status": "fail" if self.failures else "pass", "cases": len(self.cases),
                 "negative_cases": len(negatives), "guard_removal": table, "unproved_guards":sorted(missing),
+                "schema_type_inventory": _SCHEMA_TYPES,
+                "inactive_schema_type_guards": _SCHEMA_INACTIVE_TYPES,
                 "failures": self.failures, "native_execution": "NOT_RUN"}
 
 
@@ -251,11 +490,13 @@ def append_result(case, disabled=()):
     # Admission/policy always precedes lookup, including an equal-body retry.
     if "append/replay_policy" not in disabled and case["event"]["replay_policy"] == "projector_replay_only":
         return "replay_only_not_appendable"
-    if "append/admission" not in disabled and not case["admitted"]:
+    if "append/admission" not in disabled and case["admitted"] is not True:
         return "refused_before_dedupe"
+    if "append/payload_type" not in disabled and not (case['event']['payload'] is None or isinstance(case['event']['payload'], dict)):
+        return 'invalid_payload_type'
     if "append/inline_limit" not in disabled and case['event']['payload'] is not None and len(canonical(case['event']['payload']))>16*1024:
         return 'inline_payload_limit'
-    if "append/dedupe_proof" not in disabled and not case["proof_available"]:
+    if "append/dedupe_proof" not in disabled and case["proof_available"] is not True:
         return "dedupe_unavailable"
     if case["original"] is None:
         return "append_new"
@@ -266,7 +507,8 @@ def print_result(result, argv):
     if "--guard-table" in argv:
         path = Path(argv[argv.index("--guard-table") + 1])
         path.write_text(json.dumps(result, indent=2) + "\n")
-    small = {k: v for k, v in result.items() if k != "guard_removal"}
+    small = {k: v for k, v in result.items() if k not in ("guard_removal", "schema_type_inventory")}
+    small['schema_type_guards_inventoried'] = len(result.get('schema_type_inventory', {}))
     small["guards_removed"] = len(result["guard_removal"])
     print(json.dumps(small, indent=2))
     return 0 if result["status"] == "pass" else 1
@@ -279,6 +521,7 @@ def append_guards(case, disabled=()):
             'dedupe_unavailable':'append/dedupe_proof',
             'idempotency_conflict':'append/semantic_body',
             'inline_payload_limit':'append/inline_limit'}
+    guards['invalid_payload_type']='append/payload_type'
     return {guards[result]} if result in guards else set()
 
 
@@ -292,6 +535,8 @@ def materialize_cases(cases):
             if not baseline['valid']:raise ValueError('negative fixture base must be valid')
             value=copy.deepcopy(baseline['input'])
             for edit in c['changes']:
+                if edit['path'] == '' and edit['op'] == 'replace':
+                    value=copy.deepcopy(edit['value']);continue
                 path=[x.replace('~1','/').replace('~0','~') for x in edit['path'].split('/')[1:]]
                 parent=value
                 for part in path[:-1]:parent=parent[int(part)] if isinstance(parent,list) else parent[part]

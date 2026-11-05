@@ -75,8 +75,8 @@ def reduce_rows(rows, mode, disabled=(), trace=False):
     def refuse(outcome,index):
         return g.errors if trace else {'outcome':outcome,'index':index,'row':row}
     for i,r in enumerate(rows):
-        g.require('reducer/verified',r.get('verified',False))
-        g.require('reducer/scope',not r.get('scope_mismatch'))
+        g.require('reducer/verified',r.get('verified',False) is True)
+        g.require('reducer/scope',r.get('scope_mismatch',False) is False)
         if g.errors:return refuse('halt_before',i)
         if r['run']!='this':continue
         ev,key=r['event_type'],r['event_key']
@@ -171,6 +171,13 @@ def main() -> int:
         got = "observation" if case["payload_schema_id"] == CURRENT_SCHEMA["goal.cancelled"] else "unsupported_payload"
         check(got == case["expected"], f"goal.cancelled inspect:{case['id']}")
     for family, mode in ((S, "started"), (C, "cancelled"), (CE, "certified")):
+        f = fams[family]
+        v = validator(load(ROOT / f['payload_schema']))
+        for case in f['payload_cases']:
+            check((not list(v.iter_errors(case['value']))) == case['valid'], family+'/payload:'+case['id'])
+            def payload(value, disabled, v=v, family=family):
+                g=Gates(disabled);g.schema(v,value,family+'/payload');return g.errors
+            audit.case(family+'/payload/'+case['id'],payload,case['value'],case['valid'])
         for case in fams[family]["reducer_cases"]:
             got = reduce_rows(case["rows"], mode)
             exp = case["expected"]
@@ -185,7 +192,7 @@ def main() -> int:
             def protocol(value, disabled):
                 g=Gates(disabled)
                 g.require('append/replay_policy',value['event']['replay_policy']!='projector_replay_only')
-                g.require('append/admission',value['admitted'])
+                g.require('append/admission',value['admitted'] is True)
                 return g.errors
             audit.case(family+'/append/'+case['id'],protocol,case['input'],case['valid'])
     result=audit.run()

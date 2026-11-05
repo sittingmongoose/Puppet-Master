@@ -16,7 +16,7 @@ from pathlib import Path
 
 try:
     import jsonschema
-    from pm_goal_oracle_common import Audit, Gates, FORMATS, StrictValidator, schema_registry, print_result, load, append_result, append_guards, sha, validator
+    from pm_goal_oracle_common import Audit, Gates, FORMATS, StrictValidator, schema_registry, print_result, load, append_result, append_guards, sha, validator, revision_text, integer_number
 except ImportError as exc:  # pragma: no cover
     print(json.dumps({"status": "error", "reason": f"missing dependency: {exc}"}))
     sys.exit(2)
@@ -39,7 +39,7 @@ FORMAT_CHECKER = FORMATS
 
 def recipe(family: str, inputs: dict) -> tuple[str, str]:
     order = ["storage_instance_id", "project_id", "goal_id", "goal_run_id", "expected_goal_run_revision", "operation_id"]
-    vals = [str(inputs[k]) if k == "expected_goal_run_revision" else inputs[k] for k in order]
+    vals = [revision_text(inputs[k]) if k == "expected_goal_run_revision" else inputs[k] for k in order]
     blob = json.dumps([DOMAINS[family], "project"] + vals, separators=(",", ":"), ensure_ascii=False).encode()
     digest = hashlib.sha256(blob).hexdigest()
     return f"{family}.v1:{digest}", f"{family}.writer.v1:{digest}"
@@ -57,7 +57,7 @@ def project(rows: list[dict], birth, disabled=(), *, trace=False):
     g=Gates(disabled)
     for i,r in enumerate(rows):
         ev=r['event_type']
-        g.require('projection/verified',r['verified'])
+        g.require('projection/verified',r['verified'] is True)
         g.require('projection/source_edition',r['source_edition']==birth['source_edition'])
         g.require('projection/source_digest',r['birth_source_digest']==sha(birth['descriptor']))
         g.require('projection/storage',r['storage_instance_id']==birth['storage_instance_id'])
@@ -69,13 +69,14 @@ def project(rows: list[dict], birth, disabled=(), *, trace=False):
             g.require('projection/installed_writer',writer in birth['descriptor']['installed_writers'])
             g.require('projection/profile',r['profile']==birth['descriptor']['profile'])
             g.require('projection/payload_major',r['payload_major']==3)
-            g.require('projection/evidence',bool(r['evidence_refs']))
+            g.require('projection/evidence',isinstance(r['evidence_refs'],list) and bool(r['evidence_refs']) and all(isinstance(ref,str) and bool(ref) for ref in r['evidence_refs']))
         if status is None:
-            g.require('projection/first_started',ev=='goal_run.started')
+            g.require('projection/first_started',integer_number(r['goal_run_revision']) and ev=='goal_run.started')
         else:
             g.require('projection/edge', (status,ev) in EDGES)
-            g.require('projection/expected_revision',r['expected_goal_run_revision']==rev)
-            g.require('projection/revision_step',r['goal_run_revision']==r['expected_goal_run_revision']+1)
+            g.require('projection/expected_revision',integer_number(r['expected_goal_run_revision']) and r['expected_goal_run_revision']==rev)
+            if not g.errors:
+                g.require('projection/revision_step',integer_number(r['goal_run_revision']) and r['goal_run_revision']==r['expected_goal_run_revision']+1)
             if status==ev.split('.',1)[1] and stop_block:
                 g.require('projection/new_evidence',r['evidence_refs']!=rows[i-1]['evidence_refs'])
         if g.errors:
@@ -135,12 +136,12 @@ def main() -> int:
             audit.case(family+'/identity/'+case['id'],identity,case,case['valid'])
         for case in f["source_status_cases"]:
             s = case["source_status"]
-            legal = s in LEGAL[family] and (s != SELF[family] or case["new_evidence"])
+            legal = s in LEGAL[family] and (s != SELF[family] or case["new_evidence"] is True)
             check(legal == case["legal"], f"{family} source:{case['id']}")
             def source(value,disabled,family=family):
                 g=Gates(disabled)
                 g.require('source/'+family+'/status',value['source_status'] in LEGAL[family])
-                if value['source_status']==SELF[family]:g.require('source/'+family+'/new_evidence',value['new_evidence'])
+                if value['source_status']==SELF[family]:g.require('source/'+family+'/new_evidence',value['new_evidence'] is True)
                 return g.errors
             audit.case(family+'/source/'+case['id'],source,case,case['legal'])
     for case in doc["wiring_cases"]:
@@ -161,7 +162,7 @@ def main() -> int:
             def protocol(value,disabled):
                 g=Gates(disabled)
                 g.require('append/replay_policy',value['event']['replay_policy']!='projector_replay_only')
-                g.require('append/admission',value['admitted'])
+                g.require('append/admission',value['admitted'] is True)
                 return g.errors
             audit.case(family+'/append/'+case['id'],protocol,case['input'],case['valid'])
     result=audit.run();result['failures'].extend(failures)
