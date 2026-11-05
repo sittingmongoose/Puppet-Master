@@ -768,11 +768,10 @@
           "schema_site": "#/$defs/backend_detected_payload/properties/detected_backends/maxItems",
           "positive_control": "backend_detected/valid_schema_branch_16",
           "positive": "Valid selected-branch control satisfies maxItems=2",
-          "negative": {
-            "case_id": "backend_detected/invalid_schema_16",
-            "single_defect": "Violate only maxItems=2 at this location; preserve all peer predicates. If the same predicate is duplicated, record each site rather than merge different predicates."
-          },
-          "execution": "NOT_IMPLEMENTED_PHASE_1"
+          "negative": null,
+          "classification": "implied_unreachable_alone",
+          "classification_evidence": "detected_backends requires uniqueItems=true and items drawn from the two-value enum {git, jujutsu} (Plans/source_control_contracts.schema.json:184-188). Any array of three or more items therefore repeats a permitted value (uniqueItems) or adds a value outside the enum (item enum), so no input violates maxItems=2 alone. maxItems stays in the schema as owner text; its removal changes no acceptance (phase-1 review W3B-sol F1, 3,906-array probe). Isolated negatives exist for uniqueItems (schema/17) and the item enum; phase 2's shared guard-isolation tool records this site as implied, not as a duplicate.",
+          "execution": "NOT_APPLICABLE_IMPLIED"
         },
         {
           "guard": "backend_detected/schema/17",

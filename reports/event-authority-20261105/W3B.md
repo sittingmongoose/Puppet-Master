@@ -142,3 +142,9 @@ No standard governance seal, lock refresh, admission record, Decision Log edit, 
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md` — SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/search-before.json` — SHA-256 `b070f3a365a690a425e239a1862bcd72481f36ebb1fa9da0ecddf6880274a4af`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/currentness-copy-sha256.json` — SHA-256 `02965ee7f1a51989ceae85dc1cf0cd50090226564a9972b044679fb589b43419`.
+
+## Phase-1 review round 1: findings and responses
+
+- **F1 (blocking), impossible planned negative for `backend_detected` cardinality** (`reviews/W3B-sol/REVIEW-phase1.md`): fixed in `reports/event-authority-20261105/W3B-oracle-plan.json`, guard `backend_detected/schema/16`. The planned "violate only maxItems=2" negative is replaced by the classification `implied_unreachable_alone` with the finite-set evidence (uniqueItems plus a two-value item enum make any third item fail another predicate). `maxItems` stays in the schema; no owner text, schema or other row changed. Verify: the entry's `classification_evidence`, and the reviewer's 3,906-array probe.
+- **Retention:** all 19 cells stay pending with their questions; the wave-3 retention pass (`surveys/W3RT/`) maps them before any question reaches Jared.
+
