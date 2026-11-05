@@ -1,16 +1,14 @@
-# Event Authority batch 1 integration — 2026-11-05
+# Event Authority batch 1 integration — nine branches, 2026-11-05
 
-**Status: VERIFIED_WITH_NONBLOCKING_FINDINGS — lead reviews and landing remain separate.**
+**Status: STOPPED_BASE_MOVED_AFTER_VERIFICATION — lead reviews and landing remain separate.**
 
-Branch: `plans/ea-batch1-20261105`. New base: `73f2231a9ec1c93190adafcdde51030f028c8c2d`. Original base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Stopped head: `8e2d0599069d7c0b9a371b11b615d029886452d8`. Rebased source/follow-up/handoff head: `c86749191d64f0f90065db60ab40f11375999d6f`. Generated-files commit: `bd0b2092a490d62f5f41f6143e0ecbb3390cb9e3`. Machine: VM; finish worktree `/home/sittingmongoose/pm-worktrees/ea-batch1-finish`.
+Branch: `plans/ea-batch1-20261105`. Base: `73f2231a9ec1c93190adafcdde51030f028c8c2d`. Seven-branch delivery extended: `673b7d7a17a51d3b1aefd5e04e3d65e25c8c4e5d`. Regenerated/verified content head: `35ef9609e415118c1112aa123475f731ea8c0906` (the report-only delivery head is recorded separately). Machine: VM. Full worktree: `/home/sittingmongoose/pm-worktrees/ea-batch1-add`.
 
-After fetching origin, the lead's required diff from f9c5de6561 to origin/main named exactly 61 paths, all under Concepts/. The rebase completed without conflicts. All 37 commits (33 lane commits, three follow-ups and the stopped report) retain their exact messages and authors. The approved two-line .gitignore change remains its own commit. Comparing old and rebased tips found only the same Concepts paths; owner premises and citation locations are unchanged by the rebase. rebase-map.json records every old/new pair.
+The first operation was `git -C /home/sittingmongoose/src/PuppetMaster fetch origin`. Main remained at the requested base: the diff from 73f2231a9e to origin/main was empty. No rebase was needed at the initial check. At delivery main had moved outside Concepts; see the stop record below. Both added READY heads matched their Sol/Astra reviews. Initial disk availability was 119 GB and available RAM 12 GB. No original batch commit was rewritten or dropped; the original 33 lane commits, three integration follow-ups and seven-branch report remain ancestors. Five additional lane commits retain their exact messages and authors.
 
-The prior report is preserved as `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/BATCH1-stopped.md`. No input lane's product work was repeated.
+The previous report is preserved at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/BATCH1-7branches.md` — SHA-256 `d29d46409810c8498d22bf9e241ac2ca6694bfc2537a0c7e6eec7e3513cfa85e`. Its complete original replay, collision scan and follow-up evidence remains under the parent directory and `finish-VM/`.
 
-## Input replay
-
-All seven fetched heads still matched the reviewed table at the VM resume. All 33 distinct lane commits were replayed, retaining their complete messages and authors. Stacked ancestors were replayed once. The two-line `.gitignore` input remains its own commit.
+## Nine input branches
 
 | Input branch | Reviewed head | Replayed range | Commits | Owner-text conflicts | Generated conflict occurrences |
 |---|---|---|---:|---:|---:|
@@ -21,61 +19,93 @@ All seven fetched heads still matched the reviewed table at the VM resume. All 3
 | `plans/ea-retention-cards1-20261104` | `2663667e14346235daaa561d193e959422640b6e` | `784cd483b7..565310293d` (inclusive) | 7 | 0 | 2378 |
 | `plans/ea-gitignore-ea-tests-20261104` | `66af5d0d67f9138754c63823c8ddb68bd10b40aa` | `0ec80aba60..0ec80aba60` (inclusive) | 1 | 0 | 0 |
 | `plans/ea-census-recount-20261104` | `c53e4199ae94ca853a197354f3f9e7f296cf1efc` | `8a32cc347a..554052b74e` (inclusive) | 3 | 0 | 0 |
+| `plans/ea-cards2-answers-20261105` | `c81490e38cdd62175e5f921cfc6c65b542e2a5b7` | `59d63be2ab..33c5eb35bf` (inclusive) | 3 | 0 | 38 |
+| `plans/ea-retention-cards2-20261105` | `9b76338594c6f1ca75de6c757e7a8b98ab68e229` | `3a22fc1a2f..5d27ebb920` (inclusive) | 2 | 0 | 728 |
 
-Generated conflicts were deferred during the original replay and have now been resolved by deterministic regeneration; they were never hand-merged. Each no-commit cherry-pick restored `Plans/_shards/**` and `Plans/.plan_index/**` from the integration HEAD; the separate generated-files commit below completes that work. The registry final-chunk rename conflicted at `59e68d0650`; the unmerged generated paths were removed from the index and restored from HEAD for later regeneration. Raw per-commit logs and complete path lists are outside the repository.
+The first seven replay ranges and conflict counts above are inherited from the preserved seven-branch delivery, whose commits are unchanged. Both added branches have zero source conflicts. Generated paths were restored from the integration HEAD during replay and regenerated together in a separate commit; they were never hand-merged. The retention cherry-pick produced two unmerged registry rename paths (`628-lines-125218-125392.md` and `629-lines-125418-125504.md`); removing those generated index entries allowed the HEAD restore. All 728 generated conflict occurrences are retained in `retention-generated-conflicts.txt`.
 
-## Integration follow-ups
+## Added commits and integration notes
 
-- `dce12e1226` — CA-RET review: SP-291 depends_on and source_lineage add DL-401.
-- `f9f90b0c7f` — B1 part 2 review: Eight retired J248 row objects and exactly eight rows in each ledger now record completed Contracts/Run Modes edits and current citations; dispositions, cohort/category, and evidence grades unchanged; historical positive cells explicitly grant no current authority; separate orchestrator pointer remains pending.
-- `28b5b10d28` — B1 part 2, B2 and CA-RET reviews: Append current integrated premise locators to dated reports without changing historical source hashes or meanings; DL-404 answers the older B2 Q2.
+| Reviewed commit | Replayed commit | Exact message |
+|---|---|---|
+| `7ddbd14d27b41b29d041b9db5105ff39fc2eb350` | `59d63be2aba2789f6ef71fad88bf68ea54a4bd07` | plans: record all 38 E-CARDS-2 owner answers (DL-415..DL-452) |
+| `d152e079438081df8ec935522b3040f3ecab146c` | `4b9cebbaa86a60e7917726d456f0226312e5b43a` | plans: complete deck-2 Decision Log PlanUnits and Debug context |
+| `c81490e38cdd62175e5f921cfc6c65b542e2a5b7` | `33c5eb35bf3461ea8bf03c9a0f0a9a33928d7967` | reports: record CA-DL2 round-1 fixes and unchanged validation failures |
+| `a4260ca1be5eef9282f0e4fee812a0b1f3a6d0e2` | `3a22fc1a2f41e2c7a0e737ab0a4760faea2200cf` | plans(storage): apply Card 1 clock and no-project retention buckets (DL-415..DL-421) |
+| `9b76338594c6f1ca75de6c757e7a8b98ab68e229` | `5d27ebb92045729c244fd7882949004ba3270e29` | reports: trim trailing blank line in CA-RET2 report |
 
-## IDs and premise checks
+Separate generated-files commit: `35ef9609e415118c1112aa123475f731ea8c0906` — plans: regenerate batch 1 shards and index for deck-2 answers and retention. It contains 744 paths, six index outputs and only the `decision_log`, `storage-plan` and `storage_value_registry` shard namespaces. The report is committed separately.
 
-New PlanUnit IDs are DL-095, DL-096 and DL-400 through DL-414. The new main base has no definition of any of these IDs; its entire change from the original base is confined to Concepts/. The original completed all-origin scan (retained evidence; not repeated in this finish) examined 548 refs and 1,383 distinct canonical root Plans owner versions, called `git grep` for every ref, and reused exact Git blob identities for unchanged owner files. Source-memory ledgers, generated shards and migration copies are not canonical PlanUnit definitions. Stream C’s DL-330–332 on `origin/plans/closure-owner-answers-20261105` and DL-333 on `origin/plans/command-payload-defs-20261105` are disjoint. The matching Event Authority definitions on its September lineage and two reviewed input branches are the same decisions, not independently minted IDs.
+- **CA-RET2 note 2:** main repairs 9727c9a814 and 120c4f3d88 survive. The onboarding test retains the 344-family census and main ordering/prefix repairs together with the branch’s 35-policy assertion. The golden fixture is byte-identical to main and retains revision 2026-11-04.1.
+- **CA-RET2 note 4 / Astra:** preview membership is still empty; all three exact-type confirmations remain explicitly open. Debug’s older Project-required payload still needs owner reconciliation. Full-contract and separate-admission gates remain. No dev-session, formatter or LSP history was assigned by analogy.
+- **Earlier integration follow-ups:** dce12e1226 (SP-291 → DL-401), f9f90b0c7f (eight retirement ledger rows) and 28b5b10d28 (current premise locators) remain unchanged. Integration integrity rechecks the eight row objects against their ledgers, dispositions and evidence grades.
+- **CA-DL2 historical pointer note:** the exact presented DL-431/432 Sources lines remain unchanged. Their mutable `evidence:drafts/DCW/DCW.md` lookup has the independent immutable recovery at commit cdc9d4a94878868c9a2c67439bdf28ea5e5168f0, reports/event-authority-20261104/DCW.md:58 and :62, SHA-256 27ab75273ed730657ec4fb7d9321fff0a223c9984d70d9f000467c6467d6b5a0. This is lineage lookup only, with no answer change.
 
-**Known stale-branch collision:** `origin/fix/server-pairing-issuance-rebased-20260925` defines DL-095 as “Replace import resets omitted ordinary settings within the chosen scope” and DL-096 as “Stash apply explicitly chooses whether to restore saved staged selections”. These are different from stream E’s heartbeat/scope decisions. They are absent from main. BATCH1.md explicitly requires stopping on a main collision; the reviewed stream E IDs are preserved without unilateral renumbering.
+## IDs, dependencies and current premises
 
-Current premise locators and moved-citation corrections are appended to the B1 part 2, B2 and CA-RET reports. The 25 retention-row assignments remain at `Plans/storage-plan.md:17427`, `:17429`, `:17431`; the Chat policy object is still at `Plans/storage_value_registry.json:558`. Main’s DL-302, FileSafe and application-compaction admission boundaries, prototype cleanup and typed app storage/onboarding changes are preserved. B2’s older Q2 is answered by DL-404. Historical application hashes and dated source-revision citations are not restamped.
+The 38 added indexed decisions are DL-415 through DL-452; no prior PlanUnit is removed. All 38 reviewed prose sections are byte-identical after integration. Main’s DL-302 is present. The integrity check proves that the only PlanUnit additions against the original batch base are the original 17 decisions and these 38. All five added commit messages/authors and the original 33 lane commit messages/authors match their source objects.
 
-## Regeneration and verification
+All nine required edges resolve to existing unique indexed targets: SP-237 → DL-401 and DL-415..DL-421 (eight edges), and SP-291 → DL-401 (one edge). Build order is available; none of the missing-answer dependency/build-order failures remains.
 
-All four derived-file commands exited 0, with top-level JSON status parsed as pass. Shards cover 99 sources. Index generation and validation report 7,439 PlanUnits, 29,993 acceptance units and blocked_runtime_certification_incomplete; no WorkNodes or NodeSeeds were created. Only five shard namespaces changed: contracts_v0 (66 tracked paths), decision_log (13), run_modes (30), storage-plan (91), storage_value_registry (633). The generated-files commit contains 839 paths, including six index outputs and the final registry-shard rename.
+- **Current locator:** `Plans/storage-plan.md:17903` — `plan_unit_id: SP-237`.
+- **Current locator:** `Plans/storage-plan.md:23938` — `plan_unit_id: SP-291`.
+- **Current locator:** `Plans/storage-plan.md:17500` — `- **1.g — Owner-confirmed preview history`.
+- **Current locator:** `tests/test_pm_onboarding_phases.py:366` — `self.assertEqual(len(families), 344)`.
+- **Current locator:** `tests/test_pm_onboarding_phases.py:389` — `self.assertEqual(len(self.registry["retention_policies"]), 35)`.
 
-The mandatory ignored currentness edition was copied before generation. cp -a exited 1 on attributes, while all 15 source/copy SHA-256 pairs matched. Commands ran sequentially. The RAM guard ran free -g before each generator/checker; below 6 GB it would recheck every two minutes, resume at 7 GB and stop only after 45 continuous minutes below 6 GB. No RAM pause or stop was needed in this finish. Initial disk free: 85 GB.
+The original 548-ref collision scan and its known stale-branch DL-095/096 collision remain as recorded in BATCH1-7branches.md; those conflicting definitions are absent from main. CA-DL2’s completed independent reviews cover all 38 additional IDs and the retention stack; no new ID is allocated here. Source-memory, generated and migration copies are not counted as additional canonical definitions.
 
-| Check | Exit | Parsed top-level status | Seconds | Available RAM before |
+Retention preserves all 344 family rows and all 28 prior policy objects. The seven added policy objects exactly match the reviewed retention branch, giving 35 policies. The five populated application buckets retain the approved 9 + 12 + 5 + 3 + 1 exact types; preview has zero members. No event family or admission record was added.
+
+## Regeneration and targeted verification
+
+The ignored currentness edition was copied before index generation: `cp -a` exited 1 on attributes, while all 15 source/copy SHA-256 pairs matched. The baseline identity is checked again by the dry landing tool. Generators and checkers ran one at a time. The RAM guard checks before each launch; below 6 GB it rechecks every two minutes and resumes at 7 GB. No memory pause was required. The nine additional required audit inputs copied successfully; the optional live-resize directory copy timed out, matching the previous run. The evidence symlink is present.
+
+| Check | Exit | Parsed top-level status | Seconds | RAM before |
 |---|---:|---|---:|---:|
-| `shard-generate` | 0 | pass | 3.38 | 11 GB |
-| `shard-check` | 0 | pass | 25.02 | 9 GB |
-| `index-generate` | 0 | pass | 54.49 | 9 GB |
-| `index-validate` | 0 | pass | 63.79 | 10 GB |
-| `test_event_authority_holding_bucket` | 1 | see result below | 4.78 | 9 GB |
-| `test_pm_emit_only_event_boundaries` | 1 | see result below | 66.28 | 9 GB |
-| `test_pm_pnc019_currentness` | 1 | see result below | 14.32 | 9 GB |
-| `test_pm_coordination_events` | 1 | see result below | 41.66 | 9 GB |
-| `test_pm_onboarding_phases` | 0 | see result below | 12.08 | 11 GB |
-| `readiness-self-test` | 0 | pass | 42.13 | 12 GB |
-| `case-l` | 0 | pass | 1.33 | 10 GB |
-| `frozen-readonly` | 1 | see result below | 0.47 | 10 GB |
-| `integration-integrity` | 0 | pass | 4.87 | 10 GB |
-| `validate-new-contracts` | 0 | pass | 236.5 | 10 GB |
-| `validate-projects-refresh-contracts` | 0 | pass | 58.72 | 9 GB |
-| `validate-browser-event-admission` | 0 | pass | 15.98 | 8 GB |
-| `validate-testing-session-event-admission` | 0 | pass | 9.64 | 8 GB |
-| `validate-github-project-integration` | 0 | pass | 7.32 | 7 GB |
-| `validate-working-notebook-contracts` | 0 | pass | 1.49 | 8 GB |
-| `validate-case-l-non-event-materialization` | 0 | pass | 1.68 | 8 GB |
-| `validate-implementation-readiness` | 1 | fail | 47.94 | 8 GB |
-| `landing-check` | 1 | see result below | 1862.16 | 10 GB |
+| `shard-generate` | 0 | pass | 3.69 | 10 GB |
+| `shard-check` | 0 | pass | 23.53 | 10 GB |
+| `index-generate` | 0 | pass | 55.41 | 9 GB |
+| `index-validate` | 0 | pass | 55.36 | 8 GB |
+| `test_event_authority_holding_bucket` | 1 | — | 4.38 | 8 GB |
+| `test_pm_emit_only_event_boundaries` | 1 | — | 69.44 | 8 GB |
+| `test_pm_pnc019_currentness` | 1 | — | 8.5 | 13 GB |
+| `test_pm_coordination_events` | 1 | — | 39.29 | 12 GB |
+| `test_pm_onboarding_phases` | 0 | — | 10.4 | 14 GB |
+| `test_pm_plan_index` | 0 | — | 2.17 | 14 GB |
+| `test_shared_runtime_storage_contracts` | 0 | — | 20.12 | 14 GB |
+| `test_pm_runtime_vocabulary_migration` | 1 | — | 15.95 | 12 GB |
+| `readiness-self-test` | 0 | pass | 36.94 | 13 GB |
+| `case-l` | 0 | pass | 1.2 | 13 GB |
+| `frozen-readonly` | 1 | None | 0.37 | 13 GB |
+| `integration-integrity` | 0 | pass | 6.09 | 13 GB |
+| `validate-new-contracts` | 0 | pass | 208.8 | 12 GB |
+| `validate-projects-refresh-contracts` | 0 | pass | 43.5 | 11 GB |
+| `validate-browser-event-admission` | 0 | pass | 11.45 | 11 GB |
+| `validate-testing-session-event-admission` | 0 | pass | 6.89 | 10 GB |
+| `validate-github-project-integration` | 0 | pass | 5.23 | 10 GB |
+| `validate-working-notebook-contracts` | 0 | pass | 1.12 | 11 GB |
+| `validate-case-l-non-event-materialization` | 0 | pass | 1.42 | 11 GB |
+| `validate-implementation-readiness` | 1 | fail | 43.1 | 11 GB |
+| `verify-spec-lock` | 1 | fail | 0.82 | 17 GB |
+| `lint-contractrefs` | 0 | pass | 107.37 | 17 GB |
+| `storage-profile-check` | 1 | fail | 0.57 | 14 GB |
 
-**Targeted tests.** Holding bucket: 34 tests, two failures; emit-only: 13 tests, one failure; coordination: 50 tests, 14 failing test/subtest cases. Every failing case matches the retained lane base output by name after normalizing only unittest's tests. module prefix (test-baseline-comparison.json). Holding-bucket failures concern the three missing approval/settings admission records; emit-only's first-40 digest and the coordination payload/schema/storage pins are pre-existing. Currentness: nine tests, one failure caused solely by the five edited owner documents' source drift; this is a reseal item. Onboarding: all 50 tests pass, including the 28-policy census. Readiness self-test and Case-L validation pass. Seven targeted contract/admission checkers pass. Implementation-readiness validation exits 1; its 31 findings include governance drift and the retained denominator/depth blockers, classified by the dry check below.
+Index generation and validation both have parsed top-level `status=pass`: **7,477 PlanUnits**, **30,110 acceptance units**, 96 documents. Shards cover 99 sources. Runtime readiness remains `blocked_runtime_certification_incomplete`; no WorkNodes or NodeSeeds were created.
 
-**Frozen validator, read-only.** Imported without bytecode writes; its receipt destination was redirected only in memory to the external evidence directory. All seven original frozen-directory file hashes matched before and after. Exit 1, pass=false, six open-authority findings: post_august_admission_incomplete, unexpected_august_set, fresh_census_denominator_not_closed, individual_dispositions_evidence_gap_blocking, individual_dispositions_provisional, registered_contract_depth_incomplete. Incomplete Browser/compaction depth and missing approval/settings records remain visible. No closure is claimed. Full details are in the external receipt.
+All 50 onboarding tests, all 18 index/PlanUnit-retention tests and all 16 shared runtime/storage tests pass. The readiness self-test, Case L, integration integrity and the seven targeted contract/admission checkers pass.
 
-**Integration integrity.** Exit 0. The 33 original lane messages/authors and the separate rebase map are preserved; the approved .gitignore diff is isolated; the 17 new PlanUnit IDs are unique and retain their reviewed Decision Log text; DL-077/DL-094 pins are unchanged; eight retirement rows retain their dispositions/evidence grades and match the ledgers; registry family count and original policies are preserved with exactly the approved Chat policy added; recount artifacts and protected paths are unchanged.
+The holding-bucket (two failures), emit-only (one failure), coordination (14 failing test/subtest cases) and currentness (one failure) failed-case identities match the retained seven-branch runs. The first three concern existing missing approval/settings admission fixtures, registry digests and payload/schema/storage pins. Currentness reports source drift that the reseal must bind; it is not a new closure. `test-baseline-comparison.json` retains the exact identity comparison.
 
-## Dry landing check and classification
+The additional runtime-vocabulary suite has one pre-existing renderer-copy failure in nine tests: it expects “Skia compiled in and selected by default”. Both that test file and Plans/FinalGUISpec.md are byte-identical to main; the literal is absent there too. Its storage-registry representation cases pass. `runtime-vocabulary-baseline.json` binds both equal input hashes. No unrelated test or GUI owner text was changed.
+
+The storage-profile checker exits 1 with 41 missing profiles. Its checker, complete storage-profile object and consumed family identities/kinds are unchanged from main; its full error array exactly equals main’s missing-profile set (`storage-profile-baseline.json`). No profile gap was introduced here. The initial optional lock/reference invocations rejected an unsupported timeout flag (exit 2); corrected invocations are recorded in the table and the rejected outputs are retained with an `-invocation-error` suffix.
+
+Spec Lock verification fails on stale hashes; implementation-readiness validation retains source/governance drift and the open denominator/depth requirements. The full dry landing check classifies their reported items below.
+
+The frozen validator ran read-only, with bytecode disabled and only its receipt destination redirected in memory to external evidence. Exit 1 / pass=false retains six open-authority findings: post_august_admission_incomplete, unexpected_august_set, fresh_census_denominator_not_closed, individual_dispositions_evidence_gap_blocking, individual_dispositions_provisional and registered_contract_depth_incomplete. All seven frozen-directory file hashes match before/after. No closure is claimed.
+
+## Dry landing check and complete classification
 
 **Dry landing exit: 1; blocking items: 0; infrastructure results: 0.**
 
@@ -84,10 +114,10 @@ Baseline `0edfd9406fb708773df7f25ce1ce25a064ae06ad`: `{'age_days': 0.07, 'ancest
 | Aggregate | Result | Failure total | Baseline total |
 |---|---|---:|---:|
 | `audit-governance` | fail | 2067 | 222 |
-| `plan-migration-validate` | fail | 9413 | 0 |
+| `plan-migration-validate` | fail | 9411 | 0 |
 | `run-gates` | fail | 2067 | 222 |
 
-Reported sets overlap: 13103 new rows, 9495 rows on branch files, 0 pre-existing rows; 13105 distinct reported items. Every distinct item is classified in landing-classification.json. The table below groups that complete classification by error kind.
+Reported sets overlap: 13101 new rows, 9493 rows on branch files, 0 pre-existing rows; 13103 distinct reported items. Every distinct item is classified in landing-classification.json. The table below groups that complete classification by error kind.
 
 | Classification | Error kind | Items |
 |---|---|---:|
@@ -98,8 +128,8 @@ Reported sets overlap: 13103 new rows, 9495 rows on branch files, 0 pre-existing
 | branch_governance_staleness_reseal | `current_snapshot_live_bytes_mismatch` | 8 |
 | branch_governance_staleness_reseal | `current_snapshot_live_line_count_mismatch` | 6 |
 | branch_governance_staleness_reseal | `current_snapshot_live_sha256_mismatch` | 8 |
-| branch_governance_staleness_reseal | `current_snapshot_live_span_metadata_mismatch` | 8814 |
-| branch_governance_staleness_reseal | `current_snapshot_span_sha256_mismatch` | 541 |
+| branch_governance_staleness_reseal | `current_snapshot_live_span_metadata_mismatch` | 8811 |
+| branch_governance_staleness_reseal | `current_snapshot_span_sha256_mismatch` | 542 |
 | branch_governance_staleness_reseal | `event_authority_currentness_source_drift` | 10 |
 | branch_governance_staleness_reseal | `event_record_spec_lock_hash_stale` | 2 |
 | branch_governance_staleness_reseal | `non_executable_closure_spec_lock_hash_stale` | 2 |
@@ -133,55 +163,71 @@ Growth: 0 buckets and 11 subchecks. The full growth/export/pairing records are r
 
 No new non-staleness finding on this branch stops the handoff. Branch governance staleness belongs to the reseal request. Pre-existing findings are compared against the current baseline. New findings on untouched governance files are non-blocking under the repository rules and require the follow-ups below.
 
-**Six findings on untouched governance files:** four missing_ref rows (the plan-graph and evidence validators in both aggregates) name Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json. Its final registry-shard reference is still 631-lines-125818-125835.md; deterministic regeneration renamed that shard to 631-lines-125818-125851.md. The designated reseal must refresh the protected evidence reference. The two historical_successor_terminal_current_snapshot_invalid rows name run-002/final_validation_summary.json and wrap the 9,413 stale current-snapshot findings. The eventual landing snapshot/baseline refresh and designated run-002 reseal follow-up resolve those. These findings were caused by this batch but are reported against governance files outside its edited paths. No protected file or generated alias was changed to suppress them.
+**New findings on untouched files:**
 
-All 11 growing subchecks are fully keyed or print every failure; none is a truncated-growth blocker. Only audit-closure remains compared by total, unchanged at 201 in each aggregate. Existing baseline findings that do not name branch files are omitted by the landing reporter; there are zero reported pre-existing rows on branch files.
+| Error | Path | Reported items |
+|---|---|---:|
+| `historical_successor_terminal_current_snapshot_invalid` | `Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json` | 2 |
+| `missing_ref` | `Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json` | 4 |
 
+The protected evidence still references prior final shard paths; deterministic regeneration changes the corresponding paths. The designated reseal must refresh those references. Historical-successor failures wrap the stale current migration snapshot; the eventual landing refreshes that snapshot and its baseline, with the run-002 historical summary handled in the assigned reseal. These findings do not authorize changes to protected governance in this branch.
 
-## Reseal and landing follow-up
+## Reseal request and landing follow-up
 
-The reseal input list is Plans/Decision_Log.md, Plans/Contracts_V0.md, Plans/Run_Modes.md, Plans/storage-plan.md, Plans/storage_value_registry.json, scripts/pm-implementation-readiness.py, both changed disposition ledgers and their 33 changed row objects. reseal-inputs.json enumerates all 41 paths. The assigned reseal worker handles applicable Spec Lock entries, edited source/shard artifact evidence, currentness source bindings, run-002 batch hashes/final summary and readiness artifacts. The eventual landing agent separately refreshes the current migration snapshot and landing baseline after landing. This worker refreshed none of them.
+The reseal source-input list remains the same **41 paths**, enumerated in `reseal-inputs.json`: Plans/Decision_Log.md, Plans/Contracts_V0.md, Plans/Run_Modes.md, Plans/storage-plan.md, Plans/storage_value_registry.json, scripts/pm-implementation-readiness.py, both changed disposition ledgers and their 33 changed row objects.
 
-## Open items
+The assigned reseal worker handles applicable Spec Lock entries; edited owner/shard artifact evidence and stale shard references; currentness source bindings; run-002 batch hashes and final summary; readiness/buildability artifacts; and the one required auto-decisions row. The eventual landing agent separately refreshes the current migration snapshot and landing baseline after landing. None of these protected artifacts was edited here.
 
-No product decision is supplied here. Carried exact retention questions:
+## Open and stopped items
 
-- Which event starts the 90-day clock? Proposed option: first durable record creation, with no reset on retry, replay or recovery.
-- How should the nine already-approved no-project Debug investigation history names be counted under the seven-year rule?
-- How should the twelve memory-maintenance history names over a no-project thread-private memory corpus be counted under the seven-year rule?
-- How should these five no-project candidate history names be counted under the seven-year rule? Permission override remains a non-emitting candidate.
-- How should the three no-project hook candidate history names be counted under the approved 90-day terms?
-- How should no-project model.catalog_refreshed records be counted under the approved 90-day terms?
-- How should no-project preview history be counted under the approved 90-day terms, after the owner maps its scope and payload/adoption? This does not assert application scope for all seven names.
+The earlier seven Card-1 clock/count questions are now answered by DL-415..DL-421 and applied by the added retention branch. Memory cutoff choices are answered by DL-446/447; applying later-card decisions to their owners remains separate work and is not falsely reported as still awaiting Jared’s choice.
 
-- Memory owner must propose age/score cutoffs for monthly summary/prune; neither job runs before approval (DL-403).
-- Separate orchestrator pointer/child-run/board/raw-output owner edits and collaborative family contracts/admissions belong to batch 2.
-- Storage SR-04 Boot aggregate interpretation, SR-05 future regrade and storage_maintenance_operation count/card observation remain carried notes; no choice made here.
-- Chat successor physical form belongs to first admission technical work.
-- CA-SEAL frozen-validator third change is excluded from batch 1.
+- **Open owner gates:** all three no-project preview type confirmations; Debug payload/scope reconciliation; full per-family contract and admission gates.
+- **Later batches / owners:** orchestrator pointer and child-run/board/raw-output text, collaborative contracts/admissions and remaining deck-2 owner applications.
+- **Carried technical notes:** Chat successor physical form at first admission; SR-04 Boot aggregate interpretation; SR-05 future regrade; storage_maintenance_operation count/card observation.
+- **Authority still open:** denominator, registered-contract depth, missing approval/settings admission records and the six frozen findings above. CA-SEAL remains excluded.
 
-## Evidence and handoff
+Blocking items from the completed dry check (the separate delivery stop is recorded below): 0. Infrastructure results: 0. See complete classification for every reported item.
 
-All resumed raw outputs, exact commands/exit codes, stderr, copied-input hashes, rebase mapping, full landing reports/exports, every classified landing item and the frozen receipt are retained under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/`. Its SHA256SUMS manifest binds every file. The report copy and delivery record bind the final branch head separately. Historical replay and stopped-run evidence remain in the parent directory. The optional ignored live-resize directory copy timed out, as on the stopped run; all required currentness files matched, nine other audit-input copies succeeded, and the evidence symlink was created.
+## Evidence and delivery
 
-No main push, landing lock, reseal, admission, frozen source edit, protected governance edit, pm-mail or subagent. Sol/Astra reviews are the lead's next step; none were launched in this finish. The report is committed separately from generated files. The branch is force-pushed with a lease before removing the finish worktree.
+Raw commands, stdout/stderr, exit records, reviewed-input custody, copy hashes, replay map, integrity proof, frozen receipt, full landing reports/exports and per-item classification are retained under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM`. The branch report copy is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/BATCH1.md`; delivery.json records the final local head, unchanged remote head and report hash.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/rebase-map.json` — SHA-256 `0729514a3ea482c5a793fbf5b0fbb5e57c21e74f7fe078ebfbdea30cee46c79c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/SHA256SUMS` — SHA-256 `75b541434096089dd30064b19fd77893fd6dabb39b436b58f8290b8bb9a5ddc8`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/currentness-copy.json` — SHA-256 `a3c4d658e151f7732b549a132fcf835a468e98ff72cb5da279a98890450162b9`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/replay.json` — SHA-256 `54e688391355032e972393f8241a9f22178841bbee1df8245100a90b8cfa064c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/index-generate.log` — SHA-256 `79c0ad750d74dfe7f8bf64a1cf07eecabefc50cfd72151684ef773ad5f43cdda`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/index-validate.log` — SHA-256 `74ee11ed7aa32716e123864cf0adbbe3b7467ea9de7552cd7be5586d3bc6655d`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/integration-integrity.log` — SHA-256 `865e1cc40a3360e24b5a1fedaf9bf71ad1db539fbd5e40c0081451ea0b70539c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/test-baseline-comparison.json` — SHA-256 `a047d53e0610582b892002636171ea24578bf79f3ff148f842c31dcc9ad83b1b`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/runtime-vocabulary-baseline.json` — SHA-256 `2e7b8c48727e5ee4a6bd44dfe7f858d26105818faf7dea8e67f8e5f61bd517fc`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/storage-profile-baseline.json` — SHA-256 `7e4bc6d9075c574f88e44b56fc364f77b1cde76095cff11c1990ee6b1c775cab`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/frozen-readonly-integrity.json` — SHA-256 `57ab2379a423c33f92560dfa20b39895934d32bdf125736e971398f952f8e759`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/frozen-receipt/event_authority_validator_receipt.json` — SHA-256 `42d0c6094fd419f4908b35eeb262f0de60d01678769528358c8c909f7e4121c5`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/landing-check.log` — SHA-256 `a8dc1ad0ce9ffad8b715dc3c6ed0f4fca761b79553699e81ac97da47fd6a9ea8`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/landing-classification.json` — SHA-256 `2faf9a01fdc61a3b7847b2b1d9564f163c13547b495881eb33d01ca309c4c988`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/reseal-inputs.json` — SHA-256 `a188bd918c82f55731a6d98ea546e5733ef31756b4204ee28a23edbd641e63e2`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/base-drift.json` — SHA-256 `f88c94ab3c9ed8ec802400f5b1eba0fe431a777df33cc1f4a2b4c9ce30b30515`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/add-VM/base-drift-paths.txt` — SHA-256 `eb09251e107998444bf2bb1145a5e6a723c55d190a2c541918d9686e304d6eac`.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/currentness-copy.json` — SHA-256 `26ef55265edcbd597aef3a0a001b5ddc92359fb05d828942652db5ecc50d56f0`.
+The final remote check found main had advanced outside Concepts during verification, triggering the explicit stop condition. No rebase or push was performed after that discovery. Completed source, generation and report commits are preserved locally for the lead; the remote batch branch remains at 673b7d7a17a51d3b1aefd5e04e3d65e25c8c4e5d. The worktree is removed with the literal-path Git command after copying the report and evidence. No main push, landing lock, reseal, forbidden governance edit, frozen source edit, admission, pm-mail, subagent, browser or server. Lead reviews and landing remain separate.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/index-generate.log` — SHA-256 `99b7faa88c7a6da66e27e451e40424634cf1ef060159e4c1cf537893d0419db6`.
+## Delivery stop: main advanced outside Concepts
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/index-validate.log` — SHA-256 `62cecf01db70bc8b33997fc3bbdf668185692fc82ac98bffc6501d6ee835f1c9`.
+After the dry check, a final remote read and fetch found main at `57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5`. `git diff --name-only 73f2231a9e origin/main` lists 427 paths, including 427 outside Concepts. The instruction says anything outside Concepts means stop and report the paths. This worker therefore does not rebase, force-push or certify the result against this new main. The dry-check exit 1 / zero blockers applies only to the verified base `73f2231a9ec1c93190adafcdde51030f028c8c2d`.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/test-baseline-comparison.json` — SHA-256 `45005430c4462f7d705fd4b66e174099d60a5fdc5c449412328805f2931719e6`.
+Primary changed paths (the complete exact list, including generated, audit and ledger paths, is in base-drift-paths.txt and base-drift.json):
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/frozen-receipt/event_authority_validator_receipt.json` — SHA-256 `bf47b1719f11c868f552ecb81bfb1ad06877cacbe2b5c8f8fa80165181913bce`.
+- `Plans/00-plans-index.md`
+- `Plans/Goal_Runtime_System.md`
+- `Plans/Media_Generation_and_Capabilities.md`
+- `Plans/Planning_Ledger_System.md`
+- `Plans/Section15_MVP_Promoted_Features_Spec.md`
+- `Plans/UI_Command_Catalog.md`
+- `Plans/bootstrap/Bootstrap_Design_Brief.md`
+- `Plans/chain-wizard-flexibility.md`
+- `Plans/orchestrator-subagent-integration.md`
+- `scripts/pm-audit-closure.py`
+- `scripts/pm-plans-verify.py`
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/landing-check.log` — SHA-256 `f5a0cede607dcf248d31fd798d26abb8ef1824ca84c05cd69cb75738dcd27866`.
-
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/landing-classification.json` — SHA-256 `7f4f07140b91dc1457bc90458b56f3d11ddd1b9cf4774f5002ad5b40d36e8ace`.
-
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/reseal-inputs.json` — SHA-256 `a188bd918c82f55731a6d98ea546e5733ef31756b4204ee28a23edbd641e63e2`.
-
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/BATCH1/finish-VM/SHA256SUMS` — SHA-256 `d7a74f40f1b0a6a3cbbc2cfbcd8112c07e2548886b482018c34ce6d56a2b947d`.
+This base change is the one stopped item. It is separate from the zero blocking items in the completed dry check. The lead must adjudicate the new base before integration resumes.
