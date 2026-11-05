@@ -608,34 +608,11 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] 
 /* a wait's loader (L6) sits on the line like the mark it replaced */
 .o55-ldwrap { display: inline-flex; align-items: center; flex: none; }
 
-/* FO-49: the native button owns an unmoved hit box. Only its material and direct visual
-   children lift. Every paint layer ignores pointer input, including the pixels above it.
-   Material variables live beside their original look rules; the reset outranks Glass's
-   existing material specificity without changing the button's border width or layout. */
+/* FO-49: the native outer material, border and focus ring stay with the button's hit target.
+   Hover lift belongs to content inside that boundary. Existing look/press materials remain native. */
 @property --o55-hover-y { syntax: '<length>'; inherits: true; initial-value: 0px; }
-:is(.o55-card, .o55-tile) { position: relative; isolation: isolate; --o55-face-inset: -1px; }
-#pm-o55-onboarding:is([data-family="friendly"], [data-family="retro"]) .o55-card { --o55-face-inset: -2px; }
-html[data-lg="on"][data-theme^="glass"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-face-inset: 0px; }
-#pm-o55-onboarding#pm-o55-onboarding#pm-o55-onboarding :is(.o55-card, .o55-tile) {
-  background-color: transparent !important; background-image: none !important;
-  border-color: transparent !important; box-shadow: none !important; outline-color: transparent !important;
-}
-:is(.o55-card, .o55-tile) *, :is(.o55-card, .o55-tile)::after { pointer-events: none; }
 :is(.o55-card, .o55-tile) > * { translate: 0 var(--o55-hover-y); }
-:is(.o55-card, .o55-tile)::before {
-  content: ''; position: absolute; inset: var(--o55-face-inset); z-index: -1;
-  border: inherit; border-radius: inherit; pointer-events: none;
-  background: var(--o55-face-background, transparent);
-  background-size: inherit; background-position: inherit; background-repeat: inherit;
-  border-color: var(--o55-face-border-color, var(--o55-line));
-  border-top-color: var(--o55-face-border-top-color, var(--o55-face-border-color, var(--o55-line)));
-  border-right-color: var(--o55-face-border-right-color, var(--o55-face-border-color, var(--o55-line)));
-  border-bottom-color: var(--o55-face-border-bottom-color, var(--o55-face-border-color, var(--o55-line)));
-  border-left-color: var(--o55-face-border-left-color, var(--o55-face-border-color, var(--o55-line)));
-  outline: var(--o55-face-outline, none); outline-offset: inherit;
-  box-shadow: var(--o55-face-shadow, none); translate: 0 var(--o55-hover-y);
-  transition: var(--o55-face-transition, none);
+html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; }
 }
-#pm-o55-onboarding[data-family="retro"] :is(.o55-card, .o55-tile)::before,
-html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile)::before { transition: none !important; }
-@media (prefers-reduced-motion: reduce) { :is(.o55-card, .o55-tile)::before { transition: none !important; } }

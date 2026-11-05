@@ -905,6 +905,8 @@
   /* each place a folder step committed keeps the words it was chosen with, by its reference: the plan's two places only */
   function notePlace(S, ref, label) {
     const d0 = md(S), keep = [d0.project_source_ref, d0.storage_location, ref];
+    const device = dev(S);
+    S.sess.nasPlaceDevices = Object.fromEntries(Object.entries(Object.assign({}, S.sess.nasPlaceDevices, device ? { [ref]: device.id } : {})).filter(([k]) => keep.includes(k)));
     S.sess.nasPlaces = Object.fromEntries(Object.entries(Object.assign({}, S.sess.nasPlaces, { [ref]: label })).filter(([k]) => keep.includes(k)));
   }
   /* a files place or source on a NAS as a person reads it: the folder as it was picked (the NAS's own name and the folders
@@ -926,14 +928,31 @@
        commit, below, for when the session no longer holds it) */
     const own = (n.purpose === 'storage' && d0.storage_location === r) || ((n.purpose || 'source') === 'source' && d0.project_source_ref === r);
     if (n.folderLabel && own) return n.folderLabel;
-    if (S.sess.nasPlaces && S.sess.nasPlaces[r]) return S.sess.nasPlaces[r];
+    const cached = S.sess.nasPlaces;
+    if (cached && Object.prototype.hasOwnProperty.call(cached, r) && typeof cached[r] === 'string' && cached[r].trim()) return cached[r];
     /* (a reference this page cannot read is never shown as it is: it can hold a connection profile's locator, SW-39) */
     const m = /^(ssh|pm|mounted|smb|nfs):(.*)$/.exec(r); if (!m) return T('nas.folder.unnamed');
     if (m[1] === 'mounted') return m[2];
     const rest = m[2].replace(/^(sshp|shp):[^:/]*:[0-9a-f]+:?/, '');
     if (m[1] === 'smb' || m[1] === 'nfs') return rest;
     const at = rest.indexOf('/'), path = at >= 0 ? rest.slice(at) : '', slug = m[1] === 'pm' ? rest.slice(0, at >= 0 ? at : rest.length) : '';
-    const dv = (own && (S.env.devices || []).find((x) => x.id === n.device)) || (slug ? (S.env.devices || []).find((x) => U.slug(x.name) === slug || U.slug(x.id) === slug) : null);
+    const devices = S.env.devices || [], server = (S.env.pmServers || []).find((x) => x.id === 'pm:' + slug);
+    const metadata = S.sess.nasPlaceDevices || {};
+    let dv = devices.find((x) => Object.prototype.hasOwnProperty.call(metadata, r) && x.id === metadata[r]);
+    if (!dv && m[1] === 'pm') dv = devices.find((x) => server ? x.id === server.device : U.slug(x.name) === slug || U.slug(x.id) === slug);
+    /* Older default SSH places did not store device metadata. Match their producer's profile hash against known
+       endpoints/accounts, never the currently selected backup device. Ambiguous or unknown profiles stay unnamed. */
+    if (!dv && m[1] === 'ssh') {
+      const profile = /^sshp:[^:/]+:([0-9a-f]{8})(?:\/|$)/.exec(m[2]);
+      if (profile) {
+        const matches = devices.filter((x) => {
+          const accounts = [x.user, (S.env.client || {}).user].filter(Boolean).map((user) => ({ user, port: x.port || 22 }));
+          accounts.push(...((S.env.here || {}).sshConfigHosts || []).filter((h) => h.host === x.address));
+          return accounts.some((a) => hash8(a.user + '@' + x.address + ':' + (a.port || 22)) === profile[1]);
+        });
+        if (matches.length === 1) dv = matches[0];
+      }
+    }
     return (dv ? dv.name + ' · ' : '') + path;
   }
   O55.nas = { dev, N, pubLine, entry, transport, endPair, remember, placeLabel };
