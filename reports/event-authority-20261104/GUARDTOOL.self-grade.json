@@ -7,7 +7,7 @@
       "grade": "PASS"
     },
     {
-      "basis": "F3/F5 fixed with declared-entry enforcement, visible consumed-fragment obligations, dialect rules and dynamic target context. Recursive/dynamic proof isolation remains unsupported and unproved.",
+      "basis": "Declared entries enforced; dynamic/recursive and mixed-dialect assertions remain visible, unclassified and unproved. Mixed caller/target contexts preserve original validation and cannot receive isolation credit.",
       "criterion": "schema_inventory",
       "grade": "PARTIAL"
     },
@@ -17,7 +17,7 @@
       "grade": "PARTIAL"
     },
     {
-      "basis": "F1/F2 negated raise/return, nested negations, single-negative held-out peer, class/nested/module predicate-call and append inventory regressions caught. Bounded Python interface only.",
+      "basis": "Bounded Python grammar plus explicit unsupported inventory: standalone, assigned and annotated appends, class/nested/module declared calls, negated atoms and all review counterexamples caught. Consumed-result/class mutation itself is unsupported and unproved.",
       "criterion": "code_sites",
       "grade": "PASS"
     },
@@ -42,7 +42,7 @@
       "grade": "PASS"
     },
     {
-      "basis": "79/79 caught: original 49 plus all reviewer real-finding additions and F1\u2013F5/supplementary controls. Caught does not mean every matrix PASS.",
+      "basis": "86/86 expected observations caught: all 79 prior traps plus all cycle-2 probes and one extra trap for each remaining finding. The reviewed engine catches 82/86 and exposes exactly the four new F2/F5 regressions.",
       "criterion": "corpus",
       "grade": "PASS"
     },
@@ -58,8 +58,8 @@
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/verification-manifest.json",
-    "sha256": "961e47f74a72a9f1a870fba04600c0b9a4f657abc7823b2320b76fc4978f8ff5"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/verification-manifest.json",
+    "sha256": "e43848f2a67643c02e4935c9e02f7e447ec8ce64e2e4d99dbd1ecf3dac344441"
   },
   "families": [],
   "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
@@ -67,7 +67,7 @@
   "limitations": [
     "Adapter declarations of input-field identity, selectors and opaque predicate boundaries require review.",
     "Only the reviewer's bounded three-family DG6B retained-history exercise ran: 21 selected runtime guards proved, overall FAIL for uncovered obligations. No complete lane matrix or family grade upgrade.",
-    "Compound negative schemas, class/closure/native internals and recursive/dynamic schema contexts need sound atomic adapter seams; they remain unproved.",
+    "Compound negative schemas, class/closure/native internals, consumed-result refusal calls, mixed-dialect and recursive/dynamic schema contexts require sound atomic adapter seams and remain unproved.",
     "Format capability is interpreter-specific and missing checkers fail closed; no new product grammar or number-domain policy is created.",
     "Plan-index validate reports 22 failures in unchanged paths against the current origin/main comparison. Shards pass; no governance or derived refresh performed.",
     "RSS is sampled at callback boundaries, not an allocation sandbox."
@@ -86,6 +86,30 @@
       "schema_inventory": "PARTIAL"
     }
   },
-  "self_assessment": "PARTIAL overall for deliberately unsupported schema contexts; supported machinery and 79 expected trap observations verified. Complete lane adoption remains incomplete.",
+  "review_round_2": {
+    "after": {
+      "code_sites": "PASS for bounded grammar and unsupported inventory",
+      "predicate_cuts": "PARTIAL",
+      "schema_inventory": "PARTIAL"
+    },
+    "base_sha": "305952a2be640f4e3faa8638a738678dd6c593c7",
+    "before": {
+      "code_sites": "PASS claimed; F2 remained blocking in cycle 2",
+      "predicate_cuts": "PARTIAL",
+      "schema_inventory": "PARTIAL; F5 remained blocking in cycle 2"
+    },
+    "family_grade_changes": "not applicable; no families prepared or admitted",
+    "findings": {
+      "F2": "fixed: assigned refusal Call inventory; unsupported candidates stay unproved",
+      "F5": "fixed by conservative refusal: mixed-dialect assertions unclassified/unproved; original callback semantics preserved"
+    },
+    "implementation_commit": "5181b37ea868f71d188f460a38e243377810e563",
+    "selected_runtime_guards_proved": 21,
+    "traps": {
+      "caught": 86,
+      "total": 86
+    }
+  },
+  "self_assessment": "PARTIAL overall for unsupported schema/code contexts and incomplete lane adoption. All 86 required trap observations and 21 selected real DG6B runtime predicates verified; full exercises remain FAIL for uncovered obligations.",
   "subject": "shared check-11 guard-isolation tool"
 }

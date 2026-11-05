@@ -1,6 +1,6 @@
 {
   "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
-  "canonical_check_reuse": "Canonical Markdown, shard/index bodies and both checker sources are unchanged; canonical-input-invariance exits 0. Tool-specific checks were rerun after the occurrence fix.",
+  "canonical_check_reuse": "Canonical Markdown, shard/index bodies and checker sources unchanged. Both checks rerun: shards pass; 22 unchanged plan-index failures. No regeneration.",
   "checks": [
     {
       "command": [
@@ -175,7 +175,7 @@
     "resolved_by": "target-discovery-explicit; --no-ignore, exit 0"
   },
   "ids_used": [],
-  "lane_adoption": "NOT_RUN",
+  "lane_adoption": "PARTIAL: bounded three-family retained-history exercise; full adoption incomplete",
   "native_product_execution": "NOT_RUN",
   "owner_markdown_changed": false,
   "real_memory_pauses": [
@@ -419,10 +419,298 @@
       "total": 79
     }
   },
-  "self_test": {
-    "status": "PASS",
-    "traps": 49
+  "review_round_2": {
+    "base_sha": "305952a2be640f4e3faa8638a738678dd6c593c7",
+    "checks": [
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/base-traps.py"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix2",
+        "environment": {},
+        "exit_code": 0,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "seconds": 0.645,
+        "started": "2026-11-05T08:02:36.599267+00:00",
+        "tag": "base-traps"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix2/scripts/pm_guard_isolation.py",
+          "--self-test",
+          "--max-rss",
+          "1536",
+          "--pause-when-low",
+          "6",
+          "--resume-at",
+          "7",
+          "--pause-poll",
+          "30",
+          "--json",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/self-test.json",
+          "--markdown",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/self-test.md"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix2",
+        "environment": {},
+        "exit_code": 0,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "seconds": 0.675,
+        "started": "2026-11-05T08:03:02.914809+00:00",
+        "tag": "self-test"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle2/targeted-probes.py",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix2",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/targeted-probes.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix2",
+        "environment": {},
+        "exit_code": 1,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "seconds": 0.53,
+        "started": "2026-11-05T08:03:03.859671+00:00",
+        "tag": "targeted"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/f5-context-diagnostic.py"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix2",
+        "environment": {},
+        "exit_code": 0,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "seconds": 0.288,
+        "started": "2026-11-05T08:03:04.687239+00:00",
+        "tag": "diagnostic"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix2/scripts/pm_guard_isolation.py",
+          "--adapter",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/real-dg6b-adapter.py:factory",
+          "--max-rss",
+          "1536",
+          "--pause-when-low",
+          "6",
+          "--resume-at",
+          "7",
+          "--pause-poll",
+          "30",
+          "--json",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/plugin.loaded.json",
+          "--markdown",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/plugin.loaded.md"
+        ],
+        "cwd": "/home/sittingmongoose/guardtool-fix2-scratch-20261105",
+        "environment": {
+          "GUARDTOOL_REVIEW_FAMILY": "plugin.loaded",
+          "GUARDTOOL_REVIEW_ROOT": "/home/sittingmongoose/guardtool-fix2-scratch-20261105"
+        },
+        "exit_code": 1,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          20           9           0           9          17\nSwap:             15           4          11\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          22           7           0           8          15\nSwap:             15           4          11\n",
+        "seconds": 102.062,
+        "started": "2026-11-05T08:03:32.172025+00:00",
+        "tag": "plugin.loaded"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix2/scripts/pm_guard_isolation.py",
+          "--adapter",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/real-dg6b-adapter.py:factory",
+          "--max-rss",
+          "1536",
+          "--pause-when-low",
+          "6",
+          "--resume-at",
+          "7",
+          "--pause-poll",
+          "30",
+          "--json",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/plugin.hook.invoked.json",
+          "--markdown",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/plugin.hook.invoked.md"
+        ],
+        "cwd": "/home/sittingmongoose/guardtool-fix2-scratch-20261105",
+        "environment": {
+          "GUARDTOOL_REVIEW_FAMILY": "plugin.hook.invoked",
+          "GUARDTOOL_REVIEW_ROOT": "/home/sittingmongoose/guardtool-fix2-scratch-20261105"
+        },
+        "exit_code": 1,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          22           6           0          10          15\nSwap:             15           3          12\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          20           9           0           9          17\nSwap:             15           4          11\n",
+        "seconds": 109.314,
+        "started": "2026-11-05T08:05:14.623281+00:00",
+        "tag": "plugin.hook.invoked"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/home/sittingmongoose/pm-worktrees/guardtool-fix2/scripts/pm_guard_isolation.py",
+          "--adapter",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/real-dg6b-adapter.py:factory",
+          "--max-rss",
+          "1536",
+          "--pause-when-low",
+          "6",
+          "--resume-at",
+          "7",
+          "--pause-poll",
+          "30",
+          "--json",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/auth.github.authenticated.json",
+          "--markdown",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/auth.github.authenticated.md"
+        ],
+        "cwd": "/home/sittingmongoose/guardtool-fix2-scratch-20261105",
+        "environment": {
+          "GUARDTOOL_REVIEW_FAMILY": "auth.github.authenticated",
+          "GUARDTOOL_REVIEW_ROOT": "/home/sittingmongoose/guardtool-fix2-scratch-20261105"
+        },
+        "exit_code": 1,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          20           5           0          12          17\nSwap:             15           3          12\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          22           6           0          10          15\nSwap:             15           3          12\n",
+        "seconds": 106.392,
+        "started": "2026-11-05T08:07:04.267696+00:00",
+        "tag": "auth.github.authenticated"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix2",
+        "environment": {},
+        "exit_code": 1,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          21           7           0           9          16\nSwap:             15           3          12\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          20           9           0           9          17\nSwap:             15           3          12\n",
+        "seconds": 49.094,
+        "started": "2026-11-05T08:10:50.269994+00:00",
+        "tag": "plan-index"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix2",
+        "environment": {},
+        "exit_code": 0,
+        "memory_after": "               total        used        free      shared  buff/cache   available\nMem:              38          21           2           0          14          16\nSwap:             15           5          10\n",
+        "memory_before": "               total        used        free      shared  buff/cache   available\nMem:              38          23           3           0          12          14\nSwap:             15           4          11\n",
+        "seconds": 22.214,
+        "started": "2026-11-05T08:12:37.757777+00:00",
+        "tag": "shards"
+      },
+      {
+        "command": [
+          "python3",
+          "-B",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/audit-results.py"
+        ],
+        "exit_code": 0,
+        "observation": "All corpus, context and real-matrix result assertions pass.",
+        "tag": "audit-results"
+      }
+    ],
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/verification-manifest.json",
+      "sha256": "e43848f2a67643c02e4935c9e02f7e447ec8ce64e2e4d99dbd1ecf3dac344441"
+    },
+    "ids_used": [],
+    "implementation_commit": "5181b37ea868f71d188f460a38e243377810e563",
+    "plan_index": {
+      "exit_code": 1,
+      "status": "fail",
+      "unchanged_failures": 22
+    },
+    "real_exercise": [
+      {
+        "evaluations": 3849,
+        "family": "plugin.loaded",
+        "inventory": 10755,
+        "passed": true,
+        "rows": 426,
+        "status": "FAIL",
+        "undispositioned_code": 230,
+        "unproved": 649,
+        "unwitnessed_schema": 419
+      },
+      {
+        "evaluations": 3903,
+        "family": "plugin.hook.invoked",
+        "inventory": 10761,
+        "passed": true,
+        "rows": 432,
+        "status": "FAIL",
+        "undispositioned_code": 230,
+        "unproved": 655,
+        "unwitnessed_schema": 425
+      },
+      {
+        "evaluations": 4047,
+        "family": "auth.github.authenticated",
+        "inventory": 10779,
+        "passed": true,
+        "rows": 448,
+        "status": "FAIL",
+        "undispositioned_code": 230,
+        "unproved": 671,
+        "unwitnessed_schema": 441
+      }
+    ],
+    "resources": {
+      "checker_concurrency": 1,
+      "host": "VM",
+      "initial_available_gib": 14,
+      "initial_root_free_gb": 106,
+      "max_rss_mib": 1536,
+      "pause_when_low_gib": 6,
+      "poll_seconds": 30,
+      "resume_at_gib": 7
+    },
+    "targeted_driver": {
+      "exit_code": 1,
+      "explanation": "F5 cross-dialect original expectation of an ignored maximum and PASS is superseded by the review follow-up; fixed probe is unclassified/FAIL, audited and committed as a trap.",
+      "passed": 16,
+      "total": 17
+    },
+    "traps": {
+      "caught": 86,
+      "reviewed_engine_caught": 82,
+      "total": 86
+    }
   },
-  "source_edition": "final occurrence-isolated implementation",
-  "status": "PASS"
+  "self_test": {
+    "caught": 86,
+    "status": "PASS",
+    "traps": 86
+  },
+  "source_edition": "round 2: assigned refusal inventory and conservative mixed-dialect evaluation context",
+  "status": "PARTIAL"
 }

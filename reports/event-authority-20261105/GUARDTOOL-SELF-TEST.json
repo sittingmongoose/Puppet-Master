@@ -1,13 +1,13 @@
 {
-  "caught": 79,
+  "caught": 86,
   "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix1/self-test.json",
-    "sha256": "13cbdf52587f90f9d4ff2162d2e93210ea4b398279e2604e09273f613537b785"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix2/self-test.json",
+    "sha256": "083d404dab4b511c92f4e2b9a3f4ce787b035a075e4b88535c40acaa680fb001"
   },
-  "implementation_commit": "b004369868dafd173faf751695d0da7eca38352e",
-  "meaning": "caught is the expected observation, including deliberate engine FAIL or inventory-only probes; not 79 complete matrices PASS",
+  "implementation_commit": "5181b37ea868f71d188f460a38e243377810e563",
+  "meaning": "caught is the expected observation, including deliberate engine FAIL or inventory-only probes; not 86 complete matrices PASS",
   "status": "PASS",
-  "trap_count": 79,
+  "trap_count": 86,
   "traps": [
     {
       "caught": true,
@@ -676,8 +676,8 @@
       "id": "review-DG6B-C8B2",
       "masked_count": 0,
       "observed_engine_statuses": [
-        "PASS",
-        "FAIL"
+        "FAIL",
+        "PASS"
       ],
       "observed_failure_kinds": [
         "infrastructure_or_declaration"
@@ -1114,6 +1114,118 @@
       "evaluations": 1,
       "expected": "allOf inside negation has no unsupported broad atomic cut",
       "id": "F4-negated-allof",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "unclassified_assertion",
+        "unproved_guards"
+      ],
+      "unproved_count": 2
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "assigned append in a class remains one unsupported, identified, unproved obligation; no empty PASS",
+      "id": "F2-round2-assigned-class-append",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 1,
+      "expected": "annotated assignment of a top-level append result stays inventoried and unproved",
+      "id": "F2-round2-annotated-append",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "uninventoried_code_site",
+        "unproved_guards"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 3,
+      "expected": "modern caller enforces legacy ref sibling; minimum-only proof refuses and both bounds remain unclassified/unproved",
+      "id": "F5-round2-cross-dialect",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "control_refused",
+        "infrastructure_or_declaration",
+        "unclassified_assertion",
+        "unproved_guards"
+      ],
+      "unproved_count": 6
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 3,
+      "expected": "legacy ref sibling properties evaluate through a modern caller; nested bounds stay unclassified/unproved and match original validation",
+      "id": "F5-round2-cross-dialect-child",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "control_refused",
+        "infrastructure_or_declaration",
+        "unclassified_assertion",
+        "unproved_guards"
+      ],
+      "unproved_count": 6
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 22,
+      "expected": "three predicates under mixed nested negation each prove while peer negatives retain their codes",
+      "id": "F1-round2-mixed-not-call",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "PASS"
+      ],
+      "observed_failure_kinds": [],
+      "unproved_count": 0
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "callback swallowing an undeclared-entry error cannot suppress consumed-entry failure or hidden obligation",
+      "id": "F3-round2-swallowed-entry",
+      "masked_count": 0,
+      "observed_engine_statuses": [
+        "FAIL"
+      ],
+      "observed_failure_kinds": [
+        "consumed_entry_not_declared"
+      ],
+      "unproved_count": 1
+    },
+    {
+      "caught": true,
+      "duplicate_sets_proved": 0,
+      "evaluations": 6,
+      "expected": "negated ref to a two-field conjunction refuses cuts while the independent positive z guard proves",
+      "id": "F4-round2-negated-ref-peer",
       "masked_count": 0,
       "observed_engine_statuses": [
         "FAIL"
