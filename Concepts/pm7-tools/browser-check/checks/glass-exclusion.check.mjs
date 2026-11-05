@@ -49,7 +49,7 @@ async function once(t) {
   await f.evaluate(() => document.getElementById('exclusion-fixture').style.background = 'transparent');
   const leaking = await readThrough(t, f, '#exclusion-fixture');
   await t.check('real outside ink still fails the backing limit', leaking && !leaking.invalid && leaking.share > .002, JSON.stringify(leaking));
-  await f.evaluate(()=>{const e=document.getElementById('exclusion-background');e.style.color='rgb(1,253,97)';e.style.left='112px';e.style.width='396px';e.style.height='68px';e.style.overflow='hidden';});
+  await f.evaluate(()=>{const base=document.createElement('div');base.id='exclusion-base';base.style.cssText='position:fixed;left:100px;top:100px;width:420px;height:200px;z-index:2147483645;background:white';document.body.appendChild(base);const e=document.getElementById('exclusion-background');e.style.color='rgb(1,253,97)';e.style.left='112px';e.style.width='396px';e.style.height='68px';e.style.overflow='hidden';});
   const green=await measureWithRetries(t,f,'#exclusion-fixture');
   await t.check('marker-coloured real outside ink is still valid and over limit',green&&!green.invalid&&green.share>.002&&green.tries===1,JSON.stringify(green));
   await f.evaluate(()=>{const e=document.getElementById('exclusion-background');e.style.left='100px';e.style.height='20px';e.style.width='216px';e.style.backgroundImage='linear-gradient(currentColor,currentColor)';e.textContent='';});
@@ -58,7 +58,7 @@ async function once(t) {
   if(edgeDir)await writeFile(path.join(edgeDir,'sample.json'),JSON.stringify(edge,null,2));
   await t.check('real marker-green content touching the witness stays backing evidence',edge&&!edge.invalid&&edge.share>.002,JSON.stringify(edge));
   await t.check('capture styles restored', await f.evaluate(() => !document.querySelector('#bc-through, #bc-own-reference, #bc-geometry, #bc-geometry-rules, [data-bc-target], [data-bc-in]')));
- } finally { await f.evaluate(() => { document.getElementById('exclusion-fixture')?.remove(); document.getElementById('exclusion-background')?.remove(); }); }
+ } finally { await f.evaluate(() => { document.getElementById('exclusion-fixture')?.remove(); document.getElementById('exclusion-background')?.remove();document.getElementById('exclusion-base')?.remove(); }); }
 }
 
 export default async function(t) { for(let rep=0;rep<+(t.args.exclusionReps||1);rep++) await t.step(`exclusion repeat ${rep+1}`,()=>once(t)); }
