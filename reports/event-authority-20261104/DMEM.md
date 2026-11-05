@@ -1,3 +1,231 @@
+# DMEM fix round 8 — retained write recipes and enforced formats
+
+Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source commit: `ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8`. Reviewed head: `e6703d144e85ddd7e566729848666656dfe6f14e`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-cycle7.md`.
+
+Twelve exact families are prepared without admission, pending independent review. Membership remains ABSENT; retention PARTIAL; native execution NOT_RUN. The exact DL-402/DL-403 Card 1b application, original first-start custody gate, all earlier fixtures/failed snapshots and the report-only cutoff proposal remain unchanged. No cutoff is selected.
+
+## Review round 8: findings and responses
+
+- **B1 — fixed (`ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8`). Where:** `scripts/pm_memory_maintenance_events.py` historical digest/envelope/operation/target paths, plus retained-original verification during current-writer retries and checkpoint joins; frozen schema definitions; each SP-630–639/CV-658–659 numeric paragraph and ATS-315. **Cause:** the strict current-number domain was applied to retained originals and their immutable operation witnesses. **Fix:** current writes and current identity inputs keep `safe-integer-write-v2`; both retained `pm.event.v0` envelope editions explicitly use frozen `integer-json-v1`. Current writes are a byte-identical subset of that encoding, so changing edition cannot choose weaker hashing. The reader has no caller recipe override; closed schemas reject unknown editions/recipe fields, and repeated edition joins remain. Original hashes/values are never repaired while reading. Frozen `historical_` operation/target definitions equal the actual cycle-6 source, including its int63 artifact bound. Lossless ingestion, exact Boolean types, custody, access and withdrawal stay enforced. Verify all twelve full checkers, 72 actual old-writer receipts (48 integer and 24 integral binary64), 192 four-mode large-integer histories, 96 retained old-binary64 controls, four old-domain rebuild artifacts, 48 verbatim old-writer retained controls, unchanged-commitment decimal/exponent controls, 72 actual old-receipt retry controls and their 216 isolated digest/flush/binding negatives, and forged-history guard rows.
+- **Note 2 — integration item. Where:** index retention validation against newer `origin/main`. **Cause:** the branch predates current-main Decision Log additions. **Handling:** Decision_Log.md remains byte-preserved; actual index validation is `fail` with 22 failures. The untouched starting index reproduces the same failures. Preserve current-main decisions during the integration rebase and rerun validation; do not repair unrelated ledgers here.
+- **Note 3 — accounted for. Where:** four generated index clock fields. **Cause:** the generator writes `generated_at_utc`. **Handling:** normal generation is committed; no literal byte-identity claim. Only edited owner documents have changed owner shards; schema and fixture inputs are committed directly.
+- **Astra item 12 — fixed (`ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8`). Where:** optional `FormatChecker` date-time registration on this VM. **Cause:** its installed checker silently lacks `date-time`, despite a format checker being passed. **Fix:** explicit full-input RFC3339 calendar/zone/fraction grammar and UUID grammar at every validator construction. Missing zones, wrong separators, invalid calendar/time/offset fields, trailing LF, unsupported leap seconds and empty fractional parts refuse; leap-day and permitted fractional controls pass without rewriting timestamp bytes. All 85 format declarations are visited, including frozen definitions and dormant checkpoint branches. Existing UTC-Z/type/length constraints remain. The declared format contract is enforced in both reader editions; no narrower historical format recipe is introduced.
+
+## Family grades before and after
+
+Before is the independent cycle-7 review. P/Q/A = PASS/PARTIAL/ABSENT. Compatibility/withdrawal and oracles upgrade PARTIAL → PASS after the new legacy-positive, forgery, format and complete-guard proofs. Other cells remain unchanged. Static preparation only.
+
+| Exact family | Before P/Q/A | After P/Q/A |
+|---|---:|---:|
+| `memory.dedup_sweep.completed` | 8/3/1 | 10/1/1 |
+| `memory.dedup_sweep.started` | 8/3/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.completed` | 8/3/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.started` | 8/3/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.completed` | 8/3/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.started` | 8/3/1 | 10/1/1 |
+| `memory.monthly_summary.completed` | 8/3/1 | 10/1/1 |
+| `memory.monthly_summary.started` | 8/3/1 | 10/1/1 |
+| `memory.prune_archive.completed` | 8/3/1 | 10/1/1 |
+| `memory.prune_archive.started` | 8/3/1 | 10/1/1 |
+| `memory.verification_sweep.completed` | 8/3/1 | 10/1/1 |
+| `memory.verification_sweep.started` | 8/3/1 | 10/1/1 |
+
+Totals: **96 PASS / 36 PARTIAL / 12 ABSENT → 120 PASS / 12 PARTIAL / 12 ABSENT**. The self-grade has exact source citations at the assessed source commit. Absent membership, unresolved retention and native NOT_RUN remain explicit.
+
+## Complete guard table
+
+**114 named guards/duplicate sets; 23,450 negatives; 1,307,922 guard/case evaluations; 13,062 preserved custody-matrix cases.** Every guard runs once per applicable family, including zero-own-case complements, one family and one guard/duplicate set at a time. Every case has a passing control; own negatives flip, all complements keep their exact refusal, and restoration rechecks own negatives. No required-field exemption, evaluation-time input/hash/copy repair or whole-gate bypass.
+
+The current-number and historical-integrality predicates are separate members of the named numeric duplicate set. Only current schemas retain the safe upper bound; frozen schemas retain their original bounds. The 480 former historical safe-range refusals are replaced by original-recipe positives; every current-writer/identity numeric refusal remains. Envelope schema removal also removes only its repeated historical schema_id/schema_version comparisons; its independent format guard stays enabled. Format removal names explicit format checks and UTC/end-of-input patterns on formatted leaves only; unrelated patterns, types, lengths, required fields and lower bounds stay enabled. Existing custody, producer, Boolean-fence and archive-memory duplicate sets are preserved.
+
+Missing-byte/withdrawal witnesses use the actual custody gate. Other custody/legacy-history witnesses use complete entry points. Format, parser, schema, cap and reference witnesses use their actual predicate endpoints; the report does not claim physical receipt authentication or native transactions.
+
+### maintenance checker
+
+| Guard or named duplicate set | Flip | Stay rejected | Restored |
+|---|---:|---:|---|
+| `action` | 8 | 15,308 | yes |
+| `admission` | 192 | 15,124 | yes |
+| `artifacts` | 4 | 15,312 | yes |
+| `boundary_acceptance` | 48 | 15,268 | yes |
+| `boundary_payload` | 8 | 15,308 | yes |
+| `boundary_receipts` | 144 | 15,172 | yes |
+| `boundary_request` | 8 | 15,308 | yes |
+| `boundary_scope` | 24 | 15,292 | yes |
+| `boundary_snapshot` | 192 | 15,124 | yes |
+| `boundary_terminal` | 4 | 15,312 | yes |
+| `checkpoint_event` | 8 | 15,308 | yes |
+| `checkpoint_key` | 8 | 15,308 | yes |
+| `checkpoint_storage` | 8 | 15,308 | yes |
+| `commitment_numbers` | 368 | 14,948 | yes |
+| `custody_binding` | 4,806 | 10,510 | yes |
+| `custody_digest` | 1,134 | 14,182 | yes |
+| `custody_flush` | 1,038 | 14,278 | yes |
+| `custody_presence` | 934 | 14,382 | yes |
+| `custody_shape` | 958 | 14,358 | yes |
+| `effect_count` | 4 | 15,312 | yes |
+| `effect_once` | 16 | 15,300 | yes |
+| `envelope_schema` | 296 | 15,020 | yes |
+| `formats_enforced` | 2,488 | 12,828 | yes |
+| `history_event` | 40 | 15,276 | yes |
+| `inline_cap` | 8 | 15,308 | yes |
+| `json_number_grammar` | 56 | 15,260 | yes |
+| `operation_cas` | 8 | 15,308 | yes |
+| `operation_receipt` | 8 | 15,308 | yes |
+| `operation_result_digest` | 8 | 15,308 | yes |
+| `operation_result_ref` | 8 | 15,308 | yes |
+| `operation_schema` | 72 | 15,244 | yes |
+| `original_input` | 8 | 15,308 | yes |
+| `outcome` | 8 | 15,308 | yes |
+| `partition` | 8 | 15,308 | yes |
+| `payload_schema` | 40 | 15,276 | yes |
+| `permission_or_withdrawal` | 2,218 | 13,098 | yes |
+| `phase` | 8 | 15,308 | yes |
+| `prior_selector` | 4 | 15,312 | yes |
+| `producer_join` | 40 | 15,276 | yes |
+| `references_resolve` | 8 | 15,308 | yes |
+| `replay_policy` | 8 | 15,308 | yes |
+| `request` | 8 | 15,308 | yes |
+| `selected_target` | 4 | 15,312 | yes |
+| `selector_cas` | 4 | 15,312 | yes |
+| `selector_schema` | 4 | 15,312 | yes |
+| `selector_scope` | 4 | 15,312 | yes |
+| `source` | 8 | 15,308 | yes |
+| `target_identity` | 4 | 15,312 | yes |
+| `target_manifest` | 4 | 15,312 | yes |
+| `target_order` | 4 | 15,312 | yes |
+| `target_schema` | 4 | 15,312 | yes |
+| `target_source` | 4 | 15,312 | yes |
+| `terminal_custody` | 8 | 15,308 | yes |
+### archive checker
+
+| Guard or named duplicate set | Flip | Stay rejected | Restored |
+|---|---:|---:|---|
+| `action` | 4 | 8,130 | yes |
+| `admission` | 100 | 8,034 | yes |
+| `boundary_acceptance` | 24 | 8,110 | yes |
+| `boundary_payload` | 4 | 8,130 | yes |
+| `boundary_receipts` | 72 | 8,062 | yes |
+| `boundary_request` | 4 | 8,130 | yes |
+| `boundary_scope` | 12 | 8,122 | yes |
+| `boundary_snapshot` | 96 | 8,038 | yes |
+| `boundary_terminal` | 2 | 8,132 | yes |
+| `checkpoint_event` | 4 | 8,130 | yes |
+| `checkpoint_key` | 8 | 8,126 | yes |
+| `checkpoint_storage` | 8 | 8,126 | yes |
+| `commitment_numbers` | 184 | 7,950 | yes |
+| `custody_digest` | 864 | 7,270 | yes |
+| `custody_flush` | 442 | 7,692 | yes |
+| `custody_presence` | 390 | 7,744 | yes |
+| `custody_shape` | 398 | 7,736 | yes |
+| `cutoff_commitment` | 4 | 8,130 | yes |
+| `cutoff_record` | 4 | 8,130 | yes |
+| `cutoff_reference` | 4 | 8,130 | yes |
+| `cutoff_scope` | 8 | 8,126 | yes |
+| `cutoff_unique` | 4 | 8,130 | yes |
+| `cutoffs_unavailable` | 328 | 7,806 | yes |
+| `effect_once` | 12 | 8,122 | yes |
+| `envelope_schema` | 152 | 7,982 | yes |
+| `evidence_preserved` | 4 | 8,130 | yes |
+| `formats_enforced` | 1,244 | 6,890 | yes |
+| `history_event` | 20 | 8,114 | yes |
+| `inline_cap` | 4 | 8,130 | yes |
+| `json_number_grammar` | 28 | 8,106 | yes |
+| `memory_flags` | 352 | 7,782 | yes |
+| `no_extra_memories` | 4 | 8,130 | yes |
+| `no_prune_summary` | 2 | 8,132 | yes |
+| `operation_cas` | 8 | 8,126 | yes |
+| `operation_receipt` | 4 | 8,130 | yes |
+| `operation_result_digest` | 4 | 8,130 | yes |
+| `operation_result_ref` | 4 | 8,130 | yes |
+| `operation_schema` | 40 | 8,094 | yes |
+| `original_input` | 4 | 8,130 | yes |
+| `originals_preserved` | 4 | 8,130 | yes |
+| `outcome` | 4 | 8,130 | yes |
+| `partition` | 8 | 8,126 | yes |
+| `payload_schema` | 98 | 8,036 | yes |
+| `permission_or_withdrawal` | 1,044 | 7,090 | yes |
+| `phase` | 4 | 8,130 | yes |
+| `pins_preserved` | 4 | 8,130 | yes |
+| `references_resolve` | 8 | 8,126 | yes |
+| `replay_policy` | 8 | 8,126 | yes |
+| `request` | 8 | 8,126 | yes |
+| `selected_archived` | 4 | 8,130 | yes |
+| `selected_fields_preserved` | 12 | 8,122 | yes |
+| `selection_exists` | 4 | 8,130 | yes |
+| `selection_kind` | 2 | 8,132 | yes |
+| `selection_pinned` | 4 | 8,130 | yes |
+| `selection_unique` | 4 | 8,130 | yes |
+| `semantic_binding` | 2,034 | 6,100 | yes |
+| `source` | 8 | 8,126 | yes |
+| `summary_provenance` | 2 | 8,132 | yes |
+| `terminal_custody` | 8 | 8,126 | yes |
+| `unselected_preserved` | 4 | 8,130 | yes |
+| `versions_preserved` | 4 | 8,130 | yes |
+
+## All eleven standing checks
+
+| # | Evidence and limits |
+|---|---|
+| 1 | Fresh/retry replay-only writer refusals remain for every family; historical replay-only positives use the reader path. |
+| 2 | Exact CV-366 Application attempts refuse; these prepared editions remain Project-only. |
+| 3 | Encoded project~ positives and raw/foreign/padded partition negatives remain. |
+| 4 | Whole payload and separate operation/terminal-reservation caps remain; old cap fixtures are byte-preserved. SP-337 remains authoritative for larger bodies. |
+| 5 | Identifier full-input/length and trailing-LF negatives remain; new format grammar uses fullmatch. |
+| 6 | Caller-only sequence/observed/persisted retry changes return the unchanged original; semantic conflicts refuse. Physical Storage authentication remains native. |
+| 7 | Existing SP-278 checkpoint storage/key/event joins remain; UUID format is now dependency-independent. |
+| 8 | Restored historical-number and skipped-format defects each make every complete checker exit 1 at its intended assertion (24/24). Failure is never counted as success. |
+| 9 | Eager offline reference walk still covers all used schemas, frozen definitions and registry mirrors; dormant mutations remain. |
+| 10 | All prior history suites plus 340 authentic old-recipe controls and 340 live-independent controls pass. New writes remain strict. Forged/withdrawn/foreign originals refuse. |
+| 11 | Complete table above, including new legacy-history and format cases; no guard is weakened. |
+
+## All Astra defect classes, including 10a and 12
+
+| Item | Own mutation / disposition |
+|---|---|
+| 1 Forged/contradictory inputs | Independent coherently rehashed foreign identity refuses for each family; new old-recipe rehashed foreign-source/edition cases and preserved cutoff contradictions refuse. |
+| 2 Storage metadata trusted from payload | Independent caller-only Storage sequence/observed/persisted changes return the original (36/36). Synthetic resolver authentication remains a native limitation. |
+| 3 History in either direction | All four modes, current-live replacements and absent admission/cutoffs pass. The 72 actual old-writer receipts (48 integer and 24 integral binary64), large retained domains and all typed access/withdrawal/forgery controls pass. |
+| 4 One field read two ways | Integer-for-hex, schema type, case/space/LF and exact numeric tests remain; decimal/exponent legacy controls keep the same stored commitment. No timestamp normalization changes hash bytes. |
+| 5 Dormant refs | Independent unseen payload ref mutations refuse; whole-schema offline walking includes every new frozen definition. |
+| 6 Partial sizes | Whole-value cap mutation refuses; operation/target/selector and terminal-reservation checks remain. No contradictory larger-inline route or owner sentence was added. |
+| 7 Custody on every path | Independent succeeded/failed terminal advances with missing starts refuse; all 13,062 prior matrix cells remain. |
+| 8 Masked negatives | Complete removal/restoration/complement table passes. Initial diagnostics exposed missing historical integrality and repeated edition comparisons; final tests prove the independent guard and precisely named duplicate constants. |
+| 9 Inflated grades | All complete checkers, authentic old-writer controls, restored defects, full table and exact citations are required before upgrading the two cells. Retention/admission/native limits stay explicit. |
+| 10 Numeric spellings | Current safe limits and out-of-range decimal/exponent/fraction controls remain; 1/1.0/1e0/-0 agree and 01 refuses. Large retained integers use the frozen domain. |
+| 10a Tightening history | Fixed write-recipe map per envelope edition, frozen operation/target schemas, byte-identical current subset, unchanged old receipts and 480 isolated forged-history refusals. Unknown recipe fields/editions cannot select a weaker route. |
+| 11 Type confusion | All prior wrong Boolean/number/string/null/array/object boundary cases and coherent input/output archive-flag cases remain in every complete suite and guard proof. |
+| 12 Skipped formats | Explicit format implementation plus 3,732 negatives and 2,736 fractional/leap-day positives; all 85 format declarations are visited. No optional package can silently skip these formats. |
+
+## Checks, preservation, resources and remaining work
+
+- **Complete checkers:** 12/12 exit 0, each through --family. New controls: {"current_recipe_refusals": 144, "forged_old_recipe": 480, "format_declarations": 1020, "format_negatives": 3732, "format_positives": 2736, "legacy_binary64_controls": 96, "legacy_number_spellings": 480, "legacy_retry_negatives": 216, "live_independent_old_recipe": 340, "retained_old_recipe": 340}. All prior suites remain enabled; retained-original verification on writer retries uses the frozen recipe while the caller input remains strict.
+- **Guard proof:** 114 sets / 23,450 negatives / 1,307,922 evaluations; sequential and no bypass. Full ids/complements are external; the committed compact table pins counts, examples and id-list hashes.
+- **Restored defects and independent probes:** 24/24 complete checker failures at intended assertions; independent per-family probes cover existing forgery, Storage retry ownership, history/access, representation, dormant refs, cap, custody, numbers and exact types.
+- **Derived files:** shard generation/check and index generation pass. Actual index validation is `fail`; the same failures reproduce from the untouched starting index. Currentness copy: 15/15 SHA-256 matches before generation. Generated clocks are qualified, not restamped.
+- **Preservation:** all old fixtures, canonical histories, boundary fixtures, contracts, current operation/target definitions, registry values/profiles, Card 1b owner hunk, Decision Log and generic envelope schema are byte-preserved. Only 13 own numeric/format paragraphs change across the three owner docs. No PlanUnit id changes.
+- **Resources:** sparse local worktree; initial disk 70 GB free and RAM 17 GiB available. Every family/guard enforces the 6 GiB gate. No parallel checker, subagent, pm-mail, browser, server, admission, landing lock, governance reseal or main push.
+- **IDs:** no new PlanUnit ids. Existing edited ids: SP-630–639, CV-658–659, ATS-315. Existing AMS-100–107, CV-650–657 and ATS-316 remain references. New fixture schema id: pm.memory.write_recipe_fixtures.v1; recipe labels integer-json-v1 and safe-integer-write-v2 name preserved encoding and its strict writer subset.
+- **Remaining:** independent review; current-main/index reconciliation at integration; per-family admission; pending operation/result retention and cited unlanded decisions/retention integration; Jared's cutoff choice; native receipt/transaction/flush/crash/backup/GUI/race proof. The dedup survivor/disposition question remains open.
+
+## Evidence
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/check11.json` — SHA-256 `61d4f448bb7d44e56abdc7c6586efffc804fc595facdcbcec3815cb3e281efc7`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/family-summary.json` — SHA-256 `985c5501dd534f8195b732e9146c86789e220ffc581cadb05a5909b9d7304906`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/restored-defects.json` — SHA-256 `05fb37e02a1bf12ec04d540e98ae56661c079c9288d9a60c321785f55a9cc6b8`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/independent-probes.json` — SHA-256 `8faf23d47c629d4460d848866be85bbb48069f50aebc3c4ff514188763a2f6a6`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/scope-preservation.json` — SHA-256 `04f400843ed98ac5d3d5bf2a828b3d1ef4d001615c570c2345efb90446a2aa32`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/currentness-copy.json` — SHA-256 `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/shard-check.json` — SHA-256 `a471f4cd29bb5aeac3bf0eb27f14f6ee4baeec39bd3cb3a866aea09768adca69`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/index-validate.json` — SHA-256 `f9ecca138f783c040a0c537d89f3b4863a43d87b88e4c634a05b0b81eb3c3e6b`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix8/index-baseline-equivalence.json` — SHA-256 `0ffb28294c1b19fe46d66ee90a2fa30863ecf75943b2cf512c1cdbdaadbdea44`.
+
+Report and self-grade copies are in drafts/DMEM/. Complete ids and complements remain in check11.json; unneeded run outputs and extracted old-source scratch are removed after verification. The worktree is removed after both commits are pushed.
+
+---
+
+Earlier source-pinned reports follow as lineage; the cutoff proposal is unchanged.
+
 # DMEM fix round 7 — cycle-6 B1, S1 and S2
 
 Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source commit: `9646eb4e66bc7097068f1cb1588b8daac0cd2f9e`. Reviewed head: `77323e87d65908dbce2ea655ee344b6185a13ff1`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-cycle6.md`.

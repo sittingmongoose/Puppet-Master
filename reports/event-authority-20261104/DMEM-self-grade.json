@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-FIX7-SELF-GRADE-20261105",
+  "assessment_id": "EA-W2-DMEM-FIX8-SELF-GRADE-20261105",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -21,7 +21,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+    "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
     "base": "be4766513ff71776346fc73b84f2542990f955af"
   },
   "registry": {
@@ -365,7 +365,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -380,19 +380,26 @@
               "line_start": 29499,
               "line_end": 29499,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29505,
+              "line_end": 29505,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -482,28 +489,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -531,22 +538,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -561,14 +568,21 @@
               "quote": "\"memory.dedup_sweep.completed\"",
               "line_start": 5,
               "line_end": 5
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29505,
+              "line_end": 29505,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -580,11 +594,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -925,7 +940,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -940,19 +955,26 @@
               "line_start": 29556,
               "line_end": 29556,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29562,
+              "line_end": 29562,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1042,28 +1064,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -1091,22 +1113,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -1121,14 +1143,21 @@
               "quote": "\"memory.dedup_sweep.started\"",
               "line_start": 6,
               "line_end": 6
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29562,
+              "line_end": 29562,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -1140,11 +1169,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -1499,7 +1529,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1514,19 +1544,26 @@
               "line_start": 29613,
               "line_end": 29613,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29627,
+              "line_end": 29627,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1616,28 +1653,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -1665,22 +1702,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -1695,14 +1732,21 @@
               "quote": "\"memory.index.lexical.rebuild.completed\"",
               "line_start": 7,
               "line_end": 7
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29627,
+              "line_end": 29627,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -1714,11 +1758,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -2080,7 +2125,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2095,19 +2140,26 @@
               "line_start": 29678,
               "line_end": 29678,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29692,
+              "line_end": 29692,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2197,28 +2249,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -2246,22 +2298,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -2276,14 +2328,21 @@
               "quote": "\"memory.index.lexical.rebuild.started\"",
               "line_start": 8,
               "line_end": 8
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29692,
+              "line_end": 29692,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -2295,11 +2354,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -2654,7 +2714,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2669,19 +2729,26 @@
               "line_start": 29743,
               "line_end": 29743,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29757,
+              "line_end": 29757,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2771,28 +2838,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -2820,22 +2887,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -2850,14 +2917,21 @@
               "quote": "\"memory.index.semantic.rebuild.completed\"",
               "line_start": 9,
               "line_end": 9
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29757,
+              "line_end": 29757,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -2869,11 +2943,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -3235,7 +3310,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3250,19 +3325,26 @@
               "line_start": 29808,
               "line_end": 29808,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29822,
+              "line_end": 29822,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3352,28 +3434,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -3401,22 +3483,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -3431,14 +3513,21 @@
               "quote": "\"memory.index.semantic.rebuild.started\"",
               "line_start": 10,
               "line_end": 10
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29822,
+              "line_end": 29822,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -3450,11 +3539,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -3788,7 +3878,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3803,19 +3893,26 @@
               "line_start": 29873,
               "line_end": 29873,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29879,
+              "line_end": 29879,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3905,28 +4002,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -3954,22 +4051,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -3984,14 +4081,21 @@
               "quote": "\"memory.verification_sweep.completed\"",
               "line_start": 15,
               "line_end": 15
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29879,
+              "line_end": 29879,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -4003,11 +4107,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -4348,7 +4453,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4363,19 +4468,26 @@
               "line_start": 29930,
               "line_end": 29930,
               "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29936,
+              "line_end": 29936,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4465,28 +4577,28 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 410,
-              "line_end": 410
+              "line_start": 471,
+              "line_end": 471
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 610,
-              "line_end": 610
+              "line_start": 673,
+              "line_end": 673
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1199,
-              "line_end": 1199
+              "line_start": 1280,
+              "line_end": 1280
             },
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -4514,22 +4626,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -4544,14 +4656,21 @@
               "quote": "\"memory.verification_sweep.started\"",
               "line_start": 16,
               "line_end": 16
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29936,
+              "line_end": 29936,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -4563,11 +4682,12 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains.",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       }
     },
@@ -4591,7 +4711,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -4807,7 +4927,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4815,19 +4935,26 @@
               "line_start": 30070,
               "line_end": 30070,
               "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30082,
+              "line_end": 30082,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4839,8 +4966,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -4868,8 +4995,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -4903,15 +5030,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -4933,14 +5060,21 @@
               "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
               "line_start": 146,
               "line_end": 146
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30082,
+              "line_end": 30082,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -4953,7 +5087,8 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
@@ -4977,7 +5112,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -5193,7 +5328,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5201,19 +5336,26 @@
               "line_start": 30223,
               "line_end": 30223,
               "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30235,
+              "line_end": 30235,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5225,8 +5367,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -5254,8 +5396,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -5289,15 +5431,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -5319,14 +5461,21 @@
               "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
               "line_start": 146,
               "line_end": 146
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30235,
+              "line_end": 30235,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -5339,7 +5488,8 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
@@ -5363,7 +5513,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -5579,7 +5729,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5587,19 +5737,26 @@
               "line_start": 24936,
               "line_end": 24936,
               "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24946,
+              "line_end": 24946,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5611,8 +5768,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -5640,8 +5797,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -5675,15 +5832,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -5705,14 +5862,21 @@
               "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
               "line_start": 146,
               "line_end": 146
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24946,
+              "line_end": 24946,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -5725,7 +5889,8 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     },
@@ -5749,7 +5914,7 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "commit": "9646eb4e66bc7097068f1cb1588b8daac0cd2f9e",
+        "commit": "ba3880b49cc9c0d6e2d89adfd40b3ca3a7550fd8",
         "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
@@ -5965,7 +6130,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
+          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; current safe-integer writes stay strict. Unknown recipe/edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5973,19 +6138,26 @@
               "line_start": 25086,
               "line_end": 25086,
               "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25096,
+              "line_end": 25096,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
-            "status": "PASS"
+            "source": "Sol cycle-7 review at e6703d144e",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Normative grade carried from cycle 6; exact citations re-located at this source pin."
+          "change": "upgraded",
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full writer and four-mode retained-history oracles pass. Lossless parsing and safe integer commitments agree; exact Boolean authority/archive types refuse malformed inputs. Every guard/declared duplicate set flips its own negatives and preserves all complements. Native NOT_RUN.",
+          "finding": "Complete per-family suites pass old-writer retained controls, current numeric/type rules, explicit format edges and complete guard/complement/restoration proof. Physical/native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5997,8 +6169,8 @@
             {
               "path": "scripts/pm_memory_guard_isolation.py",
               "unit": "prove_complete",
-              "line_start": 624,
-              "line_end": 624,
+              "line_start": 665,
+              "line_end": 665,
               "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
@@ -6026,8 +6198,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 774,
-              "line_end": 774
+              "line_start": 849,
+              "line_end": 849
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -6061,15 +6233,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 59,
-              "line_end": 59
+              "line_start": 62,
+              "line_end": 62
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 112,
-              "line_end": 112
+              "line_start": 139,
+              "line_end": 139
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -6091,14 +6263,21 @@
               "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
               "line_start": 146,
               "line_end": 146
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25096,
+              "line_end": 25096,
+              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
             }
           ],
           "prior": {
-            "source": "Sol cycle-6 review at 77323e87d6",
+            "source": "Sol cycle-7 review at e6703d144e",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-7 lossless safe-integer, exact authority/archive Boolean, sequential full-guard and restored-defect oracles pass; native NOT_RUN."
+          "change_reason": "Frozen old-writer domains, authentic retained controls, forgery/format probes and complete guard proof pass."
         }
       },
       "remaining_gaps": [
@@ -6111,7 +6290,8 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
         "scripts/pm_memory_guard_isolation.py",
-        "Plans/memory_canonical_history_fixtures.json"
+        "Plans/memory_canonical_history_fixtures.json",
+        "round8: frozen write recipes, enforced formats, full guard table and restored defects"
       ],
       "notes": "Round-6 static preparation self-grade after Sol cycle 5. Canonical/compatibility/replay-only retained history and complete guard-removal evidence pass; membership ABSENT, retention PARTIAL, native NOT_RUN. Independent review remains."
     }
