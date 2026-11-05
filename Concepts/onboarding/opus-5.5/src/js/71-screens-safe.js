@@ -271,7 +271,7 @@
       create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { forge_target: targetOf(si), kind: 'signup', name: si.name, url: si.kind === 'forge' ? O55.official.forgeUrl(S, si.service, 'signup') : null }); O55.ui.refresh(); },
       signupBack(S) { const si = SI(S); si.state = 'idle'; si.another = true; S.save(); O55.ui.refresh(); },
       tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
-      tokenOff(S) { const si = SI(S); si.state = 'idle'; si.tokenTyped = false; F.reset(S, 'token:' + si.service); S.save(); O55.ui.refresh(); },
+      tokenOff(S) { const si = SI(S); si.attempt = (si.attempt || 0) + 1; si.state = 'idle'; si.tokenTyped = false; F.reset(S, 'token:' + si.service); S.save(); O55.ui.refresh(); },
       tokenCheck(S) {
         if (!siOffered(S)) return;
         const si = SI(S), i = S.root.querySelector('#o55f-token'), v = i ? i.value.trim() : ''; if (i) i.value = '';
@@ -284,7 +284,7 @@
              says pat_ref (normalize) with the credential's reference. */
           onDone: () => {
             const cur = SI(S);
-            if (cur.service !== mine.service || !mine.identity || resolvedKey(S, cur) !== mine.identity || (cur.attempt || 0) !== mine.attempt || cur.state === 'done') return;
+            if (cur.service !== mine.service || !mine.identity || resolvedKey(S, cur) !== mine.identity || (cur.attempt || 0) !== mine.attempt || cur.state !== 'token') return;
             completeSignIn(S, world(S).login || 'jared', 'sign_in_during_setup', false, 'token');
           }
         });

@@ -51,8 +51,8 @@ export default async function(t) {
    await key('demo-key-0000-1111-2222');
    await f.waitForFunction(()=>O55.S.sess.ai.list.some(x=>x.provider==='cursor'));
    await f.waitForFunction(()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bt-on');return b && b.textContent.startsWith('That');});
-   await click(t,f,row+'[data-o55-do="manage"]');
-   await click(t,f,row+'[data-o55-do="remove"]');
+   await f.locator(LAYER+' '+row+'[data-o55-do="manage"]').first().click();
+   await f.locator(LAYER+' '+row+'[data-o55-do="remove"]').first().click();
    await f.evaluate(()=>{
     window.__aiFrames=[];
     const tick=()=>{const b=document.querySelector('#pm-o55-onboarding .pst-bubble'), el=b&&b.querySelector('.pst-bt-on');
@@ -60,7 +60,7 @@ export default async function(t) {
      const alive=O55.S.sess.ai.list.some(x=>x.provider==='cursor');
      __aiFrames.push({alive,text}); window.__aiRAF=requestAnimationFrame(tick);};tick();
    });
-   await click(t,f,row+'[data-o55-do="removeGo"]'); await t.mark(`${look} w${mode} account removed`);
+   await f.locator(LAYER+' '+row+'[data-o55-do="removeGo"]').first().click(); await t.mark(`${look} w${mode} account removed`);
    await t.page.waitForTimeout(1100);
    const r=await f.evaluate(()=>{cancelAnimationFrame(__aiRAF);return __aiFrames;});
    const gone=r.filter(x=>!x.alive), bad=gone.filter(x=>x.text.startsWith('That'));
@@ -69,11 +69,11 @@ export default async function(t) {
   if(t.args.only !== 'ai') await t.step(`${look} w${mode} token abandoned`,async()=>{
    const f=await t.app.open();await t.app.look(look);await openAt(t,f,'online-service');
    if(mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
-   await click(t,f,'[data-o55-do="pick"][data-arg="github_enterprise"]');await works(t,f);await click(t,f,'.o55-primary');await f.waitForFunction(()=>O55.S.sess.screen==='online-signin');await settled(f,'online-signin');
+   await click(t,f,'[data-o55-do="others"]');await click(t,f,'[data-o55-do="pick"][data-arg="github_enterprise"]');await works(t,f);await click(t,f,'.o55-primary');await f.waitForFunction(()=>O55.S.sess.screen==='online-signin');await settled(f,'online-signin');
    await click(t,f,'[data-o55-do="tokenOn"]');
    await f.locator('#o55f-token').fill('pm-demo-token-7f3a9c41');
    await click(t,f,'[data-o55-do="tokenCheck"]');
-   const running=await f.evaluate(()=>O55.S.sess.ops['token:github_enterprise']?.state==='running');
+   const running=await f.evaluate(()=>O55.S.sess.ops['token:'+O55.S.sess.signin.service]?.state==='running');
    await click(t,f,'[data-o55-do="tokenOff"]');await t.mark('abandoned running token');
    await t.page.waitForTimeout(1200);
    const r=await f.evaluate(()=>({state:O55.S.sess.signin.state,signin:O55.S.sess.signin}));
