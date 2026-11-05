@@ -51,9 +51,9 @@ def segment(key):
 
 
 class OriginalPrecondition:
-    def __init__(self, package, locations):
+    def __init__(self, package, locations, *, source_directory=None):
         self.package = package
-        self.prefix = f"Plans/{package}/"
+        self.prefix = source_directory or f"Plans/{package}/"
         self.declarations = read(self.prefix + "resource-realms.json")
         self.registries = {}
         self.documents = {}
@@ -99,6 +99,17 @@ class OriginalPrecondition:
             self.inherited += json.loads(routing_path.read_bytes())["new_explicit_edges"]
 
     def explicit_import(self, realm, entry, location, ref, absolute_uri):
+        for edge in self.imports.get("newly_authored_location_scoped_imports", []):
+            if (realm == edge["from_realm"]
+                    and entry["path"] == edge["from_whole_schema"]
+                    and entry["sha256"] == edge["from_whole_sha256"]
+                    and entry["retrieval_uri"] in edge["from_retrieval_uris"]
+                    and {"location": location, "literal_reference": ref}
+                    in edge["from_schema_locations"]
+                    and absolute_uri == edge["unresolved_retrieval_uri"]):
+                if edge["nested_resolution_realm"] != edge["to_realm"]:
+                    raise ValueError("scoped import changed nested resolution realm")
+                return edge["to_realm"], edge["to_retrieval_uri"], edge["whole_target_sha256"]
         for edge in self.imports.get("imports", []):
             if (edge["from_realm"], edge["from_whole_schema"],
                 edge["from_schema_location"], edge["literal_reference"]) == (
@@ -175,6 +186,8 @@ class OriginalPrecondition:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--consumer-edition", choices=("predecessor", "source-package.v2"),
+                        default="predecessor")
     args = parser.parse_args()
     locations = json.loads(LOCATIONS.read_bytes())["whole_resource_locations"]
     report = {
@@ -182,7 +195,13 @@ def main():
         "base_commit": "e1188eae0c5fa5cf0a8548d9dba76f6f0de8c437",
         "event_type": "goal_run.certified", "native_execution": "NOT_RUN",
         "complete_path_positives": 0, "complete_path_negatives": 0,
-        "packages": {name: OriginalPrecondition(name, locations).run() for name in PACKAGES},
+        "consumer_source_edition": args.consumer_edition,
+        "packages": {name: OriginalPrecondition(
+            name, locations,
+            source_directory=(f"Plans/{name}/source-package.v2/"
+                              if name == PACKAGES[1] and args.consumer_edition == "source-package.v2"
+                              else None),
+        ).run() for name in PACKAGES},
     }
     report["closure"] = "BLOCKED" if any(
         x["status"] == "BLOCKED" for x in report["packages"].values()

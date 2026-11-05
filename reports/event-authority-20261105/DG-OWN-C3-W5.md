@@ -1,3 +1,5 @@
+> Historical part 1 report. The current continuation outcome and versioned import repair are recorded in [DG-OWN-C3-W5-part2.md](DG-OWN-C3-W5-part2.md).
+
 `PM_GOAL_AUDIT_WORKERS=1 python3 scripts/pm_goal_own_c3_w5_oracles.py --output /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W5/original-bank-precondition.json`
 
 # DG-OWN-C3-W5 — original passive-consumer bank BLOCKED

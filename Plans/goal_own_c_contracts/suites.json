@@ -114,11 +114,11 @@
       ],
       "original_isolated_resource_banks": [
         "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
-        "Plans/goal_run_certified_consumer_contracts/resource-realms.json"
+        "Plans/goal_run_certified_consumer_contracts/source-package.v2/resource-realms.json"
       ],
       "whole_method_maps": [
         "Plans/goal_certified_event_coordinator_contracts/methods.json",
-        "Plans/goal_run_certified_consumer_contracts/methods.json"
+        "Plans/goal_run_certified_consumer_contracts/source-package.v2/methods.json"
       ],
       "independent_boundaries": [
         "original_entry",
@@ -130,7 +130,22 @@
       "inherited_full_tuple_coverage": "PARTIAL",
       "native_execution": "NOT_RUN",
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
-      "part2_component_witnesses": []
+      "part2_component_witnesses": [],
+      "c3_w5_part2": {
+        "selected_source_package": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+        "source_package_edition": "pm.goal_run_certified.consumer_source.v2",
+        "predecessor_history": [
+          "Plans/goal_run_certified_consumer_contracts/imports.json",
+          "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+          "Plans/goal_run_certified_consumer_contracts/methods.json",
+          "Plans/goal_run_certified_consumer_contracts/installed-profile.json"
+        ],
+        "reference_closure": "COMPLETE_LITERAL_SCHEMA_REFERENCES_ONLY",
+        "whole_tuple_closure": "BLOCKED",
+        "technical_blocker": "W5-STORAGE-PROJECTION-NO-REFERENCE-EDITION",
+        "precondition_oracle": "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+        "native_execution": "NOT_RUN"
+      }
     }
   ]
 }
