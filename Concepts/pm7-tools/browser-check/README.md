@@ -22,6 +22,7 @@ browser-check run $K/checks --set sandbox=1                    # every check in 
 Parallel runs are safe: each gets its own browser and run folder. Give each its own copy of the build (a rebuild during a run mixes builds) and its own `--out`. The page loads as `file://`, so `--host` can't open it: to use another machine, ssh there with a checkout of the branch (`~/.local/bin/browser-check`). Motion claims need the VM, Windows or Nas1, because the Mac records about 36 fps and refuses pixel checks while recording.
 
 | Check file | What it asserts |
+| `nas-pair-instead` | Q1: pairable NAS → Use SSH instead → Back to SSH device form → Pair instead, same NAS and pairing choice; Back both ways, unique history, keyboard focus, stationary pressed target, ten looks and both wordings; SSH-only NAS has no link. Both surfaces. |
 | `diagnostics/choice-hit-bounds` | Runs the existing boundary assertions unchanged; `probeOut=<file>` retains native event targets, trusted flags and contemporaneous boxes for an unexpected outside activation. |
 | `look-menu-targets` | FO-75: every look-option pixel avoids other controls; help keeps its usable expanded target; real held right-edge presses in ten looks and three motion paths. |
 | `button-copy-face` | FO-73: real Copy/Copied acknowledgments and reset preserve the inner press face; native held edge activation and look feedback in ten looks and three motion paths. |
