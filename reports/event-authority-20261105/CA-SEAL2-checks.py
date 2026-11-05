@@ -423,7 +423,7 @@ def run(repo, output, source_map, apply_cut=None):
             # Round 2: each control starts from the same valid complete receipt.
             # The list and whole-receipt anchor are observations of the changed
             # lander/receipt, so synchronize them rather than leave a second fault.
-            for label in ['wrong_fourth_anchor_digest', 'blank_lander',
+            for label in ['wrong_fourth_anchor_digest', 'wrong_fourth_anchor_path', 'blank_lander',
                           'missing_lander_from_seal_applier_list']:
                 put(v.RECOUNT_CHANGE, encoded(change))
                 anchors()
@@ -441,6 +441,14 @@ def run(repo, output, source_map, apply_cut=None):
                     fourth = next(entry for entry in lock['canonical_ssot_hashes']['files']
                                   if entry['path'] == v.RECOUNT_CHANGE)
                     fourth['sha256'] = '0' * 64  # Canonical, wrong; third anchor stays valid.
+                    put('Plans/Spec_Lock.json', encoded(lock))
+                if label == 'wrong_fourth_anchor_path':
+                    # Cycle 7 C7-B01: only the fourth anchor's path changes; its digest
+                    # stays correct for the fourth receipt and the third anchor stays valid.
+                    lock = json.loads((root / 'Plans/Spec_Lock.json').read_bytes())
+                    fourth = next(entry for entry in lock['canonical_ssot_hashes']['files']
+                                  if entry['path'] == v.RECOUNT_CHANGE)
+                    fourth['path'] = 'reports/review-foreign-receipt.json'
                     put('Plans/Spec_Lock.json', encoded(lock))
                 record('negative_' + label, v.recount_change_state, True, 'identity, authority')
             put(v.RECOUNT_CHANGE, encoded(change))
@@ -577,6 +585,12 @@ def run(repo, output, source_map, apply_cut=None):
                 bad = copy.deepcopy(excluded)
                 mutate(bad)
                 record('negative_exclusion_' + label, lambda bad=bad: outcomes(bad, admitted_rest), True)
+            # Cycle 7 C7-B02: a fully valid exclusion shape with an unknown outcome tag.
+            outcomes(excluded, admitted_rest)
+            bad_tag = copy.deepcopy(excluded)
+            bad_tag['rows'][0]['outcome'] = 'review_unknown_exclusion'
+            record('negative_exclusion_unknown_outcome_tag', lambda: outcomes(bad_tag, admitted_rest),
+                   True, 'unknown recount outcome')
 
             alias = root / 'alias-owner.md'
             alias.symlink_to(root / 'Plans/fixture-owner.md')

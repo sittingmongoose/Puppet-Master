@@ -614,3 +614,11 @@ Raw runtime output stays outside the repository. The compact committed result is
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/currentness-copy.json` | `ab1f0477f083f1453770147475ee39452b8f6cdcd92cdc7d9e9ad4734362d724` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/scope.json` | `7e11fcf8682fe1a76ae82b300133a0ab79586de0bd0cf137312f9e3d6333d24f` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/final-corpus.json` | `fe99e4084535f27cbd47951ff27777f62892c76227bb3931493e350d21866d98` |
+
+## Review round 7: findings and responses (lead fix, 2026-11-05)
+
+Sol cycle 7 (`reviews/CA-SEAL2-sol/REVIEW-cycle7.md`) found two reachable checks filed as structural. The stream E lead fixed them as a small review fix; the validator is unchanged (`3e98a165…`).
+
+- **C7-B01, anchor-path equality (`V:850`, coverage sites 18 and 19).** New negative `negative_wrong_fourth_anchor_path`: from the passing fourth-receipt parent, only the fourth anchor entry's path changes, to `reports/review-foreign-receipt.json`. Its digest stays correct for the fourth receipt, the third anchor stays intact and every semantic field is unchanged. The intact validator refuses with `fourth amendment identity, authority, byte link or anchor mismatch`. With only the path equality relaxed, this negative alone fails, and the other 159 result records are identical.
+- **C7-B02, excluded-route tag (`V:1010`, coverage sites 190 and 191).** New negative `negative_exclusion_unknown_outcome_tag`: from the passing exact-member exclusion, only `outcome` changes, to `review_unknown_exclusion`. The intact validator refuses with `unknown recount outcome`. With only the dispatch broadened to accept that tag, this negative alone fails, and the other 159 records are identical.
+- Coverage table: the four rows move from structural to killed. The totals are now 195 killed, 59 structural, 20 implied, 3 duplicate and 50 frozen-input only, with 0 unclassified. The corpus passes 160/160, including the coverage test. Cut runner and results: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/`.

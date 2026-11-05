@@ -402,15 +402,27 @@
       "expression": "v.get('path') == path",
       "kind": "Boolean clause",
       "site_id": "syntax:e62b99e604990e6e65241e97f109ae0bbaf97ffc04c017e499965dfb44b51e49",
-      "outcome": "structural",
-      "reason": "This narrow cut interrupts a valid parent: {'type': 'ValueError', 'error': 'fourth amendment identity, authority, byte link or anchor mismatch'}. No acceptance is claimed.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
-          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
-          "selector": "anchor_entry_path"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut-anchor_path-results.json",
+          "sha256": "e32dd0f2c75a6853c3b5d29c2759224c931b9b90dbbcdbde91aa6046e74384d2",
+          "selector": "negative_wrong_fourth_anchor_path"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/intact-results.json",
+          "sha256": "ea9e29c2eef5c12766ab84ffd16240f9e4c48ab042e732bcbd72e3aec4598fda",
+          "selector": "baseline 160/160"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_wrong_fourth_anchor_path"
+      ],
+      "cut": {
+        "label": "anchor_path",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut_runner.py"
+      },
+      "review": "CA-SEAL2 Sol cycle 7 C7-B01; lead fix"
     },
     {
       "function": "recount_anchor",
@@ -419,15 +431,27 @@
       "expression": "v.get('path') == path",
       "kind": "comparison",
       "site_id": "syntax:465808ed9f9de153b06ab9edc7f67285e1e2da62325ebaf176cab7a3b3445be9",
-      "outcome": "structural",
-      "reason": "This narrow cut interrupts a valid parent: {'type': 'ValueError', 'error': 'fourth amendment identity, authority, byte link or anchor mismatch'}. No acceptance is claimed.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
-          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
-          "selector": "anchor_entry_path"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut-anchor_path-results.json",
+          "sha256": "e32dd0f2c75a6853c3b5d29c2759224c931b9b90dbbcdbde91aa6046e74384d2",
+          "selector": "negative_wrong_fourth_anchor_path"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/intact-results.json",
+          "sha256": "ea9e29c2eef5c12766ab84ffd16240f9e4c48ab042e732bcbd72e3aec4598fda",
+          "selector": "baseline 160/160"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_wrong_fourth_anchor_path"
+      ],
+      "cut": {
+        "label": "anchor_path",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut_runner.py"
+      },
+      "review": "CA-SEAL2 Sol cycle 7 C7-B01; lead fix"
     },
     {
       "function": "recount_anchor",
@@ -4687,20 +4711,27 @@
       "expression": "outcome == 'excluded'",
       "kind": "branch",
       "site_id": "syntax:cfb0289881e75ec52d9b2e3f70ed96730d2150e0ba71f7d699ad9cb61c6c5fbc",
-      "outcome": "structural",
-      "reason": "Routing cut interrupts the passing parent with {'type': 'ValueError', 'error': 'unknown recount outcome: artifacts.capture_provenance.inspected'}; no acceptance is claimed.",
+      "outcome": "killed by",
       "cut": {
-        "function": "recount_outcomes",
-        "expression": "outcome == 'excluded'",
-        "replacement": "False"
+        "label": "excluded_dispatch",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut_runner.py"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json",
-          "sha256": "552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce",
-          "selector": "outcome_excluded"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut-excluded_dispatch-results.json",
+          "sha256": "1721de255523f2b933d1566685d22cfb41dc6c10ae35e7c19222b285caa6663e",
+          "selector": "negative_exclusion_unknown_outcome_tag"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/intact-results.json",
+          "sha256": "ea9e29c2eef5c12766ab84ffd16240f9e4c48ab042e732bcbd72e3aec4598fda",
+          "selector": "baseline 160/160"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_exclusion_unknown_outcome_tag"
+      ],
+      "review": "CA-SEAL2 Sol cycle 7 C7-B02; lead fix"
     },
     {
       "function": "recount_outcomes",
@@ -4709,20 +4740,27 @@
       "expression": "outcome == 'excluded'",
       "kind": "comparison",
       "site_id": "syntax:40ce97a51ac0c669ca2f8a587ae8186d735dc35e3a2d76e06e246b2e0acd1675",
-      "outcome": "structural",
-      "reason": "Routing cut interrupts the passing parent with {'type': 'ValueError', 'error': 'unknown recount outcome: artifacts.capture_provenance.inspected'}; no acceptance is claimed.",
+      "outcome": "killed by",
       "cut": {
-        "function": "recount_outcomes",
-        "expression": "outcome == 'excluded'",
-        "replacement": "False"
+        "label": "excluded_dispatch",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut_runner.py"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json",
-          "sha256": "552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce",
-          "selector": "outcome_excluded"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/cut-excluded_dispatch-results.json",
+          "sha256": "1721de255523f2b933d1566685d22cfb41dc6c10ae35e7c19222b285caa6663e",
+          "selector": "negative_exclusion_unknown_outcome_tag"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/intact-results.json",
+          "sha256": "ea9e29c2eef5c12766ab84ffd16240f9e4c48ab042e732bcbd72e3aec4598fda",
+          "selector": "baseline 160/160"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_exclusion_unknown_outcome_tag"
+      ],
+      "review": "CA-SEAL2 Sol cycle 7 C7-B02; lead fix"
     },
     {
       "function": "recount_outcomes",
@@ -9060,8 +9098,8 @@
     "semantic_expansions": 41,
     "sites": 327,
     "outcomes": {
-      "killed by": 191,
-      "structural": 63,
+      "killed by": 195,
+      "structural": 59,
       "implied": 20,
       "same-predicate duplicate": 3,
       "frozen-input only": 50

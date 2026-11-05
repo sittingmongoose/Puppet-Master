@@ -6,8 +6,8 @@ Tested code commit `90c0eacee18e0862e067f0f54b9e79a11ea331f8`. Validator remains
 
 | Site outcome | Rows |
 |---|---:|
-| **killed by** | 191 |
-| **structural** | 63 |
+| **killed by** | 195 |
+| **structural** | 59 |
 | **implied** | 20 |
 | **same-predicate duplicate** | 3 |
 | **frozen-input only** | 50 |
@@ -22,3 +22,5 @@ Corpus **158/158**; 17 new negatives plus the inventory test; all 140 prior comp
 **Coverage-test demonstration:** remove one row in scratch: the test fails and names the missing site. Add a stale row: the test fails and names it. Intact and restored tables pass. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/coverage-demo.json`, SHA-256 `860ad5afbbafbf922fbdf9ae1d7d82d98a028a43e67840ba4e8cc49f16dc9114`.
 
 Full machine-readable rows, named failing tests, cuts, same-field survivor reasons and path/SHA-256 evidence are in `CA-SEAL2-coverage.json`. This is regression coverage, not a seal or admission.
+
+Round 7 (lead fix for Sol cycle 7): sites 18 and 19 (`recount_anchor`, `v.get('path') == path`) and sites 190 and 191 (`recount_outcomes`, `outcome == 'excluded'`) move from structural to killed by `negative_wrong_fourth_anchor_path` and `negative_exclusion_unknown_outcome_tag`. Each narrow cut fails only its own negative, and the other 159 records stay identical (`drafts/CA-SEAL2/fix7/`).
