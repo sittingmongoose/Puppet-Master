@@ -115,6 +115,7 @@ export default async function (t) {
             await f.locator(`.o55-lookslot [data-o55-do="lookMode"][data-arg="${appearance}"]`).click();
             await f.locator('.o55-lookbtn').click();
             await settled(f, 'online-signin');
+            await t.equal(`${name}: re-entry paints ${look}`, await f.evaluate(() => PMLogo.look()), look);
             for (let mode = 0; mode < 2; mode++) {
                 const known = await f.evaluate((L) => {
                     const l = document.querySelector(L), d = window.O55.S.sess.drafts.main;
