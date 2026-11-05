@@ -2,7 +2,7 @@
 
 **Branch:** `plans/ea-w3-continuity-hitl-20261105`
 **Base:** `f9c5de6561dff0a53a48e530f2a5c6804a7e941d` (`origin/main` fetched before branching).
-**Status:** four separately prepared contracts; no admission. Criterion 12 is **PARTIAL** for every family. Shared number/timestamp adoption, oracle code, predicate-level guard isolation, and Sol/Astra review belong to phase 2.
+**Status:** four separately prepared contracts; no admission. Criterion 12 is **PARTIAL** for every family. Shared number/timestamp adoption, oracle code, predicate-level guard isolation, and phase-2 Sol/Astra review belong to phase 2.
 
 ## Per-name outcomes
 
@@ -45,11 +45,11 @@ Each family's prose explicitly labels itself **NEWLY AUTHORED** and binds its ow
 
 The string-tuple identity is specified per family and recomputed from authenticated originals; CV-317 owns producer-semantic retry comparison, excluding Storage metadata. Each family has source, scope, transition, replay, custody, backup/restore, version and withdrawal rules. Source replay position references an upstream original; it cannot certify this event's own future checkpoint. Derived physical rows are bounded pointers to the complete original logical continuity snapshot, preventing duplicate large bodies. Complete checkpoint cores preserve one current/two retired publications and held original source tokens. No additional canonical operation table is created.
 
-Storage adds exactly six value rows: four individual event bodies, `continuity_record`, and `continuity_replay_checkpoint`. Existing Storage value rows and policies stay byte-for-byte equivalent as parsed values; no event-family registry row is appended.
+Storage adds exactly six value rows: four individual event bodies, `continuity_record`, and `continuity_replay_checkpoint`. Phase-1 review round 1 adds their six matching `storage_profile.family_profiles` allocations, using existing groups and budgets. Existing Storage value rows and policies stay byte-for-byte equivalent as parsed values; no event-family registry row is appended.
 
 ## HITL owner investigations
 
-[W3I-owner-investigations.json](W3I-owner-investigations.json) records each name independently. HITL-028 and its source section *HITL resolution wakes the scheduler* explicitly use both labels for immediate queue reevaluation on approval/rejection resolution. The HITL *Tier-era compatibility retirement* paragraph defines the durable approval outcome, approver principal and scope. Contracts' *Runtime event catalog carry-through* and CV-082 name `approval.granted` / `approval.denied` as the durable resolution events; The exact closed `wake_reason` enum includes `approval_resolved` at `Plans/Contracts_V0.md:917` and `:2420`, and in CV-313's acceptance criterion at `:20372`. CV-215 establishes `scheduler.pass` ownership and its `run.scheduler_analysis` legacy alias. No exact-name persisted writer/value/schema for either HITL notification label was found in current live canon.
+[W3I-owner-investigations.json](W3I-owner-investigations.json) records each name independently. HITL-028 and its source section *HITL resolution wakes the scheduler* explicitly use both labels for immediate queue reevaluation on approval/rejection resolution. The HITL *Tier-era compatibility retirement* paragraph defines the durable approval outcome, approver principal and scope. Contracts' *Runtime event catalog carry-through* and CV-082 name `approval.granted` / `approval.denied` as the durable resolution events. The exact closed `wake_reason` enum includes `approval_resolved` at `Plans/Contracts_V0.md:917` and `:2420`, and in CV-313's acceptance criterion at `:20372`. CV-215 establishes `scheduler.pass` ownership and its `run.scheduler_analysis` legacy alias. No exact-name persisted writer/value/schema for either HITL notification label was found in current live canon.
 
 Storage's `hitl.approved` migration-only mention concerns command compatibility. It cannot retire the live HITL-028 wake notification, and supplies no independent meaning for `hitl.rejected`. Both findings preserve current notifications and durable approval history; neither is called an alias of an admitted event. There is no demonstrated new-history requirement or competing-owner product choice to send back to Jared.
 
@@ -61,7 +61,7 @@ Storage's `hitl.approved` migration-only mention concerns command compatibility.
 
 ## Twelve-criterion self-grade and oracle plan
 
-[W3I-self-grade.json](W3I-self-grade.json) has one assessment per family, exact current line/substring citations in every cell, and hashes of the assessed sources. **All four:** criterion 1 **ABSENT** (required no admission); criteria 2–11 **PASS** as explicit prepared owner contracts; criterion 12 **PARTIAL**. These grades claim no runtime proof or completed independent review.
+[W3I-self-grade.json](W3I-self-grade.json) has one assessment per family, exact current line/substring citations in every cell, and hashes of the assessed sources. **All four:** criterion 1 **ABSENT** (required no admission); criteria 2–11 **PASS** as explicit prepared owner contracts; criterion 12 **PARTIAL**. These grades claim no runtime proof or completed phase-2 review.
 
 [W3I-oracle-plan.json](W3I-oracle-plan.json) and ATS-1280..1283 plan each family's own valid originals, retry/replay/history/recovery/withdrawal positives and separate negative predicates. For compound schema/runtime rules, phase 2 expands each field/predicate and enforcement site separately; no distinct predicates may share a removal set. Every negative starts from a valid case with one defective input invariant; dependent copies/digests are recomputed unless that relationship is the target. Actual code and shared guard-removal evidence are intentionally absent in phase 1.
 
@@ -85,7 +85,7 @@ Storage's `hitl.approved` migration-only mention concerns command compatibility.
 
 - **Contracts_V0.md:** CV-1600..1603 inserted at the end of *Runtime Continuity And Shared Route Object Model*, before the existing Governance section. Existing prose is not reflowed.
 - **storage-plan.md:** new end section with SP-1600..1603; no shared table row is rewritten.
-- **storage_value_registry.json:** six new tail rows only; existing families/policies are unchanged.
+- **storage_value_registry.json:** six new tail rows and, in phase-1 review round 1, six matching `storage_profile.family_profiles` allocations; existing families, policies, profiles and group budgets are unchanged.
 - **Automated_Testing_System.md:** new end section with ATS-1280..1283; existing oracle cases are untouched.
 - **orchestrator-subagent-integration.md:** OSI-1600..1603 at the end of *Continuity Record Family*; OSI-1604 at the end of *Required-Subagent Criticality And Parallel Failure Policy*. Existing behavior/list/key lines are retained.
 
@@ -112,3 +112,59 @@ Final index validation was parsed as JSON: top-level `status=pass`, zero failure
 Currentness input: 15 files copied from the shared checkout's ignored currentness edition, every SHA-256 matched before index generation. Shards regenerated only for the four edited owner docs and the edited Storage value registry; no unrelated owner shard changed. Every generator/checker in this lane runs sequentially with a memory check; no subagent, mailbox, server or browser was used. Available memory stayed above the 6 GiB pause threshold for started checks.
 
 Phase 2 must adopt both reviewed foundation branches, implement the per-family oracle plans with the shared helpers, prove guard isolation, and run Sol then Astra reviews before any admission work. No stopped product question is hidden as a technical gap. This phase does not run the repository-wide landing gates or reseal governance. The lead performs integration/landing checks; this branch never pushes main.
+
+## Phase-1 review round 1: findings and responses
+
+**Reviewed head:** `e6df324998c9f8f2d97c43e071daf0910404eae8`. **Comparison main:** `73f2231a9ec1c93190adafcdde51030f028c8c2d`, fetched on Nas1 before this fix round. The review is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/W3I-sol/REVIEW-phase1.md`, SHA-256 `4b0dd05a4ee31f67f088c421a1269c89fb92f65480a783f7732f28d189f825e1`.
+
+- **B1 — fixed, `ba7d400638eabce66ab08fff6417dfae3afec18d`.** Location: `Plans/storage_value_registry.json:127100` through the six allocations below. Cause: the six materialized W3I value families had no physical storage profiles, adding six failures to main's 41 missing profiles. Fix: allocate the four event bodies to existing `event_log` and the two derived values to existing `coordination_and_storage`, with encodings matching each value row. The derived limits are 16,384 bytes. Existing families, profiles, groups, budgets and the 41 unrelated omissions are unchanged. Verify with `python3 scripts/pm-storage-profile-check.py`; main and fixed head have identical error lists, so W3I adds **zero** failures.
+- **N1 — fixed, `66bcd82642147ac7f3b5c4b3b5b56941ce9ae3a5`.** Location: `reports/event-authority-20261105/W3I-owner-investigations.json:10` and `:32`, plus this report's HITL paragraph. Cause: CV-215 summarizes wake categories rather than declaring the exact `approval_resolved` token. Fix: both investigations and the HITL paragraph cite the exact closed enums at `Plans/Contracts_V0.md:917` and `:2420`, and CV-313's acceptance criterion at `:20372`. CV-215 supports only `scheduler.pass` ownership and its `run.scheduler_analysis` legacy alias. Verify those three source lines and both investigation citation arrays; notification/durable-resolution outcomes are unchanged.
+
+| Storage family | Profile line | Physical location | Existing group | Encoding target | Derived value limit |
+|---|---:|---|---|---|---:|
+| `continuity_actor_identified_event` | 127100 | `seglog` | `event_log` | `seglog_messagepack` | — |
+| `continuity_provenance_recorded_event` | 127106 | `seglog` | `event_log` | `seglog_messagepack` | — |
+| `continuity_redaction_applied_event` | 127112 | `seglog` | `event_log` | `seglog_messagepack` | — |
+| `continuity_replay_checkpointed_event` | 127118 | `seglog` | `event_log` | `seglog_messagepack` | — |
+| `continuity_record` | 127124 | `derived` | `coordination_and_storage` | `messagepack_canonical` | 16384 |
+| `continuity_replay_checkpoint` | 127131 | `derived` | `coordination_and_storage` | `projection_checkpoint` | 16384 |
+
+### Family reassessment
+
+`W3I-self-grade.json` pins the changed Storage registry hash and regrades each affected family. The twelve semantic cells retain their reviewed grades; the mandatory Storage companion gap is repaired independently.
+
+| Family | Criterion 1, before → after | Criteria 2–11, before → after | Criterion 12, before → after | Storage companion, before → after |
+|---|---|---|---|---|
+| `continuity.actor_identified` | ABSENT → ABSENT | PASS → PASS | PARTIAL → PARTIAL | B1 missing profiles → PASS |
+| `continuity.provenance_recorded` | ABSENT → ABSENT | PASS → PASS | PARTIAL → PARTIAL | B1 missing profiles → PASS |
+| `continuity.redaction_applied` | ABSENT → ABSENT | PASS → PASS | PARTIAL → PARTIAL | B1 missing profiles → PASS |
+| `continuity.replay_checkpointed` | ABSENT → ABSENT | PASS → PASS | PARTIAL → PARTIAL | B1 missing profiles → PASS |
+
+**Phase boundary:** SW-F1 remains phase-2 work: strengthen the inherited checkpoint/token/hash/segment schema patterns and enforce the shared timestamp profile, including every embedded copy and single-defect negative. Shared number-rule adoption and shared guard-isolation proof also remain in phase 2. This round adds no oracle/runtime guard code or fixtures and claims no guard-removal proof or independent re-review. No new IDs were minted; OSI-1600..1604, CV-1600..1603, SP-1600..1603 and ATS-1280..1283 remain the used IDs. No product or retention question arose.
+
+### Round-1 verification
+
+The final source checks ran at committed `ba7d400638eabce66ab08fff6417dfae3afec18d`; the following handoff commit changes only this report. Both profile-check exit codes remain **1** because the same 41 mainline omissions remain. The complete error lists match exactly. No W3I profile failure remains.
+
+| Command | Exit | Result | Raw evidence and SHA-256 |
+|---|---:|---|---|
+| `python3 scripts/pm-storage-profile-check.py` on comparison main | 1 | 41 pre-existing missing profiles; 344 families / 303 profiles | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/storage-profile-main.json`, SHA-256 `89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b` |
+| `python3 scripts/pm-storage-profile-check.py` on committed B1 head | 1 | Identical 41 errors; 350 families / 309 profiles; zero W3I-added failures | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/storage-profile-head-final.log`, SHA-256 `6e550e1e361f3fb8865210511a0bc682d661fa18c1a2d72ca8151dc243baa064` |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | Only Storage registry shards changed | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/shard-generate.log`, SHA-256 `5b172afd4a3f3b16555cb621d9a7bcf34e977907ff0d123a82802db037768e51` |
+| `python3 scripts/pm-plan-index.py generate` | 0 | Index regenerated; four artifacts changed | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/index-generate.log`, SHA-256 `8146b1c1d8b768c99709f9290c6288839ac12683c7853020d45a904294ce8701` |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | Pass | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/shard-check.log`, SHA-256 `25e03937700c17eaf1c5af802b6ea0730d0222ae7ca02f62e39577442c305420` |
+| `python3 scripts/pm-plan-index.py validate` | 0 | Parsed status pass; zero failures; coverage pass; 7,439 units | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/index-validate.log`, SHA-256 `a98125c2abc4ad08853868dc37d3135bcf79255a534829ffd6db9d7d5967bca7` |
+| `python3 /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/phase1-structural.py` | 0 | Pass: 142 eager refs, 4 payload positives, 498 structural negatives, 88 self-grade quotes; B1/N1 and scope/hash checks | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/phase1-structural-final.log`, SHA-256 `7b24ad7d05baed999df0220489d9e819aa8922d8296b7d5034c077970b03597a` |
+
+The worker structural checker is adapted from the phase-1 reviewer check only to allow the six named profile additions and verify their encodings, files, existing groups, derived limits and N1 citations. It retains the prior schema/reference, embedded-copy, original-source/application-hash, protected-path and self-grade-quote assertions. It is a worker self-check, not an independent re-review or a runtime oracle.
+
+Reproduction inputs retained outside the repository:
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/storage-profile-main-inputs.json`, SHA-256 `5d1d5765da02dba17b39e9e7a8af270cd7ea224a5ce1caca3b0257c93a777656`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/currentness-inputs.json`, SHA-256 `352d5ead518a544989f9552b21440f24ec3c6643c3e115a32d427b9f014ff0d5`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/phase1-structural.py`, SHA-256 `65c08bb4ddc3caf2fd9c3093c47d6e22157b7d1fc8403e3e5fa78f09c880dede`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/fix-round1/run-checks.py`, SHA-256 `1fcd612743b393dc45a780d37813545d28d5648120cb553f90abbf5ba3ab6f13`.
+
+The main check used exact git blobs for every file the checker reads, including the main checker and plan-unit index; the scratch extraction has been removed. The 15-file ignored currentness edition was copied from the shared checkout and verified file by file before index generation. Only the edited Storage registry's shards changed; no unrelated owner shard changed. Every generator/checker ran sequentially after a memory check, with at least 7 GiB available at each launch; no memory pause was needed in this round. Disk had 477 GB available before worktree creation.
+
+The report, investigations and updated self-grade are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3I/`. Push target remains `plans/ea-w3-continuity-hitl-20261105`; the literal-path worktree is removed after the final push. No admission, event-family append, Decision Log entry, governance reseal, landing/main push, mailbox, subagent, browser or server is part of this fix round.
