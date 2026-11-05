@@ -1,3 +1,112 @@
+# DMEM sweep part 1 — landed-decision citations on current main
+
+**Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Assessed implementation commit:** `91d3ec7a14` (this round). **Base:** rebased from lane head `9aec2fee0c` onto current `origin/main` `2989975e8f` (30 lane commits; every rebase conflict was in `_shards`/`.plan_index` only, resolved on the lane side and then regenerated deterministically). Round-eleven's checker/fixture work is carried unchanged as `ae04b287ae` (the former `7a1b9624d4`); the lane's checker, oracle, proof and fixture files are byte-identical to `9aec2fee0c`. **Baseline:** `reviews/DMEM-sol/REVIEW-cycle9.md` at `9374fdea03` (round-ten head; round-eleven work was ungraded there).
+
+**Worker result:** owner-text and citation work only. Under the lead's scope correction for this worker (2026-11-05), no checker, oracle or proof script is edited and no fixture or negative is rebuilt here; every checker/fixture finding of cycle 9 is listed under "For a Sol worker" with its exact location. The twelve exact-family checkers all exit 0 at this head. Grades are unchanged from round eleven. Membership remains ABSENT, retention PARTIAL, native execution NOT_RUN. No lane is READY until the shared tools pass.
+
+This lane's own review of its timestamp fields is **interim only**; no lane is READY on timestamp fields until the date-time gate passes.
+
+## Deck 2, items 6.a–6.d against the landed Decision Log
+
+Batch 1 landed DL-400..DL-452 on `main`, including DL-444..DL-447 (the lane's four Card 6 items), DL-402/DL-403 and the DL-401/G04 retention assignment. Read at `origin/main:Plans/Decision_Log.md` (`DL-444` at 5445, `DL-445` at 5469, `DL-446` at 5493, `DL-447` at 5517). Jared's verbatim answer in each entry is "i approve all of it"; the recorded fast-reply rule is "`approve all` selects **A** on all 38 items", so each item selects A. The approved option text, quoted exactly from the landed entries:
+
+- **DL-444 (6.a), option A:** Keep the oldest eligible memory by original creation time, breaking a tie by the unchanging note ID. Preserve every original evidence reference and the record of which copies were merged. If pin protection prevents that merge, skip it. You keep the earliest note ID and its history links.
+- **DL-445 (6.b), option A:** Archive the other eligible originals, preserving their identities, evidence references, versions and links to the survivor. They remain available in history and are never automatically deleted. You see one active memory for the merged group.
+- **DL-446 (6.c), option A:** Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+- **DL-447 (6.d), option A:** Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+
+Application at this head, read against those quotes:
+
+| Item | Landed decision | Where applied | Status |
+|---|---|---|---|
+| 6.a / DL-444 | quote above | `Plans/assistant-memory-subsystem.md:404` (§7.2 item 4) and the full dedup contract prose at `:3184`, `:3236`, `Plans/Contracts_V0.md:24508`, `:24555`, `Plans/storage-plan.md:29618`, `:29677` | Every decision element present: oldest by original creation time, tie by unchanging note ID (lexical id order), every evidence reference and the merge record preserved, survivor keeps the union of evidence, pin-protection skip. Applied as contract prose, as cycle 9 verified at the round-ten head. |
+| 6.b / DL-445 | quote above | the same six dedup contract copies | The DL-445 sentence "They remain available in history and are never automatically deleted." appears byte-for-byte in all six copies; archive disposition, identities, versions, survivor links and user-only deletion all present. |
+| 6.c / DL-446 | quote above | `Plans/assistant-memory-subsystem.md:416` and the two exact monthly owner units `Plans/storage-plan.md:30146`, `:30292` | Entire option A **byte-exact** in all three places (counted as exact substring matches of the landed paragraph). |
+| 6.d / DL-447 | quote above | `Plans/assistant-memory-subsystem.md:418` and the two exact prune owner units `Plans/Contracts_V0.md:24919`, `:25062` | Entire option A **byte-exact** in all three places. |
+| Related: DL-402 | "monthly summary and prune only archive. A memory is deleted only when you delete it. … Neither job archives or merges a pinned memory. Pins do not stop verification, index rebuilds or "out of date" marking, which the plan requires for every memory." | `Plans/assistant-memory-subsystem.md:406` (§7.2 item 6) with `ContractRef: …#DL-402` | Applied faithfully: archive-only, user-only deletion, originals archived with EvidenceRefs, pins excluded but still permitting verification, rebuilds, out-of-date marking. |
+| Related: DL-403 | neither job runs until cutoffs exist; the owner's exact cutoff proposal returns to Jared | resolved by landed DL-446/DL-447 supersession ("Answers DL-403's returned-cutoff condition"); `Plans/assistant-memory-subsystem.md:420` keeps activation gated | Consistent: the missing-cutoff decision is resolved by the landed values; admission, operation/result retention and authenticated binding gates remain. |
+| Related: DL-401/G04 retention | `RP-OPERATIONAL-2555D@1.0.0` on `origin/main:Plans/storage_value_registry.json` (terminal_transition, 2,555 days, 2,000,000 per Project); main's `Plans/storage-plan.md` G04 list names all twelve families | lane citations at `Plans/Contracts_V0.md:24938`, `:25081`, `Plans/storage-plan.md:30165`, `:30311` | Values agree with the landed registry row; citations reworded to the landed decision (below). |
+
+**Citation disagreements fixed (`91d3ec7a14`).** Seventeen owner-text citations still described landed decisions as living on unlanded answer branches:
+
+- 13× `DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105` → `DL-444 through DL-447, landed in Plans/Decision_Log.md on main`, at `Plans/assistant-memory-subsystem.md:422`, `:3184`, `:3236`; `Plans/Automated_Testing_System.md:7271`, `:7328`; `Plans/Contracts_V0.md:24508`, `:24555`, `:24921`, `:25064`; `Plans/storage-plan.md:29618`, `:29677`, `:30148`, `:30294`.
+- 4× `under DL-401/G04, on unlanded origin/plans/ea-retention-cards1-20261104 at 2663667e…` → `landed in Plans/Decision_Log.md on main with the CA-RET assignment in Plans/storage-plan.md and Plans/storage_value_registry.json (read on this lane at origin/plans/ea-retention-cards1-20261104 2663667e…)`, at `Plans/Contracts_V0.md:24938`, `:25081`, `Plans/storage-plan.md:30165`, `:30311`. The lineage pin is kept; only the unlanded claim and the decision's location were corrected.
+
+The `source_lineage` front-matter pins (`DL-402/DL-403 on origin/plans/ea-cards1-answers-20261104 at b6332f39…`) are left as written: they record where the lane read the decisions and make no claim about current location. The ATS-315 sentence repaired in round eleven (N1) reads correctly against the landed entries at `Plans/Automated_Testing_System.md:7269` ("Card 6 supplies those cutoff values; the independent activation gates remain"), and the stale "No cutoff values are selected" sentence is absent from every owner document.
+
+## Sweep part 1: findings and responses
+
+- **Deck items 6.a–6.d — confirmed (`91d3ec7a14`).** Byte-for-byte and content comparison against the landed entries above. **Verify:** the quotes and the application table; each byte-exact claim is an exact substring of `origin/main:Plans/Decision_Log.md`'s option-A paragraph and of the named owner-doc line.
+- **Cycle-9 B1 (cross-type preserved-field comparisons) — for a Sol worker, not edited here.** See below. **State:** round-eleven `ae04b287ae` claims the repair; both dedup phases and all four archive phases exit 0 at this head.
+- **Cycle-9 B2 (fractional-second precision in policy comparisons) — for a Sol worker, not edited here.** Same state.
+- **Cycle-9 B3 (dedup no-project negative stale Project copies) — for a Sol worker, not edited here.** Fixture content is outside this worker's scope; the fixture file is byte-identical to `9aec2fee0c`.
+- **Cycle-9 B4 (dedup eligible-group guard without a negative) — for a Sol worker, not edited here.** Same state.
+- **N1 (stale ATS-315 cutoff sentence) — verified still repaired.** `Plans/Automated_Testing_System.md:7269`. Consistent with landed DL-446/DL-447.
+- **N2 (index validation failing on 22 inherited rows) — resolved by the rebase.** The pre-rebase failures were main-only DL-302 plus 21 legacy-ledger format records; current `main` carries both, and `pm-plan-index.py validate` exits 0, top-level `pass`, at this head.
+- **N3 (generated clocks) — accounted for.** Regeneration again changes `generated_at_utc` fields; no all-byte identity claim is made for them.
+- **No other stale claim found.** Sweeps for "unlanded", "not yet landed" and answer-branch locations tied to DL-401/402/403/444..447 across the four owner documents return only the corrected lines above.
+
+## For a Sol worker
+
+Checker, oracle, fixture and proof findings from `reviews/DMEM-sol/REVIEW-cycle9.md`. This worker did not touch any of these files; the round-eleven commit `ae04b287ae` (rebased from `7a1b9624d4`) claims repairs for all four, and the twelve family checkers exit 0 here — whether those repairs fully satisfy the review is for the Sol re-review.
+
+1. **B1 — preserved fields compare equal across Boolean and integer types. Where now:** `scripts/pm_memory_policy.py:18` (`same()`), `:86` (exact-Boolean inputs incl. unselected/protected originals), `:108`–`:135` (`dedup_checks`, `typed_edits`), `:146` (`dedup_validate`); `scripts/pm_memory_archive_events.py:151`–`:166` (`originals/evidence/versions/selected_fields/pins/unselected` preserved through `POLICY.same`). **Review demand:** exact primitive types compared before values recursively (nested fields, evidence, versions, merge lineage, pins, unselected, expected outputs), one-field wrong-type negatives (Boolean/numeric aliases, floats, strings, null, arrays, objects) and full-checker wrong-oracle probes. Cycle-9 quoted `pm_memory_policy.py:93–98,139,159` and `pm_memory_archive_events.py:151–166` at the round-ten head.
+2. **B2 — policy comparisons discarded valid fractional-second precision. Where now:** `scripts/pm_memory_policy.py:29` (`instant()`), `:46` (`selection_checks`) and both survivor comparisons. **Review demand:** compare accepted instants and durations with every admitted fractional digit (no truncation, no new precision cap, original spellings/commitments untouched), with one-field submicrosecond cutoff and creation-order negatives. Cycle-9 quoted `:15–18,35–38,66,84` at the round-ten head.
+3. **B3 — the dedup no-project negative carried stale Project copies. Where now:** `Plans/memory_card6_policy_fixtures.json:7783` (`dedup_sweep:no-project`); the separate foreign-Project join negative is `:7619`. **Review demand:** every memory Project observation coherently null in that input, derived from an intact scope-consistent control, each of the two predicates (snapshot-local Project validity; selected-original Project join) proved removable alone with peers enabled.
+4. **B4 — the dedup eligible-group guard had no authored negative. Where now:** `scripts/pm_memory_policy.py:79`–`:81` (three consecutive `dedup_eligible_group` predicates: minimum two originals, unique IDs, existence of every selected original); fixtures `Plans/memory_card6_policy_fixtures.json:8749` (`dedup_sweep:fix11-minimum-group`), `:8830` (`fix11-unique-group`), `:8913` (`fix11-existing-group`). **Review demand:** an intact control plus separate minimal negatives for each predicate, no merged removal sets, and inclusion in the shared guard-tool adoption.
+
+## Part 2 items
+
+Recorded only; this worker writes no number helper, serializer, recipe selector or proof code.
+
+1. **S1 — CV-1100 current grammar and owner-range dispatch** (NUMRULE, `plans/ea-numrule-20261105`): core `json_numbers`/`canonical_numbers` (`scripts/pm_memory_maintenance_events.py:62`/`:74`), current producer schemas and registry mirrors, the twelve numeric owner paragraphs and ATS-315. Adopt the shared current token/type rule at ingestion and field-owner ranges, preserving the proven full Storage uint64 domain and historical alternatives. The raw-JSON-token `1.0`→integer conversion noted by cycle 9 belongs here.
+2. **S2 — SP-1100/CV-1100 physical, semantic and local commitment profiles:** core `canonical_numbers`, `digest`, `historical_numbers`, `historical_digest`, `retained`, `retained_digest`, `within_value_cap` and `_CODEC.binding_bytes` call sites; all twelve full-value commitment paragraphs. Adopt the distinct shared profiles; never normalize physical floats, erase signed zero or rewrite an older commitment.
+3. **S3 — SP-1101 authenticated original recipe selection:** core `HISTORY_RECIPES`, `historical_envelope_matches`, `historical_matches`, `read_canonical_history`, frozen definitions and the numeric owner paragraphs. Adopt authentic immutable original issuance/registry selection with unknown/ambiguous/downgrade negatives, keeping exact old results/bytes and the access/withdrawal fences.
+4. **S4 — shared check-11 proof tool:** adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105`, replacing the lane-local `scripts/pm_memory_guard_isolation.py:74–94,626–690,833–912` machinery (compound/multi-field removal sets, incomplete inventory: cycle 9 recorded exit 1 `AssertionError: unlisted guard` for both monthly and both prune families). Full per-predicate inventory, site-by-site true-duplicate witnesses and complete complement/restoration checks. The B3/B4 fixture defects themselves stay lane work (listed above).
+5. **Guard tables:** restructure the lane's checkers into named predicate functions in a table once the shared guard tool passes (sweep part 2; not started here).
+6. **Number recipes CV-1100/1101, SP-1100/1101** are adopted in this lane only after their own Astra review passes; the date-time gate is separate and stays required — this lane's timestamp-field review above is interim only.
+
+## Checks, regeneration and resources
+
+| Check | Exit / result |
+|---|---|
+| Rebase `9aec2fee0c` onto `origin/main` `2989975e8f` | 30/30 commits; conflicts only in `_shards`/`.plan_index` |
+| Lane checker/oracle/proof/fixture files vs `9aec2fee0c` | identical (empty diff) |
+| 8× `python3 scripts/pm_memory_maintenance_events.py --family <name>` | 8 × 0 |
+| 4× `python3 scripts/pm_memory_archive_events.py --family <name>` | 4 × 0 |
+| `pm-shard-plans.py --generate` | 0, `pass` (99 sources) |
+| `pm-plan-index.py generate` | 0 (7,518 units) |
+| `pm-shard-plans.py --check` | 0, `pass` |
+| `pm-plan-index.py validate` | 0, top-level `pass` |
+| Currentness edition copy | hash-identical to `/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness` |
+
+Regeneration rebuilt shards for documents this round did not edit — 649 `storage_value_registry` shard files plus main-side portions of `storage-plan`, `contracts_v0`, `automated_testing_system` and `assistant-memory-subsystem` — because the rebase moved the lane onto a `main` that itself changed those documents after the lane's former merge base `be4766513f`. The generator rebuilt deterministically from the merged sources and the shard check passes; this is the expected rebase consequence, not unrelated churn. Resources: start gate 11 GB RAM available / 91 GB disk free; 11–13 GB available throughout; every checker ran one at a time.
+
+No pm-mail, no subagents, no admission, no registry append, no Decision Log entry, no governance edit, no main push. `91d3ec7a14` changes only the four owner documents and regenerated derived files.
+
+## Twelve-family grades (before and after)
+
+Before = independent cycle-9 review; round = round eleven's regrade (carried); this sweep round changes no grade — its edits are owner-text citations inside the same contract units, re-read at `91d3ec7a14`. P/Q/A in rubric order; every family: membership A (no admission), retention Q (operation/result custody retention unresolved), native NOT_RUN.
+
+| Exact family | Cycle 9 | Round 11 | Sweep part 1 |
+|---|---|---|---|
+| `memory.dedup_sweep.completed` | 9P/2Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.dedup_sweep.started` | 9P/2Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.index.lexical.rebuild.completed` | 10P/1Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.index.lexical.rebuild.started` | 10P/1Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.index.semantic.rebuild.completed` | 10P/1Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.index.semantic.rebuild.started` | 10P/1Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.monthly_summary.completed` | 9P/2Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.monthly_summary.started` | 9P/2Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.prune_archive.completed` | 9P/2Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.prune_archive.started` | 9P/2Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.verification_sweep.completed` | 10P/1Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+| `memory.verification_sweep.started` | 10P/1Q/1A | 10P/1Q/1A | 10P/1Q/1A |
+
+Totals: 120 PASS / 12 PARTIAL / 12 ABSENT, unchanged. The oracle cells of the six blocked families rest on round-eleven's checker/fixture repairs, which are Sol's to re-review under "For a Sol worker"; this round's own reading adds only the landed-decision confirmation and citations above.
+
+---
+
 # DMEM fix round 11 — exact preservation and policy instants
 
 **Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Assessed implementation commit:** `7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27`. **Reviewed head:** `9374fdea031beec5553c9f859fe7c2313b8a2567`. **Independent baseline:** `reviews/DMEM-sol/REVIEW-cycle9.md`, compared with `origin/main` `73f2231a9ec1c93190adafcdde51030f028c8c2d`.
@@ -96,8 +205,6 @@ All cited paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authori
 Report and self-grade copies overwrite `drafts/DMEM/DMEM.md` and `drafts/DMEM/DMEM-self-grade.json`. Reproduction scripts and a complete SHA-256 manifest remain in fix11; redundant outputs are removed. The sparse worktree `/home/sittingmongoose/pm-worktrees/DMEM-fix11` is removed with a literal-path `git worktree remove --force` after both commits are pushed.
 
 ---
-
-Earlier source-pinned reports follow as lineage.
 
 # Round 10: deck-2 Card 6 applied
 
