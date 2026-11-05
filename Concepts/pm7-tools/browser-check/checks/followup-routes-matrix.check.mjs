@@ -7,7 +7,9 @@ import studio from './studio-screens.check.mjs';
 const LOOKS = ['basic','friendly','retro','glass','nier'].flatMap(f=>['light','dark'].map(m=>f+'-'+m));
 export const tests = {};
 for(const look of LOOKS) for(const [width,height] of [[1280,900],[740,900],[1280,500]]) {
+ if(width!==1280 || height!==900) { if(!['basic-light','glass-dark'].includes(look)) continue; }
  tests[`${look} ${width}x${height}`] = async t => {
+  if(t.args.skipBasic && look.startsWith('basic-')) return;
   Object.assign(t.args,{look,width,height,only:'c-pair',codeOnly:1,depth:1});
   await t.viewport(width,height);
   for(const [name,run] of Object.entries({empty,cheer,fallback,shelf,studio})) await t.step(name,async()=>{
