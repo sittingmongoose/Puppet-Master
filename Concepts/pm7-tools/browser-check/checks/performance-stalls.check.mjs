@@ -130,6 +130,7 @@ export default async function(t) {
     if(!await f.locator('[data-action="collab-open-configure"][data-kind="crew"]:not([data-auto])').isVisible()) await f.locator('[data-action="polish-wand-group"][data-group="work"]').click();
     await f.locator('[data-action="collab-open-configure"][data-kind="crew"]:not([data-auto])').click();
     await f.locator('[data-collab-input="purpose"]').fill('Measure query performance and report the findings '+i);
+    const countBefore=await f.evaluate(()=>PM56_COLLAB.runs().length);
     const btn=f.locator('[data-action="collab-modal-commit"]');
     await t.check('Start enabled', await btn.isEnabled());
     if(await btn.isEnabled()) {
@@ -140,7 +141,8 @@ export default async function(t) {
      });
      try { await sample('crew-start-'+i,()=>btn.click(),2000);
       const phases=await f.evaluate(()=>window.__crewCommitPhases);
-      await t.check('Crew commit projects its conversation scope',phases.includes('scope')&&!phases.includes('app'),JSON.stringify(phases));
+      t.log('Crew commit render phases (diagnostic): '+JSON.stringify(phases));
+      await t.check('Crew commit creates exactly one run',await f.evaluate(()=>PM56_COLLAB.runs().length)===countBefore+1);
       await t.check('Crew commit closes its configure sheet',await f.locator('[data-action="collab-modal-commit"]').count()===0);
      }
      finally {const n=await f.evaluate(()=>{window.getComputedStyle=window.__nativeStyle;return window.__tokenStyleReads;}); await t.check('commit uses cached timing tokens',n===0,String(n));}

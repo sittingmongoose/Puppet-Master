@@ -358,7 +358,7 @@
       activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
       /* mutators -- each triggers the render the change actually needs */
-      renderApp, renderConversation: renderConversationUpdate, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
+      renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
@@ -453,7 +453,7 @@
   }
 
   function openDialog(d){ state.dialog=d; renderOverlays(); }
-  function closeDialog(o){ if(state.dialog?.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom}; state.dialog=null; if(!o||o.render!==false)renderOverlays(); }
+  function closeDialog(){ if(state.dialog?.type==='demo'&&state.dialog.geom)lastDemoGeom={...state.dialog.geom}; state.dialog=null; renderOverlays(); }
   /* The concept had no clipboard write at all -- copy-message and copy-mermaid
      only raised a toast. Async Clipboard first, execCommand second (file://
      pages without a secure context still need it), and an honest failure
@@ -2759,26 +2759,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     syncHoverCard(); fitActivityTabs();
     runAfterRender('scope',{scope:stage,flips:[]});
     return true;
-  }
-
-  /* A committed collaboration appends to this conversation. Reconcile that
-     stage using the existing scroll/FLIP owner; leave shell/editor/history alone. */
-  function renderConversationUpdate(){
-    const stage=document.querySelector('#pmRoot .chat-stage');
-    if(!HOSTED||!stage||state.editorRevealed||state.workGate){renderApp();return;}
-    syncActivityDomain();
-    if(activityDocked()!==activityDockLayout){renderApp();return;}
-    if(!patchScope(stage,renderChat())){renderApp();return;}
-    if(state.activity.open&&activityDockLayout){
-      const panel=document.querySelector('#pmRoot .activity-panel');
-      if(panel) patchScope(panel,renderActivityPanel('dock'));
-    }
-    renderOverlays();fitActivityTabs();
-    armComposerObserver();armJumpBottomListener();armFollowObserver();syncJumpBottom();
-    if(HOSTED)hostedSyncTabs();
-    // Conversation owners arm lane streams and Crew travel on the app phase.
-    // Preserve that lifecycle after the scoped DOM commit, without a full patch.
-    runAfterRender('app',{scope:stage,flips:[]});
   }
 
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
