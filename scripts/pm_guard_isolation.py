@@ -675,8 +675,10 @@ class SchemaCatalog:
             visit(entry, key, (), (), "guard", 1, set())
         for guard in prototypes.values():
             if (guard.document, guard.path) not in visited_nodes:
-                result[guard.id] = replace(guard, classification="unreachable",
-                    evidence="no evaluation occurrence from declared roots " + encoded(self.roots), predicate_count=0, cut="")
+                unknown = guard.kind == "extension"
+                result[guard.id] = replace(guard, classification="unclassified" if unknown else "unreachable",
+                    evidence=("unknown vocabulary anywhere in the declared closure needs an adapter; reachability cannot certify its semantics" if unknown else
+                              "no evaluation occurrence from declared roots " + encoded(self.roots)), predicate_count=None if unknown else 0, cut="")
         for gid, guard in list(result.items()):
             if guard.entry_uri in self.special_entries and guard.classification == "guard":
                 result[gid] = replace(guard, classification="unclassified",

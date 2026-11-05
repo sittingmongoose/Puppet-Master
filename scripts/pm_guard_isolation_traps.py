@@ -313,7 +313,9 @@ def check(v):
         if candidate["function"] == "require":
             dispositions[candidate["id"]] = g.Classification(candidate["id"], "selector", "parameterized enforcement helper; each caller acceptance predicate separately inventoried")
         elif (candidate["action"] in ("return", "predicate") or candidate["expression"] in ("Outcome.accept()", "errors")) and not acceptance_predicate:
-            dispositions[candidate["id"]] = g.Classification(candidate["id"], "selector", "accepting terminal return; no rejection")
+            evidence = ("error-list carrier; both producer appends are inventoried and independently cut; callback translates the actual list"
+                        if candidate["expression"] == "errors" else "accepting terminal return; no rejection")
+            dispositions[candidate["id"]] = g.Classification(candidate["id"], "selector", evidence)
         elif kind == "unexposed_code":
             continue
         else:

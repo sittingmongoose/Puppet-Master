@@ -1369,6 +1369,24 @@
       "id": "round3-distinct-matcher-and-activation-invariants",
       "kind": "round3_invariant_context",
       "expected": "different contains matchers / schema-dependency antecedents never automatically become duplicate predicates"
+    },
+    {
+      "id": "round3-dormant-unknown-vocabulary",
+      "kind": "round3_dormant_unknown",
+      "expected": "unknown vocabulary in an unused definition remains unclassified, never an automatic unreachable waiver",
+      "schema": {
+        "$defs": {
+          "unused": {
+            "x-unknown-rejection": true
+          }
+        },
+        "minimum": 0
+      },
+      "control": 1,
+      "heldout": [
+        -1
+      ],
+      "label_keyword": "minimum"
     }
   ]
 }
