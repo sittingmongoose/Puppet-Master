@@ -39,6 +39,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("round10_"):
+        return round10_probe(g, trap, memory)
     if kind.startswith("round9_"):
         return round9_probe(g, trap, memory)
     if kind.startswith("round8_"):
@@ -311,7 +313,7 @@ def check(v):
         if v["x"] < 0:
             raise Refusal("bad_x")
 '''
-    class Refusal(Exception): pass
+    Refusal = ValueError  # finite checker interface: canonical builtin refusal
     namespace = {"Refusal": Refusal, "Outcome": g.Outcome}
     exec(code, namespace)
     module = g.AstGuards("trap", code, namespace)
@@ -654,14 +656,17 @@ def review_probe(g, trap, memory, uri):
             refused_control['status'] == 'FAIL' and failure(refused_control, 'control_refused') and
             g.digest(docs) == g.digest(cat.documents))
     if kind == 'review_mixed_not_call':
-        class Refusal(Exception): pass
+        Refusal = ValueError  # finite checker interface: canonical builtin refusal
         def require(ok, code):
             if not ok: raise Refusal(code)
         source = "def check(v):\n    require(not (v['x'] < 0 or not (v['y'] >= 0)) and not (v['z'] < 0), 'bad')\n    return True\n"
-        ns = {'require': require}; exec(source, ns)
+        source = 'def require(ok, code):\n    if not ok: raise ValueError(code)\n\n' + source
+        ns = {}; exec(source, ns)
         backend = g.AstGuards('mixed-not', source, ns); ids, dispositions = {}, {}
         for candidate in backend.candidates():
-            if candidate['expression'] == 'True':
+            if candidate['function'] != 'check':
+                dispositions[candidate['id']] = g.Classification(candidate['id'], 'selector', 'helper delegation; caller predicates inventoried')
+            elif candidate['expression'] == 'True':
                 dispositions[candidate['id']] = g.Classification(candidate['id'], 'selector', 'accepting terminal return')
             else:
                 field = next(f for f in ('x', 'y', 'z') if repr(f) in candidate['expression'])
@@ -763,7 +768,7 @@ def review_probe(g, trap, memory, uri):
                   "def check(v):\n    return not (not (v['x'] >= 0) or not not (v['y'] < 0))\n"
                   if kind == 'review_nested_not' else
                   "def check(v):\n    return not (v['x'] < 0 or v['y'] < 0)\n")
-        class Refusal(Exception): pass
+        Refusal = ValueError  # finite checker interface: canonical builtin refusal
         ns = {'Refusal': Refusal}; exec(source, ns)
         backend = g.AstGuards('review', source, ns); ids = {}; dispositions = {}
         for c in backend.candidates():
@@ -793,7 +798,7 @@ def review_probe(g, trap, memory, uri):
                   "class Checker:\n    def check(self, v, errors):\n        if v['x'] < 0:\n            errors.append('bad')\n" if kind=='review_class_append' else
                   "require(value['x'] >= 0, 'bad')\n" if kind=='review_module_require' else
                   "def outer(v, errors):\n    def inner():\n        if v['x'] < 0:\n            errors.append('bad')\n    inner()\n")
-        class Refusal(Exception): pass
+        Refusal = ValueError  # finite checker interface: canonical builtin refusal
         def require(ok, code):
             if not ok: raise Refusal(code)
         ns = {'require': require, 'value': {'x': 0}}; exec(source, ns)
@@ -888,7 +893,7 @@ def review_probe(g, trap, memory, uri):
         report = g.run(s,memory=memory)
         return report, report['status']=='PASS' and report['duplicates'][0]['proved'] and row(report,'same-minimum')['flips']==['lower'] and row(report,select('maximum'))['flips']==['upper']
     if kind in ('review_overlap','review_pointer','review_stale'):
-        class Refusal(Exception): pass
+        Refusal = ValueError  # finite checker interface: canonical builtin refusal
         source = ("def check(v):\n    if v['x'] < 0 or v['y'] < 0:\n        raise Refusal('bad')\n    return True\n" if kind=='review_overlap' else
                   "def check(v):\n    if len(v['x']) > 8:\n        raise Refusal('bad')\n    if v['x'] != 'ref:ok':\n        raise Refusal('bad')\n    return True\n" if kind=='review_pointer' else
                   "def check(v):\n    if v['x'] < 0:\n        raise Refusal('bad')\n    if v['x'] != v['y']:\n        raise Refusal('copy')\n    return True\n")
@@ -949,11 +954,15 @@ def python_audit(g, memory):
     for name, (source, supported) in specs.items():
         def require(ok, code):
             if not ok: raise ValueError(code)
+        if name == 'require-clauses':
+            source = 'def require(ok, code):\n    if not ok: raise ValueError(code)\n\n' + source
         ns = {'require': require}; exec(source, ns)
         mod = g.AstGuards('python-audit', source, ns); candidates = mod.candidates()
         dispositions, ids = {}, {}
         for c in candidates:
-            if c['expression'] == 'True' and c['action'] == 'predicate':
+            if c['function'] != 'check':
+                dispositions[c['id']] = g.Classification(c['id'], 'selector', 'helper delegation; caller predicates inventoried')
+            elif c['expression'] == 'True' and c['action'] == 'predicate':
                 dispositions[c['id']] = g.Classification(c['id'], 'selector', 'literal successful terminal return')
             elif c['action'] != 'unsupported':
                 field = 'x' if "['x']" in c['expression'] else 'y'
@@ -1420,7 +1429,7 @@ def round6_probe(g, trap, memory):
             source = 'def check(v, errors):\n' + '\n'.join('    '+line for line in prefix.splitlines()) + '\n    assert v["x"] >= 0 and v["y"] >= 0, "bad"\n    return True\n'
             module, candidates, _ = composition_suite(g, 'unknown/'+context, source, memory)
             targets = [c for c in candidates if c.get('refusal_kind') == 'assert']
-            assert targets and all(c['action'] == 'unsupported' and not c['cut'] and 'preceding exit' in c['reason'] for c in targets)
+            assert targets and all(c['action'] == 'unsupported' and not c['cut'] and ('preceding exit' in c['reason'] or 'allow-list' in c['reason']) for c in targets)
             for c in targets:
                 try: module.register(c, 'bad', g.Invariant('/x', 'nonnegative'))
                 except g.IsolationError: pass
@@ -1671,7 +1680,7 @@ def round9_probe(g, trap, memory):
             cut = module.clone(frozenset({gid})); cut_vector = vector(cut.check, zero=zero)
             actual = vector(env['check'], zero=zero)
             assert baseline == actual == [True, False, False], (label, baseline, actual)
-            assert cut_vector == ([True, False, False] if label == 'sibling-original-alias-control' else [True, True, False]), (label, cut_vector)
+            assert cut_vector == [True, True, False], (label, cut_vector)
             fields = ('x',) if trap['mode'] == 'single' else ('x', 'y')
             dispositions = {c['id']: g.Classification(c['id'], 'selector', 'unconditional terminal success') for c in module.candidates() if c['expression'] == 'True' and c.get('predicate_count') == 0}
             suite = g.Suite(trap['id'], lambda v, state: outcome(state.modules[module.name].check, v, zero),
@@ -1680,7 +1689,7 @@ def round9_probe(g, trap, memory):
                             modules=[module], code_dispositions=dispositions)
             report = g.run(suite, memory=memory)
             row = next(r for r in report['rows'] if r['id'] == gid)
-            assert row['proved'] == (trap['mode'] == 'single' and label != 'sibling-original-alias-control')
+            assert row['proved'] == (trap['mode'] == 'single')
             assert all(c['identical'] for c in report['original_baseline_controls'])
             return {'baseline': baseline, 'cut_vector': cut_vector, 'report': report}, True
         except g.IsolationError as exc:
@@ -1810,22 +1819,25 @@ def round9_probe(g, trap, memory):
         return {'refusals': rows, 'singleton_controls': 3}, True
 
     if trap['kind'] == 'round9_original_baseline_gate':
-        source = 'def peer(v):\n    if v["y"] < 0 and peer.enforce_y:\n        raise ValueError("bad")\n    return True\n\n' + plain.replace('    if v["y"] < 0:\n        raise ValueError("bad")\n    return True', '    return peer(v)')
-        env = compile_env(source); env['peer'].enforce_y = True
-        module = g.AstGuards('baseline-gate', source, env)
-        def runner(v, state): return outcome(state.modules[module.name].check, v)
-        suite = g.Suite('baseline-gate', runner, [g.Control('valid', inputs[0], 'synthetic'), g.Control('y', inputs[2], 'synthetic')], [], modules=[module])
+        source = plain.replace('def check(v):', 'def check(v, floor=0):').replace('v["y"] < 0', 'v["y"] < floor')
+        env = compile_env(source)
+        module = g.AstGuards('baseline-gate', source, env); gid = register(module)
+        suite = g.Suite('baseline-gate', lambda v, state: outcome(state.modules[module.name].check, v),
+                        [g.Control('valid', inputs[0], 'synthetic')],
+                        [g.Negative('x', inputs[1], gid, 'bad', 'valid', 'only /x'),
+                         g.Negative('last-y', inputs[2], gid, 'bad', 'valid', 'only /y')], modules=[module])
         copy_function = g._copy_function
-        def lose_state(original, code, namespace):
-            clone = copy_function(original, code, namespace)
-            if original is env['peer']: clone.enforce_y = False
+        def lose_state(original, code, namespace, state, shell):
+            clone = copy_function(original, code, namespace, state, shell)
+            clone.__defaults__ = (-1,)
             return clone
         try:
             g._copy_function = lose_state
             report = g.run(suite, memory=memory)
         finally: g._copy_function = copy_function
         assert report['status'] == 'FAIL' and not report['rows']
-        assert any(not c['identical'] for c in report['original_baseline_controls'])
+        assert [c['case'] for c in report['original_baseline_controls']] == ['valid', 'x', 'last-y']
+        assert [c['identical'] for c in report['original_baseline_controls']] == [True, True, False]
         return report, True
 
     if trap['kind'] == 'round9_physical_complex':
@@ -1838,3 +1850,232 @@ def round9_probe(g, trap, memory):
         else: raise AssertionError('unsupported constant fingerprint accepted')
         return {'physical_nan_variants': 4, 'recursive_wrappers': 3, 'unsupported_refused': True}, True
     raise ValueError('unknown round9 trap ' + trap['kind'])
+
+
+def round10_probe(g, trap, memory):
+    """Cycle-10 exact sources plus finite-interface and graph-copy contracts."""
+    import ast
+    import asyncio
+    import copy
+    import inspect
+    import types
+    plain = 'def check(v):\n    if v["x"] < 0:\n        raise ValueError("bad")\n    if v["y"] < 0:\n        raise ValueError("bad")\n    return True\n'
+    inputs = trap.get('inputs', [{'x': 0, 'y': 0}, {'x': -1, 'y': 0}, {'x': 0, 'y': -1}])
+    def compile_env(source):
+        ns = {}; exec(compile(source, '<round10-original>', 'exec', optimize=0, dont_inherit=True), ns)
+        return ns
+    def outcome(fn, value):
+        try:
+            result = fn(copy.deepcopy(value))
+            if inspect.isasyncgen(result):
+                async def consume(): return [x async for x in result]
+                result = asyncio.run(consume()) == [True]
+            elif inspect.isawaitable(result): result = asyncio.run(result)
+            elif inspect.isgenerator(result): result = list(result) == [True]
+        except (ValueError, AssertionError) as exc: return g.Outcome.refuse(str(exc))
+        return g.Outcome.accept() if result is True else g.Outcome.refuse('bad')
+    def vector(fn): return [outcome(fn, v).accepted for v in inputs]
+    def target(backend, function='check'):
+        return next(c for c in backend.candidates() if c['function'] == function and c['expression'] == "v['x'] < 0")
+    def register(backend, function='check'):
+        return backend.register(target(backend, function), 'bad', g.Invariant('/x', 'nonnegative'))
+    def must_refuse(source, ns=None, function='check'):
+        env = compile_env(source) if ns is None else ns
+        backend = g.AstGuards('allow-list', source, env)
+        candidates = [c for c in backend.candidates() if c['function'] == function]
+        assert candidates and all(c['action'] == 'unsupported' and not c['cut'] for c in candidates), candidates
+        try: register(backend, function)
+        except g.IsolationError as exc: return {'refused': str(exc), 'reasons': backend.subset_reasons}
+        raise AssertionError('outside-interface registration accepted')
+
+    if trap['kind'] == 'round10_review_probe':
+        source, label = trap['source'], trap['label']
+        env = compile_env(source)
+        if label in ('attrgetter-code', 'importlib-getattr-code', 'importlib-frame-observer', 'property-frame-observer'):
+            env['EXPECTED'] = env['check'].__code__.co_code
+        if label == 'operator-is-function': env['ORIGINAL'] = env['check']
+        if label == 'full-function-state':
+            fn = env['check']; fn.__defaults__ = (0,); fn.__kwdefaults__ = {'unused': 42}
+            fn.flag = {'nested': [1, 2]}; fn.__qualname__ = 'custom.check'; fn.__module__ = 'custom_module'
+            fn.__doc__ = 'runtime doc'; fn.__name__ = 'runtime_check'; fn.__annotations__['extra'] = str
+            fn.__type_params__ = ('RuntimeT',); env['peer'].flag = True
+        if label.startswith('recursion-'):
+            owner = types.ModuleType('round10-self'); owner.__dict__.update(env)
+            # Recompile to bind functions to the actual module namespace.
+            exec(compile(source, '<round10-original>', 'exec', optimize=0, dont_inherit=True), owner.__dict__)
+            env = owner.__dict__; env['SELF'] = owner
+        backend = None
+        must_cut = label in ('global-alias-state', 'default-global-shared-state', 'full-function-state',
+                            'future-simple-annotations', 'generator', 'ordinary-sibling', 'module-dict-state')
+        try:
+            backend = g.AstGuards(trap['id'], source, env)
+            if label == 'mutable-closure-cell-after-construction': env['peer'].__closure__[0].cell_contents.append(1)
+            gid = register(backend)
+            uncut, cut = backend.clone(frozenset()), backend.clone(frozenset({gid}))
+            aliases = {}
+            if 'A' in env:
+                aliases['global'] = env['A'] is env['B'] and uncut.A is uncut.B and cut.A is cut.B
+            if 'STATE' in env:
+                aliases['default_global'] = all(ns['STATE'] is ns['check'].__defaults__[0] for ns in (env, uncut.__dict__, cut.__dict__))
+            assert all(aliases.values()), aliases
+            dispositions = {c['id']: g.Classification(c['id'], 'selector', 'unconditional successful return') for c in backend.candidates() if c['expression'] == 'True' and c.get('predicate_count') == 0}
+            suite = g.Suite(trap['id'], lambda v, state: outcome(state.modules[backend.name].check, v),
+                            [g.Control('valid', inputs[0], 'synthetic')],
+                            [g.Negative('x', inputs[1], gid, 'bad', 'valid', 'only /x')], modules=[backend], code_dispositions=dispositions)
+            report = g.run(suite, memory=memory)
+            assert report['original_baseline_equality'] == {'expected': 2, 'checked': 2, 'identical': True}
+            original_vector, uncut_vector, cut_vector = vector(env['check']), vector(uncut.check), vector(cut.check)
+            assert original_vector == uncut_vector == [True, False, False]
+            assert cut_vector == [True, True, False], (label, cut_vector)
+            return {'vectors': [original_vector, uncut_vector, cut_vector], 'aliases': aliases, 'report': report}, True
+        except g.IsolationError as exc:
+            assert not must_cut, (label, str(exc))
+            if backend is not None:
+                assert backend.subset_reasons.get('check') or 'changed' in str(exc) or 'annotation' in str(exc)
+            return {'refused': str(exc)}, True
+
+    if trap['kind'] == 'round10_allow_list':
+        rows, positives = [], []
+        expressions = [
+            ('getattr(v, "x")', ''), ('vars(v)', ''), ('operator.attrgetter("__code__")(check)', 'import operator\n'),
+            ('importlib.import_module("builtins").getattr(check, "__code__")', 'import importlib\n'),
+            ('v.get', ''), ('check.__call__', ''), ('len', ''), ('check', ''),
+            ('[check]', ''), ('v["callback"](v)', ''), ('unknown(v)', ''),
+            ('str.format("{0.__code__}", check)', ''), ('re.fullmatch(PATTERN, "a")', 'import re\nPATTERN="a"\n'),
+            ('re.compile(PATTERN).fullmatch("a")', 'import re\nPATTERN="a"\n'),
+        ]
+        for expression, prefix in expressions:
+            source = prefix + plain.replace('    return True', '    unused = ' + expression + '\n    return True')
+            rows.append(must_refuse(source))
+            # Every caller, including aliases and two hops, must be unclassified.
+            source = source.replace('def check(v):', 'def peer(v):').replace('check.__call__', 'peer.__call__')
+            source += '\ndef middle(v):\n    return peer(v)\n\ndef check(v):\n    if v["x"] < 0:\n        raise ValueError("bad")\n    return middle(v)\n'
+            rows.append(must_refuse(source))
+        for statement in ('import math', 'from re import fullmatch', 'callback = len'):
+            rows.append(must_refuse(plain.replace('    return True', '    '+statement+'\n    return True')))
+        # Declaring an external function as a predicate is no bypass.
+        source = plain.replace('    return True', '    require(True, "bad")\n    return True')
+        env = compile_env(source); env['require'] = lambda ok, code: None
+        rows.append(must_refuse(source, env))
+        allowed = [
+            'isinstance(v, dict)', 'type(v) is dict', 'len(v) > 0',
+            'int("1") == 1', 'str(1) == "1"', 'bool(v)', 'bytes("a", "utf8") == b"a"',
+            'set(v) == {"x", "y"}', 'frozenset(v) == frozenset(("x", "y"))',
+            'tuple([1]) == (1,)', 'list((1,)) == [1]', 'dict(v) == v',
+            'all(x >= 0 for x in v.values())', 'any(x >= 0 for x in v.values())',
+            'v.get("x", 0) == 0', 'list(v.keys()) == ["x", "y"]', 'len(list(v.items())) == 2',
+            '"abc".startswith("a")', '"abc".endswith("c")', '"a".encode().decode() == "a"',
+            '"a,b".split(",") == ["a", "b"]', '(1, 2).count(1) == 1',
+            're.fullmatch("a", "a") is not None', 're.match("a", "a") is not None',
+            're.compile("a").fullmatch("a") is not None',
+        ]
+        for expression in allowed:
+            source = 'import re\n' + plain.replace('    return True', '    unused = '+expression+'\n    return True')
+            env = compile_env(source); backend = g.AstGuards('positive/'+expression, source, env); gid = register(backend)
+            assert vector(backend.clone(frozenset()).check) == [True, False, False]
+            assert vector(backend.clone(frozenset({gid})).check) == [True, True, False]
+            positives.append(expression)
+        for key in ('__name__', '__package__', '__doc__'):
+            source = plain.replace('if v["y"] < 0:', 'if v["y"] < 0 and ' + key + ' == EXPECTED:')
+            env = compile_env(source); env['EXPECTED'] = eval(key, env)
+            assert key not in env
+            backend = g.AstGuards('builtin-fallback/'+key, source, env); gid = register(backend)
+            assert vector(env['check']) == vector(backend.clone(frozenset()).check) == [True, False, False]
+            assert vector(backend.clone(frozenset({gid})).check) == [True, True, False]
+            positives.append('builtin fallback: '+key)
+        return {'refusals': rows, 'positive_controls': positives}, True
+
+    if trap['kind'] == 'round10_state_graph':
+        source = 'FRESH={"items":[]}\nA={"y": 0}\nB=A\n\ndef check(v, state=A, *, keyword=A):\n    if v["x"] < 0:\n        raise ValueError("bad")\n    state["y"]=v["y"]\n    bad=B["y"] < 0\n    keyword["y"]=0\n    if bad:\n        raise ValueError("bad")\n    return True\n'
+        env = compile_env(source); fn = env['check']; fn.shared = env['A']; env['ATTRIBUTES'] = fn.__dict__
+        env['A']['cycle'] = env['A']
+        # Add explicit reads without observing a function object.
+        source = source.replace('    state["y"]', '    unused = ATTRIBUTES.get("shared")\n    unused = FRESH\n    state["y"]', 1)
+        replacement = compile_env(source)['check']; fn.__code__ = replacement.__code__
+        backend = g.AstGuards('graph', source, env); gid = register(backend)
+        deepcopy = g.copy.deepcopy; passes = []
+        def counted(value, memo=None):
+            if type(value) is dict and value.keys() == {'globals', 'functions'}:
+                passes.append(True)
+            return deepcopy(value, memo)
+        try:
+            g.copy.deepcopy = counted
+            clones = [backend.clone(cuts) for cuts in (frozenset(), frozenset({gid}))]
+        finally: g.copy.deepcopy = deepcopy
+        assert len(passes) == 2
+        for clone in clones:
+            f = clone.check
+            assert clone.A is clone.B is f.__defaults__[0] is f.__kwdefaults__['keyword'] is f.shared
+            assert clone.ATTRIBUTES is f.__dict__ and clone.A['cycle'] is clone.A
+            assert clone.A is env['A']  # required original default identity port
+            assert f.__defaults__ is fn.__defaults__ and f.__kwdefaults__ is fn.__kwdefaults__
+            assert clone.FRESH is not env['FRESH']
+        assert clones[0].A is clones[1].A
+        assert clones[0].FRESH is not clones[1].FRESH
+        assert vector(env['check']) == vector(clones[0].check) == [True, False, False]
+        assert vector(clones[1].check) == [True, True, False]
+        # Function aliases are memoized before copying, and all receive a cut.
+        env['alias'] = env['check']; alias_backend = g.AstGuards('function-alias', source, env); alias_gid = register(alias_backend)
+        alias_clone = alias_backend.clone(frozenset({alias_gid}))
+        assert alias_clone.alias is alias_clone.check
+        # Closures are outside automatic registration, but an uncut decorated
+        # function must still receive the very same coherent copying policy.
+        closure_source = 'STATE={"y":0}\n\ndef bind(fn):\n    state=STATE\n    def run(v):\n        return state["y"] == 0\n    return run\n\n@bind\ndef check(v):\n    if v["x"] < 0:\n        raise ValueError("bad")\n    return True\n'
+        closure_env = compile_env(closure_source)
+        closure_backend = g.AstGuards('closure-graph', closure_source, closure_env)
+        closure_clone = closure_backend.clone(frozenset())
+        assert closure_clone.check.__closure__[0].cell_contents is closure_clone.STATE
+        assert closure_clone.STATE is closure_env['STATE']
+        assert closure_clone.check.__closure__ is closure_env['check'].__closure__
+        try: register(closure_backend)
+        except g.IsolationError: pass
+        else: raise AssertionError('decorated closure received automatic credit')
+        mutable_source = 'COUNTER=[]\n\n' + plain.replace('    return True', '    COUNTER.append(1)\n    return True')
+        mutable_env = compile_env(mutable_source)
+        mutable_backend = g.AstGuards('live-global', mutable_source, mutable_env); mutable_gid = register(mutable_backend)
+        assert mutable_env['check'](inputs[0]) is True
+        for cuts in (frozenset(), frozenset({mutable_gid})):
+            try: mutable_backend.clone(cuts)
+            except g.IsolationError as exc: assert 'global state changed' in str(exc)
+            else: raise AssertionError('global mutation changed a later clone context')
+        return {'live_global_mutation_refused': True, 'graph_deepcopies': len(passes), 'global_default_keyword_attribute_cycle_aliases': True,
+                'unanchored_graphs_independent': True, 'required_identity_ports_preserved': True, 'function_aliases': True, 'closure_global_alias': True}, True
+
+    if trap['kind'] == 'round10_uncopyable':
+        hooks, rows = [], []
+        class Hostile:
+            def __deepcopy__(self, memo):
+                hooks.append(True)
+                raise RuntimeError('must never run')
+        for slot in ('global', 'default', 'keyword', 'attribute'):
+            source = plain.replace('    return True', '    unused = STATE\n    return True') if slot == 'global' else plain
+            env = compile_env(source)
+            if slot == 'global': env['STATE'] = Hostile()
+            elif slot == 'default': env['check'].__defaults__ = (Hostile(),)
+            elif slot == 'keyword': env['check'].__kwdefaults__ = {'state': Hostile()}
+            else: env['check'].state = Hostile()
+            try: rows.append(must_refuse(source, env))
+            except g.IsolationError as exc: rows.append({'construction_refused': str(exc)})
+        assert not hooks
+        return {'slots': rows, 'deepcopy_hooks_invoked': len(hooks)}, True
+
+    if trap['kind'] == 'round10_all_fixtures':
+        source = plain.replace('def check(v):', 'def check(v, floor=0):').replace('v["y"] < 0', 'v["y"] < floor')
+        env = compile_env(source); backend = g.AstGuards('all-fixtures', source, env); gid = register(backend)
+        controls = [g.Control('c'+str(i), {'x': 0, 'y': i}, 'synthetic') for i in range(5)]
+        negatives = [g.Negative('n'+str(i), {'x': -1, 'y': 0}, gid, 'bad', 'c0', 'only /x') for i in range(5)]
+        negatives += [g.Negative('last-y', inputs[2], gid, 'bad', 'c0', 'only /y')]
+        suite = g.Suite(trap['id'], lambda v, state: outcome(state.modules[backend.name].check, v), controls, negatives, modules=[backend])
+        copy_function = g._copy_function
+        def changed(original, code, namespace, state, shell):
+            fn = copy_function(original, code, namespace, state, shell); fn.__defaults__ = (-1,); return fn
+        try:
+            g._copy_function = changed
+            report = g.run(suite, memory=memory)
+        finally: g._copy_function = copy_function
+        assert report['original_baseline_equality'] == {'expected': 11, 'checked': 11, 'identical': False}
+        assert [r['case'] for r in report['original_baseline_controls']] == [c.id for c in controls] + [n.id for n in negatives]
+        assert report['original_baseline_controls'][-1]['identical'] is False
+        assert report['status'] == 'FAIL' and not report['rows']
+        return report, True
+    raise AssertionError('unknown round10 trap: ' + trap['kind'])

@@ -3076,7 +3076,7 @@
     {
       "id": "C6-unknown-paths",
       "kind": "round6_unknown_paths",
-      "expected": "unknown preceding exits make every later refusal unclassified"
+      "expected": "every unknown path refuses through composition or the positive interface before registration"
     },
     {
       "id": "C6-exit-coverage",
@@ -3913,7 +3913,7 @@
         }
       ],
       "review_source": "design-probes.json",
-      "expected": "exact cycle-9 probe refuses or preserves the held-out peer under a verified per-atom cut"
+      "expected": "coherent function aliases receive the same narrow cut and credit (formerly safely masked)"
     },
     {
       "id": "C9-tuple-int-versus-bool-single",
@@ -4366,7 +4366,7 @@
     {
       "id": "C9-full-state-locality",
       "kind": "round9_full_state_locality",
-      "expected": "cut and uncut functions preserve runtime state, original constants, peer instructions and line tables"
+      "expected": "both clone modes retain original defaults, closure and attribute-value identities with complete code locality"
     },
     {
       "id": "C9-source-subset",
@@ -4376,12 +4376,797 @@
     {
       "id": "C9-original-baseline-gate",
       "kind": "round9_original_baseline_gate",
-      "expected": "an injected state-losing uncut clone is rejected before any credit"
+      "expected": "permitted default defect in an uncut clone is caught on the last negative before any proof row"
     },
     {
       "id": "C9-physical-complex",
       "kind": "round9_physical_complex",
       "expected": "recursive float and complex fingerprints preserve sign and NaN payloads and reject unknown constants"
+    },
+    {
+      "id": "C10-attrgetter-code",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "attrgetter-code",
+      "source": "import operator\nimport importlib\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and operator.attrgetter(\"__code__\")(check.__call__.__self__).co_code == EXPECTED:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#attrgetter-code"
+    },
+    {
+      "id": "C10-importlib-getattr-code",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "importlib-getattr-code",
+      "source": "import operator\nimport importlib\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and importlib.import_module(\"builtins\").getattr(check.__call__.__self__, \"__code__\").co_code == EXPECTED:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#importlib-getattr-code"
+    },
+    {
+      "id": "C10-operator-is-function",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "operator-is-function",
+      "source": "import operator\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and operator.is_(check.__call__.__self__, ORIGINAL):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#operator-is-function"
+    },
+    {
+      "id": "C10-property-frame-observer",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "property-frame-observer",
+      "source": "class Switch:\n    @property\n    def enabled(self):\n        import sys\n        return sys._getframe(1).f_code.co_code == EXPECTED\n\nSWITCH=Switch()\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and SWITCH.enabled:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#property-frame-observer"
+    },
+    {
+      "id": "C10-descriptor-stateful-sibling",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "descriptor-stateful-sibling",
+      "source": "class Peer:\n    def __call__(self, v):\n        if v[\"y\"] < 0:\n            raise ValueError(\"bad\")\n        return True\n\nclass Holder:\n    peer = Peer()\n\nHOLDER = Holder()\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return HOLDER.peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#descriptor-stateful-sibling"
+    },
+    {
+      "id": "C10-global-alias-state",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "global-alias-state",
+      "source": "A={\"y\":0}\nB=A\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    A[\"y\"] = v[\"y\"]\n    if B[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#global-alias-state"
+    },
+    {
+      "id": "C10-global-alias-identity",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "global-alias-identity",
+      "source": "import operator\nA=[0]\nB=A\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and operator.is_(A, B):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#global-alias-identity"
+    },
+    {
+      "id": "C10-default-global-shared-state",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "default-global-shared-state",
+      "source": "STATE={\"y\":0}\n\ndef check(v, state=STATE):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    state[\"y\"]=v[\"y\"]\n    bad = STATE[\"y\"] < 0\n    state[\"y\"]=0\n    if bad:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#default-global-shared-state"
+    },
+    {
+      "id": "C10-importlib-frame-observer",
+      "kind": "round10_review_probe",
+      "category": "attack",
+      "label": "importlib-frame-observer",
+      "source": "import operator\nimport importlib\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and operator.attrgetter(\"f_code.co_code\")(importlib.import_module(\"builtins\").getattr(importlib.import_module(\"sys\"), \"_getframe\")()) == EXPECTED:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/attack-probes.json#importlib-frame-observer"
+    },
+    {
+      "id": "C10-full-function-state",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "full-function-state",
+      "source": "def peer(v, floor=0) -> bool:\n    if v[\"y\"] < floor:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v: dict, floor=-1, *, unused=1) -> bool:\n    \"doc\"\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < floor:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#full-function-state"
+    },
+    {
+      "id": "C10-future-simple-annotations",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "future-simple-annotations",
+      "source": "from __future__ import annotations\ndef check(v: dict) -> bool:\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#future-simple-annotations"
+    },
+    {
+      "id": "C10-future-annotations",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "future-annotations",
+      "source": "from __future__ import annotations\ndef check(v: dict[str, int]) -> bool:\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#future-annotations"
+    },
+    {
+      "id": "C10-generator",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "generator",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    yield True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#generator"
+    },
+    {
+      "id": "C10-async",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "async",
+      "source": "async def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#async"
+    },
+    {
+      "id": "C10-async-generator",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "async-generator",
+      "source": "async def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    yield True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#async-generator"
+    },
+    {
+      "id": "C10-mutable-closure-dependency",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "mutable-closure-dependency",
+      "source": "def make_peer():\n    state=[0]\n    def peer(v):\n        if v[\"y\"] < state[0]:\n            raise ValueError(\"bad\")\n        return True\n    return peer\n\npeer=make_peer()\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#mutable-closure-dependency"
+    },
+    {
+      "id": "C10-mutable-closure-cell-after-construction",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "mutable-closure-cell-after-construction",
+      "source": "def make_peer():\n    state=[0]\n    def peer(v):\n        if v[\"y\"] < state[0]:\n            raise ValueError(\"bad\")\n        return True\n    return peer\n\npeer=make_peer()\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#mutable-closure-cell-after-construction"
+    },
+    {
+      "id": "C10-partial-sibling",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "partial-sibling",
+      "source": "import functools\n\ndef refuse_y(floor,v):\n    if v[\"y\"] < floor:\n        raise ValueError(\"bad\")\n    return True\n\npeer=functools.partial(refuse_y,0)\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#partial-sibling"
+    },
+    {
+      "id": "C10-wraps-sibling",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "wraps-sibling",
+      "source": "import functools\n\ndef wrapper(fn):\n    @functools.wraps(fn)\n    def run(v):\n        return fn(v)\n    return run\n\n@wrapper\ndef peer(v):\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#wraps-sibling"
+    },
+    {
+      "id": "C10-ordinary-sibling",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "ordinary-sibling",
+      "source": "def peer(v):\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    return True\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    return peer(v)\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#ordinary-sibling"
+    },
+    {
+      "id": "C10-class-property-state",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "class-property-state",
+      "source": "class Limits:\n    floor=0\n    @property\n    def threshold(self):\n        return self.floor\n\nLIMITS=Limits()\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < LIMITS.threshold:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#class-property-state"
+    },
+    {
+      "id": "C10-custom-descriptor-state",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "custom-descriptor-state",
+      "source": "class Descriptor:\n    def __get__(self, instance, owner):\n        return 0\n\nclass Limits:\n    floor=Descriptor()\n\nLIMITS=Limits()\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < LIMITS.floor:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#custom-descriptor-state"
+    },
+    {
+      "id": "C10-module-dict-state",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "module-dict-state",
+      "source": "LIMITS={\"floor\":0}\n\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < LIMITS[\"floor\"]:\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#module-dict-state"
+    },
+    {
+      "id": "C10-local-import",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "local-import",
+      "source": "def check(v):\n    import math\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < math.floor(0.1):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#local-import"
+    },
+    {
+      "id": "C10-local-from-import",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "local-from-import",
+      "source": "def check(v):\n    from math import floor\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < floor(0.1):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#local-from-import"
+    },
+    {
+      "id": "C10-recursion-self-module",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "recursion-self-module",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"depth\"] > 0:\n        return SELF.check(dict(v, depth=v[\"depth\"]-1))\n    return True\n",
+      "inputs": [
+        {
+          "depth": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "depth": 1,
+          "x": -1,
+          "y": 0
+        },
+        {
+          "depth": 1,
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#recursion-self-module"
+    },
+    {
+      "id": "C10-recursion-importlib-module-name",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "recursion-importlib-module-name",
+      "source": "import importlib\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"depth\"] > 0:\n        return importlib.import_module(__name__).check(dict(v, depth=v[\"depth\"]-1))\n    return True\n",
+      "inputs": [
+        {
+          "depth": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "depth": 1,
+          "x": -1,
+          "y": 0
+        },
+        {
+          "depth": 1,
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#recursion-importlib-module-name"
+    },
+    {
+      "id": "C10-direct-getattr",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "direct-getattr",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and bool(getattr(check, \"__code__\").co_code):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#direct-getattr"
+    },
+    {
+      "id": "C10-type-function-dict",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "type-function-dict",
+      "source": "def check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and bool(type(check).__dict__):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#type-function-dict"
+    },
+    {
+      "id": "C10-direct-attrgetter",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "direct-attrgetter",
+      "source": "import operator\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and bool(operator.attrgetter(\"__code__\")(check).co_code):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#direct-attrgetter"
+    },
+    {
+      "id": "C10-sys-modules-name",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "sys-modules-name",
+      "source": "import sys\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and bool(sys.modules[__name__]):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#sys-modules-name"
+    },
+    {
+      "id": "C10-local-reflective-import",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "local-reflective-import",
+      "source": "def check(v):\n    import sys\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and bool(sys.modules[__name__]):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#local-reflective-import"
+    },
+    {
+      "id": "C10-module-object-is",
+      "kind": "round10_review_probe",
+      "category": "fidelity",
+      "label": "module-object-is",
+      "source": "MARKER=(1000,)\ndef check(v):\n    if v[\"x\"] < 0:\n        raise ValueError(\"bad\")\n    if v[\"y\"] < 0 and bool((1000,) is MARKER):\n        raise ValueError(\"bad\")\n    return True\n",
+      "inputs": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -1,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -1
+        }
+      ],
+      "expected": "finite-interface refusal or original/uncut equality and a peer-preserving x cut",
+      "source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GUARDTOOL-sol/cycle10/fidelity-probes.json#module-object-is"
+    },
+    {
+      "id": "C10-allow-list-closure",
+      "kind": "round10_allow_list",
+      "expected": "every unsupported direct/indirect call and attribute blocks all transitive callers; named positive controls stay narrow"
+    },
+    {
+      "id": "C10-coherent-state-graph",
+      "kind": "round10_state_graph",
+      "expected": "one memo preserves all global/default/keyword/cell/attribute aliases, cycles and function aliases"
+    },
+    {
+      "id": "C10-uncopyable-state",
+      "kind": "round10_uncopyable",
+      "expected": "opaque and hostile deepcopy state refuses before registration without invoking hooks"
+    },
+    {
+      "id": "C10-all-fixtures-equality",
+      "kind": "round10_all_fixtures",
+      "expected": "all controls and negatives compared, including late differences; no proof row on any difference"
     }
   ]
 }

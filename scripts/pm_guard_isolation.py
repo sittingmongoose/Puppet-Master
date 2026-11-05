@@ -19,6 +19,7 @@ import json
 import math
 from pathlib import Path
 import resource
+import re
 import struct
 import sys
 import time
@@ -1082,10 +1083,13 @@ def _function_state(fn, seen=None):
         tuple((id(cell), _state_token(cell.cell_contents, seen)) for cell in fn.__closure__ or ()))
 
 
-def _copy_function(original, code, namespace):
-    clone = types.FunctionType(code, namespace, original.__name__, original.__defaults__, original.__closure__)
-    clone.__kwdefaults__ = original.__kwdefaults__
-    clone.__dict__.update(original.__dict__)
+def _copy_function(original, code, namespace, state, clone):
+    """Install the one-memo state graph in an already memoized function shell."""
+    clone.__defaults__ = state["defaults"]
+    clone.__kwdefaults__ = state["kwdefaults"]
+    clone.__dict__ = state["attributes"]
+    for cell, value in zip(clone.__closure__ or (), state["closure"]):
+        cell.cell_contents = value
     clone.__qualname__, clone.__module__, clone.__doc__ = original.__qualname__, original.__module__, original.__doc__
     annotate = getattr(original, "__annotate__", None)
     if annotate is not None:
@@ -1096,12 +1100,51 @@ def _copy_function(original, code, namespace):
         # clone cache, then copy its contents without invoking either setter.
         annotations = clone.__annotations__
         annotations.clear()
-        annotations.update(original.__annotations__)
+        annotations.update(state["annotations"])
     else:
-        clone.__annotations__ = original.__annotations__
+        clone.__annotations__ = state["annotations"]
     if hasattr(original, "__type_params__"):
-        clone.__type_params__ = original.__type_params__
+        clone.__type_params__ = state["type_params"]
     return clone
+
+
+# Positive checker interface. Adding a name here is a reviewed adapter change,
+# never a declaration supplied by an untrusted checker (including call_predicates).
+CHECKER_TYPES = (type(None), bool, int, float, complex, str, bytes, list, tuple, dict, set, frozenset)
+CHECKER_BUILTINS = {name: getattr(builtins, name) for name in (
+    "isinstance", "type", "len", "int", "str", "bool", "bytes", "set", "frozenset", "tuple", "list", "dict", "all", "any")}
+CHECKER_RE = {name: getattr(re, name) for name in ("fullmatch", "match", "compile")}
+CHECKER_EXCEPTIONS = {name: getattr(builtins, name) for name in (
+    "ValueError", "AssertionError", "TypeError", "RuntimeError", "KeyError", "Exception")}
+CHECKER_METHODS = {
+    str: frozenset(("startswith", "endswith", "encode", "split", "rsplit", "strip", "lstrip", "rstrip", "lower", "upper", "replace", "join", "isdigit", "isdecimal", "isascii", "count", "find")),
+    bytes: frozenset(("startswith", "endswith", "decode", "split", "rsplit", "strip", "lstrip", "rstrip", "lower", "upper", "replace", "join", "count", "find")),
+    dict: frozenset(("get", "keys", "items", "values", "copy", "setdefault", "update", "pop", "clear")),
+    list: frozenset(("append", "extend", "insert", "pop", "remove", "clear", "copy", "count", "index", "reverse")),
+    set: frozenset(("add", "update", "discard", "remove", "pop", "clear", "copy", "union", "intersection", "difference", "issubset", "issuperset", "isdisjoint")),
+    tuple: frozenset(("count", "index")),
+}
+
+
+def _plain_checker_state(value, functions=(), seen=None):
+    """Certify exact builtin graphs before deepcopy can invoke any user hooks."""
+    seen = set() if seen is None else seen
+    if id(value) in seen:
+        return
+    seen.add(id(value))
+    kind = type(value)
+    if kind in (dict, list, tuple, set, frozenset):
+        for item in (list(value.keys()) + list(value.values()) if kind is dict else value):
+            _plain_checker_state(item, functions, seen)
+    elif kind is slice:
+        for item in (value.start, value.stop, value.step):
+            _plain_checker_state(item, functions, seen)
+    elif kind in (type(None), bool, int, float, complex, str, bytes) or value is Ellipsis:
+        return
+    elif value is object or any(value is fn for fn in functions) or any(value is cls for cls in CHECKER_TYPES):
+        return
+    else:
+        raise IsolationError("checker interface requires exact builtin state; unsupported " + kind.__name__)
 
 
 def _future_flags(tree):
@@ -1184,6 +1227,30 @@ class AstGuards:
         # argument is cut; the helper, its code and other arguments remain.
         self.call_predicates = {"require": 0} if call_predicates is None else dict(call_predicates)
         self.subset_reasons = self._source_subset()
+        self.global_snapshot = self._reachable_globals_state()
+
+    def _reachable_globals_state(self):
+        """Do not let original execution change the context of later clones."""
+        builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
+        if isinstance(builtin_namespace, types.ModuleType):
+            builtin_namespace = vars(builtin_namespace)
+        result = {}
+        for key in self.read_globals:
+            origin = self.namespace if key in self.namespace else builtin_namespace
+            if key not in origin:
+                result[key] = ("absent",)
+                continue
+            value = origin[key]
+            if isinstance(value, (types.FunctionType, types.ModuleType)) or value is Outcome:
+                token = ("service", id(value))
+            else:
+                try:
+                    token = _state_token(value)
+                except IsolationError:
+                    # Opaque state already makes its function unclassified.
+                    token = ("opaque", id(value), type(value))
+            result[key] = (origin is self.namespace, token)
+        return result
 
     def _verify_builtins(self, fn):
         declared = self.namespace.get("__builtins__", builtins.__dict__)
@@ -1223,62 +1290,151 @@ class AstGuards:
             raise IsolationError("annotation evaluator is not the verified pure source compilation: " + name)
 
     def _source_subset(self):
-        """Refuse observations of code, frames, identities, or opaque callable state.
+        """Positive call/attribute/value interface, closed over direct lane calls.
 
-        This barrier applies to every candidate in the observing function and
-        transitively to its callers, rather than just the selected refusal.
-        External predicate helpers remain an explicit adapter trust boundary.
+        All dynamic callees and function-object values are outside this grammar.
+        Attribute names alone never authorize a receiver: it must be builtin
+        data, the verified re module, or the two named Outcome constructors.
         """
-        forbidden = {"__code__", "__defaults__", "__kwdefaults__", "__globals__", "__dict__", "__closure__",
-                     "__builtins__", "__getattribute__", "__traceback__", "_getframe", "currentframe", "f_code", "f_lineno",
-                     "f_locals", "f_globals", "f_back", "tb_frame", "tb_lineno", "gi_frame", "cr_frame"}
-        reflective = {"id", "globals", "locals", "vars", "getattr", "setattr", "delattr", "eval", "exec", "compile"}
         reasons, dependencies = {}, {}
-        parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
+        builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
+        if isinstance(builtin_namespace, types.ModuleType):
+            builtin_namespace = vars(builtin_namespace)
+        allowed_values = (*CHECKER_TYPES, *CHECKER_BUILTINS.values(), *CHECKER_EXCEPTIONS.values(), Outcome, re)
+        # re's public bindings are checked against import-time identities too.
+        canonical_re = CHECKER_RE
+        self.read_globals = set()
         for name, fn in self.functions.items():
-            reasons[name] = "decorated function requires an explicit faithful adapter" if fn.decorator_list else ""
+            reasons[name] = "decorated function requires a reviewed adapter seam" if fn.decorator_list else ""
+            if isinstance(fn, ast.AsyncFunctionDef):
+                reasons[name] = "checker allow-list: async functions require a reviewed adapter seam"
             dependencies[name] = set()
+            parents = {child: parent for parent in ast.walk(fn) for child in ast.iter_child_nodes(parent)}
+            arguments = [*fn.args.posonlyargs, *fn.args.args, *fn.args.kwonlyargs]
+            local_names = {a.arg for a in arguments}
+            local_names.update(a.arg for a in (fn.args.vararg, fn.args.kwarg) if a)
+            local_names.update(n.id for n in ast.walk(fn) if isinstance(n, ast.Name) and isinstance(n.ctx, (ast.Store, ast.Del)))
+            def bound(key):
+                return None if key in local_names else self.namespace.get(key, builtin_namespace.get(key))
+            def deny(message):
+                if not reasons[name]:
+                    reasons[name] = "checker allow-list: " + message
+            def lane(key):
+                value = bound(key)
+                return next((n for n, original in self.originals.items() if original is value), None)
+            def type_name(node):
+                return isinstance(node, ast.Name) and any(bound(node.id) is cls for cls in CHECKER_TYPES)
+            def re_call(node, methods):
+                if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Attribute):
+                    return False
+                attr = node.func
+                if not (isinstance(attr.value, ast.Name) and bound(attr.value.id) is re and attr.attr in methods):
+                    return False
+                if vars(re).get(attr.attr) is not canonical_re[attr.attr]:
+                    return False
+                return bool(node.args and isinstance(node.args[0], ast.Constant) and type(node.args[0].value) in (str, bytes)
+                            and not node.keywords and all(not isinstance(a, ast.Starred) for a in node.args))
+            def data_receiver(node):
+                # These expressions can produce only builtin data in this
+                # interface. Function/module/type values are never receivers.
+                if isinstance(node, ast.Name):
+                    if node.id in local_names:
+                        return True
+                    value = bound(node.id)
+                    try:
+                        _plain_checker_state(value)
+                        return not any(value is cls for cls in CHECKER_TYPES)
+                    except IsolationError:
+                        return False
+                if isinstance(node, (ast.Constant, ast.Subscript, ast.List, ast.Tuple, ast.Dict, ast.Set,
+                                     ast.ListComp, ast.SetComp, ast.DictComp, ast.BinOp, ast.IfExp)):
+                    return True
+                if isinstance(node, ast.Call):
+                    if isinstance(node.func, ast.Name):
+                        return node.func.id in CHECKER_BUILTINS and bound(node.func.id) is CHECKER_BUILTINS[node.func.id] and node.func.id != "type"
+                    return isinstance(node.func, ast.Attribute) and node.func.attr in set().union(*CHECKER_METHODS.values()) and data_receiver(node.func.value)
+                return False
             for node in ast.walk(fn):
-                if isinstance(node, (ast.Import, ast.ImportFrom)):
-                    modules = ([node.module] if isinstance(node, ast.ImportFrom) else [a.name for a in node.names])
-                    if any(m and m.split(".")[0] in ("inspect", "traceback", "sys", "builtins") for m in modules):
-                        reasons[name] = "unsupported reflective import"
-                if isinstance(node, ast.Attribute) and node.attr in forbidden:
-                    reasons[name] = "unsupported observation of function/code/frame state: " + node.attr
-                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-                    if node.id in reflective | {"inspect", "traceback", "__builtins__"}:
-                        reasons[name] = "unsupported reflection/identity access: " + node.id
-                    builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
-                    if isinstance(builtin_namespace, types.ModuleType):
-                        builtin_namespace = vars(builtin_namespace)
-                    bound = self.namespace.get(node.id, builtin_namespace.get(node.id))
-                    if isinstance(bound, types.ModuleType) and bound.__name__ in ("inspect", "traceback", "sys", "builtins"):
-                        reasons[name] = "unsupported reflective module: " + bound.__name__
-                    if node.id in self.functions:
-                        dependencies[name].add(node.id)
-                    elif isinstance(bound, types.FunctionType) and bound in self.originals.values():
-                        dependencies[name].update(n for n, f in self.originals.items() if f is bound)
-                    elif isinstance(bound, types.FunctionType) and bound.__module__ in ("inspect", "traceback"):
-                        reasons[name] = "unsupported reflective function alias: " + node.id
-                    elif isinstance(bound, types.FunctionType) and node.id not in self.call_predicates and node.id not in ("refuse", "reject", "fail"):
-                        reasons[name] = "external function source requires an explicit atomic adapter: " + node.id
-                    elif isinstance(bound, types.BuiltinFunctionType) and bound.__name__ in reflective | {"_getframe"}:
-                        reasons[name] = "unsupported reflective builtin alias: " + node.id
-                    elif callable(bound) and not isinstance(bound, (types.FunctionType, types.BuiltinFunctionType, type)):
-                        reasons[name] = "stateful callable requires a faithful adapter: " + node.id
-                    elif isinstance(bound, type) and bound is not Outcome and bound.__module__ != "builtins" and not issubclass(bound, BaseException):
-                        reasons[name] = "callable class source requires an explicit atomic adapter: " + node.id
-                    if isinstance(bound, types.FunctionType):
-                        parent = parents.get(node)
-                        if not ((isinstance(parent, ast.Call) and parent.func is node) or isinstance(parent, ast.Attribute)):
-                            reasons[name] = "function identity/escape observation requires an explicit adapter: " + node.id
+                parent = parents.get(node)
+                if isinstance(node, (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)) and node is not fn:
+                    deny("local imports, nested functions, classes and lambdas require a reviewed adapter seam")
+                if isinstance(node, (ast.Global, ast.Nonlocal)):
+                    deny("global/nonlocal rebinding requires a reviewed adapter seam")
+                if isinstance(node, ast.Call):
+                    if any(isinstance(a, ast.Starred) for a in node.args) or any(k.arg is None for k in node.keywords):
+                        deny("dynamic argument expansion requires a reviewed adapter seam")
+                    callee = node.func
+                    if isinstance(callee, ast.Name):
+                        peer = lane(callee.id)
+                        if peer is not None:
+                            dependencies[name].add(peer)
+                        elif callee.id in CHECKER_BUILTINS and bound(callee.id) is CHECKER_BUILTINS[callee.id]:
+                            if callee.id == "type":
+                                if not (len(node.args) == 1 and not node.keywords and isinstance(parent, ast.Compare)
+                                        and len(parent.ops) == 1 and isinstance(parent.ops[0], (ast.Is, ast.IsNot))
+                                        and any(type_name(n) for n in (parent.left, *parent.comparators))):
+                                    deny("type() is allowed only in an identity comparison with a listed type")
+                            if callee.id == "isinstance":
+                                types_arg = node.args[1] if len(node.args) == 2 else None
+                                if not (type_name(types_arg) or isinstance(types_arg, ast.Tuple) and all(type_name(n) for n in types_arg.elts)):
+                                    deny("isinstance requires literal listed types")
+                            if callee.id in ("all", "any") and not (len(node.args) == 1 and isinstance(node.args[0], (ast.GeneratorExp, ast.ListComp, ast.SetComp))):
+                                deny("all/any require a supported comprehension")
+                        elif any(bound(callee.id) is exc for exc in CHECKER_EXCEPTIONS.values()) and isinstance(parent, ast.Raise):
+                            pass
+                        else:
+                            deny("call outside the finite interface: " + callee.id)
+                    elif not isinstance(callee, ast.Attribute):
+                        deny("indirect call requires a reviewed adapter seam")
+                if isinstance(node, ast.Attribute):
+                    if not (isinstance(parent, ast.Call) and parent.func is node):
+                        deny("attribute values are outside the finite interface: " + node.attr)
+                    elif re_call(parent, canonical_re):
+                        pass
+                    elif node.attr == "fullmatch" and re_call(node.value, {"compile"}):
+                        pass
+                    elif isinstance(node.value, ast.Name) and bound(node.value.id) is Outcome and node.attr in ("accept", "refuse"):
+                        pass
+                    elif node.attr in set().union(*CHECKER_METHODS.values()) and data_receiver(node.value):
+                        pass
+                    else:
+                        deny("attribute/call receiver outside the finite interface: " + node.attr)
+                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id not in local_names:
+                    value = bound(node.id)
+                    self.read_globals.add(node.id)
+                    peer = lane(node.id)
+                    if peer is not None:
+                        dependencies[name].add(peer)
+                    if isinstance(value, (types.FunctionType, types.BuiltinFunctionType)):
+                        if not (isinstance(parent, ast.Call) and parent.func is node):
+                            deny("function objects cannot be used as values: " + node.id)
+                    elif not any(value is v for v in allowed_values):
+                        try:
+                            _plain_checker_state(value)
+                        except IsolationError as exc:
+                            deny(node.id + ": " + str(exc))
+                    if value is re or value is Outcome:
+                        if not (isinstance(parent, ast.Attribute) and parent.value is node):
+                            deny("module/class values require a reviewed adapter seam: " + node.id)
                 if isinstance(node, ast.Compare):
                     operands = [node.left, *node.comparators]
                     for i, op in enumerate(node.ops):
                         if isinstance(op, (ast.Is, ast.IsNot)) and not any(
                                 isinstance(x, ast.Constant) and (x.value is None or type(x.value) is bool)
                                 for x in operands[i:i + 2]):
-                            reasons[name] = "identity comparisons are supported only against None, True or False"
+                            if not (len(node.ops) == 1 and any(type_name(x) for x in operands)
+                                    and any(isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id == "type" for x in operands)):
+                                deny("identity comparison requires a singleton or type() is a listed type")
+            # Defaults, attributes and cell contents are part of the same data
+            # graph, even when source does not directly inspect their container.
+            original = self.originals.get(name)
+            if original is not None:
+                try:
+                    for value in (original.__defaults__, original.__kwdefaults__, original.__dict__,
+                                  *(c.cell_contents for c in original.__closure__ or ())):
+                        _plain_checker_state(value)
+                except IsolationError as exc:
+                    deny(str(exc))
         changed = True
         while changed:
             changed = False
@@ -1306,6 +1462,8 @@ class AstGuards:
                 raise IsolationError(f"{self.name}.{name}: verified original binding/code/function state changed before clone")
         if self._source_subset() != self.subset_reasons:
             raise IsolationError(f"{self.name}: supported source binding context changed before clone")
+        if self._reachable_globals_state() != self.global_snapshot:
+            raise IsolationError(f"{self.name}: verified reachable global state changed before clone")
 
     @staticmethod
     def _leaves(test, path=()):
@@ -1635,13 +1793,6 @@ class AstGuards:
         module = types.ModuleType(self.name)
         namespace = module.__dict__
         namespace.update(self.namespace)
-        for name, value in self.namespace.items():
-            if isinstance(value, (dict, list, tuple, set)) and name != "__builtins__":
-                try:
-                    evidence_value(value)
-                except (TypeError, ValueError, RecursionError):
-                    continue
-                namespace[name] = copy.deepcopy(value)
         selected = [self.sites[g] for g in cuts if g in self.sites]
         codes = {}
         for name in sorted({s.function for s in selected}):
@@ -1713,10 +1864,70 @@ class AstGuards:
                 return value
             proposed = proposed.replace(co_consts=tuple(reuse(v) for v in proposed.co_consts))
             codes[name] = self._local_cut(name, original, proposed, atoms)
-        # The same builder for cut and uncut siblings, with all supported state.
-        for name, fn in self.namespace.items():
-            if isinstance(fn, types.FunctionType) and fn.__globals__ is self.namespace:
-                namespace[name] = _copy_function(fn, codes.get(name, fn.__code__), namespace)
+        # Allocate shells before copying so all function aliases share the same
+        # memo entry, too. The selected cut changes only the shell's code.
+        memo, shells, states = {}, {}, {}
+        def retain_identity(value):
+            # FIX9's identity ports apply equally to cut and uncut functions.
+            # Seed their ENTIRE reachable data graph, so a copied global that
+            # aliases a default/cell/attribute value reaches that same object.
+            if id(value) in memo:
+                return
+            memo[id(value)] = value
+            if type(value) in (dict, list, tuple, set, frozenset):
+                for item in (list(value.keys()) + list(value.values()) if type(value) is dict else value):
+                    retain_identity(item)
+            elif type(value) is slice:
+                for item in (value.start, value.stop, value.step):
+                    retain_identity(item)
+        for fn in self.bound_functions.values():
+            if fn.__globals__ is not self.namespace:
+                continue
+            for value in (fn.__defaults__, fn.__kwdefaults__, fn.__annotations__,
+                          getattr(fn, "__type_params__", ()), *fn.__dict__.values(),
+                          *(c.cell_contents for c in fn.__closure__ or ())):
+                _plain_checker_state(value)
+                retain_identity(value)
+        codes_by_function = {id(self.originals[name]): code for name, code in codes.items()}
+        for name, fn in self.bound_functions.items():
+            if fn.__globals__ is not self.namespace:
+                continue
+            if id(fn) not in memo:
+                memo[id(fn)] = types.FunctionType(codes_by_function.get(id(fn), fn.__code__), namespace, fn.__name__, None, fn.__closure__)
+            shells[name] = memo[id(fn)]
+            states[name] = {"defaults": fn.__defaults__, "kwdefaults": fn.__kwdefaults__,
+                            "attributes": fn.__dict__, "annotations": fn.__annotations__,
+                            "type_params": getattr(fn, "__type_params__", ()),
+                            "closure": tuple(c.cell_contents for c in fn.__closure__ or ())}
+        # Static service bindings are not data and never go through deepcopy.
+        services = (object, *CHECKER_TYPES, *CHECKER_BUILTINS.values(), *CHECKER_EXCEPTIONS.values(), Outcome, re,
+                    *self.bound_functions.values())
+        globals_read = {}
+        builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
+        if isinstance(builtin_namespace, types.ModuleType):
+            builtin_namespace = vars(builtin_namespace)
+        for name in self.read_globals:
+            if name in self.namespace or name in builtin_namespace:
+                # ModuleType inserts metadata names even when the original
+                # resolved them through builtins. Preserve the actual lookup.
+                value = self.namespace[name] if name in self.namespace else builtin_namespace[name]
+                if any(value is service for service in services):
+                    memo.setdefault(id(value), value)
+                else:
+                    _plain_checker_state(value)
+                globals_read[name] = value
+            else:
+                namespace.pop(name, None)
+        graph = {"globals": globals_read, "functions": states}
+        _plain_checker_state(graph, services)
+        try:
+            copied = copy.deepcopy(graph, memo)
+        except Exception as exc:
+            raise IsolationError("reachable checker state cannot be copied faithfully: " + type(exc).__name__) from exc
+        namespace.update(copied["globals"])
+        for name, clone in shells.items():
+            fn = self.bound_functions[name]
+            namespace[name] = _copy_function(fn, codes.get(name, fn.__code__), namespace, copied["functions"][name], clone)
         return module
 
     def _local_cut(self, name, original, proposed, atoms):
@@ -2047,8 +2258,6 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None) -> dic
             same = actual == got
             report["original_baseline_controls"].append({"case": case.id, "original": actual,
                                                         "uncut": got, "identical": same})
-            if not same:
-                raise IsolationError("original and uncut baseline differ on case " + case.id)
         for c in controls.values():
             got = evaluate(c.value, baseline)
             compare_original(c, got)
@@ -2064,6 +2273,13 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None) -> dic
                 "changed_paths": typed_changes(controls[n.control].value, n.value), "input_sha256": digest(n.value), "outcome": got})
             if got != asdict(Outcome.refuse(n.code)):
                 fail("wrong_baseline_refusal", negative=n.id, expected=n.code, actual=got)
+        comparisons = report["original_baseline_controls"]
+        report["original_baseline_equality"] = {
+            "expected": len(controls) + len(negatives) if original is not None else 0,
+            "checked": len(comparisons), "identical": all(c["identical"] for c in comparisons)}
+        if not report["original_baseline_equality"]["identical"]:
+            raise IsolationError("original and uncut baseline differ on fixtures: " +
+                                 ", ".join(c["case"] for c in comparisons if not c["identical"]))
         if suite.schema:
             for entry in suite.schema.roots:
                 if entry not in baseline.schema.consumed_entries:
