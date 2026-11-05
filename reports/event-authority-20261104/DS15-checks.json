@@ -1,218 +1,200 @@
-[
-  {
-    "check": "ds15",
-    "command": [
-      "python3",
-      "scripts/pm-ds15-event-contracts.py"
-    ],
-    "exit_code": 0,
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/ds15-final.log",
-    "sha256": "2450f39003e0472d9f4a3315758fee3eb29cb20d43ab200ef7add4fe68e6f8c0",
-    "top_level_status": "pass",
-    "final_rerun": true,
-    "result": {
-      "status": "pass",
-      "families": 14,
-      "payload_oracles": 56,
-      "semantic_oracles": 2146,
-      "reference_closure_oracles": 84,
-      "predicate_oracles": 107,
-      "value_oracles": 49,
-      "guard_proof_oracles": 172,
-      "numeric_oracles": 3092,
-      "native_execution": "NOT_RUN"
-    }
-  },
-  {
-    "check": "storage-profile",
-    "command": [
-      "python3",
-      "scripts/pm-storage-profile-check.py"
-    ],
-    "exit_code": 1,
-    "seconds": 0.59,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/storage-profile.log",
-    "sha256": "9270749a06650c8ca65cd42ed7a1f73fde7d3b2a574c20d5950831cc0bf94bd8",
-    "top_level_status": "fail"
-  },
-  {
-    "check": "case-l",
-    "command": [
-      "python3",
-      "scripts/pm-implementation-readiness.py",
-      "validate-case-l"
-    ],
-    "exit_code": 0,
-    "seconds": 1.15,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/case-l.log",
-    "sha256": "05768be3e1da1e9bc7c18a1645a8ee75ba2b9514bb2db8a19dc40cd6a0c52a69",
-    "top_level_status": "pass"
-  },
-  {
-    "check": "storage-recovery",
-    "command": [
-      "python3",
-      "scripts/pm-storage-recovery-contracts.py",
-      "--self-test"
-    ],
-    "exit_code": 0,
-    "seconds": 1.62,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/storage-recovery.log",
-    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a",
-    "top_level_status": "pass"
-  },
-  {
-    "check": "shared-runtime",
-    "command": [
-      "python3",
-      "scripts/pm-shared-runtime-contracts.py",
-      "--self-test"
-    ],
-    "exit_code": 0,
-    "seconds": 0.83,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/shared-runtime.log",
-    "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027",
-    "top_level_status": "pass"
-  },
-  {
-    "check": "shared-runtime-tests",
-    "command": [
-      "python3",
-      "-m",
-      "unittest",
-      "discover",
-      "-s",
-      "tests",
-      "-p",
-      "test_shared_runtime_storage_contracts.py"
-    ],
-    "exit_code": 1,
-    "seconds": 94.8,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/shared-runtime-tests.log",
-    "sha256": "593423d0117d8ce6b149c3aa8d8ab67a30f613ad821712d419cc463b2b9f7400"
-  },
-  {
-    "check": "shard-check",
-    "command": [
-      "python3",
-      "scripts/pm-shard-plans.py",
-      "--check",
-      "--config",
-      "Plans/sharding_config.json"
-    ],
-    "exit_code": 0,
-    "seconds": 34.13,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/shard-check.log",
-    "sha256": "e5387ddb13846f72ceb7a5cfa0dec6047818f910b8005f5e44885508a42eb602",
-    "top_level_status": "pass"
-  },
-  {
-    "check": "index-validate",
-    "command": [
-      "python3",
-      "scripts/pm-plan-index.py",
-      "validate"
-    ],
-    "exit_code": 0,
-    "seconds": 62.58,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/index-validate.log",
-    "sha256": "f3c1ac4e8fe9014fbfcd5e246ae0755625cb07bd4a9ab7db7ae1e49ba3d33fe3",
-    "top_level_status": "pass"
-  },
-  {
-    "check": "diff-check",
-    "command": [
-      "git",
-      "diff",
-      "--check"
-    ],
-    "exit_code": 0,
-    "seconds": 0.03,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/diff-check.log",
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  },
-  {
-    "check": "whole-lane-guard-audit",
-    "command": [
-      "python3",
-      "scripts/pm-ds15-guard-audit.py",
-      "--out",
-      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/whole-lane-guard-audit.json"
-    ],
-    "exit_code": 1,
-    "top_level_status": "partial",
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/whole-lane-guard-audit.json",
-    "sha256": "82283b355a6467b4eb07698f425a341e6c4bd37e5de89c50e1d6181e667b014d",
-    "result": {
-      "status": "partial",
-      "mutants": 179,
-      "negatives": 4418,
-      "unexposed": 345,
-      "guards_without_flips": 16,
-      "positive_regressions": 0,
-      "named_duplicate_sets": 20,
-      "duplicate_witnesses": 171,
-      "guards_without_single_or_duplicate_proof": [],
-      "unexposed_after_duplicate_sets": 58,
-      "numeric_grammar_refusals": [
-        "doctor.custom_headless.checked/atom/01",
-        "doctor.custom_headless.checked/atom/00",
-        "doctor.custom_headless.checked/atom/-01",
-        "doctor.custom_headless.checked/caller-sequence-spelling/01",
-        "live.session.started/atom/01",
-        "live.session.started/atom/00",
-        "live.session.started/atom/-01",
-        "live.session.started/caller-sequence-spelling/01",
-        "live.step.updated/atom/01",
-        "live.step.updated/atom/00",
-        "live.step.updated/atom/-01",
-        "live.step.updated/caller-sequence-spelling/01",
-        "live.artifact.created/atom/01",
-        "live.artifact.created/atom/00",
-        "live.artifact.created/atom/-01",
-        "live.artifact.created/caller-sequence-spelling/01",
-        "live.session.completed/atom/01",
-        "live.session.completed/atom/00",
-        "live.session.completed/atom/-01",
-        "live.session.completed/caller-sequence-spelling/01",
-        "live.session.degraded/atom/01",
-        "live.session.degraded/atom/00",
-        "live.session.degraded/atom/-01",
-        "live.session.degraded/caller-sequence-spelling/01",
-        "browser.context_captured/atom/01",
-        "browser.context_captured/atom/00",
-        "browser.context_captured/atom/-01",
-        "browser.context_captured/caller-sequence-spelling/01",
-        "dev.session.started/atom/01",
-        "dev.session.started/atom/00",
-        "dev.session.started/atom/-01",
-        "dev.session.started/caller-sequence-spelling/01",
-        "dev.session.stopping/atom/01",
-        "dev.session.stopping/atom/00",
-        "dev.session.stopping/atom/-01",
-        "dev.session.stopping/caller-sequence-spelling/01",
-        "dev.session.stopped/atom/01",
-        "dev.session.stopped/atom/00",
-        "dev.session.stopped/atom/-01",
-        "dev.session.stopped/caller-sequence-spelling/01",
-        "dev.session.restarting/atom/01",
-        "dev.session.restarting/atom/00",
-        "dev.session.restarting/atom/-01",
-        "dev.session.restarting/caller-sequence-spelling/01",
-        "preview.session.started/atom/01",
-        "preview.session.started/atom/00",
-        "preview.session.started/atom/-01",
-        "preview.session.started/caller-sequence-spelling/01",
-        "preview.session.refreshed/atom/01",
-        "preview.session.refreshed/atom/00",
-        "preview.session.refreshed/atom/-01",
-        "preview.session.refreshed/caller-sequence-spelling/01",
-        "preview.session.stopped/atom/01",
-        "preview.session.stopped/atom/00",
-        "preview.session.stopped/atom/-01",
-        "preview.session.stopped/caller-sequence-spelling/01"
+{
+  "implementation_head": "08b1aead800c894c29dc308c902b4753eca45e66",
+  "checks": [
+    {
+      "name": "shard-generate",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
       ],
-      "seconds": 320.5
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 4.8,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/shard-generate.log",
+      "sha256": "b27aa12c62c94fa9639a8859c01c0149c7ec53fd417f55d9fd1f25b1b865962d"
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 55.8,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/index-generate.log",
+      "sha256": "f1c5c23acd4ee62a7d9a7155c811a95740f63a25693103e79fa17144bfbaa317"
+    },
+    {
+      "name": "shard-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 27.55,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/shard-check.log",
+      "sha256": "e2bde33cc5b3f2295337f30f30ddf167b0bc27d808c273dbc7a90fa064046a88"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 1,
+      "summary": "top-level fail; all 22 failures inherited, no lane failure",
+      "seconds": 51.25,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/index-validate.log",
+      "sha256": "f535c3246a4371b6f79ef37ce3622c943ab43a522926fd5b3a8f00d57bbf01b1"
+    },
+    {
+      "name": "ds15-final",
+      "command": [
+        "python3",
+        "scripts/pm-ds15-event-contracts.py"
+      ],
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 131.32,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/ds15-final.log",
+      "sha256": "1b14960187574d1e53448832faf1c122d2ac3ad047ff245c9d5960f909ba2924"
+    },
+    {
+      "name": "storage-profile",
+      "command": [
+        "python3",
+        "scripts/pm-storage-profile-check.py"
+      ],
+      "exit": 1,
+      "summary": "FAIL: 41 unchanged non-DS15 profile omissions.",
+      "seconds": 0.7,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/storage-profile.log",
+      "sha256": "61b57de32ef976006a497d80df135d0ecd3a6841e3efb447572a6c3e3543c8e2"
+    },
+    {
+      "name": "case-l",
+      "command": [
+        "python3",
+        "scripts/pm-implementation-readiness.py",
+        "validate-case-l"
+      ],
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 1.24,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/case-l.log",
+      "sha256": "7aa3feb7d182c5186eb65f9e90df566d1146202e7413da226e98754528af2c23"
+    },
+    {
+      "name": "storage-recovery",
+      "command": [
+        "python3",
+        "scripts/pm-storage-recovery-contracts.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 1.6,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/storage-recovery.log",
+      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+    },
+    {
+      "name": "shared-runtime",
+      "command": [
+        "python3",
+        "scripts/pm-shared-runtime-contracts.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 0.87,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/shared-runtime.log",
+      "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027"
+    },
+    {
+      "name": "materializer",
+      "command": [
+        "python3",
+        "scripts/pm-shared-runtime-storage-materialize.py",
+        "check"
+      ],
+      "exit": 1,
+      "summary": "FAIL: dev_session_record retention is PENDING_RETENTION_DECISION; RT decision remains held.",
+      "seconds": 15.02,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/materializer.log",
+      "sha256": "566f46828e4c97400b90847db370afc8c9b596adfec9f8d0576ec1a2bdfe39c2"
+    },
+    {
+      "name": "runtime-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_shared_runtime_storage_contracts.py"
+      ],
+      "exit": 1,
+      "summary": "17/20 pass. Residuals: operational-awareness schema mismatch; 18 PENDING retention assignments (16 prior + 2 install); materializer refuses pending retention. No census mismatch remains.",
+      "seconds": 149.32,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/runtime-tests.log",
+      "sha256": "9206520023aa812b856d111e2e5bf947f792a095ad22d42bb9ac3fc9cd650896"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "summary": "pass",
+      "seconds": 3.2,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "independent-review-regressions",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/run-independent.py"
+      ],
+      "exit": 0,
+      "summary": "2234 controls in six sequential suites; zero failures.",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/independent-results.json",
+      "sha256": "63f883a6b4817462e3d962c1e64d336508f6decdfe5149d72854b742e0f7f394"
     }
+  ],
+  "independent_controls": 2234,
+  "independent_failures": 0,
+  "native_execution": "NOT_RUN",
+  "whole_guard_table": {
+    "guards": 236,
+    "negatives_per_guard": 14259,
+    "named_duplicate_sets": 41,
+    "witnesses": 191,
+    "positive_regressions": 0,
+    "unproved_guards": 0,
+    "status": "PARTIAL",
+    "unexposed_after_duplicate_sets": 5576
+  },
+  "guard_model_lineage": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/guard-model-lineage.json",
+    "sha256": "b13cb52e665c7f7f36defa0472e315de0ca9bf642c51ed6c1fa4afd37be5012a"
+  },
+  "scope": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/scope-and-earlier-fixes.json",
+    "sha256": "cffa625000286d538f0d7b7a820ab8ce51b7e84fa2150151371ec339b2a67887"
   }
-]
+}
