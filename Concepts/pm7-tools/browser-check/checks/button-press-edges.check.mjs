@@ -104,7 +104,7 @@ export default async function(t) {
    }
    const inventory=await f.evaluate(()=>window.__pressInventory);
    await t.check(`FO-73 representative inventory ${look} ${motion}`,inventory.length>0);
-   if(!t.args.screen){const required=['o55-iconbtn','o55-btn','o55-link','o55-suggestchip','o55-detbtn','o55-morebtn','o55-lookopt','o55-treeitem','o55-check','o55-toggle','o55-railjump'];const missing=required.filter(c=>!inventory.some(e=>e.classes.split(' ').includes(c)));await t.check(`FO-73 complete family coverage ${look} ${motion}`,!missing.length,JSON.stringify(missing));}
+   if(!t.args.screen||t.args.requireFamilies){const required=['o55-iconbtn','o55-btn','o55-link','o55-suggestchip','o55-detbtn','o55-morebtn','o55-lookopt','o55-treeitem','o55-check','o55-toggle','o55-railjump'];const missing=required.filter(c=>!inventory.some(e=>e.classes.split(' ').includes(c)));await t.check(`FO-73 complete family coverage ${look} ${motion}`,!missing.length,JSON.stringify(missing));const absent=['consent','selfMatch','match'].filter(action=>!inventory.some(e=>e.action===action));await t.check(`FO-73 each checkbox producer inventoried ${look} ${motion}`,!absent.length,JSON.stringify(absent));await t.check(`FO-73 anchor producer inventoried ${look} ${motion}`,inventory.some(e=>e.key.startsWith('A:')));}
    if(t.args.inventoryOut)await appendFile(String(t.args.inventoryOut),JSON.stringify({look,motion,inventory})+'\n');
   }
  }
