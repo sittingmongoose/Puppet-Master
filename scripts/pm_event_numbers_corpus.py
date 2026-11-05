@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from decimal import Decimal
+from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
@@ -150,10 +151,14 @@ def _retained(m, case, corpus):
             if observed_profile != selected:
                 return False
             if envelope_resources:
-                _validate_envelope_datetime(json.loads(record.record_bytes),
-                                            envelope_resources["route"], profile=selected,
-                                            resource=(corpus["embedded_envelope_resources"][envelope_resources["resource"]]
-                                                      if "resource" in envelope_resources else None))
+                if "inventory_resource" in envelope_resources:
+                    _validate_inventory_datetime(json.loads(record.record_bytes), envelope_resources["route"],
+                                                 corpus["inventory_datetime_resources"][envelope_resources["inventory_resource"]])
+                else:
+                    _validate_envelope_datetime(json.loads(record.record_bytes),
+                                                envelope_resources["route"], profile=selected,
+                                                resource=(corpus["embedded_envelope_resources"][envelope_resources["resource"]]
+                                                          if "resource" in envelope_resources else None))
             else:
                 field = case.get("sealed_date_time_field", "occurred_at_utc")
                 date_time(json.loads(record.record_bytes)[field], profile=selected)
@@ -170,42 +175,92 @@ def _retained(m, case, corpus):
     return RetainedObservation(out, observed, calls)
 
 
-def _validate_envelope_datetime(event, route, *, profile="event_record", resource=None):
-    """Exercise unchanged owner resources through their actual reference paths."""
+@lru_cache(maxsize=None)
+def _datetime_resource(path):
+    return json.loads((Path(__file__).resolve().parents[1] / path).read_text())
+
+
+@lru_cache(maxsize=None)
+def _inventory_datetime_validator(path, resource_pointer, pointer, route):
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    from pm_event_datetime import datetime_validator
+    from pm_event_datetime_inventory import at, digest
+    resources = [_datetime_resource(p) for p in (
+        "Plans/event_record.schema.json", "Plans/event_append_receipt_contracts.schema.json",
+        "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json")]
+    root = at(_datetime_resource(path), resource_pointer)
+    uri = root.get("$id", "urn:pm:datetime:" + digest(root))
+    registry = Registry().with_resources(
+        (s["$id"], Resource.from_contents(s)) for s in resources)
+    registry = registry.with_resource(uri, Resource.from_contents(root, default_specification=DRAFT202012))
+    ref = {"$ref": uri + "#" + pointer[len(resource_pointer):]}
+    schema = ref if route == "root_ref" else {"properties": {"batch": {"items": {"properties": {"event": ref}}}}}
+    return datetime_validator(schema, registry=registry)
+
+
+def _validate_inventory_datetime(value, route, resource):
     from jsonschema import ValidationError
+    import pm_event_numbers as m
+    validator = _inventory_datetime_validator(resource["path"], resource["resource_pointer"],
+                                              resource["pointer"], route)
+    instance = value if route == "root_ref" else {"batch": [{"event": value}]}
+    try:
+        validator.validate(instance)
+    except ValidationError as error:
+        if isinstance(error.cause, m.Refusal):
+            raise error.cause
+        if error.validator == "pattern" and error.path[-1] in ("observed_at_utc", "persisted_at_utc"):
+            raise m.Refusal("date_time_utc_z") from error
+        raise
+
+
+@lru_cache(maxsize=None)
+def _envelope_datetime_validator(route, profile, resource_path, pointer):
+    """Reuse immutable owner resources, never cache a fixture's admission."""
     from referencing import Registry, Resource
     from pm_event_datetime import datetime_validator
-    import pm_event_numbers as m
 
-    root = Path(__file__).resolve().parents[1]
-    envelope, receipt, coordinator = (json.loads((root / path).read_text()) for path in (
+    envelope, receipt, coordinator = (_datetime_resource(path) for path in (
         "Plans/event_record.schema.json", "Plans/event_append_receipt_contracts.schema.json",
         "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json"))
     registry = Registry().with_resources(
         (s["$id"], Resource.from_contents(s)) for s in (envelope, receipt, coordinator))
     ref = {"$ref": envelope["$id"]}
-    if resource is not None:
-        embedded = json.loads((root / resource["path"]).read_text())
+    if resource_path is not None:
+        embedded = _datetime_resource(resource_path)
         registry = registry.with_resource(embedded["$id"], Resource.from_contents(embedded))
-        ref = {"$ref": embedded["$id"] + "#" + resource["pointer"]}
+        ref = {"$ref": embedded["$id"] + "#" + pointer}
     request = {"$ref": receipt["$id"] + "#/$defs/full_value_request"}
     compatibility = {"$ref": envelope["$id"] + "#/$defs/event_record_1_0_0_compatibility_reader"}
     schemas = {
-        "direct": (envelope, event),
-        "root_ref": (ref, event),
-        "allOf": ({"allOf": [envelope]}, event),
-        "nested_inline": ({"properties": {"event": envelope}}, {"event": event}),
+        "direct": envelope,
+        "root_ref": ref,
+        "allOf": {"allOf": [envelope]},
+        "nested_inline": {"properties": {"event": envelope}},
         "nested_ref": ({"properties": {"batch": {"type": "array", "items": {
-            "properties": {"event": ref}}}}}, {"batch": [{"event": event}]}),
-        "full_value_request": (request, {"event": event}),
-        "nested_full_value_request": ({"properties": {"request": request}}, {"request": {"event": event}}),
-        "coordinator_event": ({"$ref": coordinator["$id"] + "#/$defs/WholeGroupMember/properties/event"}, event),
-        "compatibility_ref": (compatibility, event),
-        "compatibility_nested": ({"properties": {"events": {"items": compatibility}}}, {"events": [event]}),
+            "properties": {"event": ref}}}}}),
+        "full_value_request": request,
+        "nested_full_value_request": {"properties": {"request": request}},
+        "coordinator_event": {"$ref": coordinator["$id"] + "#/$defs/WholeGroupMember/properties/event"},
+        "compatibility_ref": compatibility,
+        "compatibility_nested": {"properties": {"events": {"items": compatibility}}},
     }
-    schema, instance = schemas[route]
+    return datetime_validator(schemas[route], profile=profile, registry=registry)
+
+
+def _validate_envelope_datetime(event, route, *, profile="event_record", resource=None):
+    """Exercise unchanged owner resources through their actual reference paths."""
+    from jsonschema import ValidationError
+    import pm_event_numbers as m
+    validator = _envelope_datetime_validator(route, profile, resource["path"] if resource else None,
+                                             resource["pointer"] if resource else None)
+    instance = ({"event": event} if route in ("nested_inline", "full_value_request") else
+                {"batch": [{"event": event}]} if route == "nested_ref" else
+                {"request": {"event": event}} if route == "nested_full_value_request" else
+                {"events": [event]} if route == "compatibility_nested" else event)
     try:
-        datetime_validator(schema, profile=profile, registry=registry).validate(instance)
+        validator.validate(instance)
     except ValidationError as error:
         if isinstance(error.cause, m.Refusal):
             raise error.cause
@@ -283,6 +338,11 @@ def execute(m, case, corpus):
         event[case["field"]] = case["value"]
         _validate_envelope_datetime(event, route, resource=resource)
         return case["value"]
+    if op == "inventory_datetime":
+        resource = corpus["inventory_datetime_resources"][case["resource"]]
+        value = dict(resource["baseline"], **{case["field"]: case["value"]})
+        _validate_inventory_datetime(value, case["route"], resource)
+        return case["value"]
     if op == "family_datetime":
         from pm_event_datetime import datetime_validator
         root = Path(__file__).resolve().parents[1]
@@ -358,6 +418,9 @@ def run_corpus(path):
         "frozen_complete_event_bytes": m.storage_value_bytes(wire["base_event"]) == original_payload,
         "frozen_complete_event_decode": m.decode_storage_value(original_payload) == wire["base_event"],
     }
+    from pm_event_datetime_inventory import check_inventory
+    inventory_check = check_inventory(root)
+    checks["datetime_inventory_complete_and_classified"] = inventory_check["status"] == "pass"
     from pm_event_datetime import datetime_validator
     schema = json.loads((root / "Plans/event_record.schema.json").read_text())
     envelope_validator = datetime_validator(schema)
@@ -414,6 +477,7 @@ def run_corpus(path):
             "guard_isolation": {"status": "SWEEP_PENDING", "tool": "scripts/pm_guard_isolation.py",
                                 "items": corpus["guard_isolation_sweep"]},
             "owner_integration_checks": checks,
+            "datetime_inventory": inventory_check,
             "conflicts_covered": sorted({x for c in corpus["cases"] for x in c["conflicts"]}),
             "failures": failures, "native_authority": "NOT_RUN",
             "scope": "Shared adapter/corpus only; no complete lane checker or family admission."}

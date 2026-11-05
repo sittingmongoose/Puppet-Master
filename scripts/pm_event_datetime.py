@@ -109,23 +109,12 @@ def format_checker(*, profile=EVENT_RECORD):
 
 
 def _eventrecord_storage_properties(validator, properties, instance, schema):
-    """Add only CV-253's zone predicate when an envelope is evaluated.
-
-    This runs during ordinary descent, including $ref and nested resources.
-    Embedded 2.0.0 envelopes and frozen 1.0.0 compatibility definitions may
-    omit the canonical $id; their envelope discriminator selects the same
-    Storage field ownership in current and authenticated retained resources.
-    Resource authentication remains the installing owner's responsibility.
-    """
-    identity, version = properties.get("schema_id"), properties.get("schema_version")
-    envelope = (schema.get("$id") ==
-                "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json" or
-                (type(identity) is dict and identity.get("const") == "pm.event.v0" and
-                 type(version) is dict and version.get("const") in ("1.0.0", "2.0.0")))
-    if envelope and validator.is_type(instance, "object"):
-        for field in ("observed_at_utc", "persisted_at_utc"):
+    """Compose CV-253 at inventory-authenticated resource/field paths only."""
+    if validator.is_type(instance, "object"):
+        for field in validator.storage_selection.fields(schema):
             if field in properties and field in instance:
-                yield from validator.descend(instance[field], {"pattern": r"Z(?![\s\S])"},
+                yield from validator.descend(instance[field], {"type": "string", "format": "date-time",
+                                                              "pattern": r"Z(?![\s\S])"},
                                              path=field, schema_path=field)
 
 
@@ -137,14 +126,18 @@ def _bound_validator(base):
     back to its stock class on entering a resource with an explicit dialect.
     These classes are private to this helper; no global dialect is replaced.
     """
-    from attrs import fields
+    from attrs import fields, make_class, field
     from jsonschema import validators
 
     def properties(validator, value, instance, schema):
         yield from base.VALIDATORS["properties"](validator, value, instance, schema)
         yield from _eventrecord_storage_properties(validator, value, instance, schema)
 
-    bound = validators.extend(base, {"properties": properties})
+    extended = validators.extend(base, {"properties": properties})
+    from pm_event_datetime_inventory import StorageSelection
+    bound = make_class("InventoryDatetimeValidator", {
+        "storage_selection": field(factory=StorageSelection, kw_only=True),
+    }, bases=(extended,))
 
     def evolve(self, **changes):
         schema = changes.setdefault("schema", self.schema)
@@ -159,11 +152,18 @@ def _bound_validator(base):
 
 
 def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
-    """Enforce date-time and CV-253 on direct, referenced and nested envelopes.
+    """Enforce date-time and classified CV-253 resource/field boundaries.
 
     Pass authentic frozen resources in registry for retained validation. Both
     the supplied resources and their pinned hashes remain unchanged.
     """
     from jsonschema import Draft202012Validator
+    from pm_event_datetime_inventory import StorageSelection
+    selection = StorageSelection()
+    selection.install(schema)
+    registry = kwargs.get("registry")
+    if registry is not None:
+        for resource in registry.values():
+            selection.install(resource.contents)
     return _bound_validator(Draft202012Validator)(
-        schema, format_checker=format_checker(profile=profile), **kwargs)
+        schema, format_checker=format_checker(profile=profile), storage_selection=selection, **kwargs)
