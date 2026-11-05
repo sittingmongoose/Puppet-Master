@@ -6,6 +6,17 @@ export default async function(t) {
   await pod(t);
   const f=t.root;
   await t.viewport(1920,1100);
+  // No intervening render/reveal: retain the exact narrow-return history
+  // that made kit2f's sizing signature reuse the smaller generated text.
+  for(const width of [720,560,400,560,660,665,680,720]) {
+    await f.evaluate(w=>PMW.chatCol.setWidth(w),width);
+    await t.settle();
+    await f.waitForTimeout(500);
+    const fit=await readFit(f);
+    await t.check(`activity narrow return ${width}`,fit.selected==='query'&&fit.pinned&&
+      Math.abs(fit.chat-width-fit.history)<=1&&fit.scroll<=fit.width+1&&
+      (fit.available>=fit.need+8 ? !fit.compact&&fit.labels : fit.available+0.5<fit.need ? fit.compact&&!fit.labels : true),JSON.stringify(fit));
+  }
   for(const width of [720,560,400,560,660,665,680,800,600,720]) {
     await f.evaluate(w=>PMW.chatCol.setWidth(w),width);
     await t.settle();
@@ -26,7 +37,7 @@ export default async function(t) {
   }
 
   // Cross the pseudo-content boundary in every look, from both directions.
-  for(const look of LOOKS) {
+  for(const look of t.args.targeted ? [] : LOOKS) {
     await t.app.look(look);
     for(const width of [800,400,560,660,720,800]) {
       await f.evaluate(w=>PMW.chatCol.setWidth(w),width);
