@@ -1,3 +1,118 @@
+# DMEM sweep part 1 (fixture pass)
+
+**Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Fix commit:** `2cd020b60a`. **Start:** text-pass head `3bb362761b`. **Rebase:** none. The text pass did not abort its rebase, so this round stayed on base `2989975e8f`. `origin/main` has moved on since then (see "Index findings").
+
+**Result:** cycle-9 B1, B2, B3 and B4 were each checked against the review. B2, B3 and B4 are fixed as round 11 claimed. B1's reviewed rows are fixed, but its class stayed open in seven places, all now fixed. Family grades are unchanged. No lane is READY until the shared tools pass.
+
+This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+## Sweep part 1 (fixture pass): findings and responses
+
+| Item | Round-11 claim | Verdict | Commit |
+|---|---|---|---|
+| **B1** | Exact primitive types before values | Reviewed rows fixed; residual class fixed here | `2cd020b60a` |
+| **B2** | Every fractional digit compared | Holds; no change | `ae04b287ae` |
+| **B3** | No-project Project copies coherent | Holds; no change | `ae04b287ae` |
+| **B4** | Three group predicates, three negatives | Holds; guards extended with a type predicate | `ae04b287ae`, `2cd020b60a` |
+
+### B1: exact types in preserved fields
+
+**Reviewed rows, rerun:** survivor `pinned` false to `0` refuses `dedup_original_fields`. Unselected `pinned` true to `1` and `archived` false to `0` refuse `dedup_unselected`. An archive score `0` to `false` refuses `selected_fields_preserved` in both jobs. **Verify:** `drafts/DMEM/sweep-p1/fixture-pass/review-row-probes.txt`.
+
+**Residual found by one-field probes at `3bb362761b`, all fixed in `2cd020b60a`:**
+
+| # | Where (now) | Why it broke | Fix |
+|---|---|---|---|
+| 1 | `scripts/pm_memory_policy.py:105-106` | `{1, True}` is one set element, so hashes `1` and `True` read as one identical group; `7`/`7` also passed. | Exact string test before the set test, same refusal `dedup_identical`. |
+| 2 | `scripts/pm_memory_policy.py:108`; `scripts/pm_memory_archive_events.py:145` | Evidence `[1]` and `[true]` collapsed in the union and lost a reference; a string read as characters. | `string_list()` (`pm_memory_policy.py:29`) before the union; refusals `dedup_evidence_type`, `selection_evidence_type`. |
+| 3 | `scripts/pm_memory_policy.py:88` | Group `"ab"` read as IDs `a`, `b`. | Exact list test, refusal `dedup_eligible_group`. An array ID no longer raises in `set()`: type and existence now run before uniqueness (`:91-92`). |
+| 4 | `scripts/pm_memory_archive_events.py:138` | `selected_ids` of `null`, a number or an array ID raised `TypeError`. | Refusal `selection_ids_type`. |
+| 5 | `scripts/pm_memory_policy.py:144`; `scripts/pm_memory_archive_events.py:171` | Project, eligible or selected IDs, capture time and extra fields were never compared in the output. | Predicates `dedup_snapshot`, `snapshot_preserved`, through `same()`. |
+| 6 | `scripts/pm_memory_policy.py:123`, `:161`; `scripts/pm_memory_archive_events.py:127`, `:166`, `:194` | Malformed output raised `KeyError`/`TypeError`; an extra merge-record field passed; a survivor could gain a survivor link; prune could drop `summary`. | `dedup_output_shape` (exact record keys), `memory_fields`, survivor clause in `dedup_links`, presence clause in `no_prune_summary`. |
+| 7 | `scripts/pm_memory_policy.py:84-86`, `:51-76`; `scripts/pm_memory_archive_events.py:134` | Malformed or absent input fields raised instead of refusing. | `dedup_input_shape`, `memory_fields`, `.get()` reads so each owner predicate refuses. |
+
+**New fixtures:** `Plans/memory_card6_policy_fixtures.json:28308-35385`: 100 templates, each with a `p1f-` name. One is a positive control (`dedup_sweep:p1f-char-id-control`, `:31002`); 99 are negatives. Existing cases are byte-preserved; the file only gains lines. `typed_edits` gains `delete` (`pm_memory_policy.py:171`). `run` gains the archive candidate-refusal path (`:226`).
+
+**Owner text:** ATS-315 and ATS-316 state the rule (`Plans/Automated_Testing_System.md:7271`, `:7328`). Shards and the index are regenerated.
+
+**Verify:**
+- `fixture-pass/one-field-type-probes.txt`: 660 dedup output mutations, 0 accepted, 0 raised. 218 monthly and 176 prune output mutations leave only the fields listed in Part 2 unaffected. Inputs still accepted are fields the job never reads (`updated_at`, `versions`, unselected originals), which `same()` then preserves exactly.
+- `fixture-pass/full-process-probes.json`: complete `--family` processes, one at a time, for the six policy families. Controls exit 0. Wrong Boolean expected results: 6 of 6 exit 1. Restored `==`: 6 of 6 exit 1. Every removed new guard: exit 1.
+
+### B2: fractional seconds
+
+`instant()` (`scripts/pm_memory_policy.py:34`) compares exact `Fraction` seconds. The review's three rows, rerun: monthly edit `.000000001Z` refuses `selection_age`; prune edit `.000000001Z` refuses `selection_age`; dedup `a-new` at `.000000002Z` makes `z-old` survive, and a coherently built wrong survivor refuses `dedup_survivor`. A 40-digit prune boundary also refuses. Restoring microsecond truncation: 6 of 6 complete processes exit 1. No other parser in the lane drops precision (`grep fromisoformat` finds one call, whole seconds only). **Verify:** `fixture-pass/review-row-probes.txt`, `full-process-probes.json`.
+
+### B3: no-project negative
+
+`dedup_sweep:no-project` (`Plans/memory_card6_policy_fixtures.json:7783`) has all four memory Project copies null. Against the intact control it differs only in the Project fields. Removing only the local validity clause flips only it. Removing only the join flips `dedup_sweep:foreign-project` and the new `p1f-project-missing`. **Verify:** `fixture-pass/removal-dedup.jsonl`.
+
+### B4: eligible group
+
+Intact control `dedup_sweep:fix11-group-control`. Each of `fix11-minimum-group`, `fix11-unique-group` and `fix11-existing-group` differs from it only in `eligible_ids`. Each predicate, removed alone, flips its own negative (`scripts/pm_memory_policy.py:89`, `:91`, `:92`). Both dedup phases exit 1 for each removal. **Inclusion in the shared guard tool stays part 2.** **Verify:** `fixture-pass/removal-dedup.jsonl`, `full-process-probes.json`.
+
+### Guard-removal table for this round's predicates
+
+This is a targeted witness for these predicates, not a whole-lane check-11 claim; that stays S4. Peers stay enabled. No positive fails in any row. "Flip" means the case stops refusing with its own reason: either accepted, or an uncaught error (marked "raises") where later code cannot run without the guard.
+
+| Predicate removed alone | Flips only |
+|---|---|
+| `dedup_input_shape`: memories object / merge records / member object (raises) | their 2 `p1f-input-*` cases each |
+| `dedup_input_shape`: member evidence / member versions | `p1f-input-evidence-missing` / `p1f-input-versions-missing` |
+| group list type | `p1f-group-null`, `-number` (raise); `-object`, `-string` (accepted) |
+| group type-and-exists | `fix11-existing-group`, `p1f-group-number-id`, `-boolean-id`, `-array-id` |
+| hash type | `p1f-hash-integer`, `-number-boolean-alias`, `-null` (accepted); `-array`, `-missing` (raise) |
+| `dedup_evidence_type` | the 6 `p1f-evidence-*` cases |
+| `dedup_output_shape`, per clause (6 clauses) | its own `p1f-output-*` cases (raise, except the record-field case) |
+| `dedup_snapshot` | the 6 `p1f-output-project-*`, `-eligible-changed`, `-extra-field` cases |
+| `dedup_links` survivor clause | `p1f-output-survivor-link-added` |
+| archive `memory_fields` input / output | 2 cases per job each |
+| `selection_ids_type` | 3 cases per job (raise) |
+| `selection_evidence_type` | 5 cases per job |
+| `snapshot_preserved` | 6 cases per job |
+| `no_prune_summary` presence clause | `prune_archive:p1f-output-summary-deleted` |
+
+### Part 2 items added by this round
+
+Recorded with exact locations; no number helper or proof machinery was written.
+
+1. **`same()` numbers of one type:** `scripts/pm_memory_policy.py:26`. `Decimal('0.10')` equals `Decimal('0.1')` and `0.0` equals `-0.0`, so a respelled or sign-flipped preserved number passes. Belongs to S2 (physical profile).
+2. **Loader folds a raw `0.0`:** `scripts/pm_memory_maintenance_events.py:62` (`json_numbers`). A file-level wrong `expected` score `0.0` loads as integer `0`, so the four archive families exit 0 on that one probe (`full-process-probes.json`, `wrong-expected-float`). The typed form is still refused through `fix11-preserved-zero-score-float`. Belongs to S1.
+3. **Selected `created_at` read only on fallback:** `scripts/pm_memory_policy.py:66-67`. With both edit and access present, a malformed or wrong-type `created_at` on a selected original is not refused. Belongs to the date-time gate.
+
+S1-S4 and the guard-table items below stay as listed.
+
+### Checks
+
+| Check | Exit |
+|---|---|
+| 8 x `pm_memory_maintenance_events.py --family` | 8 x 0 |
+| 4 x `pm_memory_archive_events.py --family` | 4 x 0 |
+| Policy corpus per phase (positives / negatives) | dedup 16/200, monthly 39/85, prune 42/83 |
+| `pm-shard-plans.py --generate` | 0 |
+| `pm-plan-index.py generate` | 0 |
+| `pm-shard-plans.py --check` | 0 |
+| `pm-plan-index.py validate` | **1**, top-level `fail`, 24 findings |
+| `git diff --check` on the commit | 0 |
+| Currentness edition | 15 files, hash-identical to the share |
+
+### Index findings
+
+All 24 are **new here and not on `origin/main`**; `origin/main` `6861d332de` validates with exit 0, no findings.
+
+- **Where:** 3 x `plan_unit_removed_without_ledger_decision` (DL-337, DL-338, DL-339), and 21 x `plan_unit_removal_ledger_invalid` (legacy ledger records, read only when a removal is detected).
+- **Why:** `pm-plan-index.py:1330` compares against `origin/main`, which gained those three units after this lane's base. No lane removes them.
+- **Check:** the same validation with the baseline set in memory to the merge base `2989975e8f` exits 0, no findings. No source or index was edited for it.
+- **Fix:** the next rebase onto `origin/main` clears them. This is the cycle-9 N2 pattern.
+
+### Grades and other records
+
+Family grades are carried unchanged: 120 PASS / 12 PARTIAL / 12 ABSENT, as in the table below. Membership stays ABSENT, retention PARTIAL, native NOT_RUN. `DMEM-self-grade.json` keeps its grades; 388 citation lines that the rebase and this commit moved are relocated, each quote re-found at its line, and four quotes follow the rewritten `memory_flags` line.
+
+No Decision Log entry, registry append, admission, seal, `Spec_Lock`, `.evidence`, `auto_decisions`, `.gitignore` or frozen-validator edit. No pm-mail or subagent.
+
+---
+
 # DMEM sweep part 1 — landed-decision citations on current main
 
 **Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Assessed implementation commit:** `91d3ec7a14` (this round). **Base:** rebased from lane head `9aec2fee0c` onto current `origin/main` `2989975e8f` (30 lane commits; every rebase conflict was in `_shards`/`.plan_index` only, resolved on the lane side and then regenerated deterministically). Round-eleven's checker/fixture work is carried unchanged as `ae04b287ae` (the former `7a1b9624d4`); the lane's checker, oracle, proof and fixture files are byte-identical to `9aec2fee0c`. **Baseline:** `reviews/DMEM-sol/REVIEW-cycle9.md` at `9374fdea03` (round-ten head; round-eleven work was ungraded there).
