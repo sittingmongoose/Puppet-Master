@@ -655,6 +655,30 @@ def project_original_input_errors(case, formats):
     return []
 
 
+# The definitions the V2 graph reaches in the two shared aggregates, and their content digests.
+# Main edits other definitions in these files, so the graph's whole-file pins can need a refresh; these
+# digests must stay fixed across such a refresh. Every board source carries original_output null, so no
+# fixture value visits the output root or the two definitions only it reaches: only this guard sees them.
+SELECTED_SHARED_DEFINITIONS = {
+    'application_workflow_contracts': {
+        'names': ('AgentMessageApplicationV1', 'CoordinationProjectionApplicationV1', 'CrewBoardMessageStorageApplicationV1'),
+        'sha256': 'e6c9cdf3f042c1ef877b348402b9c55676eb43390ee4978cabd0c7895d2ca880'},
+    'shared_integration_runtime': {
+        'names': ('OwnerEvidenceRefV1', 'WorkflowCommandContextV1', 'WorkflowRootRefV1', 'WorkflowScopeV2'),
+        'sha256': 'e61828e2206f7e72fde1c716882d8ba40160ce1ce7065c70b64d26b383a1c48c'},
+}
+
+
+def selected_definition_errors(documents):
+    """Refuse a change to a selected shared definition, whatever the whole-file pin says."""
+    for name, selection in SELECTED_SHARED_DEFINITIONS.items():
+        selected = {x: documents[name].get('$defs', {}).get(x) for x in selection['names']}
+        encoded = json.dumps(selected, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
+        if hashlib.sha256(encoded).hexdigest() != selection['sha256']:
+            return ['successor_selected_definitions']
+    return []
+
+
 def successor_errors(root):
     """Pin the whole live successor selection without rewriting frozen graphs."""
     doc = json.loads((root / 'Plans/application_board_message_v2.schema.json').read_text())
@@ -670,6 +694,7 @@ def successor_errors(root):
             or any(x['sha256'] != hashlib.sha256((root / x['path']).read_bytes()).hexdigest()
                    for x in graph['resources'])):
         errors.append('successor_resource_selection')
+    errors.extend(selected_definition_errors(selected_documents(root)))
     method = graph['methods'][0]
     expected_method = {'interface_id': 'storage.coordination_append.application@2.0.0',
         'owner_doc': 'Plans/Contracts_V0.md#CV-740',

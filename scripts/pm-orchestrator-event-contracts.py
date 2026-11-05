@@ -105,6 +105,33 @@ def board_join_errors(case):
     return errors
 
 
+def selected_definition_checks():
+    """Each selected shared definition refuses one change; an edit elsewhere in the same file does not."""
+    documents = oracles.selected_documents(ROOT)
+    assert not oracles.selected_definition_errors(documents), 'selected_definition_positive'
+    checks = 1
+    def edited(name, definition, change):
+        result = dict(documents)
+        result[name] = copy.deepcopy(documents[name])
+        change(result[name]['$defs'], definition)
+        return result
+    for name, selection in oracles.SELECTED_SHARED_DEFINITIONS.items():
+        for definition in selection['names']:
+            tightened = edited(name, definition, lambda defs, x: defs[x].update(required=defs[x].get('required', []) + ['probe_field']))
+            removed = edited(name, definition, lambda defs, x: defs.pop(x))
+            assert oracles.selected_definition_errors(tightened) == ['successor_selected_definitions'], (name, definition)
+            assert oracles.selected_definition_errors(removed) == ['successor_selected_definitions'], (name, definition)
+            checks += 2
+    # The definitions main actually changed (3a93424300) sit outside the selection: a whole-file pin
+    # refresh over edits like these must not trip this guard.
+    for name, definition in (('application_workflow_contracts', 'GoalCommandRequestApplicationV1'),
+                             ('shared_integration_runtime', 'skill_copy_request')):
+        elsewhere = edited(name, definition, lambda defs, x: defs[x].update(description='edited elsewhere'))
+        assert not oracles.selected_definition_errors(elsewhere), (name, definition)
+        checks += 1
+    return checks
+
+
 def board_storage_checks(schema, fixtures, storage, owner):
     rows = [row for row in storage['families'] if row['family_id'] == 'coordination_event_records']
     assert len(rows) == 1
@@ -211,6 +238,7 @@ def main():
     admitted = {f['event_type'] for f in registry['families']}
     checks = 0
     assert not oracles.successor_errors(ROOT), oracles.successor_errors(ROOT)
+    checks += selected_definition_checks()
     assert len(fixtures['contracts']) == 25
     assert {c['definition'] for c in fixtures['contracts']} == set(schema['$defs'])
     assert {c['event_type'] for c in fixtures['valid_payloads']} == {c['event_type'] for c in fixtures['contracts']}
