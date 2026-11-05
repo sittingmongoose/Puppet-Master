@@ -111,12 +111,145 @@ def predicate_sites(source, before):
     return syntax + semantic
 
 
+def predicate_supplement(source, before, walker):
+    """Independently audit the changed AST, including nested functions.
+
+    The old walker's start-line rules stay reproducible. This pass uses span
+    overlap, audits every changed AST node against an explicit grammar, and
+    inventories predicate forms the walker omitted. Unknown forms fail closed;
+    adding a new form requires a rule, coverage rows and evidence together.
+    """
+    functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
+    previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
+    changed = set()
+    for tag, _, _, start, end in difflib.SequenceMatcher(
+            None, before.splitlines(), source.splitlines(), autojunk=False).get_opcodes():
+        if tag in {'insert', 'replace'}:
+            changed.update(range(start + 1, end + 1))
+    known = {(r['function'], r['line'], r['column'], r['expression'])
+             for r in walker if 'expression' in r}
+    supported = {
+        'FunctionDef', 'arg', 'Assign', 'Expr', 'For', 'If', 'IfExp', 'Try',
+        'ExceptHandler', 'Pass', 'Raise', 'Return', 'Attribute', 'BinOp', 'BoolOp',
+        'Call', 'Compare', 'Constant', 'Dict', 'GeneratorExp', 'List', 'ListComp',
+        'Name', 'Set', 'SetComp', 'Slice', 'Subscript', 'Tuple', 'UnaryOp', 'keyword',
+    }
+    # Data calls are audited too: a newly introduced predicate callback cannot
+    # silently hide in an assignment or keyword outside a branch condition.
+    named_calls = {
+        'Counter', 'Path', 'ValueError', 'any', 'bool', 'dict', 'float', 'isinstance',
+        'len', 'observed', 'ord', 'recount_anchor', 'recount_change_state',
+        'recount_frozen_inputs', 'recount_json', 'recount_object', 'recount_outcomes',
+        'recount_relative', 'recount_snapshot_pins', 'recount_source_bytes',
+        'recount_validation', 'decision_section_bytes', 'set', 'sha256_file',
+        'sorted', 'str', 'third_change_validator_pin', 'type',
+    }
+    method_calls = {
+        'append', 'check_output', 'decode', 'dumps', 'encode', 'extend', 'fullmatch',
+        'escape', 'get', 'hexdigest', 'is_absolute', 'is_file', 'is_relative_to', 'isfinite',
+        'items', 'join', 'loads', 'read_bytes', 'resolve', 'search', 'sha256',
+        'split', 'splitlines', 'startswith', 'strip',
+    }
+    predicate_methods = {'fullmatch', 'search', 'isfinite', 'startswith',
+                         'is_absolute', 'is_relative_to', 'is_file'}
+    rows = {}
+    def add(function, node, expression, kind):
+        row = {'function': function, 'line': node.lineno, 'column': node.col_offset,
+               'expression': expression, 'kind': kind}
+        row['site_id'] = 'supplement:' + sha(json.dumps(row, sort_keys=True).encode())
+        rows[row['site_id']] = row
+    def omitted(function, node, expression, kind):
+        if (function, node.lineno, node.col_offset, expression) not in known:
+            add(function, node, expression, kind)
+    def condition(n):
+        # Explicit truth-test grammar; unknown atoms (including bare filters)
+        # cannot count as covered merely because an enclosing branch is listed.
+        if isinstance(n, ast.BoolOp):
+            assert isinstance(n.op, (ast.And, ast.Or)), 'unrecognised Boolean operator'
+            for child in n.values: condition(child)
+        elif isinstance(n, ast.UnaryOp) and isinstance(n.op, ast.Not):
+            condition(n.operand)
+        elif isinstance(n, ast.BinOp) and isinstance(n.op, ast.Sub):
+            assert all(isinstance(x, ast.Call) and ast.unparse(x.func) == 'set'
+                       for x in (n.left, n.right)), 'unrecognised truth-tested subtraction'
+        elif isinstance(n, (ast.Compare, ast.Call, ast.Name, ast.Subscript)):
+            pass  # Individually enumerated by branch/clause/compare/call rules.
+        else:
+            raise AssertionError('unrecognised predicate form: ' + type(n).__name__)
+    touched = []
+    for name, fn in functions.items():
+        old = previous.get(name)
+        if old is not None and ast.dump(old) == ast.dump(fn):
+            continue
+        touched.append(name)
+        for n in ast.walk(fn):
+            if not hasattr(n, 'lineno'):
+                continue
+            if old is not None and not any(line in changed for line in range(n.lineno, n.end_lineno + 1)):
+                continue
+            assert type(n).__name__ in supported, ('unrecognised predicate/AST form', name, n.lineno, type(n).__name__)
+            if isinstance(n, (ast.If, ast.IfExp)):
+                condition(n.test)
+                omitted(name, n.test, ast.unparse(n.test), 'overlapping branch')
+            elif isinstance(n, ast.BoolOp):
+                condition(n)
+                omitted(name, n, ast.unparse(n), 'Boolean composition')
+            elif isinstance(n, ast.UnaryOp):
+                assert isinstance(n.op, ast.Not), ('unrecognised unary form', name, n.lineno)
+                condition(n)
+                omitted(name, n, ast.unparse(n), 'Boolean negation')
+            elif isinstance(n, ast.Compare):
+                assert all(isinstance(op, (ast.Eq, ast.NotEq, ast.Is, ast.IsNot, ast.In, ast.NotIn,
+                                          ast.Lt, ast.LtE)) for op in n.ops), 'unrecognised comparison'
+                for left, op, right in zip([n.left] + n.comparators[:-1], n.ops, n.comparators):
+                    expression = ast.unparse(ast.Compare(left=left, ops=[op], comparators=[right]))
+                    omitted(name, n, expression, 'overlapping comparison')
+            elif isinstance(n, (ast.GeneratorExp, ast.ListComp, ast.SetComp)):
+                for generator in n.generators:
+                    assert not generator.is_async, 'unrecognised asynchronous comprehension'
+                    for test in generator.ifs:
+                        assert isinstance(test, (ast.Compare, ast.BoolOp)), 'unrecognised comprehension filter'
+                        condition(test)
+                        omitted(name, test, ast.unparse(test), 'comprehension filter')
+            elif isinstance(n, ast.ExceptHandler):
+                assert isinstance(n.type, ast.Tuple), 'unrecognised exception dispatch form'
+                alternatives = [ast.unparse(x) for x in n.type.elts]
+                assert alternatives and len(alternatives) == len(set(alternatives)), 'invalid dispatch alternatives'
+                assert set(alternatives) <= {'OSError', 'ValueError', 'TypeError', 'KeyError',
+                                             'UnicodeError', 'subprocess.SubprocessError'}, 'unrecognised exception class'
+                add(name, n, ast.unparse(n.type), 'exception dispatch')
+                for alternative in n.type.elts:
+                    add(name, alternative, ast.unparse(alternative), 'exception alternative')
+            elif isinstance(n, ast.Call):
+                if isinstance(n.func, ast.Name):
+                    assert n.func.id in named_calls, ('unrecognised call', name, n.lineno, ast.unparse(n.func))
+                    if n.func.id in {'any', 'bool'}:
+                        omitted(name, n, ast.unparse(n), 'Boolean coercion')
+                elif isinstance(n.func, ast.Attribute):
+                    assert n.func.attr in method_calls, ('unrecognised call', name, n.lineno, ast.unparse(n.func))
+                    if n.func.attr in predicate_methods:
+                        omitted(name, n, ast.unparse(n), 'overlapping predicate call')
+                    if ast.unparse(n.func) == 'json.loads':
+                        callbacks = {'object_pairs_hook': 'pairs', 'parse_constant': 'constant',
+                                     'parse_float': 'finite_float'}
+                        for keyword in n.keywords:
+                            assert keyword.arg in callbacks and ast.unparse(keyword.value) == callbacks[keyword.arg], 'unrecognised parser callback'
+                            add(name, keyword, keyword.arg + '=' + ast.unparse(keyword.value), 'parser callback')
+                else:
+                    raise AssertionError('unrecognised call form: ' + ast.unparse(n.func))
+    return sorted(rows.values(), key=lambda r: (r['line'], r['column'], r['kind'])), touched
+
+
 def check_coverage(repo, test_names):
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
     actual = predicate_sites((repo / REL).read_text(), before)
     table = json.loads((repo / COVERAGE).read_bytes())
     expected = {row['site_id']: row for row in actual}
-    rows = table['sites']
+    supplement, touched = predicate_supplement((repo / REL).read_text(), before, actual)
+    assert table['touched_functions'] == touched, 'changed touched-function inventory'
+    rows = table['sites'] + table['supplement']
+    actual += supplement
+    expected = {row['site_id']: row for row in actual}
     recorded = {row['site_id']: row for row in rows}
     assert len(recorded) == len(rows), 'duplicate coverage site'
     missing, stale = set(expected) - set(recorded), set(recorded) - set(expected)
@@ -133,6 +266,13 @@ def check_coverage(repo, test_names):
             assert row['outcome'] in {'same-predicate duplicate', 'implied', 'frozen-input only', 'structural'}
             assert row['reason'], ('missing survivor explanation', site)
     assert len(table['prior_survivors']) == 84
+    assert table['validator_sha256'] == sha((repo / REL).read_bytes()), 'validator is not frozen'
+    assert table['totals']['walker_sites'] == len(table['sites'])
+    assert table['totals']['supplement_rows'] == len(supplement)
+    assert table['totals']['combined_sites'] == len(actual)
+    outcomes = {outcome: sum(r['outcome'] == outcome for r in rows) for outcome in {r['outcome'] for r in rows}}
+    assert table['totals']['outcomes'] == outcomes
+    assert table['totals']['unclassified'] == 0
 
 
 def run(repo, output, source_map, apply_cut=None):
@@ -149,8 +289,19 @@ def run(repo, output, source_map, apply_cut=None):
                 results.append({'name': name, 'pass': False, 'error': str(exc)})
             else:
                 results.append({'name': name, 'pass': True, 'refusal': str(exc)[:240]})
-        except AssertionError as exc:
-            results.append({'name': name, 'pass': False, 'error': str(exc)})
+        except Exception as exc:
+            # Unexpected exceptions always fail assertion-based controls.
+            results.append({'name': name, 'pass': False, 'error': type(exc).__name__ + ': ' + str(exc)})
+
+    def exact_refusal(action, message):
+        # Only the intended ValueError, with the complete contextual diagnostic,
+        # satisfies these controls. TypeError/AttributeError never qualify.
+        try:
+            action()
+        except ValueError as exc:
+            assert str(exc) == message, (message, str(exc))
+        else:
+            raise AssertionError('expected controlled refusal: ' + message)
 
     def git(spec):
         return subprocess.check_output(['git', '-C', str(repo), 'show', spec])
@@ -212,16 +363,134 @@ def run(repo, output, source_map, apply_cut=None):
                 os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(probe_map)
                 record('negative_source_map_' + label, v.recount_frozen_inputs, True)
             os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
+            # Astra 5 B01: explicit source failures keep every frozen pin fixed.
+            source_key = next(iter(real_map['locations']))
+            probe_map.write_bytes(encoded(real_map))
+            os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(probe_map)
+            v.recount_frozen_inputs()
+            for label, replacement in [
+                    ('custody_oserror', root / 'absent-source'),
+                    ('custody_valueerror', put('changed-source', b'substituted source bytes\n'))]:
+                bad_map = copy.deepcopy(real_map)
+                bad_map['locations'][source_key] = str(replacement)
+                probe_map.write_bytes(encoded(bad_map))
+                detail = (str(FileNotFoundError(2, 'No such file or directory', str(replacement)))
+                          if label == 'custody_oserror' else 'source fingerprint mismatch')
+                message = 'recount source custody failed: ' + json.dumps(
+                    [{'source': source_key, 'error': detail}], sort_keys=True)
+                record('negative_' + label, lambda message=message:
+                       exact_refusal(v.recount_frozen_inputs, message))
+            frozen = json.loads(frozen_receipt)
+            git_sources = [name for name in frozen['inputs']
+                           if name not in real_map['locations'] and not name.startswith('/')]
+            assert git_sources
+            unavailable_source = git_sources[0]
+            single_git_map = copy.deepcopy(real_map)
+            # This passing parent maps all other sources to their verified bytes.
+            # Its frozen receipt/list fingerprints remain exactly unchanged.
+            for index, name in enumerate(git_sources[1:]):
+                raw = v.recount_source_bytes(name, v.RECOUNT_REVISION, real_map['locations'])
+                single_git_map['locations'][name] = str(put('real-source-bytes/' + str(index), raw))
+            probe_map.write_bytes(encoded(single_git_map))
+            v.recount_frozen_inputs()
+            old_git = os.environ['GIT_DIR']
+            try:
+                os.environ['GIT_DIR'] = str(root / 'absent-git-directory')
+                revision, relative = v.RECOUNT_REVISION, unavailable_source
+                if unavailable_source.startswith('git:'):
+                    _, revision, relative = unavailable_source.split(':', 2)
+                command = ['git', '-C', str(root), 'cat-file', 'blob', revision + ':' + relative]
+                try:
+                    subprocess.check_output(command, stderr=subprocess.PIPE, timeout=30)
+                except subprocess.SubprocessError as exc:
+                    detail = str(exc)
+                else:
+                    raise AssertionError('absent repository unexpectedly resolved source')
+                message = 'recount source custody failed: ' + json.dumps(
+                    [{'source': unavailable_source, 'error': detail}], sort_keys=True)
+                record('negative_custody_subprocess', lambda:
+                       exact_refusal(v.recount_frozen_inputs, message))
+            finally:
+                os.environ['GIT_DIR'] = old_git
+                os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = str(source_map)
+
             record('positive_fourth_receipt', v.recount_change_state)
             record('positive_original_DL077_predicate_through_both_anchors', v.post_august_receipt_state)
+            fourth_path = root / v.RECOUNT_CHANGE
+            fourth_raw = fourth_path.read_bytes()
+            for label, raw in [('third_oserror', None), ('third_valueerror', b'[]\n')]:
+                fourth_path.write_bytes(fourth_raw)
+                assert v.third_change_validator_pin() == v.RECOUNT_BEFORE_SHA
+                if raw is None:
+                    fourth_path.unlink()
+                else:
+                    fourth_path.write_bytes(raw)
+                def live_fallback():
+                    assert v.third_change_validator_pin() == sha((root / REL).read_bytes())
+                record('negative_' + label, live_fallback)
+            fourth_path.write_bytes(fourth_raw)
+
             def august_snapshot():
                 inventory = json.loads((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())
                 denominator = json.loads(v.DENOM.read_bytes())
                 assert inventory['canonical_digest_sha256'] == denominator['freeze_digest_sha256']
                 assert sha((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes()) == sha((repo / str((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').relative_to(root))).read_bytes())
                 pins = v.recount_snapshot_pins()
+                observed = {('august', 'inventory_sha256'): v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json',
+                            ('august', 'denominator_sha256'): v.DENOM,
+                            ('recount', 'observed_receipt_sha256'): root / v.RECOUNT_RECEIPT,
+                            ('recount', 'list_sha256'): root / v.RECOUNT_LIST}
+                for (snapshot, field), path in observed.items():
+                    assert pins[snapshot][field] == sha(path.read_bytes()), (snapshot, field, pins)
                 assert pins['august']['inventory_sha256'] != pins['recount']['expected_list_sha256']
             record('positive_preserved_August_snapshot_own_digest', august_snapshot)
+
+            denominator_raw = v.DENOM.read_bytes()
+            v.DENOM.unlink()
+            def missing_snapshot():
+                pins = v.recount_snapshot_pins()
+                assert pins['august']['denominator_sha256'] is None, pins
+                assert pins['august']['inventory_sha256'] == sha(
+                    (v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())
+                assert pins['recount']['observed_receipt_sha256'] == sha(frozen_receipt)
+                assert pins['recount']['list_sha256'] == sha(frozen_list)
+                assert pins['august']['receipt_sha256'] == v.AUGUST_RECEIPT_SHA
+                assert pins['recount']['expected_receipt_sha256'] == v.RECOUNT_RECEIPT_SHA
+                assert pins['recount']['expected_list_sha256'] == v.RECOUNT_LIST_SHA
+            record('negative_snapshot_missing_file', missing_snapshot)
+            v.DENOM.write_bytes(denominator_raw)
+
+            # B02: direct False assertions retain a valid third anchor and all
+            # unrelated fourth-anchor facts. No crash is an expected refusal.
+            anchors()
+            lock_parent = json.loads((root / 'Plans/Spec_Lock.json').read_bytes())
+            for label in ['anchor_ssot_type', 'anchor_files_type', 'anchor_entry_type', 'anchor_sha_type']:
+                anchors()
+                assert v.recount_anchor(v.RECOUNT_CHANGE) is True
+                bad_lock = copy.deepcopy(lock_parent)
+                if label == 'anchor_ssot_type':
+                    bad_lock['canonical_ssot_hashes'] = 1
+                elif label == 'anchor_files_type':
+                    bad_lock['canonical_ssot_hashes']['files'] = 1
+                elif label == 'anchor_entry_type':
+                    bad_lock['canonical_ssot_hashes']['files'][-1] = None
+                else:
+                    bad_lock['canonical_ssot_hashes']['files'][-1]['sha256'] = 123
+                put('Plans/Spec_Lock.json', encoded(bad_lock))
+                def anchor_false():
+                    assert v.recount_anchor(v.RECOUNT_CHANGE) is False
+                record('negative_' + label, anchor_false)
+            anchors()
+            assert v.recount_relative('Plans/a') == 'Plans/a'
+            record('negative_relative_type', lambda: exact_refusal(
+                lambda: v.recount_relative(['a']), 'unsafe recount source path'))
+            mapped_source = next(iter(real_map['locations']))
+            v.recount_source_bytes(mapped_source, v.RECOUNT_REVISION, real_map['locations'])
+            bad_locations = copy.deepcopy(real_map['locations'])
+            bad_locations[mapped_source] = 123
+            record('negative_location_type', lambda: exact_refusal(
+                lambda: v.recount_source_bytes(mapped_source, v.RECOUNT_REVISION, bad_locations),
+                'source location must be an explicit absolute path'))
 
             # Every following negative starts from an independently passing synthetic
             # custody fixture. It uses the actual 249-name list and exact 597-source shape.
@@ -296,6 +565,21 @@ def run(repo, output, source_map, apply_cut=None):
             v.RECOUNT_RECEIPT_SHA = sha(encoded(absolute_doc))
             map_path.write_bytes(encoded({'schema_id': 'pm.event_authority.recount_source_locations.v1', 'locations': {}}))
             record('positive_absolute_sources_without_map_entries', v.recount_frozen_inputs)
+            # Remove only the optional map from the passing absolute-source
+            # fixture. These are actual fixture bytes, not a claim that this
+            # machine can resolve the real frozen sources without their map.
+            saved_map = os.environ.pop('PM_EA_RECOUNT_SOURCE_MAP')
+            try:
+                def optional_map_absent():
+                    actual_names, actual_custody = v.recount_frozen_inputs()
+                    assert actual_names == names
+                    assert actual_custody == {
+                        'receipt_sha256': v.RECOUNT_RECEIPT_SHA, 'list_sha256': v.RECOUNT_LIST_SHA,
+                        'source_revision': v.RECOUNT_REVISION, 'verified_sources': 597,
+                        'source_locations': None}, actual_custody
+                record('negative_optional_map_absent', optional_map_absent)
+            finally:
+                os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = saved_map
             map_path.write_bytes(encoded({'schema_id': 'pm.event_authority.recount_source_locations.v1', 'locations': []}))
             record('negative_source_map_locations_array', v.recount_frozen_inputs, True,
                    'invalid explicit recount source locations')
@@ -483,6 +767,15 @@ def run(repo, output, source_map, apply_cut=None):
             record('positive_complete_outcome_reader_with_injected_admitted_set', lambda: outcomes(outcome_doc))
             # Astra A01: one defect per case, from the same complete parent.
             # These helper positives inject prior admissions; they grant none.
+            for label, field, value, message in [
+                ('outcomes_rows_type', 'rows', 1, 'recount outcomes snapshot identity mismatch'),
+                ('outcomes_row_type', 'row', [], 'recount outcomes must name each exact member once in sorted order')]:
+                outcomes(outcome_doc)
+                bad = copy.deepcopy(outcome_doc)
+                if field == 'row': bad['rows'][0] = value
+                else: bad[field] = value
+                record('negative_' + label, lambda bad=bad, message=message:
+                       exact_refusal(lambda: outcomes(bad), message))
             for label, mutate in [
                 ('schema_id', lambda d: d.__setitem__('schema_id', 'wrong.schema')),
                 ('receipt_sha256', lambda d: d.__setitem__('recount_receipt_sha256', '0' * 64)),
@@ -513,6 +806,10 @@ def run(repo, output, source_map, apply_cut=None):
             bad = copy.deepcopy(doc)
             bad['rows'][0]['card']['sha256'] = '0' * 64
             record('negative_card_fingerprint', lambda: outcomes(bad), True, 'card fingerprint')
+            bad_card = copy.deepcopy(doc)
+            bad_card['rows'][0]['card'] = 1
+            record('negative_card_type', lambda: exact_refusal(lambda: outcomes(bad_card),
+                   'recount decision card incomplete: ' + names[0]))
             # Cycle 5 B02: require the malformed-card diagnostic while the
             # independent terminal unresolved-card rule remains enabled.
             card_parent = copy.deepcopy(doc)
@@ -561,6 +858,18 @@ def run(repo, output, source_map, apply_cut=None):
                 'source_citations': [{'path': 'Plans/fixture-owner.md', 'sha256': sha(evidence_raw), 'line_start': 1, 'line_end': 1}]}
             admitted_rest = set(names[1:])
             record('positive_exclusion_own_decision_and_evidence', lambda: outcomes(excluded, admitted_rest))
+            for label, field, value, message in [
+                ('rationale_type', 'rationale', 1, 'incomplete or contradictory recount exclusion: '),
+                ('decision_ref_type', 'decision_ref', 1, 'recount exclusion decision missing: '),
+                ('citations_type', 'source_citations', 1, 'recount exclusion evidence missing: '),
+                ('citation_type', 'citation', ['path', 'sha256', 'line_start', 'line_end'],
+                 'malformed recount exclusion citation: ')]:
+                outcomes(excluded, admitted_rest)
+                bad = copy.deepcopy(excluded)
+                if field == 'citation': bad['rows'][0]['source_citations'][0] = value
+                else: bad['rows'][0][field] = value
+                record('negative_' + label, lambda bad=bad, message=message: exact_refusal(
+                    lambda: outcomes(bad, admitted_rest), message + names[0]))
             # Cycle 5 B01: a reversed negative slice end can retain the event
             # token. Only line_end changes from this coherent two-line parent.
             two_line_raw = evidence_raw + b'Second evidence line.\n'
@@ -675,6 +984,9 @@ def run(repo, output, source_map, apply_cut=None):
                 assert v.build_receipt(True, True, [], {}, {}, named, True)['pass'] is True
                 assert v.build_receipt(True, True, [{'error': 'anything'}], {}, {}, named, True)['pass'] is False
                 assert v.build_receipt(False, True, [], {}, {}, named, True)['pass'] is False
+                # The newly added bool() must retain a boolean result even when
+                # an explicitly supplied false value is integer zero.
+                assert v.build_receipt(True, True, [], {}, {}, named, 0)['pass'] is False
             record('combined_result_boolean_and_single_snapshot_refusals', single_snapshot)
             named_parent = {'recount': {'complete': True}, 'august_result_before_recount': {'pass': True}}
             for label, index, field in [
@@ -772,26 +1084,71 @@ def run(repo, output, source_map, apply_cut=None):
             bad = copy.deepcopy(outcome_doc)
             bad['schema_id'] = 'wrong.schema'
             put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(bad))
-            def refuses_aggregate_input_issue():
+            def aggregate_issue(code, detail):
                 state, issues = v.recount_validation(set(names))
-                if state['complete'] is False and len(issues) == 1 and issues[0]['error'] == 'recount_input_or_outcome_invalid':
-                    raise ValueError('aggregate complete is false with its one input/outcome issue')
-            record('negative_aggregate_input_issue', refuses_aggregate_input_issue, True)
+                assert state['complete'] is False, state
+                assert state['diagnostic_only'] is True, state
+                assert issues == [{'error': code, 'detail': detail}], issues
+                if code == 'recount_change_receipt_invalid':
+                    assert 'change_receipt_sha256' not in state, state
+                    assert state['outcomes']['complete'] is True, state
+                else:
+                    assert state['change_receipt_sha256'] == sha((root / v.RECOUNT_CHANGE).read_bytes()), state
+                    assert 'outcomes' not in state, state
+            record('negative_aggregate_input_issue', lambda: aggregate_issue(
+                'recount_input_or_outcome_invalid', 'recount outcomes snapshot identity mismatch'))
             outcomes(outcome_doc)
-            state, issues = v.recount_validation(set(names))
-            assert state['complete'] is True and issues == [], (state, issues)
+            assert v.recount_validation(set(names))[0]['complete'] is True
             bad = copy.deepcopy(change)
             bad['authority_ref'] = 'Plans/Decision_Log.md#DL-450'
             put(v.RECOUNT_CHANGE, encoded(bad))
             anchors()
-            def refuses_aggregate_issue():
-                state, issues = v.recount_validation(set(names))
-                assert len(issues) == 1 and issues[0]['error'] == 'recount_change_receipt_invalid', issues
-                if state['complete'] is False:
-                    raise ValueError('aggregate complete is false with its one receipt issue')
-            record('negative_aggregate_receipt_issue', refuses_aggregate_issue, True)
+            record('negative_aggregate_receipt_issue', lambda: aggregate_issue(
+                'recount_change_receipt_invalid', 'fourth amendment identity, authority, byte link or anchor mismatch'))
             put(v.RECOUNT_CHANGE, encoded(change))
             anchors()
+            for label, path, code in [
+                ('aggregate_receipt_oserror', root / v.RECOUNT_CHANGE, 'recount_change_receipt_invalid'),
+                ('aggregate_input_oserror', v.RECOUNT_OUTCOMES, 'recount_input_or_outcome_invalid')]:
+                assert v.recount_validation(set(names))[0]['complete'] is True
+                raw = path.read_bytes()
+                path.unlink()
+                record('negative_' + label, lambda path=path, code=code: aggregate_issue(
+                    code, str(FileNotFoundError(2, 'No such file or directory', str(path)))))
+                path.write_bytes(raw)
+
+            # Remaining defensive dispatch alternatives use one explicit
+            # dependency fault, rather than malformed multi-defect JSON. The
+            # real-file controls above independently cover OSError/ValueError.
+            def dependency_fault(dependency, fault, action, source=None):
+                original = getattr(v, dependency)
+                def fail(*args, **kwargs):
+                    if source is None or args[0] == source:
+                        raise fault('fixture dependency fault')
+                    return original(*args, **kwargs)
+                setattr(v, dependency, fail)
+                try:
+                    action()
+                finally:
+                    setattr(v, dependency, original)
+            for kind in [TypeError, KeyError]:
+                record('negative_third_dispatch_' + kind.__name__, lambda kind=kind:
+                       dependency_fault('recount_object', kind, live_fallback))
+                record('negative_aggregate_receipt_dispatch_' + kind.__name__, lambda kind=kind:
+                       dependency_fault('recount_change_state', kind, lambda: aggregate_issue(
+                           'recount_change_receipt_invalid', str(kind('fixture dependency fault')))))
+                record('negative_aggregate_input_dispatch_' + kind.__name__, lambda kind=kind:
+                       dependency_fault('recount_frozen_inputs', kind, lambda: aggregate_issue(
+                           'recount_input_or_outcome_invalid', str(kind('fixture dependency fault')))))
+            record('negative_aggregate_input_dispatch_SubprocessError', lambda:
+                   dependency_fault('recount_frozen_inputs', subprocess.SubprocessError,
+                       lambda: aggregate_issue('recount_input_or_outcome_invalid', 'fixture dependency fault')))
+            record('negative_custody_dispatch_TypeError', lambda:
+                   dependency_fault('recount_source_bytes', TypeError,
+                       lambda: exact_refusal(v.recount_frozen_inputs,
+                           'recount source custody failed: ' + json.dumps([
+                               {'source': source_key, 'error': 'fixture dependency fault'}], sort_keys=True)),
+                       source_key))
 
             for label, path in [('parent', '../Plans/x'), ('absolute', '/etc/passwd'),
                                 ('empty_segment', 'Plans//x'), ('dot_segment', 'Plans/./x'),

@@ -270,15 +270,23 @@
       "expression": "type(ssot) is dict",
       "kind": "comparison",
       "site_id": "syntax:e73193bfac35bccc6fbc96631d14cc3d263529c065f6cadbd46ef17b0305650d",
-      "outcome": "structural",
-      "reason": "Strict JSON input {\"canonical_ssot_hashes\": 1} returns False intact; cutting only the type predicate reaches .get on a non-object and raises AttributeError. A crash proves no acceptance.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "new_structural/anchor_ssot_type"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_ssot_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_ssot_type"
+      ],
+      "cut": {
+        "guard": "anchor_ssot_type",
+        "function": "recount_anchor",
+        "expression": "type(ssot) is dict",
+        "replacement": "True"
+      }
     },
     {
       "function": "recount_anchor",
@@ -287,15 +295,23 @@
       "expression": "type(ssot) is dict",
       "kind": "conditional expression",
       "site_id": "syntax:16c0fc3eb57a09f85c132ace0c1b5dcf1388301720b11545fe80617e4c8273c2",
-      "outcome": "structural",
-      "reason": "Strict JSON input {\"canonical_ssot_hashes\": 1} returns False intact; cutting only the type predicate reaches .get on a non-object and raises AttributeError. A crash proves no acceptance.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "new_structural/anchor_ssot_type"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_ssot_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_ssot_type"
+      ],
+      "cut": {
+        "guard": "anchor_ssot_type",
+        "function": "recount_anchor",
+        "expression": "type(ssot) is dict",
+        "replacement": "True"
+      }
     },
     {
       "function": "recount_anchor",
@@ -304,21 +320,23 @@
       "expression": "type(files) is not list",
       "kind": "branch",
       "site_id": "syntax:d78308ebaad221fba27f130e200da7afa6cecc55e576559d820f55da9572f365",
-      "outcome": "structural",
-      "reason": "Input: files = 1. Removing this type/cardinality clause reaches iteration of the files collection and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I003_L848_recount_anchor",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I003_L848_recount_anchor"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I003"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_files_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_files_type"
+      ],
+      "cut": {
+        "guard": "anchor_files_type",
+        "function": "recount_anchor",
+        "expression": "type(files) is not list",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_anchor",
@@ -327,21 +345,23 @@
       "expression": "type(files) is not list",
       "kind": "comparison",
       "site_id": "syntax:cef98b8eb1c0c55370223d371d4dce2fc8c1bfca8db3564883c577571a834099",
-      "outcome": "structural",
-      "reason": "Input: files = 1. Removing this type/cardinality clause reaches iteration of the files collection and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I003_L848_recount_anchor",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I003_L848_recount_anchor"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I003"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_files_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_files_type"
+      ],
+      "cut": {
+        "guard": "anchor_files_type",
+        "function": "recount_anchor",
+        "expression": "type(files) is not list",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_anchor",
@@ -368,15 +388,23 @@
       "expression": "type(v) is dict",
       "kind": "Boolean clause",
       "site_id": "syntax:a087062f464a5b972d4556012643f9938c19ac21334cd9390b5a4515b0c74c4c",
-      "outcome": "structural",
-      "reason": "Strict JSON input {\"canonical_ssot_hashes\": {\"files\": [null]}} returns False intact; cutting only the type predicate reaches .get on a non-object and raises AttributeError. A crash proves no acceptance.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "new_structural/anchor_entry_type"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_entry_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_entry_type"
+      ],
+      "cut": {
+        "guard": "anchor_entry_type",
+        "function": "recount_anchor",
+        "expression": "type(v) is dict",
+        "replacement": "True"
+      }
     },
     {
       "function": "recount_anchor",
@@ -385,15 +413,23 @@
       "expression": "type(v) is dict",
       "kind": "comparison",
       "site_id": "syntax:c09661b85afcc260074b590474fb64dc218f83ffa0488b9f1977de94831cb723",
-      "outcome": "structural",
-      "reason": "Strict JSON input {\"canonical_ssot_hashes\": {\"files\": [null]}} returns False intact; cutting only the type predicate reaches .get on a non-object and raises AttributeError. A crash proves no acceptance.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "new_structural/anchor_entry_type"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_entry_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_entry_type"
+      ],
+      "cut": {
+        "guard": "anchor_entry_type",
+        "function": "recount_anchor",
+        "expression": "type(v) is dict",
+        "replacement": "True"
+      }
     },
     {
       "function": "recount_anchor",
@@ -460,22 +496,24 @@
       "expression": "len(entries) == 1 and type(entries[0].get('sha256')) is str and (HEX64.fullmatch(entries[0]['sha256']) is not None) and (entries[0]['sha256'] == sha256_file(REPO / path))",
       "kind": "return",
       "site_id": "syntax:5a3c5f3ca087cf5c0e9e9069d5c6c9622a630eb2df020fb82adc4d934f0e4493",
-      "outcome": "structural",
-      "reason": "Input: no fourth entry. Removing cardinality indexes entries[0] and raises IndexError. If absence were short-circuited separately, two otherwise valid identical fourth entries would reach cardinality; all digest and type peers remain valid. No acceptance is inferred from the crash.",
-      "prior_variant": "I004_L851_recount_anchor",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I004_L851_recount_anchor"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I004"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_sha_type"
         }
       ],
-      "scope": "Wrapper with mixed child dispositions: its structural behavior does not establish structural-only behavior of its children, and wrapper coverage is never credited as child coverage. Its independently inventoried children keep their own rows (Sol cycle 7 / Astra 4 note)."
+      "scope": "Return-expression wrapper sensitivity only; cardinality and digest children remain separate.",
+      "killed_by": [
+        "negative_anchor_sha_type"
+      ],
+      "cut": {
+        "guard": "anchor_sha_type",
+        "function": "recount_anchor",
+        "expression": "type(entries[0].get('sha256')) is str",
+        "replacement": "True"
+      }
     },
     {
       "function": "recount_anchor",
@@ -484,21 +522,26 @@
       "expression": "len(entries) == 1",
       "kind": "Boolean clause",
       "site_id": "syntax:df5fb362a6037c28d7bd8fd1b79250d392dcfdf79ea54bc60e2424e114fdb73d",
-      "outcome": "structural",
-      "reason": "Input: no fourth entry. Removing cardinality indexes entries[0] and raises IndexError. If absence were short-circuited separately, two otherwise valid identical fourth entries would reach cardinality; all digest and type peers remain valid. No acceptance is inferred from the crash.",
-      "prior_variant": "I004_L851_recount_anchor",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
           "selector": "I004_L851_recount_anchor"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I004"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_entry_type",
+        "negative_missing_fourth_anchor",
+        "negative_duplicate_fourth_anchor",
+        "negative_wrong_fourth_anchor_path"
+      ],
+      "cut": {
+        "guard": "I004_L851_recount_anchor",
+        "function": "recount_anchor",
+        "expression": "len(entries) == 1",
+        "replacement": true
+      }
     },
     {
       "function": "recount_anchor",
@@ -507,21 +550,26 @@
       "expression": "len(entries) == 1",
       "kind": "comparison",
       "site_id": "syntax:53847f90d43c03baf60157767eb21d43ba6a0eacc99af4ddd328c8b168dfe3c6",
-      "outcome": "structural",
-      "reason": "Input: no fourth entry. Removing cardinality indexes entries[0] and raises IndexError. If absence were short-circuited separately, two otherwise valid identical fourth entries would reach cardinality; all digest and type peers remain valid. No acceptance is inferred from the crash.",
-      "prior_variant": "I004_L851_recount_anchor",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
           "selector": "I004_L851_recount_anchor"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I004"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_entry_type",
+        "negative_missing_fourth_anchor",
+        "negative_duplicate_fourth_anchor",
+        "negative_wrong_fourth_anchor_path"
+      ],
+      "cut": {
+        "guard": "I004_L851_recount_anchor",
+        "function": "recount_anchor",
+        "expression": "len(entries) == 1",
+        "replacement": true
+      }
     },
     {
       "function": "recount_anchor",
@@ -530,21 +578,23 @@
       "expression": "type(entries[0].get('sha256')) is str",
       "kind": "Boolean clause",
       "site_id": "syntax:f830ee623cba7bf9f308eb9d5e711794869dc352454b7cd02e2a1a6dc508833a",
-      "outcome": "structural",
-      "reason": "Input: anchor sha256 = 123. Removing this type/cardinality clause reaches HEX64.fullmatch on a non-string and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I005_L851_recount_anchor",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I005_L851_recount_anchor"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I005"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_sha_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_sha_type"
+      ],
+      "cut": {
+        "guard": "anchor_sha_type",
+        "function": "recount_anchor",
+        "expression": "type(entries[0].get('sha256')) is str",
+        "replacement": "True"
+      }
     },
     {
       "function": "recount_anchor",
@@ -553,21 +603,23 @@
       "expression": "type(entries[0].get('sha256')) is str",
       "kind": "comparison",
       "site_id": "syntax:52c7c899a68acf729b8345c5c15d896240528017cd5bdbc9886ac376079f5cea",
-      "outcome": "structural",
-      "reason": "Input: anchor sha256 = 123. Removing this type/cardinality clause reaches HEX64.fullmatch on a non-string and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I005_L851_recount_anchor",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I005_L851_recount_anchor"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I005"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_sha_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_anchor_sha_type"
+      ],
+      "cut": {
+        "guard": "anchor_sha_type",
+        "function": "recount_anchor",
+        "expression": "type(entries[0].get('sha256')) is str",
+        "replacement": "True"
+      }
     },
     {
       "function": "recount_anchor",
@@ -1157,21 +1209,23 @@
       "expression": "type(lander) is not str",
       "kind": "Boolean clause",
       "site_id": "syntax:3cee7774b627e961e021d353bca0505156f9a5b7dce30a38be973881b05ae051",
-      "outcome": "structural",
-      "reason": "Input: lander_task = null. Removing this type/cardinality clause reaches lander.strip(); the cut reaches .strip() on null and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I014_L895_recount_change_state",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I014_L895_recount_change_state"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I014"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "lander_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_change_lander_task"
+      ],
+      "cut": {
+        "guard": "lander_type",
+        "function": "recount_change_state",
+        "expression": "type(lander) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_change_state",
@@ -1180,21 +1234,23 @@
       "expression": "type(lander) is not str",
       "kind": "comparison",
       "site_id": "syntax:d05a9324250909adf33ef81f28be738b854d4e61e241c6c8e5be9c454f97e0d4",
-      "outcome": "structural",
-      "reason": "Input: lander_task = null. Removing this type/cardinality clause reaches lander.strip(); the cut reaches .strip() on null and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I014_L895_recount_change_state",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I014_L895_recount_change_state"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I014"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "lander_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_change_lander_task"
+      ],
+      "cut": {
+        "guard": "lander_type",
+        "function": "recount_change_state",
+        "expression": "type(lander) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_change_state",
@@ -1427,21 +1483,23 @@
       "expression": "type(value) is not str",
       "kind": "Boolean clause",
       "site_id": "syntax:4a076370f15c22bcf209eedfffb52bf84710e6195a7fe5c27a53ef86260422a8",
-      "outcome": "structural",
-      "reason": "Input: path = [\"a\"]. Removing this type/cardinality clause reaches value.startswith after type guard removal and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I020_L907_recount_relative",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I020_L907_recount_relative"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I020"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "relative_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_relative_type"
+      ],
+      "cut": {
+        "guard": "relative_type",
+        "function": "recount_relative",
+        "expression": "type(value) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_relative",
@@ -1511,21 +1569,23 @@
       "expression": "type(value) is not str",
       "kind": "comparison",
       "site_id": "syntax:282d48ca561bf0b2466b7cb7f43d097413910209ffcd30ef5d2521399536bc70",
-      "outcome": "structural",
-      "reason": "Input: path = [\"a\"]. Removing this type/cardinality clause reaches value.startswith after type guard removal and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I020_L907_recount_relative",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I020_L907_recount_relative"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I020"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "relative_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_relative_type"
+      ],
+      "cut": {
+        "guard": "relative_type",
+        "function": "recount_relative",
+        "expression": "type(value) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_relative",
@@ -2015,21 +2075,23 @@
       "expression": "type(path) is not str",
       "kind": "Boolean clause",
       "site_id": "syntax:c7ce38d975efb416dbe90e65bcf00bdd69da08385341fafc61296a3a163a58fb",
-      "outcome": "structural",
-      "reason": "Input: mapped location = 123. Removing this type/cardinality clause reaches Path(123) and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I029_L917_recount_source_bytes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I029_L917_recount_source_bytes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I029"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "location_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_location_type"
+      ],
+      "cut": {
+        "guard": "location_type",
+        "function": "recount_source_bytes",
+        "expression": "type(path) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_source_bytes",
@@ -2064,21 +2126,23 @@
       "expression": "type(path) is not str",
       "kind": "comparison",
       "site_id": "syntax:5516fcd3d411b4e60760ee81e39a31bad715af956d6d3c93db78eecd50547340",
-      "outcome": "structural",
-      "reason": "Input: mapped location = 123. Removing this type/cardinality clause reaches Path(123) and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I029_L917_recount_source_bytes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I029_L917_recount_source_bytes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I029"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "location_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_location_type"
+      ],
+      "cut": {
+        "guard": "location_type",
+        "function": "recount_source_bytes",
+        "expression": "type(path) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_source_bytes",
@@ -3455,19 +3519,22 @@
       "expression": "location_path is not None",
       "kind": "branch",
       "site_id": "syntax:3f6519cc7c84111dcb6ac5e51ea1195095ae9612fabc006e939ef316cf2cd4e3",
-      "outcome": "structural",
-      "reason": "Routing cut interrupts the passing parent with {'type': 'TypeError', 'error': 'cannot unpack non-iterable NoneType object'}; no acceptance is claimed.",
+      "outcome": "killed by",
       "cut": {
+        "guard": "optional_map",
         "function": "recount_frozen_inputs",
         "expression": "location_path is not None",
-        "replacement": "False"
+        "replacement": "True"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json",
-          "sha256": "552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce",
-          "selector": "source_map_selected"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "optional_map"
         }
+      ],
+      "killed_by": [
+        "negative_optional_map_absent"
       ]
     },
     {
@@ -3477,19 +3544,22 @@
       "expression": "location_path is not None",
       "kind": "comparison",
       "site_id": "syntax:c69214c9169c65af90bf49589696f2a2ce174bf07db9bec70b7ad4a4c999fc2c",
-      "outcome": "structural",
-      "reason": "Routing cut interrupts the passing parent with {'type': 'TypeError', 'error': 'cannot unpack non-iterable NoneType object'}; no acceptance is claimed.",
+      "outcome": "killed by",
       "cut": {
+        "guard": "optional_map",
         "function": "recount_frozen_inputs",
         "expression": "location_path is not None",
-        "replacement": "False"
+        "replacement": "True"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json",
-          "sha256": "552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce",
-          "selector": "source_map_selected"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "optional_map"
         }
+      ],
+      "killed_by": [
+        "negative_optional_map_absent"
       ]
     },
     {
@@ -4375,21 +4445,23 @@
       "expression": "type(doc.get('rows')) is not list",
       "kind": "Boolean clause",
       "site_id": "syntax:ce8cb001eec63e4e17ea42b1f2ebc3b424841518f528bce9e1e25db1c8fec80d",
-      "outcome": "structural",
-      "reason": "Input: outcome rows = 1. Removing this type/cardinality clause reaches iteration of rows and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I068_L997_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I068_L997_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I068"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "outcomes_rows_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_outcomes_rows_type"
+      ],
+      "cut": {
+        "guard": "outcomes_rows_type",
+        "function": "recount_outcomes",
+        "expression": "type(doc.get('rows')) is not list",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -4398,21 +4470,23 @@
       "expression": "type(doc.get('rows')) is not list",
       "kind": "comparison",
       "site_id": "syntax:d736a5a8e7c29f8c021e2fc8f0a5eefe0ccba96b35f768e60538a710086d7543",
-      "outcome": "structural",
-      "reason": "Input: outcome rows = 1. Removing this type/cardinality clause reaches iteration of rows and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I068_L997_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I068_L997_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I068"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "outcomes_rows_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_outcomes_rows_type"
+      ],
+      "cut": {
+        "guard": "outcomes_rows_type",
+        "function": "recount_outcomes",
+        "expression": "type(doc.get('rows')) is not list",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -4421,21 +4495,24 @@
       "expression": "any((type(row) is not dict for row in rows))",
       "kind": "Boolean clause",
       "site_id": "syntax:bd76949e541f7810e3046b0ffbd29b78246552007c026076248f2c0cfac864eb",
-      "outcome": "structural",
-      "reason": "Input: outcome row = [\"event_type\", \"outcome\"]. Removing this type/cardinality clause reaches r.get on a list and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I069_L1000_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I069_L1000_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I069"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "outcomes_row_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_outcomes_row_type"
+      ],
+      "cut": {
+        "guard": "outcomes_row_type",
+        "function": "recount_outcomes",
+        "expression": "type(row) is not dict",
+        "replacement": "False"
+      },
+      "scope": "Wrapper sensitivity only; exact membership and row type have separate leaf rows."
     },
     {
       "function": "recount_outcomes",
@@ -4444,22 +4521,24 @@
       "expression": "any((type(row) is not dict for row in rows)) or [r.get('event_type') for r in rows] != names",
       "kind": "branch",
       "site_id": "syntax:c9791cea623cbfd68f6787497af63f516ac993feaa2c6619c5faf1324202c2aa",
-      "outcome": "structural",
-      "reason": "Input: outcome row = [\"event_type\", \"outcome\"]. Removing this type/cardinality clause reaches r.get on a list and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I069_L1000_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I069_L1000_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I069"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "outcomes_row_type"
         }
       ],
-      "scope": "Wrapper with mixed child dispositions: its structural behavior does not establish structural-only behavior of its children, and wrapper coverage is never credited as child coverage. Its independently inventoried children keep their own rows (Sol cycle 7 / Astra 4 note)."
+      "scope": "Wrapper sensitivity only; exact membership and row type have separate leaf rows.",
+      "killed_by": [
+        "negative_outcomes_row_type"
+      ],
+      "cut": {
+        "guard": "outcomes_row_type",
+        "function": "recount_outcomes",
+        "expression": "type(row) is not dict",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -4468,21 +4547,23 @@
       "expression": "type(row) is not dict",
       "kind": "comparison",
       "site_id": "syntax:ce5b807648eb4dab1c5f4e8be80951441f33c61e1b124db4b97c8f8664b5ef57",
-      "outcome": "structural",
-      "reason": "Input: outcome row = [\"event_type\", \"outcome\"]. Removing this type/cardinality clause reaches r.get on a list and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I069_L1000_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I069_L1000_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I069"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "outcomes_row_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_outcomes_row_type"
+      ],
+      "cut": {
+        "guard": "outcomes_row_type",
+        "function": "recount_outcomes",
+        "expression": "type(row) is not dict",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -4951,21 +5032,23 @@
       "expression": "type(row.get('rationale')) is not str",
       "kind": "Boolean clause",
       "site_id": "syntax:c700c9689961fed703ec1f6fac86b1dd8e5ac4d45d1079ebfb1959da45a155d2",
-      "outcome": "structural",
-      "reason": "Input: rationale = 1. Removing this type/cardinality clause reaches rationale.strip and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I077_L1013_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I077_L1013_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I077"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "rationale_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_rationale_type"
+      ],
+      "cut": {
+        "guard": "rationale_type",
+        "function": "recount_outcomes",
+        "expression": "type(row.get('rationale')) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -4974,21 +5057,23 @@
       "expression": "type(row.get('rationale')) is not str",
       "kind": "comparison",
       "site_id": "syntax:cfe9edf927c09f815c97412eac665e6ce8d2f54d8725bc931b131c857ea17ea0",
-      "outcome": "structural",
-      "reason": "Input: rationale = 1. Removing this type/cardinality clause reaches rationale.strip and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I077_L1013_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I077_L1013_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I077"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "rationale_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_rationale_type"
+      ],
+      "cut": {
+        "guard": "rationale_type",
+        "function": "recount_outcomes",
+        "expression": "type(row.get('rationale')) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -5022,21 +5107,23 @@
       "expression": "type(ref) is not str",
       "kind": "Boolean clause",
       "site_id": "syntax:452f14c0cabed7d7c27376fd0f0cf56eba21eae23b4b0c0f12bd2b9ae5affff8",
-      "outcome": "structural",
-      "reason": "Input: decision_ref = 1. Removing this type/cardinality clause reaches re.fullmatch on a non-string and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I079_L1016_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I079_L1016_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I079"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "decision_ref_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_decision_ref_type"
+      ],
+      "cut": {
+        "guard": "decision_ref_type",
+        "function": "recount_outcomes",
+        "expression": "type(ref) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -5071,21 +5158,23 @@
       "expression": "type(ref) is not str",
       "kind": "comparison",
       "site_id": "syntax:a79cc035e30dd961dceb1c032b177066e392d0aada3e0b44e3a02425eb1923c9",
-      "outcome": "structural",
-      "reason": "Input: decision_ref = 1. Removing this type/cardinality clause reaches re.fullmatch on a non-string and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I079_L1016_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I079_L1016_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I079"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "decision_ref_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_decision_ref_type"
+      ],
+      "cut": {
+        "guard": "decision_ref_type",
+        "function": "recount_outcomes",
+        "expression": "type(ref) is not str",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -5344,21 +5433,23 @@
       "expression": "type(citations) is not list",
       "kind": "Boolean clause",
       "site_id": "syntax:14e61ba0cd63334e9f562372ebfb3498c963a4bbfd02dcd5597e1ceddb0b442d",
-      "outcome": "structural",
-      "reason": "Input: source_citations = 1. Removing this type/cardinality clause reaches iteration of citations and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I083_L1023_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I083_L1023_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I083"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "citations_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_citations_type"
+      ],
+      "cut": {
+        "guard": "citations_type",
+        "function": "recount_outcomes",
+        "expression": "type(citations) is not list",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -5393,21 +5484,23 @@
       "expression": "type(citations) is not list",
       "kind": "comparison",
       "site_id": "syntax:6a39a250fef7210c23e64dca640d44992a923ac710f4d92102e2128d8329aa7a",
-      "outcome": "structural",
-      "reason": "Input: source_citations = 1. Removing this type/cardinality clause reaches iteration of citations and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I083_L1023_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I083_L1023_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I083"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "citations_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_citations_type"
+      ],
+      "cut": {
+        "guard": "citations_type",
+        "function": "recount_outcomes",
+        "expression": "type(citations) is not list",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -5441,21 +5534,23 @@
       "expression": "type(cite) is not dict",
       "kind": "Boolean clause",
       "site_id": "syntax:6a5c81fc33e7450a625a8bde4aaa197dbb6a08801c83b5461ac0a39f3810b96d",
-      "outcome": "structural",
-      "reason": "Input: citation = [\"path\", \"sha256\", \"line_start\", \"line_end\"]. Removing this type/cardinality clause reaches string-key indexing of a list and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I085_L1026_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I085_L1026_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I085"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "citation_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_citation_type"
+      ],
+      "cut": {
+        "guard": "citation_type",
+        "function": "recount_outcomes",
+        "expression": "type(cite) is not dict",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -5490,21 +5585,23 @@
       "expression": "type(cite) is not dict",
       "kind": "comparison",
       "site_id": "syntax:52fd7d29f74db516e0b4ea819b6588c6925e5cef1d7aec9c90db76ad9a554c7f",
-      "outcome": "structural",
-      "reason": "Input: citation = [\"path\", \"sha256\", \"line_start\", \"line_end\"]. Removing this type/cardinality clause reaches string-key indexing of a list and raises TypeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I085_L1026_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I085_L1026_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I085"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "citation_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_citation_type"
+      ],
+      "cut": {
+        "guard": "citation_type",
+        "function": "recount_outcomes",
+        "expression": "type(cite) is not dict",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -6204,21 +6301,23 @@
       "expression": "type(row.get('card')) is not dict",
       "kind": "Boolean clause",
       "site_id": "syntax:060d9c8796d4b698d9a5310f7f9224acb067d3efc576a07a0d6ed2a95783b355",
-      "outcome": "structural",
-      "reason": "Input: card = 1. Removing this type/cardinality clause reaches pin.get on an integer and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I095_L1043_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I095_L1043_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I095"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "card_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_card_type"
+      ],
+      "cut": {
+        "guard": "card_type",
+        "function": "recount_outcomes",
+        "expression": "type(row.get('card')) is not dict",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -6227,21 +6326,23 @@
       "expression": "type(row.get('card')) is not dict",
       "kind": "comparison",
       "site_id": "syntax:b5cc4bb69ff3dd52fbaccac656c7ad6f273d2e8f0b9308a8db3c059a37b79b45",
-      "outcome": "structural",
-      "reason": "Input: card = 1. Removing this type/cardinality clause reaches pin.get on an integer and raises AttributeError. The intact clause refuses before that operation; no acceptance is inferred from a crash.",
-      "prior_variant": "I095_L1043_recount_outcomes",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
-          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
-          "selector": "I095_L1043_recount_outcomes"
-        },
-        {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
-          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
-          "selector": "I095"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "card_type"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_card_type"
+      ],
+      "cut": {
+        "guard": "card_type",
+        "function": "recount_outcomes",
+        "expression": "type(row.get('card')) is not dict",
+        "replacement": "False"
+      }
     },
     {
       "function": "recount_outcomes",
@@ -6586,13 +6687,34 @@
       "expression": "path.is_file()",
       "kind": "conditional expression",
       "site_id": "syntax:948084b99220962c2b816a27373954edb43132429c64a36ed173fa83c2de4d83",
-      "outcome": "structural",
-      "reason": "File-existence observation: absent file yields null intact; forcing the is_file condition True raises FileNotFoundError. Diagnostic only; no approval predicate is removed.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/predicate-inventory.json",
-          "sha256": "bbd94480abc7de45a401ca5de78f5515d659ad20a179c6d3ae234573c5cfd20c",
-          "selector": "diagnostic_observation"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "snapshot_is_file"
+        }
+      ],
+      "killed_by": [
+        "negative_snapshot_missing_file"
+      ],
+      "cut": {
+        "guard": "snapshot_is_file",
+        "function": "recount_snapshot_pins",
+        "expression": "path.is_file()",
+        "replacement": "True"
+      },
+      "independent_component_cuts": [
+        {
+          "guard": "snapshot_absent",
+          "killed_by": [
+            "positive_preserved_August_snapshot_own_digest"
+          ],
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+            "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+            "selector": "snapshot_absent"
+          }
         }
       ]
     },
@@ -6603,13 +6725,34 @@
       "expression": "path.is_file()",
       "kind": "predicate call",
       "site_id": "syntax:11b33967740af06361c8f33ce93d433347ce19333625db386bdf39c4630746d5",
-      "outcome": "structural",
-      "reason": "File-existence observation: absent file yields null intact; forcing the is_file condition True raises FileNotFoundError. Diagnostic only; no approval predicate is removed.",
+      "outcome": "killed by",
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/predicate-inventory.json",
-          "sha256": "bbd94480abc7de45a401ca5de78f5515d659ad20a179c6d3ae234573c5cfd20c",
-          "selector": "diagnostic_observation"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "snapshot_is_file"
+        }
+      ],
+      "killed_by": [
+        "negative_snapshot_missing_file"
+      ],
+      "cut": {
+        "guard": "snapshot_is_file",
+        "function": "recount_snapshot_pins",
+        "expression": "path.is_file()",
+        "replacement": "True"
+      },
+      "independent_component_cuts": [
+        {
+          "guard": "snapshot_absent",
+          "killed_by": [
+            "positive_preserved_August_snapshot_own_digest"
+          ],
+          "evidence": {
+            "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+            "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+            "selector": "snapshot_absent"
+          }
         }
       ]
     },
@@ -7974,13 +8117,12 @@
         "negative_aggregate_receipt_issue"
       ],
       "cut": {
-        "function": "recount_validation",
-        "remove_only": "issues.append for recount_change_receipt_invalid"
+        "guard": "aggregate_collect_recount_change_receipt_invalid"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
-          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
           "selector": "aggregate_collect_recount_change_receipt_invalid"
         }
       ]
@@ -7993,13 +8135,12 @@
         "negative_aggregate_input_issue"
       ],
       "cut": {
-        "function": "recount_validation",
-        "remove_only": "issues.append for recount_input_or_outcome_invalid"
+        "guard": "aggregate_collect_recount_input_or_outcome_invalid"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
-          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
           "selector": "aggregate_collect_recount_input_or_outcome_invalid"
         }
       ]
@@ -9102,65 +9243,1092 @@
   "totals": {
     "syntax_sites": 286,
     "semantic_expansions": 41,
-    "sites": 327,
+    "walker_sites": 327,
+    "supplement_rows": 43,
+    "combined_sites": 370,
     "outcomes": {
-      "killed by": 197,
-      "structural": 57,
-      "implied": 20,
-      "same-predicate duplicate": 3,
-      "frozen-input only": 50
+      "killed by": 270,
+      "structural": 21,
+      "implied": 23,
+      "same-predicate duplicate": 4,
+      "frozen-input only": 52
     },
     "unclassified": 0
   },
-  "outside_walker_sites": [
+  "supplement": [
+    {
+      "function": "multi_family_receipt_state",
+      "line": 220,
+      "column": 8,
+      "expression": "not isinstance(receipt, dict) or not isinstance(dl077, dict) or receipt.get('schema_id') != MULTI_FAMILY_RECEIPT_SCHEMA or (receipt.get('authority_ref') != MULTI_FAMILY_AUTHORITY) or (receipt.get('authority_section_sha256') != section_hash) or (receipt.get('validator_before_sha256') != dl077.get('validator_after_sha256')) or (receipt.get('validator_after_sha256') != third_change_validator_pin()) or (not isinstance(prior, dict)) or (prior.get('path') != POST_AUGUST_RECEIPT) or (prior.get('sha256') != sha256_file(REPO / POST_AUGUST_RECEIPT)) or (receipt.get('record_dir') != POST_AUGUST_RECORD_DIR) or (receipt.get('record_schema_id') != POST_AUGUST_RECORD_SCHEMA) or (receipt.get('author_task') != MULTI_FAMILY_AUTHOR) or (not isinstance(lander, str)) or (not lander.strip()) or (receipt.get('seal_applier_forbidden_tasks') != sorted({MULTI_FAMILY_AUTHOR, lander})) or (receipt.get('seal_authorized') is not False) or (receipt.get('admission_authorized') is not False) or (receipt.get('contract_depth_complete') is not False)",
+      "kind": "Boolean composition",
+      "site_id": "supplement:771bcbb4a6463b46ad32ce493f4e1547a93d3158f84b0efa8a76a97838b04c28",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_third_semantic_after_hash"
+      ],
+      "cut": {
+        "guard": "multi_family_after_hash",
+        "function": "multi_family_receipt_state",
+        "expression": "receipt.get('validator_after_sha256') != third_change_validator_pin()",
+        "replacement": "False"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "multi_family_after_hash"
+        }
+      ],
+      "scope": "Changed multiline wrapper only; inherited unchanged clauses are outside this amendment."
+    },
+    {
+      "function": "multi_family_receipt_state",
+      "line": 220,
+      "column": 8,
+      "expression": "not isinstance(receipt, dict) or not isinstance(dl077, dict) or receipt.get('schema_id') != MULTI_FAMILY_RECEIPT_SCHEMA or (receipt.get('authority_ref') != MULTI_FAMILY_AUTHORITY) or (receipt.get('authority_section_sha256') != section_hash) or (receipt.get('validator_before_sha256') != dl077.get('validator_after_sha256')) or (receipt.get('validator_after_sha256') != third_change_validator_pin()) or (not isinstance(prior, dict)) or (prior.get('path') != POST_AUGUST_RECEIPT) or (prior.get('sha256') != sha256_file(REPO / POST_AUGUST_RECEIPT)) or (receipt.get('record_dir') != POST_AUGUST_RECORD_DIR) or (receipt.get('record_schema_id') != POST_AUGUST_RECORD_SCHEMA) or (receipt.get('author_task') != MULTI_FAMILY_AUTHOR) or (not isinstance(lander, str)) or (not lander.strip()) or (receipt.get('seal_applier_forbidden_tasks') != sorted({MULTI_FAMILY_AUTHOR, lander})) or (receipt.get('seal_authorized') is not False) or (receipt.get('admission_authorized') is not False) or (receipt.get('contract_depth_complete') is not False)",
+      "kind": "overlapping branch",
+      "site_id": "supplement:e6250eb88b9cb8933e5b69c9e8b252df38d2ea234d4b2e746f8707071fbc5ae9",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_third_semantic_after_hash"
+      ],
+      "cut": {
+        "guard": "multi_family_after_hash",
+        "function": "multi_family_receipt_state",
+        "expression": "receipt.get('validator_after_sha256') != third_change_validator_pin()",
+        "replacement": "False"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "multi_family_after_hash"
+        }
+      ],
+      "scope": "Changed multiline wrapper only; inherited unchanged clauses are outside this amendment."
+    },
+    {
+      "function": "recount_json",
+      "line": 833,
+      "column": 44,
+      "expression": "object_pairs_hook=pairs",
+      "kind": "parser callback",
+      "site_id": "supplement:327f7ee6bcdb5208d4662b5d8aebc88a12889936e808c0a860121f4feae29d3a",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_strict_duplicate_root",
+        "negative_strict_duplicate_nested"
+      ],
+      "cut": {
+        "function": "recount_json",
+        "remove_keyword": "object_pairs_hook"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "object_pairs_hook"
+        }
+      ]
+    },
+    {
+      "function": "recount_json",
+      "line": 834,
+      "column": 23,
+      "expression": "parse_constant=constant",
+      "kind": "parser callback",
+      "site_id": "supplement:842def73ab6b5bf7a99f38bacc83d599e79c16e330fc88b137818122f523674c",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_strict_NaN",
+        "negative_strict_Infinity",
+        "negative_strict_negative_Infinity"
+      ],
+      "cut": {
+        "function": "recount_json",
+        "remove_keyword": "parse_constant"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "parse_constant"
+        }
+      ]
+    },
+    {
+      "function": "recount_json",
+      "line": 834,
+      "column": 48,
+      "expression": "parse_float=finite_float",
+      "kind": "parser callback",
+      "site_id": "supplement:438889eaf1ffcc30049aa2a11503d158141757a784dda85fdd8a917b217be321",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_strict_overflow"
+      ],
+      "cut": {
+        "function": "recount_json",
+        "remove_keyword": "parse_float"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "parse_float"
+        }
+      ]
+    },
+    {
+      "function": "recount_anchor",
+      "line": 850,
+      "column": 35,
+      "expression": "type(v) is dict and v.get('path') == path",
+      "kind": "Boolean composition",
+      "site_id": "supplement:fa379ab1fadf8e3a6372ccc7072b9031ae3c00a43690a80640918d624217ed48",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_anchor_entry_type"
+      ],
+      "cut": {
+        "guard": "anchor_entry_type",
+        "function": "recount_anchor",
+        "expression": "type(v) is dict",
+        "replacement": "True"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_entry_type"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "recount_anchor",
+      "line": 850,
+      "column": 35,
+      "expression": "type(v) is dict and v.get('path') == path",
+      "kind": "comprehension filter",
+      "site_id": "supplement:6e29e1b553a315847bf557030d116a000d36e7dab850b1c3b9d3dc3b13393558",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_anchor_entry_type"
+      ],
+      "cut": {
+        "guard": "anchor_entry_type",
+        "function": "recount_anchor",
+        "expression": "type(v) is dict",
+        "replacement": "True"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_entry_type"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "recount_anchor",
+      "line": 851,
+      "column": 12,
+      "expression": "len(entries) == 1 and type(entries[0].get('sha256')) is str and (HEX64.fullmatch(entries[0]['sha256']) is not None) and (entries[0]['sha256'] == sha256_file(REPO / path))",
+      "kind": "Boolean composition",
+      "site_id": "supplement:017c96783638925eecfa9879762c9d11485b65891de6fe5065b05948507187cb",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_anchor_sha_type"
+      ],
+      "cut": {
+        "guard": "anchor_sha_type",
+        "function": "recount_anchor",
+        "expression": "type(entries[0].get('sha256')) is str",
+        "replacement": "True"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "anchor_sha_type"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "third_change_validator_pin",
+      "line": 867,
+      "column": 4,
+      "expression": "(OSError, ValueError, TypeError, KeyError, UnicodeError)",
+      "kind": "exception dispatch",
+      "site_id": "supplement:47a1138ce3e634a3b5c65eea8e01481a0b507098fc0dc34719c03bb9047b0f3b",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_third_oserror"
+      ],
+      "cut": {
+        "function": "third_change_validator_pin",
+        "handler_line": 867,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "867:OSError"
+        }
+      ],
+      "scope": "Dispatch wrapper sensitivity only; every alternative has its own row."
+    },
+    {
+      "function": "third_change_validator_pin",
+      "line": 867,
+      "column": 12,
+      "expression": "OSError",
+      "kind": "exception alternative",
+      "site_id": "supplement:313f68f20812ff0e4c2e108b0627195dd0bd4b359e8636901e7e470a0d28e899",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_third_oserror"
+      ],
+      "cut": {
+        "function": "third_change_validator_pin",
+        "handler_line": 867,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "867:OSError"
+        }
+      ]
+    },
+    {
+      "function": "third_change_validator_pin",
+      "line": 867,
+      "column": 21,
+      "expression": "ValueError",
+      "kind": "exception alternative",
+      "site_id": "supplement:8f7ccfa98e1eeaf0960615cd686454e06a2118ea75cccdc9caee33f16edd7139",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_third_valueerror"
+      ],
+      "cut": {
+        "function": "third_change_validator_pin",
+        "handler_line": 867,
+        "remove_exception": "ValueError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "867:ValueError"
+        }
+      ]
+    },
+    {
+      "function": "third_change_validator_pin",
+      "line": 867,
+      "column": 33,
+      "expression": "TypeError",
+      "kind": "exception alternative",
+      "site_id": "supplement:e0add4b6fdccc507525e9b0a4f8a4ea56b9cc6654d04c076169288784b57985c",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_third_dispatch_TypeError"
+      ],
+      "cut": {
+        "function": "third_change_validator_pin",
+        "handler_line": 867,
+        "remove_exception": "TypeError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "867:TypeError"
+        }
+      ]
+    },
+    {
+      "function": "third_change_validator_pin",
+      "line": 867,
+      "column": 44,
+      "expression": "KeyError",
+      "kind": "exception alternative",
+      "site_id": "supplement:cc2054c47b7f872c3d5e1bdf383fdff7187d46b6dec015d17aef49c80ec10bbd",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_third_dispatch_KeyError"
+      ],
+      "cut": {
+        "function": "third_change_validator_pin",
+        "handler_line": 867,
+        "remove_exception": "KeyError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "867:KeyError"
+        }
+      ]
+    },
+    {
+      "function": "third_change_validator_pin",
+      "line": 867,
+      "column": 54,
+      "expression": "UnicodeError",
+      "kind": "exception alternative",
+      "site_id": "supplement:3db96aa417086b979143425156b1d73655a4a0d57706391cdb61ce297b9657fc",
+      "outcome": "implied",
+      "reason": "UnicodeError is a subclass of ValueError on the same raised exception. Removing only UnicodeError preserves the catch; removing both alternatives loses it. This is dispatch-domain containment, independent of evaluation order.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/unicode-dispatch-proofs.json",
+          "sha256": "a506a026b9e4f2cb07b69b9c26494ae64e16ae3ed858e34aeca4487b47d8f927",
+          "selector": "867"
+        }
+      ]
+    },
+    {
+      "function": "recount_change_state",
+      "line": 894,
+      "column": 12,
+      "expression": "type(receipt.get(k)) is not type(v) or receipt.get(k) != v",
+      "kind": "Boolean composition",
+      "site_id": "supplement:0b595214923b0f49cf26c6c6e64bb7bc8308ceaad3eef18e940015666e0c05d1",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_change_schema_id",
+        "negative_change_authority_ref",
+        "negative_change_prior_receipt",
+        "negative_change_recount_receipt",
+        "negative_change_recount_list",
+        "negative_change_validator_id",
+        "negative_change_validator_path",
+        "negative_change_authority_section_sha256",
+        "negative_change_author_task",
+        "negative_change_certification_scope",
+        "negative_nested_prior_receipt_path",
+        "negative_nested_prior_receipt_keys",
+        "negative_nested_recount_receipt_path",
+        "negative_nested_recount_receipt_keys",
+        "negative_nested_recount_list_path",
+        "negative_nested_recount_list_keys",
+        "negative_aggregate_receipt_issue"
+      ],
+      "cut": {
+        "guard": "I013_L894_recount_change_state",
+        "function": "recount_change_state",
+        "expression": "receipt.get(k) != v",
+        "replacement": false
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/removal-summary.json",
+          "sha256": "4b7f3934bdf7f228d2d877d0acfadd19a76c2419ce7c362baafe2b96ef3b9af0",
+          "selector": "I013_L894_recount_change_state"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "recount_relative",
+      "line": 908,
+      "column": 19,
+      "expression": "ord(c) < 32 or ord(c) == 127",
+      "kind": "Boolean composition",
+      "site_id": "supplement:28635ea7f4ccec6599179a0b5f8968f0363b1b13c00d167422783d86688fac65",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_unsafe_source_path_control"
+      ],
+      "cut": {
+        "guard": "I024_L908_recount_relative",
+        "function": "recount_relative",
+        "expression": "ord(c) < 32",
+        "replacement": false
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/removal-summary.json",
+          "sha256": "4b7f3934bdf7f228d2d877d0acfadd19a76c2419ce7c362baafe2b96ef3b9af0",
+          "selector": "I024_L908_recount_relative"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "recount_frozen_inputs",
+      "line": 952,
+      "column": 12,
+      "expression": "type(n) is not str or not re.fullmatch('[A-Za-z0-9_]+(?:\\\\.[A-Za-z0-9_]+)+', n)",
+      "kind": "Boolean composition",
+      "site_id": "supplement:383768f86f40365d30707f977a918bdec4141e85156c7d03b0058f064b876572",
+      "outcome": "frozen-input only",
+      "reason": "list name types. NEW-LIST.json pinned at V:936 by 2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
+          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
+          "selector": "I043_L952_recount_frozen_inputs"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
+          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
+          "selector": "original frozen byte pin"
+        }
+      ],
+      "scope": "Composition of separately inventoried, receipt/list-pinned children."
+    },
+    {
+      "function": "recount_frozen_inputs",
+      "line": 954,
+      "column": 19,
+      "expression": "row.get('in_august_ledger') is not False or row.get('in_live_registry') is not False or row.get('classification') != 'persisted_event_candidate'",
+      "kind": "Boolean composition",
+      "site_id": "supplement:ab22c11970ee7d6b313aa6075c8e3adeb3fcdd80fd406abc07f44f639d9fd45c",
+      "outcome": "frozen-input only",
+      "reason": "list.in_august_ledger. NEW-LIST.json pinned at V:936 by 2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/classification-regrade.json",
+          "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040",
+          "selector": "I046_L954_recount_frozen_inputs"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-3/witnesses3.json",
+          "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
+          "selector": "original frozen byte pin"
+        }
+      ],
+      "scope": "Composition of separately inventoried, receipt/list-pinned children."
+    },
+    {
+      "function": "recount_frozen_inputs",
+      "line": 984,
+      "column": 8,
+      "expression": "(OSError, ValueError, TypeError, subprocess.SubprocessError)",
+      "kind": "exception dispatch",
+      "site_id": "supplement:2ee747891653de01d827ac3d97958d8e27ac82ebe98c4574983315348abe648f",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_custody_oserror"
+      ],
+      "cut": {
+        "function": "recount_frozen_inputs",
+        "handler_line": 984,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "984:OSError"
+        }
+      ],
+      "scope": "Dispatch wrapper sensitivity only; every alternative has its own row."
+    },
+    {
+      "function": "recount_frozen_inputs",
+      "line": 984,
+      "column": 16,
+      "expression": "OSError",
+      "kind": "exception alternative",
+      "site_id": "supplement:5ae67e9fe8cc3e48240ffb2c774735392f5da41a808539de224ad080adefbb5c",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_custody_oserror"
+      ],
+      "cut": {
+        "function": "recount_frozen_inputs",
+        "handler_line": 984,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "984:OSError"
+        }
+      ]
+    },
+    {
+      "function": "recount_frozen_inputs",
+      "line": 984,
+      "column": 25,
+      "expression": "ValueError",
+      "kind": "exception alternative",
+      "site_id": "supplement:af140df97370e0a34650c1cc804384b7920e2fc68a824b985a53523f857e0fc9",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_custody_valueerror"
+      ],
+      "cut": {
+        "function": "recount_frozen_inputs",
+        "handler_line": 984,
+        "remove_exception": "ValueError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "984:ValueError"
+        }
+      ]
+    },
+    {
+      "function": "recount_frozen_inputs",
+      "line": 984,
+      "column": 37,
+      "expression": "TypeError",
+      "kind": "exception alternative",
+      "site_id": "supplement:4612c70ebab886d0f78c36e071af97ef01e73a5042d9184805e94da82ae6118f",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_custody_dispatch_TypeError"
+      ],
+      "cut": {
+        "function": "recount_frozen_inputs",
+        "handler_line": 984,
+        "remove_exception": "TypeError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "984:TypeError"
+        }
+      ]
+    },
+    {
+      "function": "recount_frozen_inputs",
+      "line": 984,
+      "column": 48,
+      "expression": "subprocess.SubprocessError",
+      "kind": "exception alternative",
+      "site_id": "supplement:054f480235338ded415bb24398324fec8a25f8a58403341880f1691cf04b9a6d",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_custody_subprocess"
+      ],
+      "cut": {
+        "function": "recount_frozen_inputs",
+        "handler_line": 984,
+        "remove_exception": "subprocess.SubprocessError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "984:subprocess.SubprocessError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1066,
+      "column": 4,
+      "expression": "(OSError, ValueError, TypeError, KeyError, UnicodeError)",
+      "kind": "exception dispatch",
+      "site_id": "supplement:7bdca9f152b072920bbe1a5c5df03df8f0aabf320d9b4f4ce0c3087c98c23026",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_receipt_oserror"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1066,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1066:OSError"
+        }
+      ],
+      "scope": "Dispatch wrapper sensitivity only; every alternative has its own row."
+    },
+    {
+      "function": "recount_validation",
+      "line": 1066,
+      "column": 12,
+      "expression": "OSError",
+      "kind": "exception alternative",
+      "site_id": "supplement:2ce2739658670720450a2a63377c0b162cafeea0cc4e879958750074493c58f3",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_receipt_oserror"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1066,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1066:OSError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1066,
+      "column": 21,
+      "expression": "ValueError",
+      "kind": "exception alternative",
+      "site_id": "supplement:b335545712aef97c2e53cb505b187602b1cfc3eef264ae4cdac9e55af8f5b671",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_receipt_issue"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1066,
+        "remove_exception": "ValueError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1066:ValueError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1066,
+      "column": 33,
+      "expression": "TypeError",
+      "kind": "exception alternative",
+      "site_id": "supplement:003d4b84a06764ee2a04400e3e9e85a7d5d0576738b2f327d43a53cbbf9773f4",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_receipt_dispatch_TypeError"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1066,
+        "remove_exception": "TypeError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1066:TypeError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1066,
+      "column": 44,
+      "expression": "KeyError",
+      "kind": "exception alternative",
+      "site_id": "supplement:35b4ff93a24b0dce9eccb4d332303824343a5253e207bcfb1cc93b2ac6aaa134",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_receipt_dispatch_KeyError"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1066,
+        "remove_exception": "KeyError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1066:KeyError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1066,
+      "column": 54,
+      "expression": "UnicodeError",
+      "kind": "exception alternative",
+      "site_id": "supplement:03ff98b649fe58ed502bd7ac75226a273b3af28aaffe4188e6a31618f5f41339",
+      "outcome": "implied",
+      "reason": "UnicodeError is a subclass of ValueError on the same raised exception. Removing only UnicodeError preserves the catch; removing both alternatives loses it. This is dispatch-domain containment, independent of evaluation order.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/unicode-dispatch-proofs.json",
+          "sha256": "a506a026b9e4f2cb07b69b9c26494ae64e16ae3ed858e34aeca4487b47d8f927",
+          "selector": "1066"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1072,
+      "column": 4,
+      "expression": "(OSError, ValueError, TypeError, KeyError, UnicodeError, subprocess.SubprocessError)",
+      "kind": "exception dispatch",
+      "site_id": "supplement:4555d396ff109582853ac953e3364ddfa3bc9e59bc65cc9f103a67c8f9bea56b",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_input_oserror"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1072,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1072:OSError"
+        }
+      ],
+      "scope": "Dispatch wrapper sensitivity only; every alternative has its own row."
+    },
+    {
+      "function": "recount_validation",
+      "line": 1072,
+      "column": 12,
+      "expression": "OSError",
+      "kind": "exception alternative",
+      "site_id": "supplement:c12db80863a05aea2a68f979b38affa835bd53a35d68640f74d760d6392f974c",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_input_oserror"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1072,
+        "remove_exception": "OSError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1072:OSError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1072,
+      "column": 21,
+      "expression": "ValueError",
+      "kind": "exception alternative",
+      "site_id": "supplement:112b1f75d638450eed7915ad602c8303902688a1036e2be7d542bbc37bfbe1a1",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_input_issue"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1072,
+        "remove_exception": "ValueError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1072:ValueError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1072,
+      "column": 33,
+      "expression": "TypeError",
+      "kind": "exception alternative",
+      "site_id": "supplement:8f98f7aa49361b0aae20f4985b893a16399ea64da5b48a120feb954cb9241eef",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_input_dispatch_TypeError"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1072,
+        "remove_exception": "TypeError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1072:TypeError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1072,
+      "column": 44,
+      "expression": "KeyError",
+      "kind": "exception alternative",
+      "site_id": "supplement:6198e1dec938418b7f29282e35f5086b8e1cfda8f7785f24fab2d795ea40cb6c",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_input_dispatch_KeyError"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1072,
+        "remove_exception": "KeyError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1072:KeyError"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1072,
+      "column": 54,
+      "expression": "UnicodeError",
+      "kind": "exception alternative",
+      "site_id": "supplement:77781e28adad31690d1f792da0f7fd97f8884bc58beca37228b518cfc84cdb08",
+      "outcome": "implied",
+      "reason": "UnicodeError is a subclass of ValueError on the same raised exception. Removing only UnicodeError preserves the catch; removing both alternatives loses it. This is dispatch-domain containment, independent of evaluation order.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/unicode-dispatch-proofs.json",
+          "sha256": "a506a026b9e4f2cb07b69b9c26494ae64e16ae3ed858e34aeca4487b47d8f927",
+          "selector": "1072"
+        }
+      ]
+    },
+    {
+      "function": "recount_validation",
+      "line": 1072,
+      "column": 68,
+      "expression": "subprocess.SubprocessError",
+      "kind": "exception alternative",
+      "site_id": "supplement:55ad98b4594c898f5882548f989cb5a3cb82a5b514d19551a7bc9bfda2de9a20",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_input_dispatch_SubprocessError"
+      ],
+      "cut": {
+        "function": "recount_validation",
+        "handler_line": 1072,
+        "remove_exception": "subprocess.SubprocessError"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "1072:subprocess.SubprocessError"
+        }
+      ]
+    },
     {
       "function": "recount_validation",
       "line": 1074,
-      "expression": "state[\"complete\"] = not issues",
-      "kind": "assigned unary truth test",
+      "column": 24,
+      "expression": "not issues",
+      "kind": "Boolean negation",
+      "site_id": "supplement:450605e8dca0db704aa585f63caab1c85e73636471306b914db3186632e4259c",
       "outcome": "killed by",
       "killed_by": [
         "negative_aggregate_input_issue",
         "negative_aggregate_receipt_issue"
       ],
       "cut": {
+        "guard": "completion",
+        "function": "recount_validation",
         "expression": "not issues",
         "replacement": "True"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-4/completion-cut-corpus.json",
-          "sha256": "54c7a48299c8eaeb63965373946812748579b9f4b7b47971eccaa838282f5985",
-          "selector": "158 pass / 2 fail under the one-site cut"
-        },
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+          "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801",
+          "selector": "completion"
+        }
+      ]
+    },
+    {
+      "function": "main",
+      "line": 2244,
+      "column": 33,
+      "expression": "complete_denominator_known and recount_state['complete']",
+      "kind": "Boolean composition",
+      "site_id": "supplement:cc9310d6bd7e27586dc1a4ea3b5109e4aea4f22b8e578f52a283d12d9fd41343",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_main_August_complete_denominator_known"
+      ],
+      "cut": {
+        "label": "main_August_complete_denominator_known",
+        "function": "main",
+        "operand": "complete_denominator_known",
+        "replacement": "True"
+      },
+      "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-4/completion-witness.json",
-          "sha256": "b446af6d697a340068cc4a4f77c93dddcc55c823e70d40801a542104c9e047b3",
-          "selector": "completion witness"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
+          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
+          "selector": "main_August_complete_denominator_known"
         }
       ],
-      "review": "Astra 4 CA2-A4-B01: a reachable predicate the coverage walker does not enumerate; it already has effective negatives"
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "main",
+      "line": 2245,
+      "column": 30,
+      "expression": "contract_depth_complete and recount_state['complete']",
+      "kind": "Boolean composition",
+      "site_id": "supplement:33608b8c3fe2a297dd25936d41052a7720f8ef48b8ef56a44f6a5d6edf1258cd",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_main_August_contract_depth_complete"
+      ],
+      "cut": {
+        "label": "main_August_contract_depth_complete",
+        "function": "main",
+        "operand": "contract_depth_complete",
+        "replacement": "True"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
+          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
+          "selector": "main_August_contract_depth_complete"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "main",
+      "line": 2246,
+      "column": 19,
+      "expression": "overall_pass and recount_state['complete']",
+      "kind": "Boolean composition",
+      "site_id": "supplement:650e49474110271e2bd7cef766dca625e7b74557965b9bb13c4bc876f91b7509",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_main_August_overall_pass"
+      ],
+      "cut": {
+        "label": "main_August_overall_pass",
+        "function": "main",
+        "operand": "overall_pass",
+        "replacement": "True"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
+          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
+          "selector": "main_August_overall_pass"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 38,
+      "expression": "named['seal_prerequisites_met'] and recount_state['complete']",
+      "kind": "Boolean composition",
+      "site_id": "supplement:7df607ca4f15dbf0b28d33af8fb444f6d8e3a8b0184d694b7ced35b5d91d379a",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_main_August_seal_prerequisites_met"
+      ],
+      "cut": {
+        "label": "main_August_seal_prerequisites_met",
+        "function": "main",
+        "operand": "named['seal_prerequisites_met']",
+        "replacement": "True"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
+          "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62",
+          "selector": "main_August_seal_prerequisites_met"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 19,
+      "expression": "bool(overall_pass and denom is True and (depth is True) and (not failures) and (type(named.get('recount')) is dict) and (named['recount'].get('complete') is True) and (type(named.get('august_result_before_recount')) is dict) and (named['august_result_before_recount'].get('pass') is True))",
+      "kind": "Boolean coercion",
+      "site_id": "supplement:14273b3b1b4196893da2bfb516b1691ddcd6441e52379e1994fddb8bca6fc827",
+      "outcome": "same-predicate duplicate",
+      "reason": "The same overall_pass value is coerced to bool again in the existing returned pass field at V:2339. Removing either coercion alone preserves False for the explicit zero input; removing both yields integer zero and fails the is-False assertion.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/builder-bool-summary.json",
+          "sha256": "88690d7604fc7b9aa9fad33a55d73e20977e5ebda51f2f15317a5b56dfb67794",
+          "selector": "three coercion cuts"
+        }
+      ]
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 24,
+      "expression": "overall_pass and denom is True and (depth is True) and (not failures) and (type(named.get('recount')) is dict) and (named['recount'].get('complete') is True) and (type(named.get('august_result_before_recount')) is dict) and (named['august_result_before_recount'].get('pass') is True)",
+      "kind": "Boolean composition",
+      "site_id": "supplement:b0a0cb0207edc315508b3d2ece30dcd9280ae306bfb21d49fa551120c6e23cae",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_builder_explicit_overall_false"
+      ],
+      "cut": {
+        "guard": "I100_L2321_build_receipt",
+        "function": "build_receipt",
+        "expression": "overall_pass",
+        "replacement": true
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/removal-summary.json",
+          "sha256": "4b7f3934bdf7f228d2d877d0acfadd19a76c2419ce7c362baafe2b96ef3b9af0",
+          "selector": "I100_L2321_build_receipt"
+        }
+      ],
+      "scope": "Composition/coercion wrapper sensitivity only; leaf rows retain separate narrow outcomes."
     }
   ],
-  "walker_limits": {
-    "status": "The regenerated site list is complete only over the walker's supported forms. It is not a proof of a complete predicate universe.",
-    "unsupported_forms": [
-      "assigned unary or walrus truth tests",
-      "truth-only assertions",
-      "bare comprehension filters",
-      "literal or guarded match dispatch",
-      "arbitrary helper predicates",
-      "exception dispatch",
-      "comparisons whose first line is unchanged in a changed multiline node (first-line filter)",
-      "semantic expansion identities bound to argument positions rather than to the required values"
-    ],
-    "evidence": [
-      {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-4/inventory-probes.json",
-        "sha256": "6fd9e0895899a04bdb41166e2b4c9466ba51573b6be49a2577b0d70f43eb0ade",
-        "selector": "Astra 4 inventory probes"
-      }
-    ],
-    "disposition": "Open: whether completeness over the supported forms is acceptable for this gate is pending a neutral Astra review (CA2-A4-B01). No classification is claimed."
+  "touched_functions": [
+    "multi_family_receipt_state",
+    "post_august_validator_pin",
+    "recount_json",
+    "recount_object",
+    "recount_anchor",
+    "third_change_validator_pin",
+    "recount_change_state",
+    "recount_relative",
+    "recount_source_bytes",
+    "recount_frozen_inputs",
+    "recount_outcomes",
+    "recount_validation",
+    "recount_snapshot_pins",
+    "main",
+    "build_receipt"
+  ],
+  "completeness_claim": "Combined walker and independently audited AST supplement cover every predicate added or touched in the 15 frozen changed top-level functions, including nested functions. Unrecognised forms fail closed.",
+  "independent_supplement_audit": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/independent-supplement-audit.json",
+    "sha256": "123231b2b719385827d63abccb10a04f74f827041cd5f320a67b154e15cdde9e"
+  },
+  "current_cut_audit": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+    "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801"
   }
 }
