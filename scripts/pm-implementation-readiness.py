@@ -791,7 +791,9 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # class as RP-CHAT-THREAD-LIFETIME@1.0.0, so the retention-policy count moves from 27 to 28. The family, status
 # and tier counts are unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
-STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 28
+# Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
+# policies are materialized; existing policies and every family/status/tier count remain unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 35
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "materialized": 320,
     "deferred_not_build_blocking": 23,
