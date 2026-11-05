@@ -1,0 +1,218 @@
+[
+  {
+    "node": [
+      "Plans/section15_browser_program_contracts.schema.json",
+      "json",
+      "/$defs/browser_program_result_validation/properties/result_schema_resources"
+    ],
+    "value_schema_sha256": "576e670da07b7e67716bedb1fe93ba80cc5106f56bca2cb30f635be57ae05746",
+    "role": "schema_resource_string",
+    "reason": "result_schema_resources maps resource identifiers to nonempty original schema-resource strings, rather than declaring timestamp fields.",
+    "citation": {
+      "path": "Plans/section15_browser_program_contracts.schema.json",
+      "pointer": "/$defs/browser_program_result_validation/properties/result_schema_resources",
+      "value": {
+        "type": "object",
+        "propertyNames": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "additionalProperties": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+      "json",
+      "/$defs/common_node/properties/payload"
+    ],
+    "value_schema_sha256": "ff3d2790b5791382e7fb667cf2cdbe669db5f194a96d8474322b2ff1dba6e0bd",
+    "role": "arbitrary_graph_payload",
+    "reason": "common_node.properties.payload is the graph node payload object; its values are arbitrary payload values subject to the existing forbidden-name rule.",
+    "citation": {
+      "path": "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+      "pointer": "/$defs/common_node/properties/payload",
+      "value": {
+        "type": "object",
+        "propertyNames": {
+          "not": {
+            "pattern": "(?i)(retrieval_diagnostic|exact_source|hidden_source|hidden_url|benchmark_source)"
+          }
+        }
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/settings_system_contracts.schema.json",
+      "json",
+      "/$defs/setting_value/oneOf/5"
+    ],
+    "value_schema_sha256": "eb835cf9e07061402fa4cb831482cf58540ff46f2b8fcf4a5adcea867f6deeb1",
+    "role": "setting_value",
+    "reason": "The referenced setting_value definition is the recursive union of null, boolean, number, string, array and object settings values; its map values have no timestamp role.",
+    "citation": {
+      "path": "Plans/settings_system_contracts.schema.json",
+      "pointer": "/$defs/setting_value",
+      "value": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "string",
+            "maxLength": 16384
+          },
+          {
+            "type": "array",
+            "maxItems": 2048,
+            "items": {
+              "$ref": "#/$defs/setting_value"
+            }
+          },
+          {
+            "type": "object",
+            "maxProperties": 2048,
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/setting_value"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "c43929b80e75ed1123cad7a43a328b6fcb9370eccfbcd2ffbda2829ad7bb3c46",
+    "role": "SafeRef",
+    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "citation": {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "70e86e1fe47cacc39dce21f12440980d47babcdaddc01545e52fab99173907c6",
+    "role": "SafeRef",
+    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "citation": {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "d3af1edbb7bb85a81127dde1a2de33c9822d570de9b6c55f412066963be0aa30",
+    "role": "SafeRef",
+    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "4088171f66c50421b82a808a91c54504c5e6282a671d84c1993196655412de6a",
+    "role": "SafeRef",
+    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "9758b750369e038772a90428412ecf8ba2705dd7a68369c75cd95614aebf4952",
+    "role": "SafeRef",
+    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "a4d279bb8746f5ac89bf1732ed559c30920982d26a3377e61ae3bb2a7c5cb459",
+    "role": "SafeRef",
+    "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  }
+]

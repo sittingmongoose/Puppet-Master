@@ -197,43 +197,58 @@ def _dialect_validator(schema, *, default=None):
     return default or Draft202012Validator
 
 
-def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
-    """Enforce date-time over a closed, preloaded, content-pinned graph.
+def _closed_datetime_graph(schema, registry=None, *, selection=None):
+    """Shared resolver setup for runtime admission and source-value probes.
 
-    Neutral outer wrappers are admitted at construction. Supply every current
-    or authentic frozen dependency in registry; retrieval is never permitted.
+    Source probes run before inventory authentication, so they use the same
+    dialects, resources and resolver without installing inventory selections.
+    Runtime callers always supply their authenticated StorageSelection.
     """
     from referencing import Registry, Resource
     from referencing.jsonschema import specification_with
-    from pm_event_datetime_inventory import DatetimeAdmissionError, StorageSelection
-    if any(kwargs.get(key) is not None for key in ("resolver", "_resolver")):
-        raise DatetimeAdmissionError("datetime_custom_resolver_unsupported")
+    from pm_event_datetime_inventory import DatetimeAdmissionError
     base = _dialect_validator(schema)
-    registry = kwargs.pop("registry", None)
     if registry is None:
         registry = Registry()
     if type(registry) is not Registry or registry._retrieve is not Registry()._retrieve:
         raise DatetimeAdmissionError("datetime_on_demand_retrieval_unsupported")
-    selection = StorageSelection()
-    selection.install(schema)
+    if selection is not None:
+        selection.install(schema)
     # Crawl only supplied bytes. This discovers embedded $ids/anchors without
     # retrieving anything and pins all aliases as well as canonical URIs.
     for resource in registry.values():
         _dialect_validator(resource.contents, default=base)
-        selection.install(resource.contents)
+        if selection is not None:
+            selection.install(resource.contents)
     root_uri = (base.ID_OF(schema) if isinstance(schema, dict) else None) or ""
     root_resource = Resource.from_contents(schema, default_specification=specification_with(base.META_SCHEMA["$id"]))
-    selection.pin(root_uri, schema)
+    if selection is not None:
+        selection.pin(root_uri, schema)
     registry = registry.with_resource(root_uri, root_resource).crawl()
     for uri, resource in registry.items():
         _dialect_validator(resource.contents, default=base)
-        selection.pin(uri, resource.contents)
+        if selection is not None:
+            selection.pin(uri, resource.contents)
 
     def refuse_retrieve(uri):
         raise DatetimeAdmissionError("datetime_resource_not_preloaded: " + uri)
 
     from attrs import evolve
     registry = evolve(registry, retrieve=refuse_retrieve)
+    return base, registry
+
+
+def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
+    """Enforce date-time over a closed, preloaded, content-pinned graph.
+
+    Neutral outer wrappers are admitted at construction. Supply every current
+    or authentic frozen dependency in registry; retrieval is never permitted.
+    """
+    from pm_event_datetime_inventory import DatetimeAdmissionError, StorageSelection
+    if any(kwargs.get(key) is not None for key in ("resolver", "_resolver")):
+        raise DatetimeAdmissionError("datetime_custom_resolver_unsupported")
+    selection = StorageSelection()
+    base, registry = _closed_datetime_graph(schema, kwargs.pop("registry", None), selection=selection)
     return _bound_validator(base)(
         schema, registry=registry, format_checker=format_checker(profile=profile),
         storage_selection=selection, **kwargs)

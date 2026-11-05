@@ -106,7 +106,8 @@
               "Storage issued original fields",
               "other_owner_observation",
               "source_lineage_schema_patch",
-              "wildcard_non_timestamp"
+              "wildcard_non_timestamp",
+              "wildcard_non_timestamp_role"
             ]
           },
           "owner": {
@@ -185,6 +186,125 @@
                 "items": {
                   "type": "string",
                   "minLength": 1
+                }
+              }
+            }
+          },
+          "value_evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "battery_sha256",
+              "samples",
+              "value_schema_sha256",
+              "all_refused",
+              "results",
+              "reviewed_role"
+            ],
+            "properties": {
+              "battery_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "samples": {
+                "type": "integer",
+                "minimum": 300
+              },
+              "value_schema_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "all_refused": {
+                "type": "boolean"
+              },
+              "results": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "field",
+                    "accepted",
+                    "first_accepted"
+                  ],
+                  "properties": {
+                    "field": {
+                      "enum": [
+                        "observed_at_utc",
+                        "persisted_at_utc"
+                      ]
+                    },
+                    "accepted": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "first_accepted": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              },
+              "reviewed_role": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "required": [
+                  "node",
+                  "value_schema_sha256",
+                  "role",
+                  "reason",
+                  "citation"
+                ],
+                "properties": {
+                  "node": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "value_schema_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "role": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "citation": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "path",
+                      "pointer",
+                      "value"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "pointer": {
+                        "type": "string"
+                      },
+                      "value": {}
+                    }
+                  }
                 }
               }
             }

@@ -176,6 +176,9 @@ def regression_checks(root):
             file = scratch / path
             file.parent.mkdir(parents=True, exist_ok=True)
             file.write_text(json.dumps(value))
+        from pm_event_datetime_value_probe import BATTERY, ROLES
+        for path in (BATTERY, ROLES):
+            (scratch / path).write_bytes((root / path).read_bytes())
         mutated = inv.source_inventory_projection({**inventory, "nodes": [row]}, scratch)
         # All fingerprints, exact evidence and the derived pin are refreshed;
         # only the obsolete non-timestamp classification remains wrong.
@@ -290,4 +293,96 @@ def regression_checks(root):
         checks["datetime_custom_resolver_refused"] = error.reason == "datetime_custom_resolver_unsupported"
     else:
         checks["datetime_custom_resolver_refused"] = False
+    checks.update(wildcard_battery_checks(root, inventory))
+    return checks
+
+
+def wildcard_battery_checks(root, inventory):
+    """B4 controls keep real source graphs and coherently refreshed evidence."""
+    import pm_event_datetime_inventory as inv
+    from pm_event_datetime_value_probe import BATTERY, ROLES
+    checks = {}
+    maps = [r for r in inventory["nodes"] if r["classification"] in (
+        "wildcard_non_timestamp", "wildcard_non_timestamp_role")]
+    checks["datetime_battery_21_name_maps"] = (len(maps) == 21 and
+        sum(r["classification"] == "wildcard_non_timestamp" for r in maps) == 12 and
+        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 9 and
+        all(r["value_evidence"]["all_refused"] ==
+            (r["classification"] == "wildcard_non_timestamp") for r in maps))
+    original = next(r for r in maps if r["path"] == "Plans/section15_browser_program_contracts.schema.json"
+                    and r["pointer"].endswith("/result_schema_dependencies"))
+    canonical = r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?Z$"
+    alternate = canonical.replace("[0-9]{4}", "[0-9][0-9][0-9][0-9]").replace("Z$", "(?:Z)$")
+    stamp = {"type": "string", "pattern": alternate}
+    ref = {"$ref": "#/$defs/battery_stamp"}
+    forms = {
+        "direct": stamp,
+        "ref": ref,
+        "anyOf": {"anyOf": [{"type": "string", "maxLength": 4}, ref]},
+        "allOf": {"allOf": [{"type": "string"}, ref]},
+        "oneOf": {"oneOf": [ref, {"const": ""}]},
+        "not": {"not": {"not": ref}},
+        "if_then": {"if": {"type": "string"}, "then": ref, "else": False},
+        "single_timestamp": {"const": "2016-12-31T23:59:60Z"},
+        "timestamp_or_empty": {"anyOf": [stamp, {"const": ""}]},
+        "real_format": {"type": "string", "format": "date-time", "const": "2026-01-01T00:00:00Z"},
+    }
+    with tempfile.TemporaryDirectory(prefix="pm-datetime-battery-") as temp:
+        scratch = Path(temp)
+        for path in (inv.INVENTORY_SCHEMA, BATTERY, ROLES):
+            file = scratch / path
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_bytes((root / path).read_bytes())
+        source = scratch / original["path"]
+        source.parent.mkdir(parents=True, exist_ok=True)
+        for name, value in forms.items():
+            document = inv._source_document(root, original, {})
+            document["$defs"]["battery_stamp"] = copy.deepcopy(stamp)
+            inv.at(document, original["pointer"])["additionalProperties"] = copy.deepcopy(value)
+            source.write_text(json.dumps(document))
+            projected = inv.source_inventory_projection({**inventory, "nodes": [copy.deepcopy(original)]}, scratch)
+            corrected = inv.validate_inventory(projected, scratch)
+            bad = copy.deepcopy(projected)
+            bad["nodes"][0]["classification"] = "wildcard_non_timestamp"
+            errors = inv.validate_inventory(bad, scratch)
+            checks["datetime_battery_rejects_" + name] = (
+                projected["nodes"][0]["classification"] == "other_owner_observation" and
+                any(e["error"] == "source_value_classification_conflict" for e in errors) and
+                inv.derived_inventory_pin(bad, scratch) != inv.hashlib.sha256(json.dumps(bad).encode()).hexdigest())
+            checks["datetime_battery_corrected_" + name] = not corrected
+            stale = copy.deepcopy(bad)
+            stale["nodes"][0]["value_evidence"] = original["value_evidence"]
+            checks["datetime_battery_stale_fingerprint_" + name] = any(
+                e["error"] == "wildcard_value_evidence_changed" for e in inv.validate_inventory(stale, scratch))
+            if name == "single_timestamp":
+                checks["datetime_battery_exactly_one_acceptance"] = all(
+                    r["accepted"] == 1 for r in projected["nodes"][0]["value_evidence"]["results"])
+        # A real format checker must refuse an invalid calendar value; an
+        # annotation-only implementation would trigger this impossible date.
+        document = inv._source_document(root, original, {})
+        inv.at(document, original["pointer"])["additionalProperties"] = {
+            "format": "date-time", "const": "2026-02-30T00:00:00Z"}
+        source.write_text(json.dumps(document))
+        projected = inv.source_inventory_projection({**inventory, "nodes": [copy.deepcopy(original)]}, scratch)
+        checks["datetime_battery_format_enforced"] = projected["nodes"][0]["value_evidence"]["all_refused"]
+        # An explicit role is pinned independently of regenerated inventory
+        # evidence. Even refreshed source evidence cannot re-review that role.
+        role_row = next(r for r in maps if r["pointer"].endswith("/result_schema_resources"))
+        document = inv._source_document(root, role_row, {})
+        inv.at(document, role_row["pointer"])["additionalProperties"]["maxLength"] = 99
+        source.write_text(json.dumps(document))
+        changed = inv.source_inventory_projection({**inventory, "nodes": [copy.deepcopy(role_row)]}, scratch)
+        errors = inv.validate_inventory(changed, scratch)
+        checks["datetime_battery_changed_role_requires_review"] = any(
+            e["error"] == "wildcard_role_schema_changed" for e in errors)
+        # A copied role record with a refreshed pin still cannot cite another
+        # field as this value's authority.
+        roles = json.loads((scratch / ROLES).read_text())
+        record = next(r for r in roles if tuple(r["node"]) == inv.node_key(role_row))
+        record["value_schema_sha256"] = changed["nodes"][0]["value_evidence"]["value_schema_sha256"]
+        record["citation"]["pointer"] = original["pointer"]
+        (scratch / ROLES).write_text(json.dumps(roles))
+        errors = inv.validate_inventory(changed, scratch)
+        checks["datetime_battery_foreign_role_evidence_refused"] = any(
+            e["error"] == "wildcard_role_evidence_changed" for e in errors)
     return checks

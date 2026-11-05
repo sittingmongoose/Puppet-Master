@@ -511,26 +511,13 @@ def _constraint_sources(root, row, document, pointer, cache, seen=None):
                 pointer + "/" + keyword, cache, seen)
 
 
-def _timestamp_constraint(value):
-    """Recognize timestamp formats/patterns on this value, not nested members."""
-    if not isinstance(value, dict):
-        return False
-    if value.get("format") == "date-time":
-        return True
-    pattern = _JSON_U_ESCAPE.sub(lambda m: chr(int(m.group(1), 16)), value.get("pattern", ""))
-    # Include the local Z-only timestamp constraint as well as full calendar
-    # patterns. Generic identifier / non-secret-reference patterns are not
-    # timestamp declarations merely because they accept a timestamp spelling.
-    return bool(re.search(r"(?:\[0-9\]|\\d)\{4\}", pattern) or
-                re.search(r"(?:Z|z|\[Zz\]|\[zZ\])(?:\$|\\Z)$", pattern))
-
-
 def source_owner_evidence(row, document, root=ROOT, cache=None):
     """Recompute field/value pointers and exact constraints from this source.
 
     Named observations retain their actual schema, including unformatted
     string fields: evidence adds no timestamp predicate. Wildcards carry no
-    timestamp profile and must not have timestamp-string value constraints.
+    timestamp profile. Battery acceptance triggers explicit source-bound role
+    review; it never infers a role from the spelling of a regular expression.
     """
     cache = {} if cache is None else cache
     node = at(document, row["pointer"])
@@ -549,22 +536,12 @@ def source_owner_evidence(row, document, root=ROOT, cache=None):
     else:
         if not ("propertyNames" in node or "patternProperties" in node):
             raise ValueError("non-named declaration is not a wildcard value map")
-        classification = "wildcard_non_timestamp"
-        citations.append({"path": row["path"], "pointer": row["pointer"], "value": node})
-        value_pointers = set()
-        for field in fields:
-            patterns = [pattern for pattern in node.get("patternProperties", {})
-                        if re.search(pattern, field)]
-            if patterns:
-                value_pointers.update(_pointer_child(row["pointer"] + "/patternProperties", p)
-                                      for p in patterns)
-            elif "additionalProperties" in node:
-                value_pointers.add(row["pointer"] + "/additionalProperties")
-        for pointer in sorted(value_pointers):
-            constraints = list(_constraint_sources(root, row, document, pointer, cache))
-            if any(_timestamp_constraint(c["value"]) for c in constraints):
-                classification = "other_owner_observation"
-            citations.extend(constraints)
+        from pm_event_datetime_value_probe import wildcard_probe, reviewed_role
+        evidence, citations = wildcard_probe(row, document, root, cache)
+        role, _ = reviewed_role(row, evidence, citations, root, cache)
+        classification = ("wildcard_non_timestamp" if evidence["all_refused"] else
+                          "wildcard_non_timestamp_role" if role is not None else
+                          "other_owner_observation")
     # Shared ref targets can occur in both fields; keep deterministic evidence.
     return classification, list({(c["path"], c["pointer"]): c for c in citations}.values())
 
@@ -589,6 +566,13 @@ def source_inventory_projection(inventory, root=ROOT):
         if row["profile"] != "storage_utc_z":
             row["classification"], row["citation"] = source_owner_evidence(row, document, root, cache)
             row.pop("owner_profile", None)
+            if not set(declarations(node)).intersection(node.get("properties", {})):
+                from pm_event_datetime_value_probe import wildcard_probe, reviewed_role
+                evidence, sources = wildcard_probe(row, document, root, cache)
+                role, _ = reviewed_role(row, evidence, sources, root, cache)
+                row["value_evidence"] = {**evidence, "reviewed_role": role}
+            else:
+                row.pop("value_evidence", None)
     return projected
 
 
@@ -653,6 +637,16 @@ def validate_inventory(inventory, root=ROOT):
                     fail("source_value_classification_conflict")
                 if row["citation"] != citations:
                     fail("owner_field_schema_evidence_changed")
+                if not set(declarations(node)).intersection(node.get("properties", {})):
+                    from pm_event_datetime_value_probe import wildcard_probe, reviewed_role
+                    value_evidence, value_sources = wildcard_probe(row, document, root, documents)
+                    role, role_error = reviewed_role(row, value_evidence, value_sources, root, documents)
+                    if row.get("value_evidence") != {**value_evidence, "reviewed_role": role}:
+                        fail("wildcard_value_evidence_changed")
+                    if role_error:
+                        fail(role_error)
+                elif "value_evidence" in row:
+                    fail("unexpected_wildcard_value_evidence")
             if row["classification"] == "source_lineage_schema_patch":
                 match = re.fullmatch(r"/documents/([0-9]+)/changes/[0-9]+/(?:before|after)", row["pointer"])
                 if match is None or "documents" not in document or resource.get("$id"):
@@ -723,10 +717,12 @@ def check_inventory(root=ROOT):
                 errors.append({"error": "inventory_node_changed", "node": list(key), "field": name})
     counts = Counter(row.get("profile", "unclassified") for row in expected)
     wildcard_count = sum(row["classification"] == "wildcard_non_timestamp" for row in expected)
+    role_count = sum(row["classification"] == "wildcard_non_timestamp_role" for row in expected)
     return {"status": "fail" if errors else "pass", "nodes": len(actual),
             "storage_nodes": counts["storage_utc_z"],
-            "other_owner_nodes": counts["owner_schema"] - wildcard_count,
+            "other_owner_nodes": counts["owner_schema"] - wildcard_count - role_count,
             "wildcard_non_timestamp_nodes": wildcard_count,
+            "wildcard_non_timestamp_role_nodes": role_count,
             "unclassified_nodes": len(actual_by_key.keys() - expected_by_key.keys()), "failures": errors}
 
 

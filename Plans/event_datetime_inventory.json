@@ -12694,13 +12694,59 @@
         },
         {
           "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/browser_program/properties/result_schema_dependencies/propertyNames",
+          "value": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/non_secret_ref",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+            "not": {
+              "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+            }
+          }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/non_secret_ref/not",
+          "value": {
+            "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+          }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
           "pointer": "/$defs/sha256",
           "value": {
             "type": "string",
             "pattern": "^[0-9a-f]{64}$"
           }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "793a7df9d0593a784d8f9988c63a5ad51fd4cdd543a13299c254adf82291ce16",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/section15_browser_program_contracts.schema.json",
@@ -12715,7 +12761,7 @@
       "resource_sha256": "50de67bedf3eebfd859aad759f31604a69b7b3ec4aff4575211728db87daaa31",
       "node_sha256": "2a2b584f2fde27a81ef2c4150acee941db91c56db87a876a32ae00bf5e9b03b1",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Section 15 Browser Program Contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Section 15 Browser Program Contracts",
@@ -12744,8 +12790,77 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/browser_program_result_validation/properties/result_schema_resources/propertyNames",
+          "value": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/non_secret_ref",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+            "not": {
+              "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+            }
+          }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/non_secret_ref/not",
+          "value": {
+            "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "576e670da07b7e67716bedb1fe93ba80cc5106f56bca2cb30f635be57ae05746",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 653,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 653,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/section15_browser_program_contracts.schema.json",
+            "json",
+            "/$defs/browser_program_result_validation/properties/result_schema_resources"
+          ],
+          "value_schema_sha256": "576e670da07b7e67716bedb1fe93ba80cc5106f56bca2cb30f635be57ae05746",
+          "role": "schema_resource_string",
+          "reason": "result_schema_resources maps resource identifiers to nonempty original schema-resource strings, rather than declaring timestamp fields.",
+          "citation": {
+            "path": "Plans/section15_browser_program_contracts.schema.json",
+            "pointer": "/$defs/browser_program_result_validation/properties/result_schema_resources",
+            "value": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
     },
     {
       "path": "Plans/shared_runtime_contracts.schema.json",
@@ -12768,6 +12883,42 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/non_empty_string",
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string",
+          "value": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
         {
           "path": "Plans/shared_runtime_contracts.schema.json",
           "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions",
@@ -13017,6 +13168,13 @@
         },
         {
           "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/if/properties/resolution",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
           "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/then",
           "value": {
             "properties": {
@@ -13027,6 +13185,20 @@
                 "const": true
               }
             }
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_permission_state",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_value",
+          "value": {
+            "const": true
           }
         },
         {
@@ -13074,6 +13246,16 @@
         },
         {
           "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/1/if/properties/resolution",
+          "value": {
+            "enum": [
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
           "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/1/then",
           "value": {
             "properties": {
@@ -13082,8 +13264,101 @@
               }
             }
           }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/1/then/properties/effective_value",
+          "value": {
+            "const": false
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/downgrade_reason",
+          "value": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/effective_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/effective_value",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/requested_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/resolution",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/source",
+          "value": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          }
+        },
+        {
+          "path": "Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/propertyNames",
+          "value": {
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "ed78017d311abff3667c51970d61b8fed022d53781de7f1bbe94e169985f7edc",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/storage_value_registry.json",
@@ -13106,6 +13381,42 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/$defs/non_empty_string",
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/$defs/nullable_non_empty_string",
+          "value": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/$defs/nullable_non_empty_string/oneOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/$defs/nullable_non_empty_string/oneOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
         {
           "path": "Plans/storage_value_registry.json",
           "pointer": "/families/62/value_schema/properties/resolved_permissions",
@@ -13355,6 +13666,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/allOf/0/if/properties/resolution",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/allOf/0/then",
           "value": {
             "properties": {
@@ -13365,6 +13683,20 @@
                 "const": true
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_permission_state",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_value",
+          "value": {
+            "const": true
           }
         },
         {
@@ -13412,6 +13744,16 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/allOf/1/if/properties/resolution",
+          "value": {
+            "enum": [
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/allOf/1/then",
           "value": {
             "properties": {
@@ -13420,8 +13762,101 @@
               }
             }
           }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/allOf/1/then/properties/effective_value",
+          "value": {
+            "const": false
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/properties/downgrade_reason",
+          "value": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/properties/effective_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/properties/effective_value",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/properties/requested_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/properties/resolution",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties/properties/source",
+          "value": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/62/value_schema/properties/resolved_permissions/propertyNames",
+          "value": {
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "67a3168fc9556a83e8b60426c8bdaef13e7f0f020cac22047d6fa41b94358b32",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/storage_value_registry.json",
@@ -13446,23 +13881,237 @@
       "citation": [
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/properties/tabs",
+          "pointer": "/families/84/value_schema/$defs/domain_ref",
           "value": {
             "type": "object",
-            "propertyNames": {
-              "$ref": "#/$defs/panel_tab_id"
-            },
-            "additionalProperties": {
-              "$ref": "#/$defs/tab"
-            },
-            "description": "Tab records keyed by tab id. A tab id is opaque and stable; its prefix names its kind; one id is one tab in the whole workspace (Plans/FinalGUISpec.md#F3-635)."
+            "additionalProperties": false,
+            "description": "The domain identity the tab shows, separate from the tab id. Which keys a kind carries is fixed per kind in the tab definition.",
+            "properties": {
+              "path": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Workspace file path; null for an editor buffer that has no file."
+              },
+              "terminal_session_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "browser_session_id": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "board_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "plan_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "artifact_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "artifact_version": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A pinned artifact version, or null for the latest."
+              },
+              "thread_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "run_id": {
+                "$ref": "#/$defs/non_empty_string",
+                "description": "The Crew, Review, Chat Room or BrainStorm run, or its evidence, that a run tab shows (Plans/Contracts_V0.md shared record envelopes carry run_id)."
+              },
+              "record_id": {
+                "$ref": "#/$defs/non_empty_string",
+                "description": "The read-only tool-call record (search, MCP, app or work record) that a record tab shows (Plans/Contracts_V0.md shared record envelopes carry record_id)."
+              },
+              "debug_session_id": {
+                "$ref": "#/$defs/non_empty_string",
+                "description": "Unused since 2026-10-10 (DL-187, D33): the Debug Console is one tab whose chosen session sub-tab is view state in its state, so no kind carries this key in ref."
+              }
+            }
           }
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/properties/tabs/additionalProperties",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/artifact_id",
           "value": {
-            "$ref": "#/$defs/tab"
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/artifact_version",
+          "value": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A pinned artifact version, or null for the latest."
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/artifact_version/anyOf/0",
+          "value": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/artifact_version/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/board_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/browser_session_id",
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/browser_session_id/anyOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/browser_session_id/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/debug_session_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string",
+            "description": "Unused since 2026-10-10 (DL-187, D33): the Debug Console is one tab whose chosen session sub-tab is view state in its state, so no kind carries this key in ref."
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/path",
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Workspace file path; null for an editor buffer that has no file."
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/path/anyOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/path/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/plan_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/record_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string",
+            "description": "The read-only tool-call record (search, MCP, app or work record) that a record tab shows (Plans/Contracts_V0.md shared record envelopes carry record_id)."
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/run_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string",
+            "description": "The Crew, Review, Chat Room or BrainStorm run, or its evidence, that a run tab shows (Plans/Contracts_V0.md shared record envelopes carry run_id)."
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/terminal_session_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/domain_ref/properties/thread_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/non_empty_string",
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/panel_tab_id",
+          "value": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*(?:[:-].+)?$",
+            "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output, output:<channel>, problems, ports, debug-console and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (output, problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI. Output uses output for the one tab with its channel as view state; output:<channel> is only a split-off channel (D31, Plans/FinalGUISpec.md#F3-635). The Debug Console is the one tab debug-console with a sub-tab per debug session (D33, DL-187); an older debug-console:<session> id folds into it and is never written."
           }
         },
         {
@@ -13932,6 +14581,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/0/if/properties/kind",
+          "value": {
+            "const": "editor"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/0/then",
           "value": {
             "properties": {
@@ -13945,6 +14601,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/0/then/properties/ref",
+          "value": {
+            "properties": {
+              "path": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "path"
+            ]
           }
         },
         {
@@ -13992,6 +14661,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/1/if/properties/kind",
+          "value": {
+            "const": "terminal"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/1/then",
           "value": {
             "properties": {
@@ -14005,6 +14681,434 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/1/then/properties/ref",
+          "value": {
+            "properties": {
+              "terminal_session_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "terminal_session_id"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/10",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "record"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "record_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "record_id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/10/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "record"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/10/if/properties/kind",
+          "value": {
+            "const": "record"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/10/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "record_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "record_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/10/then/properties/ref",
+          "value": {
+            "properties": {
+              "record_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "record_id"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/11",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "output"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/11/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "output"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/11/if/properties/kind",
+          "value": {
+            "const": "output"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/11/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/11/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/12",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "problems"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/12/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "problems"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/12/if/properties/kind",
+          "value": {
+            "const": "problems"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/12/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/12/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/13",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "ports"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/13/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "ports"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/13/if/properties/kind",
+          "value": {
+            "const": "ports"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/13/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/13/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/14",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "debug_console"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/14/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "debug_console"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/14/if/properties/kind",
+          "value": {
+            "const": "debug_console"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/14/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/14/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/15",
+          "value": {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "preview"
+                }
+              },
+              "required": [
+                "mode"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "editor"
+                },
+                "pinned": {
+                  "const": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/15/if",
+          "value": {
+            "properties": {
+              "mode": {
+                "const": "preview"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/15/if/properties/mode",
+          "value": {
+            "const": "preview"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/15/then",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "editor"
+              },
+              "pinned": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/15/then/properties/kind",
+          "value": {
+            "const": "editor"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/15/then/properties/pinned",
+          "value": {
+            "const": false
           }
         },
         {
@@ -14049,6 +15153,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/2/if/properties/kind",
+          "value": {
+            "const": "browser"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/2/then",
           "value": {
             "properties": {
@@ -14059,6 +15170,16 @@
                 "additionalProperties": false
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/2/then/properties/ref",
+          "value": {
+            "properties": {
+              "browser_session_id": true
+            },
+            "additionalProperties": false
           }
         },
         {
@@ -14106,6 +15227,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/3/if/properties/kind",
+          "value": {
+            "const": "dashboard"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/3/then",
           "value": {
             "properties": {
@@ -14119,6 +15247,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/3/then/properties/ref",
+          "value": {
+            "properties": {
+              "board_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "board_id"
+            ]
           }
         },
         {
@@ -14166,6 +15307,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/4/if/properties/kind",
+          "value": {
+            "const": "plan"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/4/then",
           "value": {
             "properties": {
@@ -14179,6 +15327,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/4/then/properties/ref",
+          "value": {
+            "properties": {
+              "plan_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "plan_id"
+            ]
           }
         },
         {
@@ -14223,6 +15384,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/5/if/properties/kind",
+          "value": {
+            "const": "document"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/5/then",
           "value": {
             "properties": {
@@ -14233,6 +15401,16 @@
                 "additionalProperties": false
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/5/then/properties/ref",
+          "value": {
+            "properties": {
+              "path": true
+            },
+            "additionalProperties": false
           }
         },
         {
@@ -14282,6 +15460,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/6/if/properties/kind",
+          "value": {
+            "const": "artifact"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/6/then",
           "value": {
             "properties": {
@@ -14297,6 +15482,21 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/6/then/properties/ref",
+          "value": {
+            "properties": {
+              "artifact_id": true,
+              "artifact_version": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "artifact_id",
+              "artifact_version"
+            ]
           }
         },
         {
@@ -14344,6 +15544,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/7/if/properties/kind",
+          "value": {
+            "const": "run"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/7/then",
           "value": {
             "properties": {
@@ -14357,6 +15564,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/7/then/properties/ref",
+          "value": {
+            "properties": {
+              "run_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "run_id"
+            ]
           }
         },
         {
@@ -14401,6 +15621,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/8/if/properties/kind",
+          "value": {
+            "const": "transcript"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/8/then",
           "value": {
             "properties": {
@@ -14411,6 +15638,16 @@
                 "additionalProperties": false
               }
             }
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/8/then/properties/ref",
+          "value": {
+            "properties": {
+              "thread_id": true
+            },
+            "additionalProperties": false
           }
         },
         {
@@ -14458,6 +15695,13 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/9/if/properties/kind",
+          "value": {
+            "const": "context"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
           "pointer": "/families/84/value_schema/$defs/tab/allOf/9/then",
           "value": {
             "properties": {
@@ -14475,319 +15719,159 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/10",
-          "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "record"
-                }
-              },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {
-                    "record_id": true
-                  },
-                  "additionalProperties": false,
-                  "required": [
-                    "record_id"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/10/if",
+          "pointer": "/families/84/value_schema/$defs/tab/allOf/9/then/properties/ref",
           "value": {
             "properties": {
-              "kind": {
-                "const": "record"
-              }
+              "thread_id": true
             },
+            "additionalProperties": false,
             "required": [
-              "kind"
+              "thread_id"
             ]
           }
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/10/then",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/kind",
           "value": {
-            "properties": {
-              "ref": {
-                "properties": {
-                  "record_id": true
-                },
-                "additionalProperties": false,
-                "required": [
-                  "record_id"
-                ]
-              }
-            }
+            "$ref": "#/$defs/tab_kind"
           }
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/11",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/label",
           "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "output"
-                }
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
               },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
+              {
+                "type": "null"
               }
-            }
+            ],
+            "description": "The user's own label, or null for the kind's label."
           }
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/11/if",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/label/anyOf/0",
           "value": {
-            "properties": {
-              "kind": {
-                "const": "output"
-              }
-            },
-            "required": [
-              "kind"
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/label/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/mode",
+          "value": {
+            "type": "string",
+            "enum": [
+              "kept",
+              "preview"
+            ],
+            "description": "preview is the panel's one italic preview tab, for files only."
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/pinned",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/ref",
+          "value": {
+            "$ref": "#/$defs/domain_ref"
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab/properties/state",
+          "value": {
+            "type": "object",
+            "description": "The kind's own serialized state, at most 16 KB of canonical JSON. No buffers, scrollback, transcripts, secrets or widget layout."
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "pointer": "/families/84/value_schema/$defs/tab_kind",
+          "value": {
+            "type": "string",
+            "enum": [
+              "editor",
+              "terminal",
+              "browser",
+              "dashboard",
+              "plan",
+              "document",
+              "artifact",
+              "run",
+              "transcript",
+              "context",
+              "record",
+              "output",
+              "problems",
+              "ports",
+              "debug_console"
             ]
           }
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/11/then",
+          "pointer": "/families/84/value_schema/properties/tabs",
           "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/12",
-          "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "problems"
-                }
-              },
-              "required": [
-                "kind"
-              ]
+            "type": "object",
+            "propertyNames": {
+              "$ref": "#/$defs/panel_tab_id"
             },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/12/if",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "problems"
-              }
+            "additionalProperties": {
+              "$ref": "#/$defs/tab"
             },
-            "required": [
-              "kind"
-            ]
+            "description": "Tab records keyed by tab id. A tab id is opaque and stable; its prefix names its kind; one id is one tab in the whole workspace (Plans/FinalGUISpec.md#F3-635)."
           }
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/12/then",
+          "pointer": "/families/84/value_schema/properties/tabs/additionalProperties",
           "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
+            "$ref": "#/$defs/tab"
           }
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/13",
+          "pointer": "/families/84/value_schema/properties/tabs/propertyNames",
           "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "ports"
-                }
-              },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/13/if",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "ports"
-              }
-            },
-            "required": [
-              "kind"
-            ]
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/13/then",
-          "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/14",
-          "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "debug_console"
-                }
-              },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/14/if",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "debug_console"
-              }
-            },
-            "required": [
-              "kind"
-            ]
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/14/then",
-          "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/15",
-          "value": {
-            "if": {
-              "properties": {
-                "mode": {
-                  "const": "preview"
-                }
-              },
-              "required": [
-                "mode"
-              ]
-            },
-            "then": {
-              "properties": {
-                "kind": {
-                  "const": "editor"
-                },
-                "pinned": {
-                  "const": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/15/if",
-          "value": {
-            "properties": {
-              "mode": {
-                "const": "preview"
-              }
-            },
-            "required": [
-              "mode"
-            ]
-          }
-        },
-        {
-          "path": "Plans/storage_value_registry.json",
-          "pointer": "/families/84/value_schema/$defs/tab/allOf/15/then",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "editor"
-              },
-              "pinned": {
-                "const": false
-              }
-            }
+            "$ref": "#/$defs/panel_tab_id"
           }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "96d0610af7a02bc2f6dc7fd3e4dc2caa79557a931ca23c51ca97e4176fe64da7",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
@@ -14810,6 +15894,42 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/non_empty_string",
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string",
+          "value": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
           "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions",
@@ -15059,6 +16179,13 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/if/properties/resolution",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
           "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/then",
           "value": {
             "properties": {
@@ -15069,6 +16196,20 @@
                 "const": true
               }
             }
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_permission_state",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_value",
+          "value": {
+            "const": true
           }
         },
         {
@@ -15116,6 +16257,16 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/1/if/properties/resolution",
+          "value": {
+            "enum": [
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
           "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/1/then",
           "value": {
             "properties": {
@@ -15124,8 +16275,101 @@
               }
             }
           }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/allOf/1/then/properties/effective_value",
+          "value": {
+            "const": false
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/downgrade_reason",
+          "value": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/effective_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/effective_value",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/requested_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/resolution",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties/properties/source",
+          "value": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+          "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/propertyNames",
+          "value": {
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "f1452bc5dea90afb907785561c1115250225164d74a7bc3962d669cab6af4df3",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
@@ -15140,7 +16384,7 @@
       "resource_sha256": "efcb2a7eefb3acc5f5b7412a0c58810aa147635549e714d0f4a02c0e312cfd54",
       "node_sha256": "78ca2b8d26d8df3d4951816d5fbd5707dfa68fe278168b5935c9399f52dfbad6",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Plan Assurance Capability Obligation Graph",
       "role_evidence": {
         "resource_title": "Plan Assurance Capability Obligation Graph",
@@ -15159,8 +16403,64 @@
               }
             }
           }
+        },
+        {
+          "path": "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+          "pointer": "/$defs/common_node/properties/payload/propertyNames",
+          "value": {
+            "not": {
+              "pattern": "(?i)(retrieval_diagnostic|exact_source|hidden_source|hidden_url|benchmark_source)"
+            }
+          }
+        },
+        {
+          "path": "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+          "pointer": "/$defs/common_node/properties/payload/propertyNames/not",
+          "value": {
+            "pattern": "(?i)(retrieval_diagnostic|exact_source|hidden_source|hidden_url|benchmark_source)"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "ff3d2790b5791382e7fb667cf2cdbe669db5f194a96d8474322b2ff1dba6e0bd",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 653,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 653,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+            "json",
+            "/$defs/common_node/properties/payload"
+          ],
+          "value_schema_sha256": "ff3d2790b5791382e7fb667cf2cdbe669db5f194a96d8474322b2ff1dba6e0bd",
+          "role": "arbitrary_graph_payload",
+          "reason": "common_node.properties.payload is the graph node payload object; its values are arbitrary payload values subject to the existing forbidden-name rule.",
+          "citation": {
+            "path": "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+            "pointer": "/$defs/common_node/properties/payload",
+            "value": {
+              "type": "object",
+              "propertyNames": {
+                "not": {
+                  "pattern": "(?i)(retrieval_diagnostic|exact_source|hidden_source|hidden_url|benchmark_source)"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     {
       "path": "Plans/application_workflow_contracts.schema.json",
@@ -15205,6 +16505,33 @@
           }
         },
         {
+          "path": "Plans/application_workflow_contracts.schema.json",
+          "pointer": "/$defs/BrowserProgramApplicationV1/properties/result_schema_dependencies/propertyNames",
+          "value": {
+            "$ref": "https://puppetmaster.local/Plans/section15_browser_program_contracts.schema.json#/$defs/non_secret_refApplicationV1"
+          }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/non_secret_refApplicationV1",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+            "not": {
+              "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+            }
+          }
+        },
+        {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "pointer": "/$defs/non_secret_refApplicationV1/not",
+          "value": {
+            "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+          }
+        },
+        {
           "path": "Plans/section15_browser_program_contracts.schema.json",
           "pointer": "/$defs/sha256ApplicationV1",
           "value": {
@@ -15212,7 +16539,26 @@
             "pattern": "^[0-9a-f]{64}$"
           }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "d3222e087ce1ff9bfcd6715eb1d8265a6b4bfbcd401eacf63eecd141f933e4c5",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
@@ -15235,6 +16581,42 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/non_empty_string",
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string",
+          "value": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
         {
           "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
           "pointer": "/properties/resolved_permissions",
@@ -15484,6 +16866,13 @@
         },
         {
           "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/if/properties/resolution",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
           "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/then",
           "value": {
             "properties": {
@@ -15494,6 +16883,20 @@
                 "const": true
               }
             }
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_permission_state",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_value",
+          "value": {
+            "const": true
           }
         },
         {
@@ -15541,6 +16944,16 @@
         },
         {
           "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/1/if/properties/resolution",
+          "value": {
+            "enum": [
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
           "pointer": "/properties/resolved_permissions/additionalProperties/allOf/1/then",
           "value": {
             "properties": {
@@ -15549,8 +16962,101 @@
               }
             }
           }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/1/then/properties/effective_value",
+          "value": {
+            "const": false
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/downgrade_reason",
+          "value": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/effective_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/effective_value",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/requested_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/resolution",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/source",
+          "value": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          }
+        },
+        {
+          "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/propertyNames",
+          "value": {
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "3cf9f7025c3eb4cc0367441d0cbca9b4a333515b57691a092138cbee1b02db81",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/home_workspace_layout_v2.schema.json",
@@ -15575,23 +17081,237 @@
       "citation": [
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/properties/tabs",
+          "pointer": "/$defs/domain_ref",
           "value": {
             "type": "object",
-            "propertyNames": {
-              "$ref": "#/$defs/panel_tab_id"
-            },
-            "additionalProperties": {
-              "$ref": "#/$defs/tab"
-            },
-            "description": "Tab records keyed by tab id. A tab id is opaque and stable; its prefix names its kind; one id is one tab in the whole workspace (Plans/FinalGUISpec.md#F3-635)."
+            "additionalProperties": false,
+            "description": "The domain identity the tab shows, separate from the tab id. Which keys a kind carries is fixed per kind in the tab definition.",
+            "properties": {
+              "path": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Workspace file path; null for an editor buffer that has no file."
+              },
+              "terminal_session_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "browser_session_id": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "board_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "plan_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "artifact_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "artifact_version": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A pinned artifact version, or null for the latest."
+              },
+              "thread_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "run_id": {
+                "$ref": "#/$defs/non_empty_string",
+                "description": "The Crew, Review, Chat Room or BrainStorm run, or its evidence, that a run tab shows (Plans/Contracts_V0.md shared record envelopes carry run_id)."
+              },
+              "record_id": {
+                "$ref": "#/$defs/non_empty_string",
+                "description": "The read-only tool-call record (search, MCP, app or work record) that a record tab shows (Plans/Contracts_V0.md shared record envelopes carry record_id)."
+              },
+              "debug_session_id": {
+                "$ref": "#/$defs/non_empty_string",
+                "description": "Unused since 2026-10-10 (DL-187, D33): the Debug Console is one tab whose chosen session sub-tab is view state in its state, so no kind carries this key in ref."
+              }
+            }
           }
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/properties/tabs/additionalProperties",
+          "pointer": "/$defs/domain_ref/properties/artifact_id",
           "value": {
-            "$ref": "#/$defs/tab"
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/artifact_version",
+          "value": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A pinned artifact version, or null for the latest."
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/artifact_version/anyOf/0",
+          "value": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/artifact_version/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/board_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/browser_session_id",
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/browser_session_id/anyOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/browser_session_id/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/debug_session_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string",
+            "description": "Unused since 2026-10-10 (DL-187, D33): the Debug Console is one tab whose chosen session sub-tab is view state in its state, so no kind carries this key in ref."
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/path",
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Workspace file path; null for an editor buffer that has no file."
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/path/anyOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/path/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/plan_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/record_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string",
+            "description": "The read-only tool-call record (search, MCP, app or work record) that a record tab shows (Plans/Contracts_V0.md shared record envelopes carry record_id)."
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/run_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string",
+            "description": "The Crew, Review, Chat Room or BrainStorm run, or its evidence, that a run tab shows (Plans/Contracts_V0.md shared record envelopes carry run_id)."
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/terminal_session_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/domain_ref/properties/thread_id",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/non_empty_string",
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/panel_tab_id",
+          "value": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*(?:[:-].+)?$",
+            "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output, output:<channel>, problems, ports, debug-console and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (output, problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI. Output uses output for the one tab with its channel as view state; output:<channel> is only a split-off channel (D31, Plans/FinalGUISpec.md#F3-635). The Debug Console is the one tab debug-console with a sub-tab per debug session (D33, DL-187); an older debug-console:<session> id folds into it and is never written."
           }
         },
         {
@@ -16061,6 +17781,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/0/if/properties/kind",
+          "value": {
+            "const": "editor"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/0/then",
           "value": {
             "properties": {
@@ -16074,6 +17801,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/0/then/properties/ref",
+          "value": {
+            "properties": {
+              "path": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "path"
+            ]
           }
         },
         {
@@ -16121,6 +17861,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/1/if/properties/kind",
+          "value": {
+            "const": "terminal"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/1/then",
           "value": {
             "properties": {
@@ -16134,6 +17881,434 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/1/then/properties/ref",
+          "value": {
+            "properties": {
+              "terminal_session_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "terminal_session_id"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/10",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "record"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "record_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "record_id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/10/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "record"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/10/if/properties/kind",
+          "value": {
+            "const": "record"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/10/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "record_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "record_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/10/then/properties/ref",
+          "value": {
+            "properties": {
+              "record_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "record_id"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/11",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "output"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/11/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "output"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/11/if/properties/kind",
+          "value": {
+            "const": "output"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/11/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/11/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/12",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "problems"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/12/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "problems"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/12/if/properties/kind",
+          "value": {
+            "const": "problems"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/12/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/12/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/13",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "ports"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/13/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "ports"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/13/if/properties/kind",
+          "value": {
+            "const": "ports"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/13/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/13/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/14",
+          "value": {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "debug_console"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/14/if",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "debug_console"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/14/if/properties/kind",
+          "value": {
+            "const": "debug_console"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/14/then",
+          "value": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/14/then/properties/ref",
+          "value": {
+            "properties": {},
+            "additionalProperties": false
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/15",
+          "value": {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "preview"
+                }
+              },
+              "required": [
+                "mode"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "editor"
+                },
+                "pinned": {
+                  "const": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/15/if",
+          "value": {
+            "properties": {
+              "mode": {
+                "const": "preview"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/15/if/properties/mode",
+          "value": {
+            "const": "preview"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/15/then",
+          "value": {
+            "properties": {
+              "kind": {
+                "const": "editor"
+              },
+              "pinned": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/15/then/properties/kind",
+          "value": {
+            "const": "editor"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/15/then/properties/pinned",
+          "value": {
+            "const": false
           }
         },
         {
@@ -16178,6 +18353,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/2/if/properties/kind",
+          "value": {
+            "const": "browser"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/2/then",
           "value": {
             "properties": {
@@ -16188,6 +18370,16 @@
                 "additionalProperties": false
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/2/then/properties/ref",
+          "value": {
+            "properties": {
+              "browser_session_id": true
+            },
+            "additionalProperties": false
           }
         },
         {
@@ -16235,6 +18427,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/3/if/properties/kind",
+          "value": {
+            "const": "dashboard"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/3/then",
           "value": {
             "properties": {
@@ -16248,6 +18447,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/3/then/properties/ref",
+          "value": {
+            "properties": {
+              "board_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "board_id"
+            ]
           }
         },
         {
@@ -16295,6 +18507,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/4/if/properties/kind",
+          "value": {
+            "const": "plan"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/4/then",
           "value": {
             "properties": {
@@ -16308,6 +18527,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/4/then/properties/ref",
+          "value": {
+            "properties": {
+              "plan_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "plan_id"
+            ]
           }
         },
         {
@@ -16352,6 +18584,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/5/if/properties/kind",
+          "value": {
+            "const": "document"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/5/then",
           "value": {
             "properties": {
@@ -16362,6 +18601,16 @@
                 "additionalProperties": false
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/5/then/properties/ref",
+          "value": {
+            "properties": {
+              "path": true
+            },
+            "additionalProperties": false
           }
         },
         {
@@ -16411,6 +18660,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/6/if/properties/kind",
+          "value": {
+            "const": "artifact"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/6/then",
           "value": {
             "properties": {
@@ -16426,6 +18682,21 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/6/then/properties/ref",
+          "value": {
+            "properties": {
+              "artifact_id": true,
+              "artifact_version": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "artifact_id",
+              "artifact_version"
+            ]
           }
         },
         {
@@ -16473,6 +18744,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/7/if/properties/kind",
+          "value": {
+            "const": "run"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/7/then",
           "value": {
             "properties": {
@@ -16486,6 +18764,19 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/7/then/properties/ref",
+          "value": {
+            "properties": {
+              "run_id": true
+            },
+            "additionalProperties": false,
+            "required": [
+              "run_id"
+            ]
           }
         },
         {
@@ -16530,6 +18821,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/8/if/properties/kind",
+          "value": {
+            "const": "transcript"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/8/then",
           "value": {
             "properties": {
@@ -16540,6 +18838,16 @@
                 "additionalProperties": false
               }
             }
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/8/then/properties/ref",
+          "value": {
+            "properties": {
+              "thread_id": true
+            },
+            "additionalProperties": false
           }
         },
         {
@@ -16587,6 +18895,13 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/allOf/9/if/properties/kind",
+          "value": {
+            "const": "context"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
           "pointer": "/$defs/tab/allOf/9/then",
           "value": {
             "properties": {
@@ -16604,319 +18919,159 @@
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/10",
-          "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "record"
-                }
-              },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {
-                    "record_id": true
-                  },
-                  "additionalProperties": false,
-                  "required": [
-                    "record_id"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/10/if",
+          "pointer": "/$defs/tab/allOf/9/then/properties/ref",
           "value": {
             "properties": {
-              "kind": {
-                "const": "record"
-              }
+              "thread_id": true
             },
+            "additionalProperties": false,
             "required": [
-              "kind"
+              "thread_id"
             ]
           }
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/10/then",
+          "pointer": "/$defs/tab/properties/kind",
           "value": {
-            "properties": {
-              "ref": {
-                "properties": {
-                  "record_id": true
-                },
-                "additionalProperties": false,
-                "required": [
-                  "record_id"
-                ]
-              }
-            }
+            "$ref": "#/$defs/tab_kind"
           }
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/11",
+          "pointer": "/$defs/tab/properties/label",
           "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "output"
-                }
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
               },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
+              {
+                "type": "null"
               }
-            }
+            ],
+            "description": "The user's own label, or null for the kind's label."
           }
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/11/if",
+          "pointer": "/$defs/tab/properties/label/anyOf/0",
           "value": {
-            "properties": {
-              "kind": {
-                "const": "output"
-              }
-            },
-            "required": [
-              "kind"
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/properties/label/anyOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/properties/mode",
+          "value": {
+            "type": "string",
+            "enum": [
+              "kept",
+              "preview"
+            ],
+            "description": "preview is the panel's one italic preview tab, for files only."
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/properties/pinned",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/properties/ref",
+          "value": {
+            "$ref": "#/$defs/domain_ref"
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab/properties/state",
+          "value": {
+            "type": "object",
+            "description": "The kind's own serialized state, at most 16 KB of canonical JSON. No buffers, scrollback, transcripts, secrets or widget layout."
+          }
+        },
+        {
+          "path": "Plans/home_workspace_layout_v2.schema.json",
+          "pointer": "/$defs/tab_kind",
+          "value": {
+            "type": "string",
+            "enum": [
+              "editor",
+              "terminal",
+              "browser",
+              "dashboard",
+              "plan",
+              "document",
+              "artifact",
+              "run",
+              "transcript",
+              "context",
+              "record",
+              "output",
+              "problems",
+              "ports",
+              "debug_console"
             ]
           }
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/11/then",
+          "pointer": "/properties/tabs",
           "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/12",
-          "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "problems"
-                }
-              },
-              "required": [
-                "kind"
-              ]
+            "type": "object",
+            "propertyNames": {
+              "$ref": "#/$defs/panel_tab_id"
             },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/12/if",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "problems"
-              }
+            "additionalProperties": {
+              "$ref": "#/$defs/tab"
             },
-            "required": [
-              "kind"
-            ]
+            "description": "Tab records keyed by tab id. A tab id is opaque and stable; its prefix names its kind; one id is one tab in the whole workspace (Plans/FinalGUISpec.md#F3-635)."
           }
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/12/then",
+          "pointer": "/properties/tabs/additionalProperties",
           "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
+            "$ref": "#/$defs/tab"
           }
         },
         {
           "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/13",
+          "pointer": "/properties/tabs/propertyNames",
           "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "ports"
-                }
-              },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/13/if",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "ports"
-              }
-            },
-            "required": [
-              "kind"
-            ]
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/13/then",
-          "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/14",
-          "value": {
-            "if": {
-              "properties": {
-                "kind": {
-                  "const": "debug_console"
-                }
-              },
-              "required": [
-                "kind"
-              ]
-            },
-            "then": {
-              "properties": {
-                "ref": {
-                  "properties": {},
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/14/if",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "debug_console"
-              }
-            },
-            "required": [
-              "kind"
-            ]
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/14/then",
-          "value": {
-            "properties": {
-              "ref": {
-                "properties": {},
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/15",
-          "value": {
-            "if": {
-              "properties": {
-                "mode": {
-                  "const": "preview"
-                }
-              },
-              "required": [
-                "mode"
-              ]
-            },
-            "then": {
-              "properties": {
-                "kind": {
-                  "const": "editor"
-                },
-                "pinned": {
-                  "const": false
-                }
-              }
-            }
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/15/if",
-          "value": {
-            "properties": {
-              "mode": {
-                "const": "preview"
-              }
-            },
-            "required": [
-              "mode"
-            ]
-          }
-        },
-        {
-          "path": "Plans/home_workspace_layout_v2.schema.json",
-          "pointer": "/$defs/tab/allOf/15/then",
-          "value": {
-            "properties": {
-              "kind": {
-                "const": "editor"
-              },
-              "pinned": {
-                "const": false
-              }
-            }
+            "$ref": "#/$defs/panel_tab_id"
           }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "b18be02c2b2106be3e136e030077790c06868974cb7eab7033350bee61fc728f",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/project_system_contracts.schema.json",
@@ -16939,6 +19094,20 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/project_system_contracts.schema.json",
+          "pointer": "/$defs/creation_recovery_effect",
+          "value": {
+            "enum": [
+              "remote_repository_create",
+              "source_preparation",
+              "clone_connect",
+              "history_init",
+              "settings_rebind_apply",
+              "registry_publication"
+            ]
+          }
+        },
         {
           "path": "Plans/project_system_contracts.schema.json",
           "pointer": "/$defs/project_creation_recovery_context/properties/settled_effects",
@@ -16985,8 +19154,58 @@
               }
             }
           }
+        },
+        {
+          "path": "Plans/project_system_contracts.schema.json",
+          "pointer": "/$defs/project_creation_recovery_context/properties/settled_effects/additionalProperties/properties/receipt_ref",
+          "value": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        {
+          "path": "Plans/project_system_contracts.schema.json",
+          "pointer": "/$defs/project_creation_recovery_context/properties/settled_effects/additionalProperties/properties/result_ref",
+          "value": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        {
+          "path": "Plans/project_system_contracts.schema.json",
+          "pointer": "/$defs/project_creation_recovery_context/properties/settled_effects/propertyNames",
+          "value": {
+            "$ref": "#/$defs/creation_recovery_effect"
+          }
+        },
+        {
+          "path": "Plans/project_system_contracts.schema.json",
+          "pointer": "/$defs/safe_ref",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:secret|password|passwd|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "d5c583dce45d3105428b83c4d0dbb9f600cad4e6aed690b1b3c4961c0fefdce7",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/settings_system_contracts.schema.json",
@@ -17001,7 +19220,7 @@
       "resource_sha256": "3235e9a744d84c8c030f8817c14309c1161f235932feaf43facbea3afa88d378",
       "node_sha256": "30d05d6aa824d4e1d0e7cc572661ee408bf0a068e86c58d21457cd9b085151c8",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Settings System contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Settings System contracts",
@@ -17009,6 +19228,93 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value",
+          "value": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string",
+                "maxLength": 16384
+              },
+              {
+                "type": "array",
+                "maxItems": 2048,
+                "items": {
+                  "$ref": "#/$defs/setting_value"
+                }
+              },
+              {
+                "type": "object",
+                "maxProperties": 2048,
+                "propertyNames": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "additionalProperties": {
+                  "$ref": "#/$defs/setting_value"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/0",
+          "value": {
+            "type": "null"
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/1",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/2",
+          "value": {
+            "type": "number"
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/3",
+          "value": {
+            "type": "string",
+            "maxLength": 16384
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/4",
+          "value": {
+            "type": "array",
+            "maxItems": 2048,
+            "items": {
+              "$ref": "#/$defs/setting_value"
+            }
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/4/items",
+          "value": {
+            "$ref": "#/$defs/setting_value"
+          }
+        },
         {
           "path": "Plans/settings_system_contracts.schema.json",
           "pointer": "/$defs/setting_value/oneOf/5",
@@ -17034,85 +19340,82 @@
         },
         {
           "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/setting_value",
-          "value": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "number"
-              },
-              {
-                "type": "string",
-                "maxLength": 16384
-              },
-              {
-                "type": "array",
-                "maxItems": 2048,
-                "items": {
-                  "$ref": "#/$defs/setting_value"
-                }
-              },
-              {
-                "type": "object",
-                "maxProperties": 2048,
-                "propertyNames": {
-                  "type": "string",
-                  "minLength": 1,
-                  "maxLength": 256
-                },
-                "additionalProperties": {
-                  "$ref": "#/$defs/setting_value"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/setting_value/oneOf/0",
-          "value": {
-            "type": "null"
-          }
-        },
-        {
-          "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/setting_value/oneOf/1",
-          "value": {
-            "type": "boolean"
-          }
-        },
-        {
-          "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/setting_value/oneOf/2",
-          "value": {
-            "type": "number"
-          }
-        },
-        {
-          "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/setting_value/oneOf/3",
+          "pointer": "/$defs/setting_value/oneOf/5/propertyNames",
           "value": {
             "type": "string",
-            "maxLength": 16384
+            "minLength": 1,
+            "maxLength": 256
           }
-        },
-        {
-          "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/setting_value/oneOf/4",
-          "value": {
-            "type": "array",
-            "maxItems": 2048,
-            "items": {
-              "$ref": "#/$defs/setting_value"
+        }
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "eb835cf9e07061402fa4cb831482cf58540ff46f2b8fcf4a5adcea867f6deeb1",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 653,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 653,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/settings_system_contracts.schema.json",
+            "json",
+            "/$defs/setting_value/oneOf/5"
+          ],
+          "value_schema_sha256": "eb835cf9e07061402fa4cb831482cf58540ff46f2b8fcf4a5adcea867f6deeb1",
+          "role": "setting_value",
+          "reason": "The referenced setting_value definition is the recursive union of null, boolean, number, string, array and object settings values; its map values have no timestamp role.",
+          "citation": {
+            "path": "Plans/settings_system_contracts.schema.json",
+            "pointer": "/$defs/setting_value",
+            "value": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string",
+                  "maxLength": 16384
+                },
+                {
+                  "type": "array",
+                  "maxItems": 2048,
+                  "items": {
+                    "$ref": "#/$defs/setting_value"
+                  }
+                },
+                {
+                  "type": "object",
+                  "maxProperties": 2048,
+                  "propertyNames": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/setting_value"
+                  }
+                }
+              ]
             }
           }
         }
-      ]
+      }
     },
     {
       "path": "Plans/settings_system_contracts.schema.json",
@@ -17137,22 +19440,21 @@
       "citation": [
         {
           "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/values_by_setting_id",
+          "pointer": "/$defs/setting_id",
           "value": {
-            "type": "object",
-            "propertyNames": {
-              "$ref": "#/$defs/setting_id"
+            "type": "string",
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$",
+            "not": {
+              "const": "general.visual.nier-mode"
             },
-            "additionalProperties": {
-              "$ref": "#/$defs/setting_value"
-            }
+            "description": "Current ordinary setting ID. Q22 retires general.visual.nier-mode to the load migration only; no current snapshot or transaction writes it."
           }
         },
         {
           "path": "Plans/settings_system_contracts.schema.json",
-          "pointer": "/$defs/values_by_setting_id/additionalProperties",
+          "pointer": "/$defs/setting_id/not",
           "value": {
-            "$ref": "#/$defs/setting_value"
+            "const": "general.visual.nier-mode"
           }
         },
         {
@@ -17237,6 +19539,13 @@
         },
         {
           "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/4/items",
+          "value": {
+            "$ref": "#/$defs/setting_value"
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
           "pointer": "/$defs/setting_value/oneOf/5",
           "value": {
             "type": "object",
@@ -17250,8 +19559,70 @@
               "$ref": "#/$defs/setting_value"
             }
           }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/5/additionalProperties",
+          "value": {
+            "$ref": "#/$defs/setting_value"
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_value/oneOf/5/propertyNames",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/values_by_setting_id",
+          "value": {
+            "type": "object",
+            "propertyNames": {
+              "$ref": "#/$defs/setting_id"
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/setting_value"
+            }
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/values_by_setting_id/additionalProperties",
+          "value": {
+            "$ref": "#/$defs/setting_value"
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/values_by_setting_id/propertyNames",
+          "value": {
+            "$ref": "#/$defs/setting_id"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "215cd1e21474bc36c0adbe075dfa85a5930e87b7b02dcc786b2d1b7027bc19f4",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/settings_system_contracts.schema.json",
@@ -17274,6 +19645,25 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_id",
+          "value": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$",
+            "not": {
+              "const": "general.visual.nier-mode"
+            },
+            "description": "Current ordinary setting ID. Q22 retires general.visual.nier-mode to the load migration only; no current snapshot or transaction writes it."
+          }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/setting_id/not",
+          "value": {
+            "const": "general.visual.nier-mode"
+          }
+        },
         {
           "path": "Plans/settings_system_contracts.schema.json",
           "pointer": "/$defs/source_by_setting_id",
@@ -17307,8 +19697,34 @@
               "migrated"
             ]
           }
+        },
+        {
+          "path": "Plans/settings_system_contracts.schema.json",
+          "pointer": "/$defs/source_by_setting_id/propertyNames",
+          "value": {
+            "$ref": "#/$defs/setting_id"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "5f3852085353627349fd5922c001e216dce951352231d923b908c9252f147d27",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
@@ -17323,7 +19739,7 @@
       "resource_sha256": "24d6c007a7d9f03a0b482b46ac4cf63739b640a83532fd45690fcce2502ee460",
       "node_sha256": "0bea0229b582f63aa80a6a7cb6802f8d8197b04b00f06a57e462b2ee029d333f",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Shared Integration Runtime owner expansion contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Shared Integration Runtime owner expansion contracts",
@@ -17331,6 +19747,16 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeRef",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+          }
+        },
         {
           "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
           "pointer": "/$defs/TargetRefs",
@@ -17355,15 +19781,50 @@
         },
         {
           "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
-          "pointer": "/$defs/SafeRef",
+          "pointer": "/$defs/TargetRefs/propertyNames",
           "value": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512,
-            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            "pattern": "^(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token))[a-z][a-z0-9_]{0,63}$"
           }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "c43929b80e75ed1123cad7a43a328b6fcb9370eccfbcd2ffbda2829ad7bb3c46",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "json",
+            "/$defs/TargetRefs"
+          ],
+          "value_schema_sha256": "c43929b80e75ed1123cad7a43a328b6fcb9370eccfbcd2ffbda2829ad7bb3c46",
+          "role": "SafeRef",
+          "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+          "citation": {
+            "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "pointer": "/$defs/SafeRef",
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            }
+          }
+        }
+      }
     },
     {
       "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
@@ -17378,7 +19839,7 @@
       "resource_sha256": "24d6c007a7d9f03a0b482b46ac4cf63739b640a83532fd45690fcce2502ee460",
       "node_sha256": "0462ca0b70e44438aa84fb38d4f8dc1b1a914d9ff12c2168a7f40af5b14872b1",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Shared Integration Runtime owner expansion contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Shared Integration Runtime owner expansion contracts",
@@ -17442,16 +19903,6 @@
         },
         {
           "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
-          "pointer": "/$defs/SafeRef",
-          "value": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512,
-            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
-          }
-        },
-        {
-          "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
           "pointer": "/$defs/SafeParameters/additionalProperties/oneOf/1",
           "value": {
             "type": "boolean"
@@ -17470,8 +19921,63 @@
           "value": {
             "type": "null"
           }
+        },
+        {
+          "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeParameters/propertyNames",
+          "value": {
+            "pattern": "^(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token))[a-z][a-z0-9_]{0,63}$"
+          }
+        },
+        {
+          "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeRef",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "70e86e1fe47cacc39dce21f12440980d47babcdaddc01545e52fab99173907c6",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "json",
+            "/$defs/SafeParameters"
+          ],
+          "value_schema_sha256": "70e86e1fe47cacc39dce21f12440980d47babcdaddc01545e52fab99173907c6",
+          "role": "SafeRef",
+          "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+          "citation": {
+            "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "pointer": "/$defs/SafeRef",
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            }
+          }
+        }
+      }
     },
     {
       "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
@@ -17486,7 +19992,7 @@
       "resource_sha256": "24d6c007a7d9f03a0b482b46ac4cf63739b640a83532fd45690fcce2502ee460",
       "node_sha256": "0bea0229b582f63aa80a6a7cb6802f8d8197b04b00f06a57e462b2ee029d333f",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Shared Integration Runtime owner expansion contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Shared Integration Runtime owner expansion contracts",
@@ -17494,6 +20000,16 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeRef",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+          }
+        },
         {
           "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
           "pointer": "/$defs/TargetRefs",
@@ -17518,15 +20034,50 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-          "pointer": "/$defs/SafeRef",
+          "pointer": "/$defs/TargetRefs/propertyNames",
           "value": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512,
-            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            "pattern": "^(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token))[a-z][a-z0-9_]{0,63}$"
           }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "d3af1edbb7bb85a81127dde1a2de33c9822d570de9b6c55f412066963be0aa30",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "json",
+            "/$defs/TargetRefs"
+          ],
+          "value_schema_sha256": "d3af1edbb7bb85a81127dde1a2de33c9822d570de9b6c55f412066963be0aa30",
+          "role": "SafeRef",
+          "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+          "citation": {
+            "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "pointer": "/$defs/SafeRef",
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            }
+          }
+        }
+      }
     },
     {
       "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
@@ -17541,7 +20092,7 @@
       "resource_sha256": "24d6c007a7d9f03a0b482b46ac4cf63739b640a83532fd45690fcce2502ee460",
       "node_sha256": "0462ca0b70e44438aa84fb38d4f8dc1b1a914d9ff12c2168a7f40af5b14872b1",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Shared Integration Runtime owner expansion contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Shared Integration Runtime owner expansion contracts",
@@ -17605,16 +20156,6 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-          "pointer": "/$defs/SafeRef",
-          "value": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512,
-            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
-          }
-        },
-        {
-          "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
           "pointer": "/$defs/SafeParameters/additionalProperties/oneOf/1",
           "value": {
             "type": "boolean"
@@ -17633,8 +20174,63 @@
           "value": {
             "type": "null"
           }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeParameters/propertyNames",
+          "value": {
+            "pattern": "^(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token))[a-z][a-z0-9_]{0,63}$"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeRef",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "4088171f66c50421b82a808a91c54504c5e6282a671d84c1993196655412de6a",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "json",
+            "/$defs/SafeParameters"
+          ],
+          "value_schema_sha256": "4088171f66c50421b82a808a91c54504c5e6282a671d84c1993196655412de6a",
+          "role": "SafeRef",
+          "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+          "citation": {
+            "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "pointer": "/$defs/SafeRef",
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            }
+          }
+        }
+      }
     },
     {
       "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
@@ -17657,6 +20253,42 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/non_empty_string",
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string",
+          "value": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/0",
+          "value": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/$defs/nullable_non_empty_string/oneOf/1",
+          "value": {
+            "type": "null"
+          }
+        },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
           "pointer": "/properties/resolved_permissions",
@@ -17906,6 +20538,13 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/if/properties/resolution",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
           "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/then",
           "value": {
             "properties": {
@@ -17916,6 +20555,20 @@
                 "const": true
               }
             }
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_permission_state",
+          "value": {
+            "const": "allow"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/0/then/properties/effective_value",
+          "value": {
+            "const": true
           }
         },
         {
@@ -17963,6 +20616,16 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/1/if/properties/resolution",
+          "value": {
+            "enum": [
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
           "pointer": "/properties/resolved_permissions/additionalProperties/allOf/1/then",
           "value": {
             "properties": {
@@ -17971,8 +20634,101 @@
               }
             }
           }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/allOf/1/then/properties/effective_value",
+          "value": {
+            "const": false
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/downgrade_reason",
+          "value": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/effective_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/effective_value",
+          "value": {
+            "type": "boolean"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/requested_permission_state",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/resolution",
+          "value": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/additionalProperties/properties/source",
+          "value": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+          "pointer": "/properties/resolved_permissions/propertyNames",
+          "value": {
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "3448da893874cf68ebc9f56c903693a4f904fac7eca8b037b8a6468266a0deb3",
+        "all_refused": true,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 0,
+            "first_accepted": null
+          }
+        ],
+        "reviewed_role": null
+      }
     },
     {
       "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
@@ -17987,7 +20743,7 @@
       "resource_sha256": "24d6c007a7d9f03a0b482b46ac4cf63739b640a83532fd45690fcce2502ee460",
       "node_sha256": "0bea0229b582f63aa80a6a7cb6802f8d8197b04b00f06a57e462b2ee029d333f",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Shared Integration Runtime owner expansion contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Shared Integration Runtime owner expansion contracts",
@@ -17995,6 +20751,16 @@
         "required": []
       },
       "citation": [
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeRef",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+          }
+        },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
           "pointer": "/$defs/TargetRefs",
@@ -18019,15 +20785,50 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-          "pointer": "/$defs/SafeRef",
+          "pointer": "/$defs/TargetRefs/propertyNames",
           "value": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512,
-            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            "pattern": "^(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token))[a-z][a-z0-9_]{0,63}$"
           }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "9758b750369e038772a90428412ecf8ba2705dd7a68369c75cd95614aebf4952",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "json",
+            "/$defs/TargetRefs"
+          ],
+          "value_schema_sha256": "9758b750369e038772a90428412ecf8ba2705dd7a68369c75cd95614aebf4952",
+          "role": "SafeRef",
+          "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+          "citation": {
+            "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "pointer": "/$defs/SafeRef",
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            }
+          }
+        }
+      }
     },
     {
       "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
@@ -18042,7 +20843,7 @@
       "resource_sha256": "24d6c007a7d9f03a0b482b46ac4cf63739b640a83532fd45690fcce2502ee460",
       "node_sha256": "0462ca0b70e44438aa84fb38d4f8dc1b1a914d9ff12c2168a7f40af5b14872b1",
       "profile": "owner_schema",
-      "classification": "wildcard_non_timestamp",
+      "classification": "wildcard_non_timestamp_role",
       "owner": "Puppet Master Shared Integration Runtime owner expansion contracts",
       "role_evidence": {
         "resource_title": "Puppet Master Shared Integration Runtime owner expansion contracts",
@@ -18106,16 +20907,6 @@
         },
         {
           "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-          "pointer": "/$defs/SafeRef",
-          "value": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512,
-            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
-          }
-        },
-        {
-          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
           "pointer": "/$defs/SafeParameters/additionalProperties/oneOf/1",
           "value": {
             "type": "boolean"
@@ -18134,8 +20925,63 @@
           "value": {
             "type": "null"
           }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeParameters/propertyNames",
+          "value": {
+            "pattern": "^(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token))[a-z][a-z0-9_]{0,63}$"
+          }
+        },
+        {
+          "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "pointer": "/$defs/SafeRef",
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+          }
         }
-      ]
+      ],
+      "value_evidence": {
+        "battery_sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3",
+        "samples": 653,
+        "value_schema_sha256": "a4d279bb8746f5ac89bf1732ed559c30920982d26a3377e61ae3bb2a7c5cb459",
+        "all_refused": false,
+        "results": [
+          {
+            "field": "observed_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          },
+          {
+            "field": "persisted_at_utc",
+            "accepted": 592,
+            "first_accepted": "2026-01-01T00:00:00Z"
+          }
+        ],
+        "reviewed_role": {
+          "node": [
+            "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "json",
+            "/$defs/SafeParameters"
+          ],
+          "value_schema_sha256": "a4d279bb8746f5ac89bf1732ed559c30920982d26a3377e61ae3bb2a7c5cb459",
+          "role": "SafeRef",
+          "reason": "The referenced SafeRef definition is the existing non-secret reference string type used by TargetRefs and SafeParameters; it has no timestamp role.",
+          "citation": {
+            "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+            "pointer": "/$defs/SafeRef",
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+            }
+          }
+        }
+      }
     }
   ],
   "fingerprint_scope": "resource_sha256 and node_sha256 are checker-only sorted compact ASCII-JSON fingerprints; original raw-byte pins and all product hash recipes remain unchanged. Authentic native owner custody is independently required by SP-1101."
