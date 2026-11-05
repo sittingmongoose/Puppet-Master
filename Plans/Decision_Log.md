@@ -4849,7 +4849,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.f** se
 
 All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000. History needed for a legal investigation, an active reference, recovery or a protected backup stays protected even past normal expiry. Remove only expired records with none of those protections; never remove them early to make room. If none can expire at the limit, refuse new records. A shared count does not combine private memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding to an app action; model-list refresh means checking which models are available.
 
-**Sources:** `ANS:Plans/Decision_Log.md:4491-4491`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/UI_Command_Catalog.md:8579-8579`; `evidence:reviews/CA-RET-sol/REVIEW.md:116-116`.
+**Sources:** `ANS:Plans/Decision_Log.md:4491-4491`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/UI_Command_Catalog.md:8578-8578`; `evidence:reviews/CA-RET-sol/REVIEW.md:116-116`.
 
 **Supersession and boundaries:** Completes DL-401 G26’s missing no-project counting rule for the model-list refresh history type only. Its starting moment is 1.a, recorded in DL-415; this grants no allowance by analogy to other telemetry.
 
@@ -5318,7 +5318,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.b** se
 
 Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the work, including the controller overseeing a package or the connection between two parts. **Responsible owner** means the person, agent or component assigned that concern; assignment alone grants no extra permission. Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition for your choice.
 
-**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8574-8574`; `evidence:reviews/DG6A-sol/REVIEW.md:27-27`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`; `MAIN:Plans/Orchestrator_Page.md:60-60`.
+**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8573-8573`; `evidence:reviews/DG6A-sol/REVIEW.md:27-27`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`; `MAIN:Plans/Orchestrator_Page.md:60-60`.
 
 **Supersession and boundaries:** Chooses controller recording of reassignment and the stated cross-area human approval plus receiving-owner acceptance, distinct from recording itself. A transfer that also promotes the concern must additionally follow 5.d, recorded in DL-440; ordinary assignment alone grants no permission or veto.
 
@@ -5342,7 +5342,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.c** se
 
 Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the work, including the controller overseeing a package or the connection between two parts. **Responsible owner** means the person, agent or component assigned that concern; assignment alone grants no extra permission. Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition for your choice.
 
-**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8577-8577`; `evidence:reviews/DG6A-sol/REVIEW.md:29-29`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
+**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8576-8576`; `evidence:reviews/DG6A-sol/REVIEW.md:29-29`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 **Supersession and boundaries:** Chooses authorized user/controller evidence additions through the concern action, after source-access and latest-version checks. Ordinary additions require no extra confirmation. Removal and replacement retain their separate authorized actions; worker proposals confer no direct recording permission.
 
@@ -5366,7 +5366,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.d** se
 
 Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the work, including the controller overseeing a package or the connection between two parts. **Responsible owner** means the person, agent or component assigned that concern; assignment alone grants no extra permission. Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition for your choice.
 
-**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8578-8578`; `evidence:reviews/DG6A-sol/REVIEW.md:30-30`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
+**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8577-8577`; `evidence:reviews/DG6A-sol/REVIEW.md:30-30`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 **Supersession and boundaries:** Chooses controller-recorded promotion after required evidence and approval checks, with human prompts only where existing rules require them. A promotion that changes the responsible owner must additionally follow 5.b, recorded in DL-438, including its transfer confirmations.
 
@@ -5390,7 +5390,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.e** se
 
 Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the work, including the controller overseeing a package or the connection between two parts. **Responsible owner** means the person, agent or component assigned that concern; assignment alone grants no extra permission. Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition for your choice.
 
-**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8576-8576`; `evidence:reviews/DG6A-sol/REVIEW.md:31-31`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
+**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8575-8575`; `evidence:reviews/DG6A-sol/REVIEW.md:31-31`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 **Supersession and boundaries:** Chooses recording by the currently responsible, authorized concern owner on new evidence that invalidates the earlier resolution or dismissal. Prior closure history remains; extra confirmation applies only where existing critical/human-approval rules require it.
 
@@ -5414,7 +5414,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.f** se
 
 Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the work, including the controller overseeing a package or the connection between two parts. **Responsible owner** means the person, agent or component assigned that concern; assignment alone grants no extra permission. Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition for your choice.
 
-**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8575-8575`; `evidence:reviews/DG6A-sol/REVIEW.md:32-32`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`; `MAIN:Plans/Orchestrator_Page.md:60-60`; `MAIN:Plans/Orchestrator_Page.md:168-168`; `MAIN:Plans/Orchestrator_Page.md:273-275`.
+**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8574-8574`; `evidence:reviews/DG6A-sol/REVIEW.md:32-32`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`; `MAIN:Plans/Orchestrator_Page.md:60-60`; `MAIN:Plans/Orchestrator_Page.md:168-168`; `MAIN:Plans/Orchestrator_Page.md:273-275`.
 
 **Supersession and boundaries:** Chooses controller choice and recording for the seven specified non-risk outcomes, with an explicit authorized human decision for accepted_risk. All current-evidence, reason and existing approval requirements remain. Lineage outcomes do not prove a fix; resulting transfers and promotions also follow DL-438 and DL-440, and acknowledge/dismiss cannot erase a live blocker.
 
@@ -5438,7 +5438,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.g** se
 
 Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the work, including the controller overseeing a package or the connection between two parts. **Responsible owner** means the person, agent or component assigned that concern; assignment alone grants no extra permission. Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition for your choice.
 
-**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8573-8573`; `evidence:reviews/DG6A-sol/REVIEW.md:33-33`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`; `MAIN:Plans/UI_Command_Catalog.md:8573-8578`.
+**Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8572-8572`; `evidence:reviews/DG6A-sol/REVIEW.md:33-33`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`; `MAIN:Plans/UI_Command_Catalog.md:8572-8577`.
 
 **Supersession and boundaries:** Limits this answer to severity, category or authority assessments that neither reassign the responsible owner nor widen the area. An authority assessment identifies an already-authorized role and grants no permission. Any actual transfer, promotion, evidence addition, reopening or resolution follows its separate answer in DL-438 through DL-442; a display edit cannot substitute for the authorized action.
 
@@ -5554,7 +5554,7 @@ Coordinator pm7-build’s relayed reading (not Jared’s words): item **7.a** se
 
 - **A (recommended):** Author a distinct application `goal_run.stopped` payload, source/admission/read/backup contract and admit its selector at a separately approved registry checkpoint. Keep all app producers refused until adoption; keep original Project bytes and scope joins exact.
 
-**Sources:** `MAIN:Plans/Contracts_V0.md:24237-24239`; `MAIN:Plans/Goal_Runtime_System.md:8213-8237`; `MAIN:Plans/Decision_Log.md:1613-1637`; `DG:reports/event-authority-20261104/DG.md:108-108`; `evidence:reviews/DG-sol/REVIEW.md:116-125`; `evidence:surveys/A1/ANSWERS.jsonl:41-41`.
+**Sources:** `MAIN:Plans/Contracts_V0.md:24237-24239`; `MAIN:Plans/Goal_Runtime_System.md:8211-8235`; `MAIN:Plans/Decision_Log.md:1613-1637`; `DG:reports/event-authority-20261104/DG.md:108-108`; `evidence:reviews/DG-sol/REVIEW.md:116-125`; `evidence:surveys/A1/ANSWERS.jsonl:41-41`.
 
 **Supersession and boundaries:** Extends stopped-run contract preparation to a distinct application edition only, beyond the earlier Project-only scope recorded by DL-080. Its selector requires a separately approved registry checkpoint; every application producer remains refused until adoption. Original Project bytes and exact scope joins remain unchanged. This entry performs no admission.
 
@@ -5815,8 +5815,8 @@ Exactly the reviewed additional-name list, grouped above. Forge means a reposito
 
 | Exact name | What it records | Current owner evidence |
 |---|---|---|
-| `goal.paused` | An existing Goal paused under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6864-6864` |
-| `goal.resumed` | A paused Goal resumed under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6864-6864` |
+| `goal.paused` | An existing Goal paused under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
+| `goal.resumed` | A paused Goal resumed under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
 
 **Testing readiness — 1 name**
 
@@ -5842,7 +5842,7 @@ Exactly the reviewed additional-name list, grouped above. Forge means a reposito
 |---|---|---|
 | `planning.question_budget_exhausted` | Optional extra history that planning used its question allowance and moved to assembling the plan; exclusion still needs the owner’s proof that an existing result covers it. | `MAIN:Plans/Contracts_V0.md:21402-21408` |
 
-**Sources:** `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:46-62`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:315-331`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:413-428`; `evidence:reviews/CA-COUNT-sol/REVIEW.md:91-103`; `evidence:reviews/CA-COUNT-sol/REVIEW-cycle2.md:108-112`; `ANS:Plans/Decision_Log.md:4657-4666`; `ANS:Plans/Decision_Log.md:4700-4710`; `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`; `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010`; `MAIN:Plans/Permissions_System.md:9069-9069`; `MAIN:Plans/Backup_Restore_System.md:793-795`; `MAIN:Plans/Back_Seat_Driver.md:371-371`; `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730`; `MAIN:Plans/Contracts_V0.md:18551-18559`; `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`; `MAIN:Plans/External_Research.md:715-719`; `MAIN:Plans/Forge_Integrations.md:632-666`; `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6864-6864`; `MAIN:Plans/Working_Notebook.md:872-876`; `MAIN:Plans/Contracts_V0.md:21402-21408`; `MAIN:Plans/Remote_Access_System.md:653-660`; `MAIN:Plans/Wiring_Matrix.md:335-337`; `MAIN:Plans/Executor_Protocol.md:903-905`; `MAIN:Plans/Server_System.md:1004-1012`; `MAIN:Plans/Contracts_V0.md:20438-20450`; `MAIN:Plans/Source_Control_System.md:395-413`; `MAIN:Plans/Automated_Testing_System.md:2590-2590`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:1-8`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:16-35`; `evidence:reviews/CA-COUNT-sol/REVIEW-cycle3.md:1-12`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra-2.md:1-12`; `MAIN:Plans/External_Research.md:214-224`; `MAIN:Plans/External_Research.md:695-695`; `MAIN:Plans/Forge_Integrations.md:125-148`; `MAIN:Plans/Source_Control_System.md:165-180`; `MAIN:Plans/source_control_contracts.schema.json:385-400`; `MAIN:Plans/WorktreeGitImprovement.md:4978-4978`.
+**Sources:** `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:46-62`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:315-331`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:413-428`; `evidence:reviews/CA-COUNT-sol/REVIEW.md:91-103`; `evidence:reviews/CA-COUNT-sol/REVIEW-cycle2.md:108-112`; `ANS:Plans/Decision_Log.md:4657-4666`; `ANS:Plans/Decision_Log.md:4700-4710`; `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`; `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010`; `MAIN:Plans/Permissions_System.md:9069-9069`; `MAIN:Plans/Backup_Restore_System.md:793-795`; `MAIN:Plans/Back_Seat_Driver.md:371-371`; `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730`; `MAIN:Plans/Contracts_V0.md:18551-18559`; `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`; `MAIN:Plans/External_Research.md:715-719`; `MAIN:Plans/Forge_Integrations.md:632-666`; `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6862-6862`; `MAIN:Plans/Working_Notebook.md:872-876`; `MAIN:Plans/Contracts_V0.md:21402-21408`; `MAIN:Plans/Remote_Access_System.md:653-660`; `MAIN:Plans/Wiring_Matrix.md:335-337`; `MAIN:Plans/Executor_Protocol.md:903-905`; `MAIN:Plans/Server_System.md:1004-1012`; `MAIN:Plans/Contracts_V0.md:20438-20450`; `MAIN:Plans/Source_Control_System.md:395-413`; `MAIN:Plans/Automated_Testing_System.md:2590-2590`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:1-8`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:16-35`; `evidence:reviews/CA-COUNT-sol/REVIEW-cycle3.md:1-12`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra-2.md:1-12`; `MAIN:Plans/External_Research.md:214-224`; `MAIN:Plans/External_Research.md:695-695`; `MAIN:Plans/Forge_Integrations.md:125-148`; `MAIN:Plans/Source_Control_System.md:165-180`; `MAIN:Plans/source_control_contracts.schema.json:385-400`; `MAIN:Plans/WorktreeGitImprovement.md:4978-4978`.
 
 **Supersession and boundaries:** Extends DL-411’s exact 35-name technical grant to exactly the 148 appendix names reproduced here, under the same DL-045 limits. Per-name documented search, reuse first, new-definition labels, reviews and completeness checks remain. Continuity alternatives and provenance require owner proof; planning-budget exclusion remains conditional. No feature, lifetime/deletion rule, owner-conflict winner, event admission, app writer or depth waiver is granted; DL-414’s per-row disposition requirement remains.
 
@@ -7414,7 +7414,7 @@ canonical_text: '**Card item:** E-CARDS-2 **1.f**. **Question:** How is a no-pro
   to an app action; model-list refresh means checking which models are available.
 
 
-  **Sources:** `ANS:Plans/Decision_Log.md:4491-4491`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/UI_Command_Catalog.md:8579-8579`;
+  **Sources:** `ANS:Plans/Decision_Log.md:4491-4491`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/UI_Command_Catalog.md:8578-8578`;
   `evidence:reviews/CA-RET-sol/REVIEW.md:116-116`.
 
 
@@ -9303,7 +9303,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.b**. **Question:** Who records and
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8574-8574`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8573-8573`;
   `evidence:reviews/DG6A-sol/REVIEW.md:27-27`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
   `MAIN:Plans/Orchestrator_Page.md:60-60`.
 
@@ -9400,7 +9400,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.c**. **Question:** Who may add evi
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8577-8577`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8576-8576`;
   `evidence:reviews/DG6A-sol/REVIEW.md:29-29`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 
@@ -9498,7 +9498,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.d**. **Question:** Who may promote
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8578-8578`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8577-8577`;
   `evidence:reviews/DG6A-sol/REVIEW.md:30-30`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 
@@ -9593,7 +9593,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.e**. **Question:** Who reopens a r
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8576-8576`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8575-8575`;
   `evidence:reviews/DG6A-sol/REVIEW.md:31-31`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
 
 
@@ -9697,7 +9697,7 @@ canonical_text: '**Card item:** E-CARDS-2 **5.f**. **Question:** Who may resolve
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8575-8575`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8574-8574`;
   `evidence:reviews/DG6A-sol/REVIEW.md:32-32`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
   `MAIN:Plans/Orchestrator_Page.md:60-60`; `MAIN:Plans/Orchestrator_Page.md:168-168`; `MAIN:Plans/Orchestrator_Page.md:273-275`.
 
@@ -9801,9 +9801,9 @@ canonical_text: '**Card item:** E-CARDS-2 **5.g**. **Question:** Who records ass
   for your choice.
 
 
-  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8573-8573`;
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8572-8572`;
   `evidence:reviews/DG6A-sol/REVIEW.md:33-33`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
-  `MAIN:Plans/UI_Command_Catalog.md:8573-8578`.
+  `MAIN:Plans/UI_Command_Catalog.md:8572-8577`.
 
 
   **Supersession and boundaries:** Limits this answer to severity, category or authority assessments that neither
@@ -10307,7 +10307,7 @@ canonical_text: '**Card item:** E-CARDS-2 **7.a**. **Question:** For ordinary ap
   until adoption; keep original Project bytes and scope joins exact.
 
 
-  **Sources:** `MAIN:Plans/Contracts_V0.md:24237-24239`; `MAIN:Plans/Goal_Runtime_System.md:8213-8237`; `MAIN:Plans/Decision_Log.md:1613-1637`;
+  **Sources:** `MAIN:Plans/Contracts_V0.md:24237-24239`; `MAIN:Plans/Goal_Runtime_System.md:8211-8235`; `MAIN:Plans/Decision_Log.md:1613-1637`;
   `DG:reports/event-authority-20261104/DG.md:108-108`; `evidence:reviews/DG-sol/REVIEW.md:116-125`; `evidence:surveys/A1/ANSWERS.jsonl:41-41`.
 
 
@@ -11055,10 +11055,10 @@ canonical_text: '**Card item:** E-CARDS-2 **9.a**. **Question:** May the owners 
   |---|---|---|
 
   | `goal.paused` | An existing Goal paused under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`;
-  `MAIN:Plans/Goal_Runtime_System.md:6864-6864` |
+  `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
 
   | `goal.resumed` | A paused Goal resumed under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`;
-  `MAIN:Plans/Goal_Runtime_System.md:6864-6864` |
+  `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
 
 
   **Testing readiness — 1 name**
@@ -11114,7 +11114,7 @@ canonical_text: '**Card item:** E-CARDS-2 **9.a**. **Question:** May the owners 
   `MAIN:Plans/Permissions_System.md:9069-9069`; `MAIN:Plans/Backup_Restore_System.md:793-795`; `MAIN:Plans/Back_Seat_Driver.md:371-371`;
   `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730`; `MAIN:Plans/Contracts_V0.md:18551-18559`;
   `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`; `MAIN:Plans/External_Research.md:715-719`;
-  `MAIN:Plans/Forge_Integrations.md:632-666`; `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6864-6864`;
+  `MAIN:Plans/Forge_Integrations.md:632-666`; `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6862-6862`;
   `MAIN:Plans/Working_Notebook.md:872-876`; `MAIN:Plans/Contracts_V0.md:21402-21408`; `MAIN:Plans/Remote_Access_System.md:653-660`;
   `MAIN:Plans/Wiring_Matrix.md:335-337`; `MAIN:Plans/Executor_Protocol.md:903-905`; `MAIN:Plans/Server_System.md:1004-1012`;
   `MAIN:Plans/Contracts_V0.md:20438-20450`; `MAIN:Plans/Source_Control_System.md:395-413`; `MAIN:Plans/Automated_Testing_System.md:2590-2590`;
