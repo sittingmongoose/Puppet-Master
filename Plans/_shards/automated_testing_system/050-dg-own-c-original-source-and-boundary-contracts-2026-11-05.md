@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7479-L7653
+Source lines: L7479-L7655
 
-Source SHA256: `cdd74888c5be7c90500f5a8ad2cedb1b1c77e86f3b9f14f486eaa3eb7ce77ee3`
+Source SHA256: `da5505f2141a29b8c507df10d0f656e547d428f38d435315a86d53ba4f17364d`
 
 ---
 
@@ -38,6 +38,8 @@ acceptance_criteria:
 - Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
   native runtime or governance proof.
 validation_surfaces:
+- python3 scripts/pm_goal_own_c3_w12a_oracles.py --captures <raw-evidence-directory> --output <result.json>
+- Plans/goal_own_c_contracts/w12a-corpus.v1.json
 - python3 scripts/pm_goal_own_c3_w12_successor_oracles.py
 - Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json
 - python3 scripts/pm_goal_own_c_source_oracles.py
@@ -64,7 +66,7 @@ negative_constraints:
 - No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
 ```
 
-The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval and complete original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. This selection alone does not close W1 or W2.
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval and complete original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12a's original-owner corpus and explicit remaining W1 obligations are selected by `Plans/goal_own_c_contracts/w12a-corpus.v1.json`; a bounded assertion pass returns exit 2 while whole-root closure is incomplete. No full W1 PASS follows from these captures.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
 

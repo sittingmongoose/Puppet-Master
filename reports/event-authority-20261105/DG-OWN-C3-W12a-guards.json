@@ -1,0 +1,384 @@
+{
+  "new_product_guards": [],
+  "scope": "Only exercised original guards; not exhaustive",
+  "negatives": [
+    {
+      "negative": "cancel/absence_is_not_terminal",
+      "expected_refusal": "unresolved effect remains retained",
+      "observed_refusal": "original unresolved effect remains retained; terminal unavailable",
+      "original_boundary_case": "cancel/absence_is_not_terminal",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "U2/last_helper/revocation",
+      "expected_refusal": "A2/revoked",
+      "observed_refusal": "A2/revoked",
+      "original_boundary_case": "U2/last_helper/revocation",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "U2/last_helper/content_access",
+      "expected_refusal": "A2/content_access",
+      "observed_refusal": "A2/content_access",
+      "original_boundary_case": "U2/last_helper/content_access",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "U2/last_helper/stop",
+      "expected_refusal": "stop_epoch",
+      "observed_refusal": "stop_epoch",
+      "original_boundary_case": "U2/last_helper/stop",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "U2/no_effect_after_body",
+      "expected_refusal": "cannot infer rollback",
+      "observed_refusal": "original no-effect resolution cannot infer rollback from missing acknowledgement",
+      "original_boundary_case": "U2/no_effect_after_body",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "U3/proof_before_append",
+      "expected_refusal": "first append receipt unavailable",
+      "observed_refusal": "actual original first append receipt unavailable",
+      "original_boundary_case": "U3/proof_before_append",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "U4/substituted_stage_ticket",
+      "expected_refusal": "same-owner terminal stage ticket",
+      "observed_refusal": "actual original SIR same-owner terminal stage ticket",
+      "original_boundary_case": "U4/substituted_stage_ticket",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/source_audit/command.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/source_audit/command.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/source_audit/sir.available",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/source_audit/sir.available",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/source_audit/semantic.receipt_installed",
+      "expected_refusal": "semantic receipt/audit installation",
+      "observed_refusal": "current original semantic receipt/audit installation",
+      "original_boundary_case": "read/source_audit/semantic.receipt_installed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/source_audit/shared.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/source_audit/shared.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/input/command.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/input/command.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/input/sir.available",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/input/sir.available",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/input/semantic.receipt_installed",
+      "expected_refusal": "semantic receipt/audit installation",
+      "observed_refusal": "current original semantic receipt/audit installation",
+      "original_boundary_case": "read/input/semantic.receipt_installed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/input/shared.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/input/shared.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/progress/command.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/progress/command.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/progress/sir.available",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/progress/sir.available",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/progress/semantic.receipt_installed",
+      "expected_refusal": "semantic receipt/audit installation",
+      "observed_refusal": "current original semantic receipt/audit installation",
+      "original_boundary_case": "read/progress/semantic.receipt_installed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/progress/shared.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/progress/shared.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/immutable_progress/command.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/immutable_progress/command.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/immutable_progress/sir.available",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/immutable_progress/sir.available",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/immutable_progress/semantic.receipt_installed",
+      "expected_refusal": "semantic receipt/audit installation",
+      "observed_refusal": "current original semantic receipt/audit installation",
+      "original_boundary_case": "read/immutable_progress/semantic.receipt_installed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/immutable_progress/shared.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/immutable_progress/shared.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal/command.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/terminal/command.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal/sir.available",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/terminal/sir.available",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal/semantic.receipt_installed",
+      "expected_refusal": "semantic receipt/audit installation",
+      "observed_refusal": "current original semantic receipt/audit installation",
+      "original_boundary_case": "read/terminal/semantic.receipt_installed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal/shared.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/terminal/shared.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/proof/command.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/proof/command.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/proof/sir.available",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/proof/sir.available",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/proof/semantic.receipt_installed",
+      "expected_refusal": "semantic receipt/audit installation",
+      "observed_refusal": "current original semantic receipt/audit installation",
+      "original_boundary_case": "read/proof/semantic.receipt_installed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/proof/shared.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/proof/shared.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal_replay/command.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/terminal_replay/command.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal_replay/sir.available",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/terminal_replay/sir.available",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal_replay/semantic.receipt_installed",
+      "expected_refusal": "semantic receipt/audit installation",
+      "observed_refusal": "current original semantic receipt/audit installation",
+      "original_boundary_case": "read/terminal_replay/semantic.receipt_installed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "read/terminal_replay/shared.allowed",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "read/terminal_replay/shared.allowed",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/SourceAudit/permission",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "reader_helper/SourceAudit/permission",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/SourceAudit/candidate",
+      "expected_refusal": "final exact original update row read",
+      "observed_refusal": "final exact original update row read and requested role fence",
+      "original_boundary_case": "reader_helper/SourceAudit/candidate",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/InputContent/permission",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "reader_helper/InputContent/permission",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/InputContent/candidate",
+      "expected_refusal": "final exact original update row read",
+      "observed_refusal": "final exact original update row read and requested role fence",
+      "original_boundary_case": "reader_helper/InputContent/candidate",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/Progress/permission",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "reader_helper/Progress/permission",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/Progress/candidate",
+      "expected_refusal": "final exact original update row read",
+      "observed_refusal": "final exact original update row read and requested role fence",
+      "original_boundary_case": "reader_helper/Progress/candidate",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/Terminal/permission",
+      "expected_refusal": "source/owner/shared audit admission",
+      "observed_refusal": "current original update source/owner/shared audit admission",
+      "original_boundary_case": "reader_helper/Terminal/permission",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "reader_helper/Terminal/candidate",
+      "expected_refusal": "final exact original update row read",
+      "observed_refusal": "final exact original update row read and requested role fence",
+      "original_boundary_case": "reader_helper/Terminal/candidate",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "input/content_permission",
+      "expected_refusal": "current original thread content admission",
+      "observed_refusal": "current original thread content admission",
+      "original_boundary_case": "input/content_permission",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "input/thread_tombstone",
+      "expected_refusal": "current original thread content admission",
+      "observed_refusal": "current original thread content admission",
+      "original_boundary_case": "input/thread_tombstone",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "progress/epoch/-1",
+      "expected_refusal": "exact historical progress epoch request",
+      "observed_refusal": "exact historical progress epoch request",
+      "original_boundary_case": "progress/epoch/-1",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "progress/epoch/True",
+      "expected_refusal": "exact historical progress epoch request",
+      "observed_refusal": "exact historical progress epoch request",
+      "original_boundary_case": "progress/epoch/True",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "progress/epoch/'0'",
+      "expected_refusal": "exact historical progress epoch request",
+      "observed_refusal": "exact historical progress epoch request",
+      "original_boundary_case": "progress/epoch/'0'",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "progress/epoch/[]",
+      "expected_refusal": "exact historical progress epoch request",
+      "observed_refusal": "exact historical progress epoch request",
+      "original_boundary_case": "progress/epoch/[]",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "progress/epoch/{}",
+      "expected_refusal": "exact historical progress epoch request",
+      "observed_refusal": "exact historical progress epoch request",
+      "original_boundary_case": "progress/epoch/{}",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "input/replay_only",
+      "expected_refusal": "dedupe_by_idempotency_key",
+      "observed_refusal": "'dedupe_by_idempotency_key' was expected",
+      "original_boundary_case": "input/replay_only",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "input/revision_type",
+      "expected_refusal": "not of type",
+      "observed_refusal": "True is not of type 'integer'",
+      "original_boundary_case": "input/revision_type",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "input/foreign_body",
+      "expected_refusal": "actual accepted Direct Save body/head expectation",
+      "observed_refusal": "actual accepted Direct Save body/head expectation",
+      "original_boundary_case": "input/foreign_body",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    },
+    {
+      "negative": "input/agent_masquerade",
+      "expected_refusal": "actual successor approval participant required",
+      "observed_refusal": "actual successor approval participant required",
+      "original_boundary_case": "input/agent_masquerade",
+      "cut_rule": "Separate each input field and predicate even when the refusal message or source clause is shared. No removal proof claimed."
+    }
+  ]
+}

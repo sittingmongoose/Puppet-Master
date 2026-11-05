@@ -29,7 +29,10 @@
       ],
       "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
       "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
-      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE"
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE",
+      "c3_w12a_corpus_selection": "Plans/goal_own_c_contracts/w12a-corpus.v1.json",
+      "c3_w12a_oracles": "scripts/pm_goal_own_c3_w12a_oracles.py",
+      "c3_w12a_whole_root_closure": "NOT_COMPLETE"
     },
     {
       "event_type": "goal.cancelled",
