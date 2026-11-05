@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-FIX5-20261104",
+  "assessment_id": "EA-W2-DCW-FIX6-20261105",
   "assessment_kind": "worker_self_grade_after_blind_review",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "commit": "de555ce0387eb3875e52a174e61fed6e97a2564a",
-    "reviewed_head": "a40804394229feeed0719be388bec80cf16a9561",
-    "read_method": "Exact current owner units, unchanged schemas and production predicates, complete authored/generated/legacy guard-removal matrices, standing checks and fresh Astra-class mutations. Report follow-up changes no implementation."
+    "commit": "65c1465f9ee495333943ef7881f960fe8f1cb972",
+    "reviewed_head": "2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
+    "read_method": "Current exact owner units, integer-only schemas and codecs, exact typed/canonical original joins, full guard matrix, fixed legacy replay, standing checks, independent number/type/byte probes. Report/grade follow-up changes no implementation."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -99,16 +99,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
+          "finding": "PASS: exact-family integer-only identity/digest/descriptor recipe, original preparation and independent SP-337 event/source transport; all originals authenticate exact nested types and canonical bytes.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -144,14 +144,21 @@
               "line_start": 24516,
               "line_end": 24516,
               "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "canonical_json/exact_equal",
+              "line_start": 622,
+              "line_end": 632,
+              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n            for key, child in item.items():\n              "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -175,17 +182,17 @@
             {
               "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
               "unit": "bundle.revision_requested",
-              "line_start": 116,
-              "line_end": 126,
+              "line_start": 117,
+              "line_end": 127,
               "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -208,11 +215,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -235,11 +242,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -255,11 +262,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -292,15 +299,15 @@
               "unit": "source_storage",
               "line_start": 394,
               "line_end": 394,
-              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
+              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -316,11 +323,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -343,11 +350,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -373,20 +380,20 @@
               "unit": "bundle.revision_requested",
               "line_start": 471,
               "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=orig"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
+          "finding": "PASS: 132 require sites; 2330 whole-checker negatives including 786 new numeric/type witnesses; all 15 legacy assertions and 182 fixed legacy negatives; zero unrelated cross-acceptances. Native NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -450,14 +457,21 @@
               "line_start": 2,
               "line_end": 5,
               "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+            },
+            {
+              "path": "scripts/pm_dcw_event_numeric_cases.py",
+              "unit": "bundle.revision_requested",
+              "line_start": 1,
+              "line_end": 5,
+              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -467,7 +481,9 @@
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
-        "scripts/pm_dcw_event_regressions.py"
+        "scripts/pm_dcw_event_regressions.py",
+        "scripts/pm_dcw_event_isolation.py",
+        "scripts/pm_dcw_event_numeric_cases.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -535,11 +551,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -562,16 +578,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
+          "finding": "PASS: exact-family integer-only identity/digest/descriptor recipe, original preparation and independent SP-337 event/source transport; all originals authenticate exact nested types and canonical bytes.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -607,14 +623,21 @@
               "line_start": 24593,
               "line_end": 24593,
               "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never J"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "canonical_json/exact_equal",
+              "line_start": 622,
+              "line_end": 632,
+              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n            for key, child in item.items():\n              "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -638,17 +661,17 @@
             {
               "path": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
               "unit": "bundle.revision_started",
-              "line_start": 116,
-              "line_end": 126,
+              "line_start": 117,
+              "line_end": 127,
               "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -671,11 +694,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -698,11 +721,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -718,11 +741,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -755,15 +778,15 @@
               "unit": "source_storage",
               "line_start": 394,
               "line_end": 394,
-              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
+              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -779,11 +802,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -806,11 +829,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -836,20 +859,20 @@
               "unit": "bundle.revision_started",
               "line_start": 471,
               "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=orig"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
+          "finding": "PASS: 132 require sites; 2330 whole-checker negatives including 786 new numeric/type witnesses; all 15 legacy assertions and 182 fixed legacy negatives; zero unrelated cross-acceptances. Native NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -913,14 +936,21 @@
               "line_start": 2,
               "line_end": 5,
               "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+            },
+            {
+              "path": "scripts/pm_dcw_event_numeric_cases.py",
+              "unit": "bundle.revision_started",
+              "line_start": 1,
+              "line_end": 5,
+              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -930,7 +960,9 @@
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
-        "scripts/pm_dcw_event_regressions.py"
+        "scripts/pm_dcw_event_regressions.py",
+        "scripts/pm_dcw_event_isolation.py",
+        "scripts/pm_dcw_event_numeric_cases.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -998,11 +1030,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1025,16 +1057,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
+          "finding": "PASS: exact-family integer-only identity/digest/descriptor recipe, original preparation and independent SP-337 event/source transport; all originals authenticate exact nested types and canonical bytes.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1070,14 +1102,21 @@
               "line_start": 24670,
               "line_end": 24670,
               "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "canonical_json/exact_equal",
+              "line_start": 622,
+              "line_end": 632,
+              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n            for key, child in item.items():\n              "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1101,17 +1140,17 @@
             {
               "path": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
               "unit": "bundle.revision_completed",
-              "line_start": 116,
-              "line_end": 126,
+              "line_start": 117,
+              "line_end": 127,
               "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1134,11 +1173,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1161,11 +1200,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1181,11 +1220,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1218,15 +1257,15 @@
               "unit": "source_storage",
               "line_start": 394,
               "line_end": 394,
-              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
+              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1242,11 +1281,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1269,11 +1308,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1299,20 +1338,20 @@
               "unit": "bundle.revision_completed",
               "line_start": 471,
               "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=orig"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
+          "finding": "PASS: 132 require sites; 2330 whole-checker negatives including 786 new numeric/type witnesses; all 15 legacy assertions and 182 fixed legacy negatives; zero unrelated cross-acceptances. Native NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1376,14 +1415,21 @@
               "line_start": 2,
               "line_end": 5,
               "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+            },
+            {
+              "path": "scripts/pm_dcw_event_numeric_cases.py",
+              "unit": "bundle.revision_completed",
+              "line_start": 1,
+              "line_end": 5,
+              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -1393,7 +1439,9 @@
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
-        "scripts/pm_dcw_event_regressions.py"
+        "scripts/pm_dcw_event_regressions.py",
+        "scripts/pm_dcw_event_isolation.py",
+        "scripts/pm_dcw_event_numeric_cases.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -1461,11 +1509,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1488,16 +1536,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
+          "finding": "PASS: exact-family integer-only identity/digest/descriptor recipe, original preparation and independent SP-337 event/source transport; all originals authenticate exact nested types and canonical bytes.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1533,14 +1581,21 @@
               "line_start": 24747,
               "line_end": 24747,
               "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, nev"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "canonical_json/exact_equal",
+              "line_start": 622,
+              "line_end": 632,
+              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n            for key, child in item.items():\n              "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1564,17 +1619,17 @@
             {
               "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
               "unit": "bundle.revision_interrupted",
-              "line_start": 116,
-              "line_end": 126,
+              "line_start": 117,
+              "line_end": 127,
               "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1597,11 +1652,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1624,11 +1679,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1644,11 +1699,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1681,15 +1736,15 @@
               "unit": "source_storage",
               "line_start": 394,
               "line_end": 394,
-              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
+              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1705,11 +1760,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1732,11 +1787,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1762,20 +1817,20 @@
               "unit": "bundle.revision_interrupted",
               "line_start": 471,
               "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=orig"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
+          "finding": "PASS: 132 require sites; 2330 whole-checker negatives including 786 new numeric/type witnesses; all 15 legacy assertions and 182 fixed legacy negatives; zero unrelated cross-acceptances. Native NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1839,14 +1894,21 @@
               "line_start": 2,
               "line_end": 5,
               "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+            },
+            {
+              "path": "scripts/pm_dcw_event_numeric_cases.py",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 1,
+              "line_end": 5,
+              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -1856,7 +1918,9 @@
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
-        "scripts/pm_dcw_event_regressions.py"
+        "scripts/pm_dcw_event_regressions.py",
+        "scripts/pm_dcw_event_isolation.py",
+        "scripts/pm_dcw_event_numeric_cases.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -2254,11 +2318,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2281,16 +2345,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
+          "finding": "PASS: exact-family integer-only identity/digest/descriptor recipe, original preparation and independent SP-337 event/source transport; all originals authenticate exact nested types and canonical bytes.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2302,16 +2366,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30011,
-              "line_end": 30011,
-              "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s"
+              "line_start": 30028,
+              "line_end": 30028,
+              "quote": "Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receip"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30007,
-              "line_end": 30007,
-              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
+              "line_start": 30024,
+              "line_end": 30024,
+              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema "
             },
             {
               "path": "Plans/Contracts_V0.md",
@@ -2326,14 +2390,21 @@
               "line_start": 24896,
               "line_end": 24896,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, "
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "canonical_json/exact_equal",
+              "line_start": 622,
+              "line_end": 632,
+              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n            for key, child in item.items():\n              "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change": "repaired",
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2370,11 +2441,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2397,11 +2468,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2424,11 +2495,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2438,17 +2509,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30013,
-              "line_end": 30015,
-              "quote": "retention_policy_ref=PENDING_RETENTION_DECISION, with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.\n\nThe independent passive consumer is `reader.wizard_"
+              "line_start": 30030,
+              "line_end": 30032,
+              "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2458,9 +2529,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30013,
-              "line_end": 30013,
-              "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody "
+              "line_start": 30030,
+              "line_end": 30030,
+              "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified"
             },
             {
               "path": "Plans/dcw/wizard_seed_load_evidence.schema.json",
@@ -2472,24 +2543,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30007,
-              "line_end": 30007,
-              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
+              "line_start": 30024,
+              "line_end": 30024,
+              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
               "line_start": 394,
               "line_end": 394,
-              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
+              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2505,11 +2576,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2519,24 +2590,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30015,
-              "line_end": 30015,
-              "quote": "SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_rec"
+              "line_start": 30032,
+              "line_end": 30032,
+              "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30015,
-              "line_end": 30015,
-              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-"
+              "line_start": 30032,
+              "line_end": 30032,
+              "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2553,29 +2624,29 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30017,
-              "line_end": 30017,
-              "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport"
+              "line_start": 30034,
+              "line_end": 30034,
+              "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_history@1.0.0` "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
               "line_start": 471,
               "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=orig"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
+          "finding": "PASS: 132 require sites; 2330 whole-checker negatives including 786 new numeric/type witnesses; all 15 legacy assertions and 182 fixed legacy negatives; zero unrelated cross-acceptances. Native NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -2639,14 +2710,21 @@
               "line_start": 2,
               "line_end": 5,
               "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+            },
+            {
+              "path": "scripts/pm_dcw_event_numeric_cases.py",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 1,
+              "line_end": 5,
+              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -2656,7 +2734,9 @@
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
-        "scripts/pm_dcw_event_regressions.py"
+        "scripts/pm_dcw_event_regressions.py",
+        "scripts/pm_dcw_event_isolation.py",
+        "scripts/pm_dcw_event_numeric_cases.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -2723,11 +2803,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2750,16 +2830,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family SP-286 original ordering and independent SP-337 event/source transport. Inline/reference alternatives solely govern payload_ref; actual canonical byte boundaries and custody/reference paths pass.",
+          "finding": "PASS: exact-family integer-only identity/digest/descriptor recipe, original preparation and independent SP-337 event/source transport; all originals authenticate exact nested types and canonical bytes.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2795,14 +2875,21 @@
               "line_start": 24821,
               "line_end": 24821,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON charac"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "canonical_json/exact_equal",
+              "line_start": 622,
+              "line_end": 632,
+              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n            for key, child in item.items():\n              "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change": "repaired",
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2839,11 +2926,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2866,11 +2953,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2893,11 +2980,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2913,11 +3000,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2950,15 +3037,15 @@
               "unit": "source_storage",
               "line_start": 394,
               "line_end": 394,
-              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
+              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2974,11 +3061,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3001,11 +3088,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3031,20 +3118,20 @@
               "unit": "wizard.opened",
               "line_start": 471,
               "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=orig"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: complete static whole-checker proof, 131 require sites, all 1544 authored/generated negatives and 15 legacy semantic assertions; zero unrelated cross-acceptances. Native execution remains NOT_RUN.",
+          "finding": "PASS: 132 require sites; 2330 whole-checker negatives including 786 new numeric/type witnesses; all 15 legacy assertions and 182 fixed legacy negatives; zero unrelated cross-acceptances. Native NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -3108,14 +3195,21 @@
               "line_start": 2,
               "line_end": 5,
               "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+            },
+            {
+              "path": "scripts/pm_dcw_event_numeric_cases.py",
+              "unit": "wizard.opened",
+              "line_start": 1,
+              "line_end": 5,
+              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "reviews/DCW-sol/REVIEW-cycle6.md at 2b1c118e7e52a3d1d8c3f82914599dbf67ce15c2",
             "status": "PARTIAL"
           },
           "change": "repaired",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-six numeric/type fixes and complete guard proof; membership, pending retention and exact Jared holds unchanged."
         }
       },
       "remaining_gaps": [
@@ -3125,7 +3219,9 @@
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
-        "scripts/pm_dcw_event_regressions.py"
+        "scripts/pm_dcw_event_regressions.py",
+        "scripts/pm_dcw_event_isolation.py",
+        "scripts/pm_dcw_event_numeric_cases.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -3487,27 +3583,30 @@
     "stopped_for_Jared": 2,
     "admissions": 0,
     "native_execution": "NOT_RUN",
-    "full_contract_cases": 1904,
-    "total_static_cases": 2083,
+    "full_contract_cases": 2690,
+    "total_static_cases": 2869,
     "standing_checks_per_drafted_family": 11,
     "standing_regression_cases": 1328,
     "storage_profile_new_failures": 0,
     "checks_fixed_this_round": [
       4,
+      10,
       11
     ],
-    "guard_ablation_witnesses": 1544,
+    "guard_ablation_witnesses": 2330,
     "astra_exact_cases": 183,
     "independent_event_byte_cases": 306,
     "standing_guard_ablation_witnesses": 264,
-    "require_sites_proved": 131,
+    "require_sites_proved": 132,
     "legacy_semantic_assertions": 15,
     "legacy_negative_cases": 182,
-    "full_guard_cross_tests": 249745,
+    "full_guard_cross_tests": 394263,
     "legacy_cross_tests": 8356,
-    "astra_class_cases": 168,
-    "current_evidence_quotes": 270,
-    "grade_mutants_rejected": 10
+    "current_evidence_quotes": 282,
+    "grade_mutants_rejected": 10,
+    "new_numeric_type_cases": 786,
+    "independent_type_sweep_cases": 858,
+    "local_predecessor_type_cases": 21
   },
   "round5_verification": {
     "require_sites": 131,
@@ -3519,6 +3618,19 @@
     "unrelated_acceptances": 0,
     "unrelated_refusal_changes": 0,
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix5",
+    "native": "NOT_RUN",
+    "ids_added": []
+  },
+  "round6_verification": {
+    "require_sites": 132,
+    "full_negatives": 2330,
+    "full_cross_tests": 394263,
+    "legacy_assertions": 15,
+    "legacy_negatives": 182,
+    "legacy_cross_tests": 8356,
+    "unrelated_acceptances": 0,
+    "unrelated_refusal_changes": 0,
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix6",
     "native": "NOT_RUN",
     "ids_added": []
   }
