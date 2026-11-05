@@ -32,7 +32,7 @@ export default async function(t) {
     await t.check(`FO-73 consent native held edges and corners ${tag}`,data.every(v=>v.h.worst<=.01&&v.h.frames>=2&&v.clicks.length===1&&v.clicks[0].trusted&&v.clicks[0].own),JSON.stringify(data));
     await t.check(`FO-73 consent painted ring keeps look cue ${tag}`,data.every(v=>v.h.paintBorder>0&&(motion==='no-preference'&&look.startsWith('friendly')?v.h.paintWidth<v.base.w-.1:Math.abs(v.h.paintWidth-v.base.w)<.02)),JSON.stringify(data));
     await t.check(`FO-73 checkbox state is painted ${tag}`,data.every(v=>v.h.checked===state&&(state==='false'||(v.h.tick&&!['transparent','rgba(0, 0, 0, 0)'].includes(v.h.paintBackground)))),JSON.stringify(data));
-    if(t.args.dataOut)await appendFile(String(t.args.dataOut),JSON.stringify({tag,data})+'\n');
+    if(t.args.dataOut)await appendFile(String(t.args.dataOut)+'.checkbox.jsonl',JSON.stringify({tag,data})+'\n');
    }
   }
  }
