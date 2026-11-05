@@ -32,6 +32,9 @@ def scenario(row, case):
                               case.get('payload_body_mutations', ()))
     for mutation in case.get('mutations', ()):
         m.patch(value, mutation)
+    if case.get('refresh_index'):
+        from pm_dcw_index_fixtures import issue
+        issue(value)
     return value
 
 

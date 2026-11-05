@@ -379,12 +379,12 @@ def supplement(p, fixture, family=None):
         changed = copy.deepcopy(short)
         changed['families'] = [r for r in changed['families'] if r['event_type'] != row['event_type']]
         before = runner(changed, registry, [])
-        after = runner(changed, registry, ['run:547'])
-        results.append(dict(family=row['event_type'], case='missing_family', guard='run:547',
+        after = runner(changed, registry, ['run:549'])
+        results.append(dict(family=row['event_type'], case='missing_family', guard='run:549',
                             baseline=before, after=after, passed=before == 'family_inventory' and after == 'accept'))
-        for field, value, code, site in [('status', 'deferred', 'materialized_source', 'run:555'),
-                                        ('value_schema_ref', 'foreign-schema', 'materialized_source', 'run:555'),
-                                        ('backup_required', False, 'original_backup_contract', 'run:556')]:
+        for field, value, code, site in [('status', 'deferred', 'materialized_source', 'run:557'),
+                                        ('value_schema_ref', 'foreign-schema', 'materialized_source', 'run:557'),
+                                        ('backup_required', False, 'original_backup_contract', 'run:558')]:
             changed = copy.deepcopy(registry)
             source = next(s for s in changed['families'] if s['family_id'] == row['source_family'])
             if field == 'backup_required':
@@ -499,6 +499,13 @@ def audit(author=False, family=None):
                     ('schema', 'event_payload_digest'), ('schema', 'scope'),
                     ('source_identity', 'source_phase_identity'),
                     ('reader_effect_forbidden', 'effect_not_authorized'),
+                    # Exact named SP-278 duplicates. These configurations still
+                    # execute every other guard, and list every flipped ID.
+                    ('index_row_source', 'index_row_digest'),
+                    ('index_coverage', 'index_row_membership'),
+                    ('index_currentness', 'index_source_binding'),
+                    ('schema', 'index_source_coverage'),
+                    ('restore_epoch', 'index_recovery_epoch'),
                 ]}
                 # These schema/type checks deliberately duplicate the exact
                 # original-value or descriptor guard named in the configuration.

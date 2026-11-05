@@ -65,9 +65,14 @@ def seal_originals(scenario, allow_prepared=False):
         for key in ('event_id', 'scope_partition', 'event_type', 'idempotency_key', 'producer_semantic_digest'):
             member[key] = custody[key]
 
+    from pm_dcw_index_fixtures import issue
+    issue(scenario)
+
 
 def refresh_restore(scenario):
     authority = scenario['authority']
+    from pm_dcw_index_fixtures import issue
+    issue(scenario)
     if scenario['source']['recovery_epoch'] == scenario['control']['selected_recovery_epoch']:
         return
     stored = scenario.get('stored_source', scenario['source'])
@@ -184,6 +189,8 @@ def event_size_fixture(row, scenario, target, referenced, restored=False):
     if len(m.canonical_msgpack(scenario['source'])) > 16384:
         source_reference(row, scenario)
     refresh_restore(scenario)
+    from pm_dcw_index_fixtures import issue
+    issue(scenario)
 
 
 def opened_source_reference(scenario):

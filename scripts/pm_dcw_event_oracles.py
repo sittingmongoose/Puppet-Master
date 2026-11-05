@@ -350,7 +350,7 @@ def wizard_source(row, scenario):
     return source
 
 
-def index_read(index, reader):
+def index_read(index, reader, authority=None):
     checkpoint=index['checkpoint'];generation=checkpoint['generations'][checkpoint['current_generation_id']];frontier=generation['frontier']
     check_schema('Plans/event_record_index_checkpoint.schema.json', checkpoint, 'checkpoint')
     check_schema('Plans/event_record_index_checkpoint.schema.json', reader['live_token'], 'read_token')
@@ -359,15 +359,15 @@ def index_read(index, reader):
     rows=index['datasets'][generation['index_dataset_name']]
     require(len(rows) == frontier['index_row_count'] == frontier['coverage']['retained_event_count'], 'index_coverage')
     require(reader['expected_predecessor'] == frontier['predecessor_frontier_sha256'], 'index_CAS')
-    require(any(t['transaction_id'] == frontier['redb_transaction_id'] and t['index_row_set_sha256'] == frontier['index_row_set_sha256'] for t in index['committed_transactions']), 'index_atomicity')
+    require(any(t['transaction_id'] == frontier['redb_transaction_id'] and t['generation_id'] == generation['generation_id'] and t['index_row_set_sha256'] == frontier['index_row_set_sha256'] for t in index['committed_transactions']), 'index_atomicity')
     require('redb_snapshot_id' not in reader['durable_token'], 'durable_snapshot_forbidden')
     require(exact_equal(reader['durable_token'], {k:v for k,v in reader['live_token'].items() if k != 'redb_snapshot_id'}), 'durable_token')
     require(len(reader['durable_token']) == 9 and len(reader['live_token']) == 10, 'token_shape')
     token=reader['live_token']
-    require(exact_equal(token,load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']['read_token']), 'index_currentness')
-    require(token['generation_id'] == generation['generation_id'] and token['storage_instance_id'] == checkpoint['storage_instance_id'] and token['source_selection'] == frontier['source_selection'] and token['frontier_revision'] == frontier['publication_revision'] and token['index_dataset_name'] == generation['index_dataset_name'] and token['checkpoint_key'] == index['checkpoint_key'], 'index_currentness')
+    require(token['generation_anchor_sha256'] == index_binding(generation['anchor']), 'index_currentness')
+    require(token['generation_id'] == generation['generation_id'] and token['storage_instance_id'] == checkpoint['storage_instance_id'] and token['source_selection'] == frontier['source_selection'] and token['frontier_revision'] == frontier['publication_revision'] and token['index_dataset_name'] == generation['index_dataset_name'] and token['checkpoint_key'] == index['checkpoint_key'] == 'event_record_index_checkpoint.v1:' + checkpoint['storage_instance_id'] and token['checkpoint_ref'] == index['checkpoint_key'] + '#/generations/' + generation['generation_id'] and token['redb_snapshot_id'] == index['captured_redb_snapshot_id'], 'index_currentness')
     require(any(t['transaction_id']==frontier['redb_transaction_id'] and t['frontier_sha256']==token['frontier_sha256'] for t in index['committed_transactions']), 'index_currentness')
-
+    index_content(index, reader, authority)
 
 def source_storage(row, scenario):
     """Validate the physical redb row and its SP-337 original payload, if selected.
@@ -456,11 +456,11 @@ def verify(row, scenario, operation, legacy_validate):
         require(control['reader_schema_version'] == payload['schema_version'], 'unsupported_reader')
         if operation=='rebuild':
             require(control['replacement_reader_admitted'] is True and control['rebuild_complete'] is True, 'rebuild_not_current')
-        index=copy.deepcopy(load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']['generic'])
+        index=copy.deepcopy(scenario['index'])
         for mutation in scenario.get('index_mutations',[]):
             patch(index,mutation)
         require(scenario['reader']['live_token']['storage_instance_id'] == authority['storage_instance_id'], 'checkpoint_storage_instance')
-        index_read(index,scenario['reader'])
+        # Validate after original custody, before disclosing the retained event.
     # Compatibility is a transient view of the original; no source or custody bytes change.
     original_event=authority['events'].get(event['event_id'])
     if operation=='compatibility_read':
@@ -476,6 +476,8 @@ def verify(row, scenario, operation, legacy_validate):
     slot=bundle_source(row,scenario,legacy_validate,historical=operation in ('read','rebuild','compatibility_read')) if row['event_type'].startswith('bundle.') else wizard_source(row,scenario)
     if operation != 'append':
         original_receipt(event,slot,authority)
+    if operation in ('read','rebuild','compatibility_read'):
+        index_read(index,scenario['reader'],authority); index_event(index, event, authority)
     require(control['requested_effects']==[], 'reader_effect_forbidden' if operation in ('read','rebuild','compatibility_read') else 'effect_not_authorized')
     return 'accept'
 
@@ -568,6 +570,9 @@ def run(legacy_validate, family=None):
                                     case.get('payload_body_mutations', ()))
             for mutation in case.get('mutations',[]):
                 patch(scenario,mutation)
+            if case.get('refresh_index'):
+                from pm_dcw_index_fixtures import issue
+                issue(scenario)
             try:
                 outcome=verify(row,scenario,case['operation'],legacy_validate)
             except Refusal as exc:
@@ -678,3 +683,190 @@ def opened_source_custody(row, scenario, opened, payload):
     opened_row = dict(row, source_family='wizard_open_evidence',
                       source_schema='Plans/dcw/wizard_open_evidence.schema.json')
     verify(opened_row, predecessor, 'read', None)
+
+
+def valid_date_time(value):
+    """RFC3339 shape and calendar checks, independent of optional packages.
+
+    Fractions have one or more decimal digits; numeric zones and t/z follow
+    RFC3339. Family UTC-Z constraints remain in their schemas. Seconds are
+    00..59, matching the existing Python calendar validator (no leap seconds).
+    These prepared families have no admitted older timestamp recipe.
+    """
+    from datetime import datetime
+    if not isinstance(value, str):
+        return True  # JSON Schema's type keyword owns non-string values.
+    match = re.fullmatch(r'([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?(?:[Zz]|([+-])([0-9]{2}):([0-9]{2}))', value)
+    if match is None:
+        return False
+    try:
+        datetime(*(int(match[i]) for i in range(1, 7)))
+        return match[8] is None or (int(match[8]) <= 23 and int(match[9]) <= 59)
+    except ValueError:
+        return False
+
+
+FORMAT.checks('date-time')(valid_date_time)
+
+
+def index_binding(value):
+    from pm_event_index_binding import binding_digest
+    return binding_digest(value)
+
+
+def index_partition(event):
+    return ('app' if event['scope_kind'] == 'application' else
+            'project~' + base64.urlsafe_b64encode(event['project_id'].encode('utf-8')).decode('ascii').rstrip('='))
+
+
+def index_key(event):
+    return 'event_record_index.v2:' + index_partition(event) + ':' + str(event['sequence_id']).zfill(20) + ':' + event['event_id']
+
+
+def index_prefix(frames):
+    return index_binding(dict(domain='pm.event_index.retained_prefix.v1', entries=[dict(
+        sequence_id=f['event']['sequence_id'], event_id=f['event']['event_id'],
+        scope_partition=index_partition(f['event']),
+        source_value_bytes_sha256=hashlib.sha256(base64.b64decode(f['source_value_bytes_base64'], validate=True)).hexdigest()) for f in frames]))
+
+
+def index_selection(source, storage_instance_id):
+    manifest = source['manifest']
+    return dict(storage_instance_id=storage_instance_id, current_ref='storage/seglog/CURRENT',
+        current_bytes_sha256=hashlib.sha256(canonical_msgpack(source['current'])).hexdigest(),
+        selected_segment_generation=source['current']['selected_segment_generation'],
+        manifest_ref='storage/seglog/manifest.v1.msgpack',
+        manifest_bytes_sha256=hashlib.sha256(canonical_msgpack(manifest)).hexdigest(),
+        manifest_generation=manifest['manifest_generation'], recovery_epoch=manifest['recovery_epoch'],
+        manifest_survivor_prefix_sha256=index_prefix(source['frames']),
+        **{field + '_sha256': index_binding(manifest[field]) for field in
+           ('retained_inventory', 'durable_watermarks', 'excluded_ranges', 'retired_inputs')})
+
+
+def index_coverage(source):
+    frames = source['frames']; last = frames[-1] if frames else None
+    return dict(scope='all_application_and_project_partitions', complete_to_captured_boundary=True,
+        empty_retained_source=not frames, first_retained_sequence_id=frames[0]['event']['sequence_id'] if frames else None,
+        through_sequence_id=last['event']['sequence_id'] if last else None, last_frame=None if last is None else dict(
+            **{k: last[k] for k in ('segment_generation', 'segment_name', 'byte_offset', 'frame_end_offset')},
+            last_sequence_id=last['event']['sequence_id'], last_event_id=last['event']['event_id']),
+        retained_event_count=len(frames), retained_event_prefix_sha256=index_prefix(frames),
+        segments=source['segments'], sequence_gaps=source['sequence_gaps'],
+        health='degraded' if any(g['reason'] == 'corruption_loss' for g in source['sequence_gaps']) else 'healthy')
+
+
+def index_generation(storage_instance_id, anchor):
+    return 'eig_' + index_binding(dict(domain='pm.event_index.generation.v1', storage_instance_id=storage_instance_id,
+        projector_version='1.0.0', birth_source_selection=anchor['source_selection'],
+        generation_seed_sha256=anchor['generation_seed_sha256']))
+
+
+def index_row(frame, generation, checkpoint_key):
+    event = frame['event']; birth = generation['anchor']['source_selection']
+    return dict(schema_id='pm.storage_value.event_record_index.v2', schema_version='2.0.0',
+        **{k: event[k] for k in ('scope_kind', 'project_id', 'sequence_id', 'event_id', 'event_type', 'idempotency_key',
+                                'correlation_id', 'causation_event_id', 'persisted_at_utc', 'redaction_profile')},
+        scope_partition=index_partition(event), source_locator=dict(
+            **{k: frame[k] for k in ('segment_generation', 'segment_name', 'byte_offset')}, sequence_id=event['sequence_id']),
+        publication_locator=dict(manifest_generation=birth['manifest_generation'], recovery_epoch=birth['recovery_epoch'],
+            survivor_prefix_sha256=birth['manifest_survivor_prefix_sha256'],
+            checkpoint_ref=checkpoint_key + '#/generations/' + generation['generation_id'],
+            compaction_translation_manifest_ref=None),
+        payload_sha256=hashlib.sha256(canonical_msgpack(event['payload'])).hexdigest(),
+        producer_semantic_digest=semantic_digest(event), source_schema_id=event['schema_id'],
+        source_schema_version=event['schema_version'], projector_replay_only=event['replay_policy'] == 'projector_replay_only')
+
+
+def index_rows_digest(rows):
+    return index_binding(dict(domain='pm.event_index.row_set.v1', entries=[dict(key=k, value=v)
+        for k, v in sorted(rows.items(), key=lambda pair: (pair[1]['sequence_id'], pair[1]['event_id']))]))
+
+
+def index_content(index, reader, authority=None):
+    """SP-278 joins over captured source/rows, never the fixed example token.
+
+    Captured controls, frame extents and transaction observations are synthetic
+    trusted-adapter inputs. Native CRC/redb/fence proof remains NOT_RUN. This
+    oracle covers direct-source rebuild/append snapshots; translation snapshots
+    must use their separate owner validator, never an opaque translation ref.
+    """
+    cp = index['checkpoint']; gid = cp['current_generation_id']; generation = cp['generations'][gid]
+    source = index['current_source']; frontier = generation['frontier']; anchor = generation['anchor']
+    frames = source['frames']; rows = index['datasets'][generation['index_dataset_name']]
+    canonical_msgpack(cp)  # Exact integer-only owner domain, before indexing or slicing.
+    prepared = {r['event_type']: r for r in load('Plans/dcw_event_contract_fixtures.json')['families']}
+    registered = {r['event_type']: r for r in load('Plans/event_family_registry.json')['families']}
+    for frame in frames:
+        event = frame['event']
+        check_schema('Plans/event_record.schema.json', event)
+        if event['event_type'] in prepared:
+            envelope(prepared[event['event_type']], event, compatibility=event['replay_policy'] == 'projector_replay_only', authority=authority)
+        else:
+            owner = registered.get(event['event_type'])
+            require(owner is not None and event['payload_schema_id'] == owner['payload_schema_id'] and
+                    Draft202012Validator(owner['payload_schema'], format_checker=FORMAT).is_valid(event['payload']), 'index_source_dispatch')
+    require(exact_equal(source['source_selection'], index_selection(source, cp['storage_instance_id'])) and
+            source['manifest']['selected_segment_generation'] == source['current']['selected_segment_generation'] and
+            source['manifest']['survivor_prefix_sha256'] == index_prefix(frames), 'index_source_binding')
+    blobs = []; segments = []; frame_bytes_valid = True
+    for segment in source['segments']:
+        members = [f for f in frames if (f['segment_generation'], f['segment_name']) ==
+                   (segment['segment_generation'], segment['segment_name'])]
+        blob = b''
+        for frame in members:
+            raw = canonical_msgpack(frame['event'])
+            frame_bytes_valid &= (base64.b64decode(frame['source_value_bytes_base64'], validate=True) == raw and
+                exact_equal(frame['byte_offset'], len(blob)) and exact_equal(frame['frame_end_offset'], len(blob) + len(raw)) and
+                frame['source_schema_id'] == frame['event']['schema_id'] and
+                frame['source_schema_version'] == frame['event']['schema_version'])
+            blob += raw
+        blobs.append(blob)
+        segments.append(dict(segment_generation=segment['segment_generation'], segment_name=segment['segment_name'],
+            state=segment['state'], scan_start_offset=0, scanned_through_offset=len(blob), source_durable_end_offset=len(blob),
+            source_durable_bytes_sha256=hashlib.sha256(blob).hexdigest(), retained_event_count=len(members),
+            first_sequence_id=members[0]['event']['sequence_id'] if members else None,
+            last_sequence_id=members[-1]['event']['sequence_id'] if members else None))
+    sequences = [f['event']['sequence_id'] for f in frames]
+    require(frame_bytes_valid and sum(s['retained_event_count'] for s in segments) == len(frames) and
+            base64.b64decode(source['source_bytes_base64'], validate=True) == b''.join(blobs) and
+            exact_equal(source['segments'], segments) and exact_equal(source['manifest']['retained_inventory'], segments) and
+            exact_equal(source['manifest']['durable_watermarks'], [dict(segment_name=s['segment_name'],
+                durable_end_offset=s['source_durable_end_offset']) for s in segments]) and
+            sequences == sorted(set(sequences)) and len({f['event']['event_id'] for f in frames}) == len(frames), 'index_source_bytes')
+    holes = [(a + 1, b - 1) for a, b in zip(sequences, sequences[1:]) if b != a + 1]
+    gaps = source['sequence_gaps']
+    require(exact_equal(gaps, source['manifest']['excluded_ranges']) and
+            [(g['first_sequence_id'], g['last_sequence_id']) for g in gaps] == holes and
+            all(g['reason'] in ('allocator_lease_abandoned', 'corruption_loss', 'retention_compaction') and
+                exact_equal(source.get('gap_evidence', {}).get(g['manifest_evidence_ref']), g) for g in gaps), 'index_source_gaps')
+    require(exact_equal(frontier['coverage'], index_coverage(source)), 'index_source_coverage')
+    require(gid == generation['generation_id'] == index_generation(cp['storage_instance_id'], anchor) and
+            all(k == g['generation_id'] == index_generation(cp['storage_instance_id'], g['anchor']) and
+                g['index_dataset_name'] == 'event_record_index.v2@' + k for k, g in cp['generations'].items()) and
+            [k for k, g in cp['generations'].items() if g['state'] == 'current'] == [gid] and
+            anchor['source_selection']['storage_instance_id'] == cp['storage_instance_id'], 'index_generation_identity')
+    prefix = frames[:anchor['retained_event_count']]
+    birth_gaps = [g for g in gaps if prefix and prefix[0]['event']['sequence_id'] <= g['first_sequence_id'] and
+                  g['last_sequence_id'] <= prefix[-1]['event']['sequence_id']]
+    require(anchor['retained_event_count'] <= len(frames) and anchor['retained_event_prefix_sha256'] == index_prefix(prefix) and
+            anchor['first_retained_sequence_id'] == (prefix[0]['event']['sequence_id'] if prefix else None) and
+            anchor['through_sequence_id'] == (prefix[-1]['event']['sequence_id'] if prefix else None) and
+            anchor['sequence_gaps_sha256'] == index_binding(birth_gaps) and
+            all(exact_equal(anchor['source_selection'][k], source['source_selection'][k]) for k in
+                ('current_bytes_sha256', 'selected_segment_generation', 'recovery_epoch')), 'index_anchor_prefix')
+    expected_rows = {index_key(f['event']): index_row(f, generation, 'event_record_index_checkpoint.v1:' + cp['storage_instance_id']) for f in frames}
+    require(rows.keys() == expected_rows.keys(), 'index_row_membership')
+    require(all(exact_equal(rows[k], expected_rows[k]) for k in rows.keys() & expected_rows.keys()), 'index_row_source')
+    require(frontier['index_row_set_sha256'] == index_rows_digest(rows), 'index_row_digest')
+    require(reader['live_token']['frontier_sha256'] == index_binding(frontier), 'index_frontier_digest')
+
+
+def index_event(index, event, authority):
+    """Join the returned original and receipt to this captured complete source."""
+    frames = index['current_source']['frames']
+    selected = [f for f in frames if f['event']['event_id'] == event['event_id']]
+    require(exact_equal(index['current_source']['source_selection']['recovery_epoch'], authority['recovery_epoch']), 'index_recovery_epoch')
+    # original_receipt has already authenticated this exact event's Storage
+    # original, encoded scope, semantic digest, commitment and first receipt.
+    # Exact frame equality joins that verified custody to the captured source.
+    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')

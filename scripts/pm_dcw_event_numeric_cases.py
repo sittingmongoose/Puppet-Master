@@ -68,7 +68,8 @@ def cases(row):
 
     for label, invalid in [('float', 0.0), ('string', '0'), ('null', None), ('array', []), ('object', {'value': 0}), ('boolean', False)]:
         value = copy.deepcopy(row['positive']); value['authority']['recovery_epoch'] = invalid
-        add('authority_epoch_' + label, value, 'publish', 'restore_epoch', ['verify:409'])
+        from pm_dcw_index_cases import sites
+        add('authority_epoch_' + label, value, 'publish', 'restore_epoch', ['verify:409'] + (sites('index_recovery_epoch') if row['event_type'] == 'wizard.deferred_payload.loaded' else []))
     for label, invalid in [('float', 1.0), ('string', '1'), ('null', None), ('array', []), ('object', {'value': 1}), ('boolean', True)]:
         value = copy.deepcopy(row['positive']); value['control']['expected_value_revision'] = invalid
         add('source_CAS_' + label, value, 'publish', 'source_CAS', ['verify:437'])
@@ -120,7 +121,8 @@ def cases(row):
                 slot['prepared_event']['payload_ref'] = new
         value['event']['payload_ref'] = new; seal_originals(value); source_reference(row, value)
         rules = schema_rules(row['schema'], json.loads(new), 'payload_reference')
-        add('descriptor_' + label, value, 'publish', 'schema', ['domain:631', 'event_reference:171'], rules,
+        add('descriptor_' + label, value, 'publish', 'schema', ['domain:636', 'event_reference:171'], rules,
             'pm-uint schema format, integer-only canonical-JSON domain and exact descriptor re-encoding enforce one numeric representation; opaque descriptor originals are coherent.')
     from pm_dcw_opened_custody_cases import cases as opened_custody_cases
-    return result + opened_custody_cases(row)
+    from pm_dcw_index_cases import cases as index_cases
+    return result + opened_custody_cases(row) + index_cases(row)
