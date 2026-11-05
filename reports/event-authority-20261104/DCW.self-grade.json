@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-FIX7-20261105",
+  "assessment_id": "EA-W2-DCW-FIX8-20261105",
   "assessment_kind": "worker_self_grade_after_blind_review",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "commit": "8d043b82e967f6f3e38962e91279fe83f85c3b97",
-    "reviewed_head": "e49ae0c5895909b428883478d1a69aaabbdd643f",
-    "read_method": "Canonical owner/schema/registry text unchanged and exact quotations rechecked; every family suite rerun separately; complete original opened-source historical validation and whole-lane guard union verified. Report-only follow-up changes no implementation."
+    "commit": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+    "reviewed_head": "cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+    "read_method": "Owner prose/schemas/registries unchanged; six full CLI suites, whole-corpus guard-removal proofs, source joins, mandatory formats and independent review counterexamples rerun serially. Report-only follow-up changes no implementation."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PASS",
@@ -99,11 +99,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PASS",
@@ -148,17 +148,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 629,
-              "line_end": 633,
+              "line_start": 634,
+              "line_end": 638,
               "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -188,11 +188,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PASS",
@@ -215,11 +215,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -242,11 +242,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -262,11 +262,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -303,11 +303,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PASS",
@@ -323,16 +323,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Named versioned passive reader explicitly adopts SP-278 generic global coverage, atomic predecessor CAS and live/durable token contracts; no new family cursor.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -347,14 +347,21 @@
               "line_start": 29504,
               "line_end": 29505,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_requested",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -384,16 +391,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family static suite (440 full cases), all eleven standing cells, and complete lane proof of 133 require sites / 2838 negatives; native NOT_RUN.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -405,8 +412,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 575,
-              "line_end": 575,
+              "line_start": 580,
+              "line_end": 580,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
@@ -419,36 +426,36 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 551,
-              "line_end": 551,
+              "line_start": 553,
+              "line_end": 553,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 151,
-              "line_end": 151,
+              "line_start": 154,
+              "line_end": 154,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_requested",
-              "line_start": 6283,
-              "line_end": 6289,
+              "line_start": 6746,
+              "line_end": 6751,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_requested",
-              "line_start": 6646,
-              "line_end": 6653,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n      "
+              "line_start": 7124,
+              "line_end": 7129,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_requested",
-              "line_start": 7086,
-              "line_end": 7091,
+              "line_start": 7589,
+              "line_end": 7594,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
@@ -464,14 +471,21 @@
               "line_start": 1,
               "line_end": 5,
               "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_requested",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "remaining_gaps": [
@@ -483,7 +497,9 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
         "scripts/pm_dcw_event_isolation.py",
-        "scripts/pm_dcw_event_numeric_cases.py"
+        "scripts/pm_dcw_event_numeric_cases.py",
+        "scripts/pm_dcw_index_cases.py",
+        "scripts/pm_dcw_index_fixtures.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -504,6 +520,16 @@
           "10": "PASS",
           "11": "PASS"
         }
+      },
+      "review_round_8": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "findings": [
+          "F1",
+          "S1"
+        ],
+        "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+        "full_contract_cases": 764
       }
     },
     {
@@ -551,11 +577,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PASS",
@@ -578,11 +604,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PASS",
@@ -627,17 +653,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 629,
-              "line_end": 633,
+              "line_start": 634,
+              "line_end": 638,
               "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -667,11 +693,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PASS",
@@ -694,11 +720,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -721,11 +747,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -741,11 +767,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -782,11 +808,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PASS",
@@ -802,16 +828,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Named versioned passive reader explicitly adopts SP-278 generic global coverage, atomic predecessor CAS and live/durable token contracts; no new family cursor.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -826,14 +852,21 @@
               "line_start": 29504,
               "line_end": 29505,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_started",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -863,16 +896,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family static suite (445 full cases), all eleven standing cells, and complete lane proof of 133 require sites / 2838 negatives; native NOT_RUN.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -884,8 +917,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 575,
-              "line_end": 575,
+              "line_start": 580,
+              "line_end": 580,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
@@ -898,36 +931,36 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 551,
-              "line_end": 551,
+              "line_start": 553,
+              "line_end": 553,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 151,
-              "line_end": 151,
+              "line_start": 154,
+              "line_end": 154,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_started",
-              "line_start": 6283,
-              "line_end": 6289,
+              "line_start": 6746,
+              "line_end": 6751,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_started",
-              "line_start": 6646,
-              "line_end": 6653,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n      "
+              "line_start": 7124,
+              "line_end": 7129,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_started",
-              "line_start": 7086,
-              "line_end": 7091,
+              "line_start": 7589,
+              "line_end": 7594,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
@@ -943,14 +976,21 @@
               "line_start": 1,
               "line_end": 5,
               "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_started",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "remaining_gaps": [
@@ -962,7 +1002,9 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
         "scripts/pm_dcw_event_isolation.py",
-        "scripts/pm_dcw_event_numeric_cases.py"
+        "scripts/pm_dcw_event_numeric_cases.py",
+        "scripts/pm_dcw_index_cases.py",
+        "scripts/pm_dcw_index_fixtures.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -983,6 +1025,16 @@
           "10": "PASS",
           "11": "PASS"
         }
+      },
+      "review_round_8": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "findings": [
+          "F1",
+          "S1"
+        ],
+        "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+        "full_contract_cases": 769
       }
     },
     {
@@ -1030,11 +1082,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1057,11 +1109,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PASS",
@@ -1106,17 +1158,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 629,
-              "line_end": 633,
+              "line_start": 634,
+              "line_end": 638,
               "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1146,11 +1198,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1173,11 +1225,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1200,11 +1252,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1220,11 +1272,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1261,11 +1313,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PASS",
@@ -1281,16 +1333,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Named versioned passive reader explicitly adopts SP-278 generic global coverage, atomic predecessor CAS and live/durable token contracts; no new family cursor.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1305,14 +1357,21 @@
               "line_start": 29504,
               "line_end": 29505,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_completed",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1342,16 +1401,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family static suite (446 full cases), all eleven standing cells, and complete lane proof of 133 require sites / 2838 negatives; native NOT_RUN.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1363,8 +1422,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 575,
-              "line_end": 575,
+              "line_start": 580,
+              "line_end": 580,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
@@ -1377,36 +1436,36 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 551,
-              "line_end": 551,
+              "line_start": 553,
+              "line_end": 553,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 151,
-              "line_end": 151,
+              "line_start": 154,
+              "line_end": 154,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_completed",
-              "line_start": 6283,
-              "line_end": 6289,
+              "line_start": 6746,
+              "line_end": 6751,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_completed",
-              "line_start": 6646,
-              "line_end": 6653,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n      "
+              "line_start": 7124,
+              "line_end": 7129,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_completed",
-              "line_start": 7086,
-              "line_end": 7091,
+              "line_start": 7589,
+              "line_end": 7594,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
@@ -1422,14 +1481,21 @@
               "line_start": 1,
               "line_end": 5,
               "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_completed",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "remaining_gaps": [
@@ -1441,7 +1507,9 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
         "scripts/pm_dcw_event_isolation.py",
-        "scripts/pm_dcw_event_numeric_cases.py"
+        "scripts/pm_dcw_event_numeric_cases.py",
+        "scripts/pm_dcw_index_cases.py",
+        "scripts/pm_dcw_index_fixtures.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -1462,6 +1530,16 @@
           "10": "PASS",
           "11": "PASS"
         }
+      },
+      "review_round_8": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "findings": [
+          "F1",
+          "S1"
+        ],
+        "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+        "full_contract_cases": 770
       }
     },
     {
@@ -1509,11 +1587,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1536,11 +1614,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PASS",
@@ -1585,17 +1663,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 629,
-              "line_end": 633,
+              "line_start": 634,
+              "line_end": 638,
               "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1625,11 +1703,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1652,11 +1730,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1679,11 +1757,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1699,11 +1777,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1740,11 +1818,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PASS",
@@ -1760,16 +1838,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Named versioned passive reader explicitly adopts SP-278 generic global coverage, atomic predecessor CAS and live/durable token contracts; no new family cursor.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1784,14 +1862,21 @@
               "line_start": 29504,
               "line_end": 29505,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1821,16 +1906,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family static suite (444 full cases), all eleven standing cells, and complete lane proof of 133 require sites / 2838 negatives; native NOT_RUN.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1842,8 +1927,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 575,
-              "line_end": 575,
+              "line_start": 580,
+              "line_end": 580,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
@@ -1856,36 +1941,36 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 551,
-              "line_end": 551,
+              "line_start": 553,
+              "line_end": 553,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 151,
-              "line_end": 151,
+              "line_start": 154,
+              "line_end": 154,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_interrupted",
-              "line_start": 6283,
-              "line_end": 6289,
+              "line_start": 6746,
+              "line_end": 6751,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_interrupted",
-              "line_start": 6646,
-              "line_end": 6653,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n      "
+              "line_start": 7124,
+              "line_end": 7129,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "bundle.revision_interrupted",
-              "line_start": 7086,
-              "line_end": 7091,
+              "line_start": 7589,
+              "line_end": 7594,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
@@ -1901,14 +1986,21 @@
               "line_start": 1,
               "line_end": 5,
               "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "remaining_gaps": [
@@ -1920,7 +2012,9 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
         "scripts/pm_dcw_event_isolation.py",
-        "scripts/pm_dcw_event_numeric_cases.py"
+        "scripts/pm_dcw_event_numeric_cases.py",
+        "scripts/pm_dcw_index_cases.py",
+        "scripts/pm_dcw_index_fixtures.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -1941,6 +2035,16 @@
           "10": "PASS",
           "11": "PASS"
         }
+      },
+      "review_round_8": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "findings": [
+          "F1",
+          "S1"
+        ],
+        "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+        "full_contract_cases": 768
       }
     },
     {
@@ -1963,11 +2067,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -1990,11 +2094,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PARTIAL",
@@ -2017,11 +2121,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -2044,11 +2148,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -2071,11 +2175,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -2098,11 +2202,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2125,11 +2229,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -2152,11 +2256,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -2179,11 +2283,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -2206,11 +2310,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -2233,11 +2337,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -2260,11 +2364,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "prepared_pass": false,
@@ -2318,11 +2422,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2345,11 +2449,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PASS",
@@ -2394,24 +2498,24 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 629,
-              "line_end": 633,
+              "line_start": 634,
+              "line_end": 638,
               "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 680,
-              "line_end": 680,
+              "line_start": 685,
+              "line_end": 685,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change": "carried",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2448,11 +2552,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2475,11 +2579,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2502,11 +2606,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2522,11 +2626,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2564,17 +2668,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 680,
-              "line_end": 680,
+              "line_start": 685,
+              "line_end": 685,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change": "carried",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PASS",
@@ -2590,16 +2694,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Named versioned passive reader explicitly adopts SP-278 generic global coverage, atomic predecessor CAS and live/durable token contracts; no new family cursor.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2614,14 +2718,21 @@
               "line_start": 30032,
               "line_end": 30032,
               "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2651,16 +2762,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family static suite (994 full cases), all eleven standing cells, and complete lane proof of 133 require sites / 2838 negatives; native NOT_RUN.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -2672,8 +2783,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 575,
-              "line_end": 575,
+              "line_start": 580,
+              "line_end": 580,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
@@ -2686,36 +2797,36 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 551,
-              "line_end": 551,
+              "line_start": 553,
+              "line_end": 553,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 151,
-              "line_end": 151,
+              "line_start": 154,
+              "line_end": 154,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 6283,
-              "line_end": 6289,
+              "line_start": 6746,
+              "line_end": 6751,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 6646,
-              "line_end": 6653,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n      "
+              "line_start": 7124,
+              "line_end": 7129,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 7086,
-              "line_end": 7091,
+              "line_start": 7589,
+              "line_end": 7594,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
@@ -2735,8 +2846,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 680,
-              "line_end": 680,
+              "line_start": 685,
+              "line_end": 685,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             },
             {
@@ -2745,14 +2856,21 @@
               "line_start": 2,
               "line_end": 2,
               "quote": "\"\"\"Full loaded-operation witnesses for separately owned opened-source custody.\"\"\""
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "F1 original opened-source custody repaired on all six operations; canonical owner contracts unchanged and family suite plus complete lane proof rerun."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "remaining_gaps": [
@@ -2765,7 +2883,9 @@
         "scripts/pm_dcw_event_regressions.py",
         "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
-        "scripts/pm_dcw_opened_custody_cases.py"
+        "scripts/pm_dcw_opened_custody_cases.py",
+        "scripts/pm_dcw_index_cases.py",
+        "scripts/pm_dcw_index_fixtures.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -2786,6 +2906,16 @@
           "10": "PASS",
           "11": "PASS"
         }
+      },
+      "review_round_8": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "findings": [
+          "F1",
+          "S1"
+        ],
+        "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+        "full_contract_cases": 1318
       }
     },
     {
@@ -2832,11 +2962,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2859,11 +2989,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PASS",
@@ -2908,17 +3038,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 629,
-              "line_end": 633,
+              "line_start": 634,
+              "line_end": 638,
               "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2955,11 +3085,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2982,11 +3112,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3009,11 +3139,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3029,11 +3159,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3070,11 +3200,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PASS",
@@ -3090,16 +3220,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Named versioned passive reader explicitly adopts SP-278 generic global coverage, atomic predecessor CAS and live/durable token contracts; no new family cursor.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3114,14 +3244,21 @@
               "line_start": 30015,
               "line_end": 30015,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "wizard.opened",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3151,16 +3288,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact-family static suite (456 full cases), all eleven standing cells, and complete lane proof of 133 require sites / 2838 negatives; native NOT_RUN.",
+          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -3172,8 +3309,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 575,
-              "line_end": 575,
+              "line_start": 580,
+              "line_end": 580,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
@@ -3186,36 +3323,36 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 551,
-              "line_end": 551,
+              "line_start": 553,
+              "line_end": 553,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 151,
-              "line_end": 151,
+              "line_start": 154,
+              "line_end": 154,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.opened",
-              "line_start": 6283,
-              "line_end": 6289,
+              "line_start": 6746,
+              "line_end": 6751,
               "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.opened",
-              "line_start": 6646,
-              "line_end": 6653,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n      "
+              "line_start": 7124,
+              "line_end": 7129,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
             },
             {
               "path": "Plans/dcw_event_contract_fixtures.json",
               "unit": "wizard.opened",
-              "line_start": 7086,
-              "line_end": 7091,
+              "line_start": 7589,
+              "line_end": 7594,
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
@@ -3231,14 +3368,21 @@
               "line_start": 1,
               "line_end": 5,
               "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "wizard.opened",
+              "line_start": 872,
+              "line_end": 872,
+              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md at e49ae0c5895909b428883478d1a69aaabbdd643f",
-            "status": "PASS"
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Five-family Astra PASS preserved; immutable canon and fixture row verified, shared-helper changes rerun against this family."
+          "change": "promoted",
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "remaining_gaps": [
@@ -3250,7 +3394,9 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
         "scripts/pm_dcw_event_isolation.py",
-        "scripts/pm_dcw_event_numeric_cases.py"
+        "scripts/pm_dcw_event_numeric_cases.py",
+        "scripts/pm_dcw_index_cases.py",
+        "scripts/pm_dcw_index_fixtures.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
       "review_round_4": {
@@ -3271,6 +3417,16 @@
           "10": "PASS",
           "11": "PASS"
         }
+      },
+      "review_round_8": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "findings": [
+          "F1",
+          "S1"
+        ],
+        "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+        "full_contract_cases": 780
       }
     },
     {
@@ -3293,11 +3449,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -3320,11 +3476,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "producer": {
           "status": "PARTIAL",
@@ -3347,11 +3503,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -3374,11 +3530,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -3401,11 +3557,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -3428,11 +3584,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3455,11 +3611,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -3482,11 +3638,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -3509,11 +3665,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -3536,11 +3692,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -3563,11 +3719,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -3590,11 +3746,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/REVIEW-cycle5.md at a40804394229feeed0719be388bec80cf16a9561",
+            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-five complete guard/negative proof and current owner evidence; membership, pending retention and exact owner holds unchanged."
+          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
         }
       },
       "prepared_pass": false,
@@ -3606,31 +3762,35 @@
     }
   ],
   "summary": {
-    "prepared_before": 5,
+    "prepared_before": 0,
     "prepared_after": 6,
     "assigned": 8,
     "stopped_for_Jared": 2,
     "admissions": 0,
     "native_execution": "NOT_RUN",
-    "full_contract_cases": 3225,
-    "total_static_cases": 3404,
+    "full_contract_cases": 5169,
+    "total_static_cases": 5348,
     "standing_checks_per_drafted_family": 11,
     "standing_regression_cases": 1328,
     "checks_fixed_this_round": [
-      10,
+      7,
       11
     ],
-    "guard_ablation_witnesses": 2838,
+    "guard_ablation_witnesses": 4656,
     "standing_guard_ablation_witnesses": 264,
-    "require_sites_proved": 133,
+    "require_sites_proved": 146,
     "legacy_semantic_assertions": 15,
     "legacy_negative_cases": 182,
-    "full_guard_cross_tests": 502587,
+    "full_guard_cross_tests": 906471,
     "legacy_cross_tests": 8356,
-    "current_evidence_quotes": 286,
+    "current_evidence_quotes": 298,
     "grade_mutants_rejected": 11,
-    "new_opened_custody_negatives": 508,
-    "review_counterexamples_refused": 103
+    "review_counterexamples_refused": 78,
+    "new_index_format_negatives": 1818,
+    "astra_classes_fixed_this_round": [
+      1,
+      12
+    ]
   },
   "round5_verification": {
     "require_sites": 131,
@@ -3689,6 +3849,113 @@
     "independent_event_byte_cases": 306,
     "new_numeric_type_cases": 786,
     "independent_type_sweep_cases": 858,
-    "local_predecessor_type_cases": 21
+    "local_predecessor_type_cases": 21,
+    "round7_summary": {
+      "prepared_before": 5,
+      "prepared_after": 6,
+      "assigned": 8,
+      "stopped_for_Jared": 2,
+      "admissions": 0,
+      "native_execution": "NOT_RUN",
+      "full_contract_cases": 3225,
+      "total_static_cases": 3404,
+      "standing_checks_per_drafted_family": 11,
+      "standing_regression_cases": 1328,
+      "checks_fixed_this_round": [
+        10,
+        11
+      ],
+      "guard_ablation_witnesses": 2838,
+      "standing_guard_ablation_witnesses": 264,
+      "require_sites_proved": 133,
+      "legacy_semantic_assertions": 15,
+      "legacy_negative_cases": 182,
+      "full_guard_cross_tests": 502587,
+      "legacy_cross_tests": 8356,
+      "current_evidence_quotes": 286,
+      "grade_mutants_rejected": 11,
+      "new_opened_custody_negatives": 508,
+      "review_counterexamples_refused": 103
+    }
+  },
+  "round8_verification": {
+    "reviewed_head": "cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+    "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
+    "findings": [
+      "F1",
+      "S1"
+    ],
+    "proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/isolation-final.json",
+      "sha256": "205a0772af02c87359227397be8f36e089b3877fdea04b66159efdb8b4b31677"
+    },
+    "independent": {
+      "status": "PASS",
+      "outcomes": 150,
+      "astra_F1": 54,
+      "astra_S1": 24,
+      "ablation_controls": 36,
+      "files": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/bundle_revision_requested-independent.json",
+          "sha256": "9e43dc25b9c4e3c1985a1542bd9eee6bc8ebf29bc23891b9b514424b4597a81e"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/bundle_revision_started-independent.json",
+          "sha256": "d8ff7f4664296e41db714190d490890b9e2fc6059bf304d4333e971230b48978"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/bundle_revision_completed-independent.json",
+          "sha256": "5450ac1c028c0e89fdebab52b9052206ad27f8fbcd2ebdbd667d80b3695cb38d"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/bundle_revision_interrupted-independent.json",
+          "sha256": "9a0dbd2accfcee2918846a9c5ebc9a85401589ab0dd653c18d67c30c0cabe2bd"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/wizard_opened-independent.json",
+          "sha256": "100bafb2eec0c80273e2ec63658f0001b8cd3ba317a04cfadf9b1187e8c0908a"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/wizard_deferred_payload_loaded-independent.json",
+          "sha256": "894e8eb526f5cd25ce8b37548afc66a365d569f88690e4274988c3a4e557dec2"
+        }
+      ]
+    },
+    "per_family_contract_cases": {
+      "bundle.revision_requested": {
+        "full": 764,
+        "total": 801
+      },
+      "bundle.revision_started": {
+        "full": 769,
+        "total": 817
+      },
+      "bundle.revision_completed": {
+        "full": 770,
+        "total": 817
+      },
+      "bundle.revision_interrupted": {
+        "full": 768,
+        "total": 815
+      },
+      "wizard.opened": {
+        "full": 780,
+        "total": 780
+      },
+      "wizard.deferred_payload.loaded": {
+        "full": 1318,
+        "total": 1318
+      }
+    },
+    "source_closure": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8/source-closure.json",
+      "sha256": "2bb6989e38ce5d3330c85fb54be613ae8bc8812778c4ebd5a3ff604b2b23d610"
+    },
+    "execution_order": "One family/checker and one guard or named duplicate set at a time; all final proofs serial.",
+    "membership": "ABSENT",
+    "native": "NOT_RUN",
+    "retention": "PENDING_RETENTION_DECISION",
+    "ids_added": []
   }
 }
