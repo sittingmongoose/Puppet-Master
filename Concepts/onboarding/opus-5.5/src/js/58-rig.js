@@ -1049,7 +1049,9 @@
       if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - hx0, at[1] - hy0]; } else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
-      this.bubble.style.transform = `translate(${R(x)}px, ${R(y)}px)`;
+      /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
+         `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
+      this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
       this.bubble.dataset.side = tall ? 'down' : 'left';
       this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
       this.bubble.style.setProperty('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
@@ -1062,13 +1064,17 @@
       this.root.classList.add('pst-swap');
       this.build();
       this.direct(this.spec);
+      /* the rebuilt rig is drawn in its pose before the browser can paint it, as addProp places a new prop (FA-10): a theme
+         written after this frame's draw (NieR's moment writes it from inside a frame) left the new head and control with
+         no transform for that frame, the kit's 64-unit Pip at the stage's corner (FO-40) */
+      this.render();
       requestAnimationFrame(() => this.root.classList.remove('pst-swap'));
       this.kick();
     }
     setLayout(name) {
       if (name === this.layoutName) return;
       this.layoutName = name; this.ps = null;
-      this.build(); this.direct(this.spec);
+      this.build(); this.direct(this.spec); this.render(); /* (drawn in its pose before it can be painted, as setTheme) */
     }
     setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
