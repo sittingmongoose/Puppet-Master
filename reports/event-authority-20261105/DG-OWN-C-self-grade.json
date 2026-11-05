@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-DG-OWN-C-20261105",
+  "assessment_id": "EA-DG-OWN-C-PART2-20261105",
   "assessment_kind": "self_grade_five_existing_families",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -24,7 +24,7 @@
     "branch": "plans/ea-goal-own-c-20261105",
     "source_sha256": {
       "Plans/Assistant_Plan_Runtime.md": "ed72bc6bea30c3727977cd993c556cf1ab1951bcd9dc728317ff339cc60051de",
-      "Plans/Automated_Testing_System.md": "27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514",
+      "Plans/Automated_Testing_System.md": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
       "Plans/Contracts_V0.md": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
       "Plans/Executor_Protocol.md": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
       "Plans/Goal_Runtime_System.md": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
@@ -33,15 +33,22 @@
       "Plans/Shared_Integration_Runtime.md": "661d2ce3d3be4f1a9ef00b390c45fc46a629025a6d2392bf5480e0b20cc201ba",
       "Plans/goal_own_c_contracts/contracts.schema.json": "6cfc3868f485286d9fadbbab293b0407583b30e88a02f6f5e1334f77fa0ad84a",
       "Plans/goal_own_c_contracts/methods.json": "d5ecd0b1cb621ca147f8d0374113421902739dafa0aadf0c52aaf7b5d21b9c63",
-      "Plans/goal_own_c_contracts/protocol.md": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+      "Plans/goal_own_c_contracts/protocol.md": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
       "Plans/goal_own_c_contracts/resources.json": "a1a59f8337540ae9e43858b33e87c67889b4008cefbeeca56a3d54bc7a858976",
-      "Plans/goal_own_c_contracts/suites.json": "d6afacf6a047d25ab2bedf7bdf70d0bd18c3001815ebc7eb7e57c2181ed390e8",
+      "Plans/goal_own_c_contracts/suites.json": "902336f94065f5e3168a2631090ecb807ed26cb84af34cd32a5b45ebed5f2f08",
       "Plans/human-in-the-loop.md": "c4538ca0f08e3ae892d324f691390b4c7499fe3b9d7d27f236d61bfc56e961d0",
       "Plans/storage-plan.md": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
-      "scripts/pm_goal_own_c_oracles.py": "ec8daf13cf3814e3264be408c5861fdd7d51aff2ebe62c36d9042990c61136c4"
+      "scripts/pm_goal_own_c_oracles.py": "ec8daf13cf3814e3264be408c5861fdd7d51aff2ebe62c36d9042990c61136c4",
+      "Plans/goal_own_c_contracts/source-witness-inputs.json": "172b2e7a8daf813101e231702a2db50e3d76a158e83c507ee3e3db885f7cd435",
+      "Plans/goal_own_c_contracts/whole-root-banks.json": "6935391c8c757e5be91f30874e87e0ff92bfce12282e35064f3f1cd01a8b6b18",
+      "scripts/pm_goal_own_c_roots.py": "cd0b685772ff010779dd1de129bfcbecbf6083dd0662e894b5d6d274ebee1eb9",
+      "scripts/pm_goal_own_c_source_oracles.py": "9e21d4de12b4ba4aabee0ccc8515aafd87e143c2c7558d6847bf3ecb4cbd1565"
     },
-    "implementation_commit": "f0679a8885ccfddef902a16615ed5ed7a81f64df",
-    "assessment_applies_to_later_report_only_commits": true
+    "implementation_commit": "5cb639818520eb55acf83860c5791a4b7555b376",
+    "assessment_applies_to_later_report_only_commits": true,
+    "part1_implementation_commit": "f0679a8885ccfddef902a16615ed5ed7a81f64df",
+    "continuation_base_commit": "25b20381c59971761074475bcdafbd02f90a9ebd",
+    "part2_initial_component_commit": "1dd1b03ba436376498b6eed4d6ef3ba49b5b48de"
   },
   "membership_note": "All five are existing registered families; no registry admission or membership change. New bindings are prepared without admission. Native NOT_RUN alone does not lower a grade.",
   "native_execution": "NOT_RUN",
@@ -592,7 +599,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "New separately adopted W suite, closed new companion roots and bounded executable provider/migration/dispatch/custody cases exist. Complete inherited original source/method-root fixtures and all own publication/disclosure/checkpoint boundaries remain required; no blanket check-11 or native result is claimed.",
+          "finding": "Part 2 adds bounded source/storage witnesses for Goal update/cancellation; it does not instantiate this family's complete original current producer/consumer tuple corpus. Whole-path closure remains PARTIAL; no upgrade follows from native NOT_RUN or component passes.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -601,7 +608,7 @@
               "line_end": 7243,
               "quote": "goal_run.cancelled: the SP-312 combined projector rule table.",
               "excerpt_sha256": "eac9634bcf0563654d0bd02a8ffc3f26a93142d6236ff5cb082df79a2acd7d7a",
-              "file_sha256": "27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514",
+              "file_sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
               "quote_check": "exact"
             },
             {
@@ -611,7 +618,17 @@
               "line_end": 79,
               "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
               "excerpt_sha256": "b76b48f7ea15468b77c18eef1af0220222cfbc15c656dbf82bcb26bd5a5ffc87",
-              "file_sha256": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 94,
+              "line_end": 94,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "63696835820fb237f3f7df0807ded752cb23f8a48cdea5ad555f2a602571c245",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
               "quote_check": "exact"
             }
           ],
@@ -625,7 +642,8 @@
       },
       "remaining_gaps": [
         "O7: complete inherited original source/method-root fixtures and every own boundary remain incomplete; the new adapter is bounded.",
-        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate."
+        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
+        "Part 2 did not finish the requested whole original W1-W5/native source corpus; see the exact family closure table in DG-OWN-C.md."
       ],
       "normative_depth_complete": false,
       "disposition_evidence": [
@@ -1241,7 +1259,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "New separately adopted W suite, closed new companion roots and bounded executable provider/migration/dispatch/custody cases exist. Complete inherited original source/method-root fixtures and all own publication/disclosure/checkpoint boundaries remain required; no blanket check-11 or native result is claimed.",
+          "finding": "Part 2 adds bounded source/storage witnesses for Goal update/cancellation; it does not instantiate this family's complete original current producer/consumer tuple corpus. Whole-path closure remains PARTIAL; no upgrade follows from native NOT_RUN or component passes.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1250,7 +1268,7 @@
               "line_end": 7243,
               "quote": "goal_run.certified: the GRS-085 mandatory prefix projection rule table.",
               "excerpt_sha256": "eac9634bcf0563654d0bd02a8ffc3f26a93142d6236ff5cb082df79a2acd7d7a",
-              "file_sha256": "27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514",
+              "file_sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
               "quote_check": "exact"
             },
             {
@@ -1260,7 +1278,17 @@
               "line_end": 79,
               "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
               "excerpt_sha256": "b76b48f7ea15468b77c18eef1af0220222cfbc15c656dbf82bcb26bd5a5ffc87",
-              "file_sha256": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 94,
+              "line_end": 94,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "63696835820fb237f3f7df0807ded752cb23f8a48cdea5ad555f2a602571c245",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
               "quote_check": "exact"
             }
           ],
@@ -1274,7 +1302,8 @@
       },
       "remaining_gaps": [
         "O7: complete inherited original source/method-root fixtures and every own boundary remain incomplete; the new adapter is bounded.",
-        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate."
+        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
+        "Part 2 did not finish the requested whole original W1-W5/native source corpus; see the exact family closure table in DG-OWN-C.md."
       ],
       "normative_depth_complete": false,
       "disposition_evidence": [
@@ -1840,7 +1869,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "New separately adopted W suite, closed new companion roots and bounded executable provider/migration/dispatch/custody cases exist. Complete inherited original source/method-root fixtures and all own publication/disclosure/checkpoint boundaries remain required; no blanket check-11 or native result is claimed.",
+          "finding": "Part 2 adds bounded source/storage witnesses for Goal update/cancellation; it does not instantiate this family's complete original current producer/consumer tuple corpus. Whole-path closure remains PARTIAL; no upgrade follows from native NOT_RUN or component passes.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1849,7 +1878,7 @@
               "line_end": 7243,
               "quote": "goal_run.started: the SP-311 started-only projector rule table.",
               "excerpt_sha256": "eac9634bcf0563654d0bd02a8ffc3f26a93142d6236ff5cb082df79a2acd7d7a",
-              "file_sha256": "27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514",
+              "file_sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
               "quote_check": "exact"
             },
             {
@@ -1859,7 +1888,17 @@
               "line_end": 79,
               "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
               "excerpt_sha256": "b76b48f7ea15468b77c18eef1af0220222cfbc15c656dbf82bcb26bd5a5ffc87",
-              "file_sha256": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 94,
+              "line_end": 94,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "63696835820fb237f3f7df0807ded752cb23f8a48cdea5ad555f2a602571c245",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
               "quote_check": "exact"
             }
           ],
@@ -1873,7 +1912,8 @@
       },
       "remaining_gaps": [
         "O7: complete inherited original source/method-root fixtures and every own boundary remain incomplete; the new adapter is bounded.",
-        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate."
+        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
+        "Part 2 did not finish the requested whole original W1-W5/native source corpus; see the exact family closure table in DG-OWN-C.md."
       ],
       "normative_depth_complete": false,
       "disposition_evidence": [
@@ -2435,7 +2475,7 @@
               "line_end": 35,
               "quote": "An unknown or partially effective operation",
               "excerpt_sha256": "e475182e869ecd5fc163f3e15e7993bd307e1aa662a481b617f95e64830fe512",
-              "file_sha256": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
               "quote_check": "exact"
             }
           ],
@@ -2449,7 +2489,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "New separately adopted W suite, closed new companion roots and bounded executable provider/migration/dispatch/custody cases exist. Complete inherited original source/method-root fixtures and all own publication/disclosure/checkpoint boundaries remain required; no blanket check-11 or native result is claimed.",
+          "finding": "Part 2 adds bounded source/storage witnesses for Goal update/cancellation; it does not instantiate this family's complete original current producer/consumer tuple corpus. Whole-path closure remains PARTIAL; no upgrade follows from native NOT_RUN or component passes.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2458,7 +2498,7 @@
               "line_end": 7243,
               "quote": "goal.cancelled: v3 payload cases, SP-422 identity vectors",
               "excerpt_sha256": "eac9634bcf0563654d0bd02a8ffc3f26a93142d6236ff5cb082df79a2acd7d7a",
-              "file_sha256": "27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514",
+              "file_sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
               "quote_check": "exact"
             },
             {
@@ -2468,7 +2508,17 @@
               "line_end": 79,
               "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
               "excerpt_sha256": "b76b48f7ea15468b77c18eef1af0220222cfbc15c656dbf82bcb26bd5a5ffc87",
-              "file_sha256": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 94,
+              "line_end": 94,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "63696835820fb237f3f7df0807ded752cb23f8a48cdea5ad555f2a602571c245",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
               "quote_check": "exact"
             }
           ],
@@ -2483,7 +2533,8 @@
       "remaining_gaps": [
         "O7: complete inherited original source/method-root fixtures and every own boundary remain incomplete; the new adapter is bounded.",
         "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
-        "O5: instantiate complete actual old-source schema realms/mapping/manifest/transaction witnesses without inferring absent-as-empty."
+        "O5: instantiate complete actual old-source schema realms/mapping/manifest/transaction witnesses without inferring absent-as-empty.",
+        "Part 2 did not finish the requested whole original W1-W5/native source corpus; see the exact family closure table in DG-OWN-C.md."
       ],
       "normative_depth_complete": false,
       "disposition_evidence": [
@@ -2500,7 +2551,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm_goal_current_writer_oracles.py",
-        "scripts/pm_goal_own_c_oracles.py"
+        "scripts/pm_goal_own_c_oracles.py",
+        "python3 scripts/pm_goal_own_c_source_oracles.py (component coverage only)"
       ]
     },
     {
@@ -2639,7 +2691,7 @@
               "unit": "GRS-068 section",
               "line_start": 6524,
               "line_end": 6524,
-              "quote": "SP-299 defines the complete original source \u2192 reservation \u2192 body commit \u2192 frozen event input \u2192 shared first publication \u2192 SIR terminal sequence.",
+              "quote": "SP-299 defines the complete original source → reservation → body commit → frozen event input → shared first publication → SIR terminal sequence.",
               "excerpt_sha256": "06216ca0ce330517b9f86e63403542727d9990800bae032d3f735efda2b5d0d3",
               "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
               "quote_check": "exact"
@@ -2671,7 +2723,7 @@
               "line_end": 13,
               "quote": "U4. `owner.hitl.goal_update.read_resolution.v1` resolves the actual request AND resolution from original owner custody",
               "excerpt_sha256": "970911664c08dc49548591785e97812808544b3dd316ce55725c428c68437bf6",
-              "file_sha256": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
               "quote_check": "exact"
             }
           ],
@@ -2957,7 +3009,7 @@
               "unit": "Acyclic operation and original effect resolution (SP-299)",
               "line_start": 24554,
               "line_end": 24554,
-              "quote": "Permitted progress edges are source_admitted\u2192body_reserved\u2192body_committed\u2192event_ready\u2192event_issued",
+              "quote": "Permitted progress edges are source_admitted→body_reserved→body_committed→event_ready→event_issued",
               "excerpt_sha256": "a571696819a97fc1b78bd344933ac24c968cc2b1b8e3d5a600f176c08194be39",
               "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
               "quote_check": "exact"
@@ -3089,7 +3141,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "New separately adopted W suite, closed new companion roots and bounded executable provider/migration/dispatch/custody cases exist. Complete inherited original source/method-root fixtures and all own publication/disclosure/checkpoint boundaries remain required; no blanket check-11 or native result is claimed.",
+          "finding": "Part 2 adds bounded source/storage witnesses for Goal update/cancellation; it does not instantiate this family's complete original current producer/consumer tuple corpus. Whole-path closure remains PARTIAL; no upgrade follows from native NOT_RUN or component passes.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3098,7 +3150,7 @@
               "line_end": 7243,
               "quote": "Newly authored owner contract under DL-045 (2026-11-04). It names the static oracles of five current Goal writers, each with its own cases in Plans/goal_current_writer_oracle_fixtures.json, ",
               "excerpt_sha256": "eac9634bcf0563654d0bd02a8ffc3f26a93142d6236ff5cb082df79a2acd7d7a",
-              "file_sha256": "27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514",
+              "file_sha256": "7c14844fffac3bd898d90226fd3a94a58a193d22808ccf45a5f15d1beceb784d",
               "quote_check": "exact"
             },
             {
@@ -3108,7 +3160,17 @@
               "line_end": 79,
               "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
               "excerpt_sha256": "b76b48f7ea15468b77c18eef1af0220222cfbc15c656dbf82bcb26bd5a5ffc87",
-              "file_sha256": "4970f3566cb7d170d2909b1f20628e39d094806fe785d876c5e7e77d8b173f3b",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 94,
+              "line_end": 94,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "63696835820fb237f3f7df0807ded752cb23f8a48cdea5ad555f2a602571c245",
+              "file_sha256": "37447e33294092415598440c9d6407b82b12a1a8fd622fd0b7bdd345e66d3bd4",
               "quote_check": "exact"
             }
           ],
@@ -3123,7 +3185,8 @@
       "remaining_gaps": [
         "O7: complete inherited original source/method-root fixtures and every own boundary remain incomplete; the new adapter is bounded.",
         "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
-        "O4: finish complete original provider-source realm/mutation join companions and whole-path specimens; existing descriptor references require explicit route integration."
+        "O4: finish complete original provider-source realm/mutation join companions and whole-path specimens; existing descriptor references require explicit route integration.",
+        "Part 2 did not finish the requested whole original W1-W5/native source corpus; see the exact family closure table in DG-OWN-C.md."
       ],
       "normative_depth_complete": false,
       "disposition_evidence": [
@@ -3140,10 +3203,20 @@
       ],
       "static_checks_seen": [
         "scripts/pm_goal_current_writer_oracles.py",
-        "scripts/pm_goal_own_c_oracles.py"
+        "scripts/pm_goal_own_c_oracles.py",
+        "python3 scripts/pm_goal_own_c_source_oracles.py (component coverage only)"
       ]
     }
   ],
   "status_meaning": "Self-grade by the drafting worker; an independent grader and the Sol and Astra reviewers check it later.",
-  "static_suites_run_by_grader": true
+  "static_suites_run_by_grader": true,
+  "part2": {
+    "status": "NOT_COMPLETE",
+    "source_oracle_cases": 293,
+    "positives": 112,
+    "negatives": 181,
+    "native_execution": "NOT_RUN",
+    "new_ids_minted": [],
+    "stopped_owner_question": null
+  }
 }

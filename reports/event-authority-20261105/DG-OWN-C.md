@@ -3,7 +3,7 @@
 Branch `plans/ea-goal-own-c-20261105`, based exactly on `cfb7e550746c08a989bb41583286d72acc47e68d` from `origin/plans/ea-goal-depth-20261104`. Prepared without admission. No registry, Decision Log, auto-decisions, Spec Lock, governance evidence, frozen validator, existing original schema/resource bank, application stopped-event edition, retention policy or main push is changed. No pm-mail or subagents.
 Implementation commit `f0679a8885ccfddef902a16615ed5ed7a81f64df`; subsequent handoff edits change reports only.
 
-**O4 and O5 have newly authored owner contracts and closed companions. O7 has five separately adopted complete-path oracle contracts and an executable dispatch/custody slice; its full inherited original-source/root corpus remains PARTIAL. None of these five families is claimed fully prepared.** Native execution is NOT_RUN. The passing adapter is not a substitute for the complete original Start, D06, coordinator, body/command or private inspection graphs.
+**O4 and O5 have newly authored owner contracts and closed transport companions; their native source companion corpus remains PARTIAL. O7 has five separately adopted complete-path oracle contracts and an executable dispatch/custody slice; its full inherited original-source/root corpus remains PARTIAL. None of these five families is claimed fully prepared.** Native execution is NOT_RUN. The passing adapter is not a substitute for the complete original Start, D06, coordinator, body/command or private inspection graphs.
 
 ## Changes and exact limits
 
@@ -68,32 +68,32 @@ There is **no new question for Jared**. Existing second-deck 7.a remains with Ja
 
 | Added unit | Owner location |
 |---|---|
-| HITL-1130 | Plans/human-in-the-loop.md:2808 |
-| PS-1130 | Plans/Permissions_System.md:11106 |
-| SIR-1130 | Plans/Shared_Integration_Runtime.md:3313 |
-| SIR-1131 | Plans/Shared_Integration_Runtime.md:3368 |
-| APR-1130 | Plans/Assistant_Plan_Runtime.md:2236 |
-| SQR-1130 | Plans/Scheduling_and_Quota_Resume.md:2105 |
-| SP-1130 | Plans/storage-plan.md:30442 |
-| SP-1131 | Plans/storage-plan.md:30497 |
-| CV-1130 | Plans/Contracts_V0.md:24830 |
-| CV-1131 | Plans/Contracts_V0.md:24885 |
-| GRS-1130 | Plans/Goal_Runtime_System.md:8922 |
-| SP-1132 | Plans/storage-plan.md:30556 |
-| GRS-1131 | Plans/Goal_Runtime_System.md:8977 |
-| SP-1133 | Plans/storage-plan.md:30611 |
-| GRS-1132 | Plans/Goal_Runtime_System.md:9032 |
-| SP-1134 | Plans/storage-plan.md:30666 |
-| GRS-1133 | Plans/Goal_Runtime_System.md:9087 |
-| SP-1135 | Plans/storage-plan.md:30722 |
-| GRS-1134 | Plans/Goal_Runtime_System.md:9142 |
-| SP-1136 | Plans/storage-plan.md:30778 |
-| EP-1130 | Plans/Executor_Protocol.md:9185 |
-| EP-1131 | Plans/Executor_Protocol.md:9238 |
-| EP-1132 | Plans/Executor_Protocol.md:9291 |
-| ATS-1116 | Plans/Automated_Testing_System.md:7481 |
-| ATS-1117 | Plans/Automated_Testing_System.md:7535 |
-| ATS-1118 | Plans/Automated_Testing_System.md:7589 |
+| HITL-1130 | Plans/human-in-the-loop.md:2811 |
+| PS-1130 | Plans/Permissions_System.md:11109 |
+| SIR-1130 | Plans/Shared_Integration_Runtime.md:3316 |
+| SIR-1131 | Plans/Shared_Integration_Runtime.md:3371 |
+| APR-1130 | Plans/Assistant_Plan_Runtime.md:2239 |
+| SQR-1130 | Plans/Scheduling_and_Quota_Resume.md:2108 |
+| SP-1130 | Plans/storage-plan.md:30445 |
+| SP-1131 | Plans/storage-plan.md:30500 |
+| CV-1130 | Plans/Contracts_V0.md:24833 |
+| CV-1131 | Plans/Contracts_V0.md:24888 |
+| GRS-1130 | Plans/Goal_Runtime_System.md:8925 |
+| SP-1132 | Plans/storage-plan.md:30559 |
+| GRS-1131 | Plans/Goal_Runtime_System.md:8980 |
+| SP-1133 | Plans/storage-plan.md:30614 |
+| GRS-1132 | Plans/Goal_Runtime_System.md:9035 |
+| SP-1134 | Plans/storage-plan.md:30669 |
+| GRS-1133 | Plans/Goal_Runtime_System.md:9090 |
+| SP-1135 | Plans/storage-plan.md:30725 |
+| GRS-1134 | Plans/Goal_Runtime_System.md:9145 |
+| SP-1136 | Plans/storage-plan.md:30781 |
+| EP-1130 | Plans/Executor_Protocol.md:9188 |
+| EP-1131 | Plans/Executor_Protocol.md:9241 |
+| EP-1132 | Plans/Executor_Protocol.md:9294 |
+| ATS-1116 | Plans/Automated_Testing_System.md:7484 |
+| ATS-1117 | Plans/Automated_Testing_System.md:7540 |
+| ATS-1118 | Plans/Automated_Testing_System.md:7596 |
 
 | Amended unit | Owner amendment location |
 |---|---|
@@ -132,10 +132,10 @@ There is **no new question for Jared**. Existing second-deck 7.a remains with Ja
 | SQR-011 | Plans/Scheduling_and_Quota_Resume.md:1183 |
 | ATS-057 | Plans/Automated_Testing_System.md:5412 |
 | ATS-210 | Plans/Automated_Testing_System.md:7295 |
-Exact changed ranges in shared owner files (inclusive; full machine list in DG-OWN-C-merge-ranges.json):
+Exact current changed ranges in shared owner files (inclusive; full machine list in DG-OWN-C-merge-ranges.json):
 
 - **Plans/Assistant_Plan_Runtime.md**: 1938–1940, 2233–2288.
-- **Plans/Automated_Testing_System.md**: 5412–5414, 7295–7297, 7478–7645.
+- **Plans/Automated_Testing_System.md**: 5412–5414, 7295–7297, 7478–7649.
 - **Plans/Contracts_V0.md**: 22639–22641, 23014–23016, 23517–23519, 24827–24937.
 - **Plans/Executor_Protocol.md**: 9182–9343.
 - **Plans/Goal_Runtime_System.md**: 6521, 6528, 6615–6617, 7076–7078, 7177–7179, 7714–7716, 7793–7795, 7878–7880, 7960–7962, 8204–8206, 8279–8281, 8919–9195.
@@ -213,3 +213,106 @@ Additional reproducible input/scope evidence:
 - **/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/currentness-inputs.tar.gz** — SHA-256 `4b3ed5629a6ad3508f6d7401a1bb77a72a427a9147511ac0e951636b2891c609`.
 - **/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/derived-scope.json** — SHA-256 `507ba8afe3621d0125b7b2af446fae1190834cfad23698519a886b8dfd0884e8`.
 - **/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/citation-check.json** — SHA-256 `7c82ef3b519a7ddbf6a43e0eff5ec979027a2e3f57475935345110a5ef74eed1`.
+
+
+<!-- part2-results -->
+
+## Part 2 — incremental source witnesses; requested closure NOT_COMPLETE
+
+Continuation base: `25b20381c59971761074475bcdafbd02f90a9ebd`, same branch and id allocation. **This continuation does not finish Remaining technical work items 1 or 2.** None of the five families is newly fully prepared. No missing owner/product choice was established: the remaining work is technical. Jared's existing 7.a is untouched. Native execution remains NOT_RUN.
+
+### Closure by exact family
+
+| Family / suite | Additional executable evidence | Still open | Whole-root closure |
+|---|---|---|---|
+| goal.updated / W1 | Pinned complete original Direct Save U0-U4 capture roots and immutable byte custody; complete inline/reference proposal storage; complete stored approval-resolution roots and bounded provider joins; retained denial/expiry/revocation audit versus current refusal; original native Goal body/control/history/origin validator | Current SP-421 direct Save/no-effect/fault/recovery/first-receipt/SIR graph, each independent current inspection helper/final tuple, and actual agent approval-to-body-mutation path. The preserved old capture is not a new current writer or full route execution. | PARTIAL |
+| goal.cancelled / W2 | One complete retained original Goal outer value plus independently held actual original mutation-receipt wrapper; native snapshot semantics; ordered, scoped, complete-part MessagePack manifest integrity; private TEST_ONLY participant identities, whole source-image/origin CAS, compact result/manifest atomic visibility and interruption witnesses | All complete no-association, bound-Plan, Workflow D05/D06, private inspection and late-assignment paths; all six owners' native original image-to-binding mapping; actual destination Binding/Control/Origin/WriterDomain/Stop transaction and migration recovery/withdrawal. Compact output publication is not enrollment. | PARTIAL |
+| goal_run.started / W3 | Inherited DG suite rerun; no new original Start tuple corpus | Original Start/native/D01 production and publication, native-v7 dispatch, actual generic source and all checkpoint/CAS/crash/staging/cutover/source-withdrawal tuples. | PARTIAL |
+| goal_run.cancelled / W4 | Inherited DG suite rerun; no new positive original D06 tuple corpus | Full positive D06/D05/effect/Goal/current-source graph and combined projector/checkpoint/CAS/crash/staging/cutover tuples. | PARTIAL |
+| goal_run.certified / W5 | Inherited DG suite rerun; original explicit cross-realm import contract located and left intact | All CF-01..12 and P4..P8 complete original v7/prepare.v2 coordinator/consumer tuples, including birth/identity chronology, full append group/first custody, native joint commit/release and exact original prefix/generation/current-source arguments. | PARTIAL |
+
+### Source companions and constraints
+
+`pm_goal_own_c_source_oracles.py` supplies component witnesses for ATS-1116/1117. `pm_goal_own_c_roots.py` qualifies whole original bytes and eagerly resolves schema references, including unvisited definitions, in an isolated original bank. `whole-root-banks.json` selects three exact whole-resource locations at the original hashes. No existing bank, URI, resource, original method or schema was rewritten or restamped. The new suite does not pretend that a transport-shaped value or a copied source is native authority. URI repetition requires the same full-document SHA-256 and declared JSON pointer, even when parsed schemas compare equal. The ordinary validation-surface command also runs without an output-file argument. Manifest Selection members remain opaque TEST_ONLY fixtures; their native targets are not resolved. The enrolled result is shape data. The private component participants and store selection do not instantiate an SP-305 WriterDomain or its native owners.
+
+The original pure Goal and MessagePack implementations are imported from the exact package pinned by `source-witness-inputs.json`; no serializer or numeric cap is added. The Goal image is authentic retained pre-DL-270 JSON under its original recipe, not a new JSON redb write. New stored wrappers and manifest/operation measurements use the pinned original canonical MessagePack implementation. The newly authored M7 hash binding is SHA-256 of the complete ordered Selection list in that existing MessagePack profile, without a new prefix; it does not replace the full-source-capture commitment.
+
+New guard/negative mappings are exported for the shared guard-isolation sweep. Source-epoch wrong-type predicates are separated from value predicates. Manifest metadata negatives keep actual physical byte copies coherent; the member-corruption witness targets the original whole-list commitment. Native snapshot mutations recompute the relevant body/control/revision hashes so stale mirrors do not mask the intended original guard. There is no local guard-removal tool or check-11 PASS claim. Per-part sizes are tested on complete typed roots; each proposal/resolution operation embeds its entire record, so its size bound also bounds that record.
+
+Only ATS-1116/1117's validation surfaces and this lane's own protocol/suite metadata change in owner prose. No other lane's unit or script, pm_goal_oracle_common.py, registry, Decision Log, governance lock/evidence, admission, application stopped-event edition, or retention policy is edited. No pm-mail, subagent or main push occurs.
+
+### Part 2 grades and ids
+
+Criterion order and twelve-cell vectors remain those in Part 1. Scores do not rise merely for schema/custody specimens or a green bounded component model.
+
+| Family | Before Part 2 | After Part 2 | Oracle cell |
+|---|---:|---:|---|
+| goal.updated | 10/12 | 10/12 | PARTIAL |
+| goal.cancelled | 10/12 | 10/12 | PARTIAL |
+| goal_run.started | 11/12 | 11/12 | PARTIAL |
+| goal_run.cancelled | 11/12 | 11/12 | PARTIAL |
+| goal_run.certified | 11/12 | 11/12 | PARTIAL |
+
+No new id is minted in Part 2. Existing used ids: GRS-1130..1134; SP-1130..1136; CV-1130..1131; SIR-1130..1131; HITL-1130; PS-1130; APR-1130; SQR-1130; EP-1130..1132; ATS-1116..1118. Unminted allocation: GRS-1135..1139; SP-1137..1139; CV-1132..1139; SIR-1132..1139; HITL/PS/APR/SQR-1131..1139; EP-1133..1139; no ATS id remains. The final origin-definition scan is recorded with the checks below.
+
+No stopped question for Jared is submitted. These unclosed paths must not be represented as fully prepared or admitted.
+
+<!-- part2-checks -->
+
+Part 2 implementation commits: `1dd1b03ba436376498b6eed4d6ef3ba49b5b48de` and `5cb639818520eb55acf83860c5791a4b7555b376`. Subsequent handoff commits change reports only.
+
+### Part 2 checks and current merge ranges
+
+| Check | Exit | Result |
+|---|---:|---|
+| DG current writer | 0 | 931 cases / 861 negatives |
+| DG history reader | 0 | 6,143 cases / 6,032 negatives |
+| DG stop/block | 0 | 478 cases / 427 negatives |
+| DG lifecycle | 0 | 514 cases / 487 negatives |
+| Part 1 lane oracles | 0 | 355 cases / 46 positives / 309 negatives |
+| Part 2 source oracles | 0 | 293 cases / 112 positives / 181 negatives; 123 new guard labels with negative IDs |
+| negative-success probe | 0 | child correctly exited 1 |
+| original lineage self-test | 0 | pass |
+| shard generate / check | 0 | pass; only ATS shard directory changed |
+| index generate | 0 | top-level pass; 7,481 units / 30,125 acceptance units |
+| index validate | 1 | top-level FAIL: 23 failures: 21 existing legacy-ledger errors, DL-302 and PLS-025 absent from pinned base but present on refreshed origin/main |
+| derived owner-scope audit | 0 | 84 PlanUnit rows and 9 acceptance rows changed; all ATS; no row removed |
+| origin id definition scan | 0 | 548 origin refs / 1,410 distinct Plan-document blobs; no owner/heading conflict; free ids as listed |
+| git diff --check | 0 | pass after removing one trailing blank line from the new qualifier |
+
+All heavy generators/checkers ran one at a time. The history audit took about 27 minutes with PM_GOAL_AUDIT_WORKERS=1. Disk began at 104 GB free; sampled RAM remained above 6 GB, so no resource pause was needed. The live fifteen-file currentness edition was copied coherently, verified with sha256sum and frozen in the cited archive. No aggregate governance check, reseal, migration refresh, baseline refresh, admission, native run or main landing is claimed.
+
+`PLS-025` is the one additional index failure since Part 1. Both missing units were already absent at `25b20381c59971761074475bcdafbd02f90a9ebd`; neither owner document was edited. The check was not weakened or given a different baseline. Readiness remains blocked_runtime_certification_incomplete.
+
+Part 2 owner hunks (relative to continuation base):
+
+- **Plans/Automated_Testing_System.md**: 7509–7510, 7565–7566.
+
+Full package merge ranges are current in `DG-OWN-C-merge-ranges.json`. The complete new guard-to-negative map is `reports/event-authority-20261105/DG-OWN-C-part2-guards.json`; it is an inventory, not an isolation proof. Every citation was relocated/rehashed against this tree (220 carried citations plus five new partial-coverage citations).
+
+Retained Part 2 evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/part2/`. Each artifact below is in that directory; hashes identify exact bytes.
+
+- **checks.json** — SHA-256 `692dc94aa31331a0827588367ed0e12897a88b50970b8b1e4adb1300a8cb1601`.
+- **source-oracles-final.json** — SHA-256 `112478ab319904486665ed703772b8438423149818f851cf6f4bccdb9877258a`.
+- **source-oracles-final.log** — SHA-256 `6d87272985fb706ec5772d2f0365a0e959cedc1048cafe7d6d3f7aa2af0d6ec9`.
+- **negative-success-probe.json** — SHA-256 `e80709257a1985ded5785b621242fc0a885d56858b5fee0cae63f1489bc75b64`.
+- **current-guards.json** — SHA-256 `c6f3bf866bfa0b03a59b59110246e766a4262c68e276c08a3c399cf4de34c3f6`.
+- **history-guards.json** — SHA-256 `8d4e8a4b539f3bab9805372b1a8af60df1ee0b0eb553d2f47fa6685c4a3332cf`.
+- **stop-block-guards.json** — SHA-256 `1bb67253a22ad91ffde6c9285a73917e0252cc4863cc09cd96ecb52dc3aafe8c`.
+- **lifecycle-guards.json** — SHA-256 `f068728913c9d937c8dee334f31f157cb990c2000f0e1f245717c90c0526b619`.
+- **first-part-oracles.json** — SHA-256 `e65caaa8e76ee1e85b556d6685b5548a45197c01b01d640318ff48c21075aba6`.
+- **currentness-copy.json** — SHA-256 `533c1f981da37bf5f5d137d8521654e05d1b43a6fee599a0bbde6597eb990022`.
+- **currentness-sha256sum.log** — SHA-256 `2315aaa049e4e294ac234868478520c17af2ffc72e39fc94b3e882637fba9d69`.
+- **currentness-inputs.tar.gz** — SHA-256 `2dd621b9c4be752cd89243334f1900ac93fc4339ef7854a9590952640842aa05`.
+- **shard-generate.log** — SHA-256 `d7cfdf85905b1af45d5817cf77df09f8ece650942ade45163f90dd6f61b3ad68`.
+- **shard-check.log** — SHA-256 `a715ce384c99d89a8b5576fb6a07f92786372746197d08d9bad57c619fec35c1`.
+- **index-generate.log** — SHA-256 `f18d227174efa905439bbf1c7a509663490a3795d6a16ba9d352adf2865ef889`.
+- **index-validate.log** — SHA-256 `f4ce95e71fc1964b4f4702f47ff69f2a8a87f8dbd72a9bff577afda0ee451027`.
+- **shard-scope.json** — SHA-256 `73633af5f07eca53e6a81d881dce881231f25f2ad845ff86fe386f6b2eda36db`.
+- **derived-scope.json** — SHA-256 `90a3ea786829447f8ad74b3b9b6825e3f90483f505507509b08e29c2f14ee727`.
+- **id-scan.json** — SHA-256 `be47b701cdeb5434d179ae17cd5abc40fb61a8f3cf514f99de35c151b807d80e`.
+- **lineage.log** — SHA-256 `00c588e5bcd1c3ac0fa42cca5fb71270b5884209be6391c21c53ffdb63d9e918`.
+
+Final source qualification also passed in stdout-only mode. The final source result pins both actual source-file hashes; equal parsed schemas with different whole bytes refuse. This source correction changes no owner document or derived PlanUnit row.
+
+Final report QA: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/part2/final-report-qa.json`, SHA-256 `16cc7bd967c19fddbce850a39a4570a96e859b24a485b603b17c446f15064cb6`; 220 cell citations, source hashes, scores and current merge locations verify.
