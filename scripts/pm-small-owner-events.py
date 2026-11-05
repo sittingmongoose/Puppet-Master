@@ -596,7 +596,8 @@ def retained_event_valid(row, event, authority, selected):
 
 def reader_result(row, state):
     return 'available' if (
-        integer_tree(state) and state['reader_enabled'] and state['permission_current'] and state['source_present']
+        integer_tree({k: state[k] for k in ('event', 'retained_authority', 'live_token', 'selected_token')})
+        and state['reader_enabled'] and state['permission_current'] and state['source_present']
         and state['deletion_clear'] and state['hold_allows_disclosure']
         and state['version'] == '1.0.0' and state['current_frontier_verified']
         and token_matches_original(state['live_token'], state['retained_authority'])
@@ -607,7 +608,7 @@ def reader_result(row, state):
 
 def rebuild_publication(row, state):
     old = copy.deepcopy(state['old_publication'])
-    if not integer_tree(state):
+    if not integer_tree({k: state[k] for k in ('event', 'retained_authority', 'new_checkpoint', 'selected_live_token')}):
         return old
     if not all(state[k] for k in REBUILD_GATES):
         return old
@@ -719,15 +720,26 @@ def run_numeric_family(row):
             historical.pop('original_operation', None)
             historical['event'] = copy.deepcopy(event)
             historical['retained_authority'] = copy.deepcopy(authority)
+            historical['current_live_owner_state'] = {'writer_enabled': False, 'revision': 999.0}
+            historical['obsolete_request'] = {'timeout_seconds': 1.5}
             if mode == 'reader':
                 check(reader_result(row, historical) == 'available', 'historical reader ' + str(number))
             else:
+                historical['old_publication']['unrelated_numeric_value'] = 1.5
                 check(rebuild_publication(row, historical) != historical['old_publication'], 'historical rebuild ' + str(number))
         check(state == before, 'immutable integer authority ' + str(number))
     for token in cases['upstream_aliases']:
         alias = json.loads(token)
         check(type(alias) is float and alias.is_integer(), 'integral float stimulus ' + token)
-        state = upstream_sequence_state(row, int(alias) if abs(alias) <= MAX_SAFE_JSON_INTEGER else 1)
+        if abs(alias) > MAX_SAFE_JSON_INTEGER:
+            # A current append cannot supply a valid baseline outside its
+            # encoder domain. Isolate representation at the schema boundary,
+            # whose integer domain includes this exact mathematical value.
+            baseline = dict(row['positive_event_record'], producer_sequence_id=int(alias))
+            check(envelope_valid(baseline), 'schema integer baseline ' + token)
+            check(not envelope_valid(dict(baseline, producer_sequence_id=alias)), 'schema-only alias refusal ' + token)
+            continue
+        state = upstream_sequence_state(row, int(alias))
         event, authority = state['event'], state['committed_authority']
         incoming = dict(event, producer_sequence_id=alias)
         before = copy.deepcopy((state, incoming))
@@ -755,6 +767,8 @@ def run_numeric_family(row):
     for name in ('publication_positive', 'reader_positive', 'rebuild_positive'):
         original = row[name]
         for path, value in numeric_paths(original):
+            if name == 'rebuild_positive' and path[0] == 'old_publication':
+                continue  # opaque fallback, not the proposed retained identity
             bad = patched(original, [{'path': list(path), 'value': float(value)}])
             before = copy.deepcopy(bad)
             if name == 'publication_positive':

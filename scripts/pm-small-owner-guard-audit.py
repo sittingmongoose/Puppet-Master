@@ -435,7 +435,9 @@ def catalogue(m, fixtures):
         note=docs['exclusions']['notes'][command]
         settings('dry_exclusion','exclusion:'+token,change(docs,['exclusions','notes',command],note.replace(token,'absent-token')),[("return all(token in exclusion for token in ('settings.layer.changed', 'owner-adoption', 'owner_contract_missing', 'disabled'))",'return True')])
     add('datetime.timezone','datetime:timezone','utc_datetime',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00',),[('return parsed.tzinfo is not None','return True')])
-    add('datetime.parse','datetime:parse','utc_datetime',('2026-11-04T12:00:00Z',),('not-a-date',),[('except ValueError:\n        return False','except ValueError:\n        return True')])
+    add('datetime.parse','datetime:parse','utc_datetime',('2026-11-04T12:00:00Z',),('not-a-date',),
+        [('return parsed.tzinfo is not None\n    except ValueError:\n        return False',
+          'return parsed.tzinfo is not None\n    except ValueError:\n        return True')])
     numeric_catalogue(m, fixtures, add, change)
     return probes,mutants
 
@@ -458,6 +460,9 @@ def numeric_catalogue(m, fixtures, add, change):
         for token in row['numeric_representation_cases']['upstream_aliases']:
             alias = json.loads(token)
             if abs(alias) > m.MAX_SAFE_JSON_INTEGER:
+                e=dict(row['positive_event_record'],producer_sequence_id=int(alias))
+                numeric('numeric.integer_form',family,'envelope:producer_sequence_id_'+token,'envelope_valid',
+                        (e,),(dict(e,producer_sequence_id=alias),))
                 continue
             state = m.upstream_sequence_state(row, int(alias))
             e, o, a = state['event'], state['original_operation'], state['committed_authority']
