@@ -456,6 +456,8 @@ const MOTION = async (ms, probeSource, geometrySource, selftest) => {
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) out.moving++;
+		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
+		if (!props.length) continue;
 		try {
 			// Test-only controls fire after valid sampling has begun, exercising loss during a cell.
 			if (selftest && out.validPairs > 0 && performance.now() - t0 > 1000) {
