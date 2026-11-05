@@ -15272,7 +15272,7 @@
     {
       "name": "invalid.choose_look.family_choice_without_mode",
       "definition": "onboarding_action_request",
-      "expected_error": "intent choose_look names both the family and Light or Dark",
+      "expected_error": "intent choose_look names both the family and Light, Dark or Auto",
       "base_valid": "valid.request.choose_look.look_tile",
       "patch": {
         "local_context.look_choice.theme_mode": null
