@@ -27,6 +27,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 | `button-anchor-face` | FO-73: actual generated Caddyfile Download anchor, all ten looks and three motion paths, native held edges and stationary bounds. |
 | `button-checkbox-producers` | FO-73: consent, Server self and guest producers in both states, all looks and motion paths, twelve native holds and painted inner cues. |
 | `button-server-self-face` / `button-server-guest-face` | FO-73: both Server checkbox producers retain unchecked ring and checked paint. |
+| `editor-style-scope` | Final editor-only display correction matches no element in ten-look Look fixtures, core/choice/button routes, Look menu or sheets. Records structural scope for reuse of unchanged checks. |
 | `button-editor-face` | FO-73: both editor controls keep stationary bounds in ten looks x three paths; Friendly inner press cue, expected active-NieR Use-button visibility, native crops and optional film marks. |
 | `diagnostics/choice-help-paired-film` | Paired control/fix Help corner holds at740x1000/1280x500 on both surfaces; expects four old misses, preserves visible geometry, supports60fps films. |
 | `diagnostics/button-covered-negative` | Synthetic 2.5 px footer cover must fail the press guard. |
