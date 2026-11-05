@@ -129,7 +129,7 @@
     {
       "ordinal": 9,
       "role": "retention_release",
-      "barrier": "PENDING_RETENTION_DECISION; this graph selects no deletion or lifetime policy"
+      "barrier": "Project history: RP-OPERATIONAL-2555D under DL-422; application history PENDING_RETENTION_DECISION, no recording before exact approved rules. Original bodies keep their own policies."
     }
   ],
   "consumer_id": "storage.filesafe_command_denied_history_read.v1@1.0.0",
@@ -137,5 +137,10 @@
   "retention_policy_ref": "PENDING_RETENTION_DECISION",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "72c9f9147762ef968be7344f2d595d96197bf8277e68cd763e4b4e733d6f1e6e"
+  "graph_sha256": "3f7294b9ced4a1fac1d7c355b8446d8f5a7e613e70debe3cfad10a0b7be3ad9a",
+  "retention_policy_by_scope": {
+    "project": "RP-OPERATIONAL-2555D",
+    "application": "PENDING_RETENTION_DECISION"
+  },
+  "retention_decision_ref": "DL-422"
 }
