@@ -1,6 +1,7 @@
 {
   "native_execution": "NOT_RUN",
-  "assessed_commit": "bdc257cc0852fdd094570f2d8390216a4487821c",
+  "assessed_commit": "198a28e67da8770ea346ef65e6f4786ee220cc30",
+  "review_round": 5,
   "prepared_families": 17,
   "stop_status": "BLOCKED_ON_JARED_NOT_PREPARED",
   "stop_grade": {
@@ -9,30 +10,39 @@
     "ABSENT": 7,
     "CONFLICT": 0
   },
-  "DCH_static_checks": 6012,
+  "DCH_static_checks": 18287,
+  "guard_entries": 6113,
+  "guard_negative_cases": 17430,
+  "full_checker_defect_restorations": 10,
+  "mutant_containment_controls": 51,
+  "independent_containment_assertions": 102,
   "exit_codes": {
     "lane_checker": 0,
-    "eight_standing_checks": 0,
+    "guard_proof": 0,
+    "round5_regressions": 0,
     "shard_generate": 0,
     "index_generate": 0,
     "shard_check": 0,
-    "index_validate": 0,
-    "schema_audit": 0,
-    "grade_citation_audit": 0,
-    "scope_audit": 0,
-    "derived_content_audit": 0,
+    "index_validate": 1,
     "storage_profile": 1,
     "assistant_contract": 1,
-    "git_diff_check": 0
+    "scope_audit": 0,
+    "grade_citation_audit": 0
   },
   "index_generate_top_level_status": "pass",
-  "index_validate_top_level_status": "pass",
+  "index_validate_top_level_status": "fail",
   "storage_profile_errors": 41,
   "storage_profile_new_errors": 0,
-  "storage_profile_bytes_equal_fix2": true,
-  "assistant_contract_json_equal_fix2": true,
   "currentness_files_sha256_matched": 15,
-  "owner_passages_changed": [],
+  "owner_passages_changed": [
+    "SP-610..626",
+    "ATS-305"
+  ],
   "new_ids": [],
-  "native_or_governance_pass_claimed": false
+  "new_derived_acceptance_id": "ATS-305-A005",
+  "native_or_governance_pass_claimed": false,
+  "previous_summary": {
+    "assessed_commit": "bdc257cc0852fdd094570f2d8390216a4487821c",
+    "DCH_static_checks": 6012
+  }
 }

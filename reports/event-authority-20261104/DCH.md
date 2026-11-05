@@ -1,3 +1,128 @@
+# DCH — review round 5
+
+Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `d36809af13ae4a666a425b8632f3d6af9acde44c`. Assessed source/fix commit: `198a28e67da8770ea346ef65e6f4786ee220cc30`. This report commit follows those source bytes.
+
+All seventeen families are prepared without admission at **10 PASS / 1 PARTIAL retention / 1 ABSENT membership**, after Sol cycle 5's **9 PASS / 2 PARTIAL / 1 ABSENT**. The oracle cell is upgraded on fresh evidence. Independent technical re-review is pending; native execution remains NOT_RUN. Stop stays held for Jared, with its separate 0 PASS / 5 PARTIAL / 7 ABSENT assessment and original question unchanged.
+
+## Review round 5: findings and responses
+
+- **C5-B1 — fixed (`198a28e67da8770ea346ef65e6f4786ee220cc30`).** `scripts/pm_dch_events.py` passes the actual `storage_instance` into the event-ID recipe inside `joins()`. History and checkpoints use their independently read Store context and exact original source commitment. `pm_dch_round5_oracles.py` exercises both Project/application editions in two Stores, inline and referenced, with ordinary and compatibility history. Foreign IDs preserve correct same-context keys and byte commitments; no stale observational copy supplies the rejection. Removing the actual-instance argument fails the complete checker for all 17 families. Locations: `scripts/pm_dch_events.py:228`, `scripts/pm_dch_round5_oracles.py:92`.
+- **C5-B2 — fixed (`198a28e67da8770ea346ef65e6f4786ee220cc30`).** `checkpoint_storage_valid()` measures the entire SP-236 checkpoint, including retained history, and its physical pointer. `SP-610–626` explicitly bind 16384-byte inline / 16385-byte reference boundaries. The exact-boundary and maximum legal current/history arrays retain their logical bounds. Oversized inline values refuse; identical logical values pass only through exact BLAKE3/size/media-type references, same-instance/key/scope/family pack custody, current access and durable bytes/index/readback. Removing the cap or pack-custody predicate fails the complete checker for all 17. Locations: `scripts/pm_dch_events.py:343`, `scripts/pm_dch_round5_oracles.py:73`, `Plans/storage-plan.md:29497`.
+- **C5-B3 — fixed (`198a28e67da8770ea346ef65e6f4786ee220cc30`).** `checkpoint_joins()` invokes `historical_read_valid()` with supported original envelope/payload validators, actual Store, index-record commitment and current source access before resolving/joining the body. It uses historical policy for retained originals and leaves current append/retry policy separate. Every edition's inline/reference compatibility positives survive later live-state changes; unknown editions, withdrawal, forgery and foreign records refuse. Unsupported-edition, writer-policy and missing-reference restorations each fail the whole checker in all 17. Locations: `scripts/pm_dch_events.py:96`, `scripts/pm_dch_events.py:292`.
+- **C5-B4 — fixed (`198a28e67da8770ea346ef65e6f4786ee220cc30`).** Guard **G0838**, `checkpoint: source generation exists` (previously G0836), substitutes only an explicit accepted generation lookup witness and continues all downstream joins. It never returns early success. All 51 unrelated-defect containment controls refuse; an independent 102-assertion campaign checks them with the generation both missing and restored. The entire guard table is rerun and retained. Locations: `scripts/pm_dch_guard_proofs.py:294`, `scripts/pm_dch_guard_proofs.py:504`.
+- **N1 / Astra item 10 — fixed (`198a28e67da8770ea346ef65e6f4786ee220cc30`).** SP-236 physical encoding canonicalizes integral aliases and signed zero to shortest integer bytes; exact integer slots refuse non-integer runtime forms before joins. Every family tests `1`, `1.0`, `1e0`, `-0`, `0` and invalid JSON `01`. Numeric payload families additionally test stable physical commitments, references, identity/key recipes and refused float retries. The schema permits sequence zero, so `-0`/`0` are valid identical positives. No DCH float slot is declared; the encoder preserves finite non-integral float values and refuses non-finite numbers. Locations: `scripts/pm_dch_events.py:115`, `Plans/Automated_Testing_System.md:7246`.
+- **Astra item 11 — fixed (`198a28e67da8770ea346ef65e6f4786ee220cc30`).** Exact types precede equality, arithmetic and access checks. All 17 families exercise string booleans/numbers, null, arrays, nested objects and integer booleans in historical access, payload-pack custody, checkpoint-pack custody and retry availability. Archive request/state/readback flags and numeric publication copies have their own probes. The 238 availability cases remove the actual AST type predicate without replacing input; canonical unavailable=False remains an independent refusal. Locations: `scripts/pm_dch_events.py:131`, `scripts/pm_dch_guard_proofs.py:308`.
+
+No finding is disputed. No new product choice is taken. Existing Stop remains the only held source-record question; RT source-policy assignment remains open.
+
+## Family re-grade
+
+P=PASS, Pa=PARTIAL, A=ABSENT. Before is the independent cycle-5 assessment. After is this source-pinned self-grade. Each row retains its own current owner/schema/custody citations; membership and retention are the authorized preparation exceptions.
+
+| Family | Before | After | Ordinary assertions |
+|---|---|---|---:|
+| `bundle.selection_forward_blocked` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,061 |
+| `bundle.selection_sent_to_chat` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,095 |
+| `chat.message` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,077 |
+| `chat.thread_archived` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,177 |
+| `chat.thread_created` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,055 |
+| `chat.thread_deleted` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,055 |
+| `chat.thread_worktree_bound` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,053 |
+| `chat.thread_worktree_create_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,049 |
+| `chat.thread_worktree_merge_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,057 |
+| `chat.thread_worktree_merged` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,061 |
+| `chat.thread_worktree_pr_created` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,067 |
+| `chat.thread_worktree_pr_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,053 |
+| `chat.thread_worktree_pre_merge_test_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,157 |
+| `chat.thread_worktree_pre_merge_test_passed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,117 |
+| `chat.thread_worktree_pre_merge_test_started` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,053 |
+| `chat.thread_worktree_renamed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,051 |
+| `chat.thread_worktree_unbound` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,049 |
+
+## Guard table and practical limits
+
+[DCH-guard-removal.md](DCH-guard-removal.md) has **6,113 guard rows**, **17,430 refusal witnesses**, and **19,059 total direct cases**. [DCH-guard-negative-index.json](DCH-guard-negative-index.json) resolves every flipping ID and exact rejected complement. Zero guards lack a flipping witness; zero mandatory negatives are unproved; zero exceptions count as rejection. All 7,031 frozen schema constraints, 5,998 logical schema guards and 4,923 frozen schema witnesses are preserved. Named duplicate sets are stated in the table. Null is separately tested at the exact-type boundary and at the materializer's unavailable sentinel; these are not claimed as one end-to-end flipping witness.
+
+All earlier confirmed findings remain fixed: exact CV-366 application keys; encoded Project partitions; manual-only archive; forbidden current replay-only append/retry; original maximum EventRecord body/reference bounds; caller-semantic retry commitments; independent checkpoint frontier/source identities; actual nonzero failure outcomes; exact-end regexes and schema parity; full schema-reference closure; isolated history-generation, retained-edition and terminal-started-event negatives. C4's three guard removals are rerun through the full checker. The previous 501-run and independent 677 raw-schema / 510 relation campaigns remain historical evidence, not fresh execution claims for this head. The current table and ten lane-wide defect restorations supply fresh evidence.
+
+## All eleven standing checks and Astra sweep
+
+| Standing check | Fresh coverage in every family |
+|---:|---|
+| 1 | Writer/retry forbids projector_replay_only; retained-reader compatibility is tested separately. |
+| 2 | Exact CV-366 application key, including UTF-8 and exact-end negatives. |
+| 3 | Canonical project~ partition with internally rekeyed wrong-partition refusals. |
+| 4 | Complete EventRecord body and checkpoint 16384/16385 boundaries; verified SP-337 routes and maximum arrays. |
+| 5 | Both selected/registered current/history schemas retain LF and exact identifier guards. |
+| 6 | Exact 21 caller-semantic fields; Storage metadata changes remain excluded from retry comparison. |
+| 7 | Actual-instance event identity, source record commitment and checkpoint/token/frontier joins. |
+| 8 | Actual started/outcome joins, nonzero failed exit, independent success refusal. |
+| 9 | Eager hidden/optional/history/conditional/file/dynamic reference closure and schema parity. |
+| 10 | Retained valid inline/reference/compatibility originals survive later live state; forged/withdrawn/foreign/unknown editions refuse. |
+| 11 | Complete guard table, isolated witnesses and all 51 no-bypass controls. |
+
+| Astra item | Probe and result |
+|---:|---|
+| 1 | Forged IDs/digests and inconsistent owner/index/publication copies refuse; actual-instance foreign controls have coherent hashes. |
+| 2 | Original source SHA-256 verifies Storage-assigned sequence/timestamps in actual Store context; metadata-only retries stay separate. |
+| 3 | Both editions, two Stores, inline/reference and compatibility originals run through history and checkpoint publication. |
+| 4 | Schema primitive guards and exact recursive types prevent numeric/hex, case, whitespace and type aliases being read differently. |
+| 5 | Entire selected/registered graphs close eagerly, including unvisited branches; unresolved-reference guard negatives flip only on their own removal. |
+| 6 | Every inline checkpoint part is byte measured; complete maximum current/history refs require verified packs; old EventRecord inline-only contradiction remains absent. |
+| 7 | Exact-family original source/custody checks precede publication; original started-event and failure outcome controls remain enforced. |
+| 8 | Whole-lane guard removal has no masked negatives; missing-source substitution preserves all later rules. |
+| 9 | Grades use own current units and fresh oracles; admission, RT and native execution remain explicit limits. |
+| 10 | Integer/float/exponent/zero lexical alternatives, encoded commitments, references, identities and retries have independent probes. |
+| 11 | Wrong-type forms cover access, pack flags, archive, numeric copies, payloads and retry availability; exact predicates refuse coercion. |
+
+## Verification, source scope and IDs
+
+| Check | Exit | Result |
+|---|---:|---|
+| pm_dch_events.py | 0 | 18,287 assertions; all 17 families; zero failures |
+| pm_dch_guard_proofs.py --out <proof> | 0 | 6,113 rows / 17,430 negatives; 51 containment controls |
+| pm_dch_round5_regressions.py --workers 2 --out <results> | 0 | Ten complete, unfiltered lane-wide checker runs return structured exit 1; exceptions never count as refusal |
+| Independent no-bypass-controls.py | 0 | 102 assertions, missing and restored generation; zero accepted controls |
+| pm-shard-plans.py --generate / --check | 0 / 0 | Only storage-plan and automated_testing_system shard owners change |
+| pm-plan-index.py generate / validate | 0 / 1 baseline | Generation passes; 7,473 PlanUnits. Validation has 22 identical reviewed-base retention/ledger failures after origin/main advanced; no lane-owned failure. Runtime certification remains blocked |
+| Grade/citation/scope audits | 0 | 52 canonical prose/metadata pairs, own exact citations, protected inputs and held Stop unchanged |
+| pm-storage-profile-check.py | 1 baseline | Byte-identical prior 41 errors; no new error |
+| pm-assistant-contract-check.py | 1 baseline | Same gaps_found; errors and Projects-refresh failures empty; only the two edited owners' source/reference hashes differ |
+| git diff --check | 0 | No whitespace errors |
+
+Only SP-610–626 and ATS-305 prose/metadata change. Existing canonical text formatting is preserved when appending the refinements. No other owner, event-family registry, storage registry/profile, payload/checkpoint schema, frozen schema-witness file, admission, Decision Log, test file, Spec Lock, auto-decisions or governance evidence is changed. The 17 checkpoint fixtures gain independent access observations and coherent source-instance controls. New fixture-only physical/access/lookup observations confer no runtime authority. Currentness's 15 ignored files were copied and SHA-256 matched before generation. Index timestamps remain generated clock fields; no manual restamp is used.
+
+Existing per-family binding searches remain pinned lineage. The same SP-236/278/337/340, CV-365/366 and SP-286/CV-339 owners are reused; no new consumer, projector, key, retention exemption, public behavior or product premise is chosen. **New PlanUnit IDs: none.** Existing IDs: **ACD-610–626, CV-630–646, SP-610–626, ATS-305**. New generated acceptance criterion: ATS-305-A005. Stop's four names, 3-second wait, saved outcome barrier and ACD-471 user-action barrier remain unchanged.
+
+Initial capacity: 14 GB available RAM / 85 GB free disk, above 6 GB / 50 GB limits. A detached sparse DCH-fix5 worktree from the supplied local clone is used and removed after push. Initial inbox/who reads occurred before the no-mail brief was loaded; no mailbox write or later mailbox use followed. No subagent, landing lock, main push, admission or reseal is used.
+
+The first index validation passed. A later shared-clone origin/main update to bc399e19742ddc6afd1a1cb1d77a33845341d565 introduced DL-302 into the comparison baseline. The pinned reviewed branch already lacks that unit. Applying the unchanged retention validator to the reviewed head reproduces all 22 final failures exactly: 21 invalid legacy ledger records plus the out-of-lane DL-302 comparison. No failure names a lane edit, no validator is weakened and no foreign file is repaired. This is an integration item, recorded in index-baseline-comparison.json.
+
+## Retained evidence
+
+Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round5/`. Paths below are relative to it and pinned by SHA-256. Report and self-grade are copied to the parent DCH draft directory. Raw outputs remain outside the repository.
+
+| Evidence | SHA-256 |
+|---|---|
+| `dch-static.json` | `cd415169be2c188657de8edafed7285bdb604955bb814f7d4aecee3ee8ffa6ba` |
+| `guard-removal.json` | `ad026e4d2387e849e1ebef395286bb19b006f113f75f06a25ac2ba3685d36708` |
+| `full-checker-regressions.json` | `96f25497df46a4259648167b77d0bc1e7b26f9519feb8e7dfe26cd997a7c2d9a` |
+| `no-bypass-controls.json` | `4482ab830002314338c1ac3f78ea9be96b4c87b5ea25c27c264967bc9c748525` |
+| `grade-citation-check.json` | `c0f015178cbce6daddef7928613f0f8ab61edb960707b3651f5585d8730eeff5` |
+| `scope-audit.json` | `bc07853de98332639b7bb7db2b1f0822680ffa41bd467b1f68c8f24c2c7cbb42` |
+| `currentness-sha256.json` | `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84` |
+| `input-sha256.json` | `717500ca5359781797f2ede8663a2b9b77d54709ef043e8994b2fffdfd1b0345` |
+| `broader-baseline-comparison.json` | `8a53f0f171740943e0d9a9e7dadd8f30a78fc867e0a88055d02511ebfb30009e` |
+| `index-baseline-comparison.json` | `612a0592afed7d63f2c034566e495fd93d33ff179aecb5fa007efbf72279b270` |
+| `shard-generate.json` | `a860c43269caab92d401c4ed0955268da735a36aee6a0f1d26608e7f426ade81` |
+| `shard-check.json` | `6749d1671ce42bb36b5a4b623875e0db779efaf197186095421986d7d5490039` |
+| `index-generate.json` | `cadfcb66daf053e67b6d5ea5c37c35666ff4f40635ca253805d2f1bca66e7771` |
+| `index-validate.json` | `a6c8cdfe7680e9f64b1b7b65e7ac589e71c7afc86d9b74cceb6931c69d5254ee` |
+
+---
+
+# Prior reports (historical; round 5 above supersedes preparation claims)
+
 # DCH — targeted round 4
 
 Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `4e1408afc1cda95ee03797deb0bb6e56a3273991`. Assessed source head: `d383d981f6ea97e226fc94bf137047b44a5cddcb`. Fix commit: `b581a704fcf362bb64a504cc4992a15f0d23e96b`; fixture-generator follow-up: `35f4d58988abb1e7b19a5c0df724a4cb1cab87e5`. Complete frozen schema-guard source: `d383d981f6ea97e226fc94bf137047b44a5cddcb`. This report commit follows those source commits.
