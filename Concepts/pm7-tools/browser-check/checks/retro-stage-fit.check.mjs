@@ -422,20 +422,33 @@ async function probeFixture(t, f, mode) {
 	await t.check(`${mode}: ink probe accepts disjoint fixture boxes`, r.disjoint === 0, JSON.stringify(r), { hard: true });
 }
 
-const MOTION = async (ms, probeSource) => {
-	const overlap = (0, eval)(`(${probeSource})`);
+// A disjoint pair is valid only after both groups supplied usable painted geometry.
+const GEOMETRY = (e, label) => {
+	if (!e || !e.isConnected) throw new Error(`${label}: missing or detached`);
+	for (let a = e; a; a = a.parentElement) {
+		const c = getComputedStyle(a);
+		if (c.display === 'none' || c.visibility !== 'visible' || +c.opacity === 0) throw new Error(`${label}: hidden`);
+	}
+	const b = e.getBoundingClientRect();
+	if (![b.left, b.top, b.right, b.bottom, b.width, b.height].every(Number.isFinite) || b.width <= 0 || b.height <= 0) throw new Error(`${label}: empty or invalid bounds`);
+	const m = e.getScreenCTM(), box = e.getBBox();
+	if (!m || ![m.a, m.b, m.c, m.d, m.e, m.f].every(Number.isFinite) || !Number.isFinite(m.a * m.d - m.b * m.c) || m.a * m.d - m.b * m.c === 0 || ![box.x, box.y, box.width, box.height].every(Number.isFinite) || box.width <= 0 || box.height <= 0) throw new Error(`${label}: invalid SVG geometry`);
+	return b;
+};
+const MOTION = async (ms, probeSource, geometrySource, selftest) => {
+	const overlap = (0, eval)(`(${probeSource})`), geometry = (0, eval)(`(${geometrySource})`);
 	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	if (!st) return { err: 'no stage' };
 	const PH = O55.pipStage.h;
-	const R = (e) => e.getBoundingClientRect();
-	const out = { n: 0, off: 0, offWhy: '', moving: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
+	const R = (e, label) => geometry(e, label);
+	const out = { n: 0, validPairs: 0, validFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
 	const t0 = performance.now();
 	while (performance.now() - t0 < ms) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
 		const s2 = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
-		if (!s2 || !s2.ps) continue;
+		if (!s2 || !s2.ps) { out.geometryError = 'stage or physics disappeared'; break; }
 		const ps = s2.ps;
 		const nominal = !s2.reduced && !O55.motion.lowResource && PH.part('sway-and-physics') && PH.part('idle-life');
 		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : O55.motion.lowResource ? 'low-resource' : 'a Pip part off'; }
@@ -443,14 +456,26 @@ const MOTION = async (ms, probeSource) => {
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 		if (Math.abs(ps.tilt - ps.tiltT) > .02 || Math.abs(ps.th) > .02 || Math.abs(ps.dy) > 1 || props.some((p) => Math.abs(p.a) > .02)) out.moving++;
-		const hb = R(s2.gHead);
+		try {
+		// Test-only controls fire after valid sampling has begun, exercising loss during a cell.
+		if (selftest && out.validPairs > 0 && performance.now() - t0 > 1000) {
+			if (selftest === 'head-hidden') s2.gHead.style.display = 'none';
+			if (selftest === 'head-zero') s2.gHead.getBoundingClientRect = () => new DOMRect();
+			if (selftest === 'head-detached') s2.gHead.remove();
+		}
+		const hb = R(s2.gHead, 'head');
+		if (props.length) out.validFrames++;
 		for (const p of props) {
-			const q = R(p.el), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
+			const q = R(p.el, `prop ${p.spec.kind}:${p.spec.slot || ''}`), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
+			// Invoke the shared reader even for disjoint boxes; coverage is independent of intersection.
+			const area = overlap(s2.gHead, p.el);
+			if (!Number.isFinite(area) || area < 0) throw new Error('ink reader: invalid area');
+			out.validPairs++;
 			if (x1 <= x0 || y1 <= y0) continue;
 			out.boxFrames++; out.worstBox = Math.max(out.worstBox, Math.min(x1 - x0, y1 - y0));
-			const area = overlap(s2.gHead, p.el);
 			if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), propA: Math.round(p.a * 100) / 100 };
 		}
+		} catch (e) { out.geometryError = `${e.message} at frame ${out.n}`; break; }
 	}
 	return out;
 };
@@ -473,7 +498,7 @@ async function awakeMotion(t, mode) {
 				const tag = `${mode} ${look} ${scr} ${w}x${h} awake`;
 				if (!ok) { await t.check(`${tag}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
 				// watched from the screen's entrance on, through the wake, the person's input and the idle that follows
-				const watch = f.evaluate(`(${MOTION.toString()})(14000, ${JSON.stringify(INK_OVERLAP.toString())})`);
+				const watch = f.evaluate(`(${MOTION.toString()})(14000, ${JSON.stringify(INK_OVERLAP.toString())}, ${JSON.stringify(GEOMETRY.toString())}, ${JSON.stringify(t.args.selftest || "")})`);
 				await f.waitForTimeout(250);
 				await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
 				if (scr === 'name') {
@@ -489,7 +514,9 @@ async function awakeMotion(t, mode) {
 				if (r.err) { await t.check(`${tag}: the stage`, false, r.err); continue; }
 				for (const k of Object.keys(r.kinds)) total[k] += r.kinds[k];
 				total.boxFrames += r.boxFrames;
-				const why = JSON.stringify({ frames: r.n, moving: r.moving, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
+				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, geometryError: r.geometryError, moving: r.moving, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
+				await t.check(`${tag}: head and eligible props have valid visible geometry`, !r.geometryError, why, { hard: true });
+				await t.check(`${tag}: positive valid measurement coverage`, r.validPairs > 0 && r.validFrames > 0, why, { hard: true });
 				await t.check(`${tag}: normal motion stayed on`, r.off === 0, `${r.off}/${r.n} frames without it (${r.offWhy})`);
 				await t.check(`${tag}: Pip was seen moving`, r.moving >= 20, why);
 				const okInk = r.worst <= 4;
