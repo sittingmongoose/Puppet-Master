@@ -171,6 +171,12 @@ export default async function (t) {
 		fails.forEach((x) => { bad.push(`${look}: "${x.text}" ${x.cr.toFixed(2)}:1`); t.log(`${look} FAILS "${x.text}" ${x.cr.toFixed(2)}:1 (${x.cls} ${x.size}; stem rgb(${x.stem}) on rgb(${x.ground}); ${x.where})`); });
 		// the walk itself must have happened: a window that could not be walked, or was walked short, fails here
 		const problems = [];
+		// FO-65: these formerly renderer-sensitive lines must actually be sampled, not silently skipped.
+		for (const [name, match] of [['SSH Ed25519 subtitle', x => /Ed25519/.test(x.text) && /o55g-cardsub/.test(x.cls)], ['Git access rail', x => /Git access/.test(x.text)]]) {
+			const readings = [...seen.values()].filter(match);
+			if (!readings.length) problems.push(`${name} was not read from painted pixels`);
+			readings.forEach(x => t.log(`${look} FO-65 ${name}: ${x.cr.toFixed(2)}:1; stem rgb(${x.stem}) on rgb(${x.ground})`));
+		}
 		const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
 		if (!same(rail, STEPS)) problems.push(`the window names ${rail.join(' › ') || 'no steps'} (expected ${STEPS.join(' › ')})`);
 		if (!same(visited, STEPS)) problems.push(`the walk went ${visited.join(' › ') || 'nowhere'} (expected ${STEPS.join(' › ')})`);
