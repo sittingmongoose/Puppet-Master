@@ -1527,6 +1527,12 @@ def thaw_prestate(encoded):
     return state
 
 
+def lf_negative(value):
+    """One LF defect: preserve the width of fixed-width wire strings."""
+    fixed = re.fullmatch(r"(?:[0-9a-f]{64}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|(?:collabop_|evt_collaboration_|eig_)[0-9a-f]{64})", value)
+    return value[:-1] + "\n" if fixed else value + "\n"
+
+
 def contract_probes(root=ROOT, include_shapes=True):
     """Every negative starts from a named valid snapshot; related observations are recomputed."""
     fx = load(FIXTURE_PATH, root)
@@ -1558,7 +1564,7 @@ def contract_probes(root=ROOT, include_shapes=True):
         # True-end tests cover each present identifier/ref/hash/timestamp in both editions.
         for key, value in p.items():
             if isinstance(value, str) and (key.endswith(("_id", "_ref", "_hash", "_utc")) or key == "idempotency_key"):
-                bad = copy.deepcopy(p); bad[key] += "\n"
+                bad = copy.deepcopy(p); bad[key] = lf_negative(value)
                 if key != "idempotency_key":
                     bad["idempotency_key"] = idempotency_key(c["event_type"], bad, epoch)
                 add("payload", c["case_id"] + ":lf:" + key, bad, "schema", event_type=c["event_type"])
@@ -1726,7 +1732,9 @@ def contract_probes(root=ROOT, include_shapes=True):
     add("envelope","inline_16385",bad,"inline_limit",event_type="collaboration.created")
     strict=load(PROJECTION_PATH,root)["$defs"]["durable_read_token"]
     add("read_token","read_token:strict",{"name":"index_read_token","schema":strict,"root":strict},None)
-    for label,name,schema in [("string","index_read_token",{"type":"string"}),("renamed","api_token",strict),("open","index_read_token",dict(strict,additionalProperties=True)),("arbitrary","index_read_token",{"type":"object","additionalProperties":False})]:
+    wrong_type=copy.deepcopy(strict);wrong_type["type"]="string"
+    missing_member=copy.deepcopy(strict);missing_member["required"].remove("storage_instance_id")
+    for label,name,schema in [("string:type_only","index_read_token",wrong_type),("renamed","api_token",strict),("open","index_read_token",dict(strict,additionalProperties=True)),("arbitrary:required_member_only","index_read_token",missing_member)]:
         add("read_token","read_token:"+label,{"name":name,"schema":schema,"root":schema},"read_token_exemption")
     changed=copy.deepcopy(strict);changed["properties"]["frontier_revision"]["type"]="string"
     add("read_token","read_token:wrong_field_type",{"name":"index_read_token","schema":changed,"root":changed},"read_token_exemption")
@@ -1782,8 +1790,12 @@ def round_two_probes(root=ROOT):
         memory_floor()
         v=original["value"];p=v["semantic_body"];et=v["event_type"]
         for i,control in enumerate(["false","0",0,1,None,[],{}, {"nested":True}]):
+            if type(control) is dict:continue
             c=copy.deepcopy(original);c["source_context"]=control
             prepared(c,"source_context_type:"+str(i),"source_context_missing")
+        for field in ("storage_instance_id","write_epoch","binding","currentness_hash","owner_record_sha256","envelope_metadata","required_slot_ids","participant_slot_ids","owner_record_ref","owner_facts"):
+            c=copy.deepcopy(original);del c["source_context"][field]
+            prepared(c,"source_context_missing_field:"+field,"source_context_missing")
         for field,error in [("write_epoch","source_epoch"),("binding","source_record_identity"),("required_slot_ids","source_required_slots"),("participant_slot_ids","source_slot_roster"),("owner_facts","source_owner_facts"),("envelope_metadata","source_envelope_metadata")]:
             for i,control in enumerate(wrong):
                 if type(control) is type(original["source_context"][field]):continue
@@ -1881,7 +1893,12 @@ def round_two_probes(root=ROOT):
             c=copy.deepcopy(original);del c["application_wrapper"]
             prepared(c,"wrapper_missing","application_wrapper_schema")
             c=copy.deepcopy(original);c["application_wrapper"]["record"]["schema_version"]="0.0.0"
-            prepared(c,"wrapper_record_schema","application_wrapper_schema")
+            # This schema predicate is a component case. A full prepared event
+            # would also contradict its independently captured original record.
+            out.append(dict(domain="shape",case_id=c["case_id"]+":r2:wrapper_record_schema:component",
+                            path="Plans/application_workflow_contracts.schema.json",
+                            definition=application_wrapper_definition(v["owner_record"])+"StorageApplicationV2",
+                            value=c["application_wrapper"],event_type=et,expected="schema"))
             c=copy.deepcopy(original);c["application_wrapper"]["server_id"]+="x"
             prepared(c,"wrapper_identity:outer_server_only","application_wrapper_identity")
             c=copy.deepcopy(original);rec=c["application_wrapper"]["record"]
@@ -1915,7 +1932,11 @@ def round_two_probes(root=ROOT):
             out.append(dict(domain="historical",case_id=c["case_id"]+":r2:type:epoch:"+str(i),value=c["record"],context=ctx,event_type=c["event_type"],expected="historical_epoch_type"))
     policy={"retention_mode":"indefinite","anchor_kind":"explicit_delete","max_cardinality":250000,"cardinality_scope":"thread","overflow_action":"roll_successor","hold_eligible":True,"policy_version":"1.0.0"}
     for i,value in enumerate(["false","0",False,0,[],{}, {"nested":True}]):
+        if type(value) is dict:continue
         out.append(dict(domain="retention",case_id="r2:retention:shape:"+str(i),value=value,expected="retention_values"))
+    for field in policy:
+        bad=dict(policy);del bad[field]
+        out.append(dict(domain="retention",case_id="r2:retention:missing_field:"+field,value=bad,expected="retention_values"))
     for field in policy:
         for i,value in enumerate(wrong):
             if type(value) is type(policy[field]):continue
@@ -2241,7 +2262,7 @@ def schema_guard_removal_report(root=ROOT, only_guards=None, compact=False):
         for path,value in leaves(c["value"]):
             bad=copy.deepcopy(c["value"]);node=bad
             for key in path[:-1]:node=node[key]
-            node[path[-1]]=value+"\n"
+            node[path[-1]]=lf_negative(value)
             cases.append((c["case_id"]+":lf:"+"/".join(map(str,path)),PROJECTION_PATH,c["definition"],bad))
     # Map validator error dictionaries back to the canonical schema node they actually evaluated.
     documents={p:load(p,root) for p in (PAYLOAD_PATH,PROJECTION_PATH,SOURCE_PATH,CWC_PATH,INDEX_CHECKPOINT_PATH,EVENT_RECORD_PATH,LEDGER_SCHEMA_PATH,"Plans/application_workflow_contracts.schema.json","Plans/shared_integration_runtime.schema.json")}
