@@ -2943,13 +2943,14 @@ def event_family_active_schema_ids_match(
 def event_family_legacy_payload_schema(
     family: dict[str, Any],
     payload: Any,
+    *, payload_validator=None,
 ) -> tuple[dict[str, Any] | None, str | None, str | None]:
     active_schema, active_schema_id = event_family_payload_schema(family)
     if active_schema is None:
         return None, None, "event_payload_schema_unregistered"
     if not event_family_active_schema_ids_match(family, active_schema_id):
         return None, None, "event_payload_schema_id_mismatch"
-    if not draft202012_schema_failures(
+    if not (payload_validator or draft202012_schema_failures)(
         payload,
         active_schema,
         path_label="legacy-payload:active-schema",
@@ -2972,7 +2973,7 @@ def event_family_legacy_payload_schema(
         if not isinstance(reader_id, str) or not reader_id:
             continue
         reader_schema = {"$defs": defs, **reader}
-        if not draft202012_schema_failures(
+        if not (payload_validator or draft202012_schema_failures)(
             payload,
             reader_schema,
             path_label=f"legacy-payload:$defs/{name}",
@@ -3291,6 +3292,7 @@ def event_producer_semantic_digest(record: dict[str, Any]) -> str:
 def normalized_legacy_case(
     case: dict[str, Any],
     registry: dict[str, Any],
+    *, payload_validator=None,
 ) -> tuple[dict[str, Any] | None, str | None, dict[str, Any] | None]:
     envelope = case.get("legacy_envelope", {})
     source = case.get("source", {})
@@ -3334,7 +3336,7 @@ def normalized_legacy_case(
     if event_record_secret_key_failures(payload, path_label="legacy-payload"):
         return None, "legacy_secret_unhandled", None
     payload_schema, selected_payload_schema_id, payload_schema_error = (
-        event_family_legacy_payload_schema(family, payload)
+        event_family_legacy_payload_schema(family, payload, payload_validator=payload_validator)
     )
     if payload_schema_error:
         return None, payload_schema_error, None
@@ -3342,7 +3344,7 @@ def normalized_legacy_case(
         payload_schema is None
         or not isinstance(selected_payload_schema_id, str)
         or not selected_payload_schema_id
-        or draft202012_schema_failures(payload, payload_schema, path_label="legacy-payload")
+        or (payload_validator or draft202012_schema_failures)(payload, payload_schema, path_label="legacy-payload")
     ):
         return None, "legacy_payload_schema_invalid", None
 

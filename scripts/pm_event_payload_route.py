@@ -54,10 +54,26 @@ def _validator(encoded, root):
     eager(reg, schema)
     return StrictValidator(schema, registry=reg, format_checker=FormatChecker())
 
+def numeric_representation_errors(value):
+    """Current typed values have a single integral representation; never rewrite old bytes."""
+    errors = []
+    if isinstance(value, float) and value.is_integer():
+        errors.append('integral_numeric_representation')
+    if isinstance(value, dict):
+        for child in value.values():
+            errors.extend(numeric_representation_errors(child))
+    elif isinstance(value, list):
+        for child in value:
+            errors.extend(numeric_representation_errors(child))
+    return errors
+
+
 def encode(event, store):
     """Freeze one exact representation before append; store maps BLAKE3 to (media, bytes)."""
     event = copy.deepcopy(event)
     event['schema_version'] = '3.0.0'
+    if numeric_representation_errors(event):
+        raise ValueError('integral_numeric_representation')
     data = canonical_msgpack(event['payload'])
     if len(data) > INLINE_LIMIT:
         ident = blake3_hex(data)
@@ -68,9 +84,37 @@ def encode(event, store):
         event['payload_ref'] = None
     return event
 
+
+def reference_presence_errors(entry):
+    """Availability predicate; resolution cannot fabricate bytes when this fails."""
+    errors = []
+    if entry is None:
+        errors.append('payload_reference_missing')
+    return errors
+
+
+def reference_metadata_errors(ref, entry):
+    """Validate only an available object's physical claims, before decoding."""
+    if not isinstance(entry, (tuple, list)) or len(entry) != 2 or type(entry[0]) is not str or type(entry[1]) is not bytes:
+        return ['payload_reference_store_type']
+    media, data = entry
+    errors = []
+    if media != ref['media_type']:
+        errors.append('payload_reference_media')
+    if len(data) != ref['byte_size']:
+        errors.append('payload_reference_size')
+    if blake3_hex(data) != ref['blake3_id']:
+        errors.append('payload_reference_hash')
+    return errors
+
+
 def resolved_body(event, store=None, *, historical=False):
     """No reference text is evidence of object resolution. Does not mutate retained bytes."""
     errors = []
+    if type(historical) is not bool:
+        return None, ['historical_context_type']
+    if not isinstance(event, dict):
+        return None, ['envelope_schema']
     version = event.get('schema_version')
     if version != '3.0.0':
         if not historical and event.get('event_type') in ADOPTED:
@@ -95,16 +139,17 @@ def resolved_body(event, store=None, *, historical=False):
     ref_schema = json.loads((ROOT / 'Plans/event_record_v3.schema.json').read_text())['$defs']['payload_store_ref']
     if not StrictValidator(ref_schema).is_valid(ref):
         return None, ['payload_reference_schema']
+    if store is not None and not isinstance(store, dict):
+        return None, ['payload_reference_store_type']
     entry = (store or {}).get(ref['blake3_id'])
-    if entry is None:
-        return None, ['payload_reference_missing']
+    presence = reference_presence_errors(entry)
+    if presence:
+        return None, presence
+    metadata = reference_metadata_errors(ref, entry)
+    if 'payload_reference_store_type' in metadata:
+        return None, metadata
     media, data = entry
-    if media != ref['media_type']:
-        errors.append('payload_reference_media')
-    if len(data) != ref['byte_size']:
-        errors.append('payload_reference_size')
-    if blake3_hex(data) != ref['blake3_id']:
-        errors.append('payload_reference_hash')
+    errors.extend(metadata)
     try:
         body = decode_canonical_msgpack(data)
     except (ValueError, UnicodeError):

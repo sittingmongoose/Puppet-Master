@@ -176,7 +176,7 @@ class ResetOracle:
         self.reset_count = self.append_count = self.publication_count = 0
 
     def reset(self, event, request, result, transition, witness, append_outcome, *, admitted=False, payload_store=None):
-        if not admitted or reset_preflight_failures(event, request, result, transition, witness, payload_store=payload_store):
+        if admitted is not True or reset_preflight_failures(event, request, result, transition, witness, payload_store=payload_store):
             return "rejected_no_reset"
         if transition["subject"] != self.subject:
             return "wrong_owner_subject_no_reset"
@@ -450,7 +450,7 @@ class CheckpointOracle:
         self.commit_count = self.disclosure_count = self.runtime_effect_count = 0
 
     def advance(self, candidate, index, observation, *, admitted=False, _replacement=False):
-        if not admitted:
+        if admitted is not True:
             return "event_not_admitted_no_advance"
         if checkpoint_failures(candidate) or (self.checkpoint is not None and checkpoint_failures(self.checkpoint)):
             return "checkpoint_invalid_no_advance"
@@ -550,7 +550,7 @@ class CheckpointOracle:
 
 def workspace_history_fact(event, subject, *, admitted=False, source_verified=False,
                            access_allowed=False, deletion_allows_audit=False,
-                           checkpoint_read_token_valid=False, root=ROOT, payload_store=None):
+                           checkpoint_read_token_valid=False, root=ROOT, payload_store=None, historical_source=None):
     """One bounded synthetic payload join, not whole-range or live authority."""
     refused = {"outcome": "read_unavailable", "fact": None, "current_runtime_authority": False}
     if not all(flag is True for flag in (admitted, source_verified, access_allowed, deletion_allows_audit, checkpoint_read_token_valid)):
@@ -558,7 +558,7 @@ def workspace_history_fact(event, subject, *, admitted=False, source_verified=Fa
     if not validators(root)["subject"].is_valid(subject):
         return refused
     gate = sibling("pm-browser-event-admission", root)
-    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", gate.contract_context(), payload_store=payload_store, historical=True) or event["event_type"] != EVENT_TYPE:
+    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", gate.contract_context(), payload_store=payload_store, historical=True, historical_source=historical_source) or event["event_type"] != EVENT_TYPE:
         return refused
     event, _ = body_route.resolved_event(event, payload_store, historical=True)
     payload = event["payload"]

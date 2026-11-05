@@ -270,7 +270,7 @@ def creation_preflight_failures(event, request, result, witness, *, root=ROOT, r
         failures.append("creation_resolved_reference_mismatch")
     if not witness.get("workspace_ref") or witness["workspace_ref"] not in result["result_refs"]:
         failures.append("creation_workspace_result_ref_missing")
-    if witness.get("workspace_id") != context.get("browser_workspace_id") or witness.get("workspace_generation") != facts.get("workspace_generation"):
+    if witness.get("workspace_id") != context.get("browser_workspace_id") or type(witness.get("workspace_generation")) is not int or witness.get("workspace_generation") != facts.get("workspace_generation"):
         failures.append("creation_committed_identity_mismatch")
     if witness.get("producer_component") != "BrowserRuntimeService.workspace":
         failures.append("creation_producer_mismatch")
@@ -300,7 +300,7 @@ class CreationOracle:
         self.published_count = 0
 
     def create(self, event, request, result, witness, append_outcome, *, admitted, payload_store=None):
-        if not admitted or creation_preflight_failures(event, request, result, witness, require_new_identity=False, payload_store=payload_store):
+        if admitted is not True or creation_preflight_failures(event, request, result, witness, require_new_identity=False, payload_store=payload_store):
             return "rejected_no_append"
         semantic = self.semantic_digest(event)
         key = (scope_partition(event["project_id"]), EVENT_TYPE, event["idempotency_key"])
@@ -378,7 +378,7 @@ class CheckpointOracle:
     def disclose(self, expected_checkpoint_digest, *, current_token, access_allowed, deletion_allows_audit):
         if (self.checkpoint is None or checkpoint_failures(self.checkpoint)
                 or self.checkpoint["state"] == "withdrawn" or not self.checkpoint["filter_complete"]
-                or not current_token or not access_allowed or not deletion_allows_audit
+                or any(v is not True for v in (current_token, access_allowed, deletion_allows_audit))
                 or expected_checkpoint_digest != digest(self.checkpoint)):
             return "read_unavailable_no_disclosure"
         self.disclosure_count += 1
@@ -402,7 +402,7 @@ class CheckpointOracle:
 
 
 def workspace_history_fact(event, subject, *, source_verified, access_allowed,
-                           deletion_allows_audit, checkpoint_read_token_valid, root=ROOT, payload_store=None):
+                           deletion_allows_audit, checkpoint_read_token_valid, root=ROOT, payload_store=None, historical_source=None):
     """One synthetic read join, never whole-range completeness or live state."""
     refused = {"outcome": "read_unavailable", "fact": None, "current_runtime_authority": False}
     if not all(value is True for value in (source_verified, access_allowed, deletion_allows_audit, checkpoint_read_token_valid)):
@@ -410,7 +410,7 @@ def workspace_history_fact(event, subject, *, source_verified, access_allowed,
     if not isinstance(subject, dict) or set(subject) != set(SUBJECT) or any(not isinstance(subject[field], str) or not subject[field] for field in SUBJECT):
         return refused
     gate, context = candidate_gate(root)
-    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", context, payload_store=payload_store, historical=True) or event["event_type"] != EVENT_TYPE:
+    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", context, payload_store=payload_store, historical=True, historical_source=historical_source) or event["event_type"] != EVENT_TYPE:
         return refused
     event, _ = body_route.resolved_event(event, payload_store, historical=True)
     payload = event["payload"]

@@ -458,10 +458,43 @@ def fixture_event(case, ordinal):
     }
 
 
-def candidate_failures(event, producer_component, context, *, payload_store=None, historical=False):
+def compatibility_source_presence_errors(original):
+    errors = []
+    if not isinstance(original, dict):
+        errors.append("browser_compatibility_source_missing")
+    return errors
+
+
+def compatibility_history_failures(event, context, original):
+    """Recompute Case-L normalization from the verified original, never live policy.
+
+    Custody/access flags are checked by the reader. `original` is its authenticated
+    legacy source observation, not caller migration metadata or a claimed digest.
+    """
+    presence = compatibility_source_presence_errors(original)
+    if presence:
+        return presence
+    def validate_payload(payload, schema, **kwargs):
+        selected = context[-1][event['event_type']]
+        body_route.eager(selected._registry, schema)
+        return list(selected.evolve(schema=schema).iter_errors(payload))
+    try:
+        normalized, reason, _ = envelope_oracle().normalized_legacy_case(
+            original, load_json("Plans/event_family_registry.json"), payload_validator=validate_payload)
+    except (ValueError, TypeError, KeyError):
+        return ["browser_compatibility_source_invalid"]
+    from pm_home_layout_v2_slot_receipt import canonical_msgpack
+    if reason is not None or canonical_msgpack(normalized) != canonical_msgpack(event):
+        return ["browser_compatibility_source_mismatch"]
+    return []
+
+
+def candidate_failures(event, producer_component, context, *, payload_store=None, historical=False, historical_source=None):
     """Check prepared payload semantics without granting EventRecord admission."""
     admission, _, _, envelope, validators = context
     failures = []
+    if type(historical) is not bool:
+        return ['historical_context_type']
     if not isinstance(event, dict):
         return ["envelope_schema"]
     rows = {row["event_type"]: row for row in admission["rows"]}
@@ -475,7 +508,11 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
     failures.extend(route_errors)
     if not isinstance(payload, dict):
         return failures + ["payload_schema"]
-    if list(validators[event["event_type"]].iter_errors(payload)):
+    payload_validator = validators[event['event_type']]
+    if historical:
+        from pm_home_layout_v2_slot_receipt import RetainedBodyValidator
+        payload_validator = RetainedBodyValidator(payload_validator.schema, registry=payload_validator._registry, format_checker=FormatChecker())
+    if list(payload_validator.iter_errors(payload)):
         failures.append("payload_schema")
     if producer_component != row["producer_component"]:
         failures.append("producer_not_authorized")
@@ -488,10 +525,15 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
         failures.append("envelope_scope")
     if event.get("payload_schema_id") != row["payload_schema_ref"]["schema_id"] or payload.get("event_type") != event["event_type"]:
         failures.append("payload_identity_mismatch")
-    if event.get("producer_sequence_id") is None or event.get("replay_policy") != "dedupe_by_idempotency_key":
+    if not historical and (event.get("producer_sequence_id") is None or event.get("replay_policy") != "dedupe_by_idempotency_key"):
         failures.append("browser_replay_contract")
-    if event.get("redaction_profile") != "no_secrets" or any(event.get("migration", {}).values()):
+    migration = event.get('migration')
+    if not isinstance(migration, dict):
+        return failures + ['browser_redaction_or_unadmitted_migration']
+    if event.get("redaction_profile") != "no_secrets" or (not historical and any(migration.values())):
         failures.append("browser_redaction_or_unadmitted_migration")
+    if historical and (event.get('replay_policy') == 'projector_replay_only' or any(migration.values())):
+        failures.extend(compatibility_history_failures(event, context, historical_source))
     if len(json.dumps(payload, separators=(",", ":"), ensure_ascii=False).encode()) > MAX_PAYLOAD_BYTES:
         failures.append("payload_total_byte_limit")
     if "payload_schema" not in failures:
@@ -534,9 +576,9 @@ def central_binding_failures(row, family, row_index):
     return failures
 
 
-def event_failures(event, producer_component, context, *, families=None, payload_store=None, historical=False):
+def event_failures(event, producer_component, context, *, families=None, payload_store=None, historical=False, historical_source=None):
     """Admission-enforcing check, distinct from candidate shape/semantics."""
-    failures = candidate_failures(event, producer_component, context, payload_store=payload_store, historical=historical)
+    failures = candidate_failures(event, producer_component, context, payload_store=payload_store, historical=historical, historical_source=historical_source)
     if not isinstance(event, dict):
         return failures + ["event_not_admitted"]
     matches = [(index, row) for index, row in enumerate(context[0]["rows"]) if row["event_type"] == event.get("event_type")]
@@ -569,8 +611,11 @@ class ReplayOracle:
         self.projected_count = 0
         self.executed_effects = 0
 
-    def consume(self, event, producer, context, *, payload_store=None):
-        if self.contract_failures(event, producer, context, payload_store=payload_store, historical=True):
+    def consume(self, event, producer, context, *, payload_store=None, historical_source=None,
+                source_verified=True, access_allowed=True, deletion_allows_audit=True, withdrawn=False):
+        if not all(v is True for v in (source_verified, access_allowed, deletion_allows_audit)) or withdrawn is not False:
+            return "quarantined_without_checkpoint_advance"
+        if self.contract_failures(event, producer, context, payload_store=payload_store, historical=True, historical_source=historical_source):
             return "quarantined_without_checkpoint_advance"
         identity = event["event_id"]
         owner = envelope_oracle()

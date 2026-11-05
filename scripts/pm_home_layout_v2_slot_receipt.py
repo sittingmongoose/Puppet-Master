@@ -341,7 +341,25 @@ def _ecma_pattern(validator: Any, pattern: str, instance: Any, schema: dict[str,
         yield ValidationError(f"{instance!r} does not match {pattern!r} (ECMA-262 end of input)")
 
 
-Home4Validator = validators.extend(Draft202012Validator, {"pattern": _ecma_pattern})
+def _exact_numeric_type(validator: Any, expected: Any, instance: Any,
+                        schema: dict[str, Any]) -> Iterator[ValidationError]:
+    """One representation for integral values, before any identity or digest.
+
+    JSON Schema's mathematical integer includes 4.0. The typed storage domain uses
+    an integer for that value. Keep the codec able to read original float bytes;
+    refuse alternate integral forms at admission instead of rewriting history.
+    """
+    kinds = expected if isinstance(expected, list) else [expected]
+    if isinstance(instance, float) and instance.is_integer() and any(k in kinds for k in ("integer", "number")):
+        yield ValidationError("integral numeric values require the integer representation")
+        return
+    yield from Draft202012Validator.VALIDATORS["type"](validator, expected, instance, schema)
+
+
+Home4Validator = validators.extend(Draft202012Validator, {"pattern": _ecma_pattern, "type": _exact_numeric_type})
+# Retained bodies keep their originally admitted numeric domain and exact bytes.
+# This reader class never authorizes a current append or computes replacement pins.
+RetainedBodyValidator = validators.extend(Home4Validator, {"type": Draft202012Validator.VALIDATORS["type"]})
 
 
 def ref_closure(registry: Registry, root_uri: str) -> tuple[int, int, list[str]]:
