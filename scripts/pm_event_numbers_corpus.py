@@ -151,7 +151,9 @@ def _retained(m, case, corpus):
                 return False
             if envelope_resources:
                 _validate_envelope_datetime(json.loads(record.record_bytes),
-                                            envelope_resources["route"], profile=selected)
+                                            envelope_resources["route"], profile=selected,
+                                            resource=(corpus["embedded_envelope_resources"][envelope_resources["resource"]]
+                                                      if "resource" in envelope_resources else None))
             else:
                 field = case.get("sealed_date_time_field", "occurred_at_utc")
                 date_time(json.loads(record.record_bytes)[field], profile=selected)
@@ -168,7 +170,7 @@ def _retained(m, case, corpus):
     return RetainedObservation(out, observed, calls)
 
 
-def _validate_envelope_datetime(event, route, *, profile="event_record"):
+def _validate_envelope_datetime(event, route, *, profile="event_record", resource=None):
     """Exercise unchanged owner resources through their actual reference paths."""
     from jsonschema import ValidationError
     from referencing import Registry, Resource
@@ -182,6 +184,10 @@ def _validate_envelope_datetime(event, route, *, profile="event_record"):
     registry = Registry().with_resources(
         (s["$id"], Resource.from_contents(s)) for s in (envelope, receipt, coordinator))
     ref = {"$ref": envelope["$id"]}
+    if resource is not None:
+        embedded = json.loads((root / resource["path"]).read_text())
+        registry = registry.with_resource(embedded["$id"], Resource.from_contents(embedded))
+        ref = {"$ref": embedded["$id"] + "#" + resource["pointer"]}
     request = {"$ref": receipt["$id"] + "#/$defs/full_value_request"}
     compatibility = {"$ref": envelope["$id"] + "#/$defs/event_record_1_0_0_compatibility_reader"}
     schemas = {
@@ -267,12 +273,15 @@ def execute(m, case, corpus):
     if op == "envelope_datetime":
         root = Path(__file__).resolve().parents[1]
         event = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+        resource = corpus["embedded_envelope_resources"][case["resource"]] if "resource" in case else None
+        if resource is not None and resource.get("baseline") == "compaction":
+            event = dict(corpus["embedded_compaction_event"])
         route = case.get("route", "direct")
         if route.startswith("compatibility_"):
             event.pop("scope_kind")
             event.update(schema_version="1.0.0", project_id="project-A", replay_policy="projector_replay_only")
         event[case["field"]] = case["value"]
-        _validate_envelope_datetime(event, route)
+        _validate_envelope_datetime(event, route, resource=resource)
         return case["value"]
     if op == "family_datetime":
         from pm_event_datetime import datetime_validator

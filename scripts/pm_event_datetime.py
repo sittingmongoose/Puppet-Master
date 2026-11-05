@@ -112,15 +112,16 @@ def _eventrecord_storage_properties(validator, properties, instance, schema):
     """Add only CV-253's zone predicate when an envelope is evaluated.
 
     This runs during ordinary descent, including $ref and nested resources.
-    The frozen 1.0.0 compatibility definition has no $id of its own; its
-    envelope discriminator selects the same Storage field ownership.
+    Embedded 2.0.0 envelopes and frozen 1.0.0 compatibility definitions may
+    omit the canonical $id; their envelope discriminator selects the same
+    Storage field ownership in current and authenticated retained resources.
     Resource authentication remains the installing owner's responsibility.
     """
     identity, version = properties.get("schema_id"), properties.get("schema_version")
     envelope = (schema.get("$id") ==
                 "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json" or
                 (type(identity) is dict and identity.get("const") == "pm.event.v0" and
-                 type(version) is dict and version.get("const") == "1.0.0"))
+                 type(version) is dict and version.get("const") in ("1.0.0", "2.0.0")))
     if envelope and validator.is_type(instance, "object"):
         for field in ("observed_at_utc", "persisted_at_utc"):
             if field in properties and field in instance:
