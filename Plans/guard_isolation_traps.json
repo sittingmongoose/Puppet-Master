@@ -1811,7 +1811,23 @@
       ],
       "failure_kinds": [],
       "status": "PASS",
-      "proved_rows": 2
+      "proved_rows": 2,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "set([886, 573, 877, 946, 799, 476, 462, 520, 875, 601, 194, 189, 823, 524, 487, 644])",
+          "reason": "Construct this fixed set of literal integers; no input is consulted."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "str(observed)",
+          "reason": "Record the original builtin literal set representation for the no-clone control."
+        }
+      ]
     },
     {
       "id": "retired-C4-tuple-comparison",
@@ -2251,7 +2267,16 @@
       ],
       "failure_kinds": [],
       "status": "PASS",
-      "proved_rows": 2
+      "proved_rows": 2,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "value['floor']",
+          "reason": "Reviewed fixture boundary: every supplied input carries a floor; this selects the model threshold without repairing the fixture."
+        }
+      ]
     },
     {
       "id": "factory-cannot-repair-fixture",
@@ -4005,6 +4030,966 @@
         "hidden_static_sites"
       ],
       "static_error_kind": "predicate_purity_uncertified"
+    },
+    {
+      "id": "C3-shared-global-scalar-binding",
+      "kind": "code",
+      "expected": "State certification refuses shared-global-scalar-binding with zero credit.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\nATTEMPTS = 0\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        global ATTEMPTS\n        ATTEMPTS += 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "factory",
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Count checker attempts for diagnostics; the counter does not decide acceptance.",
+          "source": "ATTEMPTS += 1"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true
+    },
+    {
+      "id": "C3-shared-nonlocal-scalar-binding",
+      "kind": "code",
+      "expected": "State certification refuses shared-nonlocal-scalar-binding with zero credit.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef make_factory():\n    attempts = 0\n    def factory():\n        table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n        context = None\n        def check(value):\n            nonlocal attempts\n            attempts += 1\n            table.require('x', value, context)\n            return True\n        return g.Case(table, check, context)\n    def observed():\n        return attempts\n    return factory, observed\n\nfactory, observed = make_factory()\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "make_factory.factory",
+      "non_guards": [
+        {
+          "function": "make_factory.factory.check",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Count checker attempts for diagnostics; no acceptance decision.",
+          "source": "attempts += 1"
+        },
+        {
+          "function": "make_factory",
+          "kind": "return",
+          "path": "subject.py",
+          "reason": "Publish the original fresh-case constructor and diagnostic getter.",
+          "source": "return (factory, observed)"
+        },
+        {
+          "function": "make_factory.observed",
+          "kind": "return",
+          "path": "subject.py",
+          "reason": "Read the diagnostic count.",
+          "source": "return attempts"
+        },
+        {
+          "function": "",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Initialize the factory and diagnostic getter at import.",
+          "source": "make_factory()"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true
+    },
+    {
+      "id": "C3-shared-factory-list",
+      "kind": "code",
+      "expected": "State certification refuses shared-factory-list with zero credit.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\nATTEMPTS = []\n\ndef factory():\n    ATTEMPTS.append(1)\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "factory",
+      "non_guards": [
+        {
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Log each case construction; this operation makes no acceptance decision.",
+          "source": "ATTEMPTS.append(1)"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true
+    },
+    {
+      "id": "C3-shared-factory-changes-enforcement",
+      "kind": "code",
+      "expected": "State certification refuses shared-factory-changes-enforcement with zero credit.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if context['strict'] and value['x'] < 0 else None\n\nATTEMPTS = []\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative when the model is strict'), 'bad_x', px)])\n    context = {'strict': len(ATTEMPTS) % 9 != 6}\n    ATTEMPTS.append(context['strict'])\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "factory",
+      "non_guards": [
+        {
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Record the model strictness at each construction; recording does not decide acceptance.",
+          "source": "ATTEMPTS.append(context['strict'])"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true
+    },
+    {
+      "id": "C3-predicate-global-scalar-mutation",
+      "kind": "code",
+      "expected": "State certification refuses predicate-global-scalar-mutation with zero credit.",
+      "source": "import pm_guard_isolation as g\n\nCALLS = 0\n\ndef px(value, context):\n    global CALLS\n    CALLS = CALLS + 1\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "factory",
+      "non_guards": [],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true
+    },
+    {
+      "id": "C3-shared-slotted-closure",
+      "kind": "code",
+      "expected": "State certification refuses shared-slotted-closure with zero credit.",
+      "source": "import pm_guard_isolation as g\n\nclass Log:\n    __slots__ = ('count',)\n    def __init__(self):\n        self.count = 0\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef make_factory():\n    shared = Log()\n    def factory():\n        table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n        context = None\n        def check(value):\n            shared.count += 1\n            table.require('x', value, context)\n            return True\n        return g.Case(table, check, context)\n    def observed():\n        return shared.count\n    return factory, observed\n\nfactory, observed = make_factory()\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "make_factory.factory",
+      "non_guards": [
+        {
+          "function": "Log.__init__",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Initialize the diagnostic log object.",
+          "source": "self.count = 0"
+        },
+        {
+          "function": "Log.__init__",
+          "kind": "implicit_return",
+          "path": "subject.py",
+          "reason": "Normal constructor completion.",
+          "source": "<implicit None return>"
+        },
+        {
+          "function": "make_factory",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Construct the diagnostic log.",
+          "source": "Log()"
+        },
+        {
+          "function": "make_factory",
+          "kind": "return",
+          "path": "subject.py",
+          "reason": "Expose the constructor and diagnostic getter.",
+          "source": "return (factory, observed)"
+        },
+        {
+          "function": "make_factory.factory.check",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Count checker attempts; the count is not consulted for acceptance.",
+          "source": "shared.count += 1"
+        },
+        {
+          "function": "make_factory.observed",
+          "kind": "return",
+          "path": "subject.py",
+          "reason": "Read the diagnostic count.",
+          "source": "return shared.count"
+        },
+        {
+          "function": "",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Initialize constructor/getter at import.",
+          "source": "make_factory()"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true
+    },
+    {
+      "id": "C3-shared-slotted-global-control",
+      "kind": "code",
+      "expected": "State certification refuses shared-slotted-global-control with zero credit.",
+      "source": "import pm_guard_isolation as g\n\nclass Log:\n    __slots__ = ('count',)\n    def __init__(self):\n        self.count = 0\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\nshared = Log()\n\ndef make_factory():\n    def factory():\n        table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n        context = None\n        def check(value):\n            shared.count += 1\n            table.require('x', value, context)\n            return True\n        return g.Case(table, check, context)\n    def observed():\n        return shared.count\n    return factory, observed\n\nfactory, observed = make_factory()\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "make_factory.factory",
+      "non_guards": [
+        {
+          "function": "Log.__init__",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Initialize the diagnostic log object.",
+          "source": "self.count = 0"
+        },
+        {
+          "function": "Log.__init__",
+          "kind": "implicit_return",
+          "path": "subject.py",
+          "reason": "Normal constructor completion.",
+          "source": "<implicit None return>"
+        },
+        {
+          "function": "make_factory",
+          "kind": "return",
+          "path": "subject.py",
+          "reason": "Expose the constructor and diagnostic getter.",
+          "source": "return (factory, observed)"
+        },
+        {
+          "function": "make_factory.factory.check",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Count checker attempts; the count is not consulted for acceptance.",
+          "source": "shared.count += 1"
+        },
+        {
+          "function": "make_factory.observed",
+          "kind": "return",
+          "path": "subject.py",
+          "reason": "Read the diagnostic count.",
+          "source": "return shared.count"
+        },
+        {
+          "function": "",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Initialize constructor/getter at import.",
+          "source": "make_factory()"
+        },
+        {
+          "function": "",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Construct diagnostic state at import.",
+          "source": "Log()"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true
+    },
+    {
+      "id": "C3-inline-conversion",
+      "kind": "code",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        int(value['y'])\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": "0"
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": "0"
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "data_operation"
+    },
+    {
+      "id": "C3-inline-lookup",
+      "kind": "code",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        allowed = {'ok': None}\n        allowed[value['y']]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": "ok"
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": "ok"
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "data_operation"
+    },
+    {
+      "id": "C3-inline-unpacking",
+      "kind": "code",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        first, second = value['y']\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": [
+              0,
+              0
+            ]
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "data_operation"
+    },
+    {
+      "id": "C3-dormant-missing-table-entry",
+      "kind": "code",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['y']:\n            table.require('missing-y', value, context)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "missing_table_entry"
+    },
+    {
+      "id": "C3-readonly-scalar-constant",
+      "kind": "code",
+      "expected": "readonly-scalar-constant enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\nFLOOR = 0\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < FLOOR else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1
+    },
+    {
+      "id": "C3-external-function-global",
+      "kind": "code",
+      "expected": "external-function-global enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\nfrom textwrap import dedent as shared\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        unused = shared\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "error_contains": "external function graph"
+    },
+    {
+      "id": "C3-external-function-closure",
+      "kind": "code",
+      "expected": "external-function-closure enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef make_factory():\n    from textwrap import dedent\n    shared = dedent\n    def factory():\n        table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n        context = None\n        def check(value):\n            unused = shared\n            table.require('x', value, context)\n            return True\n        return g.Case(table, check, context)\n    return factory\n\nfactory = make_factory()\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "factory_function": "make_factory.factory",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "error_contains": "external function graph",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "make_factory",
+          "kind": "return",
+          "source": "return factory",
+          "reason": "Publish the source-backed factory; not an acceptance result."
+        },
+        {
+          "path": "subject.py",
+          "function": "",
+          "kind": "call_review",
+          "source": "make_factory()",
+          "reason": "Construct the factory closure at import."
+        }
+      ]
+    },
+    {
+      "id": "C3-factory-output-equivalence",
+      "kind": "code",
+      "expected": "factory-output-equivalence enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = {'nonce': id(table)}\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "factory_nondeterministic"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "id(table)",
+          "reason": "Expose the per-construction identity as a model nonce to test the determinism refusal."
+        }
+      ]
+    },
+    {
+      "id": "C3-dormant-attribute",
+      "kind": "code",
+      "expected": "dormant-attribute enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if False:\n            observed = value.missing\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "data_operation"
+    },
+    {
+      "id": "C3-dormant-comparison",
+      "kind": "code",
+      "expected": "dormant-comparison enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if False:\n            observed = value < None\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "data_operation"
+    },
+    {
+      "id": "C3-dormant-unlisted-call",
+      "kind": "code",
+      "expected": "dormant-unlisted-call enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if False:\n            float(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "call_review"
+    },
+    {
+      "id": "C3-dynamic-table-name",
+      "kind": "code",
+      "expected": "dynamic-table-name enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        name = 'x'\n        if False:\n            table.require(name, value, context)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_table_name"
+    },
+    {
+      "id": "C3-reviewed-reset-control",
+      "kind": "code",
+      "expected": "reviewed-reset-control enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\nATTEMPTS = 0\n\ndef reset():\n    global ATTEMPTS\n    ATTEMPTS = 0\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        global ATTEMPTS\n        ATTEMPTS += 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "reset_function": "reset",
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "reset",
+          "kind": "shared_state_write",
+          "source": "global ATTEMPTS",
+          "reason": "Reviewed reset owns this diagnostic scalar binding."
+        },
+        {
+          "path": "subject.py",
+          "function": "reset",
+          "kind": "shared_state_write",
+          "source": "ATTEMPTS = 0",
+          "reason": "Restore the diagnostic counter to its first value."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "shared_state_write",
+          "source": "global ATTEMPTS",
+          "reason": "Reviewed diagnostic binding; reset before every construction/evaluation."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "shared_state_write",
+          "source": "ATTEMPTS += 1",
+          "reason": "Diagnostic increment, restored by reset; never a product refusal."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "ATTEMPTS += 1",
+          "reason": "Diagnostic counter increment is not a product refusal."
+        }
+      ]
+    },
+    {
+      "id": "C3-ineffective-reset",
+      "kind": "code",
+      "expected": "ineffective-reset enforces its specified certification boundary.",
+      "source": "import pm_guard_isolation as g\n\nATTEMPTS = 0\n\ndef reset():\n    global ATTEMPTS\n    ATTEMPTS = ATTEMPTS\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        global ATTEMPTS\n        ATTEMPTS += 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "reset_function": "reset",
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "reset",
+          "kind": "shared_state_write",
+          "source": "global ATTEMPTS",
+          "reason": "Reviewed reset owns this diagnostic scalar binding."
+        },
+        {
+          "path": "subject.py",
+          "function": "reset",
+          "kind": "shared_state_write",
+          "source": "ATTEMPTS = ATTEMPTS",
+          "reason": "Restore the diagnostic counter to its first value."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "shared_state_write",
+          "source": "global ATTEMPTS",
+          "reason": "Reviewed diagnostic binding; reset before every construction/evaluation."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "shared_state_write",
+          "source": "ATTEMPTS += 1",
+          "reason": "Diagnostic increment, restored by reset; never a product refusal."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "ATTEMPTS += 1",
+          "reason": "Diagnostic increment; ineffective reset must still fail the snapshot."
+        }
+      ]
+    },
+    {
+      "id": "C3-os-temp-scratch",
+      "kind": "os-temp-scratch",
+      "expected": "Default self-test scratch uses the operating system temporary directory."
+    },
+    {
+      "id": "C3-dormant-unbound-local",
+      "kind": "code",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if False:\n            observed = absent\n        if False:\n            absent = 0\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "data_operation"
+    },
+    {
+      "id": "C3-dormant-dict-key",
+      "kind": "code",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if False:\n            observed = {value: 0}\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "data_operation"
+    },
+    {
+      "id": "C3-dormant-invalid-construction",
+      "kind": "code",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if False:\n            unused = g.GuardTable(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "call_review"
     }
   ]
 }

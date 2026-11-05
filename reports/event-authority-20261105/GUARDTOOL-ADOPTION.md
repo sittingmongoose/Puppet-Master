@@ -8,7 +8,7 @@ Method B replaces the Python AST rewrite, recompilation, bytecode patch and func
 Guard(name, Invariant(field_path, predicate_in_words), refusal_code, predicate)
 table = GuardTable(guards); table.require(name, complete_value, context)
 factory(value) -> Case(table, original_check, context)  # factory() also works
-Suite(name, factory, controls, negatives, checker_modules, repository_root, duplicates=[], non_guards=[])
+Suite(name, factory, controls, negatives, checker_modules, repository_root, duplicates=[], non_guards=[], reset=None, reset_seams=[])
 report = run(suite); markdown(report)  # --adapter file:factory --json report.json --markdown report.md
 ```
 
@@ -21,7 +21,7 @@ Registered predicate entry is checked by its known function/code/global identity
 ## Restructure a lane checker
 
 1. Extract each independent invariant into a named predicate function. Split an `x_bad or y_bad` refusal into two rows even when both retain the same refusal code. One helper, field group, schema keyword or return statement is not evidence of one invariant.
-2. Build a fresh `GuardTable` in the per-case factory. Build all model/trace/Storage state there as well. `factory(value)` can initialize state from the frozen case; it must not change the fixture. Fixed-family `factory()` is supported. Reusing mutable globals, defaults, closure state, objects, table instances or contexts across cases fails freshness checks.
+2. Build a fresh `GuardTable` in the per-case factory. Build all model/trace/Storage state there as well. `factory(value)` can initialize state from the frozen case; it must not change the fixture. Fixed-family `factory()` is supported. Shared per-case contexts, defaults, closure state, objects and tables fail identity checks. Adapter/factory module state is fingerprinted before construction and each run, including scalar bindings; any difference fails. Independently built case graphs for the same input must also agree in value, order and alias structure.
 3. Replace inline refusals with `table.require(...)`. Keep the original complete append, retry or retained-history sequence. Put state preparation needed by individually tested predicates in the factory; do not rely on a preceding guard to repair or initialize it. Preserve authenticated at-write recipes and original custody joins.
 4. Name the checker module files and repository root. The static scan follows their repository imports transitively, including dormant imports and package initialization. Include any extra modules loaded by existing orchestration explicitly. Dynamic code/imports and star imports fail closed; do not use them to evade the closure.
 5. Declare each pure computation or plumbing site that the conservative scan flags with a `NonGuard(path, qualified_function, kind, exact_ast_unparse_source, reason)`. A declaration must match exactly one site; stale, broad or duplicate declarations fail. Review each reason. Product refusals belong in guard predicates.
@@ -46,11 +46,11 @@ The return of `Case(...)` is a plumbing return: declare its exact source as a no
 
 An exception allowance binds the exact bytecode operation and source span: the assertion's raise, the explicit raise, or the declared refusal-helper call. It does not cover another statement on the same line, evaluation failures in an assertion test/raise payload, or an undeclared new raise of a previously allowed exception. Only verified propagation of the same authorized exception is permitted. Missing instruction positions fail closed.
 
-## Certification boundaries after Method B review round 1
+## Certification boundaries after Method B review round 2
 
 The scanner follows the actual module origins, Python search paths, loaded package paths and package context. Loaded origins must agree with the search result. From-import bindings and package initializers are included. Missing/ambiguous origins, unsupported repository loaders, native repository modules and unresolved bindings fail closed. Importlib, `__import__` and runpy loaders retain that classification through import aliases and assignment aliases, including inside predicate bodies and dormant branches. A non-guard declaration cannot waive these import failures. Supply a source-backed, statically imported seam that can be reviewed and scanned.
 
-Freshness walks reachable class attributes/bases/descriptors and builtin bound-method receivers. Shared classes themselves are mutable state. An opaque/slotted graph, custom access/metaclass graph or external function/class graph that cannot be certified fails with `state_shared_across_cases`; no row earns credit. Construct the supported model/state per case or supply an explicit reviewed seam instead of treating an unknown graph as safe.
+Freshness fingerprints the factory and adapter module namespaces, closure cells of every reached function, defaults and class attributes. A closure certification error propagates; only reading an actually empty cell is ignored. Shared classes themselves are mutable state. The original per-case identity check remains as an additional defense. An opaque/slotted graph, custom access/metaclass graph or external function/class graph that cannot be certified fails with `state_shared_across_cases`; no row earns credit. Construct the supported model/state per case or supply an explicit reviewed seam instead of treating an unknown graph as safe.
 
 Input purity uses a separate diagnostic graph snapshot. It retains dictionary/set iteration order, aliases, cycles, typed scalar bits and object identities, keeping references so detached nodes cannot recycle their IDs. This does not change product number, identity or storage serialization. Exact builtin scalar/container data is supported; subclasses, descriptors and opaque input/context data fail closed. Fixture reconstruction still refuses sets; original context sets are observed without copying them.
 
@@ -64,7 +64,7 @@ The complete checker then runs with all entries enabled, each single entry swapp
 
 Runtime refusals must be exception objects issued by the active table, with that guard's name and code. Merely having matching attributes is insufficient. Swallowed table refusals, unknown table names, predicate protocol errors, rejecting returns and untracked exceptions fail the run. A runtime trace also catches handled exceptions in the scanned source and calls into repository source missing from the static closure.
 
-The static census flags raises, assertions, non-success/implicit returns, yields, mutation/error-list writes and potential refusal/delegation calls outside the registered predicate bodies. Predicate identification includes the exact file, definition line and qualified name, so a comprehension target or same-line function cannot waive another function. Nested predicate code and unknown statement forms fail closed. This census grants no cut credit. The adapter's non-guard reasons and predicate bodies remain reviewer obligations.
+The static allowlist requires obligations for conversions, subscripts/lookups, unpacking, data attribute access, potentially raising comparisons, iteration, unproven bindings and calls, in addition to raises, assertions, non-success/implicit returns, yields and mutation/error-list writes outside predicate bodies. Single-argument canonical builtin type/bool and engine constructors with a verified argument boundary are the total-call exceptions. Static literal table names must exist in the inventory; dynamic names are refused even on dormant paths. Each other operation needs an exact reviewed plumbing declaration; finite fixture agreement does not exempt it. Predicate identification includes the exact file, definition line and qualified name, so a comprehension target or same-line function cannot waive another function. Nested predicate code and unknown statement forms fail closed. This census grants no cut credit. The adapter's non-guard reasons and predicate bodies remain reviewer obligations.
 
 Any safety, inventory, matrix or proof failure withholds every row's credit. JSON includes guard metadata, source SHA-256 hashes, the full predicate matrix, exact baseline/cut/restoration outcomes, per-site duplicate checks, masks, static sites and non-guard reasons. Markdown summarizes those same rows. Missing witnesses are unproved. Neither a successful constructor nor a suite-level FAIL excuses a broad credited cut.
 
@@ -96,7 +96,7 @@ The reproducible external driver also uses the unchanged complete retained-histo
 
 Run one lane/family process at a time. MemoryGate checks finite limits, fresh available-memory samples, peak RSS before/after factories and evaluations, and RSS again on resume. The default CLI poll is 30 seconds. These are sampled limits, not an allocation sandbox. A fresh child process may be needed to avoid inheriting an unrelated high-water RSS mark; never disable the gate to make a run pass.
 
-Freshness checks retain references to prior mutable state to detect reuse without copying it or mistaking recycled IDs for reuse. Memory therefore grows with the evaluated state graphs. Large lanes must partition complete family/boundary suites to stay under the RSS cap. Repository module state is checked; external libraries, native services and stores need independent reset/semantics review.
+Freshness checks retain references to prior mutable state to detect reuse without copying it or mistaking recycled IDs for reuse. Memory therefore grows with the evaluated state graphs. Large lanes must partition complete family/boundary suites to stay under the RSS cap. All adapter/factory-owned module state is checked. External functions, objects/modules and opaque/native graphs outside the small immutable builtin/engine metadata boundary fail certification; a review note alone cannot waive them. External service semantics still need independent review and a supported source-backed seam.
 
 No finite matrix proves arbitrary Python predicate honesty, complete boundary selection, semantic duplicate equality or a non-guard declaration. Review these explicitly. Dynamic imports, non-source callables, unscannable modules, opaque fixture data and unported checker closures cannot receive automatic proof credit. No current lane/family admission or twelve-criterion grade is granted by this tool task.
 
@@ -125,3 +125,26 @@ This table covers all 19 drafting lanes discovered on the fetched `plans/ea-*` b
 | **DM** | `boundary_state`, upstream/timestamp states, current retry, original resolution, `retained_event_valid` / `reader_result` and publication rebuild | Family/scenario/occurrence; exact caller versus Storage field, schema atom, written recipe | `pm-small-owner-guard-audit.py` catalogue/container/invoke/matrix machinery. Preserve verified Storage metadata and recipe selection; formats without enforcement stay an explicit sweep gap. |
 | **DT** | `source_corpus`, checkpoint/other/boundary constructors and `round6_corpus`; full append/source-stage/recovery/historical paths in `pm-dt-event-contracts.py` | Family/phase/case, exact predicate field and source copy; schema required members independently | `function_mutants`, `replace_function`, `schema_table`, `prove_family/prove` and reference-guard matrix loops. Keep original source custody, history and physical-size guards; no local number-domain policy. |
 | **DCN** | `pm_card2_events.mutate` and coherent application/source/evidence fixtures; `_run` dispatch through envelope, payload, transition, token and evidence custody | Exact family/case occurrence, individual claim/fact/evidence field and schema/member | Lane/external check-11 grouping and removal loops. Preserve original verified-evidence and retained-history behavior. |
+
+## Standalone use and reset seams
+
+Installation files, supported Python/platform boundary, dependencies, generic CLI,
+self-test and `--scratch` are in [the standalone README](../../scripts/guard-isolation/README.md).
+The OS temporary directory is the default; an adjacent trap JSON permits a flat
+three-file distribution with no PuppetMaster checkout or mount.
+
+`Suite.reset` and exact `Suite.reset_seams` declarations (kind
+`shared_state_write`) are required for global/nonlocal statements and shared
+writes. Ordinary `NonGuard` declarations cannot exempt those effects. The reset
+function itself is scanned. After resetting, the first-run namespace fingerprint
+must match, including object identities. Unknown state remains refused even
+when a reset is declared. The corpus includes both an effective diagnostic
+scalar reset and a reset that leaves the binding changed.
+
+Every evaluation builds its case twice independently. Table rows, context,
+inputs, checker closure state and original predicate metadata must agree with
+the first construction for that input; cuts and restorations repeat the same
+comparison. Fresh identities alone do not establish deterministic state. Shared
+fingerprints also run before factories and after original execution, with any
+reviewed reset applied first. Certification failures retain census/baseline
+diagnostics but withhold every row and duplicate credit.

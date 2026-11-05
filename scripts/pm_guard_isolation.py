@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import builtins
 import copy
 import dis
 import inspect
@@ -1136,6 +1137,8 @@ class Suite:
     repository_root: str | Path
     duplicates: list[Duplicate] = field(default_factory=list)
     non_guards: list[NonGuard] = field(default_factory=list)
+    reset: Callable[[], None] | None = None
+    reset_seams: list[NonGuard] = field(default_factory=list)
 
 
 def _function_key(fn):
@@ -1161,17 +1164,24 @@ def static_scan(suite, table):
     pending = [(root / p).resolve() for p in suite.checker_modules]
     if not pending:
         raise IsolationError('checker_modules must name the complete source closure')
+    pending.append(Path(_function_key(suite.factory)[0]))
+    if suite.reset:
+        pending.append(Path(_function_key(suite.reset)[0]))
     predicate_functions = {_function_key(fn): fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)}
     predicate_keys = set(predicate_functions)
     located_predicates = set()
     files, sites, imports, errors = {}, [], [], []
-    allowed = {}
-    for declaration in suite.non_guards:
+    allowed, reset_allowed = {}, {}
+    for declaration in [*suite.non_guards, *suite.reset_seams]:
         path = (root / declaration.path).resolve()
         key = (str(path), declaration.function, declaration.kind, declaration.source)
         if key in allowed or not declaration.reason.strip() or not path.is_relative_to(root):
             raise IsolationError('invalid or duplicate non-guard declaration')
         allowed[key] = [declaration, 0]
+        if declaration in suite.reset_seams:
+            if suite.reset is None or declaration.kind != 'shared_state_write':
+                raise IsolationError('reset seams need a reset function and shared_state_write kind')
+            reset_allowed[key] = allowed[key]
 
     contexts, source_modules = {}, {}
     for _, module in list(sys.modules.items()):
@@ -1338,6 +1348,51 @@ def static_scan(suite, table):
             if isinstance(part, ast.Call):
                 return isinstance(part.func, ast.Name) and part.func.id in calls - shadowed and not origins(part.func) and all(data_expression(a, names, calls) for a in part.args)
             return False
+        def builtin_is(name):
+            modules = source_modules.get(path, [])
+            if not modules:
+                return False
+            canonical = vars(builtins).get(name)
+            for module in modules:
+                namespace = vars(module)
+                environment = namespace.get('__builtins__')
+                environment = vars(environment) if type(environment) is types.ModuleType else environment
+                if type(environment) is not dict or namespace.get(name, environment.get(name)) is not canonical:
+                    return False
+            return True
+        def engine_constructor_total(node):
+            if not (isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == 'g'):
+                return False
+            name = node.func.attr
+            constructors = {'Guard': Guard, 'GuardTable': GuardTable, 'Invariant': Invariant, 'Case': Case,
+                            'Suite': Suite, 'Control': Control, 'Negative': Negative, 'NonGuard': NonGuard, 'Duplicate': Duplicate}
+            modules = source_modules.get(path, [])
+            if name not in constructors or not modules or any(vars(module).get('g') is not sys.modules[__name__] for module in modules):
+                return False
+            if any(isinstance(arg, ast.Starred) for arg in node.args) or any(kw.arg is None for kw in node.keywords):
+                return False
+            try:
+                arguments = inspect.signature(constructors[name]).bind(*node.args, **{kw.arg: kw.value for kw in node.keywords}).arguments
+            except TypeError:
+                return False
+            if name == 'Guard':
+                for key in ('name', 'refusal_code'):
+                    value = arguments[key]
+                    if not isinstance(value, ast.Constant) or type(value.value) is not str or not value.value.strip():
+                        return False
+                predicate = arguments['predicate']
+                if not isinstance(predicate, ast.Name) or not any(callable(vars(module).get(predicate.id)) for module in modules):
+                    return False
+            if name == 'GuardTable':
+                rows = arguments['guards']
+                if not isinstance(rows, (ast.List, ast.Tuple)) or any(not isinstance(row, ast.Call) or not engine_constructor_total(row) or ast.unparse(row.func) != 'g.Guard' for row in rows.elts):
+                    return False
+                names = [row.args[0].value if row.args else next(kw.value.value for kw in row.keywords if kw.arg == 'name') for row in rows.elts]
+                if len(set(names)) != len(names):
+                    return False
+            # The remaining constructors are dataclasses with no validation
+            # hooks: argument binding is their entire exception boundary.
+            return True
         exempt = set()
         predicate_data = {}
         for node in ast.walk(tree):
@@ -1421,8 +1476,10 @@ def static_scan(suite, table):
                         if not (isinstance(node.func, ast.Attribute) and node.func.attr in ('require', 'validate') and
                                 isinstance(node.func.value, ast.Name) and node.func.value.id == 'table'):
                             kind = 'refusal_helper'
-                    elif not (name in ('len', 'isinstance', 'type', 'str', 'int', 'bool', 'bytes', 'dict', 'list', 'tuple', 'set', 'frozenset', 'range', 'enumerate', 'zip')
-                              or name in ('g.Guard', 'g.GuardTable', 'g.Invariant', 'g.Case', 'g.Suite', 'g.Control', 'g.Negative', 'g.NonGuard', 'g.Duplicate')
+                    elif not (isinstance(node.func, ast.Name) and node.func.id in ('type', 'bool') and node.func.id not in shadowed and
+                              builtin_is(node.func.id) and len(node.args) == 1 and not node.keywords
+                              and (node.func.id == 'type' or isinstance(node.args[0], ast.Constant))
+                              or engine_constructor_total(node)
                               or name in ('table.require', 'table.validate')):
                         kind = 'call_review'
             if node in exempt:
@@ -1475,6 +1532,150 @@ def static_scan(suite, table):
                               'path': _relative(path, root), 'function': owners[node], 'line': node.end_lineno,
                               'kind': kind, 'source': text, 'non_guard': bool(declaration),
                               'reason': declaration[0].reason if declaration else ''})
+        # Outside predicates the default is an obligation, not "no explicit
+        # raise found". No sampled fixture can waive a dormant operation.
+        def obligation(node, kind, *, reset_only=False):
+            text = ast.unparse(node)
+            key = (str(path), owners[node], kind, text)
+            declaration = (reset_allowed if reset_only else allowed).get(key)
+            if declaration:
+                declaration[1] += 1
+            position = node if hasattr(node, 'lineno') else node.iter
+            sites.append({'id': _relative(path, root) + ':' + str(position.lineno) + ':' + str(position.col_offset) + ':' + kind,
+                          'path': _relative(path, root), 'function': owners[node], 'line': position.lineno,
+                          'exception_span': [position.lineno, position.end_lineno, position.col_offset, position.end_col_offset],
+                          'kind': kind, 'source': text, 'non_guard': bool(declaration),
+                          'reason': declaration[0].reason if declaration else ''})
+        def bound_function(name):
+            bindings = [vars(module).get(name) for module in source_modules.get(path, [])]
+            return bindings[0] if bindings and all(value is bindings[0] for value in bindings) else None
+        def total_attribute(node):
+            # Immutable original Python code observation used by the no-clone
+            # control. General attribute access/descriptors are obligations.
+            if isinstance(node.value, ast.Name) and node.attr == '__code__':
+                return type(bound_function(node.value.id)) is types.FunctionType
+            if isinstance(node.value, ast.Attribute) and node.attr == 'co_code':
+                return node.value.attr == '__code__' and total_attribute(node.value)
+            parent = parents.get(node)
+            if isinstance(parent, ast.Call) and parent.func is node:
+                if isinstance(node.value, ast.Name) and node.value.id == 'table' and node.attr in ('require', 'validate'):
+                    return True  # actual receiver is enforced at the engine entry
+                if isinstance(node.value, ast.Name) and node.value.id == 'g':
+                    return all(vars(module).get('g') is sys.modules[__name__] for module in source_modules.get(path, []))
+            return False
+        def target_names(target):
+            return {part.id for part in ast.walk(target) if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store)}
+        def statement_binds(statement, name):
+            if isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                return name == statement.name
+            if isinstance(statement, (ast.Import, ast.ImportFrom)):
+                return any(name == (alias.asname or (alias.name.split('.')[0] if isinstance(statement, ast.Import) else alias.name)) for alias in statement.names)
+            if isinstance(statement, (ast.Assign, ast.AnnAssign)):
+                return statement.value is not None and any(name in target_names(target) for target in (statement.targets if isinstance(statement, ast.Assign) else [statement.target]))
+            return False
+        def total_name(node):
+            name, child = node.id, node
+            while child in parents:
+                parent = parents[child]
+                if isinstance(parent, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)):
+                    # Iteration itself is a separate reviewed obligation.
+                    if child not in parent.generators and any(name in target_names(gen.target) for gen in parent.generators):
+                        return True
+                if isinstance(parent, (ast.For, ast.AsyncFor)) and child in parent.body and name in target_names(parent.target):
+                    return True
+                if isinstance(parent, ast.ExceptHandler) and child in parent.body and parent.name == name:
+                    return True
+                for field in ('body', 'orelse', 'finalbody'):
+                    siblings = getattr(parent, field, None)
+                    if isinstance(siblings, list) and child in siblings:
+                        if any(statement_binds(statement, name) for statement in siblings[:siblings.index(child)]):
+                            return True
+                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+                    args = parent.args
+                    if name in {arg.arg for arg in [*args.posonlyargs, *args.args, *args.kwonlyargs, *([args.vararg] if args.vararg else []), *([args.kwarg] if args.kwarg else [])]}:
+                        return True
+                    local = any(owners.get(part) == owners[parent] and isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store) and part.id == name for part in ast.walk(parent))
+                    declared = any(owners.get(part) == owners[parent] and isinstance(part, (ast.Global, ast.Nonlocal)) and name in part.names for part in ast.walk(parent))
+                    if local and not declared:
+                        return False  # binding exists, but does not dominate the read
+                child = parent
+            return any(name in vars(module) for module in source_modules.get(path, [])) or name in vars(builtins)
+        functions = [node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))]
+        function_bindings = {}
+        for fn in functions:
+            own = [part for part in ast.walk(fn) if owners[part] == owners[fn]]
+            declared_shared = {name for part in own if isinstance(part, (ast.Global, ast.Nonlocal)) for name in part.names}
+            locals_ = {a.arg for a in [*fn.args.posonlyargs, *fn.args.args, *fn.args.kwonlyargs]}
+            locals_.update(part.id for part in own if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store))
+            locals_.difference_update(declared_shared)
+            # Unknown/free roots and aliases of them remain shared. A local
+            # binding never certifies the object to which it was assigned.
+            bindings_shared = declared_shared | {part.id for part in own if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Load) and part.id not in locals_}
+            shared = set(bindings_shared)
+            for _ in range(len(own) + 1):
+                prior = set(shared)
+                for part in own:
+                    if isinstance(part, (ast.Assign, ast.AnnAssign, ast.NamedExpr)) and part.value is not None:
+                        if any(isinstance(x, ast.Name) and x.id in shared for x in ast.walk(part.value)):
+                            targets = part.targets if isinstance(part, ast.Assign) else [part.target]
+                            shared.update(x.id for target in targets for x in ast.walk(target) if isinstance(x, ast.Name))
+                if prior == shared:
+                    break
+            function_bindings[owners[fn]] = (bindings_shared, shared)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == 'require' and isinstance(node.func.value, ast.Name) and node.func.value.id == 'table':
+                name = node.args[0] if node.args else next((kw.value for kw in node.keywords if kw.arg == 'name'), None)
+                if not isinstance(name, ast.Constant) or type(name.value) is not str:
+                    errors.append({'kind': 'dynamic_table_name', 'path': _relative(path, root), 'line': node.lineno})
+                elif name.value not in table.guards:
+                    errors.append({'kind': 'missing_table_entry', 'path': _relative(path, root), 'line': node.lineno, 'guard': name.value})
+            bindings_shared, shared = function_bindings.get(owners[node], (set(), set()))
+            write = isinstance(node, (ast.Global, ast.Nonlocal))
+            if owners[node] and isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign, ast.Delete, ast.NamedExpr)):
+                targets = node.targets if isinstance(node, (ast.Assign, ast.Delete)) else [node.target]
+                write = any(isinstance(target, ast.Name) and target.id in bindings_shared or
+                            any(isinstance(part, ast.Attribute) or isinstance(part, ast.Subscript) and
+                                any(isinstance(x, ast.Name) and x.id in shared for x in ast.walk(part.value)) for part in ast.walk(target))
+                            for target in targets)
+            if owners[node] and isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in (
+                    'append', 'extend', 'insert', 'update', 'add', 'setdefault', 'clear', 'pop', 'remove', 'discard', '__setitem__', '__setattr__'):
+                write = any(isinstance(part, ast.Name) and part.id in shared for part in ast.walk(node.func.value))
+            if write:
+                obligation(node, 'shared_state_write', reset_only=True)
+            if node in exempt:
+                continue
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                for decorator in node.decorator_list:
+                    obligation(decorator, 'implicit_call')
+            if isinstance(node, ast.ExceptHandler) and node.type is not None:
+                types_ = node.type.elts if isinstance(node.type, ast.Tuple) else [node.type]
+                if not all(isinstance(item, ast.Name) and builtin_is(item.id) and isinstance(vars(builtins)[item.id], type) and
+                           issubclass(vars(builtins)[item.id], BaseException) for item in types_):
+                    obligation(node, 'data_operation')
+            # Explicit grammar allowlist: new/unknown expression forms cannot
+            # inherit a safe default when CPython adds syntax.
+            known_expressions = (ast.BoolOp, ast.NamedExpr, ast.BinOp, ast.UnaryOp, ast.Lambda, ast.IfExp,
+                                 ast.Dict, ast.Set, ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp,
+                                 ast.Await, ast.Yield, ast.YieldFrom, ast.Compare, ast.Call, ast.FormattedValue,
+                                 ast.JoinedStr, ast.Constant, ast.Attribute, ast.Subscript, ast.Starred,
+                                 ast.Name, ast.List, ast.Tuple, ast.Slice)
+            potential = (isinstance(node, ast.Subscript) and isinstance(node.ctx, ast.Load) or
+                         isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and not total_name(node) or
+                         isinstance(node, ast.Attribute) and isinstance(node.ctx, ast.Load) and not total_attribute(node) or
+                         isinstance(node, ast.Compare) and any(not isinstance(op, (ast.Is, ast.IsNot)) for op in node.ops) or
+                         isinstance(node, (ast.BinOp, ast.BoolOp, ast.JoinedStr, ast.Starred, ast.Await, ast.DictComp, ast.SetComp)) or
+                         isinstance(node, ast.UnaryOp) and not isinstance(node.operand, ast.Constant) or
+                         isinstance(node, (ast.If, ast.IfExp)) and not isinstance(node.test, ast.Constant) or
+                         isinstance(node, (ast.While, ast.Match, ast.ClassDef)) or
+                         isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)) or
+                         isinstance(node, (ast.With, ast.AsyncWith)) or
+                         isinstance(node, ast.Dict) and any(key is None or not isinstance(key, ast.Constant) for key in node.keys) or
+                         isinstance(node, ast.Set) and any(not isinstance(value, ast.Constant) for value in node.elts) or
+                         isinstance(node, ast.Call) and any(keyword.arg is None for keyword in node.keywords) or
+                         isinstance(node, ast.expr) and not isinstance(node, known_expressions) or
+                         isinstance(node, (ast.Tuple, ast.List)) and isinstance(node.ctx, ast.Store))
+            if potential:
+                obligation(node, 'data_operation')
     for key, (declaration, matches) in allowed.items():
         if matches != 1:
             errors.append({'kind': 'non_guard_not_exactly_one_site', 'declaration': asdict(declaration), 'matches': matches})
@@ -1521,9 +1722,10 @@ def _state_objects(case, root):
                 raise IsolationError('state_shared_across_cases: cannot certify external function graph: ' + obj.__qualname__)
             for cell in obj.__closure__ or ():
                 try:
-                    visit(cell.cell_contents)
+                    contents = cell.cell_contents
                 except ValueError:
-                    pass
+                    continue
+                visit(contents)
             visit(obj.__defaults__)
             visit(obj.__kwdefaults__)
             visit(obj.__dict__)
@@ -1588,6 +1790,145 @@ def _state_objects(case, root):
         for selector in case.table._schema.selectors.values():
             visit(selector)
     return result
+
+
+def _certified_snapshot(roots, root, *, identities, namespaces=False):
+    """Observe original objects without hooks; no copying, user equality or repr.
+
+    Shared snapshots retain binding/alias/identity information. Case snapshots
+    erase fresh identities but retain order, aliases, closure state and bits.
+    Unknown graphs are certification errors, never empty/safe fingerprints.
+    """
+    engine = Path(__file__).resolve()
+    seen, nodes, keepalive = {}, [], []
+    immutable_builtins = (len, type, isinstance, bool, str, int, float, bytes,
+                          dict, list, tuple, set, frozenset, range, enumerate, zip,
+                          abs, all, any, min, max, sum, id, object,
+                          BaseException, Exception, ValueError, TypeError, KeyError,
+                          AssertionError, RuntimeError, SystemExit)
+    metadata_types = (Invariant, NonGuard, Control, Negative, Duplicate)
+    def unsupported(obj, reason='reachable state'):
+        raise IsolationError('state_shared_across_cases: cannot certify ' + reason + ': ' + type(obj).__name__)
+    def namespace(mapping):
+        # Interpreter-owned import bookkeeping is not adapter state. All other
+        # bindings, including private names, are observed, even if unreferenced.
+        ignored = {'__builtins__', '__loader__', '__spec__', '__cached__'}
+        return tuple((name, visit(value)) for name, value in mapping.items() if name not in ignored)
+    def visit(obj):
+        kind = type(obj)
+        if kind in (type(None), bool, int, float, str, bytes):
+            return ('scalar', encoded(evidence_value(obj)))
+        if kind is complex:
+            return ('complex', struct.pack('>dd', obj.real, obj.imag).hex())
+        if obj is Ellipsis or obj is NotImplemented:
+            return ('immutable-singleton', 'Ellipsis' if obj is Ellipsis else 'NotImplemented')
+        if any(obj is value for value in immutable_builtins):
+            return ('immutable-builtin', obj.__module__, obj.__name__)
+        if obj is sys.modules[__name__]:
+            return ('engine-module',)
+        if id(obj) in seen:
+            return ('ref', seen[id(obj)])
+        index = len(nodes)
+        seen[id(obj)] = index
+        nodes.append(None)
+        keepalive.append(obj)
+        if kind in (dict, list, tuple, set, frozenset, bytearray):
+            content = (tuple((visit(k), visit(v)) for k, v in obj.items()) if kind is dict else
+                       bytes(obj) if kind is bytearray else tuple(visit(v) for v in obj))
+        elif kind is types.FunctionType:
+            source = Path(obj.__code__.co_filename).resolve()
+            if source == engine:
+                content = ('engine-function', obj.__qualname__)
+            else:
+                if not source.is_relative_to(root):
+                    unsupported(obj, 'external function graph')
+                if getattr(obj, '__annotate__', None) is not None:
+                    unsupported(obj, 'lazy function annotation graph')
+                content = (_function_key(obj), visit(obj.__code__), visit(obj.__defaults__),
+                           visit(obj.__kwdefaults__), visit(obj.__dict__), tuple(visit(cell) for cell in obj.__closure__ or ()),
+                           visit(obj.__annotations__), visit(getattr(obj, '__type_params__', ())),
+                           obj.__name__, obj.__qualname__, visit(obj.__module__), visit(obj.__doc__),
+                           namespace(obj.__globals__) if namespaces else (),
+                           tuple((name, visit(obj.__builtins__[name])) for name in sorted(set(obj.__code__.co_names))
+                                 if name not in obj.__globals__ and name in obj.__builtins__) if namespaces else ())
+        elif kind is types.MethodType:
+            content = (visit(obj.__func__), visit(obj.__self__))
+        elif kind is types.CellType:
+            try:
+                contents = obj.cell_contents
+            except ValueError:
+                content = ('empty-cell',)
+            else:
+                # Certification errors in the contents escape, including
+                # IsolationError (a ValueError subclass).
+                content = ('cell', visit(contents))
+        elif kind is types.ModuleType:
+            source = vars(obj).get('__file__')
+            if not source or not Path(source).resolve().is_relative_to(root):
+                unsupported(obj, 'external module graph')
+            content = namespace(vars(obj))
+        elif kind is types.CodeType:
+            # Immutable Python code, including nested constants; never executed.
+            content = (obj.co_code.hex(), visit(obj.co_consts), obj.co_names, obj.co_varnames,
+                       obj.co_freevars, obj.co_cellvars, obj.co_flags, obj.co_argcount,
+                       obj.co_posonlyargcount, obj.co_kwonlyargcount, obj.co_stacksize,
+                       obj.co_exceptiontable.hex(), obj.co_linetable.hex(), obj.co_filename, obj.co_firstlineno)
+        elif kind is type:
+            module = sys.modules.get(obj.__module__)
+            source = vars(module).get('__file__') if type(module) is types.ModuleType else None
+            if source and Path(source).resolve() == engine:
+                content = ('engine-type', obj.__qualname__)
+            else:
+                if not source or not Path(source).resolve().is_relative_to(root):
+                    unsupported(obj, 'external class graph')
+                content = (obj.__qualname__, tuple(visit(base) for base in obj.__bases__),
+                           tuple((name, visit(value)) for name, value in vars(obj).items()
+                                 if name not in ('__dict__', '__weakref__')))
+        elif kind in (staticmethod, classmethod):
+            content = visit(obj.__func__)
+        elif kind is property:
+            content = tuple(visit(fn) for fn in (obj.fget, obj.fset, obj.fdel))
+        elif kind in metadata_types:
+            content = tuple((name, visit(value)) for name, value in vars(obj).items())
+        elif kind is GuardTable and not namespaces:
+            content = (visit(_guard_metadata(obj)),
+                       tuple(visit(fn) for fn in _predicate_functions(obj)),
+                       tuple(visit(fn) for fn in obj._schema.selectors.values()) if obj._schema else ())
+        else:
+            cls = kind
+            if (type(cls) is not type or any(vars(base).get('__slots__') or '__getattr__' in vars(base) or
+                    base is not object and '__getattribute__' in vars(base) for base in cls.__mro__)):
+                unsupported(obj, 'slotted/opaque object graph')
+            module = sys.modules.get(cls.__module__)
+            source = vars(module).get('__file__') if type(module) is types.ModuleType else None
+            if not source or not Path(source).resolve().is_relative_to(root) or Path(source).resolve() == engine:
+                unsupported(obj, 'external object graph')
+            try:
+                state = object.__getattribute__(obj, '__dict__')
+            except AttributeError:
+                unsupported(obj)
+            if type(state) is not dict:
+                unsupported(obj)
+            content = (visit(cls), visit(state))
+        nodes[index] = (kind.__name__, id(obj) if identities else None, content)
+        return ('ref', index)
+    references = tuple(visit(value) for value in roots)
+    return _DataSnapshot((references, tuple(nodes)), tuple(keepalive))
+
+
+def _adapter_snapshot(suite):
+    root = Path(suite.repository_root).resolve()
+    # Starting at the factory also includes factory-only closures and globals.
+    roots = [suite.factory]
+    if suite.reset:
+        roots.append(suite.reset)
+    paths = {(root / path).resolve() for path in suite.checker_modules}
+    for module in list(sys.modules.values()):
+        if type(module) is types.ModuleType:
+            filename = vars(module).get('__file__')
+            if filename and Path(filename).resolve() in paths:
+                roots.append(module)
+    return _certified_snapshot(roots, root, identities=True, namespaces=True)
 
 
 def _guard_metadata(table):
@@ -1714,9 +2055,28 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
     scanned_paths, exception_sites = set(), set()
     engine = Path(__file__).resolve()
     root = Path(suite.repository_root).resolve()
+    shared_snapshot = None
+    case_snapshots = {}
+    def certify_shared(*, reset=False):
+        nonlocal shared_snapshot
+        if reset and suite.reset:
+            suite.reset()
+        try:
+            snapshot = _adapter_snapshot(suite)
+        except IsolationError as exc:
+            # Still census/observe baselines for diagnostic specificity. Any
+            # certification failure withholds ALL credit before matrix/cuts.
+            fail('state_shared_across_cases', error=str(exc))
+            return
+        report.setdefault('state_snapshots', []).append(hashlib.sha256(repr(snapshot.signature).encode()).hexdigest())
+        if shared_snapshot is None:
+            shared_snapshot = snapshot
+        elif snapshot != shared_snapshot:
+            fail('state_shared_across_cases', error='adapter/factory bindings or reachable state changed from first run')
     def fresh(value):
         nonlocal signature, checker_signature, scanned_paths, exception_sites
         gate.check()
+        certify_shared(reset=True)
         before = _data_snapshot(value)
         factory_signature = inspect.signature(suite.factory)
         try:
@@ -1760,11 +2120,19 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                 retained[id(obj)] = weakref.ref(obj)
             except TypeError:
                 retained[id(obj)] = obj
+        certify_shared(reset=True)
+        key = repr(_certified_snapshot([value], root, identities=False).signature)
+        snapshot = _certified_snapshot([value, case.context, case.check, case.table], root, identities=False)
+        if key in case_snapshots and snapshot != case_snapshots[key]:
+            fail('factory_nondeterministic', error='same input produced a different table/context/checker closure graph')
+        else:
+            case_snapshots.setdefault(key, snapshot)
         gate.check()
         return case
 
     def observe(case, value, cuts=frozenset(), predicate=None):
         gate.check()
+        certify_shared(reset=True)
         report['evaluations'] += 1
         table = case.table
         table._bind(value, case.context, cuts)
@@ -1865,6 +2233,7 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                 report.setdefault('schema_consumption', []).append({'evaluation': report['evaluations'],
                     'cuts': sorted(cuts), 'roots': sorted(table._schema.consumed)})
             table._restore()
+            certify_shared(reset=True)
             gate.check()
         return got
 
@@ -1872,6 +2241,9 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
         # Only fixture data is copied. Checker functions, defaults, globals,
         # closure cells, code objects and state are never cloned by this tool.
         data = _fixture_copy(value)
+        # Two independently built original cases must agree before this run.
+        # The per-input signature also compares each cut/restoration to baseline.
+        fresh(_fixture_copy(value))
         return observe(fresh(data), data, frozenset(cuts), predicate)
 
     try:
@@ -2068,9 +2440,9 @@ def markdown(report):
     return '\n'.join(lines) + '\n'
 
 
-def self_test(memory=None):
+def self_test(memory=None, *, scratch=None):
     from pm_guard_isolation_traps import exercise
-    return exercise(sys.modules[__name__], memory or MemoryGate())
+    return exercise(sys.modules[__name__], memory or MemoryGate(), scratch=scratch)
 
 
 def self_test_markdown(report):
@@ -2086,6 +2458,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--adapter', help='Python file:factory returning Method B Suite')
     parser.add_argument('--self-test', action='store_true')
+    parser.add_argument('--scratch', type=Path, help='self-test scratch parent (default: operating system temporary directory)')
     parser.add_argument('--json', type=Path)
     parser.add_argument('--markdown', type=Path)
     parser.add_argument('--max-rss', type=int, default=2048)
@@ -2100,7 +2473,7 @@ def main(argv=None):
         memory = MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, args.pause_poll, args.low_timeout)
         memory.check()
         if args.self_test:
-            report = self_test(memory)
+            report = self_test(memory, scratch=args.scratch)
         else:
             sys.modules.setdefault('pm_guard_isolation', sys.modules[__name__])
             path, sep, factory = args.adapter.rpartition(':')

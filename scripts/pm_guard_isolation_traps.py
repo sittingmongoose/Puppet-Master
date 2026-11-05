@@ -52,10 +52,13 @@ def _code_suite(g, trap, root):
             fixture.value['right'] = fixture.value['left']
     # checker_modules accepts absolute paths; relative convenience is rooted here.
     suite.checker_modules = (path,)
-    suite.non_guards = [_allow(g, 'subject.py', 'factory', 'return',
+    suite.non_guards = [_allow(g, 'subject.py', trap.get('factory_function', 'factory'), 'return',
         'return g.Case(table, check, context)', 'Factory returns a newly constructed execution object; it does not decide acceptance.')]
     for declaration in trap.get('non_guards', []):
         suite.non_guards.append(g.NonGuard(**declaration))
+    if trap.get('reset_function'):
+        suite.reset = vars(module)[trap['reset_function']]
+    suite.reset_seams = [g.NonGuard(**declaration) for declaration in trap.get('reset_seams', [])]
     for duplicate in trap.get('duplicates', []):
         suite.duplicates.append(g.Duplicate(duplicate['id'], tuple(duplicate['sites']), g.Invariant(*duplicate['invariant']), duplicate['evidence']))
     if trap.get('omit_factory_allowance'):
@@ -106,11 +109,18 @@ def factory():
         _allow(g, 'subject.py', 'factory', 'return', 'return g.Case(table, check, context)', 'Fresh execution object construction.'),
         _allow(g, 'subject.py', 'factory', 'call_review', 'g.SchemaCatalog(DOCUMENTS, roots=ROOTS)', 'Eager complete schema inventory, retaining the original validator semantics.'),
         _allow(g, 'subject.py', 'factory', 'call_review', 'g.schema_table(catalog, {entry: selected for entry in ROOTS})', 'Engine schema/table plumbing; no adapter-issued refusal.')]
+    suite.non_guards += [
+        _allow(g, 'subject.py', 'factory.check', 'data_operation', 'for entry in ROOTS:\n    table.validate(entry, value)', 'Iterate the declared immutable tuple of schema-root strings; each complete validation stays tagged.'),
+        _allow(g, 'subject.py', 'factory', 'data_operation', ' for entry in ROOTS', 'Construct selector bindings over the declared immutable tuple of roots.')]
+    suite.non_guards.append(_allow(g, 'subject.py', 'factory', 'data_operation', '{entry: selected for entry in ROOTS}', 'Build a dictionary keyed only by the declared immutable root strings.'))
     return suite
 
 
 def _special(g, trap, memory):
     kind = trap['kind']
+    if kind == 'os-temp-scratch':
+        with tempfile.TemporaryDirectory(prefix='guardtool-portable-', dir=_scratch_parent(None)) as directory:
+            return Path(directory).parent == Path(tempfile.gettempdir()), {'parent': str(Path(directory).parent)}
     if kind == 'finite-memory':
         rejected = []
         for parameter in ('max_rss', 'pause_when_low', 'resume_at', 'poll', 'low_timeout'):
@@ -136,13 +146,20 @@ def _special(g, trap, memory):
     raise RuntimeError('unknown special trap: ' + kind)
 
 
-def exercise(g, memory):
-    corpus = json.loads((Path(__file__).resolve().parents[1] / 'Plans/guard_isolation_traps.json').read_text())
+def _scratch_parent(scratch):
+    if scratch is not None:
+        scratch = Path(scratch).resolve()
+        scratch.mkdir(parents=True, exist_ok=True)
+    return scratch
+
+
+def exercise(g, memory, *, scratch=None):
+    adjacent = Path(__file__).with_name('guard_isolation_traps.json')
+    corpus = json.loads((adjacent if adjacent.is_file() else Path(__file__).resolve().parents[1] / 'Plans/guard_isolation_traps.json').read_text())
     if corpus['version'] != 2:
         raise RuntimeError('expected Method B trap corpus')
     report = {'version': 2, 'method': 'B: guard tables', 'status': 'FAIL', 'caught': 0, 'traps': []}
-    scratch = Path('/mnt/Cursor/PuppetMaster-Evidence/scratch')
-    scratch.mkdir(parents=True, exist_ok=True)
+    scratch = _scratch_parent(scratch)
     for trap in corpus['traps']:
         memory.check()
         row = {'id': trap['id'], 'expected': trap['expected'], 'caught': False}
@@ -215,7 +232,7 @@ def exercise(g, memory):
             for name in set(sys.modules) - old_modules:
                 module = sys.modules.get(name)
                 path = getattr(module, '__file__', None)
-                if name.startswith('_method_b_') or (path and str(path).startswith(str(scratch))):
+                if name.startswith('_method_b_') or (path and 'root' in locals() and Path(path).is_relative_to(root)):
                     sys.modules.pop(name, None)
         report['traps'].append(row)
         report['caught'] += bool(row['caught'])
