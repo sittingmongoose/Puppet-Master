@@ -2,8 +2,14 @@
 import pod from './pod-clearance.check.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 export default async function(t) {
+  const previous={width:t.args.width,only:t.args.only};
   t.args.width=1512; t.args.only='query';
-  await pod(t);
+  try { await pod(t); } finally {
+    for(const key of ['width','only']) {
+      if(previous[key]===undefined) delete t.args[key];
+      else t.args[key]=previous[key];
+    }
+  }
   const f=t.root;
   await t.viewport(1920,1100);
   // No intervening render/reveal: retain the exact narrow-return history
