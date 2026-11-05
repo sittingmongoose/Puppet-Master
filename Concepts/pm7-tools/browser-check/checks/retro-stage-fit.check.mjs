@@ -643,7 +643,7 @@ async function leavingHead(t, mode) {
 async function frozenDrawing(t,mode) {
 	await t.viewport(860,768); const f=await frameFor(t,mode);
 	await t.emulate({reducedMotion:'no-preference'}); await stageLook(t,f,'nier-light');
-	await f.evaluate(()=>O55.ui.open({fresh:true,screen:'c-ready'})); await f.waitForTimeout(3500);
+	await f.evaluate(()=>O55.ui.open({fresh:true,screen:'c-ready'})); await arrive(t,f); await f.waitForTimeout(3500);
 	const r=await f.evaluate(async ({m,i,g})=>{
 		const s=O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 		const nodes=[s.gHead,s.gCtl].flatMap(e=>[e,...e.querySelectorAll('*')]);
@@ -654,7 +654,7 @@ async function frozenDrawing(t,mode) {
 	},{m:MOTION.toString(),i:INK_OVERLAP.toString(),g:GEOMETRY.toString()});
 	await t.check(`${mode}: frozen drawing retains valid visible geometry`,!r.err&&!r.geometryError&&r.validPairs>0,JSON.stringify(r));
 	await t.check(`${mode}: frozen drawing retains nominal physics`,r.off===0&&r.forced?.fired,JSON.stringify(r));
-	await t.check(`${mode}: frozen drawing rejected by 200 ms drawn-pose assertion`,r.movingMs<200,JSON.stringify(r));
+	await t.check(`${mode}: frozen drawing rejected by 200 ms drawn-pose assertion`,t.args.selftest === 'frozen-drawing' ? r.movingMs>=200 : r.movingMs<200,JSON.stringify(r));
 	t.log(JSON.stringify(r));
 }
 
