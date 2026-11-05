@@ -3290,6 +3290,7 @@
     "APR-008",
     "APR-011",
     "F3-417",
+    "DL-331",
     "BS-013",
     "C-007",
     "C-021",
@@ -4352,6 +4353,7 @@
     "UF-063",
     "UF-067",
     "UF-057",
+    "DL-332",
     "UF-064",
     "UF-069",
     "UF-089",
@@ -5697,6 +5699,8 @@
     "CWF-090",
     "CWF-091",
     "CWF-092",
+    "DP-064",
+    "DP-066",
     "MA-026",
     "OSI-274",
     "OSI-331",
@@ -5757,6 +5761,7 @@
     "CWF-082",
     "CWF-094",
     "CWF-093",
+    "PWIZ-038",
     "MA-027",
     "OSI-333",
     "OSI-332",
@@ -5810,6 +5815,7 @@
     "CWF-097",
     "CWF-098",
     "CWF-099",
+    "DL-330",
     "MA-028",
     "OSI-334",
     "OSI-157",
@@ -29447,6 +29453,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "DL-330",
+      "to": "DP-064"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-330",
+      "to": "DP-066"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-330",
+      "to": "PWIZ-038"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-331",
+      "to": "ATS-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-331",
+      "to": "T-159"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-332",
+      "to": "UF-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-332",
+      "to": "UF-021"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "DP-003",
       "to": "DP-002"
     },
@@ -29794,6 +29835,31 @@
       "edge_type": "depends_on",
       "from": "DP-063",
       "to": "DR-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-064",
+      "to": "DP-033"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-064",
+      "to": "DP-034"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-066",
+      "to": "DP-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-066",
+      "to": "DP-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-066",
+      "to": "DP-034"
     },
     {
       "edge_type": "depends_on",
@@ -61349,6 +61415,11 @@
       "edge_type": "depends_on",
       "from": "PWIZ-037",
       "to": "SCS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-038",
+      "to": "DP-064"
     },
     {
       "edge_type": "depends_on",
@@ -111332,6 +111403,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "DP-064",
+      "to": "PWIZ-038"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "DR-036",
       "to": "ATS-018"
     },
@@ -117241,7 +117317,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T08:46:25Z",
+  "generated_at_utc": "2026-11-05T11:14:57Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -144555,8 +144631,8 @@
       "source_location": {
         "heading": "CWF-001 - Chain Wizard & Interview Flexibility Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 2323,
-        "line": 2325,
+        "heading_line": 2328,
+        "line": 2330,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144572,8 +144648,8 @@
       "source_location": {
         "heading": "CWF-002 - Document Compliance, Status, and Rewrite Alignment",
         "heading_level": 3,
-        "heading_line": 2608,
-        "line": 2610,
+        "heading_line": 2613,
+        "line": 2615,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144589,8 +144665,8 @@
       "source_location": {
         "heading": "CWF-003 - Change Summary and SSOT Guardrails",
         "heading_level": 3,
-        "heading_line": 2663,
-        "line": 2665,
+        "heading_line": 2668,
+        "line": 2670,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144606,8 +144682,8 @@
       "source_location": {
         "heading": "CWF-004 - Executive Scope and Navigation",
         "heading_level": 3,
-        "heading_line": 2722,
-        "line": 2724,
+        "heading_line": 2727,
+        "line": 2729,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144623,8 +144699,8 @@
       "source_location": {
         "heading": "CWF-005 - Intent Model Overview and Summary Matrix",
         "heading_level": 3,
-        "heading_line": 2771,
-        "line": 2773,
+        "heading_line": 2776,
+        "line": 2778,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144640,8 +144716,8 @@
       "source_location": {
         "heading": "CWF-006 - New Project Intent",
         "heading_level": 3,
-        "heading_line": 2815,
-        "line": 2817,
+        "heading_line": 2820,
+        "line": 2822,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144657,8 +144733,8 @@
       "source_location": {
         "heading": "CWF-007 - Fork & Evolve Intent",
         "heading_level": 3,
-        "heading_line": 2858,
-        "line": 2860,
+        "heading_line": 2863,
+        "line": 2865,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144674,8 +144750,8 @@
       "source_location": {
         "heading": "CWF-008 - Enhance / Rewrite / Add Intent",
         "heading_level": 3,
-        "heading_line": 2903,
-        "line": 2905,
+        "heading_line": 2908,
+        "line": 2910,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144691,8 +144767,8 @@
       "source_location": {
         "heading": "CWF-009 - Contribute PR Intent",
         "heading_level": 3,
-        "heading_line": 2947,
-        "line": 2949,
+        "heading_line": 2952,
+        "line": 2954,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144708,8 +144784,8 @@
       "source_location": {
         "heading": "CWF-010 - Intent-Driven Flow Adaptation",
         "heading_level": 3,
-        "heading_line": 2991,
-        "line": 2993,
+        "heading_line": 2996,
+        "line": 2998,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144725,8 +144801,8 @@
       "source_location": {
         "heading": "CWF-011 - Wizard Thread Lifecycle Boundary",
         "heading_level": 3,
-        "heading_line": 3036,
-        "line": 3038,
+        "heading_line": 3041,
+        "line": 3043,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144742,8 +144818,8 @@
       "source_location": {
         "heading": "CWF-012 - Canonical Wizard State Shape",
         "heading_level": 3,
-        "heading_line": 3080,
-        "line": 3082,
+        "heading_line": 3085,
+        "line": 3087,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144759,8 +144835,8 @@
       "source_location": {
         "heading": "CWF-013 - Wizard Runtime Fields and Lifecycle",
         "heading_level": 3,
-        "heading_line": 3127,
-        "line": 3129,
+        "heading_line": 3132,
+        "line": 3134,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144776,8 +144852,8 @@
       "source_location": {
         "heading": "CWF-014 - Wizard Contracts and Blocked Persistence Aliases",
         "heading_level": 3,
-        "heading_line": 3175,
-        "line": 3177,
+        "heading_line": 3180,
+        "line": 3182,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144793,8 +144869,8 @@
       "source_location": {
         "heading": "CWF-015 - Wizard Persistence and Handoff Payload",
         "heading_level": 3,
-        "heading_line": 3223,
-        "line": 3225,
+        "heading_line": 3228,
+        "line": 3230,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144810,8 +144886,8 @@
       "source_location": {
         "heading": "CWF-016 - Validation Report Bridge and Runtime Identity Carry-Through",
         "heading_level": 3,
-        "heading_line": 3275,
-        "line": 3277,
+        "heading_line": 3280,
+        "line": 3282,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144827,8 +144903,8 @@
       "source_location": {
         "heading": "CWF-017 - Wizard Cancellation Cleanup and Resume",
         "heading_level": 3,
-        "heading_line": 3332,
-        "line": 3334,
+        "heading_line": 3337,
+        "line": 3339,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144844,8 +144920,8 @@
       "source_location": {
         "heading": "CWF-018 - GUI Updates Boundary",
         "heading_level": 3,
-        "heading_line": 3385,
-        "line": 3387,
+        "heading_line": 3390,
+        "line": 3392,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144861,8 +144937,8 @@
       "source_location": {
         "heading": "CWF-019 - Feature Enhancement CTA and Intent Selection Copy",
         "heading_level": 3,
-        "heading_line": 3425,
-        "line": 3427,
+        "heading_line": 3430,
+        "line": 3432,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144878,8 +144954,8 @@
       "source_location": {
         "heading": "CWF-020 - OpenCode Provider Settings Surface",
         "heading_level": 3,
-        "heading_line": 3474,
-        "line": 3476,
+        "heading_line": 3479,
+        "line": 3481,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144895,8 +144971,8 @@
       "source_location": {
         "heading": "CWF-021 - Requirements Step Entry and Builder Option",
         "heading_level": 3,
-        "heading_line": 3520,
-        "line": 3522,
+        "heading_line": 3525,
+        "line": 3527,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144912,8 +144988,8 @@
       "source_location": {
         "heading": "CWF-022 - Project Setup GitHub Fields and Readiness Strips",
         "heading_level": 3,
-        "heading_line": 3563,
-        "line": 3565,
+        "heading_line": 3568,
+        "line": 3570,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144929,8 +145005,8 @@
       "source_location": {
         "heading": "CWF-023 - Navigation and Recovery Reset Semantics",
         "heading_level": 3,
-        "heading_line": 3614,
-        "line": 3616,
+        "heading_line": 3619,
+        "line": 3621,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144946,8 +145022,8 @@
       "source_location": {
         "heading": "CWF-024 - Wizard Plan Deep Plan TODO Handoff and Permission Boundary",
         "heading_level": 3,
-        "heading_line": 3656,
-        "line": 3658,
+        "heading_line": 3661,
+        "line": 3663,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144963,8 +145039,8 @@
       "source_location": {
         "heading": "CWF-025 - Embedded Agent Activity Pane and Progress Placement",
         "heading_level": 3,
-        "heading_line": 3717,
-        "line": 3719,
+        "heading_line": 3722,
+        "line": 3724,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144980,8 +145056,8 @@
       "source_location": {
         "heading": "CWF-026 - Pause Cancel Resume Runtime Semantics",
         "heading_level": 3,
-        "heading_line": 3767,
-        "line": 3769,
+        "heading_line": 3772,
+        "line": 3774,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -144997,8 +145073,8 @@
       "source_location": {
         "heading": "CWF-027 - Run States Control Row Stale Progress and Checkpoint Payload",
         "heading_level": 3,
-        "heading_line": 3816,
-        "line": 3818,
+        "heading_line": 3821,
+        "line": 3823,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145014,8 +145090,8 @@
       "source_location": {
         "heading": "CWF-028 - Requirements Upload UI and Normalization",
         "heading_level": 3,
-        "heading_line": 3866,
-        "line": 3868,
+        "heading_line": 3871,
+        "line": 3873,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145031,8 +145107,8 @@
       "source_location": {
         "heading": "CWF-029 - Canonical Requirements Merge and Single Source",
         "heading_level": 3,
-        "heading_line": 3917,
-        "line": 3919,
+        "heading_line": 3922,
+        "line": 3924,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145048,8 +145124,8 @@
       "source_location": {
         "heading": "CWF-030 - Requirements Artifact Storage Paths",
         "heading_level": 3,
-        "heading_line": 3965,
-        "line": 3967,
+        "heading_line": 3970,
+        "line": 3972,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145065,8 +145141,8 @@
       "source_location": {
         "heading": "CWF-031 - Upload Limits and Merge Edge Constraints",
         "heading_level": 3,
-        "heading_line": 4015,
-        "line": 4017,
+        "heading_line": 4020,
+        "line": 4022,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145082,8 +145158,8 @@
       "source_location": {
         "heading": "CWF-032 - Builder Concept and Opening Prompts",
         "heading_level": 3,
-        "heading_line": 4059,
-        "line": 4061,
+        "heading_line": 4064,
+        "line": 4066,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145099,8 +145175,8 @@
       "source_location": {
         "heading": "CWF-033 - Builder Conversation and Generation Trigger",
         "heading_level": 3,
-        "heading_line": 4105,
-        "line": 4107,
+        "heading_line": 4110,
+        "line": 4112,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145116,8 +145192,8 @@
       "source_location": {
         "heading": "CWF-034 - Builder Handoff Artifacts and Packaging Gate",
         "heading_level": 3,
-        "heading_line": 4149,
-        "line": 4151,
+        "heading_line": 4154,
+        "line": 4156,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145133,8 +145209,8 @@
       "source_location": {
         "heading": "CWF-035 - Builder Output and Contract Seed Templates",
         "heading_level": 3,
-        "heading_line": 4196,
-        "line": 4198,
+        "heading_line": 4201,
+        "line": 4203,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145150,8 +145226,8 @@
       "source_location": {
         "heading": "CWF-036 - Builder State Contracts and Qualifying Questions",
         "heading_level": 3,
-        "heading_line": 4242,
-        "line": 4244,
+        "heading_line": 4247,
+        "line": 4249,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145167,8 +145243,8 @@
       "source_location": {
         "heading": "CWF-037 - Builder Staged Bundle Promotion Lifecycle",
         "heading_level": 3,
-        "heading_line": 4291,
-        "line": 4293,
+        "heading_line": 4296,
+        "line": 4298,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145184,8 +145260,8 @@
       "source_location": {
         "heading": "CWF-038 - Builder Dependencies and No Duplicate Rules",
         "heading_level": 3,
-        "heading_line": 4338,
-        "line": 4340,
+        "heading_line": 4343,
+        "line": 4345,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145201,8 +145277,8 @@
       "source_location": {
         "heading": "CWF-039 - Builder Bundle and Doc State Model",
         "heading_level": 3,
-        "heading_line": 4383,
-        "line": 4385,
+        "heading_line": 4388,
+        "line": 4390,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145218,8 +145294,8 @@
       "source_location": {
         "heading": "CWF-040 - Updated Builder Review Flow and Final Review Gate",
         "heading_level": 3,
-        "heading_line": 4434,
-        "line": 4436,
+        "heading_line": 4439,
+        "line": 4441,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145235,8 +145311,8 @@
       "source_location": {
         "heading": "CWF-041 - Targeted Revision Input Contract",
         "heading_level": 3,
-        "heading_line": 4482,
-        "line": 4484,
+        "heading_line": 4487,
+        "line": 4489,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145252,8 +145328,8 @@
       "source_location": {
         "heading": "CWF-042 - Targeted Revision Output and Validation Contract",
         "heading_level": 3,
-        "heading_line": 4533,
-        "line": 4535,
+        "heading_line": 4538,
+        "line": 4540,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145269,8 +145345,8 @@
       "source_location": {
         "heading": "CWF-043 - Targeted Revision Hard Rules and Capability Modes",
         "heading_level": 3,
-        "heading_line": 4580,
-        "line": 4582,
+        "heading_line": 4585,
+        "line": 4587,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145286,8 +145362,8 @@
       "source_location": {
         "heading": "CWF-044 - Workflow Acceptance and Legacy Label Compatibility",
         "heading_level": 3,
-        "heading_line": 4634,
-        "line": 4636,
+        "heading_line": 4639,
+        "line": 4641,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145303,8 +145379,8 @@
       "source_location": {
         "heading": "CWF-045 - Multi-Pass Final Review Gate",
         "heading_level": 3,
-        "heading_line": 4686,
-        "line": 4688,
+        "heading_line": 4691,
+        "line": 4693,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145320,8 +145396,8 @@
       "source_location": {
         "heading": "CWF-046 - Contract Layer Two-Layer Boundary",
         "heading_level": 3,
-        "heading_line": 4749,
-        "line": 4751,
+        "heading_line": 4754,
+        "line": 4756,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145337,8 +145413,8 @@
       "source_location": {
         "heading": "CWF-047 - Contract Artifact Materialization and Storage",
         "heading_level": 3,
-        "heading_line": 4809,
-        "line": 4811,
+        "heading_line": 4814,
+        "line": 4816,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145354,8 +145430,8 @@
       "source_location": {
         "heading": "CWF-048 - Contract DRY Validation Gate",
         "heading_level": 3,
-        "heading_line": 4863,
-        "line": 4865,
+        "heading_line": 4868,
+        "line": 4870,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145371,8 +145447,8 @@
       "source_location": {
         "heading": "CWF-049 - Adaptive Interview Phase Selection Goal",
         "heading_level": 3,
-        "heading_line": 4918,
-        "line": 4920,
+        "heading_line": 4923,
+        "line": 4925,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145388,8 +145464,8 @@
       "source_location": {
         "heading": "CWF-050 - Scope Probe and Depth Enforcement",
         "heading_level": 3,
-        "heading_line": 4968,
-        "line": 4970,
+        "heading_line": 4973,
+        "line": 4975,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145405,8 +145481,8 @@
       "source_location": {
         "heading": "CWF-051 - Phase Selector Contract and Normalization",
         "heading_level": 3,
-        "heading_line": 5025,
-        "line": 5027,
+        "heading_line": 5030,
+        "line": 5032,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145422,8 +145498,8 @@
       "source_location": {
         "heading": "CWF-052 - Phase Plan Persistence Fallback and Resume",
         "heading_level": 3,
-        "heading_line": 5084,
-        "line": 5086,
+        "heading_line": 5089,
+        "line": 5091,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145439,8 +145515,8 @@
       "source_location": {
         "heading": "CWF-053 - Phase Override Controls",
         "heading_level": 3,
-        "heading_line": 5139,
-        "line": 5141,
+        "heading_line": 5144,
+        "line": 5146,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145456,8 +145532,8 @@
       "source_location": {
         "heading": "CWF-054 - Interview Subagent Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 5193,
-        "line": 5195,
+        "heading_line": 5198,
+        "line": 5200,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145473,8 +145549,8 @@
       "source_location": {
         "heading": "CWF-055 - Adaptive Selection Determinism Risk",
         "heading_level": 3,
-        "heading_line": 5240,
-        "line": 5242,
+        "heading_line": 5245,
+        "line": 5247,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145490,8 +145566,8 @@
       "source_location": {
         "heading": "CWF-056 - Per-Phase Contract Fragments",
         "heading_level": 3,
-        "heading_line": 5285,
-        "line": 5287,
+        "heading_line": 5290,
+        "line": 5292,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145507,8 +145583,8 @@
       "source_location": {
         "heading": "CWF-057 - Contract Unification Ownership and Conflict Handling",
         "heading_level": 3,
-        "heading_line": 5342,
-        "line": 5344,
+        "heading_line": 5347,
+        "line": 5349,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145524,8 +145600,8 @@
       "source_location": {
         "heading": "CWF-058 - Project Artifact Pack and Sharded Graph Materialization",
         "heading_level": 3,
-        "heading_line": 5392,
-        "line": 5394,
+        "heading_line": 5397,
+        "line": 5399,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145541,8 +145617,8 @@
       "source_location": {
         "heading": "CWF-059 - GUI Project Wiring Artifacts",
         "heading_level": 3,
-        "heading_line": 5448,
-        "line": 5450,
+        "heading_line": 5453,
+        "line": 5455,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145558,8 +145634,8 @@
       "source_location": {
         "heading": "CWF-060 - Large Output and Dry-Run Validation",
         "heading_level": 3,
-        "heading_line": 5507,
-        "line": 5509,
+        "heading_line": 5512,
+        "line": 5514,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145575,8 +145651,8 @@
       "source_location": {
         "heading": "CWF-061 - GitHub Create Repo Setup Flow",
         "heading_level": 3,
-        "heading_line": 5562,
-        "line": 5564,
+        "heading_line": 5567,
+        "line": 5569,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145592,8 +145668,8 @@
       "source_location": {
         "heading": "CWF-062 - Fork Creation vs User-Provided Fork",
         "heading_level": 3,
-        "heading_line": 5615,
-        "line": 5617,
+        "heading_line": 5620,
+        "line": 5622,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145609,8 +145685,8 @@
       "source_location": {
         "heading": "CWF-063 - PR Start Feature Branch Flow",
         "heading_level": 3,
-        "heading_line": 5667,
-        "line": 5669,
+        "heading_line": 5672,
+        "line": 5674,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145626,8 +145702,8 @@
       "source_location": {
         "heading": "CWF-064 - PR Finish and Default Branch Targeting",
         "heading_level": 3,
-        "heading_line": 5720,
-        "line": 5722,
+        "heading_line": 5725,
+        "line": 5727,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145643,8 +145719,8 @@
       "source_location": {
         "heading": "CWF-065 - GitHub Auth Scopes Rate Limits and Host Scope",
         "heading_level": 3,
-        "heading_line": 5776,
-        "line": 5778,
+        "heading_line": 5781,
+        "line": 5783,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145660,8 +145736,8 @@
       "source_location": {
         "heading": "CWF-066 - PR Branch and Worktree Boundary",
         "heading_level": 3,
-        "heading_line": 5848,
-        "line": 5850,
+        "heading_line": 5853,
+        "line": 5855,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145677,8 +145753,8 @@
       "source_location": {
         "heading": "CWF-067 - Adjacent Plan Owner Map",
         "heading_level": 3,
-        "heading_line": 5903,
-        "line": 5905,
+        "heading_line": 5908,
+        "line": 5910,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145694,8 +145770,8 @@
       "source_location": {
         "heading": "CWF-068 - Intent Change Recovery and Builder-Interview State Guard",
         "heading_level": 3,
-        "heading_line": 5957,
-        "line": 5959,
+        "heading_line": 5962,
+        "line": 5964,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145711,8 +145787,8 @@
       "source_location": {
         "heading": "CWF-069 - Requirements Merge Template and Builder Abandonment Resolutions",
         "heading_level": 3,
-        "heading_line": 6014,
-        "line": 6016,
+        "heading_line": 6019,
+        "line": 6021,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145728,8 +145804,8 @@
       "source_location": {
         "heading": "CWF-070 - Wizard Progress Indicator and Deferred Skip-to-Execution",
         "heading_level": 3,
-        "heading_line": 6072,
-        "line": 6074,
+        "heading_line": 6077,
+        "line": 6079,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145745,8 +145821,8 @@
       "source_location": {
         "heading": "CWF-071 - Legible Project Shell Complexity Guard",
         "heading_level": 3,
-        "heading_line": 6120,
-        "line": 6122,
+        "heading_line": 6125,
+        "line": 6127,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145762,8 +145838,8 @@
       "source_location": {
         "heading": "CWF-072 - Cross-Surface Source Context Preservation",
         "heading_level": 3,
-        "heading_line": 6171,
-        "line": 6173,
+        "heading_line": 6176,
+        "line": 6178,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145779,8 +145855,8 @@
       "source_location": {
         "heading": "CWF-073 - Agent Activity Pane Accessibility and Stream Bounds",
         "heading_level": 3,
-        "heading_line": 6218,
-        "line": 6220,
+        "heading_line": 6223,
+        "line": 6225,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145796,8 +145872,8 @@
       "source_location": {
         "heading": "CWF-074 - New Wizard Control Accessibility",
         "heading_level": 3,
-        "heading_line": 6272,
-        "line": 6274,
+        "heading_line": 6277,
+        "line": 6279,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145813,8 +145889,8 @@
       "source_location": {
         "heading": "CWF-075 - Centralized User-Facing Wizard Strings",
         "heading_level": 3,
-        "heading_line": 6321,
-        "line": 6323,
+        "heading_line": 6326,
+        "line": 6328,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145830,8 +145906,8 @@
       "source_location": {
         "heading": "CWF-076 - Handoff and PR Body Secret Exclusion",
         "heading_level": 3,
-        "heading_line": 6367,
-        "line": 6369,
+        "heading_line": 6372,
+        "line": 6374,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145847,8 +145923,8 @@
       "source_location": {
         "heading": "CWF-077 - Untrusted Upstream Clone No-Execution Boundary",
         "heading_level": 3,
-        "heading_line": 6416,
-        "line": 6418,
+        "heading_line": 6421,
+        "line": 6423,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145864,8 +145940,8 @@
       "source_location": {
         "heading": "CWF-078 - User-Project Artifact Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 6462,
-        "line": 6464,
+        "heading_line": 6467,
+        "line": 6469,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145881,8 +145957,8 @@
       "source_location": {
         "heading": "CWF-079 - Sharded Project Graph Execution Input Boundary",
         "heading_level": 3,
-        "heading_line": 6510,
-        "line": 6512,
+        "heading_line": 6515,
+        "line": 6517,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145898,8 +145974,8 @@
       "source_location": {
         "heading": "CWF-080 - Project Auto-Decisions and HITL Scheduling",
         "heading_level": 3,
-        "heading_line": 6562,
-        "line": 6564,
+        "heading_line": 6567,
+        "line": 6569,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145915,8 +145991,8 @@
       "source_location": {
         "heading": "CWF-081 - Mandatory Headless Invariant Sweep Boundary",
         "heading_level": 3,
-        "heading_line": 6610,
-        "line": 6612,
+        "heading_line": 6615,
+        "line": 6617,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145932,8 +146008,8 @@
       "source_location": {
         "heading": "CWF-082 - Legacy Pass 1 Alias And Initial Auditor Quality Report",
         "heading_level": 3,
-        "heading_line": 6666,
-        "line": 6668,
+        "heading_line": 6671,
+        "line": 6673,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145949,8 +146025,8 @@
       "source_location": {
         "heading": "CWF-083 - Legacy Pass 2 Alias And Bounded Auditor Repair",
         "heading_level": 3,
-        "heading_line": 6720,
-        "line": 6722,
+        "heading_line": 6725,
+        "line": 6727,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145966,8 +146042,8 @@
       "source_location": {
         "heading": "CWF-084 - Legacy Pass 3 Alias And Auditor Certification Gate",
         "heading_level": 3,
-        "heading_line": 6777,
-        "line": 6779,
+        "heading_line": 6782,
+        "line": 6784,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -145983,8 +146059,8 @@
       "source_location": {
         "heading": "CWF-085 - Validation Sweep Execution Settings and Report Emission",
         "heading_level": 3,
-        "heading_line": 6832,
-        "line": 6834,
+        "heading_line": 6837,
+        "line": 6839,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146000,8 +146076,8 @@
       "source_location": {
         "heading": "CWF-086 - Validation Failure Routing and Finding Artifact Split",
         "heading_level": 3,
-        "heading_line": 6890,
-        "line": 6892,
+        "heading_line": 6895,
+        "line": 6897,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146017,8 +146093,8 @@
       "source_location": {
         "heading": "CWF-087 - Auditor Cycle Report Lineage and Runtime Identity Carry-Through",
         "heading_level": 3,
-        "heading_line": 6945,
-        "line": 6947,
+        "heading_line": 6950,
+        "line": 6952,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146034,8 +146110,8 @@
       "source_location": {
         "heading": "CWF-088 - No-Wizard Flow Owner Boundary",
         "heading_level": 3,
-        "heading_line": 6999,
-        "line": 7001,
+        "heading_line": 7004,
+        "line": 7006,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146051,8 +146127,8 @@
       "source_location": {
         "heading": "CWF-089 - No-Wizard Entry Points and Later-Wizard Preload Overview",
         "heading_level": 3,
-        "heading_line": 7041,
-        "line": 7043,
+        "heading_line": 7046,
+        "line": 7048,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146068,8 +146144,8 @@
       "source_location": {
         "heading": "CWF-090 - Add Existing Project No-Wizard Flow",
         "heading_level": 3,
-        "heading_line": 7088,
-        "line": 7090,
+        "heading_line": 7093,
+        "line": 7095,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146085,8 +146161,8 @@
       "source_location": {
         "heading": "CWF-091 - Create New Local Project No-Wizard Flow",
         "heading_level": 3,
-        "heading_line": 7139,
-        "line": 7141,
+        "heading_line": 7144,
+        "line": 7146,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146102,8 +146178,8 @@
       "source_location": {
         "heading": "CWF-092 - Create New GitHub Repo Project No-Wizard Flow",
         "heading_level": 3,
-        "heading_line": 7186,
-        "line": 7188,
+        "heading_line": 7191,
+        "line": 7193,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146119,8 +146195,8 @@
       "source_location": {
         "heading": "CWF-093 - Deferred Chain Wizard Later Affordance and Payload",
         "heading_level": 3,
-        "heading_line": 7237,
-        "line": 7239,
+        "heading_line": 7242,
+        "line": 7244,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146136,8 +146212,8 @@
       "source_location": {
         "heading": "CWF-094 - Requirements Completion Contract Gate",
         "heading_level": 3,
-        "heading_line": 7291,
-        "line": 7293,
+        "heading_line": 7296,
+        "line": 7298,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146153,8 +146229,8 @@
       "source_location": {
         "heading": "CWF-095 - C-1 Scenario Coverage",
         "heading_level": 3,
-        "heading_line": 7340,
-        "line": 7342,
+        "heading_line": 7345,
+        "line": 7347,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146170,8 +146246,8 @@
       "source_location": {
         "heading": "CWF-096 - C-2 Boundary Declaration",
         "heading_level": 3,
-        "heading_line": 7385,
-        "line": 7387,
+        "heading_line": 7390,
+        "line": 7392,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146187,8 +146263,8 @@
       "source_location": {
         "heading": "CWF-097 - C-3 Implementation Anchor",
         "heading_level": 3,
-        "heading_line": 7430,
-        "line": 7432,
+        "heading_line": 7435,
+        "line": 7437,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146204,8 +146280,8 @@
       "source_location": {
         "heading": "CWF-098 - C-4 Executable Verification Reference",
         "heading_level": 3,
-        "heading_line": 7474,
-        "line": 7476,
+        "heading_line": 7479,
+        "line": 7481,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146221,8 +146297,8 @@
       "source_location": {
         "heading": "CWF-099 - C-5 Unknown Resolution",
         "heading_level": 3,
-        "heading_line": 7518,
-        "line": 7520,
+        "heading_line": 7523,
+        "line": 7525,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146238,8 +146314,8 @@
       "source_location": {
         "heading": "CWF-100 - Requirements Quality Report Artifact",
         "heading_level": 3,
-        "heading_line": 7568,
-        "line": 7570,
+        "heading_line": 7573,
+        "line": 7575,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146255,8 +146331,8 @@
       "source_location": {
         "heading": "CWF-101 - Deterministic Quality Report Shaping",
         "heading_level": 3,
-        "heading_line": 7615,
-        "line": 7617,
+        "heading_line": 7620,
+        "line": 7622,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146272,8 +146348,8 @@
       "source_location": {
         "heading": "CWF-102 - Requirements Quality Escalation Trigger",
         "heading_level": 3,
-        "heading_line": 7665,
-        "line": 7667,
+        "heading_line": 7670,
+        "line": 7672,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146289,8 +146365,8 @@
       "source_location": {
         "heading": "CWF-103 - Attention Required Wizard State",
         "heading_level": 3,
-        "heading_line": 7711,
-        "line": 7713,
+        "heading_line": 7716,
+        "line": 7718,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146306,8 +146382,8 @@
       "source_location": {
         "heading": "CWF-104 - Thread Clarification Surface",
         "heading_level": 3,
-        "heading_line": 7759,
-        "line": 7761,
+        "heading_line": 7764,
+        "line": 7766,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146323,8 +146399,8 @@
       "source_location": {
         "heading": "CWF-105 - Dashboard Attention Required Card",
         "heading_level": 3,
-        "heading_line": 7809,
-        "line": 7811,
+        "heading_line": 7814,
+        "line": 7816,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146340,8 +146416,8 @@
       "source_location": {
         "heading": "CWF-106 - Clarification Payload Storage",
         "heading_level": 3,
-        "heading_line": 7858,
-        "line": 7860,
+        "heading_line": 7863,
+        "line": 7865,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146357,8 +146433,8 @@
       "source_location": {
         "heading": "CWF-107 - Clarification Round Cap",
         "heading_level": 3,
-        "heading_line": 7902,
-        "line": 7904,
+        "heading_line": 7907,
+        "line": 7909,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146374,8 +146450,8 @@
       "source_location": {
         "heading": "CWF-108 - Blocked Clarification Override Evidence",
         "heading_level": 3,
-        "heading_line": 7950,
-        "line": 7952,
+        "heading_line": 7955,
+        "line": 7957,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146391,8 +146467,8 @@
       "source_location": {
         "heading": "CWF-109 - Shared Questionnaire Alignment",
         "heading_level": 3,
-        "heading_line": 8002,
-        "line": 8004,
+        "heading_line": 8007,
+        "line": 8009,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146408,8 +146484,8 @@
       "source_location": {
         "heading": "CWF-110 - Builder Stage Taxonomy and Default Personas",
         "heading_level": 3,
-        "heading_line": 8055,
-        "line": 8057,
+        "heading_line": 8060,
+        "line": 8062,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146425,8 +146501,8 @@
       "source_location": {
         "heading": "CWF-111 - Deterministic Builder Persona Resolver",
         "heading_level": 3,
-        "heading_line": 8104,
-        "line": 8106,
+        "heading_line": 8109,
+        "line": 8111,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146442,8 +146518,8 @@
       "source_location": {
         "heading": "CWF-112 - Review Pass Persona Key Contract",
         "heading_level": 3,
-        "heading_line": 8156,
-        "line": 8158,
+        "heading_line": 8161,
+        "line": 8163,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146459,8 +146535,8 @@
       "source_location": {
         "heading": "CWF-113 - Builder Persona Settings Config",
         "heading_level": 3,
-        "heading_line": 8207,
-        "line": 8209,
+        "heading_line": 8212,
+        "line": 8214,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146476,8 +146552,8 @@
       "source_location": {
         "heading": "CWF-114 - Builder Requested Effective Runtime Record",
         "heading_level": 3,
-        "heading_line": 8255,
-        "line": 8257,
+        "heading_line": 8260,
+        "line": 8262,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146493,8 +146569,8 @@
       "source_location": {
         "heading": "CWF-115 - Intake and Drafting Persona Behavior",
         "heading_level": 3,
-        "heading_line": 8304,
-        "line": 8306,
+        "heading_line": 8309,
+        "line": 8311,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146510,8 +146586,8 @@
       "source_location": {
         "heading": "CWF-116 - Specialized and Review Persona Defaults",
         "heading_level": 3,
-        "heading_line": 8353,
-        "line": 8355,
+        "heading_line": 8358,
+        "line": 8360,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146527,8 +146603,8 @@
       "source_location": {
         "heading": "CWF-117 - Stage And Auditor Loop Platform Model Filtering",
         "heading_level": 3,
-        "heading_line": 8402,
-        "line": 8404,
+        "heading_line": 8407,
+        "line": 8409,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146544,8 +146620,8 @@
       "source_location": {
         "heading": "CWF-118 - Builder Requested Effective UI Visibility",
         "heading_level": 3,
-        "heading_line": 8448,
-        "line": 8450,
+        "heading_line": 8453,
+        "line": 8455,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146561,8 +146637,8 @@
       "source_location": {
         "heading": "CWF-119 - Assistant Deep Plan Chain Wizard Escalation Optionality",
         "heading_level": 3,
-        "heading_line": 8498,
-        "line": 8500,
+        "heading_line": 8503,
+        "line": 8505,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146578,8 +146654,8 @@
       "source_location": {
         "heading": "CWF-120 - Feature Enhancement CTA Intent Mapping",
         "heading_level": 3,
-        "heading_line": 8553,
-        "line": 8555,
+        "heading_line": 8558,
+        "line": 8560,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146595,8 +146671,8 @@
       "source_location": {
         "heading": "CWF-121 - Assistant Deep Plan Typed Handoff Payload",
         "heading_level": 3,
-        "heading_line": 8597,
-        "line": 8599,
+        "heading_line": 8602,
+        "line": 8604,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146612,8 +146688,8 @@
       "source_location": {
         "heading": "CWF-122 - Handoff Runtime Attribution and Permission Lineage",
         "heading_level": 3,
-        "heading_line": 8650,
-        "line": 8652,
+        "heading_line": 8655,
+        "line": 8657,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146629,8 +146705,8 @@
       "source_location": {
         "heading": "CWF-123 - Imported Handoff State Persistence",
         "heading_level": 3,
-        "heading_line": 8707,
-        "line": 8709,
+        "heading_line": 8712,
+        "line": 8714,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146646,8 +146722,8 @@
       "source_location": {
         "heading": "CWF-124 - Context Aware Wizard Launch After Acceptance",
         "heading_level": 3,
-        "heading_line": 8756,
-        "line": 8758,
+        "heading_line": 8761,
+        "line": 8763,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146663,8 +146739,8 @@
       "source_location": {
         "heading": "CWF-125 - Handoff Evidence Quality Preservation",
         "heading_level": 3,
-        "heading_line": 8804,
-        "line": 8806,
+        "heading_line": 8809,
+        "line": 8811,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146680,8 +146756,8 @@
       "source_location": {
         "heading": "CWF-126 - Interview Ownership After Handoff",
         "heading_level": 3,
-        "heading_line": 8849,
-        "line": 8851,
+        "heading_line": 8854,
+        "line": 8856,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146697,8 +146773,8 @@
       "source_location": {
         "heading": "CWF-127 - Adaptive Phase Pruning Across Intents",
         "heading_level": 3,
-        "heading_line": 8897,
-        "line": 8899,
+        "heading_line": 8902,
+        "line": 8904,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146714,8 +146790,8 @@
       "source_location": {
         "heading": "CWF-128 - Wizard Status Reference Consolidation",
         "heading_level": 3,
-        "heading_line": 8950,
-        "line": 8952,
+        "heading_line": 8955,
+        "line": 8957,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146731,8 +146807,8 @@
       "source_location": {
         "heading": "CWF-129 - Attention Required Versus Blocked Semantics",
         "heading_level": 3,
-        "heading_line": 9005,
-        "line": 9007,
+        "heading_line": 9010,
+        "line": 9012,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146748,8 +146824,8 @@
       "source_location": {
         "heading": "CWF-130 - Blocked Controls Copy and Rewrite Stop",
         "heading_level": 3,
-        "heading_line": 9052,
-        "line": 9054,
+        "heading_line": 9057,
+        "line": 9059,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146765,8 +146841,8 @@
       "source_location": {
         "heading": "CWF-131 - Wizard Attention Blocked Resume Packet",
         "heading_level": 3,
-        "heading_line": 9100,
-        "line": 9102,
+        "heading_line": 9105,
+        "line": 9107,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146782,8 +146858,8 @@
       "source_location": {
         "heading": "CWF-132 - Pre Lock Draft Decomposition Degradation",
         "heading_level": 3,
-        "heading_line": 9147,
-        "line": 9149,
+        "heading_line": 9152,
+        "line": 9154,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146799,8 +146875,8 @@
       "source_location": {
         "heading": "CWF-133 - Post Lock Decomposition Integrity Block",
         "heading_level": 3,
-        "heading_line": 9201,
-        "line": 9203,
+        "heading_line": 9206,
+        "line": 9208,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146816,8 +146892,8 @@
       "source_location": {
         "heading": "CWF-134 - Degradation and Recovery State Fields",
         "heading_level": 3,
-        "heading_line": 9249,
-        "line": 9251,
+        "heading_line": 9254,
+        "line": 9256,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146833,8 +146909,8 @@
       "source_location": {
         "heading": "CWF-135 - Wizard Status UX Differentiation",
         "heading_level": 3,
-        "heading_line": 9298,
-        "line": 9300,
+        "heading_line": 9303,
+        "line": 9305,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146850,8 +146926,8 @@
       "source_location": {
         "heading": "CWF-136 - Block Escalation Thresholds",
         "heading_level": 3,
-        "heading_line": 9342,
-        "line": 9344,
+        "heading_line": 9347,
+        "line": 9349,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146867,8 +146943,8 @@
       "source_location": {
         "heading": "CWF-137 - Canonical Wizard Blocked Record Payload",
         "heading_level": 3,
-        "heading_line": 9387,
-        "line": 9389,
+        "heading_line": 9392,
+        "line": 9394,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146884,8 +146960,8 @@
       "source_location": {
         "heading": "CWF-138 - Blocked Clear and Counter Preservation Rules",
         "heading_level": 3,
-        "heading_line": 9441,
-        "line": 9443,
+        "heading_line": 9446,
+        "line": 9448,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146901,8 +146977,8 @@
       "source_location": {
         "heading": "CWF-139 - Runtime Identity Carry Through For Wizard Planning",
         "heading_level": 3,
-        "heading_line": 9491,
-        "line": 9493,
+        "heading_line": 9496,
+        "line": 9498,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146918,8 +146994,8 @@
       "source_location": {
         "heading": "CWF-140 - Audit Lineage Exact Value Preservation",
         "heading_level": 3,
-        "heading_line": 9543,
-        "line": 9545,
+        "heading_line": 9548,
+        "line": 9550,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146935,8 +147011,8 @@
       "source_location": {
         "heading": "CWF-141 - Shared Route Payloads and Typed Selectors",
         "heading_level": 3,
-        "heading_line": 9592,
-        "line": 9594,
+        "heading_line": 9597,
+        "line": 9599,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146952,8 +147028,8 @@
       "source_location": {
         "heading": "CWF-142 - Gate Registry and Attention Evidence Separation",
         "heading_level": 3,
-        "heading_line": 9643,
-        "line": 9645,
+        "heading_line": 9648,
+        "line": 9650,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146969,8 +147045,8 @@
       "source_location": {
         "heading": "CWF-143 - Project Attention Summaries and Severity Model",
         "heading_level": 3,
-        "heading_line": 9692,
-        "line": 9694,
+        "heading_line": 9697,
+        "line": 9699,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -146986,8 +147062,8 @@
       "source_location": {
         "heading": "CWF-144 - Persona Historical Mode and Mutable Command Boundaries",
         "heading_level": 3,
-        "heading_line": 9742,
-        "line": 9744,
+        "heading_line": 9747,
+        "line": 9749,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147003,8 +147079,8 @@
       "source_location": {
         "heading": "CWF-145 - Subject First Document Identity",
         "heading_level": 3,
-        "heading_line": 9793,
-        "line": 9795,
+        "heading_line": 9798,
+        "line": 9800,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147020,8 +147096,8 @@
       "source_location": {
         "heading": "CWF-146 - Graph Native Planning Output and Compatibility Vocabulary",
         "heading_level": 3,
-        "heading_line": 9837,
-        "line": 9839,
+        "heading_line": 9842,
+        "line": 9844,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147037,8 +147113,8 @@
       "source_location": {
         "heading": "CWF-147 - Cross Surface Actions and Work Type Explanation",
         "heading_level": 3,
-        "heading_line": 9891,
-        "line": 9893,
+        "heading_line": 9896,
+        "line": 9898,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147054,8 +147130,8 @@
       "source_location": {
         "heading": "CWF-148 - Section 12 Parent And Blocked Addenda Deduplication",
         "heading_level": 3,
-        "heading_line": 9956,
-        "line": 9958,
+        "heading_line": 9961,
+        "line": 9963,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147071,8 +147147,8 @@
       "source_location": {
         "heading": "CWF-149 - Wizard Blocked Packet Payload Contract",
         "heading_level": 3,
-        "heading_line": 9994,
-        "line": 9996,
+        "heading_line": 9999,
+        "line": 10001,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147088,8 +147164,8 @@
       "source_location": {
         "heading": "CWF-150 - Fork Destination And Unsupported Host Active Contract",
         "heading_level": 3,
-        "heading_line": 10034,
-        "line": 10036,
+        "heading_line": 10039,
+        "line": 10041,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147105,8 +147181,8 @@
       "source_location": {
         "heading": "CWF-151 - PRD Builder Legacy Compatibility Ledger To Invisible Goal Flow",
         "heading_level": 3,
-        "heading_line": 10077,
-        "line": 10079,
+        "heading_line": 10082,
+        "line": 10084,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -147122,8 +147198,8 @@
       "source_location": {
         "heading": "CWF-152 - PRD Builder And Planning Wizard Semantic Migration",
         "heading_level": 3,
-        "heading_line": 10157,
-        "line": 10159,
+        "heading_line": 10162,
+        "line": 10164,
         "path": "Plans/chain-wizard-flexibility.md"
       },
       "status": "retired",
@@ -152417,6 +152493,57 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-330",
+      "reasoning_tier": "high",
+      "risk_class": "owner_routing_to_retired_document",
+      "source_location": {
+        "heading": "DL-330 - Planning Wizard Owns Wizard Status And The Blocked States; Decision Policy Keeps The Clarification Limits",
+        "heading_level": 3,
+        "heading_line": 21202,
+        "line": 21204,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-331",
+      "reasoning_tier": "medium",
+      "risk_class": "retired_token_revived_or_ledger_unrecorded",
+      "source_location": {
+        "heading": "DL-331 - Retire The Exact Token \"Playwright optional\" With A Ledger Correction",
+        "heading_level": 3,
+        "heading_line": 21282,
+        "line": 21284,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-332",
+      "reasoning_tier": "medium",
+      "risk_class": "retired_provider_route_revived",
+      "source_location": {
+        "heading": "DL-332 - UF-019 Distinguishes Gemini Direct From Antigravity CLI",
+        "heading_level": 3,
+        "heading_line": 21334,
+        "line": 21336,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Policy.md",
@@ -152426,8 +152553,8 @@
       "source_location": {
         "heading": "DP-001 - Decision Policy Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 3236,
-        "line": 3238,
+        "heading_line": 3561,
+        "line": 3563,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152443,8 +152570,8 @@
       "source_location": {
         "heading": "DP-002 - Canonical Name And Policy Scope Signals",
         "heading_level": 3,
-        "heading_line": 466,
-        "line": 468,
+        "heading_line": 788,
+        "line": 790,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152460,8 +152587,8 @@
       "source_location": {
         "heading": "DP-003 - Ambiguity Scope And Decision Policy Contract",
         "heading_level": 3,
-        "heading_line": 508,
-        "line": 510,
+        "heading_line": 830,
+        "line": 832,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152477,8 +152604,8 @@
       "source_location": {
         "heading": "DP-004 - Precedence Stack And Spec Lock Priority",
         "heading_level": 3,
-        "heading_line": 551,
-        "line": 553,
+        "heading_line": 873,
+        "line": 875,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152494,8 +152621,8 @@
       "source_location": {
         "heading": "DP-005 - Safe Autonomous Default Ordering",
         "heading_level": 3,
-        "heading_line": 596,
-        "line": 598,
+        "heading_line": 918,
+        "line": 920,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152511,8 +152638,8 @@
       "source_location": {
         "heading": "DP-006 - Stable Identity And Attribution Defaults",
         "heading_level": 3,
-        "heading_line": 641,
-        "line": 643,
+        "heading_line": 963,
+        "line": 965,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152528,8 +152655,8 @@
       "source_location": {
         "heading": "DP-007 - Provider Policy Stale-Table Retirement",
         "heading_level": 3,
-        "heading_line": 687,
-        "line": 689,
+        "heading_line": 1009,
+        "line": 1011,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152545,8 +152672,8 @@
       "source_location": {
         "heading": "DP-008 - Operational Identity And Execution Role Separation",
         "heading_level": 3,
-        "heading_line": 730,
-        "line": 732,
+        "heading_line": 1052,
+        "line": 1054,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152562,8 +152689,8 @@
       "source_location": {
         "heading": "DP-009 - HITL Recovery Defaults And Projection Trust Copy",
         "heading_level": 3,
-        "heading_line": 776,
-        "line": 778,
+        "heading_line": 1098,
+        "line": 1100,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152579,8 +152706,8 @@
       "source_location": {
         "heading": "DP-010 - Page-Owned Orchestrator Scope And Permission Identity",
         "heading_level": 3,
-        "heading_line": 824,
-        "line": 826,
+        "heading_line": 1146,
+        "line": 1148,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152596,8 +152723,8 @@
       "source_location": {
         "heading": "DP-011 - Degraded-Trust Concern Escalation Bridge",
         "heading_level": 3,
-        "heading_line": 872,
-        "line": 874,
+        "heading_line": 1194,
+        "line": 1196,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152613,8 +152740,8 @@
       "source_location": {
         "heading": "DP-012 - Subagent Runtime Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 915,
-        "line": 917,
+        "heading_line": 1237,
+        "line": 1239,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152630,8 +152757,8 @@
       "source_location": {
         "heading": "DP-013 - Blocked Approval Identity And Compatibility Fields",
         "heading_level": 3,
-        "heading_line": 960,
-        "line": 962,
+        "heading_line": 1282,
+        "line": 1284,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152647,8 +152774,8 @@
       "source_location": {
         "heading": "DP-014 - Runtime Blocked Reasons And Concern Lifecycle",
         "heading_level": 3,
-        "heading_line": 1008,
-        "line": 1010,
+        "heading_line": 1330,
+        "line": 1332,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152664,8 +152791,8 @@
       "source_location": {
         "heading": "DP-015 - HITL Interview Approval Scope And Automation Defaults",
         "heading_level": 3,
-        "heading_line": 1055,
-        "line": 1057,
+        "heading_line": 1377,
+        "line": 1379,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152681,8 +152808,8 @@
       "source_location": {
         "heading": "DP-016 - Actor Account Traceability And Degraded Projection Gating",
         "heading_level": 3,
-        "heading_line": 1104,
-        "line": 1106,
+        "heading_line": 1426,
+        "line": 1428,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152698,8 +152825,8 @@
       "source_location": {
         "heading": "DP-017 - Worker Runtime Identity And Durable Projection Browsing",
         "heading_level": 3,
-        "heading_line": 1150,
-        "line": 1152,
+        "heading_line": 1472,
+        "line": 1474,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152715,8 +152842,8 @@
       "source_location": {
         "heading": "DP-018 - Route Primitive Ownership And Research-Incomplete Seams",
         "heading_level": 3,
-        "heading_line": 1195,
-        "line": 1197,
+        "heading_line": 1517,
+        "line": 1519,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152732,8 +152859,8 @@
       "source_location": {
         "heading": "DP-019 - Blocked Projection Persistence And Owner-Schema Completion",
         "heading_level": 3,
-        "heading_line": 1245,
-        "line": 1247,
+        "heading_line": 1567,
+        "line": 1569,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152749,8 +152876,8 @@
       "source_location": {
         "heading": "DP-020 - Runtime Artifact Lineage And Blocked Episode Targetability",
         "heading_level": 3,
-        "heading_line": 1295,
-        "line": 1297,
+        "heading_line": 1617,
+        "line": 1619,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152766,8 +152893,8 @@
       "source_location": {
         "heading": "DP-021 - Usage Route Open Object Ownership Cleanup",
         "heading_level": 3,
-        "heading_line": 1344,
-        "line": 1346,
+        "heading_line": 1666,
+        "line": 1668,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152783,8 +152910,8 @@
       "source_location": {
         "heading": "DP-022 - Tier Compatibility Cleanup Lifecycle And Large-Run Policy",
         "heading_level": 3,
-        "heading_line": 1392,
-        "line": 1394,
+        "heading_line": 1714,
+        "line": 1716,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152800,8 +152927,8 @@
       "source_location": {
         "heading": "DP-023 - OpenCode Identity And Redaction Defaults",
         "heading_level": 3,
-        "heading_line": 1441,
-        "line": 1443,
+        "heading_line": 1763,
+        "line": 1765,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152817,8 +152944,8 @@
       "source_location": {
         "heading": "DP-024 - Tie-Break Ordering Defaults",
         "heading_level": 3,
-        "heading_line": 1487,
-        "line": 1489,
+        "heading_line": 1809,
+        "line": 1811,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152834,8 +152961,8 @@
       "source_location": {
         "heading": "DP-025 - Autonomous Decision Logging Contract",
         "heading_level": 3,
-        "heading_line": 1528,
-        "line": 1530,
+        "heading_line": 1850,
+        "line": 1852,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152851,8 +152978,8 @@
       "source_location": {
         "heading": "DP-026 - No Human In Loop Runtime Rule",
         "heading_level": 3,
-        "heading_line": 1575,
-        "line": 1577,
+        "heading_line": 1897,
+        "line": 1899,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152868,8 +152995,8 @@
       "source_location": {
         "heading": "DP-027 - Spec Lock Protocol Boundary",
         "heading_level": 3,
-        "heading_line": 1617,
-        "line": 1619,
+        "heading_line": 1939,
+        "line": 1941,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152885,8 +153012,8 @@
       "source_location": {
         "heading": "DP-028 - Spec Lock Deterministic Update Steps",
         "heading_level": 3,
-        "heading_line": 1663,
-        "line": 1665,
+        "heading_line": 1985,
+        "line": 1987,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152902,8 +153029,8 @@
       "source_location": {
         "heading": "DP-029 - Spec Lock Prohibited Behaviors",
         "heading_level": 3,
-        "heading_line": 1707,
-        "line": 1709,
+        "heading_line": 2029,
+        "line": 2031,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152919,8 +153046,8 @@
       "source_location": {
         "heading": "DP-030 - No Secrets In Persistent Storage",
         "heading_level": 3,
-        "heading_line": 1752,
-        "line": 1754,
+        "heading_line": 2074,
+        "line": 2076,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152936,8 +153063,8 @@
       "source_location": {
         "heading": "DP-031 - Ambiguity Deterministic Resolution",
         "heading_level": 3,
-        "heading_line": 1803,
-        "line": 1805,
+        "heading_line": 2125,
+        "line": 2127,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152953,8 +153080,8 @@
       "source_location": {
         "heading": "DP-032 - Missing User Intent Clarification Boundary",
         "heading_level": 3,
-        "heading_line": 1848,
-        "line": 1850,
+        "heading_line": 2170,
+        "line": 2172,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152970,8 +153097,8 @@
       "source_location": {
         "heading": "DP-033 - Pre-Execution Clarification And Start-Run Block",
         "heading_level": 3,
-        "heading_line": 1891,
-        "line": 1893,
+        "heading_line": 2213,
+        "line": 2215,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152987,8 +153114,8 @@
       "source_location": {
         "heading": "DP-034 - Requirements Quality Report Boundary Severity Persistence",
         "heading_level": 3,
-        "heading_line": 1940,
-        "line": 1942,
+        "heading_line": 2264,
+        "line": 2266,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153004,8 +153131,8 @@
       "source_location": {
         "heading": "DP-035 - Runtime Fallback Prohibition Defaults",
         "heading_level": 3,
-        "heading_line": 1990,
-        "line": 1992,
+        "heading_line": 2315,
+        "line": 2317,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153021,8 +153148,8 @@
       "source_location": {
         "heading": "DP-036 - Deterministic Blocked Approval Identity Addendum",
         "heading_level": 3,
-        "heading_line": 2036,
-        "line": 2038,
+        "heading_line": 2361,
+        "line": 2363,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153038,8 +153165,8 @@
       "source_location": {
         "heading": "DP-037 - Workflow Overlay Identity Preservation",
         "heading_level": 3,
-        "heading_line": 2086,
-        "line": 2088,
+        "heading_line": 2411,
+        "line": 2413,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153055,8 +153182,8 @@
       "source_location": {
         "heading": "DP-038 - Projection-Sensitive Mutation Guard",
         "heading_level": 3,
-        "heading_line": 2133,
-        "line": 2135,
+        "heading_line": 2458,
+        "line": 2460,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153072,8 +153199,8 @@
       "source_location": {
         "heading": "DP-039 - Auth Action Lifecycle Provider Pressure And Config Ownership",
         "heading_level": 3,
-        "heading_line": 2182,
-        "line": 2184,
+        "heading_line": 2507,
+        "line": 2509,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153089,8 +153216,8 @@
       "source_location": {
         "heading": "DP-040 - Question Routing Approval UX And Runtime Display Defaults",
         "heading_level": 3,
-        "heading_line": 2234,
-        "line": 2236,
+        "heading_line": 2559,
+        "line": 2561,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153106,8 +153233,8 @@
       "source_location": {
         "heading": "DP-041 - Debug Context And Reopen Blocking",
         "heading_level": 3,
-        "heading_line": 2285,
-        "line": 2287,
+        "heading_line": 2610,
+        "line": 2612,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153123,8 +153250,8 @@
       "source_location": {
         "heading": "DP-042 - Provider Auth Surface And Storage Lock Owner Boundaries",
         "heading_level": 3,
-        "heading_line": 2332,
-        "line": 2334,
+        "heading_line": 2657,
+        "line": 2659,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153140,8 +153267,8 @@
       "source_location": {
         "heading": "DP-043 - Runtime Scheduler Event Canonical Defaults",
         "heading_level": 3,
-        "heading_line": 2384,
-        "line": 2386,
+        "heading_line": 2709,
+        "line": 2711,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153157,8 +153284,8 @@
       "source_location": {
         "heading": "DP-044 - Retry And Remediation Ceiling Defaults",
         "heading_level": 3,
-        "heading_line": 2430,
-        "line": 2432,
+        "heading_line": 2755,
+        "line": 2757,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153174,8 +153301,8 @@
       "source_location": {
         "heading": "DP-045 - Blocked Outcome Preservation And Attempt Snapshots",
         "heading_level": 3,
-        "heading_line": 2473,
-        "line": 2475,
+        "heading_line": 2798,
+        "line": 2800,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153191,8 +153318,8 @@
       "source_location": {
         "heading": "DP-046 - Graph Degradation And Integrity Defaults",
         "heading_level": 3,
-        "heading_line": 2515,
-        "line": 2517,
+        "heading_line": 2840,
+        "line": 2842,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153208,8 +153335,8 @@
       "source_location": {
         "heading": "DP-047 - Mutation-Sensitive Git Snapshot Failure Criticality",
         "heading_level": 3,
-        "heading_line": 2555,
-        "line": 2557,
+        "heading_line": 2880,
+        "line": 2882,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153225,8 +153352,8 @@
       "source_location": {
         "heading": "DP-048 - Provider Response Guard Determinism",
         "heading_level": 3,
-        "heading_line": 2599,
-        "line": 2601,
+        "heading_line": 2924,
+        "line": 2926,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153242,8 +153369,8 @@
       "source_location": {
         "heading": "DP-049 - Additional Blocked Reason Matrix Rows",
         "heading_level": 3,
-        "heading_line": 2641,
-        "line": 2643,
+        "heading_line": 2966,
+        "line": 2968,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153259,8 +153386,8 @@
       "source_location": {
         "heading": "DP-050 - Timeout Outcome Provider-Transient Normalization",
         "heading_level": 3,
-        "heading_line": 2688,
-        "line": 2690,
+        "heading_line": 3013,
+        "line": 3015,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153276,8 +153403,8 @@
       "source_location": {
         "heading": "DP-051 - Safe-Point Restore Field Override",
         "heading_level": 3,
-        "heading_line": 2731,
-        "line": 2733,
+        "heading_line": 3056,
+        "line": 3058,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153293,8 +153420,8 @@
       "source_location": {
         "heading": "DP-052 - Worktree Blocked Posture Defaults",
         "heading_level": 3,
-        "heading_line": 2773,
-        "line": 2775,
+        "heading_line": 3098,
+        "line": 3100,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153310,8 +153437,8 @@
       "source_location": {
         "heading": "DP-053 - Source Control Recovery CTA Effects",
         "heading_level": 3,
-        "heading_line": 2811,
-        "line": 2813,
+        "heading_line": 3136,
+        "line": 3138,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153327,8 +153454,8 @@
       "source_location": {
         "heading": "DP-054 - GitHub Actions Auth-Expired Blocked Default",
         "heading_level": 3,
-        "heading_line": 2848,
-        "line": 2850,
+        "heading_line": 3173,
+        "line": 3175,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153344,8 +153471,8 @@
       "source_location": {
         "heading": "DP-055 - GitHub Actions Recovery CTA Effect",
         "heading_level": 3,
-        "heading_line": 2888,
-        "line": 2890,
+        "heading_line": 3213,
+        "line": 3215,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153361,8 +153488,8 @@
       "source_location": {
         "heading": "DP-056 - Docker And Kubernetes Blocked Posture Defaults",
         "heading_level": 3,
-        "heading_line": 2926,
-        "line": 2928,
+        "heading_line": 3251,
+        "line": 3253,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153378,8 +153505,8 @@
       "source_location": {
         "heading": "DP-057 - Docker Manager Kubernetes CTA Effect",
         "heading_level": 3,
-        "heading_line": 2971,
-        "line": 2973,
+        "heading_line": 3296,
+        "line": 3298,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153395,8 +153522,8 @@
       "source_location": {
         "heading": "DP-058 - Target-Bound Approval Identity Fields",
         "heading_level": 3,
-        "heading_line": 3010,
-        "line": 3012,
+        "heading_line": 3335,
+        "line": 3337,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153412,8 +153539,8 @@
       "source_location": {
         "heading": "DP-059 - Approval Preflight Ordering And Revalidation",
         "heading_level": 3,
-        "heading_line": 3057,
-        "line": 3059,
+        "heading_line": 3382,
+        "line": 3384,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153429,8 +153556,8 @@
       "source_location": {
         "heading": "DP-060 - Domain-Sensitive Approval Scope Separation",
         "heading_level": 3,
-        "heading_line": 3101,
-        "line": 3103,
+        "heading_line": 3426,
+        "line": 3428,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153446,8 +153573,8 @@
       "source_location": {
         "heading": "DP-061 - Research-Safe Planning Tool Boundary",
         "heading_level": 3,
-        "heading_line": 3145,
-        "line": 3147,
+        "heading_line": 3470,
+        "line": 3472,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153463,8 +153590,8 @@
       "source_location": {
         "heading": "DP-062 - Durable Approval Scope Reuse Context",
         "heading_level": 3,
-        "heading_line": 3188,
-        "line": 3190,
+        "heading_line": 3513,
+        "line": 3515,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153480,8 +153607,42 @@
       "source_location": {
         "heading": "DP-063 - DRY Clarification And Mutation Gate Policy",
         "heading_level": 3,
-        "heading_line": 3313,
-        "line": 3315,
+        "heading_line": 3638,
+        "line": 3640,
+        "path": "Plans/Decision_Policy.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "clarification_round_limits",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Policy.md",
+      "plan_unit_id": "DP-064",
+      "reasoning_tier": "high",
+      "risk_class": "clarification_round_limit_drift",
+      "source_location": {
+        "heading": "DP-064 - Planning Wizard Clarification-Round Limits",
+        "heading_level": 3,
+        "heading_line": 3695,
+        "line": 3697,
+        "path": "Plans/Decision_Policy.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "requirements_quality",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Policy.md",
+      "plan_unit_id": "DP-066",
+      "reasoning_tier": "high",
+      "risk_class": "requirements_completion_gate_drift",
+      "source_location": {
+        "heading": "DP-066 - Requirements Completion Contract And Requirements-Quality Auditor Loop",
+        "heading_level": 4,
+        "heading_line": 451,
+        "line": 453,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153990,8 +154151,8 @@
       "source_location": {
         "heading": "DR-001 - DRY Rules Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 2032,
-        "line": 2034,
+        "heading_line": 2038,
+        "line": 2040,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154143,8 +154304,8 @@
       "source_location": {
         "heading": "DR-010 - Graph Record Storage Owner Route",
         "heading_level": 3,
-        "heading_line": 694,
-        "line": 696,
+        "heading_line": 700,
+        "line": 702,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154160,8 +154321,8 @@
       "source_location": {
         "heading": "DR-011 - Compare Review SCM Boundaries",
         "heading_level": 3,
-        "heading_line": 743,
-        "line": 745,
+        "heading_line": 749,
+        "line": 751,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154177,8 +154338,8 @@
       "source_location": {
         "heading": "DR-012 - Worktree Owner-Node Compatibility",
         "heading_level": 3,
-        "heading_line": 794,
-        "line": 796,
+        "heading_line": 800,
+        "line": 802,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154194,8 +154355,8 @@
       "source_location": {
         "heading": "DR-013 - Permission Snapshot Split",
         "heading_level": 3,
-        "heading_line": 839,
-        "line": 841,
+        "heading_line": 845,
+        "line": 847,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154211,8 +154372,8 @@
       "source_location": {
         "heading": "DR-014 - Special Recovery Routing Evidence",
         "heading_level": 3,
-        "heading_line": 888,
-        "line": 890,
+        "heading_line": 894,
+        "line": 896,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154228,8 +154389,8 @@
       "source_location": {
         "heading": "DR-015 - Tooling Memory Consumer Checks",
         "heading_level": 3,
-        "heading_line": 946,
-        "line": 948,
+        "heading_line": 952,
+        "line": 954,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154245,8 +154406,8 @@
       "source_location": {
         "heading": "DR-016 - Audit And Contract Check Ordering",
         "heading_level": 3,
-        "heading_line": 994,
-        "line": 996,
+        "heading_line": 1000,
+        "line": 1002,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154262,8 +154423,8 @@
       "source_location": {
         "heading": "DR-017 - Projection-Backed Trust State",
         "heading_level": 3,
-        "heading_line": 1047,
-        "line": 1049,
+        "heading_line": 1053,
+        "line": 1055,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154279,8 +154440,8 @@
       "source_location": {
         "heading": "DR-018 - Stale Event And Crosswalk Integrity",
         "heading_level": 3,
-        "heading_line": 1093,
-        "line": 1095,
+        "heading_line": 1099,
+        "line": 1101,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154296,8 +154457,8 @@
       "source_location": {
         "heading": "DR-019 - Corroboration Dispatch Boundary",
         "heading_level": 3,
-        "heading_line": 1139,
-        "line": 1141,
+        "heading_line": 1145,
+        "line": 1147,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154313,8 +154474,8 @@
       "source_location": {
         "heading": "DR-020 - UI Behavior And Route Reconciliation",
         "heading_level": 3,
-        "heading_line": 1185,
-        "line": 1187,
+        "heading_line": 1191,
+        "line": 1193,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154330,8 +154491,8 @@
       "source_location": {
         "heading": "DR-021 - Assistant Worktree Owner Routes",
         "heading_level": 3,
-        "heading_line": 1311,
-        "line": 1313,
+        "heading_line": 1317,
+        "line": 1319,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154347,8 +154508,8 @@
       "source_location": {
         "heading": "DR-022 - Assistant Worktree Consumer Cross-Refs",
         "heading_level": 3,
-        "heading_line": 1366,
-        "line": 1368,
+        "heading_line": 1372,
+        "line": 1374,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154364,8 +154525,8 @@
       "source_location": {
         "heading": "DR-023 - Assistant Chat Dispatcher Owner Route",
         "heading_level": 3,
-        "heading_line": 1410,
-        "line": 1412,
+        "heading_line": 1416,
+        "line": 1418,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154381,8 +154542,8 @@
       "source_location": {
         "heading": "DR-024 - Assistant Chat Traceability Anchors",
         "heading_level": 3,
-        "heading_line": 1458,
-        "line": 1460,
+        "heading_line": 1464,
+        "line": 1466,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154398,8 +154559,8 @@
       "source_location": {
         "heading": "DR-025 - Index-Only ID Lists",
         "heading_level": 3,
-        "heading_line": 1519,
-        "line": 1521,
+        "heading_line": 1525,
+        "line": 1527,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154415,8 +154576,8 @@
       "source_location": {
         "heading": "DR-026 - Forbidden Drift Patterns",
         "heading_level": 3,
-        "heading_line": 1565,
-        "line": 1567,
+        "heading_line": 1571,
+        "line": 1573,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154432,8 +154593,8 @@
       "source_location": {
         "heading": "DR-027 - ContractRef Required Keywords",
         "heading_level": 3,
-        "heading_line": 1615,
-        "line": 1617,
+        "heading_line": 1621,
+        "line": 1623,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154449,8 +154610,8 @@
       "source_location": {
         "heading": "DR-028 - ContractRef Taxonomy",
         "heading_level": 3,
-        "heading_line": 1658,
-        "line": 1660,
+        "heading_line": 1664,
+        "line": 1666,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154466,8 +154627,8 @@
       "source_location": {
         "heading": "DR-029 - Operational Requirement Annotation Rule",
         "heading_level": 3,
-        "heading_line": 1709,
-        "line": 1711,
+        "heading_line": 1715,
+        "line": 1717,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154483,8 +154644,8 @@
       "source_location": {
         "heading": "DR-030 - Packet-Fidelity Semantic Matching",
         "heading_level": 3,
-        "heading_line": 1760,
-        "line": 1762,
+        "heading_line": 1766,
+        "line": 1768,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154500,8 +154661,8 @@
       "source_location": {
         "heading": "DR-031 - Reference Style",
         "heading_level": 3,
-        "heading_line": 1808,
-        "line": 1810,
+        "heading_line": 1814,
+        "line": 1816,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154517,8 +154678,8 @@
       "source_location": {
         "heading": "DR-032 - No Unreferenced Operational Text",
         "heading_level": 3,
-        "heading_line": 1852,
-        "line": 1854,
+        "heading_line": 1858,
+        "line": 1860,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154534,8 +154695,8 @@
       "source_location": {
         "heading": "DR-033 - Inline Requirement Tags Are Non-Authoritative",
         "heading_level": 3,
-        "heading_line": 1896,
-        "line": 1898,
+        "heading_line": 1902,
+        "line": 1904,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154551,8 +154712,8 @@
       "source_location": {
         "heading": "DR-034 - Authoritative Requirement Coverage",
         "heading_level": 3,
-        "heading_line": 1941,
-        "line": 1943,
+        "heading_line": 1947,
+        "line": 1949,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154568,8 +154729,8 @@
       "source_location": {
         "heading": "DR-035 - Inline Tag Conflict Rule",
         "heading_level": 3,
-        "heading_line": 1987,
-        "line": 1989,
+        "heading_line": 1993,
+        "line": 1995,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154585,8 +154746,8 @@
       "source_location": {
         "heading": "DR-036 - DRY Owner Route Fallback And Disabled Boundary",
         "heading_level": 3,
-        "heading_line": 2106,
-        "line": 2108,
+        "heading_line": 2112,
+        "line": 2114,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154602,8 +154763,8 @@
       "source_location": {
         "heading": "DR-037 - Shared Runtime Service Name And Delegation Registry",
         "heading_level": 3,
-        "heading_line": 2291,
-        "line": 2293,
+        "heading_line": 2297,
+        "line": 2299,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154619,8 +154780,8 @@
       "source_location": {
         "heading": "DR-038 - Usage Candidate Role Dispositions",
         "heading_level": 3,
-        "heading_line": 2399,
-        "line": 2401,
+        "heading_line": 2405,
+        "line": 2407,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154636,8 +154797,8 @@
       "source_location": {
         "heading": "DR-039 - PMConcept7 One Usage One Command Language And One Shared Assistant Boundary",
         "heading_level": 3,
-        "heading_line": 2498,
-        "line": 2500,
+        "heading_line": 2504,
+        "line": 2506,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154653,8 +154814,8 @@
       "source_location": {
         "heading": "DR-040 - Universal touch closure and sole-owner projection law",
         "heading_level": 3,
-        "heading_line": 2592,
-        "line": 2594,
+        "heading_line": 2598,
+        "line": 2600,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154670,8 +154831,8 @@
       "source_location": {
         "heading": "DR-041 - Touch Closure Exact-Key And No-Peer DRY Rule",
         "heading_level": 3,
-        "heading_line": 2638,
-        "line": 2640,
+        "heading_line": 2644,
+        "line": 2646,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154687,8 +154848,8 @@
       "source_location": {
         "heading": "DR-042 - Commands Local-Action Namespace Ownership",
         "heading_level": 3,
-        "heading_line": 2706,
-        "line": 2708,
+        "heading_line": 2712,
+        "line": 2714,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154704,8 +154865,8 @@
       "source_location": {
         "heading": "DR-043 - Chat Transcript Presentation Single Owners",
         "heading_level": 3,
-        "heading_line": 2768,
-        "line": 2770,
+        "heading_line": 2774,
+        "line": 2776,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154721,8 +154882,8 @@
       "source_location": {
         "heading": "DR-044 - Wand Module Presentation Grammar Single Owner",
         "heading_level": 3,
-        "heading_line": 2835,
-        "line": 2837,
+        "heading_line": 2841,
+        "line": 2843,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154738,8 +154899,8 @@
       "source_location": {
         "heading": "DR-045 - One Plate Fit Rule, One Cast Grammar With Its Wrap, One Track",
         "heading_level": 3,
-        "heading_line": 2999,
-        "line": 3001,
+        "heading_line": 3005,
+        "line": 3007,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154755,8 +154916,8 @@
       "source_location": {
         "heading": "DR-047 - Plan Actions Use The One Shared Action Row",
         "heading_level": 3,
-        "heading_line": 3061,
-        "line": 3063,
+        "heading_line": 3067,
+        "line": 3069,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154772,8 +154933,8 @@
       "source_location": {
         "heading": "DR-050 - Concept Web Fonts Share One Set Of Files",
         "heading_level": 3,
-        "heading_line": 2932,
-        "line": 2934,
+        "heading_line": 2938,
+        "line": 2940,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154789,8 +154950,8 @@
       "source_location": {
         "heading": "DR-051 - One Icon Registry And One Status Set For The Assistant Chat",
         "heading_level": 3,
-        "heading_line": 3120,
-        "line": 3122,
+        "heading_line": 3126,
+        "line": 3128,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154806,8 +154967,8 @@
       "source_location": {
         "heading": "DR-052 - One Transcript Renderer For The Chat And Its Read-Only Child Transcripts",
         "heading_level": 3,
-        "heading_line": 3194,
-        "line": 3196,
+        "heading_line": 3200,
+        "line": 3202,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154823,8 +154984,8 @@
       "source_location": {
         "heading": "DR-054 - One First-Paint Reader Per Page, Reading The Look Owner's Store",
         "heading_level": 3,
-        "heading_line": 3313,
-        "line": 3315,
+        "heading_line": 3319,
+        "line": 3321,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154840,8 +155001,8 @@
       "source_location": {
         "heading": "DR-056 - One NieR Adjust Editor, One Reboot Plate, One Look Store And One Set Of Hero Moments",
         "heading_level": 3,
-        "heading_line": 3249,
-        "line": 3251,
+        "heading_line": 3255,
+        "line": 3257,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154857,8 +155018,8 @@
       "source_location": {
         "heading": "DR-057 - Left Rail Presentation Single Owner",
         "heading_level": 3,
-        "heading_line": 3365,
-        "line": 3367,
+        "heading_line": 3371,
+        "line": 3373,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154874,8 +155035,8 @@
       "source_location": {
         "heading": "DR-058 - Usage Presentation Grammar Single Owner",
         "heading_level": 3,
-        "heading_line": 3424,
-        "line": 3426,
+        "heading_line": 3430,
+        "line": 3432,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154891,8 +155052,8 @@
       "source_location": {
         "heading": "DR-065 - One Panel And Tab Grammar For Every Panel In The Home Centre",
         "heading_level": 3,
-        "heading_line": 3588,
-        "line": 3590,
+        "heading_line": 3594,
+        "line": 3596,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154908,8 +155069,8 @@
       "source_location": {
         "heading": "DR-066 - One Gesture Kit For Panels And The Usage Board",
         "heading_level": 3,
-        "heading_line": 3685,
-        "line": 3687,
+        "heading_line": 3691,
+        "line": 3693,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154925,8 +155086,8 @@
       "source_location": {
         "heading": "DR-067 - One Overlay Root And One Stacking Order",
         "heading_level": 3,
-        "heading_line": 3767,
-        "line": 3769,
+        "heading_line": 3773,
+        "line": 3775,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154942,8 +155103,8 @@
       "source_location": {
         "heading": "DR-068 - One Terminal Appearance Model",
         "heading_level": 3,
-        "heading_line": 3847,
-        "line": 3849,
+        "heading_line": 3853,
+        "line": 3855,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154959,8 +155120,8 @@
       "source_location": {
         "heading": "DR-069 - No Side Stripes, No Emoji And No Pills Anywhere In Puppet Master",
         "heading_level": 3,
-        "heading_line": 3934,
-        "line": 3936,
+        "heading_line": 3940,
+        "line": 3942,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -154976,8 +155137,8 @@
       "source_location": {
         "heading": "DR-070 - Retired historical identifier",
         "heading_level": 3,
-        "heading_line": 4019,
-        "line": 4021,
+        "heading_line": 4025,
+        "line": 4027,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "retired",
@@ -154993,8 +155154,8 @@
       "source_location": {
         "heading": "DR-071 - One Opening Module For Everything That Opens In A Panel",
         "heading_level": 3,
-        "heading_line": 4059,
-        "line": 4061,
+        "heading_line": 4065,
+        "line": 4067,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155010,8 +155171,8 @@
       "source_location": {
         "heading": "DR-072 - One Hover Grammar For PMConcept7",
         "heading_level": 3,
-        "heading_line": 3505,
-        "line": 3507,
+        "heading_line": 3511,
+        "line": 3513,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155027,8 +155188,8 @@
       "source_location": {
         "heading": "DR-073 - One Wallpaper Catalog And One Writer",
         "heading_level": 3,
-        "heading_line": 4135,
-        "line": 4137,
+        "heading_line": 4141,
+        "line": 4143,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155044,8 +155205,8 @@
       "source_location": {
         "heading": "DR-074 - One Owner For The Board Commit Shape And For Hosted Settings Controls",
         "heading_level": 3,
-        "heading_line": 4211,
-        "line": 4213,
+        "heading_line": 4217,
+        "line": 4219,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155061,8 +155222,8 @@
       "source_location": {
         "heading": "DR-075 - The Hosted Chat Reuses The Host And The Settings Writer",
         "heading_level": 3,
-        "heading_line": 4275,
-        "line": 4277,
+        "heading_line": 4281,
+        "line": 4283,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155078,8 +155239,8 @@
       "source_location": {
         "heading": "DR-076 - One Brand Mark And One Pip Kit",
         "heading_level": 3,
-        "heading_line": 4343,
-        "line": 4345,
+        "heading_line": 4349,
+        "line": 4351,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155095,8 +155256,8 @@
       "source_location": {
         "heading": "DR-077 - One Loading Indicator",
         "heading_level": 3,
-        "heading_line": 4403,
-        "line": 4405,
+        "heading_line": 4409,
+        "line": 4411,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155112,8 +155273,8 @@
       "source_location": {
         "heading": "DR-078 - One Work Projection And Resource Owner",
         "heading_level": 3,
-        "heading_line": 4469,
-        "line": 4471,
+        "heading_line": 4475,
+        "line": 4477,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155129,8 +155290,8 @@
       "source_location": {
         "heading": "DR-079 - One Menu Sprout Owner",
         "heading_level": 3,
-        "heading_line": 4522,
-        "line": 4524,
+        "heading_line": 4528,
+        "line": 4530,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155146,8 +155307,8 @@
       "source_location": {
         "heading": "DR-080 - One Joined-Choice Tray And Option Hint Owner",
         "heading_level": 3,
-        "heading_line": 4582,
-        "line": 4584,
+        "heading_line": 4588,
+        "line": 4590,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155163,8 +155324,8 @@
       "source_location": {
         "heading": "DR-081 - One Free Models Catalog And Advanced Disclosure",
         "heading_level": 3,
-        "heading_line": 4666,
-        "line": 4668,
+        "heading_line": 4672,
+        "line": 4674,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155180,8 +155341,8 @@
       "source_location": {
         "heading": "DR-082 - One Owner For Each DL-270 Storage Rule",
         "heading_level": 3,
-        "heading_line": 4746,
-        "line": 4748,
+        "heading_line": 4752,
+        "line": 4754,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155197,8 +155358,8 @@
       "source_location": {
         "heading": "DR-083 - One Read Path For Stored State And One Storage Health",
         "heading_level": 3,
-        "heading_line": 4810,
-        "line": 4812,
+        "heading_line": 4816,
+        "line": 4818,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155214,8 +155375,8 @@
       "source_location": {
         "heading": "DR-084 - One Settings Resolver",
         "heading_level": 3,
-        "heading_line": 4874,
-        "line": 4876,
+        "heading_line": 4880,
+        "line": 4882,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155231,8 +155392,8 @@
       "source_location": {
         "heading": "DR-085 - One Detached Settings Copy Engine",
         "heading_level": 3,
-        "heading_line": 4924,
-        "line": 4926,
+        "heading_line": 4930,
+        "line": 4932,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155248,8 +155409,8 @@
       "source_location": {
         "heading": "DR-086 - One Reviewed Setup Draft Engine",
         "heading_level": 3,
-        "heading_line": 4978,
-        "line": 4980,
+        "heading_line": 4984,
+        "line": 4986,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155265,8 +155426,8 @@
       "source_location": {
         "heading": "DR-087 - One Chat Conversion Engine",
         "heading_level": 3,
-        "heading_line": 5029,
-        "line": 5031,
+        "heading_line": 5035,
+        "line": 5037,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155282,8 +155443,8 @@
       "source_location": {
         "heading": "DR-088 - One Read Coverage Object And Formatter",
         "heading_level": 3,
-        "heading_line": 5085,
-        "line": 5087,
+        "heading_line": 5091,
+        "line": 5093,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155299,8 +155460,8 @@
       "source_location": {
         "heading": "DR-089 - One Destination Account Readiness List",
         "heading_level": 3,
-        "heading_line": 5137,
-        "line": 5139,
+        "heading_line": 5143,
+        "line": 5145,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155316,8 +155477,8 @@
       "source_location": {
         "heading": "DR-090 - One Automation Permission Admission",
         "heading_level": 3,
-        "heading_line": 5194,
-        "line": 5196,
+        "heading_line": 5200,
+        "line": 5202,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155333,8 +155494,8 @@
       "source_location": {
         "heading": "DR-091 - One Scope Model For Application Workflows",
         "heading_level": 3,
-        "heading_line": 5250,
-        "line": 5252,
+        "heading_line": 5256,
+        "line": 5258,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155350,8 +155511,8 @@
       "source_location": {
         "heading": "DR-092 - One Scheduler And Dispatch Eligibility Predicate",
         "heading_level": 3,
-        "heading_line": 5308,
-        "line": 5310,
+        "heading_line": 5314,
+        "line": 5316,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -179507,8 +179668,8 @@
       "source_location": {
         "heading": "ISI-001 - Interview Feature Subagent Integration Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 928,
-        "line": 930,
+        "heading_line": 929,
+        "line": 931,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179592,8 +179753,8 @@
       "source_location": {
         "heading": "ISI-006 - Phase Plan And Contract Unification",
         "heading_level": 3,
-        "heading_line": 264,
-        "line": 266,
+        "heading_line": 265,
+        "line": 267,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179609,8 +179770,8 @@
       "source_location": {
         "heading": "ISI-007 - Shared Runtime Identity Packet",
         "heading_level": 3,
-        "heading_line": 313,
-        "line": 315,
+        "heading_line": 314,
+        "line": 316,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179626,8 +179787,8 @@
       "source_location": {
         "heading": "ISI-008 - Actor Kind Boundary",
         "heading_level": 3,
-        "heading_line": 363,
-        "line": 365,
+        "heading_line": 364,
+        "line": 366,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179643,8 +179804,8 @@
       "source_location": {
         "heading": "ISI-009 - Shared Question Contract Consumption",
         "heading_level": 3,
-        "heading_line": 413,
-        "line": 415,
+        "heading_line": 414,
+        "line": 416,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179660,8 +179821,8 @@
       "source_location": {
         "heading": "ISI-010 - Required Question Submit And Draft State",
         "heading_level": 3,
-        "heading_line": 466,
-        "line": 468,
+        "heading_line": 467,
+        "line": 469,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179677,8 +179838,8 @@
       "source_location": {
         "heading": "ISI-011 - Runtime Identity Visibility",
         "heading_level": 3,
-        "heading_line": 520,
-        "line": 522,
+        "heading_line": 521,
+        "line": 523,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179694,8 +179855,8 @@
       "source_location": {
         "heading": "ISI-012 - Requested/Effective Interview Alignment",
         "heading_level": 3,
-        "heading_line": 571,
-        "line": 573,
+        "heading_line": 572,
+        "line": 574,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179711,8 +179872,8 @@
       "source_location": {
         "heading": "ISI-013 - Contract Unification Conflict Rules",
         "heading_level": 3,
-        "heading_line": 622,
-        "line": 624,
+        "heading_line": 623,
+        "line": 625,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179728,8 +179889,8 @@
       "source_location": {
         "heading": "ISI-014 - Wizard/Interview Handoff Packet Fields",
         "heading_level": 3,
-        "heading_line": 671,
-        "line": 673,
+        "heading_line": 672,
+        "line": 674,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179745,8 +179906,8 @@
       "source_location": {
         "heading": "ISI-015 - Missing Thread Typed Absence",
         "heading_level": 3,
-        "heading_line": 722,
-        "line": 724,
+        "heading_line": 723,
+        "line": 725,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179762,8 +179923,8 @@
       "source_location": {
         "heading": "ISI-016 - Provider-Native Delegation Boundary",
         "heading_level": 3,
-        "heading_line": 769,
-        "line": 771,
+        "heading_line": 770,
+        "line": 772,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179779,8 +179940,8 @@
       "source_location": {
         "heading": "ISI-017 - Reviewer Cap Boundary",
         "heading_level": 3,
-        "heading_line": 819,
-        "line": 821,
+        "heading_line": 820,
+        "line": 822,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179796,8 +179957,8 @@
       "source_location": {
         "heading": "ISI-018 - Auditor Cycle Report Bridge",
         "heading_level": 3,
-        "heading_line": 870,
-        "line": 872,
+        "heading_line": 871,
+        "line": 873,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -179813,8 +179974,8 @@
       "source_location": {
         "heading": "ISI-019 - Interview Prompt Route DRY Consumer",
         "heading_level": 3,
-        "heading_line": 1001,
-        "line": 1003,
+        "heading_line": 1002,
+        "line": 1004,
         "path": "Plans/interview-subagent-integration.md"
       },
       "status": "accepted",
@@ -214518,6 +214679,23 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": true,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-038",
+      "reasoning_tier": "high",
+      "risk_class": "wizard_lifecycle_owner_drift",
+      "source_location": {
+        "heading": "PWIZ-038 - Wizard Status And Blocked Lifecycle",
+        "heading_level": 3,
+        "heading_line": 4063,
+        "line": 4065,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "runtime_artifacts_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
@@ -237358,8 +237536,8 @@
       "source_location": {
         "heading": "UF-001 - Usage Feature Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 4922,
-        "line": 4924,
+        "heading_line": 4928,
+        "line": 4930,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237681,8 +237859,8 @@
       "source_location": {
         "heading": "UF-020 - Gemini Direct Setup Usage",
         "heading_level": 3,
-        "heading_line": 1933,
-        "line": 1935,
+        "heading_line": 1939,
+        "line": 1941,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237698,8 +237876,8 @@
       "source_location": {
         "heading": "UF-021 - Retired Gemini CLI Usage Evidence",
         "heading_level": 3,
-        "heading_line": 1985,
-        "line": 1987,
+        "heading_line": 1991,
+        "line": 1993,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237715,8 +237893,8 @@
       "source_location": {
         "heading": "UF-022 - Active Provider Family Pooling Capability Posture",
         "heading_level": 3,
-        "heading_line": 2047,
-        "line": 2049,
+        "heading_line": 2053,
+        "line": 2055,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237732,8 +237910,8 @@
       "source_location": {
         "heading": "UF-023 - Provider Source Confidence Augmentation",
         "heading_level": 3,
-        "heading_line": 2110,
-        "line": 2112,
+        "heading_line": 2116,
+        "line": 2118,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237749,8 +237927,8 @@
       "source_location": {
         "heading": "UF-024 - Direct Provider Status Probes",
         "heading_level": 3,
-        "heading_line": 2167,
-        "line": 2169,
+        "heading_line": 2173,
+        "line": 2175,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237766,8 +237944,8 @@
       "source_location": {
         "heading": "UF-025 - Cost Usage Artifact Routing",
         "heading_level": 3,
-        "heading_line": 2218,
-        "line": 2220,
+        "heading_line": 2224,
+        "line": 2226,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237783,8 +237961,8 @@
       "source_location": {
         "heading": "UF-026 - OpenCode Product Pipeline Reference",
         "heading_level": 3,
-        "heading_line": 2273,
-        "line": 2275,
+        "heading_line": 2279,
+        "line": 2281,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237800,8 +237978,8 @@
       "source_location": {
         "heading": "UF-027 - Backend Input Hierarchy",
         "heading_level": 3,
-        "heading_line": 2326,
-        "line": 2328,
+        "heading_line": 2332,
+        "line": 2334,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237817,8 +237995,8 @@
       "source_location": {
         "heading": "UF-028 - Usage Linked Planning Widget Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 2385,
-        "line": 2387,
+        "heading_line": 2391,
+        "line": 2393,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237834,8 +238012,8 @@
       "source_location": {
         "heading": "UF-029 - Canonical Usage Placement And Exclusions",
         "heading_level": 3,
-        "heading_line": 2437,
-        "line": 2439,
+        "heading_line": 2443,
+        "line": 2445,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237851,8 +238029,8 @@
       "source_location": {
         "heading": "UF-030 - Canonical Usage Event Pipeline",
         "heading_level": 3,
-        "heading_line": 2496,
-        "line": 2498,
+        "heading_line": 2502,
+        "line": 2504,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237868,8 +238046,8 @@
       "source_location": {
         "heading": "UF-031 - Debug Investigation Phase Attribution",
         "heading_level": 3,
-        "heading_line": 2550,
-        "line": 2552,
+        "heading_line": 2556,
+        "line": 2558,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237885,8 +238063,8 @@
       "source_location": {
         "heading": "UF-032 - Billing Attribution Family And Pricing Metadata",
         "heading_level": 3,
-        "heading_line": 2600,
-        "line": 2602,
+        "heading_line": 2606,
+        "line": 2608,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237902,8 +238080,8 @@
       "source_location": {
         "heading": "UF-033 - Artifact Bridge And Inspector Routing",
         "heading_level": 3,
-        "heading_line": 2653,
-        "line": 2655,
+        "heading_line": 2659,
+        "line": 2661,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237919,8 +238097,8 @@
       "source_location": {
         "heading": "UF-034 - Notification Projection Health Gating",
         "heading_level": 3,
-        "heading_line": 2711,
-        "line": 2713,
+        "heading_line": 2717,
+        "line": 2719,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237936,8 +238114,8 @@
       "source_location": {
         "heading": "UF-035 - UsageRecord Schema Source Attribution",
         "heading_level": 3,
-        "heading_line": 2767,
-        "line": 2769,
+        "heading_line": 2773,
+        "line": 2775,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237953,8 +238131,8 @@
       "source_location": {
         "heading": "UF-036 - Cost Precision Display Boundary",
         "heading_level": 3,
-        "heading_line": 2826,
-        "line": 2828,
+        "heading_line": 2832,
+        "line": 2834,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237970,8 +238148,8 @@
       "source_location": {
         "heading": "UF-037 - Blocked Escalation Observability",
         "heading_level": 3,
-        "heading_line": 2878,
-        "line": 2880,
+        "heading_line": 2884,
+        "line": 2886,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -237987,8 +238165,8 @@
       "source_location": {
         "heading": "UF-038 - Usage Secrets Fallback Source Labeling",
         "heading_level": 3,
-        "heading_line": 2937,
-        "line": 2939,
+        "heading_line": 2943,
+        "line": 2945,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238004,8 +238182,8 @@
       "source_location": {
         "heading": "UF-039 - Usage Api Refresh Rate Limiting",
         "heading_level": 3,
-        "heading_line": 2988,
-        "line": 2990,
+        "heading_line": 2994,
+        "line": 2996,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238021,8 +238199,8 @@
       "source_location": {
         "heading": "UF-040 - Canonical UsageRecord Write Path",
         "heading_level": 3,
-        "heading_line": 3038,
-        "line": 3040,
+        "heading_line": 3044,
+        "line": 3046,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238038,8 +238216,8 @@
       "source_location": {
         "heading": "UF-041 - Usage Window Model And Platform Semantics",
         "heading_level": 3,
-        "heading_line": 3091,
-        "line": 3093,
+        "heading_line": 3097,
+        "line": 3099,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238055,8 +238233,8 @@
       "source_location": {
         "heading": "UF-042 - Seglog Retention Rollup Freshness",
         "heading_level": 3,
-        "heading_line": 3148,
-        "line": 3150,
+        "heading_line": 3154,
+        "line": 3156,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238072,8 +238250,8 @@
       "source_location": {
         "heading": "UF-043 - Stale Data And Project Scope Disclosure",
         "heading_level": 3,
-        "heading_line": 3207,
-        "line": 3209,
+        "heading_line": 3213,
+        "line": 3215,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238089,8 +238267,8 @@
       "source_location": {
         "heading": "UF-044 - Current Time Window And Scope Selectors",
         "heading_level": 3,
-        "heading_line": 3260,
-        "line": 3262,
+        "heading_line": 3266,
+        "line": 3268,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238106,8 +238284,8 @@
       "source_location": {
         "heading": "UF-045 - Deferred Reset Countdown",
         "heading_level": 3,
-        "heading_line": 3320,
-        "line": 3322,
+        "heading_line": 3326,
+        "line": 3328,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238123,8 +238301,8 @@
       "source_location": {
         "heading": "UF-046 - Deferred Per Run Config Usage",
         "heading_level": 3,
-        "heading_line": 3368,
-        "line": 3370,
+        "heading_line": 3374,
+        "line": 3376,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238140,8 +238318,8 @@
       "source_location": {
         "heading": "UF-047 - Deferred Usage Page Export",
         "heading_level": 3,
-        "heading_line": 3419,
-        "line": 3421,
+        "heading_line": 3425,
+        "line": 3427,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238157,8 +238335,8 @@
       "source_location": {
         "heading": "UF-048 - Deferred Compact Header Usage",
         "heading_level": 3,
-        "heading_line": 3468,
-        "line": 3470,
+        "heading_line": 3474,
+        "line": 3476,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238174,8 +238352,8 @@
       "source_location": {
         "heading": "UF-049 - Deferred Doctor Usage Integration",
         "heading_level": 3,
-        "heading_line": 3517,
-        "line": 3519,
+        "heading_line": 3523,
+        "line": 3525,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238191,8 +238369,8 @@
       "source_location": {
         "heading": "UF-050 - Deferred Cost Column",
         "heading_level": 3,
-        "heading_line": 3566,
-        "line": 3568,
+        "heading_line": 3572,
+        "line": 3574,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238208,8 +238386,8 @@
       "source_location": {
         "heading": "UF-051 - Deferred Alerts History",
         "heading_level": 3,
-        "heading_line": 3614,
-        "line": 3616,
+        "heading_line": 3620,
+        "line": 3622,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238225,8 +238403,8 @@
       "source_location": {
         "heading": "UF-052 - Out Of Scope Peer Benchmarks",
         "heading_level": 3,
-        "heading_line": 3663,
-        "line": 3665,
+        "heading_line": 3669,
+        "line": 3671,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238242,8 +238420,8 @@
       "source_location": {
         "heading": "UF-053 - Usage Plan Out Of Scope Constraints",
         "heading_level": 3,
-        "heading_line": 3711,
-        "line": 3713,
+        "heading_line": 3717,
+        "line": 3719,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238259,8 +238437,8 @@
       "source_location": {
         "heading": "UF-054 - Usage Success Criteria",
         "heading_level": 3,
-        "heading_line": 3763,
-        "line": 3765,
+        "heading_line": 3769,
+        "line": 3771,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238276,8 +238454,8 @@
       "source_location": {
         "heading": "UF-055 - Widget Composed Usage Page Scope",
         "heading_level": 3,
-        "heading_line": 3814,
-        "line": 3816,
+        "heading_line": 3820,
+        "line": 3822,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238293,8 +238471,8 @@
       "source_location": {
         "heading": "UF-056 - Default Usage Layout Non Empty Seed",
         "heading_level": 3,
-        "heading_line": 3870,
-        "line": 3872,
+        "heading_line": 3876,
+        "line": 3878,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238310,8 +238488,8 @@
       "source_location": {
         "heading": "UF-057 - Search Acceleration Analytics Signal",
         "heading_level": 3,
-        "heading_line": 3917,
-        "line": 3919,
+        "heading_line": 3923,
+        "line": 3925,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238327,8 +238505,8 @@
       "source_location": {
         "heading": "UF-058 - Default Usage Widget Layout Table",
         "heading_level": 3,
-        "heading_line": 3971,
-        "line": 3973,
+        "heading_line": 3977,
+        "line": 3979,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238344,8 +238522,8 @@
       "source_location": {
         "heading": "UF-059 - Usage Widget Responsive Grid Resizing",
         "heading_level": 3,
-        "heading_line": 4036,
-        "line": 4038,
+        "heading_line": 4042,
+        "line": 4044,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238361,8 +238539,8 @@
       "source_location": {
         "heading": "UF-060 - Usage Widget Configuration And Persistence",
         "heading_level": 3,
-        "heading_line": 4090,
-        "line": 4092,
+        "heading_line": 4096,
+        "line": 4098,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238378,8 +238556,8 @@
       "source_location": {
         "heading": "UF-061 - Multi Account Widget Observability Boundary",
         "heading_level": 3,
-        "heading_line": 4146,
-        "line": 4148,
+        "heading_line": 4152,
+        "line": 4154,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238395,8 +238573,8 @@
       "source_location": {
         "heading": "UF-062 - Dashboard Add Widget Reuse For Usage Widgets",
         "heading_level": 3,
-        "heading_line": 4212,
-        "line": 4214,
+        "heading_line": 4218,
+        "line": 4220,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238412,8 +238590,8 @@
       "source_location": {
         "heading": "UF-063 - Runtime Recovery Counters And Metrics Integrity",
         "heading_level": 3,
-        "heading_line": 4266,
-        "line": 4268,
+        "heading_line": 4272,
+        "line": 4274,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238429,8 +238607,8 @@
       "source_location": {
         "heading": "UF-064 - Cross Surface Cost Routing And View Ban",
         "heading_level": 3,
-        "heading_line": 4327,
-        "line": 4329,
+        "heading_line": 4333,
+        "line": 4335,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238446,8 +238624,8 @@
       "source_location": {
         "heading": "UF-065 - Reversibility Undo And High Cost Disclosure",
         "heading_level": 3,
-        "heading_line": 4387,
-        "line": 4389,
+        "heading_line": 4393,
+        "line": 4395,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238463,8 +238641,8 @@
       "source_location": {
         "heading": "UF-066 - Bulk Receipt Shape And Owner Precedence",
         "heading_level": 3,
-        "heading_line": 4453,
-        "line": 4455,
+        "heading_line": 4459,
+        "line": 4461,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238480,8 +238658,8 @@
       "source_location": {
         "heading": "UF-067 - Requested Account And Pressure Record Boundary",
         "heading_level": 3,
-        "heading_line": 4523,
-        "line": 4525,
+        "heading_line": 4529,
+        "line": 4531,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238497,8 +238675,8 @@
       "source_location": {
         "heading": "UF-068 - Usage Contract Evidence And Consolidation Gate",
         "heading_level": 3,
-        "heading_line": 4578,
-        "line": 4580,
+        "heading_line": 4584,
+        "line": 4586,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238514,8 +238692,8 @@
       "source_location": {
         "heading": "UF-069 - Subject Routing And Inspector History Focus",
         "heading_level": 3,
-        "heading_line": 4635,
-        "line": 4637,
+        "heading_line": 4641,
+        "line": 4643,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238531,8 +238709,8 @@
       "source_location": {
         "heading": "UF-070 - Export Labels And View Export Boundary",
         "heading_level": 3,
-        "heading_line": 4694,
-        "line": 4696,
+        "heading_line": 4700,
+        "line": 4702,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238548,8 +238726,8 @@
       "source_location": {
         "heading": "UF-071 - Source Control Views And History Dimensions",
         "heading_level": 3,
-        "heading_line": 4751,
-        "line": 4753,
+        "heading_line": 4757,
+        "line": 4759,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238565,8 +238743,8 @@
       "source_location": {
         "heading": "UF-072 - Effective Resolution Display Boundary",
         "heading_level": 3,
-        "heading_line": 4814,
-        "line": 4816,
+        "heading_line": 4820,
+        "line": 4822,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238582,8 +238760,8 @@
       "source_location": {
         "heading": "UF-073 - Provider Provenance Before Resolved Facts",
         "heading_level": 3,
-        "heading_line": 4869,
-        "line": 4871,
+        "heading_line": 4875,
+        "line": 4877,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238599,8 +238777,8 @@
       "source_location": {
         "heading": "UF-074 - Provider Usage Source Confidence And Missing-Vs-Zero Contract",
         "heading_level": 3,
-        "heading_line": 5065,
-        "line": 5067,
+        "heading_line": 5071,
+        "line": 5073,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238616,8 +238794,8 @@
       "source_location": {
         "heading": "UF-075 - Provider Plan Gating And Quota Pressure Presentation",
         "heading_level": 3,
-        "heading_line": 5108,
-        "line": 5110,
+        "heading_line": 5114,
+        "line": 5116,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238633,8 +238811,8 @@
       "source_location": {
         "heading": "UF-076 - Vision Bridge Usage Attribution",
         "heading_level": 3,
-        "heading_line": 5156,
-        "line": 5158,
+        "heading_line": 5162,
+        "line": 5164,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238650,8 +238828,8 @@
       "source_location": {
         "heading": "UF-077 - Free Models Paid Costed Fallback Gates And Budget Evidence",
         "heading_level": 3,
-        "heading_line": 5250,
-        "line": 5252,
+        "heading_line": 5256,
+        "line": 5258,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238667,8 +238845,8 @@
       "source_location": {
         "heading": "UF-078 - Free Models Fallback Receipts And Immutable Request Provenance",
         "heading_level": 3,
-        "heading_line": 5305,
-        "line": 5307,
+        "heading_line": 5311,
+        "line": 5313,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238684,8 +238862,8 @@
       "source_location": {
         "heading": "UF-079 - P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
         "heading_level": 3,
-        "heading_line": 5368,
-        "line": 5370,
+        "heading_line": 5374,
+        "line": 5376,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238701,8 +238879,8 @@
       "source_location": {
         "heading": "UF-080 - P0-CACHE-USAGE-ENVELOPE",
         "heading_level": 3,
-        "heading_line": 5846,
-        "line": 5848,
+        "heading_line": 5852,
+        "line": 5854,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238718,8 +238896,8 @@
       "source_location": {
         "heading": "UF-081 - P2-CACHE-OBSERVABILITY-DASHBOARD",
         "heading_level": 3,
-        "heading_line": 5911,
-        "line": 5913,
+        "heading_line": 5917,
+        "line": 5919,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238735,8 +238913,8 @@
       "source_location": {
         "heading": "UF-082 - P2-CACHE-PRIVACY-POLICY",
         "heading_level": 3,
-        "heading_line": 5973,
-        "line": 5975,
+        "heading_line": 5979,
+        "line": 5981,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238752,8 +238930,8 @@
       "source_location": {
         "heading": "UF-083 - P1-USAGE-ANOMALY-QUOTA-GUARD",
         "heading_level": 3,
-        "heading_line": 6040,
-        "line": 6042,
+        "heading_line": 6046,
+        "line": 6048,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238769,8 +238947,8 @@
       "source_location": {
         "heading": "UF-084 - P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
         "heading_level": 3,
-        "heading_line": 6126,
-        "line": 6128,
+        "heading_line": 6132,
+        "line": 6134,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238786,8 +238964,8 @@
       "source_location": {
         "heading": "UF-085 - Implementation Ready Usage Accounting Contract",
         "heading_level": 3,
-        "heading_line": 5643,
-        "line": 5645,
+        "heading_line": 5649,
+        "line": 5651,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238803,8 +238981,8 @@
       "source_location": {
         "heading": "UF-086 - Provider Parser Fixture And Acceptance Contract",
         "heading_level": 3,
-        "heading_line": 5753,
-        "line": 5755,
+        "heading_line": 5759,
+        "line": 5761,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238820,8 +238998,8 @@
       "source_location": {
         "heading": "UF-087 - UsageRecord GUI Projection And Alias Contract",
         "heading_level": 3,
-        "heading_line": 5453,
-        "line": 5455,
+        "heading_line": 5459,
+        "line": 5461,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238837,8 +239015,8 @@
       "source_location": {
         "heading": "UF-088 - GUI Usage Acceptance Fixture Matrix",
         "heading_level": 3,
-        "heading_line": 5545,
-        "line": 5547,
+        "heading_line": 5551,
+        "line": 5553,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238854,8 +239032,8 @@
       "source_location": {
         "heading": "UF-089 - Usage Page Head Presentation",
         "heading_level": 3,
-        "heading_line": 6209,
-        "line": 6211,
+        "heading_line": 6215,
+        "line": 6217,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238871,8 +239049,8 @@
       "source_location": {
         "heading": "UF-090 - Complete Provider And Helper Attempt Attribution",
         "heading_level": 3,
-        "heading_line": 6303,
-        "line": 6305,
+        "heading_line": 6309,
+        "line": 6311,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238888,8 +239066,8 @@
       "source_location": {
         "heading": "UF-091 - Operational Time, Wait, And BSD Attribution",
         "heading_level": 3,
-        "heading_line": 6336,
-        "line": 6338,
+        "heading_line": 6342,
+        "line": 6344,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238905,8 +239083,8 @@
       "source_location": {
         "heading": "UF-092 - Usage Page Counting Honesty, Settlement Axis, And Policy Boundary",
         "heading_level": 3,
-        "heading_line": 6386,
-        "line": 6388,
+        "heading_line": 6392,
+        "line": 6394,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238922,8 +239100,8 @@
       "source_location": {
         "heading": "UF-093 - Usage Rooms Disclosure And Local Projection State",
         "heading_level": 3,
-        "heading_line": 6481,
-        "line": 6483,
+        "heading_line": 6487,
+        "line": 6489,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238939,8 +239117,8 @@
       "source_location": {
         "heading": "UF-094 - Curated Room Defaults And Saved-Layout Migration",
         "heading_level": 3,
-        "heading_line": 6723,
-        "line": 6725,
+        "heading_line": 6729,
+        "line": 6731,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238956,8 +239134,8 @@
       "source_location": {
         "heading": "UF-095 - Usage Workspace Settled-State Persistence Consumer Contract",
         "heading_level": 3,
-        "heading_line": 6794,
-        "line": 6796,
+        "heading_line": 6800,
+        "line": 6802,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238973,8 +239151,8 @@
       "source_location": {
         "heading": "UF-096 - Polished Usage Widget Width Coverage Set",
         "heading_level": 3,
-        "heading_line": 6871,
-        "line": 6873,
+        "heading_line": 6877,
+        "line": 6879,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -238990,8 +239168,8 @@
       "source_location": {
         "heading": "UF-097 - Full-Thread Usage Projection And Attempt Continuity",
         "heading_level": 3,
-        "heading_line": 6652,
-        "line": 6654,
+        "heading_line": 6658,
+        "line": 6660,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239007,8 +239185,8 @@
       "source_location": {
         "heading": "UF-098 - Public Gate, Authentication, Rate, And Quota Separation",
         "heading_level": 3,
-        "heading_line": 6691,
-        "line": 6693,
+        "heading_line": 6697,
+        "line": 6699,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239024,8 +239202,8 @@
       "source_location": {
         "heading": "Working Notebook Usage Fidelity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 6995,
-        "line": 7003,
+        "heading_line": 7001,
+        "line": 7009,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239041,8 +239219,8 @@
       "source_location": {
         "heading": "Working Notebook Usage Fidelity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 6995,
-        "line": 7038,
+        "heading_line": 7001,
+        "line": 7044,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239058,8 +239236,8 @@
       "source_location": {
         "heading": "Working Notebook Usage Fidelity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 6995,
-        "line": 7073,
+        "heading_line": 7001,
+        "line": 7079,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239075,8 +239253,8 @@
       "source_location": {
         "heading": "UF-102 - Run-start attribution context reader",
         "heading_level": 3,
-        "heading_line": 7151,
-        "line": 7153,
+        "heading_line": 7157,
+        "line": 7159,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239092,8 +239270,8 @@
       "source_location": {
         "heading": "UF-103 - Browser Operational Attribution Without Synthetic Usage",
         "heading_level": 3,
-        "heading_line": 7106,
-        "line": 7108,
+        "heading_line": 7112,
+        "line": 7114,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239109,8 +239287,8 @@
       "source_location": {
         "heading": "UF-104 - Pre-Start Run Estimate",
         "heading_level": 3,
-        "heading_line": 7211,
-        "line": 7213,
+        "heading_line": 7217,
+        "line": 7219,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239126,8 +239304,8 @@
       "source_location": {
         "heading": "UF-105 - Live Run Cost From The Run Group",
         "heading_level": 3,
-        "heading_line": 7254,
-        "line": 7256,
+        "heading_line": 7260,
+        "line": 7262,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239143,8 +239321,8 @@
       "source_location": {
         "heading": "UF-106 - Live Run Cost Against The Run's Effective Limit",
         "heading_level": 3,
-        "heading_line": 7292,
-        "line": 7294,
+        "heading_line": 7298,
+        "line": 7300,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239160,8 +239338,8 @@
       "source_location": {
         "heading": "UF-107 - Redesigned Usage Page: One Provider Catalog, Every Account, Accounts In Place, Honest Pace And Live Readings",
         "heading_level": 3,
-        "heading_line": 7338,
-        "line": 7340,
+        "heading_line": 7344,
+        "line": 7346,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -239177,8 +239355,8 @@
       "source_location": {
         "heading": "UF-108 - Usage Loads From Rollups And Keeps Its Daily Totals",
         "heading_level": 3,
-        "heading_line": 7580,
-        "line": 7582,
+        "heading_line": 7586,
+        "line": 7588,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -243458,12 +243636,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18753,
+    "depends_on_edge_count": 18766,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21962,
-    "node_count": 7424,
+    "edge_count": 21976,
+    "node_count": 7430,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3209,
+    "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []
