@@ -18190,7 +18190,7 @@
               },
               "proxy_tls": {
                 "type": "null",
-                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
+                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person\u2019s own systems; onboarding collects no TLS/certificate choice."
               },
               "source_more": {
                 "type": "boolean"
@@ -81808,7 +81808,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody — external proposal",
+            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {
@@ -119934,8 +119934,8 @@
       "status": "materialized",
       "tier": "tier_0_launch_critical",
       "key_shape": "collaboration_definition.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(definition_id)}",
-      "value_schema_id": "pm.storage_value.collaboration_definition.application.v1",
-      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationDefinitionStorageApplicationV1",
+      "value_schema_id": "pm.storage_value.collaboration_definition.application.v2",
+      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationDefinitionStorageApplicationV2",
       "owner_doc": "Plans/storage-plan.md#SP-351",
       "producer": [
         "CV-366 exact selected owner; specified_unimplemented"
@@ -119943,7 +119943,7 @@
       "consumers": [
         "CV-366 exact read/checkpoint/backup/restore owners"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
@@ -119951,12 +119951,16 @@
         "storage_instance_id",
         "server_id",
         "scope",
-        "record"
+        "record",
+        "record_ref"
       ],
       "optional_fields": [],
-      "nullable_fields": [],
+      "nullable_fields": [
+        "record",
+        "record_ref"
+      ],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
-      "migration": "Explicit new application family; Project resource/key/hash unchanged.",
+      "migration": "Explicit V2 wrapper successor for complete-value SP-337 externalization; keys and logical record editions unchanged; V1 remains read-only at its existing definition. No implicit rewrite.",
       "retention_compaction": "canonical; `RP-CONFIG-CURRENT` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
@@ -119969,14 +119973,15 @@
           "storage_instance_id",
           "server_id",
           "scope",
-          "record"
+          "record",
+          "record_ref"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.storage_value.collaboration_definition.application.v1"
+            "const": "pm.storage_value.collaboration_definition.application.v2"
           },
           "schema_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
           "storage_instance_id": {
             "type": "string",
@@ -120003,9 +120008,67 @@
             ]
           },
           "record": {
-            "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1"
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "record_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "string"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
       },
       "compatibility_key_shapes": [],
       "recovery_disposition": {
@@ -120045,8 +120108,8 @@
       "status": "materialized",
       "tier": "tier_0_launch_critical",
       "key_shape": "collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}",
-      "value_schema_id": "pm.storage_value.collaboration_run.application.v1",
-      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationRunStorageApplicationV1",
+      "value_schema_id": "pm.storage_value.collaboration_run.application.v2",
+      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationRunStorageApplicationV2",
       "owner_doc": "Plans/storage-plan.md#SP-351",
       "producer": [
         "CV-366 exact selected owner; specified_unimplemented"
@@ -120054,7 +120117,7 @@
       "consumers": [
         "CV-366 exact read/checkpoint/backup/restore owners"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
@@ -120062,13 +120125,17 @@
         "storage_instance_id",
         "server_id",
         "scope",
-        "record"
+        "record",
+        "record_ref"
       ],
       "optional_fields": [],
-      "nullable_fields": [],
+      "nullable_fields": [
+        "record",
+        "record_ref"
+      ],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
-      "migration": "Explicit new application family; Project resource/key/hash unchanged.",
       "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "migration": "Explicit V2 wrapper successor for complete-value SP-337 externalization; keys and logical record editions unchanged; V1 remains read-only at its existing definition. No implicit rewrite.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120080,14 +120147,15 @@
           "storage_instance_id",
           "server_id",
           "scope",
-          "record"
+          "record",
+          "record_ref"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.storage_value.collaboration_run.application.v1"
+            "const": "pm.storage_value.collaboration_run.application.v2"
           },
           "schema_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
           "storage_instance_id": {
             "type": "string",
@@ -120114,9 +120182,67 @@
             ]
           },
           "record": {
-            "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "record_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "string"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
       },
       "compatibility_key_shapes": [],
       "recovery_disposition": {
@@ -120156,8 +120282,8 @@
       "status": "materialized",
       "tier": "tier_0_launch_critical",
       "key_shape": "collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}",
-      "value_schema_id": "pm.storage_value.collaboration_participant.application.v1",
-      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationParticipantStorageApplicationV1",
+      "value_schema_id": "pm.storage_value.collaboration_participant.application.v2",
+      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationParticipantStorageApplicationV2",
       "owner_doc": "Plans/storage-plan.md#SP-351",
       "producer": [
         "CV-366 exact selected owner; specified_unimplemented"
@@ -120165,7 +120291,7 @@
       "consumers": [
         "CV-366 exact read/checkpoint/backup/restore owners"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
@@ -120173,13 +120299,17 @@
         "storage_instance_id",
         "server_id",
         "scope",
-        "record"
+        "record",
+        "record_ref"
       ],
       "optional_fields": [],
-      "nullable_fields": [],
+      "nullable_fields": [
+        "record",
+        "record_ref"
+      ],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
-      "migration": "Explicit new application family; Project resource/key/hash unchanged.",
       "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "migration": "Explicit V2 wrapper successor for complete-value SP-337 externalization; keys and logical record editions unchanged; V1 remains read-only at its existing definition. No implicit rewrite.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120191,14 +120321,15 @@
           "storage_instance_id",
           "server_id",
           "scope",
-          "record"
+          "record",
+          "record_ref"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.storage_value.collaboration_participant.application.v1"
+            "const": "pm.storage_value.collaboration_participant.application.v2"
           },
           "schema_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
           "storage_instance_id": {
             "type": "string",
@@ -120225,9 +120356,67 @@
             ]
           },
           "record": {
-            "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationParticipantApplicationV1"
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationParticipantApplicationV1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "record_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "string"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
       },
       "compatibility_key_shapes": [],
       "recovery_disposition": {
@@ -120267,8 +120456,8 @@
       "status": "materialized",
       "tier": "tier_0_launch_critical",
       "key_shape": "collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}",
-      "value_schema_id": "pm.storage_value.collaboration_transcript.application.v1",
-      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationTranscriptStorageApplicationV1",
+      "value_schema_id": "pm.storage_value.collaboration_transcript.application.v2",
+      "value_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CollaborationTranscriptStorageApplicationV2",
       "owner_doc": "Plans/storage-plan.md#SP-351",
       "producer": [
         "CV-366 exact selected owner; specified_unimplemented"
@@ -120276,7 +120465,7 @@
       "consumers": [
         "CV-366 exact read/checkpoint/backup/restore owners"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
@@ -120284,13 +120473,17 @@
         "storage_instance_id",
         "server_id",
         "scope",
-        "record"
+        "record",
+        "record_ref"
       ],
       "optional_fields": [],
-      "nullable_fields": [],
+      "nullable_fields": [
+        "record",
+        "record_ref"
+      ],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
-      "migration": "Explicit new application family; Project resource/key/hash unchanged.",
       "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "migration": "Explicit V2 wrapper successor for complete-value SP-337 externalization; keys and logical record editions unchanged; V1 remains read-only at its existing definition. No implicit rewrite.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120302,14 +120495,15 @@
           "storage_instance_id",
           "server_id",
           "scope",
-          "record"
+          "record",
+          "record_ref"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.storage_value.collaboration_transcript.application.v1"
+            "const": "pm.storage_value.collaboration_transcript.application.v2"
           },
           "schema_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
           "storage_instance_id": {
             "type": "string",
@@ -120336,9 +120530,67 @@
             ]
           },
           "record": {
-            "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationMessageApplicationV1"
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationMessageApplicationV1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "record_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "record_ref"
+              ],
+              "properties": {
+                "record_ref": {
+                  "type": "string"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "record": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
       },
       "compatibility_key_shapes": [],
       "recovery_disposition": {

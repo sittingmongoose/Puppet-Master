@@ -24496,6 +24496,8 @@ This is a **newly authored owner contract under DL-090** (DL-091 for `collaborat
 6. **No text.** No payload carries a definition name or purpose, message body, proposal or vote text, finding claim, dissent, waiver reason, Plan text, error text or tool output (CWR-105). Each closed definition admits only its listed fields, so such a field fails validation.
 7. **EventRecord joins.** A collaborative EventRecord has `scope_kind` equal to the payload's; `project_id`, `thread_id` and `idempotency_key` equal to the payload's; `run_id` equal to `collaboration_run_id`; `node_id` null; `attempt_id` equal to the payload's `attempt_id` for the two participant families and null otherwise; `payload_schema_id` equal to the edition's schema ID; `event_type` exactly the selected family; `payload` inline only when canonical UTF-8 JSON is at most 16,384 bytes, otherwise `payload` `{}` and `payload_ref` `payload:blake3:{64_lowercase_hex}:{byte_size}:application/json`; `redaction_profile` `no_secrets`; `replay_policy` `dedupe_by_idempotency_key`; `occurred_at_utc` equal to the family timestamp; and `event_id` and `idempotency_key` from SP-460's recipe. `actor_ref`, `correlation_id` and `causation_event_id` follow CWR-105.
 
+8. **Original source facts and application wrapper successors.** SP-460's field-by-field original-owner joins are mandatory on prepare, retry and recovery. Every nested application context joins instance, Server and thread; a recomputed digest cannot replace those joins. The four collaborative application physical wrappers use explicit `*StorageApplicationV2` definitions (schema version `2.0.0`); unchanged logical V1 records are inline or resolved through SP-337, with exactly one of `record` and `record_ref` non-null. The complete encoded wrapper must fit 16,384 bytes. Closed V1 physical definitions remain unchanged for historical readers. Numeric identity/digest input uses SP-460's lossless decimal decoding and one canonical number rule; exact boolean/integer control types are required without coercion.
+
 ```yaml
 plan_unit_id: CV-460
 unit_type: schema_contract
@@ -24514,7 +24516,9 @@ canonical_text: >-
   redaction, replay, occurrence time and the SP-460 identity recipe. Nothing is admitted.
   SP-337 externalizes bodies above 16384 canonical UTF-8 bytes and verifies complete resolved bytes and
   identical payload joins. Identifiers and hashes use true-end lexical guards. Family/envelope equality is
-  mandatory; SP-460 defines canonical numeric serialization and frozen caller-envelope/source custody.
+  mandatory; SP-460 defines lossless numeric serialization, exact control types and field-level frozen
+  caller-envelope/source custody. Four explicit collaborative app V2 wrappers independently fit 16384
+  MessagePack bytes or use verified SP-337 logical-record references; closed V1 definitions are preserved.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false

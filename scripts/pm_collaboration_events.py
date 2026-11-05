@@ -27,11 +27,14 @@ import copy
 import datetime as dt
 import hashlib
 import math
+import gc
+from decimal import Decimal
 import msgpack
 import importlib.util
 import json
 import re
 import sys
+import time
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -97,20 +100,59 @@ ATTEMPT_FAMILIES = {"collaboration.participant_started", "collaboration.particip
 
 @lru_cache(maxsize=64)
 def load(path: str, root: Path = ROOT) -> Any:
-    return json.loads((root / path).read_text(encoding="utf-8"))
+    return decode_json((root / path).read_text(encoding="utf-8"))
+
+
+def decode_json(raw):
+    """Decode mathematical integers before binary64 can round a decimal/exponent spelling."""
+    def number(token):
+        exact = Decimal(token)
+        if exact == exact.to_integral_value():
+            # Keep the existing owner/MessagePack float domain when it is lossless;
+            # new identity/digest canonicalization still writes its integer value.
+            return float(exact) if abs(exact)<=9007199254740991 else int(exact)
+        value = float(exact)
+        if not math.isfinite(value) or Decimal(str(value)) != exact:
+            raise ValueError("JSON number cannot round-trip losslessly")
+        return value
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            if key in result:
+                raise ValueError("duplicate JSON key")
+            result[key] = value
+        return result
+    return json.loads(raw, parse_float=number, object_pairs_hook=pairs,
+                      parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
+
+
+def memory_floor():
+    # Pause between guards without discarding an already completed matrix prefix.
+    # No validation or mutation runs below the worker's available-memory floor.
+    paused=False
+    while True:
+        available = int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines()
+                             if line.startswith('MemAvailable:'))) // (1024 * 1024)
+        if available>=6:
+            if paused:print("RESUMED: free -g available is at least 6 GB",file=sys.stderr,flush=True)
+            return
+        print("PAUSED: free -g available is below 6 GB; no next guard runs",file=sys.stderr,flush=True)
+        paused=True
+        gc.collect()
+        time.sleep(10)
 
 
 def canonical(value: Any) -> str:
     """DL-077 JSON plus one numerical representation for each admitted mathematical value.
 
-    Exact integers stay arbitrary precision. Finite integral binary64 values become
-    integers (including negative zero); other finite floats use Python's unique
-    shortest round-trip decimal. No source field is rounded or narrowed.
+    Exact integers stay arbitrary precision after lossless decimal decoding.
+    Already-decoded unsafe integral binary64 values refuse rather than authenticate
+    a rounded source. Other admitted finite floats use their shortest decimal.
     """
     def normalize(node):
         if isinstance(node, float):
-            if not math.isfinite(node):
-                raise ValueError("nonfinite JSON number")
+            if not math.isfinite(node) or (node.is_integer() and abs(node) > 9007199254740991):
+                raise ValueError("nonfinite or already-rounded JSON number")
             return int(node) if node.is_integer() else node
         if isinstance(node, dict):
             return {key: normalize(child) for key, child in node.items()}
@@ -171,6 +213,11 @@ def producer_digest(payload: dict[str, Any]) -> str:
     return sha(canonical(payload))
 
 
+def same_fact(left, right):
+    try:return canonical(left) == canonical(right)
+    except (TypeError,ValueError):return False
+
+
 def valid_utc(value: Any) -> bool:
     if not isinstance(value, str) or not value.endswith("Z"):
         return False
@@ -226,6 +273,8 @@ def payload_rejection(event_type: str, payload: Any, recovery_epoch: int, root: 
     uri = load(PAYLOAD_PATH, root)["$id"]
     if not isinstance(payload, dict) or not validator(uri, "#/$defs/" + payload_def(event_type, edition_of(payload)), root).is_valid(payload):
         return "schema"
+    if type(recovery_epoch) is not int or recovery_epoch < 0:
+        return "epoch_type"
     if not valid_utc(payload[FAMILY_TS[event_type]]):
         return "valid_utc_datetime"
     if payload["idempotency_key"] != idempotency_key(event_type, payload, recovery_epoch):
@@ -480,11 +529,12 @@ def registry_membership_failures(root: Path = ROOT, registry: dict[str, Any] | N
 
 
 def retention_rejection(policy):
+    """Policy control shape: named string fields, exact int cardinality and exact bool hold flag."""
     if policy is None:
         return "retention_missing"
     if policy is not None:
         want={"retention_mode":"indefinite","anchor_kind":"explicit_delete","max_cardinality":250000,"cardinality_scope":"thread","overflow_action":"roll_successor","hold_eligible":True,"policy_version":"1.0.0"}
-        if any(policy.get(k)!=v for k,v in want.items()):
+        if type(policy) is not dict or any(type(policy.get(k)) is not type(v) or policy.get(k)!=v for k,v in want.items()):
             return "retention_values"
     return None
 
@@ -508,28 +558,29 @@ def envelope_rejection(event_type: str, record: dict[str, Any], storage_instance
     p, error = resolved_payload(record, payload_store)
     if error:
         return error
-    if record["scope_kind"] != p.get("scope_kind") or record["project_id"] != p.get("project_id"):
-        return "scope_kind"
-    if record["redaction_profile"] != "no_secrets":
-        return "redaction_profile"
-    if current_writer and record["replay_policy"] != "dedupe_by_idempotency_key":
-        return "replay_policy"
-    if record["node_id"] is not None:
-        return "node_join"
-    want_attempt = p.get("attempt_id") if event_type in ATTEMPT_FAMILIES else None
-    if record["attempt_id"] != want_attempt:
-        return "attempt_join"
-    if (record["thread_id"], record["run_id"], record["idempotency_key"]) != (p.get("thread_id"), p.get("collaboration_run_id"), p.get("idempotency_key")):
-        return "payload_envelope_identity"
-    sid = f"pm.collaboration_event.{TOKEN[event_type]}." + ("v1" if p["scope_kind"] == "project" else "application.v1")
-    if record["payload_schema_id"] != sid:
-        return "payload_schema_id"
-    if record["occurred_at_utc"] != p.get(FAMILY_TS[event_type]):
-        return "occurred_at_join"
-    if record["event_id"] != event_id(event_type, p, storage_instance_id, recovery_epoch):
-        return "identity_recipe"
-    if payload_rejection(event_type, p, recovery_epoch, root):
-        return "payload"
+    if p is not None:
+        if record["scope_kind"] != p.get("scope_kind") or record["project_id"] != p.get("project_id"):
+            return "scope_kind"
+        if record["redaction_profile"] != "no_secrets":
+            return "redaction_profile"
+        if current_writer and record["replay_policy"] != "dedupe_by_idempotency_key":
+            return "replay_policy"
+        if record["node_id"] is not None:
+            return "node_join"
+        want_attempt = p.get("attempt_id") if event_type in ATTEMPT_FAMILIES else None
+        if record["attempt_id"] != want_attempt:
+            return "attempt_join"
+        if (record["thread_id"], record["run_id"], record["idempotency_key"]) != (p.get("thread_id"), p.get("collaboration_run_id"), p.get("idempotency_key")):
+            return "payload_envelope_identity"
+        sid = f"pm.collaboration_event.{TOKEN[event_type]}." + ("v1" if p["scope_kind"] == "project" else "application.v1")
+        if record["payload_schema_id"] != sid:
+            return "payload_schema_id"
+        if record["occurred_at_utc"] != p.get(FAMILY_TS[event_type]):
+            return "occurred_at_join"
+        if record["event_id"] != event_id(event_type, p, storage_instance_id, recovery_epoch):
+            return "identity_recipe"
+        if payload_rejection(event_type, p, recovery_epoch, root):
+            return "payload"
     return None
 
 
@@ -553,7 +604,7 @@ def reference_rejection(ref, body):
             return "reference_size"
         if blake3(raw).hexdigest()!=parts[2]:
             return "reference_hash"
-        try: p=json.loads(body)
+        try: p=decode_json(body)
         except (ValueError,TypeError): p=None
         valid_json=isinstance(p,dict)
         if not valid_json:
@@ -572,7 +623,7 @@ def resolved_payload(record, payload_store=None):
     body=(payload_store or {}).get(ref)
     error=reference_rejection(ref,body)
     if error:return None,error
-    return json.loads(body),None
+    return (decode_json(body) if body is not None else None),None
 
 
 def payload_reference(p):
@@ -608,6 +659,14 @@ def reference_failures(root=ROOT):
         document = load(path, root)
         Draft202012Validator.check_schema(document)
         walk(document, registry.resolver(document["$id"]), path)
+    # This common file also holds foreign Goal/Chain/automation contracts. Add every
+    # owned wrapper root in full, retaining every pre-existing lane root above; do
+    # not treat another lane's unrelated definitions as collaborative contracts.
+    path="Plans/application_workflow_contracts.schema.json";document=load(path,root)
+    Draft202012Validator.check_schema(document)
+    for name in ("CollaborationDefinition","CollaborationRun","CollaborationParticipant","CollaborationTranscript"):
+        definition=name+"StorageApplicationV2"
+        walk(document["$defs"][definition],registry.resolver(document["$id"]),path+"/$defs/"+definition)
     return failures
 
 
@@ -623,16 +682,16 @@ def checkpoint_rejection(value, context, root=ROOT):
         return "checkpoint_partition"
     def without_instance(t):
         t=copy.deepcopy(t);t.pop("storage_instance_id");t["source_selection"].pop("storage_instance_id");return t
-    if without_instance(token) != without_instance(context["index_read_token"]):
+    if not same_fact(without_instance(token),without_instance(context["index_read_token"])):
         return "checkpoint_token"
-    if value["admitted_event_types"] != context["admitted_event_types"]:
+    if not same_fact(value["admitted_event_types"],context["admitted_event_types"]):
         return "checkpoint_admitted"
     cursor = value["source_cursor"]
-    if (value["first_retained_sequence_id"], value["index_through_sequence_id"]) != (context["first_retained_sequence_id"], context["index_through_sequence_id"]) or (cursor is not None and cursor["last_sequence_id"] != value["index_through_sequence_id"]):
+    if not same_fact([value["first_retained_sequence_id"], value["index_through_sequence_id"]],[context["first_retained_sequence_id"], context["index_through_sequence_id"]]) or (cursor is not None and cursor["last_sequence_id"] != value["index_through_sequence_id"]):
         return "checkpoint_coverage"
     if cursor is not None:
         event = context["last_event"]
-        if cursor != context["source_cursor"] or cursor["segment_generation"] != token["source_selection"]["selected_segment_generation"] or cursor["frame_end_offset"] <= cursor["byte_offset"] or cursor["last_event_id"] != event["event_id"] or cursor["last_sequence_id"] != event["sequence_id"]:
+        if not same_fact(cursor,context["source_cursor"]) or cursor["segment_generation"] != token["source_selection"]["selected_segment_generation"] or cursor["frame_end_offset"] <= cursor["byte_offset"] or cursor["last_event_id"] != event["event_id"] or not same_fact(cursor["last_sequence_id"],event["sequence_id"]):
             return "checkpoint_cursor"
         if event["scope_kind"] != value["scope_kind"] or event["project_id"] != value["project_id"] or envelope_rejection(event["event_type"], event, actual, token["source_selection"]["recovery_epoch"], root, context.get("payload_store"), current_writer=False):
             return "checkpoint_event"
@@ -642,14 +701,22 @@ def checkpoint_rejection(value, context, root=ROOT):
 
 
 def historical_rejection(event_type, record, context, root=ROOT):
+    """Controls require a dict, exact bool withdrawn/retained and exact int original write epoch.
+
+    Original-record comparison is type-preserving and the EventRecord schema validates
+    that identical original; live state is deliberately outside the historical domain.
+    """
     # Historical validation uses the captured write epoch, never the current live run/definition.
-    if context["withdrawn"]:
+    if type(context) is not dict or type(context.get("withdrawn")) is not bool or context["withdrawn"]:
         return "historical_withdrawn"
-    if not context["retained"]:
+    if type(context.get("retained")) is not bool or not context["retained"]:
         return "historical_not_retained"
-    if record != context["original_record"]:
+    if type(context.get("write_epoch")) is not int or context["write_epoch"] < 0:
+        return "historical_epoch_type"
+    if not same_fact(record,context["original_record"]):
         return "historical_forged"
-    return envelope_rejection(event_type, record, context["storage_instance_id"], context["write_epoch"], root, context.get("payload_store"), current_writer=False)
+    # Only a typed original write epoch supplies the identity domain; the preceding guard owns malformed controls.
+    return envelope_rejection(event_type, record, context["storage_instance_id"], context["write_epoch"], root, context.get("payload_store"), current_writer=False) if type(context.get("write_epoch")) is int else None
 
 
 def source_storage_key(value):
@@ -658,16 +725,32 @@ def source_storage_key(value):
 
 def source_rejection(value, root=ROOT, physical_key=None, source_context=None):
     schema = load(SOURCE_PATH, root)
-    et = value.get("event_type")
-    if et not in EVENT_TYPES or not validator(schema["$id"], "#/$defs/" + TOKEN[et], root).is_valid(value):
+    if type(value) is not dict:
+        return "source_schema"
+    et=value.get("event_type")
+    if et not in EVENT_TYPES:
+        return "source_family"
+    if et in EVENT_TYPES and not validator(schema["$id"], "#/$defs/" + TOKEN[et], root).is_valid(value):
         return "source_schema"
     p = value["semantic_body"]
-    if source_context is None:
+    if not source_context_shape(source_context):
         return "source_context_missing"
+    return source_fact_rejection(value, root, physical_key, source_context) if et in EVENT_TYPES and source_context_shape(source_context) else None
+
+
+def source_context_shape(context):
+    """Required independently read control slots; each fact guard checks its exact value/type."""
+    return type(context) is dict and {"storage_instance_id","write_epoch","binding","currentness_hash",
+        "owner_record_sha256","envelope_metadata","required_slot_ids","participant_slot_ids",
+        "owner_record_ref","owner_facts"} <= context.keys()
+
+
+def source_fact_rejection(value, root=ROOT, physical_key=None, source_context=None):
+    et=value["event_type"];p=value["semantic_body"]
     if source_context is not None:
         if value["storage_instance_id"]!=source_context["storage_instance_id"]:
             return "source_instance"
-        if value["recovery_epoch"]!=source_context["write_epoch"]:
+        if type(source_context.get("write_epoch")) is not int or value["recovery_epoch"]!=source_context["write_epoch"]:
             return "source_epoch"
     if physical_key!=source_storage_key(value):
         return "source_key"
@@ -688,10 +771,11 @@ def source_rejection(value, root=ROOT, physical_key=None, source_context=None):
     joins = {"collaboration_id": "collaboration_id", "collaboration_run_id": "collaboration_run_id", "thread_id": "thread_id", "project_id": "project_id", "kind": "kind", "proposal_id": "proposal_id", "vote_id": "vote_id", "finding_id": "finding_id", "collaboration_message_id": "collaboration_message_id", "participant_slot_id": "participant_slot_id", "run_id": "collaboration_run_id", "slot_id": "participant_slot_id", "review_run_id":"collaboration_run_id", "definition_revision":"definition_revision", "revision":"definition_revision", "sequence":"sequence", "sender_kind":"sender_kind", "sender_id":"sender_id", "recipient_ids":"recipient_ids", "body_ref":"body_ref", "attachment_refs":"attachment_refs", "position":"position", "severity":"severity", "disposition":"disposition", "requested_effective_snapshot_ref":"requested_effective_snapshot_ref", "outcome":"outcome", "proposal_round":"proposal_round", "confidence":"confidence", "message_type":"message_type", "reply_to":"reply_to"}
     binding={k:p[k] for k in ["scope_kind","project_id","thread_id","collaboration_id","collaboration_run_id","definition_revision","kind"]+(["server_id"] if p["scope_kind"]=="application" else [])}
     binding["event_type"]=et;binding["subject"]=subject_values(et,p);binding["family_timestamp"]=p[FAMILY_TS[et]]
-    same_fields=(set(record)&set(p))-{"assistant_plan_id","plan_version","goal_id","parent_run_id","attempt_id"}
-    if (source_context is not None and source_context.get("binding")!=binding) or any(record[field]!=p[field] for field in same_fields) or any(field in record and target in p and record[field]!=p[target] for field,target in joins.items()):
+    separate={"attempt_id"} | ({"assistant_plan_id","plan_version"} if et=="brainstorm.plan_synthesized" else set())
+    same_fields=(set(record)&set(p))-separate
+    if (source_context is not None and not same_fact(source_context.get("binding"),binding)) or any(not same_fact(record[field],p[field]) for field in same_fields) or any(field in record and target in p and not same_fact(record[field],p[target]) for field,target in joins.items()) or ("coordinator_kind" in p and p["coordinator_kind"] != record["coordinator_spec"]["kind"]):
         return "source_record_identity"
-    expected_state={"collaboration.started":"running","collaboration.paused":"paused","collaboration.resumed":"running","collaboration.cancelled":"cancelled","collaboration.completed":"completed","collaboration.failed":"failed"}.get(et)
+    expected_state={"collaboration.started":p.get("state_after"),"collaboration.paused":"paused","collaboration.resumed":p.get("state_after"),"collaboration.cancelled":"cancelled","collaboration.completed":"completed","collaboration.failed":"failed"}.get(et)
     if (et=="collaboration.started" and record.get("created_at")!=p["started_at_utc"]) or (et=="collaboration.message_added" and record.get("created_at")!=p["written_at_utc"]) or (expected_state is not None and record.get("state")!=expected_state) or (expected_state in ("cancelled","completed","failed") and record.get("completed_at")!=p[FAMILY_TS[et]]):
         return "source_record_state"
     if source_context is not None and value["envelope_metadata"]!=source_context.get("envelope_metadata"):
@@ -713,17 +797,30 @@ def source_rejection(value, root=ROOT, physical_key=None, source_context=None):
         if pack["review_run_id"]!=p["collaboration_run_id"] or pack["target_hashes"]!=p["target_hashes"] or (source_context is not None and pack!=source_context.get("review_target_pack")):
             return "source_review_pack"
     if "application_context" in record:
-        ac = record["application_context"]
-        if ac["storage_instance_id"] != value["storage_instance_id"] or ac["scope"]["server_id"] != p["server_id"]:
+        if any(ac["storage_instance_id"] != value["storage_instance_id"] or ac["scope"]["server_id"] != p["server_id"] or ac["thread_id"] != p["thread_id"] for ac in application_contexts(record)):
             return "source_application_context"
-    if (source_context is not None and {s["slot_id"] for s in value["slot_requirements"] if s["required"]} != set(source_context["required_slot_ids"])) or (et in ("collaboration.created", "collaboration.configuration_changed", "collaboration.completed") and set(p["required_slot_ids"]) != {s["slot_id"] for s in value["slot_requirements"] if s["required"]}):
+    if not identifier_list(source_context.get("required_slot_ids")) or {s["slot_id"] for s in value["slot_requirements"] if s["required"]} != set(source_context["required_slot_ids"]) or (et in ("collaboration.created", "collaboration.configuration_changed", "collaboration.completed") and set(p["required_slot_ids"]) != {s["slot_id"] for s in value["slot_requirements"] if s["required"]}) or ("required" in p and p["required"] != (p["participant_slot_id"] in {s["slot_id"] for s in value["slot_requirements"] if s["required"]})):
         return "source_required_slots"
-    if source_context is not None and p["currentness_hash"] != source_context.get("currentness_hash"):
+    if (source_context is not None and p["currentness_hash"] != source_context.get("currentness_hash")) or ("currentness" in record and record["currentness"]!=p["currentness_hash"]):
         return "source_currentness"
     slot_ids=[s["slot_id"] for s in value["slot_requirements"]]
     record_slots=[s["participant_slot_id"] for s in record.get("participant_specs",[])]
-    if len(slot_ids)!=len(set(slot_ids)) or len(record_slots)!=len(set(record_slots)) or (source_context is not None and sorted(slot_ids)!=sorted(source_context["participant_slot_ids"])) or ("participant_specs" in record and sorted(slot_ids)!=sorted(record_slots)):
+    if not identifier_list(source_context.get("participant_slot_ids")) or len(slot_ids)!=len(set(slot_ids)) or len(record_slots)!=len(set(record_slots)) or slot_ids!=source_context["participant_slot_ids"] or ("participant_specs" in record and slot_ids!=record_slots) or ("participant_slot_ids" in p and p["participant_slot_ids"]!=slot_ids):
         return "source_slot_roster"
+    if et in ("brainstorm.proposal_added", "brainstorm.vote_added") and (source_context.get("attempt_id") != p["attempt_id"]):
+        return "source_producer_attempt"
+    if et == "brainstorm.vote_added" and record["hard_constraint_conflicts"] != p["hard_constraint_conflict_ids"]:
+        return "source_vote_constraints"
+    if et == "brainstorm.plan_synthesized" and not same_fact({k:p[k] for k in ("assistant_plan_id","plan_version","plan_hash","plan_create_receipt_ref")}, source_context.get("plan_create_result")):
+        return "source_plan_result"
+    if et in ("collaboration.artifact_added","review.artifact_finalized") and p["artifact_ref"] not in record["artifact_refs"]:
+        return "source_artifact_custody"
+    if et in ("review.finding_added", "review.finding_dispositioned") and (p["target_hashes"] != source_context.get("review_target_hashes") or not identifier_list(source_context.get("reviewer_ids")) or any(v["target_hash"] not in p["target_hashes"] or v["reviewer_id"] not in source_context["reviewer_ids"] for v in record["reviewer_votes"])):
+        return "source_review_targets"
+    if et == "review.finding_dispositioned" and (p["counted_vote_count"] != len({v["reviewer_id"] for v in record["reviewer_votes"]}) or len(record["reviewer_votes"]) != len({v["reviewer_id"] for v in record["reviewer_votes"]}) or p["dissent_count"] != len(record["dissent"])):
+        return "source_review_counts"
+    if not same_fact(original_fact_projection(et, p, record),source_context.get("owner_facts")):
+        return "source_owner_facts"
     if payload_rejection(et, p, value["recovery_epoch"], root):
         return "source_payload"
     return None
@@ -733,13 +830,85 @@ def prepared_event_rejection(source_case, record, root=ROOT, payload_store=None)
     value=source_case["value"];et=value["event_type"]
     error=source_rejection(value,root,source_case["physical_key"],source_case["source_context"])
     if error:return error
+    error=application_wrapper_rejection(source_case,root)
+    if error:return error
     error=envelope_rejection(et,record,value["storage_instance_id"],value["recovery_epoch"],root,payload_store)
     if error:return error
     body,_=resolved_payload(record,payload_store)
-    if body!=value["semantic_body"]:
+    if not same_fact(body,value["semantic_body"]):
         return "prepared_body"
     if {k:record[k] for k in value["envelope_metadata"]}!=value["envelope_metadata"]:
         return "prepared_envelope_metadata"
+    return None
+
+
+def application_contexts(node):
+    if isinstance(node, dict):
+        if "application_context" in node:
+            yield node["application_context"]
+        for value in node.values():
+            yield from application_contexts(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from application_contexts(value)
+
+
+def identifier_list(value):
+    return type(value) is list and all(type(item) is str for item in value) and len(value)==len(set(value))
+
+
+def original_fact_projection(et, p, record):
+    """Facts absent from the typed record come from independently captured original owner controls.
+
+    Fields already derived from record/roster/binding/results have their own joins above.
+    This projection never takes an assigned Storage sequence, time, token or receipt.
+    """
+    bound = set(record) - ({"attempt_id"} | ({"assistant_plan_id","plan_version"} if et=="brainstorm.plan_synthesized" else set()))
+    bound |= {"schema_version","scope_kind","project_id","thread_id","server_id","collaboration_id","collaboration_run_id","definition_revision","kind","currentness_hash","idempotency_key",FAMILY_TS[et]}
+    bound |= set(SUBJECT[et])
+    bound |= {"state_after","participant_slot_ids","required_slot_ids","required"}
+    bound |= {"definition_record_ref","run_record_ref","proposal_record_ref","vote_record_ref","finding_record_ref","disposition_record_ref"}
+    if et in ("collaboration.artifact_added","review.artifact_finalized"):bound.add("artifact_ref")
+    if et == "collaboration.completed":bound.add("output_refs")
+    if et in ("brainstorm.proposal_added","brainstorm.vote_added"):
+        bound |= {"participant_slot_id","attempt_id","hard_constraint_conflict_ids"}
+    if "coordinator_kind" in p:bound.add("coordinator_kind")
+    if et == "brainstorm.plan_synthesized":
+        bound |= {"assistant_plan_id","plan_version","plan_hash","plan_create_receipt_ref"}
+    if et in ("review.finding_added","review.finding_dispositioned"):
+        bound |= {"target_hashes","counted_vote_count","dissent_count"}
+    return {key:value for key,value in p.items() if key not in bound}
+
+
+def application_wrapper_definition(record):
+    return {"pm.collaboration.definition.application.v1":"CollaborationDefinition",
+            "pm.collaboration.run.application.v1":"CollaborationRun",
+            "pm.collaboration.participant.application.v1":"CollaborationParticipant",
+            "pm.collaboration.message.application.v1":"CollaborationTranscript"}.get(record.get("schema_id"))
+
+
+def application_wrapper_rejection(source_case, root=ROOT):
+    value=source_case["value"];record=value["owner_record"]
+    definition=application_wrapper_definition(record)
+    if definition is not None:
+        wrapper=source_case.get("application_wrapper")
+        uri=load("Plans/application_workflow_contracts.schema.json",root)["$id"]
+        if not validator(uri,"#/$defs/"+definition+"StorageApplicationV2",root).is_valid(wrapper):
+            return "application_wrapper_schema"
+        if len(msgpack.packb(wrapper,use_bin_type=True))>16384:
+            return "application_wrapper_limit"
+        if wrapper["record_ref"] is None:
+            original=wrapper["record"]
+        else:
+            ref=wrapper["record_ref"];body=source_case.get("payload_store",{}).get(ref)
+            error=reference_rejection(ref,body)
+            if error:return error
+            original=decode_json(body) if body is not None else None
+        if original is not None and not same_fact(original,record):
+            return "application_wrapper_record"
+        ac=record["application_context"]
+        if wrapper["storage_instance_id"]!=value["storage_instance_id"] or wrapper["server_id"]!=value["semantic_body"]["server_id"] or not same_fact(wrapper["scope"],ac["scope"]):
+            return "application_wrapper_identity"
     return None
 
 
@@ -751,7 +920,7 @@ def source_record_ref(et, p):
         "review.finding_dispositioned": "finding_record_ref",
     }
     if et in ("collaboration.created","collaboration.configuration_changed"):
-        return p.get("definition_record_ref", "collaboration_definition:"+p["collaboration_id"]+":"+str(p["definition_revision"]))
+        return p.get("definition_record_ref", "collaboration_definition:"+p["collaboration_id"]+":"+canonical(p["definition_revision"]))
     if et=="collaboration.message_added":
         return "collaboration_message:"+p["collaboration_message_id"]
     if et=="collaboration.participant_started":
@@ -1156,16 +1325,17 @@ def fixture_report(root: Path = ROOT, fixtures: dict[str, Any] | None = None) ->
     payload_by_id = {}
     for c in fx["numeric_vectors"]:
         try:
-            actual=canonical(json.loads(c["raw_json"], parse_constant=lambda v: (_ for _ in ()).throw(ValueError(v))))
+            actual=canonical(decode_json(c["raw_json"]))
         except (ValueError, TypeError):
             actual=None
         if actual!=c["canonical"]:
             fails.append({"check":"numeric_canonical","case_id":c["case_id"]})
     for c in fx["numeric_family_cases"]:
-        et=c["event_type"];before=c["payload"];after=c["alternate_payload"]
-        a=(owner_operation_id(et,before,epoch),idempotency_key(et,before,epoch),event_id(et,before,siid,epoch),producer_digest(before))
-        b=(owner_operation_id(et,after,float(epoch)),idempotency_key(et,after,float(epoch)),event_id(et,after,siid,float(epoch)),producer_digest(after))
-        if a!=b or payload_rejection(et,after,epoch,root) is not None:
+        et=c["event_type"];before=c["payload"];after=decode_json(c["alternate_raw_json"]) if "alternate_raw_json" in c else c["alternate_payload"]
+        original_epoch=c.get("epoch",epoch);alternate_epoch=decode_json(c["epoch_raw_json"]) if "epoch_raw_json" in c else float(epoch)
+        a=(owner_operation_id(et,before,original_epoch),idempotency_key(et,before,original_epoch),event_id(et,before,siid,original_epoch),producer_digest(before),row_sha256(before))
+        b=(owner_operation_id(et,after,alternate_epoch),idempotency_key(et,after,alternate_epoch),event_id(et,after,siid,alternate_epoch),producer_digest(after),row_sha256(after))
+        if a!=b or payload_rejection(et,after,int(alternate_epoch),root) is not None:
             fails.append({"check":"numeric_identity","case_id":c["case_id"]})
     for c in fx["payloads"]:
         payload_by_id[c["case_id"]] = c["payload"]
@@ -1184,7 +1354,7 @@ def fixture_report(root: Path = ROOT, fixtures: dict[str, Any] | None = None) ->
             fails.append({"check": "valid_event", "case_id": c["case_id"], "found": r})
         per[c["event_type"]]["valid_events"].add(c["record"]["scope_kind"])
     for c in fx["invalid_events"]:
-        r = envelope_rejection(c["event_type"], c["record"], siid, epoch, root)
+        r = envelope_rejection(c["event_type"], c["record"], siid, epoch, root, c.get("payload_store"))
         if r != c["join"]:
             fails.append({"check": "invalid_event_join", "case_id": c["case_id"], "expected": c["join"], "found": r})
         per[c["event_type"]]["joins"].add(c["join"])
@@ -1279,13 +1449,20 @@ def stored_size_report(root=ROOT):
     rows=[]
     for kind,items in (("canonical_source",fx["prepared_sources"]),("derived_projection_or_checkpoint",fx["projection_values"])):
         for c in items:rows.append(dict(case_id=c["case_id"],kind=kind,**size(c["value"])))
+    for c in fx["valid_events"]:
+        rows.append(dict(case_id=c["case_id"],kind="event_record",inline_body_bytes=len(canonical(c["record"]["payload"]).encode()),inline_limit_bytes=16384,**size(c["record"])))
+    for c in fx["prepared_sources"]:
+        if "application_wrapper" in c:
+            rows.append(dict(case_id=c["case_id"],kind="required_application_wrapper",limit_bytes=16384,**size(c["application_wrapper"])))
+    for c in wrapper_boundary_cases(root):
+        rows.append(dict(case_id=c["boundary_label"],kind="application_wrapper_boundary",limit_bytes=16384,expected=c["expected"],event_record=size(c["event"]),source_holder=size(c["value"]),wrapper=size(c["application_wrapper"]),payload_packs={ref:len(body.encode()) for ref,body in c.get("payload_store",{}).items()}))
     for probe in contract_probes(root,include_shapes=False):
         if probe["domain"]=="envelope" and ":large_reference:" in probe["case_id"]:
             body,_=resolved_payload(probe["value"],probe["payload_store"])
             holder=copy.deepcopy(next(c["value"] for c in fx["prepared_sources"] if c["value"]["event_type"]==probe["event_type"] and c["value"]["semantic_body"]["scope_kind"]=="project"))
             holder["semantic_body"]=body;holder["semantic_sha256"]=producer_digest(body)
             rows.append(dict(case_id=probe["case_id"],kind="large_reference",semantic_body=size(body),event_record=size(probe["value"]),source_holder_candidate=size(holder),payload_pack_bytes=len(canonical(body).encode())))
-    return {"boundary":"Only EventRecord inline body is capped at 16384 bytes by SP-337; complete redb source/projection/checkpoint values have no new cap. MessagePack sizes are synthetic encodings, not native codec or durability proof.","values":rows}
+    return {"boundary":"SP-337 caps the EventRecord inline body at 16384 UTF-8 bytes; SP-351 separately caps each complete MessagePack application wrapper at 16384 bytes, including header/reference fields. Both mandatory parts independently externalize above their own boundary. Complete source-holder/projection/checkpoint sizes are inventoried without inventing a new redb cap. Encodings are synthetic, not native codec or durability proof.","values":rows}
 
 
 def validate(root: Path = ROOT) -> dict[str, Any]:
@@ -1375,7 +1552,7 @@ def contract_probes(root=ROOT, include_shapes=True):
     for c in fx["invalid_payloads"]:
         add("payload", c["case_id"], c["payload"], c["first_failing_layer"], event_type=c["event_type"])
     for c in fx["invalid_events"]:
-        add("envelope", c["case_id"], c["record"], c["join"], event_type=c["event_type"])
+        add("envelope", c["case_id"], c["record"], c["join"], event_type=c["event_type"],payload_store=c.get("payload_store"))
     for c in fx["payloads"]:
         p = c["payload"]
         # True-end tests cover each present identifier/ref/hash/timestamp in both editions.
@@ -1441,14 +1618,14 @@ def contract_probes(root=ROOT, include_shapes=True):
             bad=copy.deepcopy(v)
             if field=="storage_instance_id":
                 bad[field]="00000000-0000-4000-8000-000000000000"
-                if "application_context" in bad["owner_record"]:bad["owner_record"]["application_context"][field]=bad[field]
+                for ac in application_contexts(bad["owner_record"]):ac[field]=bad[field]
             else:bad[field]+=1
             bad["semantic_body"]["idempotency_key"]=idempotency_key(bad["event_type"],bad["semantic_body"],bad["recovery_epoch"])
-            bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_body"]["currentness_hash"]=bad["owner_record_sha256"];bad["semantic_sha256"]=producer_digest(bad["semantic_body"])
+            bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_sha256"]=producer_digest(bad["semantic_body"])
             bad["owner_operation_id"]=owner_operation_id(bad["event_type"],bad["semantic_body"],bad["recovery_epoch"]);bad["event_id"]=event_id(bad["event_type"],bad["semantic_body"],bad["storage_instance_id"],bad["recovery_epoch"])
             add("source",c["case_id"]+":"+field,bad,error)
         bad=copy.deepcopy(v);bad["unexpected"]=True;add("source",c["case_id"]+":closed",bad,"source_schema")
-        bad=copy.deepcopy(v);bad["event_type"]="unknown.event";add("source",c["case_id"]+":family",bad,"source_schema")
+        bad=copy.deepcopy(v);bad["event_type"]="unknown.event";add("source",c["case_id"]+":family",bad,"source_family")
         bad=copy.deepcopy(v);bad["semantic_body"]["currentness_hash"]="f"*64;bad["semantic_sha256"]=producer_digest(bad["semantic_body"]);add("source",c["case_id"]+":currentness",bad,"source_currentness")
         bad=copy.deepcopy(v);key=bad["semantic_body"]["idempotency_key"];bad["semantic_body"]["idempotency_key"]=(key[:-2]+("30" if key[-2:]!="30" else "31")) if bad["semantic_body"]["scope_kind"]=="application" else key[:-1]+("0" if key[-1]!="0" else "1");bad["semantic_sha256"]=producer_digest(bad["semantic_body"]);add("source",c["case_id"]+":payload_identity",bad,"source_payload")
         if v["event_type"] in ("collaboration.created","collaboration.configuration_changed"):
@@ -1459,7 +1636,7 @@ def contract_probes(root=ROOT, include_shapes=True):
         record=v["owner_record"]
         field=next((k for k in ("thread_id","collaboration_id","collaboration_run_id","proposal_id","vote_id","finding_id","participant_slot_id","run_id") if k in record),None)
         if field:
-            bad=copy.deepcopy(v);bad["owner_record"][field]="other_record";bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_body"]["currentness_hash"]=bad["owner_record_sha256"];bad["semantic_sha256"]=producer_digest(bad["semantic_body"]);add("source",c["case_id"]+":record_identity",bad,"source_record_identity")
+            bad=copy.deepcopy(v);bad["owner_record"][field]="other_record";bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_sha256"]=producer_digest(bad["semantic_body"]);add("source",c["case_id"]+":record_identity",bad,"source_record_identity")
         bad=copy.deepcopy(v);bad["envelope_metadata"]["actor_ref"]="user:other_actor"
         add("source",c["case_id"]+":metadata",bad,"source_envelope_metadata")
         if v["event_type"]=="collaboration.completed":
@@ -1476,10 +1653,10 @@ def contract_probes(root=ROOT, include_shapes=True):
             bad=copy.deepcopy(v);bad["owner_record"]["created_at"]="2026-11-04T13:00:00Z";bad["owner_record_sha256"]=row_sha256(bad["owner_record"])
             add("source",c["case_id"]+":record_state",bad,"source_record_state")
         if v["event_type"]=="collaboration.participant_completed":
-            bad=copy.deepcopy(v);bad["owner_record"]["attempt_id"]="other_attempt";bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_body"]["currentness_hash"]=bad["owner_record_sha256"];bad["semantic_sha256"]=producer_digest(bad["semantic_body"])
+            bad=copy.deepcopy(v);bad["owner_record"]["attempt_id"]="other_attempt";bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_sha256"]=producer_digest(bad["semantic_body"])
             add("source",c["case_id"]+":attempt",bad,"source_attempt")
             if v["semantic_body"]["outcome"]=="explicitly_waived":
-                bad=copy.deepcopy(v);bad["owner_record"]["waiver"]["currentness_hash"]="0"*64;bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_body"]["currentness_hash"]=bad["owner_record_sha256"];bad["semantic_sha256"]=producer_digest(bad["semantic_body"])
+                bad=copy.deepcopy(v);bad["owner_record"]["waiver"]["currentness_hash"]="0"*64;bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_sha256"]=producer_digest(bad["semantic_body"])
                 add("source",c["case_id"]+":waiver",bad,"source_waiver")
         if "participant_identity" in v:
             bad=copy.deepcopy(v);bad["participant_identity"]["participant_id"]="other_participant"
@@ -1488,7 +1665,7 @@ def contract_probes(root=ROOT, include_shapes=True):
             bad=copy.deepcopy(v);bad["review_target_pack"]["target_hashes"]=["0"*64]
             add("source",c["case_id"]+":review_pack",bad,"source_review_pack")
         if "application_context" in record:
-            bad=copy.deepcopy(v);bad["owner_record"]["application_context"]["storage_instance_id"]="00000000-0000-4000-8000-000000000000";bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_body"]["currentness_hash"]=bad["owner_record_sha256"];bad["semantic_sha256"]=producer_digest(bad["semantic_body"]);add("source",c["case_id"]+":app_context",bad,"source_application_context")
+            bad=copy.deepcopy(v);bad["owner_record"]["application_context"]["storage_instance_id"]="00000000-0000-4000-8000-000000000000";bad["owner_record_sha256"]=row_sha256(bad["owner_record"]);bad["semantic_sha256"]=producer_digest(bad["semantic_body"]);add("source",c["case_id"]+":app_context",bad,"source_application_context")
     for c in fx["projection_values"]:
         if c["definition"]!="checkpoint": continue
         v=c["value"];ctx=fx["checkpoint_contexts"][c["case_id"]]
@@ -1564,12 +1741,227 @@ def contract_probes(root=ROOT, include_shapes=True):
         if p["domain"]=="envelope" and p["expected"]=="inline_limit":
             add("representation","decision:"+p["case_id"],p["value"],"inline_limit")
     probes += copy.deepcopy(fx["transition_cases"])
+    probes += round_two_probes(root)
     if include_shapes:
         for c in fx.get("schema_valid_cases",[]):
             add("shape",c["case_id"],c["value"],None,path=c["path"],definition=c["definition"])
         for c in fx.get("schema_cases",[]):
             add("shape",c["case_id"],schema_case_value(c,root),"schema",path=c["path"],definition=c["definition"])
     return probes
+
+
+def refresh_prepared(case, owner_changed=False):
+    """Recompute observations, leaving independently captured original facts unchanged."""
+    v=case["value"];p=v["semantic_body"]
+    if owner_changed:
+        v["owner_record_sha256"]=row_sha256(v["owner_record"])
+        case["source_context"]["owner_record_sha256"]=v["owner_record_sha256"]
+        if "application_wrapper" in case:
+            case["application_wrapper"].update(record=copy.deepcopy(v["owner_record"]),record_ref=None)
+    v["semantic_sha256"]=producer_digest(p)
+    case["event"]["payload"]=copy.deepcopy(p)
+    case["event"]["payload_ref"]=None
+    if len(canonical(p).encode())>16384:
+        ref,body=payload_reference(p)
+        case["event"].update(payload={},payload_ref=ref)
+        case.setdefault("payload_store",{})[ref]=body
+    return case
+
+
+def round_two_probes(root=ROOT):
+    fx=load(FIXTURE_PATH,root);out=[]
+    wrong=["false","true","0","1",0,1,None,[],{}, {"value":False}]
+    def prepared(c,label,error):
+        out.append(dict(domain="prepared",case_id=c["case_id"]+":r2:"+label,
+                        source_case=c,value=copy.deepcopy(c["event"]),expected=error,
+                        payload_store=copy.deepcopy(c.get("payload_store",{}))))
+    for original in fx["prepared_sources"]:
+        memory_floor()
+        v=original["value"];p=v["semantic_body"];et=v["event_type"]
+        for i,control in enumerate(["false","0",0,1,None,[],{}, {"nested":True}]):
+            c=copy.deepcopy(original);c["source_context"]=control
+            prepared(c,"source_context_type:"+str(i),"source_context_missing")
+        for field,error in [("write_epoch","source_epoch"),("binding","source_record_identity"),("required_slot_ids","source_required_slots"),("participant_slot_ids","source_slot_roster"),("owner_facts","source_owner_facts"),("envelope_metadata","source_envelope_metadata")]:
+            for i,control in enumerate(wrong):
+                if type(control) is type(original["source_context"][field]):continue
+                c=copy.deepcopy(original);c["source_context"][field]=control
+                prepared(c,"source_control_type:"+field+":"+str(i),error)
+        if "coordinator_kind" in p:
+            c=copy.deepcopy(original);c["value"]["semantic_body"]["coordinator_kind"]="dedicated_model"
+            prepared(refresh_prepared(c),"coordinator_kind","source_record_identity")
+        # Every literal field shared by the owner record and emitted fact is independently probed.
+        for field in sorted((set(v["owner_record"]) & set(p)) - {"schema_version","assistant_plan_id","plan_version","goal_id","parent_run_id","attempt_id","required"}):
+            old=v["owner_record"][field]
+            replacements=[old+"x"] if type(old) is str else [old+1] if type(old) is int else [old/2] if type(old) is float else [old+["other"]] if type(old) is list else []
+            if field in ("position","severity","disposition","sender_kind","message_type","kind"):
+                replacements={"position":["oppose","abstain"],"severity":["minor","critical"],"disposition":["uncertain","rejected"],"sender_kind":["system","user"],"message_type":["system","message"],"kind":["crew","chat_room"]}[field]
+            for replacement in replacements:
+                if same_fact(old,replacement):continue
+                c=copy.deepcopy(original);c["value"]["owner_record"][field]=replacement;refresh_prepared(c,True)
+                if validator(load(SOURCE_PATH,root)["$id"],"#/$defs/"+TOKEN[et],root).is_valid(c["value"]):
+                    prepared(c,"copied_owner_field:"+field,"source_record_identity")
+                    break
+        if "participant_slot_ids" in p:
+            c=copy.deepcopy(original);c["value"]["semantic_body"]["participant_slot_ids"]=["s1"]
+            prepared(refresh_prepared(c),"semantic_roster","source_slot_roster")
+            c=copy.deepcopy(original);c["value"]["semantic_body"]["participant_slot_ids"].reverse()
+            prepared(refresh_prepared(c),"semantic_roster_order","source_slot_roster")
+        if "state_after" in p:
+            for state in ("running","waiting","blocked"):
+                c=copy.deepcopy(original);c["value"]["semantic_body"]["state_after"]=state
+                c["value"]["owner_record"]["state"]=state
+                prepared(refresh_prepared(c,True),"valid_state:"+state,None)
+            c=copy.deepcopy(original);c["value"]["semantic_body"]["state_after"]="waiting"
+            prepared(refresh_prepared(c),"state_disagreement","source_record_state")
+        if et=="collaboration.started":
+            c=copy.deepcopy(original)
+            launching={"parent_run_id":"parent_run_original","assistant_plan_id":"plan_launch_original","plan_version":3,"goal_id":"goal_original"}
+            c["value"]["owner_record"].update(launching);c["value"]["semantic_body"].update(launching)
+            c["source_context"]["owner_facts"]=original_fact_projection(et,c["value"]["semantic_body"],c["value"]["owner_record"])
+            refresh_prepared(c,True);prepared(c,"launching_plan_counterpart",None)
+            for field in launching:
+                bad=copy.deepcopy(c);old=bad["value"]["semantic_body"][field]
+                bad["value"]["semantic_body"][field]=old+1 if type(old) is int else old+"x"
+                prepared(refresh_prepared(bad),"launching_identity:"+field,"source_record_identity")
+        if "required" in p:
+            c=copy.deepcopy(original);c["value"]["semantic_body"]["required"]=False
+            if "required" in c["value"]["owner_record"]:c["value"]["owner_record"]["required"]=False
+            prepared(refresh_prepared(c,True),"required_disagreement","source_required_slots")
+            c=copy.deepcopy(original);slot=p["participant_slot_id"]
+            c["value"]["semantic_body"]["required"]=False
+            if "required" in c["value"]["owner_record"]:c["value"]["owner_record"]["required"]=False
+            for requirement in c["value"]["slot_requirements"]:
+                if requirement["slot_id"]==slot:requirement["required"]=False
+            c["source_context"]["required_slot_ids"].remove(slot)
+            prepared(refresh_prepared(c,True),"optional_slot_counterpart",None)
+        if et in ("brainstorm.proposal_added","brainstorm.vote_added"):
+            c=copy.deepcopy(original);c["value"]["semantic_body"]["attempt_id"]="forged_attempt"
+            prepared(refresh_prepared(c),"producer_attempt","source_producer_attempt")
+        if et=="brainstorm.vote_added":
+            c=copy.deepcopy(original);c["value"]["semantic_body"]["hard_constraint_conflict_ids"]=["forged_constraint"]
+            prepared(refresh_prepared(c),"vote_constraints","source_vote_constraints")
+        if et=="brainstorm.plan_synthesized":
+            c=copy.deepcopy(original);c["value"]["owner_record"].update(assistant_plan_id="plan_launch_original",plan_version=3)
+            prepared(refresh_prepared(c,True),"launching_plan_is_distinct_from_output",None)
+            for field in ("assistant_plan_id","plan_version","plan_hash","plan_create_receipt_ref"):
+                c=copy.deepcopy(original);old=p[field];c["value"]["semantic_body"][field]=old+1 if type(old) is int else old+"x"
+                prepared(refresh_prepared(c),"plan_result:"+field,"source_plan_result")
+        if et in ("review.finding_added","review.finding_dispositioned"):
+            c=copy.deepcopy(original);c["value"]["owner_record"]["reviewer_votes"][0]["target_hash"]="f"*64
+            prepared(refresh_prepared(c,True),"review_vote_target","source_review_targets")
+            c=copy.deepcopy(original);c["value"]["owner_record"]["reviewer_votes"][0]["reviewer_id"]="foreign_reviewer"
+            prepared(refresh_prepared(c,True),"review_vote_reviewer","source_review_targets")
+        if et in ("collaboration.artifact_added","review.artifact_finalized"):
+            c=copy.deepcopy(original);c["value"]["owner_record"]["artifact_refs"]=[]
+            prepared(refresh_prepared(c,True),"artifact_custody","source_artifact_custody")
+        if "currentness" in v["owner_record"]:
+            c=copy.deepcopy(original);c["value"]["owner_record"]["currentness"]="f"*64
+            prepared(refresh_prepared(c,True),"native_currentness","source_currentness")
+        if et=="review.finding_dispositioned":
+            for field in ("counted_vote_count","dissent_count"):
+                c=copy.deepcopy(original);c["value"]["semantic_body"][field]+=1
+                prepared(refresh_prepared(c),"review_count:"+field,"source_review_counts")
+        # Probe each separately captured control field; no guessed digest can authenticate it.
+        for field in original["source_context"]["owner_facts"]:
+            c=copy.deepcopy(original);fact=c["source_context"]["owner_facts"][field]
+            c["source_context"]["owner_facts"][field]=not fact if type(fact) is bool else fact+1 if type(fact) is int else fact+["other"] if type(fact) is list else fact+"x"
+            prepared(c,"owner_fact:"+field,"source_owner_facts")
+        if "application_context" in v["owner_record"]:
+            for index,_ in enumerate(application_contexts(v["owner_record"])):
+                for field in ("storage_instance_id","server_id","thread_id"):
+                    c=copy.deepcopy(original);ac=list(application_contexts(c["value"]["owner_record"]))[index]
+                    if field=="server_id":ac["scope"][field]+="x"
+                    elif field=="storage_instance_id":ac[field]="00000000-0000-4000-8000-000000000000"
+                    else:ac[field]+="x"
+                    prepared(refresh_prepared(c,True),"app_context:"+str(index)+":"+field,"source_application_context")
+        if "application_wrapper" in original:
+            c=copy.deepcopy(original);del c["application_wrapper"]
+            prepared(c,"wrapper_missing","application_wrapper_schema")
+            c=copy.deepcopy(original);c["application_wrapper"]["record"]["schema_version"]="0.0.0"
+            prepared(c,"wrapper_record_schema","application_wrapper_schema")
+            c=copy.deepcopy(original);c["application_wrapper"]["server_id"]+="x"
+            prepared(c,"wrapper_identity","application_wrapper_identity")
+            c=copy.deepcopy(original);rec=c["application_wrapper"]["record"]
+            field=next(k for k in ("thread_id","collaboration_run_id","participant_slot_id") if k in rec)
+            rec[field]+="x";prepared(c,"wrapper_record","application_wrapper_record")
+            # Every application wrapper, including all four logical source kinds, takes the reference route.
+            c=copy.deepcopy(original);ref,body=payload_reference(v["owner_record"])
+            c["application_wrapper"].update(record=None,record_ref=ref);c["payload_store"]={ref:body}
+            prepared(c,"wrapper_reference",None)
+            for field,item in v["owner_record"].items():
+                if type(item) is not bool:continue
+                for i,replacement in enumerate(["false","0",int(item),None,[],{}, {"nested":item}]):
+                    c=copy.deepcopy(original);forged=copy.deepcopy(v["owner_record"]);forged[field]=replacement
+                    ref,body=payload_reference(forged);c["application_wrapper"].update(record=None,record_ref=ref);c["payload_store"]={ref:body}
+                    prepared(c,"wrapper_reference_type:"+field+":"+str(i),"application_wrapper_record")
+    for c in wrapper_boundary_cases(root):
+        prepared(c,c.pop("boundary_label"),c.pop("expected"))
+    for c in fx["valid_events"]:
+        for i,epoch in enumerate(["false","0",False,True,None,[],{}, {"nested":0},4.0,-1]):
+            body=copy.deepcopy(c["record"]["payload"])
+            body["idempotency_key"]=idempotency_key(c["event_type"],body,epoch)
+            out.append(dict(domain="payload",case_id=c["case_id"]+":r2:epoch_type:"+str(i),value=body,expected="epoch_type",event_type=c["event_type"],recovery_epoch=epoch))
+        context=dict(storage_instance_id=fx["storage_context"]["storage_instance_id"],write_epoch=fx["storage_context"]["recovery_epoch"],withdrawn=False,retained=True,original_record=c["record"])
+        for field in ("withdrawn","retained"):
+            for i,value in enumerate(wrong):
+                ctx=copy.deepcopy(context);ctx[field]=value
+                out.append(dict(domain="historical",case_id=c["case_id"]+":r2:type:"+field+":"+str(i),value=c["record"],context=ctx,event_type=c["event_type"],expected="historical_withdrawn" if field=="withdrawn" else "historical_not_retained"))
+        for i,value in enumerate(wrong):
+            if type(value) is int:continue
+            ctx=copy.deepcopy(context);ctx["write_epoch"]=value
+            out.append(dict(domain="historical",case_id=c["case_id"]+":r2:type:epoch:"+str(i),value=c["record"],context=ctx,event_type=c["event_type"],expected="historical_epoch_type"))
+    policy={"retention_mode":"indefinite","anchor_kind":"explicit_delete","max_cardinality":250000,"cardinality_scope":"thread","overflow_action":"roll_successor","hold_eligible":True,"policy_version":"1.0.0"}
+    for i,value in enumerate(["false","0",False,0,[],{}, {"nested":True}]):
+        out.append(dict(domain="retention",case_id="r2:retention:shape:"+str(i),value=value,expected="retention_values"))
+    for field in policy:
+        for i,value in enumerate(wrong):
+            if type(value) is type(policy[field]):continue
+            bad=dict(policy);bad[field]=value
+            out.append(dict(domain="retention",case_id="r2:retention:type:"+field+":"+str(i),value=bad,expected="retention_values"))
+    return out
+
+
+def wrapper_boundary_cases(root=ROOT):
+    """Measure the entire MessagePack wrapper, including the pointer/header and null fields."""
+    fx=load(FIXTURE_PATH,root);seen=set();cases=[]
+    for original in fx["prepared_sources"]:
+        if "application_wrapper" not in original:continue
+        definition=application_wrapper_definition(original["value"]["owner_record"])
+        if definition in seen:continue
+        seen.add(definition)
+        def candidate(n):
+            c=copy.deepcopy(original);rec=c["value"]["owner_record"];p=c["value"]["semantic_body"]
+            field={"CollaborationDefinition":"name","CollaborationRun":"transcript_ref","CollaborationParticipant":"requested_model_id"}.get(definition)
+            if field:rec[field]="x"*n
+            else:
+                # Valid opaque references; no single ref exceeds the existing identifier bound.
+                refs=["artifact:"+str(i)+":"+"x"*(n//64+(i<n%64)) for i in range(64)]
+                rec["attachment_refs"]=refs;p["attachment_refs"]=copy.deepcopy(refs)
+            return refresh_prepared(c,True)
+        # Find a legal value at or just below the boundary; MessagePack prefix changes are included.
+        low,high=0,20000
+        while low<high:
+            mid=(low+high+1)//2
+            if len(msgpack.packb(candidate(mid)["application_wrapper"],use_bin_type=True))<=16384:low=mid
+            else:high=mid-1
+        exact=candidate(low)
+        if len(msgpack.packb(exact["application_wrapper"],use_bin_type=True))!=16384:
+            raise AssertionError("wrapper exact boundary: "+definition)
+        exact.update(boundary_label=definition+":wrapper_16384",expected=None);cases.append(exact)
+        over=candidate(low+1)
+        if len(msgpack.packb(over["application_wrapper"],use_bin_type=True))!=16385:
+            raise AssertionError("wrapper over boundary: "+definition)
+        over.update(boundary_label=definition+":wrapper_16385",expected="application_wrapper_limit");cases.append(over)
+        routed=copy.deepcopy(over);ref,body=payload_reference(routed["value"]["owner_record"])
+        routed["application_wrapper"].update(record=None,record_ref=ref)
+        routed.setdefault("payload_store",{})[ref]=body
+        routed.update(boundary_label=definition+":wrapper_16385_reference",expected=None);cases.append(routed)
+        absent=copy.deepcopy(routed);absent["payload_store"].pop(ref)
+        absent.update(boundary_label=definition+":wrapper_reference_missing",expected="reference_missing");cases.append(absent)
+        forged=copy.deepcopy(routed);parts=ref.split(":");parts[2]="0"*64;badref=":".join(parts)
+        forged["application_wrapper"]["record_ref"]=badref;forged["payload_store"][badref]=body
+        forged.update(boundary_label=definition+":wrapper_reference_forged",expected="reference_hash");cases.append(forged)
+    return cases
 
 
 @lru_cache(maxsize=8)
@@ -1590,9 +1982,9 @@ def evaluate_probe(probe, root=ROOT):
     d=probe["domain"];v=probe["value"]
     if d=="read_token":return read_token_rejection(v,root)
     if d=="shape":return None if validator(load(probe["path"],root)["$id"],"#/$defs/"+probe["definition"],root).is_valid(v) else "schema"
-    if d=="payload": return payload_rejection(probe["event_type"],v,epoch,root)
+    if d=="payload": return payload_rejection(probe["event_type"],v,probe.get("recovery_epoch",epoch),root)
     if d=="envelope": return envelope_rejection(probe["event_type"],v,siid,epoch,root,probe.get("payload_store"))
-    if d=="prepared":return prepared_event_rejection(probe["source_case"],v,root)
+    if d=="prepared":return prepared_event_rejection(probe["source_case"],v,root,probe.get("payload_store"))
     if d=="retention":return retention_rejection(v)
     if d=="representation": return representation_rejection(v)
     if d=="reference": return reference_rejection(v["ref"],v["body"])
@@ -1760,8 +2152,30 @@ def integrity_failures(root=ROOT):
 
 def integrity_guard_removal_report(root=ROOT, only_targets=None):
     source=Path(__file__).read_text();cases=integrity_cases(root);table=[]
+    tree=ast.parse(source);append_lines={}
+    for node in ast.walk(tree):
+        if isinstance(node,ast.Expr) and isinstance(node.value,ast.Call) and isinstance(node.value.func,ast.Attribute) and node.value.func.attr=="append" and node.value.args and isinstance(node.value.args[0],ast.Dict):
+            d=node.value.args[0]
+            for k,v in zip(d.keys,d.values):
+                if isinstance(k,ast.Constant) and k.value=="check" and isinstance(v,ast.Constant):
+                    append_lines.setdefault(v.value,set()).add(node.lineno)
+    # An unexecuted append cannot alter a later rejection. Trace each baseline
+    # once, then rerun every case that actually reached the removed assertion.
+    traces={};wanted_lines=set().union(*append_lines.values())
     for case in cases:
+        memory_floor();reached=set()
+        def trace(frame,event,arg):
+            if frame.f_code.co_filename!=__file__:return None
+            if event=="line" and frame.f_lineno in wanted_lines:reached.add(frame.f_lineno)
+            return trace
+        sys.settrace(trace)
+        try:found=evaluate_integrity(case,root)
+        finally:sys.settrace(None)
+        if set(found)!={case["expected"]}:raise AssertionError("invalid integrity baseline: "+case["case_id"])
+        traces[case["case_id"]]=reached
+    for number,case in enumerate(cases,1):
         if only_targets is not None and case["target"] not in only_targets:continue
+        memory_floor()
         tree=ast.parse(source);wanted=case["expected"]
         class Remove(ast.NodeTransformer):
             def visit_Expr(self,node):
@@ -1774,7 +2188,7 @@ def integrity_guard_removal_report(root=ROOT, only_targets=None):
         ns={"__name__":"pm_collab_integrity_mutant","__file__":__file__};exec(compile(tree,__file__,"exec"),ns)
         flipped=[];stayed=[];masked=[];changed=[]
         for other in cases:
-            if other["target"]!=case["target"]:
+            if not append_lines.get(wanted,set()).intersection(traces[other["case_id"]]):
                 stayed.append(other["case_id"]);continue
             found=evaluate_integrity(other,root,ns)
             if other["case_id"]==case["case_id"]:
@@ -1782,11 +2196,14 @@ def integrity_guard_removal_report(root=ROOT, only_targets=None):
             elif set(found)=={other["expected"]}:stayed.append(other["case_id"])
             else:changed.append(other["case_id"])
         table.append(dict(guard="integrity:"+case["target"]+":"+wanted,negatives_that_flip=flipped,negatives_that_stay_rejected=stayed,masked=masked,unexpected_changes=changed,status="pass" if flipped and not masked and not changed else "fail"))
+        print(f"integrity guards {number}/{len(cases)} flips={len(flipped)} masked={len(masked)} changed={len(changed)}",file=sys.stderr)
+        del ns
+        gc.collect()
     return table
 
 
 
-def schema_guard_removal_report(root=ROOT, only_guards=None):
+def schema_guard_removal_report(root=ROOT, only_guards=None, compact=False):
     """Mutation proof at the same shape gate used by the full payload/projection/source checkers.
 
     A lexical invariant includes its regex and exact-length clauses. Removing only one
@@ -1800,6 +2217,15 @@ def schema_guard_removal_report(root=ROOT, only_guards=None):
     for p in contract_probes(root,include_shapes=False):
         if p["domain"]=="payload" and p["expected"]=="schema" and ":lf:" in p["case_id"]:
             cases.append((p["case_id"],PAYLOAD_PATH,payload_def(p["event_type"],edition_of(p["value"])),p["value"]))
+        elif p["domain"]=="source" and p["expected"]=="source_schema":
+            cases.append((p["case_id"],SOURCE_PATH,TOKEN[p["value"]["event_type"]],p["value"]))
+        elif p["domain"]=="checkpoint" and p["expected"]=="checkpoint_schema":
+            cases.append((p["case_id"],PROJECTION_PATH,"checkpoint",p["value"]))
+        elif p["domain"]=="envelope" and p["expected"]=="event_record_schema":
+            cases.append((p["case_id"],EVENT_RECORD_PATH,None,p["value"]))
+        elif p["domain"]=="prepared" and p["expected"]=="application_wrapper_schema":
+            c=p["source_case"];definition=application_wrapper_definition(c["value"]["owner_record"])+"StorageApplicationV2"
+            cases.append((p["case_id"],"Plans/application_workflow_contracts.schema.json",definition,c.get("application_wrapper")))
     for c in fx.get("schema_cases",[]):cases.append((c["case_id"],c["path"],c["definition"],schema_case_value(c,root)))
     for c in fx["invalid_projection_values"]:cases.append((c["case_id"],PROJECTION_PATH,c["definition"],c["value"]))
     def leaves(value,path=()):
@@ -1826,11 +2252,20 @@ def schema_guard_removal_report(root=ROOT, only_guards=None):
     for path,doc in documents.items():index(doc,path)
     def errors(case):
         _,path,definition,value=case
-        return list(validator(load(path,root)["$id"],"#/$defs/"+definition,root).iter_errors(value))
-    groups={};baseline_errors={}
+        return list(validator(load(path,root)["$id"],"#/$defs/"+definition if definition is not None else "",root).iter_errors(value))
+    groups={};baseline_errors={};error_cases={};case_by_id={case[0]:case for case in cases}
+    case_manifest=sorted(case_by_id)
+    def error_key(error):
+        path,pointer=identities[id(error.schema)]
+        key="lexical" if error.validator in ("pattern","minLength","maxLength") else error.validator
+        return path,pointer,key,error.message.split("'")[1] if key=="required" else None
+    def index_errors(error,case_id):
+        error_cases.setdefault(error_key(error),set()).add(case_id)
+        for child in error.context:index_errors(child,case_id)
     for case in cases:
         es=errors(case);baseline_errors[case[0]]=es
         if not es:raise AssertionError("schema negative accepted: "+case[0])
+        for error in es:index_errors(error,case[0])
         rules=[]
         for e in es:
             path,pointer=identities[id(e.schema)]
@@ -1863,8 +2298,9 @@ def schema_guard_removal_report(root=ROOT, only_guards=None):
         return pairs
     original_load=load;table=[]
     try:
-        for rules,own in groups.items():
+        for group_number,(rules,own) in enumerate(groups.items(),1):
             if only_guards is not None and guard_name(rules) not in only_guards:continue
+            memory_floor()
             rules=tuple(rules)+tuple(nullable_exclusivity_duplicates(rules))
             overrides={}
             for path,pointer,keyword,member in rules:
@@ -1888,7 +2324,14 @@ def schema_guard_removal_report(root=ROOT, only_guards=None):
                         if key=="oneOf_exclusivity" and error.validator=="oneOf":return True
                         if key==error.validator and (key!="required" or member==error.message.split("'")[1]):return True
                 return any(affected(e) for e in error.context)
-            for case in cases:
+            candidate_ids=set(own_ids)
+            for path,pointer,key,member in rules:
+                candidate_ids.update(error_cases.get((path,pointer,"oneOf" if key=="oneOf_exclusivity" else key,member),set()))
+            # Every case outside this dependency index has the identical original
+            # assertion, value and rejection reason. Reevaluate every potentially
+            # affected case; the complement retains those exact baseline witnesses.
+            for case_id in sorted(candidate_ids):
+                case=case_by_id[case_id]
                 prior=baseline_errors[case[0]]
                 # The identical assertion sees the identical value: its unchanged rejection is a witness.
                 if case[0] not in own_ids and any(not affected(e) for e in prior):
@@ -1900,37 +2343,46 @@ def schema_guard_removal_report(root=ROOT, only_guards=None):
                 else:
                     # Every original error depended on the removed invariant (including reference/union contexts).
                     flipped.append(case[0])
-            table.append({"guard":guard_name(rules),"negatives_that_flip":flipped,"negatives_that_stay_rejected":stayed,"masked":masked,"unexpected_changes":unexpected,"status":"pass" if flipped and not masked and not unexpected else "fail"})
+            stayed=sorted(set(case_by_id)-set(flipped)-set(masked)-set(unexpected))
+            row={"guard":guard_name(rules),"negatives_that_flip":flipped,"negatives_that_stay_rejected":stayed,"masked":masked,"unexpected_changes":unexpected,"status":"pass" if flipped and not masked and not unexpected else "fail"}
+            if compact:
+                row["negatives_that_stay_rejected"]={"count":len(stayed),"case_ids_sha256":row_sha256(stayed),"selection":"the layer's negative-case manifest minus negatives_that_flip; masked/unexpected lists must be empty"}
+                row["_negative_case_manifest"]=case_manifest
+            table.append(row)
+            if group_number%100==0:print(f"schema guards {group_number}/{len(groups)}",file=sys.stderr)
             globals()["load"]=original_load;validator.cache_clear();schema_registry.cache_clear()
+            if group_number%25==0:gc.collect()
     finally:
         globals()["load"]=original_load;validator.cache_clear();schema_registry.cache_clear()
     return table
 
 
 
-def guard_removal_report(root=ROOT):
+def guard_removal_report(root=ROOT, layers=("decision","schema","integrity")):
     """Remove a rejection branch in an isolated module; never alter the installed checker."""
     source = Path(__file__).read_text()
+    input_paths=[PAYLOAD_PATH,PROJECTION_PATH,SOURCE_PATH,LEDGER_PATH,LEDGER_SCHEMA_PATH,FIXTURE_PATH,CWC_PATH,INDEX_CHECKPOINT_PATH,EVENT_RECORD_PATH,REGISTRY_PATH,REGISTRY_SCHEMA_PATH,COORD_PROJECTION_PATH,SVR_PATH,"Plans/application_workflow_contracts.schema.json","Plans/shared_integration_runtime.schema.json",*UNIT_DOC.values(),"scripts/pm_collaboration_events.py","scripts/pm-implementation-readiness.py"]
+    input_hashes={path:hashlib.sha256((root/path).read_bytes()).hexdigest() for path in input_paths}
     tree = ast.parse(source)
     guards=[]
-    checked={"read_token_rejection","payload_rejection","envelope_rejection","representation_rejection","reference_rejection","retention_rejection","prepared_event_rejection","checkpoint_rejection","source_rejection","historical_rejection","admission_rejection","transition_rejection","family_rejection"}
+    checked={"application_wrapper_rejection","read_token_rejection","payload_rejection","envelope_rejection","representation_rejection","reference_rejection","retention_rejection","prepared_event_rejection","checkpoint_rejection","source_rejection","source_fact_rejection","historical_rejection","admission_rejection","transition_rejection","family_rejection"}
 
     def walk(node, function=""):
         if isinstance(node,ast.FunctionDef): function=node.name
         if isinstance(node,ast.If) and function in checked and len(node.body)==1 and isinstance(node.body[0],ast.Return):
             ret=node.body[0].value
             if isinstance(ret,ast.Constant) and isinstance(ret.value,str) and ret.value not in ("appended","exact_retry"):
-                if not (function=="payload_rejection" and ret.value=="schema") and ret.value not in ("checkpoint_schema","source_schema"):
+                if not (function=="payload_rejection" and ret.value=="schema") and ret.value not in ("checkpoint_schema","source_schema","application_wrapper_schema"):
                     guards.append((function,node.lineno,node.body[0].lineno,ret.value))
         for child in ast.iter_child_nodes(node):walk(child,function)
-    walk(tree)
-    probes=contract_probes(root,include_shapes=False)
+    if "decision" in layers:walk(tree)
+    probes=contract_probes(root,include_shapes=False) if guards else []
     negatives=[p for p in probes if p["expected"] is not None]
     baseline={}
     traces={}
     wanted_lines={r[2] for r in guards}
     for probe in negatives:
-        if probe["expected"] in ("schema","checkpoint_schema","source_schema"):
+        if probe["expected"] in ("schema","checkpoint_schema","source_schema","application_wrapper_schema"):
             # The shape gate is independently mutated in the schema layer below.
             baseline[probe["case_id"]]=probe["expected"];traces[probe["case_id"]]=set()
             continue
@@ -1947,38 +2399,47 @@ def guard_removal_report(root=ROOT):
         if baseline[probe["case_id"]]!=probe["expected"]:
             raise AssertionError("invalid baseline negative: "+probe["case_id"]+":"+str(baseline[probe["case_id"]]))
     table=[]
-    for function,line,return_line,reason in guards:
+    # The source snapshot and its physical app wrapper intentionally repeat the same
+    # original application identity invariant. Remove and name both, never bypass either.
+    application_duplicates=[g for g in guards if (g[0],g[3]) in (("source_fact_rejection","source_application_context"),("application_wrapper_rejection","application_wrapper_identity"))]
+    guard_groups=[[g] for g in guards if g not in application_duplicates]
+    if application_duplicates:guard_groups.append(application_duplicates)
+    for group in guard_groups:
+        memory_floor()
+        name=";".join(function+":"+str(line)+":"+reason for function,line,_,reason in group)
+        removed_lines={g[1] for g in group};return_lines={g[2] for g in group}
         mutated=ast.parse(source)
         for n in ast.walk(mutated):
-            if isinstance(n,ast.If) and n.lineno==line:n.test=ast.Constant(False)
+            if isinstance(n,ast.If) and n.lineno in removed_lines:n.test=ast.Constant(False)
         ast.fix_missing_locations(mutated)
         namespace={"__name__":"pm_collab_guard_mutant","__file__":str(Path(__file__))}
         exec(compile(mutated,str(Path(__file__)),"exec"),namespace)
         flipped=[];other=[];masked=[];changed=[]
         for p in negatives:
-            if return_line not in traces[p["case_id"]]:
+            if not return_lines.intersection(traces[p["case_id"]]):
                 other.append(p["case_id"])
                 continue
             try:
-                if function=="reference_rejection" and p["domain"]=="envelope":
-                    got=namespace["reference_rejection"](p["value"]["payload_ref"],p.get("payload_store",{}).get(p["value"]["payload_ref"]))
-                elif function=="representation_rejection" and p["domain"]=="envelope":
-                    got=namespace["representation_rejection"](p["value"])
-                else:got=namespace["evaluate_probe"](p,root)
+                got=namespace["evaluate_probe"](p,root)
             except Exception as e:got="exception:"+type(e).__name__
             if got is None:flipped.append(p["case_id"])
             else:masked.append({"case_id":p["case_id"],"remaining":got})
-        print(function+":"+str(line)+":"+reason+f" flips={len(flipped)} masked={len(masked)}", file=sys.stderr)
-        table.append({"guard":function+":"+str(line)+":"+reason,"negatives_that_flip":flipped,"negatives_that_stay_rejected":other,"masked":masked,"unexpected_changes":changed,"status":"pass" if flipped and not masked and not changed else "fail"})
-    table += schema_guard_removal_report(root)
-    table += integrity_guard_removal_report(root)
-    negative_ids=sorted({case for row in table for case in row["negatives_that_flip"]+row["negatives_that_stay_rejected"]})
-    manifests={layer:sorted({case for row in table if ("schema" if row["guard"].startswith("schema:") else "integrity" if row["guard"].startswith("integrity:") else "decision")==layer for case in row["negatives_that_flip"]+row["negatives_that_stay_rejected"]}) for layer in ("decision","schema","integrity")}
+        print(name+f" flips={len(flipped)} masked={len(masked)}", file=sys.stderr)
+        table.append({"guard":name,"negatives_that_flip":flipped,"negatives_that_stay_rejected":other,"masked":masked,"unexpected_changes":changed,"status":"pass" if flipped and not masked and not changed else "fail"})
+        del namespace
+        gc.collect()
+    if "schema" in layers:table += schema_guard_removal_report(root,compact=True)
+    if "integrity" in layers:table += integrity_guard_removal_report(root)
+    manifest_sets={layer:set() for layer in ("decision","schema","integrity")}
     for row in table:
         row["layer"]="schema" if row["guard"].startswith("schema:") else "integrity" if row["guard"].startswith("integrity:") else "decision"
+        manifest_sets[row["layer"]].update(row.pop("_negative_case_manifest",[]) or row["negatives_that_flip"]+row["negatives_that_stay_rejected"])
         stayed=row["negatives_that_stay_rejected"]
-        row["negatives_that_stay_rejected"]={"count":len(stayed),"case_ids_sha256":row_sha256(sorted(stayed)),"selection":"the layer's negative-case manifest minus negatives_that_flip; masked/unexpected lists must be empty"}
-    return {"status":"pass" if all(r["status"]=="pass" for r in table) else "fail","claim_boundary":"Read-only decision, shape and integrity gates used by the full checker; no native decode/commit, token authentication, source provenance or admission is proved.","negative_case_ids":negative_ids,"negative_case_manifests":manifests,"guards":table}
+        if isinstance(stayed,list):row["negatives_that_stay_rejected"]={"count":len(stayed),"case_ids_sha256":row_sha256(sorted(stayed)),"selection":"the layer's negative-case manifest minus negatives_that_flip; masked/unexpected lists must be empty"}
+    manifests={layer:sorted(values) for layer,values in manifest_sets.items()}
+    negative_ids=sorted(set().union(*manifest_sets.values()))
+    if any(hashlib.sha256((root/path).read_bytes()).hexdigest()!=digest for path,digest in input_hashes.items()):raise AssertionError("guard proof input changed during run")
+    return {"status":"pass" if all(r["status"]=="pass" for r in table) else "fail","guard_layers":list(layers),"proof_input_sha256":input_hashes,"claim_boundary":"Read-only decision, shape and integrity gates used by the full checker; no native decode/commit, token authentication, source provenance or admission is proved.","negative_case_ids":negative_ids,"negative_case_manifests":manifests,"guards":table}
 
 
 
@@ -1988,6 +2449,8 @@ def self_test(root: Path = ROOT) -> dict[str, Any]:
     """Each scenario plants one defect in an in-memory copy and requires the checker to report it."""
     results = {}
     fx = load(FIXTURE_PATH, root)
+    baseline=validate(root)
+    results["complete_baseline"]=baseline["status"]=="pass"
 
     def expect_fail(name, mutate, check):
         f = copy.deepcopy(fx)
@@ -2025,16 +2488,31 @@ def self_test(root: Path = ROOT) -> dict[str, Any]:
     finally:
         globals()["load"]=original_load
         for cached in (validator,schema_registry,schema_bases,doc_units):cached.cache_clear()
-    return {"status": "pass" if all(results.values()) else "fail", "scenarios": results}
+    app_path="Plans/application_workflow_contracts.schema.json"
+    broken=copy.deepcopy(original_load(app_path,root))
+    broken["$defs"]["CollaborationDefinitionStorageApplicationV2"]["properties"]["unvisited_probe"]={"$ref":broken["$id"]+"#/$defs/MISSING_UNVISITED"}
+    globals()["load"]=lambda path,where=root:broken if path==app_path else original_load(path,where)
+    validator.cache_clear();schema_registry.cache_clear()
+    try:
+        failures=reference_failures(root)
+        results["unvisited_wrapper_reference_refused"]=len(failures)==1 and failures[0]["check"]=="unresolved_ref"
+        with contextlib.redirect_stdout(io.StringIO()):exit_code=main([])
+        results["unresolved_wrapper_cli_rejects_success_exit"]=exit_code==1
+    finally:
+        globals()["load"]=original_load
+        validator.cache_clear();schema_registry.cache_clear()
+    return {"status": "pass" if all(results.values()) else "fail", "scenarios": results,"baseline":baseline}
 
 
 def main(argv: list[str] | None = None) -> int:
+    memory_floor()
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--guard-removal", action="store_true")
+    ap.add_argument("--guard-layer", choices=("decision","schema","integrity"), action="append")
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--json", action="store_true", help="print the full report")
     a = ap.parse_args(argv)
-    rep = guard_removal_report() if a.guard_removal else self_test() if a.self_test else validate()
+    rep = guard_removal_report(layers=a.guard_layer or ("decision","schema","integrity")) if a.guard_removal else self_test() if a.self_test else validate()
     if a.json or a.self_test or a.guard_removal:
         print(json.dumps(rep, indent=2, sort_keys=True))
     else:
