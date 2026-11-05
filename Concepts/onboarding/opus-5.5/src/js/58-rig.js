@@ -562,6 +562,20 @@
       const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => { const u = (x - 32) * s, v = (y - 31.5) * s; return [u * c - v * n, u * n + v * c]; });
       return [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))];
     }
+    /* how hard an idle swing may push Pip: the room between its head's keep-off box and the nearest resting prop beside it
+       (either side, as the pendulum swings back), as a kick to the swing's speed (a kick of v swings about v / w rad) */
+    swingRoom() {
+      const keep = this.pipKeep, Lay = this.L;
+      if (!keep) return .5;
+      let room = Infinity;
+      this.props.forEach((p) => {
+        if (p.state === 'out' || !p.box || p.op < .5) return;
+        const b = p.box;
+        if (b[3] <= keep[1] || b[1] >= keep[3]) return;
+        room = Math.min(room, b[0] >= keep[2] ? b[0] - keep[2] : b[2] <= keep[0] ? keep[0] - b[2] : 0);
+      });
+      return room === Infinity ? .5 : Math.asin(clamp((room - 2) / Lay.rope, 0, 1)) * this.fam.w;
+    }
     // Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit)
     pipHead() {
       const ps = this.ps, Lay = this.L, s = Lay.s;
@@ -929,7 +943,13 @@
         const ps = this.ps, f = this.famName, acts = ['wiggle'].concat(f !== 'nier' ? ['swing'] : [], pointer.t > 0 ? [] : ['up', 'side']);
         const pick = acts[Math.floor(Math.random() * acts.length)];
         if (pick === 'up') { this.idleLook = [0, -2.4]; this.idleUntil = this.t + 1.3; this.ps.tiltv -= .8; }
-        else if (pick === 'swing') { ps.thv += (Math.random() > .5 ? 1 : -1) * .5; this.sfx('swing', { x: ps.C.x, intensity: .35 }); }
+        else if (pick === 'swing') {
+          /* (as far as the room beside the head allows: a swing carried Glass's head .15 rad into the forge beside it on
+             Online details at 860, 24 px2 painted, the awake guard of sol-review-retro-1; with no room, a wiggle) */
+          const kick = Math.min(.5, this.swingRoom());
+          if (kick > .08) { ps.thv += (Math.random() > .5 ? 1 : -1) * kick; this.sfx('swing', { x: ps.C.x, intensity: .35 * kick / .5 }); }
+          else ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3;
+        }
         else if (pick === 'wiggle') ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3;
         else { this.idleLook = [Math.random() > .5 ? 2.2 : -2.2, .3]; this.idleUntil = this.t + 1.1; }
       }
