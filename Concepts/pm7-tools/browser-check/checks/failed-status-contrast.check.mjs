@@ -12,11 +12,14 @@ async function freshRoute(t,f,code){
  await f.evaluate(fixture=>O55.studio.onboarding.screen('ai-all',fixture),scenario(code));
  await f.waitForFunction(()=>O55.S.sess&&O55.S.sess.screen==='ai-all');await t.settle();
 }
-async function copiedRoute(t,f,code){
+async function copiedRoute(t,f,code,looks){
  await f.evaluate(fixture=>O55.studio.onboarding.screen('name','returning+'+fixture),scenario(code));
  const screen=async id=>{await f.waitForFunction(id=>O55.S.sess&&O55.S.sess.screen===id,id);await t.settle();};
  const next=async()=>f.locator('#pm-o55-onboarding [data-o55-do="next"]:visible').last().click();
- await screen('name');await f.locator('[data-o55-bind="name"]').fill('Failed status contrast check');await next();
+ await screen('name');
+ // applyLook reads session drafts, so even a cold copied-only run must open Name first.
+ if(looks.includes('nier-dark'))await applyLook(t,f,'nier-dark');
+ await f.locator('[data-o55-bind="name"]').fill('Failed status contrast check');await next();
  await screen('like');await f.locator('[data-o55-do="pick"][data-arg="tastebook"]').click();await next();
  await screen('safe');await next();await screen('review');await f.locator('[data-o55-do="commit"]').click();await screen('creating');
  await f.waitForSelector('[data-o55-do="next"]:not([disabled]):not([aria-disabled="true"])',{timeout:30000});await next();await screen('ai');
@@ -91,9 +94,8 @@ export default async function(t){
  let lowest={contrast:Infinity},totalMeasured=0;
  for(const route of routes)for(const code of reasons){
   await t.viewport(1390,900);
-  // Keep NieR active across fresh -> copied: text-transform must not change semantic assertions.
-  if(route==='copied'&&looks.includes('nier-dark')){await applyLook(t,f,'nier-dark');}
-  if(route==='fresh')await freshRoute(t,f,code);else await copiedRoute(t,f,code);
+  // Walk the copied route with NieR active: text-transform must not change semantic assertions.
+  if(route==='fresh')await freshRoute(t,f,code);else await copiedRoute(t,f,code,looks);
   if(route==='copied'&&looks.includes('nier-dark'))await t.check('copied route retains active NieR Dark',await f.evaluate(()=>PMLogo.look()==='nier-dark'));
   await fail(t,f,code);
   await f.evaluate(on=>O55.studio.looks.setReduced(!on),on);
