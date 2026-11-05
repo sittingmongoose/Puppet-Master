@@ -430,7 +430,7 @@
       "cancelled/record_reference/ref_media_type"
     ]
   },
-  "schema_assertion_negative_observations": [
+  "raw_schema_assertion_observations": [
     {
       "case_id": "started/inline/uuid/'invalid-uuid'",
       "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection",

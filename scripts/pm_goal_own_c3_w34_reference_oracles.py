@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""C3-W34 reference successors and original-edition obstruction. TEST_ONLY.
+"""C3-W34 reference-successor component checks. TEST_ONLY.
 
 Representation specimens are NOT native Start/D06 semantic positives. Exit 2
-means an exact original-source edition blocks W3/W4, even if components pass.
+means full qualification is incomplete, including old W4 reference routing.
+The available native-v7 companions are separate editions, not a blocker.
 No source bank is rewritten and no guard-removal engine or number codec lives here.
 """
 from __future__ import annotations
@@ -276,8 +277,8 @@ def schema_record(short,bank,selection,codec):
     return record
 
 
-def source_edition_blocker(bank,short):
-    """A structural disjointness proof, NOT a full native-source positive."""
+def edition_separation_probe(bank,short):
+    """Expected edition separation, NOT a blocker or native-source positive."""
     olduri='https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json'
     v7path=ROOT/'Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json'
     fresh=json.loads(v7path.read_text())
@@ -291,7 +292,7 @@ def source_edition_blocker(bank,short):
         native_v7_update_schema_id=fresh['$defs']['StorageWorkflowUpdate']['properties']['schema_id']['const'],
         native_v7_update_schema_version=fresh['$defs']['StorageWorkflowUpdate']['properties']['schema_version']['const'],
         native_v7_birth_writer_contract=fresh['$defs']['WorkflowBirth']['properties']['writer_contract']['const'],
-        qualification='EDITION_SEPARATION_EXPECTED_MISSING_EXPLICIT_CONSUMER_ROUTE_IS_THE_BLOCKER',probes=[])
+        qualification='EXPECTED_SEPARATE_DISPATCH_NOT_A_BLOCKER',probes=[])
     # These are exact selected schema keywords, not a hand-built facsimile.
     for field,value in [('schema_id',result['native_v7_update_schema_id']),('schema_version',result['native_v7_update_schema_version'])]:
         errors=list(Validator(old['properties'][field]).iter_errors(value))
@@ -328,11 +329,11 @@ def main():
     parser.add_argument('--output',type=Path)
     args=parser.parse_args()
     codec=original_codec()
-    suite=RepresentationSuite();audits=[];blockers=[];sizes=[]
+    suite=RepresentationSuite();audits=[];edition_checks=[];sizes=[]
     for short in ['started','cancelled']:
         bank,selection=select_bank(short)
         audits.append(dict(family=short,unresolved=bank.failures,resources=len(bank.documents)+1))
-        blockers.append(source_edition_blocker(bank,short))
+        edition_checks.append(edition_separation_probe(bank,short))
         small=schema_record(short,bank,selection,codec)
         for mode in ['inline','event_reference','record_reference']:
             record=copy.deepcopy(small)
@@ -454,18 +455,20 @@ def main():
             first=copy.deepcopy(owner.cells)
             suite.case(prefix+'/idempotent_representation_retry',lambda:require('retry/whole_bytes',equal(owner.publish(wrapper,ck),first)))
             sizes.append(dict(family=short,mode=mode,**owner.last_sizes))
-    result=dict(status='BLOCKED_ORIGINAL_NATIVE_V7_CONSUMER_EDITION' if not suite.failures else 'FAIL',
-        whole_root_closure={'goal_run.started':'BLOCKED_MISSING_EXPLICIT_NATIVE_V7_PASSIVE_CONSUMER_BINDING','goal_run.cancelled':'BLOCKED_MISSING_EXPLICIT_NATIVE_V7_PASSIVE_CONSUMER_BINDING'},
+    result=dict(status='NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED' if not suite.failures else 'FAIL',
+        whole_root_closure={'goal_run.started':'NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED','goal_run.cancelled':'NOT_COMPLETE_ROUTING_AND_ORIGINAL_CORPUS'},
+        task_completion='NOT_COMPLETE_NO_PROVEN_UNFILLABLE_TECHNICAL_BLOCKER',
         full_path_oracles=dict(positive=0,negative=0),
         representation_checks=dict(positive=sum(r['valid'] for r in suite.rows),negative=sum(not r['valid'] for r in suite.rows)),
         representation_qualification='SCHEMA_AND_REPRESENTATION_ONLY_NO_ORIGINAL_START_D06_SEMANTIC_PATH',
-        blockers=blockers,bank_audits=audits,encoded_sizes=sizes,cases=suite.rows,failures=suite.failures,
+        expected_edition_separation=edition_checks,bank_audits=audits,encoded_sizes=sizes,cases=suite.rows,failures=suite.failures,
         guard_negative_map={guard:[r['id'] for r in suite.rows if r['expected_guard']==guard] for guard in sorted({r['expected_guard'] for r in suite.rows if r['expected_guard']})},
         schema_assertion_negative_observations=SCHEMA_OBSERVATIONS,
         guard_isolation='Runtime label/negative inventory plus raw per-field schema errors only; generic refusal codes are NOT duplicate sets. Shared sweep tool required. No local removal engine.',native_execution='NOT_RUN')
     if args.output:
         args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({k:result[k] for k in ['status','whole_root_closure','full_path_oracles','representation_checks','failures']}))
+    # Passing a representation component never supplies the missing full corpus.
     return 1 if suite.failures else 2
 
 

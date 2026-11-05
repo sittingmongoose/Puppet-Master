@@ -17,11 +17,11 @@
       "positive_negative_oracles"
     ]
   },
-  "membership_note": "These two existing registered families retain membership and every Event selector. Only four additive derived Storage selection rows are authored. No event admission.",
+  "membership_note": "Two existing registered Event families remain unchanged. Four additive derived Storage rows and profiles are authored; no Event admission.",
   "native_execution": "NOT_RUN",
   "status_meaning": "Self-grade by the drafting worker; an independent grader and the Sol and Astra reviewers check it later.",
   "assessment_id": "EA-DG-OWN-C3-W34-P2-20261105",
-  "assessment_kind": "explicit_projection_successors_with_exact_source_consumer_blocker",
+  "assessment_kind": "incomplete_original_corpus_no_proven_unfillable_blocker",
   "assessed_tree": {
     "base_commit": "83fbbd77bb5351995349861fdb713e18f2ec05dc",
     "branch": "plans/ea-goal-own-c3-w34-20261105",
@@ -85,11 +85,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -138,11 +138,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "producer": {
           "status": "PASS",
@@ -191,11 +191,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -244,11 +244,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -297,11 +297,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -340,11 +340,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "retention": {
           "status": "PASS",
@@ -393,11 +393,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -446,11 +446,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "transitions": {
           "status": "PASS",
@@ -489,16 +489,16 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "consumers_checkpoints": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-1138 supplies a separately selected reference projection/checkpoint representation. W3/W4 still lack a separately selected native-v7 passive consumer source graph. Original v3-profile consumers and v7 producers remain intentionally separate; no implicit source cast or sibling certified-consumer substitution is admitted.",
+          "finding": "SP-1138 supplies the new reference representation. Its whole original-method/source integration remains unverified; the older W4 native bank also fails eager reference closure. Existing native-v7 companions and source-method composition are available and are not a missing-source blocker.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -557,24 +557,14 @@
               "quote": "\"CancelledProjection\": {",
               "excerpt_sha256": "fdb1f262cda34416fee66714bf3184bfd3a67879cfb2292050d181d834552ca9",
               "file_sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
-            },
-            {
-              "path": "Plans/goal_run_projection_reference_contracts/cancelled.md",
-              "unit": "Acceptance qualification",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "A green representation component cannot mark the whole W4 suite COMPLETE.",
-              "file_sha256": "4f029d84fdd4a00a3e82cd9116665d77a8304b8e75f11438726b74d55bd4417b",
-              "excerpt_sha256": "b212c2d04dbf6fcc5216ec155d9afc52cfc40ab2f4d35a4e80b9e881fc41dc3b",
-              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -593,16 +583,16 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-1120 supplies schema/representation checks and an exact consumer-edition obstruction, not full original Start/D06 production/publication/source/checkpoint tuples. Whole W3/W4 closure is BLOCKED; native NOT_RUN alone does not determine this grade.",
+          "finding": "ATS-1120 has representation/component checks only. No complete original Start/D06 producer/publication/source/prefix/CAS/cutover corpus was added. Both W3 and W4 remain NOT_COMPLETE; no proven unfillable technical blocker is claimed.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -621,7 +611,7 @@
               "line_end": 83,
               "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
               "excerpt_sha256": "042e904a2eed162b3149e716a37d561bf23fc95f6038f2e96643ca5c84b302d8",
-              "file_sha256": "0ffe1203f7b3a349e4eef68e19caf49852f93d8f25865f37a83164cddb9983b1",
+              "file_sha256": "df4f349278eaff0ec86d0060370d6faf08c06f55d7c5b58794da0f64a6bc94ca",
               "quote_check": "exact"
             },
             {
@@ -631,31 +621,22 @@
               "line_end": 98,
               "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
               "excerpt_sha256": "d56e8b9f02a667d5799ea15de2a04c87b14adbc31e5255f1bd3365375efe9295",
-              "file_sha256": "0ffe1203f7b3a349e4eef68e19caf49852f93d8f25865f37a83164cddb9983b1",
-              "quote_check": "exact"
-            },
-            {
-              "path": "Plans/goal_run_projection_reference_contracts/cancelled.md",
-              "unit": "Acceptance qualification",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "A green representation component cannot mark the whole W4 suite COMPLETE.",
-              "file_sha256": "4f029d84fdd4a00a3e82cd9116665d77a8304b8e75f11438726b74d55bd4417b",
-              "excerpt_sha256": "b212c2d04dbf6fcc5216ec155d9afc52cfc40ab2f4d35a4e80b9e881fc41dc3b",
+              "file_sha256": "df4f349278eaff0ec86d0060370d6faf08c06f55d7c5b58794da0f64a6bc94ca",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         }
       },
       "remaining_gaps": [
-        "Exact native-v7 passive consumer whole source/realm/method/custody selection; preserving all original producers and old consumer editions.",
-        "Complete original Start/D06 entry/helper/publication/current-read/global-prefix/CAS/crash/stage/cutover oracles against that selected source graph."
+        "Implement and execute complete original W3/W4 method-root tuples and semantic source graphs.",
+        "Complete old W4 scoped reference routing without rewriting original banks or guessing from another realm.",
+        "Reuse the existing native-v7 companions and complete source-method composition in their exact separate realms."
       ],
       "normative_depth_complete": false,
       "disposition_evidence": [
@@ -677,12 +658,7 @@
       "prior_pass_count_pinned_base": 11,
       "whole_root_closure": "BLOCKED_ORIGINAL_PROJECTION_REFERENCE_ROOT_MISSING",
       "full_path_oracles_added": 0,
-      "current_owner_units": [
-        "GRS-1137",
-        "SP-1138",
-        "ATS-1120"
-      ],
-      "notes": "No new product decision. The source-edition separation itself is expected; the missing independently selected passive consumer route is the technical blocker. Existing bare-v7 unresolved references have an explicit scoped route in the coordinator package and are not reclassified as missing."
+      "notes": "The earlier native-v7 missing-consumer stop was withdrawn after locating the existing canonical companions and explicit source-method composition. No new product question is established."
     },
     {
       "event_type": "goal_run.started",
@@ -741,11 +717,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -794,11 +770,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "producer": {
           "status": "PASS",
@@ -847,11 +823,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -900,11 +876,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -953,11 +929,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -996,11 +972,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "retention": {
           "status": "PASS",
@@ -1049,11 +1025,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1102,11 +1078,11 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "transitions": {
           "status": "PASS",
@@ -1145,16 +1121,16 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "consumers_checkpoints": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-1138 supplies a separately selected reference projection/checkpoint representation. W3/W4 still lack a separately selected native-v7 passive consumer source graph. Original v3-profile consumers and v7 producers remain intentionally separate; no implicit source cast or sibling certified-consumer substitution is admitted.",
+          "finding": "SP-1138 supplies the new reference representation. Its whole original-method/source integration remains unverified; the older W4 native bank also fails eager reference closure. Existing native-v7 companions and source-method composition are available and are not a missing-source blocker.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1213,24 +1189,14 @@
               "quote": "\"Projection\": {",
               "excerpt_sha256": "7ae73fd34ec8dfd53bbf65e17de16f6430726c81bd6ec60f63db0f2fd629b844",
               "file_sha256": "626cfe1aff57bbfcf67c2ab70a3b12c55ca4e137bfbe2c0fd54a3534bc359392"
-            },
-            {
-              "path": "Plans/goal_run_projection_reference_contracts/started.md",
-              "unit": "Acceptance qualification",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "A green representation component cannot mark the whole W3 suite COMPLETE.",
-              "file_sha256": "8eff996d9087b6ff333997032b636d57f1719bc2049f6123250b40f10bbb28df",
-              "excerpt_sha256": "a39137535785ad45a281669fe3a94fd465298188ece9eb95965f741c5f700410",
-              "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1249,16 +1215,16 @@
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "ATS-1120 supplies schema/representation checks and an exact consumer-edition obstruction, not full original Start/D06 production/publication/source/checkpoint tuples. Whole W3/W4 closure is BLOCKED; native NOT_RUN alone does not determine this grade.",
+          "finding": "ATS-1120 has representation/component checks only. No complete original Start/D06 producer/publication/source/prefix/CAS/cutover corpus was added. Both W3 and W4 remain NOT_COMPLETE; no proven unfillable technical blocker is claimed.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1277,7 +1243,7 @@
               "line_end": 83,
               "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
               "excerpt_sha256": "042e904a2eed162b3149e716a37d561bf23fc95f6038f2e96643ca5c84b302d8",
-              "file_sha256": "0ffe1203f7b3a349e4eef68e19caf49852f93d8f25865f37a83164cddb9983b1",
+              "file_sha256": "df4f349278eaff0ec86d0060370d6faf08c06f55d7c5b58794da0f64a6bc94ca",
               "quote_check": "exact"
             },
             {
@@ -1287,31 +1253,22 @@
               "line_end": 98,
               "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
               "excerpt_sha256": "d56e8b9f02a667d5799ea15de2a04c87b14adbc31e5255f1bd3365375efe9295",
-              "file_sha256": "0ffe1203f7b3a349e4eef68e19caf49852f93d8f25865f37a83164cddb9983b1",
-              "quote_check": "exact"
-            },
-            {
-              "path": "Plans/goal_run_projection_reference_contracts/started.md",
-              "unit": "Acceptance qualification",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "A green representation component cannot mark the whole W3 suite COMPLETE.",
-              "file_sha256": "8eff996d9087b6ff333997032b636d57f1719bc2049f6123250b40f10bbb28df",
-              "excerpt_sha256": "a39137535785ad45a281669fe3a94fd465298188ece9eb95965f741c5f700410",
+              "file_sha256": "df4f349278eaff0ec86d0060370d6faf08c06f55d7c5b58794da0f64a6bc94ca",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG-OWN-C3-W34-self-grade.json at 83fbbd77bb5351995349861fdb713e18f2ec05dc",
+            "source": "C3-W34 part 1 at 83fbbd77",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact owner evidence remains valid; added projection references do not establish the missing explicit original consumer source edition or complete whole-root oracles."
+          "change_reason": "No full original-path closure is established. Native NOT_RUN alone does not lower the grade."
         }
       },
       "remaining_gaps": [
-        "Exact native-v7 passive consumer whole source/realm/method/custody selection; preserving all original producers and old consumer editions.",
-        "Complete original Start/D06 entry/helper/publication/current-read/global-prefix/CAS/crash/stage/cutover oracles against that selected source graph."
+        "Implement and execute complete original W3/W4 method-root tuples and semantic source graphs.",
+        "Complete old W4 scoped reference routing without rewriting original banks or guessing from another realm.",
+        "Reuse the existing native-v7 companions and complete source-method composition in their exact separate realms."
       ],
       "normative_depth_complete": false,
       "disposition_evidence": [
@@ -1333,20 +1290,13 @@
       "prior_pass_count_pinned_base": 11,
       "whole_root_closure": "BLOCKED_ORIGINAL_PROJECTION_REFERENCE_ROOT_MISSING",
       "full_path_oracles_added": 0,
-      "current_owner_units": [
-        "GRS-1136",
-        "SP-1138",
-        "ATS-1120"
-      ],
-      "notes": "No new product decision. The source-edition separation itself is expected; the missing independently selected passive consumer route is the technical blocker. Existing bare-v7 unresolved references have an explicit scoped route in the coordinator package and are not reclassified as missing."
+      "notes": "The earlier native-v7 missing-consumer stop was withdrawn after locating the existing canonical companions and explicit source-method composition. No new product question is established."
     }
   ],
   "static_checks_seen": [
-    "New W34 reference oracles: expected technical-stop exit 2; representation only, no complete native path",
-    "DG current/history/stop-block/lifecycle and lineage: pass",
-    "Inherited own-C and source suites: pass; their declared coverage remains bounded/PARTIAL",
-    "Shard generation/check and index generation: pass",
-    "Ordinary index validation: fail with 29 pre-existing or main-ahead failures; no baseline rewrite",
-    "Storage profile validation: fail with same 41 errors as requested base; new profiles are present"
+    "Reference component: 30 positives / 358 negatives; no original-path semantic positives",
+    "All four inherited DG suites, own-C/source suites and lineage: pass; their coverage limitations remain",
+    "Shards and index generation pass; ordinary index validation has 29 baseline/main-ahead failures",
+    "Storage profiles have same 41 errors as requested base; all four new rows have profiles"
   ]
 }

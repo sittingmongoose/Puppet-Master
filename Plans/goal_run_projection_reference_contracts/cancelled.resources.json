@@ -11,5 +11,13 @@
   },
   "realm": "native_consumer",
   "scope_rule": "The new resource resolves external references only inside this exact original realm. Original realms are never merged. Every original and new reference must eagerly resolve; this declaration does not excuse missing historical routes.",
-  "whole_resource_locations": "Plans/goal_run_projection_reference_contracts/original-locations.json"
+  "whole_resource_locations": "Plans/goal_run_projection_reference_contracts/original-locations.json",
+  "existing_native_v7_source_reuse": {
+    "path": "Plans/goal_run_certified_consumer_contracts/companions/cancelled-cancelled-causal-arguments.schema.json",
+    "sha256": "f812e4a93393919f0145f58eb93d1ca35f232e4680272c6bfe9eb6275de3d66c",
+    "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_causal_arguments.native_v7.v1.schema.json#/$defs/RetainedNativeCancellation",
+    "composition": "Plans/goal_run_certified_consumer_contracts/source-method-composition.json",
+    "imports": "Plans/goal_run_certified_consumer_contracts/imports.json",
+    "rule": "Existing separately scoped native-v7 companion is available. Preserve whole source composition and exact native/Goal/FileSafe realms; never cast a v7 original to the v3-profile root. This is not a missing-v7-source blocker."
+  }
 }

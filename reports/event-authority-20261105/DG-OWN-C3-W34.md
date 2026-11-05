@@ -1,128 +1,133 @@
-# DG-OWN-C3-W34 part 2 — reference successors authored; original consumer-edition blocker
+# DG-OWN-C3-W34 part 2 — projection repair drafted; W3/W4 NOT_COMPLETE
 
-Continuation branch `plans/ea-goal-own-c3-w34-20261105`, exact starting head `83fbbd77bb5351995349861fdb713e18f2ec05dc`, on Nas1. **W3 and W4 are BLOCKED at the exact source-consumer dependency below. Neither is COMPLETE.** The requested projection-reference successors are authored; this is a technical-stop package, not a claim that more partial witnesses close O7. Native execution is NOT_RUN.
+Branch `plans/ea-goal-own-c3-w34-20261105`, exact continuation base `83fbbd77bb5351995349861fdb713e18f2ec05dc`, Nas1. **I did not finish W3/W4 and did not establish a valid unfillable technical blocker. This does not satisfy the requested COMPLETE-or-exact-blocker condition.** Native execution remains NOT_RUN. No full original-path PASS or family preparation is claimed.
 
-## Where, why, and required repair
+## Corrected finding
 
-**Where.** `Plans/goal_run_started_consumer_contracts/consumer.schema.json#/$defs/RetainedNativeStart` requires complete `original_d01_update` through `executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate`. The cancelled consumer requires the same started original and the same original D01 graph through its own retained cancellation/current-source roots. The source schema at `Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json:1784` fixes the header to `pm.storage_value.executor_workflow_workflow_update.v4@4.0.0`; its original WorkflowBirth fixes `pm.executor.workflow_source.all_writers.v3` at line 692.
+The earlier proposed native-v7 missing-consumer blocker is **withdrawn**. The v3-profile D01 wrapper is v4 and the native-v7 wrapper is v8; that is intentional separate dispatch, not a missing contract. Canon already supplies:
 
-The required native-v7 branch is independently authored and correctly separately dispatched: `Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json:1844` issues `pm.storage_value.executor_workflow_workflow_update.v8@8.0.0`, with `all_writers.v7` birth at line 752. **These differences are intentional edition separation, not by themselves a defect.** The missing contract is the separately selected native-v7 passive consumer source/realm/method/custody mapping for each exact family. None was found in either family's own full consumer schema, method map or bank. The native-v7 protocol at line 144 expressly preserves the complete original started consumer and says no started consumer is adopted or modified. Its separate producer/current-source methods do not independently bind the old passive consumer graph. The certified family's v7 consumer cannot be silently adopted as either family's contract.
+- `Plans/goal_run_certified_consumer_contracts/companions/started-consumer.schema.json`, exact native-v7 RetainedNativeStart.
+- `Plans/goal_run_certified_consumer_contracts/companions/cancelled-cancelled-causal-arguments.schema.json`, exact native-v7 RetainedNativeCancellation.
+- `source-method-composition.json` and `protocol.md` in that package: complete original SP-311/SP-312 semantics with explicit native-v7 source bindings, unchanged native profile and independently installed passive consumer.
 
-**Why the new projection/test contract cannot supply it.** The newly authored projection edition encodes/reconstructs the exact logical record and new derived checkpoint; it does not issue, rename or convert native original source custody. A TEST_ONLY source copy, changed original header, a copied v7 descriptor on an old birth, or a sibling's certified-consumer graph cannot create an authentic v3 birth/D01 original for a v7 run. The real repair is another **explicit, complete source-consumer edition** for each family, selecting its native-v7 complete original source graph and full retained/current/prefix/first-receipt methods in their own realms while retaining old editions. That is a source binding task, not another Event admission, product vote, retention policy or a payload-reference cast. This report does not claim the differing versions prevent the already specified separately dispatched producer methods from running.
+`reuse-and-merge-notes.json` pins the whole files and their hashes. The header-disjointness probes remain only expected-edition diagnostics; they do not prove a task blocker. The prior two commits' stronger stop rationale was incorrect and is superseded by this report and the corrected protocol/suite metadata.
 
-The executable obstruction validates a **complete v7 StorageWorkflowUpdate schema specimen** under its actual selected whole root, then applies each family's actual old selected whole source root. Both old roots reject precisely the two version-header consts. Three additional exact-keyword checks per family show update schema id/version and birth writer_contract have disjoint required domains. They prove edition disjointness; per-family search and the explicit no-consumer-adoption text identify the missing route. None of these schema specimens asserts genuine native issuance or a semantic Start/D06 positive.
+The older `Plans/goal_run_cancelled_consumer_schema_resources.json`, realm `native_consumer`, still reports **22 eagerly unresolved sites / 11 distinct references**, all at the historical completion input's `inputs/Plans/plans_to_code_handoff.schema.json`. The absolute missing retrieval URI is:
 
-The old cancelled bank also retains its known 22 eagerly unresolved reference sites through two retrieval roots. They remain a whole-bank qualification blocker for that frozen selection, not a claim that an active D06 path is broken. The bare native-v7 bank's corresponding sites already have an explicit scoped import in `goal_certified_event_coordinator_contracts/original-reference-routing.json`; that existing native-v7 route is preserved and is **not** reported as a missing v7 contract. No bank, URI, old hash or historical byte was rewritten.
+`file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json`
 
-## Requested projection repair
+Its known explicit import in the certified packages is scoped to `native` and `current_d05_source`, with target SHA-256 `1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d` in `retained_original_d05`. It does not name this older W4 realm. This is remaining scoped-routing work, **not a proved reason that a newly authored compatibility composition cannot resolve it**. No global alias, guessed older scope binding, original-bank edit or hash restamping was used. These inherited sites are inactive in the prior active-method resolution claim; the present whole-bank requirement nevertheless includes them. No active D06 semantic failure is asserted from them.
 
-Two separate newly authored contracts live in `Plans/goal_run_projection_reference_contracts/started.md` and `cancelled.md`. Each has its own complete schema, resource selection, physical selection and methods. GRS-1136 adopts started; GRS-1137 adopts cancelled; SP-1138 and ATS-1120 adopt both separately. They implement the lead's projection ruling and preserve SP-311/SP-312's original producer semantics.
+## Projection successors delivered
 
-- **Identity and value:** each stored row retains Storage/RunScope/Event identity plus original SP-286/CV-339 whole-value commitment. It verifies complete original Event bytes, BLAKE3/byte_size/media_type and independently acquired original custody. The payload reference is not an original-source authenticator.
-- **Whole stored parts:** deterministic inline, Event-reference, then metadata-reference forms preserve every original record field. Metadata omits only original_event, stored separately once. Complete row and complete operation must each fit 16 KiB. An oversized checkpoint uses its own full-value reference wrapper; every stored row/checkpoint/operation remains bounded. No source/schema field is trimmed and no new numeric codec/cap is authored.
-- **Packs and lifetime:** original bytes and index durability precede referencing-record acknowledgement. Resolution rechecks exact byte/digest/type/canonical decoding, actual store/access/permission/withdrawal and source availability before and after helpers and final disclosure. Existing SP-337 retention/hold/backup/deletion rules and each original source lifetime remain controlling; no projection-created original hold.
-- **Selection and cutover:** four additive Storage value rows select new projection/checkpoint keys, profiles and schemas. Every one of the 344 old Storage rows and all old profiles remain structurally identical; four additive same-group profiles enforce the same 16 KiB budget. All Event registry bytes remain identical. Derived state rebuilds into new isolated generations, with original full-prefix/source/CAS rules and atomic row/checkpoint/cutover; no in-place rewrite or old checkpoint copying. A missing source-consumer edition fails closed.
+Two separate newly authored contracts are `Plans/goal_run_projection_reference_contracts/started.md` and `cancelled.md`, each with a schema, resource selection, physical selection and method map. Owner adoption locations: `Plans/Goal_Runtime_System.md:9200` (GRS-1136), `Plans/Goal_Runtime_System.md:9248` (GRS-1137), `Plans/storage-plan.md:30837` (SP-1138), and `Plans/Automated_Testing_System.md:7654` (ATS-1120). The schema/representation component is drafted; full method qualification is not complete.
 
-The new private/return schemas explicitly replace only derived projection/checkpoint members. Original native/Goal/FileSafe source roots remain in their original isolated realms. Semantic checkpoint algorithms are parameterized only by the new derived key/table/profile; no new checkpoint is cast to an old header.
+Each new row retains actual Storage/RunScope/Event identity and the original SP-286/CV-339 whole-value commitment. Its deterministic forms are inline, Event reference, then separate metadata and Event references. Every original metadata field remains; metadata omits only the separately stored original_event. An oversized checkpoint uses a full-value reference wrapper. Complete rows and complete operations are measured against 16 KiB, with exact existing canonical MessagePack, BLAKE3/byte-size/media-type checks and pack/index durability before reference acknowledgement.
 
-## Search, authority and preservation
+The protocols retain actual original source/first-receipt admission, read/access/current permission and withdrawal predicates, source-coupled lifetimes and existing holds/backup/GC policy. No projection-created original hold, indefinite archive, body reconstruction, native action or new retention policy is introduced. New derived keys/profiles rebuild into isolated generations and use full original source/root CAS, atomic row/checkpoint and fenced cutover; old rows are not rewritten in place. Whole new private/return roots replace only derived members, and a new checkpoint is not cast to an old header.
 
-`source-search.json` records an independent fifteen-plus-file search for EACH exact family, complete hashes and line hits: current Goal_Runtime_System, Executor_Protocol, Contracts_V0, Automated_Testing_System, storage-plan, Event/Storage registries, original consumer/method/bank, DG-OWN-C protocol, native-v7 protocol/methods/fresh-profile methods and both exact native source editions. `main-comparison.json` records that all six original own consumer/schema-bank/method files are byte-identical on fetched origin/main. No binding is inferred from a sibling.
+Four additive Storage rows point directly to SP-1138, with four additive same-group 16 KiB profiles. All 344 old family rows, every old profile, every existing policy and all other registry members remain unchanged. All original Event registry, source bank, schema, URI and historical bytes remain unchanged. The new native-v7 reuse metadata points to the existing complete companions; it is not a claim that the full corpus ran.
 
-DL-045's exact Goal row still includes both families and permits technical bindings for existing behavior after that search. GRS-079/EP-120/SP-311 still select genuine original Start; GRS-080/EP-121/SP-312 still select positive D06 and its distinct causal/effect graph. DL-270/SP-337 still require the projection reference path. These owner premises hold. The projection-representation premise now has a new explicit edition; the missing independently selected native-v7 passive consumer graph is not assumed away. No application `goal_run.stopped`, DL-448, Decision Log, admission, retention/deletion decision, seal or main push is authored.
+## What is not finished
 
-Before minting, the scan covered **577 scanned refs including local main, 287 distinct owner-document blobs**, with zero definitions for the allocated ids used. Used: **GRS-1136, GRS-1137, SP-1138, ATS-1120**. CV/SIR/EP allocations remain unused. The scan is retained as id-scan.json.
+**W3 / goal_run.started:** original Start/native/D01 production and publication; separate native-v7 full method dispatch; complete source-backed retained/current helpers; actual global frames/first custody and all nine durable token fields; whole row/checkpoint CAS, interruption, staging/cutover and SP-424 withdrawal; full-original reference-route specimens with real semantic source joins.
 
-## Oracles and qualification
+**W4 / goal_run.cancelled:** explicit older scoped-routing qualification; complete positive D06/D05/Goal/Stop/FileSafe/process causal graphs, distinct operation identities and full receipts; mutation=false and mutation=true settlements/rollback, genuine empty flush and sticky failures; separate fresh CurrentRead/CurrentSuccessfulReadback/CurrentGoalStopArgument; combined prefix/reducer, CAS/crash/cutover and SP-425 withdrawal.
 
-**Complete original-path oracles added: 0 positive / 0 negative.** The new runner exits **2** on `BLOCKED_ORIGINAL_NATIVE_V7_CONSUMER_EDITION` after representation and exact-source diagnostics; it cannot claim full W3/W4 closure. The representation count is reported separately in `reference-oracles.json`: {'positive': 30, 'negative': 358}. Earlier failed intermediate fixture expectations are superseded by the final result, not counted as passing checks.
+The complete original tuple/semantic corpus was not implemented. A schema specimen, an independently held representation fixture, a passing inherited adapter, or native NOT_RUN does not close it. No independent technical blocker for W3 is claimed. There is no new product question for Jared.
 
-The representation suite covers inline/Event-reference/metadata-reference decode, original full-value commitment and identity/key/dataset/store joins, selected representation, direct pack media and canonical-byte boundaries, missing/corrupt payloads, durability/access, typed source/permission/withdrawal/root facts, retained-versus-current distinction, full checkpoint spill, whole-operation bounds, and before/after publication plus immutable byte replay. **Its native metadata are schema specimens, not authentic Start/D06 source positives.** Publication uses an explicitly labelled TEST_ONLY assignment, never native redb or fsync evidence. New runtime guard labels and negative ids are exported in `guard_negative_map`, with raw per-field schema-path/keyword observations separately exported. Generic refusal codes are not asserted to be duplicate sets; no local isolation engine or check-11 clearance is claimed. Schema/physical seams are labelled component witnesses and are not presented as complete-path negatives.
+## Oracles and checks
 
-Every new stored-part size is measured with the exact existing hash-pinned canonical MessagePack implementation from DG-OWN-C's original source manifest. SP-286 full-value commitments use CV-339's exact existing ordered array, separately from pack BLAKE3. No identity serializer, physical-float normalization, 53-bit cap or changed historical recipe is introduced. The existing format/number/guard-proof shared sweeps remain separate obligations. Native NOT_RUN alone does not lower any grade.
+**New complete original-path oracles: 0 positives / 0 negatives.** New representation checks: **30 positives / 358 negatives**, with no failures. Six qualification/sentinel probes reject correctly. The corrected runner returns 2 because full qualification is incomplete, even if representation checks pass. The old W4 eager-reference gate also remains open. Each family has 15 positive and 179 negative representation checks; complete original-path counts are zero for each.
 
-## Closure and twelve-criterion re-grade
+Representation coverage includes complete encode/decode and original value commitment, every identity/key/dataset/store join, selected representation, exact UUID/source-flag types, missing/corrupt/noncanonical payloads, size/media/durability/access, retained-versus-current separation, full checkpoint spill/joins, complete operation limits, before/after publication and byte-stable retry. These are **schema/representation specimens, not native Start/D06 semantic positives**. Publication uses a labelled TEST_ONLY assignment, not native redb/fsync. The 35 runtime guard-to-negative mappings, 55 raw per-field schema error observations and setup probes are exported for the shared guard tool. Generic refusal codes are not claimed as duplicate sets. No local guard-removal engine or check-11 clearance is supplied.
 
-| Family | Before part 2 | After part 2 | Whole-root result |
-|---|---:|---:|---|
-| goal_run.started / W3 | 10/12 | 10/12 | BLOCKED: separately selected native-v7 passive consumer source edition missing. |
-| goal_run.cancelled / W4 | 10/12 | 10/12 | BLOCKED: separately selected native-v7 passive consumer source edition missing; old whole-bank eager routing also remains unqualified. |
+Fresh inherited results: current writer 931 cases/861 negatives; history 6,143/6,032; stop/block 478/427; lifecycle 514/487. The inherited own-C adapter passes 355 cases (46/309), source suite 293, and lineage self-test passes. Their prior bounded coverage and shared number/format/guard-proof obligations remain unchanged.
 
-Both vectors, rubric order: `PASS PASS PASS PASS PASS PASS PASS PASS PASS PARTIAL PASS PARTIAL`. The two PARTIAL cells are consumers/checkpoints and positive/negative oracles. All 88 carried citations are checked against current text and rehashed; the self-grade adds four exact new limitation citations. No untested facet is upgraded. Old-profile complete producer/publication and source/prefix/CAS/crash/cutover tuples remain unclosed, rather than being implied by a new derived representation.
+| Command | Exit |
+|---|---:|
+| `shard-generate` | 0 |
+| `index-generate` | 0 |
+| `shard-check` | 0 |
+| `index-validate` | 1 |
+| `own-c` | 0 |
+| `source-oracles` | 0 |
+| `dg-current` | 0 |
+| `dg-history` | 0 |
+| `dg-stop-block` | 0 |
+| `dg-lifecycle` | 0 |
+| `lineage` | 0 |
+| `final-reference-oracles` | 2 |
+| `storage-profile` | 1 |
+| `final-shard-generate` | 0 |
+| `final-index-generate` | 0 |
+| `final-shard-check` | 0 |
+| `final-index-validate` | 1 |
+| `pycompile` | 0 |
+| `diff-check` | 0 |
+| `coherence-reference-oracles` | 2 |
+| `coherence-index-generate` | 0 |
+| `coherence-index-validate` | 1 |
+| `coherence-pycompile` | 0 |
+| `delivery-shard-generate` | 0 |
+| `delivery-index-generate` | 0 |
+| `delivery-shard-check` | 0 |
+| `delivery-index-validate` | 1 |
+| `delivery-storage-profile` | 1 |
+| `delivery-diff-check` | 0 |
+| `correction-reference-oracles` | 2 |
+| `correction-pycompile` | 0 |
+| `correction-shard-generate` | 0 |
+| `correction-index-generate` | 0 |
+| `correction-shard-check` | 0 |
+| `correction-index-validate` | 1 |
+| `correction-storage-profile` | 1 |
+| `correction-diff-check` | 0 |
 
-## Changes and merge scope
+Shards/index generation and shard verification pass. The last ordinary index run has **29 failures**: 21 existing invalid legacy removal records, main-ahead DL-302/PLS-025, and newly refreshed-main DL-330/DL-331/DL-332, DP-064/DP-066 and PWIZ-038. All six additional units were absent at the requested base, and this branch never edited their documents. No validator, baseline, ledger or Decision Log was changed to remove them. One intermediate stale generated index was removed by final coherent regeneration. A wrapper expected 23 and failed its fixed-count assertion after the validator correctly returned the newer 29-failure result; that is recorded, not treated as a product failure.
 
-New units: `Plans/Goal_Runtime_System.md:9197` GRS-1136; `:9245` GRS-1137; `Plans/storage-plan.md:30834` SP-1138; `Plans/Automated_Testing_System.md:7651` ATS-1120. Existing ATS-1118 and all other workers' units/scripts remain untouched. The new oracle is `scripts/pm_goal_own_c3_w34_reference_oracles.py`; part 1's diagnostic is preserved.
+Storage-profile validation has the same **41 errors** at the requested base and this branch; none names a new family. The attribution run changes only its registry input, never predicates. New rows/profiles are checked independently. Heavy checks ran serially with PM_GOAL_AUDIT_WORKERS=1, sampled availability at least 7 GB, and C3-W12's own supervisor yielding then receiving the slot. No peer process was modified. The live fifteen-file ignored currentness edition was copied coherently and archived before regeneration. No aggregate gate, seal, baseline refresh, native run, admission, WorkNode or main landing was run.
 
-Every shared-file hunk relative to requested continuation head (new-side start,count):
+## Per-family grades
+
+Both families remain **10/12**, vector `PASS PASS PASS PASS PASS PASS PASS PASS PASS PARTIAL PASS PARTIAL`: consumers/checkpoints and positive/negative oracles remain PARTIAL. The new representation's full source/method integration and original corpus are not closed. Native NOT_RUN alone does not lower a grade. The self-grade has 88 carried exact citations revalidated and rehashed against the final sources. The earlier proposed missing-v7 rationale is removed.
+
+## Scope, IDs and merge
+
+Used IDs: **GRS-1136, GRS-1137, SP-1138, ATS-1120**. They were free across 577 scanned refs including local main and 287 distinct owner-document blobs. No CV/SIR/EP allocation was used. ATS-1118, all other workers' units/scripts, original banks, event registry, Spec Lock, governance evidence and auto-decisions are untouched. DL-045 and the original Start/D06 source premises still hold; no application stopped-event edition or new retention/deletion rule is authored.
+
+The selected certified-v5 `CertifiedProjection` also requires a complete inline original_event, and its whole StorageProjection has no corresponding reference branch. This is a **W5 merge/adjudication item only**, pinned in reuse-and-merge-notes.json; no certified/A/B family was repaired here.
+
+Shared-file hunks relative to the requested continuation head (new-side start,count):
 
 - **Plans/Goal_Runtime_System.md**: 9196,96.
 - **Plans/storage-plan.md**: 30833,58.
 - **Plans/Automated_Testing_System.md**: 7650,58.
 - **Plans/storage_value_registry.json**: 123079,658, 125939,28.
 - **Plans/goal_own_c_contracts/protocol.md**: 63,2, 71,2.
-- **Plans/goal_own_c_contracts/suites.json**: 82,8, 113,8.
+- **Plans/goal_own_c_contracts/suites.json**: 82,9, 114,9.
 
-Machine copy: `DG-OWN-C3-W34-part2-merge-ranges.json`. Generated shards/indexes are regenerated, never hand-merged. Registry shard churn outside the final appended rows is generated source-hash/header/line-boundary churn for the edited registry, not another source edit.
+Exact machine ranges: `DG-OWN-C3-W34-part2-merge-ranges.json`. Generated shards/indexes are regenerated rather than hand-merged; changed source/index rows remain within the edited owner documents and registry.
 
-## Checks
+Retained evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W34/part2/`.
 
-| Command | Exit | Elapsed |
-|---|---:|---:|
-| `shard-generate` | 0 | 12.43 s |
-| `index-generate` | 0 | 110.63 s |
-| `shard-check` | 0 | 48.81 s |
-| `index-validate` | 1 | 98.07 s |
-| `own-c` | 0 | 3.01 s |
-| `source-oracles` | 0 | 12.23 s |
-| `dg-current` | 0 | 48.7 s |
-| `dg-history` | 0 | 2762.12 s |
-| `dg-stop-block` | 0 | 12.01 s |
-| `dg-lifecycle` | 0 | 12.23 s |
-| `lineage` | 0 | 3.07 s |
-| `final-reference-oracles` | 2 | 14.25 s |
-| `storage-profile` | 1 | 1.07 s |
-| `final-shard-generate` | 0 | 4.13 s |
-| `final-index-generate` | 0 | 46.87 s |
-| `final-shard-check` | 0 | 10.02 s |
-| `final-index-validate` | 1 | 27.09 s |
-| `pycompile` | 0 | 1.0 s |
-| `diff-check` | 0 | 2.02 s |
-| `coherence-reference-oracles` | 2 | 25.13 s |
-| `coherence-index-generate` | 0 | 67.09 s |
-| `coherence-index-validate` | 1 | 81.2 s |
-| `coherence-pycompile` | 0 | 0.24 s |
-| `delivery-shard-generate` | 0 | 6.17 s |
-| `delivery-index-generate` | 0 | 57.3 s |
-| `delivery-shard-check` | 0 | 33.78 s |
-| `delivery-index-validate` | 1 | 77.23 s |
-| `delivery-storage-profile` | 1 | 1.07 s |
-| `delivery-diff-check` | 0 | 2.05 s |
-
-The ordinary index baseline is recorded unmodified. Storage-profile validation exits 1 with the same 41 missing-profile errors at the requested base and this branch; all four new families have profiles, and no existing profile or policy is repaired. The attributed base run changes only its registry input, never its predicates. The first final ordinary index run had the 23 known legacy-ledger/main-ahead DL-302/PLS-025 failures. After another thread refreshed origin/main, the last ordinary run has 29 failures: those same 23 plus DL-330/DL-331/DL-332, DP-064/DP-066 and PWIZ-038, all present only on refreshed main in documents this branch never edited. `main-ahead-attribution.json` verifies every new unit was already absent at the requested base. The wrapper's fixed-count assertion expected 23 and failed after the validator had correctly completed; that assertion is not used to reclassify the actual 29-failure result. An intermediate run also reported a stale generated readiness artifact while registry edits were still in progress; final coherent generation/rerun removes that extra failure. No legacy ledger or Decision Log is repaired. Final check outputs and the exact input edition accompany this report. Heavy checks run serially with PM_GOAL_AUDIT_WORKERS=1; C3-W12's serial supervisor yields while the history audit is active. Resource pauses are recorded. The source-check pass is serialized by pausing this worker's own history audit and its supervisor, then resuming both; C3-W12 is untouched. The fifteen-file live ignored currentness edition is copied coherently before index generation. No aggregate gates, governance reseal/baseline refresh, native execution, admission or landing is claimed.
-
-Retained evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W34/part2/`. Exact hashes:
-
-| File | SHA-256 |
+| Evidence | SHA-256 |
 |---|---|
-| `reference-oracles.json` | `7a5eff4f9755dfcc9cdeac52aa3740a2b1f49a434b2664a5c5c95804576e557e` |
+| `reference-oracles.json` | `127a1276fe0f74eee8d9c0c81df293b436d14d686c4e8b3039f97613f661630c` |
+| `reuse-and-merge-notes.json` | `20a512c49baf583e6efa321d33aac737888f929f738e56060244c1ab81eb470a` |
 | `source-search.json` | `654ce49875abe8d0ee8b679a9b388bfa1113c326f21a1dd6718bb29ad38c865c` |
 | `main-comparison.json` | `3ee91de978596717bf82c483d79435844274d3a8b7c186be1633edfff5b052c6` |
-| `preserved-roots.json` | `44d5006c4a0272e1457efa42ad3487d96f3a5e456cd14ef2e352d35230179ecc` |
 | `id-scan.json` | `ba54dca75101576c6b003d036259df04c07be7c8165c53aae375c4d2a094c60d` |
-| `currentness-copy.json` | `ab791e5e2ed31495e4044be4139a858a1470a3171a210fc609231ddf1030be98` |
-| `citation-check.json` | `1374945a3c550324b9370563b620e2b585c122d0b8ec94786566cc3b39a74111` |
-| `checks.json` | `9eb8f7909d5e0e2009419abac8641ca991df7f7248643fa5ac84b060193a204b` |
+| `registry-additive.json` | `d0c546853920ed54fcd0312965cd760fe7bf3505f796a12eb4d3865d6f415fee` |
+| `preserved-roots.json` | `44d5006c4a0272e1457efa42ad3487d96f3a5e456cd14ef2e352d35230179ecc` |
 | `derived-scope.json` | `b167f66f33474c324ae1b3dbc5cb29c153671d538d8005ec59e076aea0da09ea` |
 | `schema-probes.json` | `3fe1f143431a3a8c52b321a0f09dc3847468fe4a83f905eaaca946be98510b6a` |
-| `registry-additive.json` | `d0c546853920ed54fcd0312965cd760fe7bf3505f796a12eb4d3865d6f415fee` |
-| `storage-profile-comparison.json` | `69729c81567784c98aab5d2a54b1ecaca8e90b733d3932723dfeb883106568d4` |
-| `input-briefs.json` | `02cf1ca56506bdaa9107cf1865ecb18281024395739de745e7bf663c4589e2da` |
-| `currentness-inputs.tar.gz` | `3824f8a5d012d711d47263bcbad1adfdf228af35994102f61d527b3d0bff709a` |
-| `main-ahead-attribution.json` | `ade8ab0959d23d22a2dd0c62a2f0afb02b9937f07a68bbef303278267b44599b` |
-| `coherence-checks.json` | `5230077d88d2df93e0bb0d28d31f2ca38d9f612e5e8e3a234adccf60071a2fbc` |
-| `delivery-checks.json` | `00788763c62aa720a2a3e6be89eb2022e52d70cac6d72bca81dde14f330b213e` |
 | `inherited-summary.json` | `02826d6d65471074402dde2133074e31718fa7c3b02319a2632d404777663218` |
+| `currentness-copy.json` | `ab791e5e2ed31495e4044be4139a858a1470a3171a210fc609231ddf1030be98` |
+| `currentness-inputs.tar.gz` | `63491f745ba601ab2494c855abf32fb99f31232f351b9488d83c2dd3d622ce30` |
+| `main-ahead-attribution.json` | `ade8ab0959d23d22a2dd0c62a2f0afb02b9937f07a68bbef303278267b44599b` |
+| `storage-profile-comparison.json` | `69729c81567784c98aab5d2a54b1ecaca8e90b733d3932723dfeb883106568d4` |
+| `citation-check.json` | `2946a956d4128efe5fae56acc8cab72f5f61d32fef066a66cc56bdabf8642b5c` |
 | `resource-serialization.json` | `8274815366d4c434d3dcd9535ef93e3cbe3a830ceb390d6f6c10af5676c84476` |
 
-**Stopped question: none.** This handoff names missing technical source-consumer binding, not a new product decision.
+**Stopped product question: none. Completion condition: not met.** The projection repair is reviewable, but this worker did not deliver the requested whole W3/W4 closure or a proved unfillable technical stop.
