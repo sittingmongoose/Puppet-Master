@@ -151,7 +151,7 @@ export default async function (t) {
           await t.page.mouse.wheel(0, 100000); await f.waitForTimeout(1000);
         }
         await t.page.mouse.move(5, h - 5);
-        const r = await f.evaluate(pos => {
+        const r = await f.evaluate(({pos, selftest}) => {
           const pod = document.getElementById('o55np-pod');
           if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
           const P = pod.getBoundingClientRect();
@@ -169,6 +169,15 @@ export default async function (t) {
             return q;
           };
           const hit = e => { const q = paintedRect(e); if (!q || q.right <= q.left || q.bottom <= q.top) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
+          if (selftest === 'clipped') {
+            const e = document.querySelector('#pmRoot .chat-float .activity-item');
+            const old = e.getBoundingClientRect();
+            e.style.setProperty('transform',`translate(${P.left+2-old.left}px,${P.top+2-old.top}px)`,'important');
+            const moved=e.getBoundingClientRect(), q=paintedRect(e);
+            const area = r => r ? Math.max(0,Math.min(P.right,r.right)-Math.max(P.left,r.left))*Math.max(0,Math.min(P.bottom,r.bottom)-Math.max(P.top,r.top)) : 0;
+            const top=document.elementFromPoint(P.left+4,P.top+4);
+            return {clipControl:{rawArea:area(moved),paintedArea:area(q),reported:hit(e),hittable:top===e || e.contains(top)}};
+          }
           const out = [];
           for (const e of document.querySelectorAll('.jump-bottom, .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
           const tr = document.querySelector('.transcript').getBoundingClientRect(), under = [];
@@ -186,7 +195,13 @@ export default async function (t) {
           if (bar && bar.scrollWidth - bar.clientWidth > 1) out.push('bar overflows');
           const t = document.querySelector('.transcript');
           return { out, atEnd: t.scrollTop + t.clientHeight >= t.scrollHeight - 2, atTop: t.scrollTop <= 2 };
-        }, pos);
+        }, {pos,selftest:t.args.selftest});
+        if (r.clipControl) {
+          await t.check('clipped activity child has no painted Pod overlap', r.clipControl.rawArea > 0 &&
+            r.clipControl.paintedArea === 0 && !r.clipControl.reported && !r.clipControl.hittable,
+            JSON.stringify(r.clipControl), {hard:true});
+          return; // Controlled clipping diagnostic; no clearance views certified.
+        }
         views++;
         if (r.nopod || r.out?.length || (pos === 'bottom' ? !r.atEnd : !r.atTop)) {
           bad.push(`${w} ${id} ${pos}: ${JSON.stringify(r)}`);

@@ -193,7 +193,13 @@ def paired_main():
                        '--port', str(PORT), '--single-measurement', '--metrics', metrics]
             result = subprocess.run(command)
             if result.returncode or not os.path.exists(metrics):
-                print('FAIL: invalid tracking/reference measurement', flush=True)
+                if opt('metrics'):
+                    partial = json.load(open(metrics)) if os.path.exists(metrics) else None
+                    with open(opt('metrics'),'w') as f:
+                        json.dump({'order':['reference','target','target','reference'],
+                                   'measurements':rows+[partial], 'failed_sample':i,
+                                   'exit_code':result.returncode}, f, indent=2)
+                print('FAIL: sample violated a hard check or was invalid (see sample output)', flush=True)
                 return 1
             rows.append(json.load(open(metrics)))
     failures = []

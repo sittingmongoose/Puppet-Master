@@ -2431,6 +2431,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       abCompactTier=0;
       return;
     }
+    // A hidden hosted Chat can still render a new thread/variant. Its children
+    // have zero layout widths then; caching those widths would keep labelled
+    // controls after reveal even though the real row no longer fits.
+    if(wrap.clientWidth===0){
+      activityMeasureCache=null;
+      return;
+    }
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
