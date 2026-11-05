@@ -212,13 +212,11 @@
         },
         "expected_thread_revision": {
           "type": "integer",
-          "minimum": 0,
-          "maximum": 9007199254740991
+          "minimum": 0
         },
         "committed_thread_revision": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": 1
         }
       }
     },
@@ -423,13 +421,11 @@
         },
         "expected_thread_revision": {
           "type": "integer",
-          "minimum": 0,
-          "maximum": 9007199254740991
+          "minimum": 0
         },
         "committed_thread_revision": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": 1
         }
       }
     }

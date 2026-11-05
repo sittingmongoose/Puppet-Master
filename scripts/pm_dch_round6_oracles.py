@@ -73,26 +73,28 @@ def cases(m, Case=Case):
             # below exercise the actual public paths and explicitly forbid exceptions.
             for n in [-MAX, MAX]:
                 add(prefix+'integer_endpoint/'+str(n), 'types', {'exit_code': n}, expected=True)
+            # The owner never capped logical exit integers at 2^53. Encoding
+            # availability is a separate physical constraint, not logical admission.
             for n in [-MAX-1, MAX+1, (1<<64)-1, 1<<64, 1<<100]:
-                add(prefix+'integer_domain/'+str(n), 'types', {'exit_code': n})
-                add(prefix+'encoder_domain/'+str(n), 'encoder_refusal', n, expected=True)
+                add(prefix+'integer_domain/'+str(n), 'types', {'exit_code': n}, expected=True)
+                add(prefix+'encoder_domain/'+str(n), 'encoder_refusal', n, expected=n>=1<<64)
             for n in [-MAX-1, MAX+1]:
-                add(prefix+'encoder_bound/'+str(n), 'encoding', n)
+                add(prefix+'encoder_bound/'+str(n), 'encoding', n, expected=True)
             for field in ['producer_sequence_id','sequence_id']:
                 for n in [MAX, MAX+1, (1<<64)-1, 1<<64, 1<<100]:
                     record = copy.deepcopy(f['record']); record[field] = n
                     add(prefix+'envelope_integer/'+field+'/'+str(n), 'payload',
-                        json.loads((ROOT/'Plans/event_record.schema.json').read_text()), record, expected=n==MAX)
-                    add(prefix+'writer_integer/'+field+'/'+str(n), 'acceptance_result', 'joins', (record,event), n==MAX, expected=True)
+                        json.loads((ROOT/'Plans/event_record.schema.json').read_text()), record, expected=n<(1<<64) if field=='sequence_id' else True)
+                    add(prefix+'writer_integer/'+field+'/'+str(n), 'acceptance_result', 'joins', (record,event), n<(1<<64) if field=='sequence_id' else True, expected=True)
                     add(prefix+'retry_integer/'+field+'/'+str(n), 'retry_result', record, record,
-                        'original_result' if n==MAX else 'invalid_input_type', expected=True)
+                        'original_result' if n<(1<<64) and (field=='sequence_id' or n==MAX) else 'invalid_input_type', expected=True)
                     if n < 1<<64:
                         # This is a current-recipe write observation, not the independently
                         # receipted earlier original with the same semantic body.
                         record = {**record, 'observed_at_utc':'2026-11-04T00:00:08Z'}
                         witness = copy.deepcopy(f['historical_source']); witness['source_value_sha256'] = commitment(m, record)
                         add(prefix+'history_integer/'+field+'/'+str(n), 'acceptance_result', 'history',
-                            (record,row,witness,payload_schema), n==MAX, expected=True)
+                            (record,row,witness,payload_schema), True, expected=True)
             # Both terminal families retain the exact original source in either
             # Store/transport/policy combination; current live state is irrelevant.
             if 'test_source' in f:
@@ -146,7 +148,8 @@ def cases(m, Case=Case):
                 for n in [MAX+1,-MAX-1]:
                     candidate=replaced(f['valid'],path,n)
                     # Existing nonnegative minima already own the lower refusal.
-                    add(prefix+'payload_bound/'+'.'.join(map(str,path))+'/'+str(n), 'payload', payload_schema, candidate)
+                    add(prefix+'payload_bound/'+'.'.join(map(str,path))+'/'+str(n), 'payload', payload_schema, candidate,
+                        expected=n>0 or path[-1]=='exit_code')
         prefix=event+'/checkpoint/round6/'
         for path, _ in integer_paths(c['maximum_history']):
             # Positive at the admitted upper boundary; copies must be coherent
@@ -154,12 +157,12 @@ def cases(m, Case=Case):
             add(prefix+'schema_max/'+'.'.join(map(str,path)), 'payload', schema,
                 replaced(c['maximum_history'],path,MAX), expected=True)
             add(prefix+'schema_overflow/'+'.'.join(map(str,path)), 'payload', schema,
-                replaced(c['maximum_history'],path,MAX+1))
+                replaced(c['maximum_history'],path,MAX+1), expected=True)
         for n in [MAX, MAX+1, (1<<64)-1, 1<<64, 1<<100]:
             value=copy.deepcopy(c['valid']);source=copy.deepcopy(c['source'])
             value['revision']=source['publication']['revision']=n
             add(prefix+'revision/'+str(n), 'acceptance_result', 'checkpoint',
-                (value,source,row,c['key'],schema), n==MAX, expected=True)
+                (value,source,row,c['key'],schema), n<(1<<64), expected=True)
     return out
 
 def evaluate(m, c, envelope):

@@ -212,10 +212,7 @@
       "then": {
         "properties": {
           "sequence_id": {
-            "maximum": 9007199254740991
-          },
-          "producer_sequence_id": {
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           }
         }
       }

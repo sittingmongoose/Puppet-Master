@@ -123798,8 +123798,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -123809,7 +123808,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -123852,7 +123851,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -123898,7 +123897,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -123910,12 +123909,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -124015,8 +124014,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -124026,7 +124024,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -124069,7 +124067,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -124115,7 +124113,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -124127,12 +124125,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -124316,8 +124314,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -124327,7 +124324,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -124370,7 +124367,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -124416,7 +124413,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -124428,12 +124425,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -124533,8 +124530,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -124544,7 +124540,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -124587,7 +124583,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -124633,7 +124629,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -124645,12 +124641,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -124834,8 +124830,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -124845,7 +124840,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -124888,7 +124883,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -124934,7 +124929,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -124946,12 +124941,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -125051,8 +125046,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -125062,7 +125056,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -125105,7 +125099,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -125151,7 +125145,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -125163,12 +125157,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -125352,8 +125346,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -125363,7 +125356,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -125406,7 +125399,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -125452,7 +125445,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -125464,12 +125457,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -125569,8 +125562,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -125580,7 +125572,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -125623,7 +125615,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -125669,7 +125661,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -125681,12 +125673,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -125870,8 +125862,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -125881,7 +125872,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -125924,7 +125915,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -125970,7 +125961,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -125982,12 +125973,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -126087,8 +126078,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -126098,7 +126088,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -126141,7 +126131,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -126187,7 +126177,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -126199,12 +126189,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -126388,8 +126378,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -126399,7 +126388,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -126442,7 +126431,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -126488,7 +126477,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -126500,12 +126489,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -126605,8 +126594,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -126616,7 +126604,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -126659,7 +126647,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -126705,7 +126693,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -126717,12 +126705,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -126906,8 +126894,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -126917,7 +126904,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -126960,7 +126947,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -127006,7 +126993,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -127018,12 +127005,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -127123,8 +127110,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -127134,7 +127120,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -127177,7 +127163,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -127223,7 +127209,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -127235,12 +127221,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -127424,8 +127410,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -127435,7 +127420,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -127478,7 +127463,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -127524,7 +127509,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -127536,12 +127521,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -127641,8 +127626,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -127652,7 +127636,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -127695,7 +127679,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -127741,7 +127725,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -127753,12 +127737,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -127942,8 +127926,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -127953,7 +127936,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -127996,7 +127979,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -128042,7 +128025,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -128054,12 +128037,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -128159,8 +128142,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -128170,7 +128152,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -128213,7 +128195,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -128259,7 +128241,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -128271,12 +128253,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -128460,8 +128442,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -128471,7 +128452,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -128514,7 +128495,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -128560,7 +128541,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -128572,12 +128553,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -128677,8 +128658,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -128688,7 +128668,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -128731,7 +128711,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -128777,7 +128757,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -128789,12 +128769,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -128978,8 +128958,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -128989,7 +128968,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -129032,7 +129011,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -129078,7 +129057,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -129090,12 +129069,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -129195,8 +129174,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -129206,7 +129184,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -129249,7 +129227,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -129295,7 +129273,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -129307,12 +129285,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -129496,8 +129474,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -129507,7 +129484,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -129550,7 +129527,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -129596,7 +129573,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -129608,12 +129585,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -129713,8 +129690,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -129724,7 +129700,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -129767,7 +129743,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -129813,7 +129789,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -129825,12 +129801,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -130014,8 +129990,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -130025,7 +130000,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -130068,7 +130043,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -130114,7 +130089,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -130126,12 +130101,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -130231,8 +130206,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -130242,7 +130216,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -130285,7 +130259,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -130331,7 +130305,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -130343,12 +130317,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -130532,8 +130506,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -130543,7 +130516,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -130586,7 +130559,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -130632,7 +130605,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -130644,12 +130617,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -130749,8 +130722,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -130760,7 +130732,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -130803,7 +130775,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -130849,7 +130821,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -130861,12 +130833,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -131050,8 +131022,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -131061,7 +131032,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -131104,7 +131075,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -131150,7 +131121,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -131162,12 +131133,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -131267,8 +131238,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -131278,7 +131248,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -131321,7 +131291,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -131367,7 +131337,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -131379,12 +131349,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -131568,8 +131538,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -131579,7 +131548,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -131622,7 +131591,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -131668,7 +131637,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -131680,12 +131649,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -131785,8 +131754,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -131796,7 +131764,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -131839,7 +131807,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -131885,7 +131853,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -131897,12 +131865,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
@@ -132086,8 +132054,7 @@
           },
           "revision": {
             "type": "integer",
-            "minimum": 0,
-            "maximum": 9007199254740991
+            "minimum": 0
           },
           "last_event_id": {
             "type": "string",
@@ -132097,7 +132064,7 @@
           "last_sequence_id": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 18446744073709551615
           },
           "source_token": {
             "type": "object",
@@ -132140,7 +132107,7 @@
               "frontier_revision": {
                 "type": "integer",
                 "minimum": 0,
-                "maximum": 9007199254740991
+                "maximum": 18446744073709551615
               },
               "frontier_sha256": {
                 "type": "string",
@@ -132186,7 +132153,7 @@
                   "selected_segment_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_ref": {
                     "const": "storage/seglog/manifest.v1.msgpack"
@@ -132198,12 +132165,12 @@
                   "manifest_generation": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "recovery_epoch": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 18446744073709551615
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
@@ -132303,8 +132270,7 @@
                 },
                 "revision": {
                   "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
+                  "minimum": 0
                 },
                 "last_event_id": {
                   "type": "string",
@@ -132314,7 +132280,7 @@
                 "last_sequence_id": {
                   "type": "integer",
                   "minimum": 0,
-                  "maximum": 9007199254740991
+                  "maximum": 18446744073709551615
                 },
                 "source_token": {
                   "type": "object",
@@ -132357,7 +132323,7 @@
                     "frontier_revision": {
                       "type": "integer",
                       "minimum": 0,
-                      "maximum": 9007199254740991
+                      "maximum": 18446744073709551615
                     },
                     "frontier_sha256": {
                       "type": "string",
@@ -132403,7 +132369,7 @@
                         "selected_segment_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_ref": {
                           "const": "storage/seglog/manifest.v1.msgpack"
@@ -132415,12 +132381,12 @@
                         "manifest_generation": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
                           "type": "integer",
                           "minimum": 0,
-                          "maximum": 9007199254740991
+                          "maximum": 18446744073709551615
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",

@@ -24,7 +24,7 @@ from referencing.jsonschema import DRAFT202012
 ROOT = Path(__file__).resolve().parents[1]
 STORAGE_INSTANCE = '00000000-0000-4000-8000-000000000001'
 INLINE_LIMIT = 16 * 1024
-SAFE_INTEGER_MAX = (1 << 53) - 1
+UINT64_MAX = (1 << 64) - 1
 SELECTED_FAMILY = None
 # Reuse Storage's own instance descriptor, including its UUID format.
 STORAGE_INSTANCE_DESCRIPTOR = json.loads((ROOT/'Plans/event_record_index_checkpoint.schema.json').read_text())['$defs']['checkpoint']['properties']['storage_instance_id']
@@ -177,8 +177,6 @@ def body_bytes(value, rule=CURRENT_RULE):
             if not v.is_integer():
                 return v
             v = int(v)
-        if rule == CURRENT_RULE and type(v) is int and abs(v) > SAFE_INTEGER_MAX:
-            raise ValueError('integer outside DCH I-JSON safe domain')
         if isinstance(v, dict):
             return {k: ordered(v[k]) for k in sorted(v, key=lambda k: k.encode('utf-8'))}
         if isinstance(v, list):
@@ -214,8 +212,7 @@ def input_types_valid(value, rule=CURRENT_RULE):
     if type(value) is list:
         return all(input_types_valid(v, rule) for v in value)
     if type(value) is not dict:
-        return (type(value) in [str, bool, type(None)]
-                or (type(value) is int and (rule != CURRENT_RULE or abs(value) <= SAFE_INTEGER_MAX)))
+        return type(value) in [str, bool, int, type(None)]
     for key, v in value.items():
         if type(key) is not str:
             return False
@@ -223,6 +220,13 @@ def input_types_valid(value, rule=CURRENT_RULE):
             return False
         if key in integers and not (type(v) is int or (key == 'producer_sequence_id' and v is None)):
             return False
+        # Storage metadata retains the owner's exact uint64 range. Producer
+        # integers keep their own schema domain; RFC8785 route work is separate.
+        if rule == CURRENT_RULE and key in {'sequence_id', 'last_sequence_id',
+                'frontier_revision', 'selected_segment_generation',
+                'manifest_generation', 'recovery_epoch', 'byte_size'}:
+            if not (type(v) is int and 0 <= v <= UINT64_MAX):
+                return False
         if key in objects and type(v) is not dict:
             return False
         if key in arrays and type(v) is not list:
@@ -463,35 +467,39 @@ def checkpoint_storage_valid(value, source, row, key):
         return False
     if not input_types_valid(value, rule):
         return False
+    # Owner-valid logical integers can exceed this physical codec's range.
+    # Contain its refusal before any provenance hash uses the encoded bytes.
+    try:
+        raw = body_bytes(value, rule)
+    except (ValueError, OverflowError):
+        return False
     provenance = source.get('checkpoint_access')
-    if provenance is not None and hashlib.sha256(body_bytes(value, rule)).hexdigest() != provenance['source_value_sha256']:
+    if provenance is not None and hashlib.sha256(raw).hexdigest() != provenance['source_value_sha256']:
         return False
     physical = source.get('checkpoint_storage')
     if physical is not None and not input_types_valid({'pointer':physical['pointer'], 'pack':{k:v for k,v in physical['pack'].items() if k != 'body'}}):
         return False
     if physical is not None and not input_types_valid(physical['pack']['body'], rule):
         return False
-    try:
-        body_bytes(value, rule)
-    except (ValueError, OverflowError):
-        return False
     if physical is None:
         return len(body_bytes(value, rule)) <= INLINE_LIMIT
     packed = physical['pack']
     pointer = physical['pointer']
-    raw = body_bytes(value, rule)
-    return (len(body_bytes(pointer)) <= INLINE_LIMIT
-            and pointer == {'payload_ref': payload_reference(value, rule)}
-            and body_bytes(packed['body'], rule) == raw
-            and packed['key'] == 'payload:v1:' + blake3.blake3(raw).hexdigest()
-            and packed['byte_size'] == len(raw)
-            and packed['media_type'] == 'application/msgpack'
-            and packed['storage_instance_id'] == source['storage_instance_id']
-            and packed['domain_key'] == key
-            and packed['scope_partition'] == value['scope_partition']
-            and packed['event_type'] == row['event_type']
-            and all(packed[k] is True for k in ['authorized', 'hold_access_allowed', 'bytes_durable', 'index_durable', 'readback_verified'])
-            and packed['deleted'] is False)
+    try:
+        return (len(body_bytes(pointer)) <= INLINE_LIMIT
+                and pointer == {'payload_ref': payload_reference(value, rule)}
+                and body_bytes(packed['body'], rule) == raw
+                and packed['key'] == 'payload:v1:' + blake3.blake3(raw).hexdigest()
+                and packed['byte_size'] == len(raw)
+                and packed['media_type'] == 'application/msgpack'
+                and packed['storage_instance_id'] == source['storage_instance_id']
+                and packed['domain_key'] == key
+                and packed['scope_partition'] == value['scope_partition']
+                and packed['event_type'] == row['event_type']
+                and all(packed[k] is True for k in ['authorized', 'hold_access_allowed', 'bytes_durable', 'index_durable', 'readback_verified'])
+                and packed['deleted'] is False)
+    except (ValueError, OverflowError):
+        return False
 
 def archive_joins(payload, source):
     """Static original request/commit fixture joins; never an authorization receipt."""
@@ -571,7 +579,7 @@ def main():
     def finish():
         print(json.dumps({'status':'pass' if not failures else 'fail','checks':checks,'failures':failures,
                           'per_family':per_family,'native_execution':'NOT_RUN',
-                          'coverage':'Static standing checks 1-10; check 11 is supplied by pm_dch_guard_proofs.py: append, transport, retry, registry parity, complete schema-reference closure, populated histories, retained-original lookup and checkpoint relations. Source/access adapters are synthetic. Native process, receipt, CRC, full-source coverage, redb CAS, durability, custody and withdrawal are NOT_RUN.'},indent=2))
+                          'coverage':'Static standing checks 1-10; check 11 proof machinery awaits shared pm_guard_isolation.py adoption (legacy grouped proofs are not certification): append, transport, retry, registry parity, complete schema-reference closure, populated histories, retained-original lookup and checkpoint relations. Source/access adapters are synthetic. Native process, receipt, CRC, full-source coverage, redb CAS, durability, custody and withdrawal are NOT_RUN.'},indent=2))
         return bool(failures)
     # Preflight every selected schema before validating a single instance. In
     # particular an empty history must not conceal an unresolved reference.
@@ -834,6 +842,9 @@ def main():
     from pm_dch_round7_oracles import cases as round7_cases, evaluate as evaluate7
     for oracle in round7_cases(subject):
         check(evaluate7(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
+    from pm_dch_round8_oracles import cases as round8_cases, evaluate as evaluate8
+    for oracle in round8_cases(subject):
+        check(evaluate8(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
     return finish()
 
 if __name__=='__main__':
