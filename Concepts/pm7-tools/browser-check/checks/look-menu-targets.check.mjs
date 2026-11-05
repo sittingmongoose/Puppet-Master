@@ -1,6 +1,6 @@
 // FO-75: no look-option pixel belongs to another control; help retains a 30px target.
 import { LOOKS } from '../browser-check.config.mjs';
-const menu='#pm-o55-onboarding .o55-lookmenu';
+const menu='#pm-o55-onboarding .o55-lookmenu', option=':is(.o55-lookopt,.o55-lookmodes button)';
 export default async function(t) {
  const f=await t.app.open({onboarding:true,query:'o55=fresh'});
  await f.waitForFunction(()=>window.O55?.S?.open);
@@ -12,7 +12,7 @@ export default async function(t) {
    await t.page.mouse.move(2,2);await f.evaluate(([a,b])=>O55.ui.applyLook(a,b),look.split('-'));await f.waitForTimeout(1600);
    await f.evaluate(m=>{document.documentElement.setAttribute('data-motion',m==='attribute'?'reduced':'full');O55.S.lookOpen=false;O55.ui.go('look',{noHistory:true});O55.ui.act('lookMenu');},motion);await f.waitForTimeout(1800);
    const scan=await f.evaluate(()=>{
-    const root=document.querySelector('#pm-o55-onboarding .o55-lookmenu'),options=[...root.querySelectorAll('.o55-lookopt')];let pixels=0,wrong=0;const examples=[];
+    const root=document.querySelector('#pm-o55-onboarding .o55-lookmenu'),options=[...root.querySelectorAll(':is(.o55-lookopt,.o55-lookmodes button)')];let pixels=0,wrong=0;const examples=[];
     options.forEach((e,i)=>{e.__menuId=i;const b=e.getBoundingClientRect();
      for(let y=b.top+.5;y<b.bottom;y++)for(let x=b.left+.5;x<b.right;x++){
       pixels++;const hit=document.elementFromPoint(x,y)?.closest('button,input,select,textarea,[role="button"]');
@@ -24,12 +24,12 @@ export default async function(t) {
      return {...r,owned};});return {count:options.length,pixels,wrong,examples,help};
    });
    const tag=`${look} ${motion}`;
-   await t.check(`FO-75 every look-option pixel avoids other controls ${tag}`,scan.count>=5&&scan.wrong===0,JSON.stringify(scan));
+   await t.check(`FO-75 every look-option pixel avoids other controls ${tag}`,scan.count>=7&&scan.wrong===0,JSON.stringify(scan));
    await t.check(`FO-75 help retains usable 30px target ${tag}`,scan.help.length>=6&&scan.help.every(x=>x.w>=30&&x.h>=30&&x.owned),JSON.stringify(scan.help));
    if(motion==='no-preference')await t.crop(`${look}-look-menu-rest`,f.locator(menu),'Transparent hit expansion changes without changing the resting menu.');
    const misses=[];
    for(let i=0;i<scan.count;i++) {
-    const c=f.locator(menu+' .o55-lookopt').nth(i),b=await c.boundingBox(),before=await f.evaluate(()=>window.__menuClicks.length);
+    const c=f.locator(menu+' '+option).nth(i),b=await c.boundingBox(),before=await f.evaluate(()=>window.__menuClicks.length);
     await t.page.mouse.move(b.x+b.width-1,b.y+b.height/2);await t.page.mouse.down();await f.waitForTimeout(350);await t.page.mouse.up();
     await f.waitForFunction(n=>window.__menuClicks.length>n,before,{timeout:1000}).catch(()=>{});
     const got=await f.evaluate(n=>window.__menuClicks.slice(n),before);if(got.length!==1||got[0].id!==i||!got[0].trusted)misses.push({i,got});
