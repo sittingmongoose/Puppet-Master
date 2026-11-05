@@ -345,7 +345,7 @@ def wizard_source(row, scenario):
         opened_payload = envelope(opened_row, opened, authority=authority)
         for key in ('project_id','planning_run_id','named_plan_id','thread_group_id','thread_id','request_id','seed_ref','seed_kind','seed_version','seed_sha256','project_context_snapshot_ref','project_context_snapshot_hash'):
             require(opened_payload[key] == p[key], 'opened_join')
-        original_receipt(opened, authority['opened_source'], authority)
+        opened_source_custody(opened_row, scenario, opened, opened_payload)
     require(exact_equal(source['prepared_event'], event), 'latest_source_event')
     return source
 
@@ -516,6 +516,10 @@ def source_size_fixture(row, scenario, target, referenced, payload_body_mutation
         raise AssertionError(('unreachable source boundary', row['event_type'], target))
     if row['event_type'].startswith('wizard.'):
         scenario['authority']['seeds'][source['seed']['seed_ref']] = copy.deepcopy(source['seed'])
+        if row['event_type'] == 'wizard.deferred_payload.loaded':
+            scenario['authority']['opened_source']['seed'] = copy.deepcopy(source['seed'])
+            from pm_dcw_event_fixtures import opened_source_reference
+            opened_source_reference(scenario)
     if referenced:
         body = copy.deepcopy(source)
         for mutation in payload_body_mutations:
@@ -527,24 +531,26 @@ def source_size_fixture(row, scenario, target, referenced, payload_body_mutation
         scenario['stored_source'].update(source_key=copy.deepcopy(scenario['source_key']), source_payload_ref=dict(
             blake3=payload_id, byte_size=len(raw),
             media_type='application/vnd.puppetmaster.' + row['source_family'].replace('_', '-') + '+msgpack'))
-        scenario['authority']['payloads'] = {payload_id: dict(body=body, readable=True, durable=True, index_durable=True)}
+        scenario['authority'].setdefault('payloads', {})[payload_id] = dict(body=body, readable=True, durable=True, index_durable=True)
     if source['recovery_epoch'] != scenario['control']['selected_recovery_epoch']:
         stored = scenario.get('stored_source', source)
         scenario['authority']['restored_sources'][compact_digest(scenario['source_key'])] = hashlib.sha256(canonical_msgpack(stored)).hexdigest()
         if referenced:
             ref = stored['source_payload_ref']
             scenario['authority']['restored_payloads'] = {ref['blake3']: {k: ref[k] for k in ('byte_size', 'media_type')}}
+        from pm_dcw_event_fixtures import refresh_restore
+        refresh_restore(scenario)
 
 
-def run(legacy_validate):
+def run(legacy_validate, family=None):
     from pm_dcw_event_numeric_cases import cases as numeric_cases; fixtures=load('Plans/dcw_event_contract_fixtures.json');checks=0
-    require({r['event_type'] for r in fixtures['families']}=={'bundle.revision_requested','bundle.revision_started','bundle.revision_completed','bundle.revision_interrupted','wizard.opened','wizard.deferred_payload.loaded'} and len(fixtures['families'])==6,'family_inventory')
+    require({r['event_type'] for r in fixtures['families']}=={'bundle.revision_requested','bundle.revision_started','bundle.revision_completed','bundle.revision_interrupted','wizard.opened','wizard.deferred_payload.loaded'} and len(fixtures['families'])==6 and (family is None or family in {r['event_type'] for r in fixtures['families']}),'family_inventory')
     for schema_path in SCHEMAS:
         schema = load(str(schema_path.relative_to(ROOT)))
         Draft202012Validator.check_schema(schema)
         schema_references(schema)
     registry=load('Plans/storage_value_registry.json')
-    for row in fixtures['families']:
+    for row in (r for r in fixtures['families'] if family is None or r['event_type'] == family):
         source=next(f for f in registry['families'] if f['family_id']==row['source_family'])
         require(source['status']=='materialized' and source['value_schema_ref']==row['source_schema'] and source['value_schema']==load(row['source_schema']), 'materialized_source')
         require(source['recovery_disposition']['backup_required'] is True and source['restore_disposition']['mutation_fence_on_unresolved'] is True and source['restore_disposition']['mode']=='mandatory_backup', 'original_backup_contract')
@@ -649,3 +655,26 @@ def exact_equal(left, right):
         return canonical_msgpack(left) == canonical_msgpack(right)
     except Refusal:
         return False
+
+
+def opened_source_custody(row, scenario, opened, payload):
+    """Resolve the separately owned predecessor through the full historical path.
+
+    Its physical source, immutable owner observations, full event and receipt
+    must authenticate independently of the loaded event. Current writer CAS,
+    effects, cutoff and write permission never apply to this retained original.
+    """
+    authority = scenario['authority']
+    source = authority.get('opened_source')
+    require(type(source) is dict, 'opened_source_missing')
+    check_schema('Plans/dcw/wizard_open_evidence.schema.json', source, 'inline')
+    predecessor = dict(scenario, event=opened, source=source,
+                       source_key=authority.get('opened_source_key', [
+                           'wizard_open_evidence.v1', payload['project_id'],
+                           payload['planning_run_id'], payload['request_id']]),
+                       stored_source=authority.get('opened_stored_source', source),
+                       control=dict(scenario['control'],
+                           reader_withdrawn=authority.get('opened_reader_withdrawn'), requested_effects=[]))
+    opened_row = dict(row, source_family='wizard_open_evidence',
+                      source_schema='Plans/dcw/wizard_open_evidence.schema.json')
+    verify(opened_row, predecessor, 'read', None)

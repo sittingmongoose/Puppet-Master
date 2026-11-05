@@ -160,7 +160,7 @@ def additional_checks(rows, results):
 
         # 5: one exact-format original hash defect, with owner mirrors aligned.
         def loosen_hash_length(path, schema):
-            if path != row['source_schema']:
+            if path not in (row['source_schema'], *(['Plans/dcw/wizard_open_evidence.schema.json'] if row['event_type'] == 'wizard.deferred_payload.loaded' else [])):
                 return
             def visit(node):
                 if isinstance(node, dict):
@@ -220,7 +220,7 @@ def additional_checks(rows, results):
             value['event']['replay_policy'] = 'projector_replay_only'
             isolated(row, 10, 'isolated_historical_' + defect, value, 'compatibility_read', code, code=code)
         if row['event_type'] in ('bundle.revision_requested', 'bundle.revision_started', 'bundle.revision_interrupted'):
-            started = next(r for r in rows if r['event_type'] == 'bundle.revision_started')
+            started = next(r for r in m.load('Plans/dcw_event_contract_fixtures.json')['families'] if r['event_type'] == 'bundle.revision_started')
             case = next(c for c in started['cases'] if c['case_id'] == 'full_original_interrupted_resume')
             value = scenario(started, case)
             value['event'] = copy.deepcopy(next(s['prepared_event'] for s in value['source']['phases'] if s['event_type'] == row['event_type']))

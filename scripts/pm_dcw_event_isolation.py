@@ -11,6 +11,7 @@ import collections
 import copy
 import inspect
 import io
+import hashlib
 from contextlib import redirect_stdout
 import json
 import sys
@@ -97,7 +98,7 @@ class Probe:
                         isinstance(node.exc.args[0], ast.Constant) and node.exc.args[0].value == 'codec_type'):
                     check = ast.Call(ast.Attribute(ast.Name('_isolation', ast.Load()), 'codec_fallback', ast.Load()),
                                      [ast.Name('value', ast.Load())], [])
-                    return ast.copy_location(ast.If(check, [ast.Return(ast.Constant(b''))], [node]), node)
+                    return ast.copy_location(ast.If(check, [ast.Return(ast.Call(ast.Attribute(ast.Name('_isolation', ast.Load()), 'codec_bytes', ast.Load()), [ast.Name('value', ast.Load())], []))], [node]), node)
                 return node
 
             def visit_Expr(self, node):
@@ -111,7 +112,7 @@ class Probe:
                     return [transformed, ast.copy_location(continuation, node)]
                 variable = {'event_payload_missing': 'payload', 'source_payload_missing': 'payload',
                             'original_custody_missing': 'custody' if self.function == 'original_receipt' else 'original_event',
-                            'opened_original': 'opened'}.get(code)
+                            'opened_original': 'opened', 'opened_source_missing': 'source'}.get(code)
                 if self.function == 'original_receipt' and code == 'receipt_group' and node.lineno == 253:
                     variable = 'group'
                 if self.function == 'bundle_source' and code == 'latest_source_event' and node.lineno == 304:
@@ -160,8 +161,18 @@ class Probe:
         self.module.require(condition, code)
 
     def codec_fallback(self, value):
-        return (('canonical_msgpack:codec_type:integer' in self.disabled and type(value) is int) or
+        if type(value) is float:
+            self.trace.append('canonical_msgpack:codec_type')
+            self.failures.append(dict(site='canonical_msgpack:codec_type', code='codec_type'))
+        return (('canonical_msgpack:codec_type:float' in self.disabled and type(value) is float) or
+                ('canonical_msgpack:codec_type:integer' in self.disabled and type(value) is int) or
                 ('canonical_msgpack:codec_type:key' in self.disabled and isinstance(value, OpaqueKey)))
+
+    def codec_bytes(self, value):
+        if type(value) is float:
+            import msgpack
+            return msgpack.packb(value)  # Named duplicate type-domain mutant only.
+        return b''
 
     def conditional(self, site, local):
         if site + ':replay_only' in self.disabled:
@@ -218,13 +229,15 @@ class Probe:
                 value[default['field']] = copy.deepcopy(default['value'])
 
     def absent(self, site, variable, value, local):
-        if site not in self.disabled or value:
+        if site not in self.disabled or (type(value) is dict if variable == 'source' else value):
             return value
         # Removing a fail-closed absence predicate also needs a defined resolver
         # continuation. The positive's exact observation supplies that continuation;
         # no other field, guard or negative input is repaired.
         if variable == 'matching':
             return [local['source']['phases'][-1]]
+        if variable == 'source':
+            return copy.deepcopy(self.fallback['opened_source'])
         if variable == 'custody':
             return copy.deepcopy(self.fallback.get('custody', {}).get(local['event']['event_id']))
         if variable == 'group':
@@ -300,7 +313,7 @@ def guard_inventory(p, cases, table, supplemental):
     return result
 
 
-def supplement(p, fixture):
+def supplement(p, fixture, family=None):
     results = []
     real_load = p.module.load
     p.schema_defaults = []; p.schema_rules = set(); p.fallback = {}
@@ -335,7 +348,7 @@ def supplement(p, fixture):
                             baseline=baselines[name], single_removal=alone, after=paired,
                             others_rejected=rejected, passed=paired == 'accept' and
                             all(result != 'accept' for result in rejected.values())))
-    for row in fixture['families']:
+    for row in (r for r in fixture['families'] if family is None or r['event_type'] == family):
         for field, value in [('redb_file', 'derived'), ('storage_group', 'foreign'), ('max_value_bytes', 16385)]:
             changed = copy.deepcopy(registry)
             changed['storage_profile']['family_profiles'][row['source_family']][field] = value
@@ -358,20 +371,20 @@ def supplement(p, fixture):
                                      reg if path == 'Plans/storage_value_registry.json' else real_load(path))
         try:
             with redirect_stdout(io.StringIO()):
-                p.module.run(p.validate)
+                p.module.run(p.validate, family)
             return 'accept'
         except p.module.Refusal as exc:
             return str(exc)
-    for row in fixture['families']:
+    for row in (r for r in fixture['families'] if family is None or r['event_type'] == family):
         changed = copy.deepcopy(short)
         changed['families'] = [r for r in changed['families'] if r['event_type'] != row['event_type']]
         before = runner(changed, registry, [])
-        after = runner(changed, registry, ['run:541'])
-        results.append(dict(family=row['event_type'], case='missing_family', guard='run:541',
+        after = runner(changed, registry, ['run:547'])
+        results.append(dict(family=row['event_type'], case='missing_family', guard='run:547',
                             baseline=before, after=after, passed=before == 'family_inventory' and after == 'accept'))
-        for field, value, code, site in [('status', 'deferred', 'materialized_source', 'run:549'),
-                                        ('value_schema_ref', 'foreign-schema', 'materialized_source', 'run:549'),
-                                        ('backup_required', False, 'original_backup_contract', 'run:550')]:
+        for field, value, code, site in [('status', 'deferred', 'materialized_source', 'run:555'),
+                                        ('value_schema_ref', 'foreign-schema', 'materialized_source', 'run:555'),
+                                        ('backup_required', False, 'original_backup_contract', 'run:556')]:
             changed = copy.deepcopy(registry)
             source = next(s for s in changed['families'] if s['family_id'] == row['source_family'])
             if field == 'backup_required':
@@ -386,10 +399,10 @@ def supplement(p, fixture):
     return results
 
 
-def audit(author=False):
+def audit(author=False, family=None):
     fixture = original.load('Plans/dcw_event_contract_fixtures.json')
     p = Probe(); cases = []; table = []; unexpected = []
-    for row in fixture['families']:
+    for row in (r for r in fixture['families'] if family is None or r['event_type'] == family):
         generated = []
         # The complete runner also generates these exact single-field omissions.
         # The mutant removes the required-property rule and its downstream
@@ -404,10 +417,11 @@ def audit(author=False):
                     isolation=dict(guards=[], schema_rules=[], schema_defaults=[dict(path=schema_path, field=field, value=value)],
                                    duplicate_reason='Required property and downstream field availability; the mutation control resolves only that missing field from its frozen valid original.')))
         from pm_dcw_event_fixtures import writer_policy_fixture
-        for valid_case in row['cases']:
+        from pm_dcw_event_numeric_cases import cases as numeric_cases
+        for valid_case in [*row['cases'], *numeric_cases(row)]:
             if valid_case['expected'] != 'accept' or valid_case['operation'] not in ('append', 'publish', 'retry'):
                 continue
-            valid_value = scenario(row, valid_case)
+            valid_value = copy.deepcopy(valid_case['_value']) if '_value' in valid_case else scenario(row, valid_case)
             value = copy.deepcopy(valid_value)
             writer_policy_fixture(row, value)
             generated.append(dict(case_id='generated_event_policy_' + valid_case['case_id'],
@@ -440,6 +454,7 @@ def audit(author=False):
         p.schema_rules = set(config.get('schema_rules', ()))
         p.schema_defaults = copy.deepcopy(config.get('schema_defaults', []))
         p.fallback = copy.deepcopy(row['positive']['authority'])
+        p.fallback.update(copy.deepcopy(case.get('_fallback_authority', {})))
         if 'event_bytes' in case:
             valid = dict(case); valid.pop('event_defect', None); valid['mutations'] = []
             p.fallback.update(scenario(row, valid)['authority'])
@@ -492,9 +507,13 @@ def audit(author=False):
                     'round6_original_sequence_': ['original_full_value'],
                     'round6_custody_sequence_': ['receipt_event_sequence', 'original_receipt_equality'],
                     'round6_descriptor_': ['event_payload_reference_encoding'],
+                    'round7_opened_prepared_sequence_': ['latest_source_event'],
+                    'round7_opened_foreign_request_project_': ['original_request'],
                 }
                 for prefix, codes in named_numeric_duplicates.items():
                     if owner['case'].startswith(prefix):
+                        if prefix == 'round7_opened_foreign_request_project_':
+                            aliases.add(frozenset(('current_child_join', 'original_request')))
                         aliases.update(frozenset(('schema', code)) for code in codes)
                 if owner['baseline'] != entry['baseline'] and frozenset((owner['baseline'], entry['baseline'])) not in aliases:
                     unrelated.append(case['case_id'])
@@ -509,16 +528,25 @@ def audit(author=False):
         cross.append(dict(family=owner['family'], guards=owner['guards'], schema_rules=owner['schema_rules'],
                           schema_defaults=owner['schema_defaults'], flips=flips, rejected=rejected,
                           changed_refusals=changed, unrelated_acceptances=unrelated))
-    supplemental = supplement(p, fixture)
+    supplemental = supplement(p, fixture, family)
     inventory = guard_inventory(p, cases, table, supplemental)
+    reached = {site for entry in table for site in entry['trace']}
+    for guard in inventory:
+        guard['applicable'] = family is None or guard['site'] in reached or bool(guard['supplemental'])
     for entry in table:
         entry.pop('fallback')
-    result = dict(status='PASS' if all(e['after'] == 'accept' for e in table) and
-                  not any(not r['still_own_invariant'] for c in cross for r in c['changed_refusals']) and
-                  not any(c['unrelated_acceptances'] for c in cross) and all(s['passed'] for s in supplemental) and
-                  all(g['passed'] for g in inventory) else 'FAIL',
+    healthy = (all(e['after'] == 'accept' for e in table) and
+               not any(not r['still_own_invariant'] for c in cross for r in c['changed_refusals']) and
+               not any(c['unrelated_acceptances'] for c in cross) and all(s['passed'] for s in supplemental))
+    complete = all(g['passed'] for g in inventory)
+    # A family run cannot prove a shared site's witness owned by another family.
+    # It remains explicitly partial until the lane aggregate proves EVERY site.
+    status = 'PASS' if healthy and complete else ('PARTIAL' if healthy and family is not None else 'FAIL')
+    result = dict(status=status, coverage_scope=family or 'whole_lane', complete_guard_coverage=complete,
+                  production_source_sha256=hashlib.sha256(PATH.read_bytes()).hexdigest(),
+                  fixtures_sha256=hashlib.sha256((ROOT / 'Plans/dcw_event_contract_fixtures.json').read_bytes()).hexdigest(),
                   require_sites=len(inventory), proved_require_sites=sum(g['passed'] for g in inventory),
-                  unproved_require_sites=[g['site'] for g in inventory if not g['passed']],
+                  unproved_require_sites=[g['site'] for g in inventory if g['applicable'] and not g['passed']],
                   negatives=len(table), flipped=sum(e['after'] == 'accept' for e in table),
                   configurations=len(cross), cross_tests=sum(len(c['flips']) + len(c['rejected']) for c in cross),
                   changed_refusals=sum(len(c['changed_refusals']) for c in cross),
@@ -528,12 +556,85 @@ def audit(author=False):
     return result
 
 
+def merge_reports(paths):
+    """Require complete lane coverage from six sequential family proofs.
+
+    A selected-family proof is intentionally PARTIAL for global guard coverage.
+    This merge refuses omitted families, corpus rows, sites or cross-test IDs;
+    it does not execute another family or weaken any production predicate.
+    """
+    from pm_dcw_event_numeric_cases import cases as numeric_cases
+    fixtures = original.load('Plans/dcw_event_contract_fixtures.json')['families']
+    expected_families = {row['event_type'] for row in fixtures}
+    reports = [json.loads(path.read_text()) for path in paths]
+    assert len(reports) == len(expected_families)
+    assert {p['coverage_scope'] for p in reports} == expected_families
+    source_sha = hashlib.sha256(PATH.read_bytes()).hexdigest()
+    fixture_sha = hashlib.sha256((ROOT / 'Plans/dcw_event_contract_fixtures.json').read_bytes()).hexdigest()
+    inventory = {}
+    all_table = []; all_cross = []; supplemental = []
+    for row in fixtures:
+        p = next(p for p in reports if p['coverage_scope'] == row['event_type'])
+        assert p['status'] in ('PASS', 'PARTIAL')
+        assert p['production_source_sha256'] == source_sha and p['fixtures_sha256'] == fixture_sha
+        authored = [*row['cases'], *numeric_cases(row)]
+        expected_ids = {c['case_id'] for c in authored if c['expected'] != 'accept'}
+        for kind, body in [('payload', row['positive']['event']['payload']), ('envelope', row['positive']['event'])]:
+            expected_ids.update('generated_missing_' + kind + '_' + key for key in body)
+        for case in authored:
+            if case['expected'] == 'accept' and case['operation'] in ('append', 'publish', 'retry'):
+                expected_ids.add('generated_event_policy_' + case['case_id'])
+                if case['operation'] == 'retry':
+                    expected_ids.add('generated_caller_policy_' + case['case_id'])
+        assert len(p['table']) == p['negatives'] == p['flipped'] == len(expected_ids)
+        assert {e['case'] for e in p['table']} == expected_ids
+        assert all(e['family'] == row['event_type'] and e['after'] == 'accept' for e in p['table'])
+        assert all(s['passed'] for s in p['supplemental'])
+        for cross in p['cross']:
+            assert cross['family'] == row['event_type']
+            assert set(cross['flips']).isdisjoint(cross['rejected'])
+            assert set(cross['flips']) | set(cross['rejected']) == expected_ids
+            assert not cross['unrelated_acceptances']
+            assert all(r['still_own_invariant'] for r in cross['changed_refusals'])
+        for guard in p['guard_inventory']:
+            prior = inventory.get(guard['site'])
+            if prior is None or (guard['passed'] and not prior['passed']):
+                inventory[guard['site']] = copy.deepcopy(guard)
+        all_table.extend(p['table']); all_cross.extend(p['cross']); supplemental.extend(p['supplemental'])
+    # Inventory is extracted afresh, so an old export cannot hide a new guard.
+    class Sites(ast.NodeVisitor):
+        def __init__(self):
+            self.function = ''; self.found = set()
+        def visit_FunctionDef(self, node):
+            previous = self.function; self.function = node.name
+            self.generic_visit(node); self.function = previous
+        def visit_Call(self, node):
+            if isinstance(node.func, ast.Name) and node.func.id == 'require':
+                self.found.add(self.function + ':' + str(node.lineno))
+            self.generic_visit(node)
+    sites = Sites(); sites.visit(ast.parse(PATH.read_text()))
+    assert set(inventory) == sites.found and all(g['passed'] for g in inventory.values())
+    return dict(status='PASS', coverage_scope='whole_lane', complete_guard_coverage=True,
+                production_source_sha256=source_sha, fixtures_sha256=fixture_sha,
+                require_sites=len(inventory), proved_require_sites=len(inventory), unproved_require_sites=[],
+                negatives=len(all_table), flipped=len(all_table), configurations=len(all_cross),
+                cross_tests=sum(len(c['flips']) + len(c['rejected']) for c in all_cross),
+                changed_refusals=sum(len(c['changed_refusals']) for c in all_cross),
+                unrelated_changed_refusals=0, unrelated_acceptances=0,
+                table=all_table, cross=all_cross, supplemental=supplemental, guard_inventory=list(inventory.values()),
+                inputs=[dict(path=str(path), sha256=hashlib.sha256(path.read_bytes()).hexdigest()) for path in paths],
+                noninterference='Six sequential family proofs; complete corpus, site inventory and every named flip/reject complement verified before accepting the lane aggregate.')
+
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--author-diagnostics', action='store_true')
+    ap.add_argument('--family', choices=[r['event_type'] for r in original.load('Plans/dcw_event_contract_fixtures.json')['families']])
+    ap.add_argument('--merge', nargs=6, type=Path, metavar='FAMILY_REPORT')
     args = ap.parse_args()
-    result = audit(args.author_diagnostics)
+    assert not args.merge or (not args.family and not args.author_diagnostics)
+    result = merge_reports(args.merge) if args.merge else audit(args.author_diagnostics, args.family)
     args.output.write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k not in ('table', 'cross', 'supplemental', 'guard_inventory')}))
-    sys.exit(0 if result['status'] == 'PASS' else 1)
+    sys.exit(0 if result['status'] in ('PASS', 'PARTIAL') else 1)

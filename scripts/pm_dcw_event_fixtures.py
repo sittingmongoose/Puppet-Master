@@ -76,6 +76,15 @@ def refresh_restore(scenario):
     if 'source_payload_ref' in stored:
         ref = stored['source_payload_ref']
         authority['restored_payloads'] = {ref['blake3']: {k: ref[k] for k in ('byte_size', 'media_type')}}
+    if scenario['event']['event_type'] == 'wizard.deferred_payload.loaded':
+        source = authority['opened_source']
+        key = ['wizard_open_evidence.v1', source['request']['project_id'],
+               source['request']['planning_run_id'], source['request']['request_id']]
+        physical = authority.get('opened_stored_source', source)
+        authority['restored_sources'][m.compact_digest(key)] = hashlib.sha256(m.canonical_msgpack(physical)).hexdigest()
+        if 'source_payload_ref' in physical:
+            ref = physical['source_payload_ref']
+            authority.setdefault('restored_payloads', {})[ref['blake3']] = {k: ref[k] for k in ('byte_size', 'media_type')}
     authority['restored_event_payloads'] = {}
     for slot in event_slots(scenario):
         event = slot['prepared_event']
@@ -171,9 +180,25 @@ def event_size_fixture(row, scenario, target, referenced, restored=False):
     current_slot = scenario['source']['phases'][-1] if row['event_type'].startswith('bundle.') else scenario['source']
     scenario['event'] = copy.deepcopy(current_slot['prepared_event'])
     seal_originals(scenario)
+    opened_source_reference(scenario)
     if len(m.canonical_msgpack(scenario['source'])) > 16384:
         source_reference(row, scenario)
     refresh_restore(scenario)
+
+
+def opened_source_reference(scenario):
+    """Materialize predecessor overflow independently of the loaded source."""
+    if scenario['event']['event_type'] != 'wizard.deferred_payload.loaded':
+        return
+    authority = scenario['authority']; source = authority['opened_source']
+    if len(m.canonical_msgpack(source)) <= 16384 and 'opened_stored_source' not in authority:
+        return
+    row = dict(source_family='wizard_open_evidence')
+    predecessor = dict(source=source, source_key=[
+        'wizard_open_evidence.v1', source['request']['project_id'],
+        source['request']['planning_run_id'], source['request']['request_id']], authority=authority)
+    source_reference(row, predecessor)
+    authority['opened_stored_source'] = predecessor['stored_source']
 
 
 def event_case_fixture(row, scenario, case):

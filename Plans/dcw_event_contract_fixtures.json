@@ -56881,11 +56881,13 @@
             },
             "original_segment_ref": "segment:original-1",
             "publication": "receipted"
-          }
+          },
+          "opened_reader_withdrawn": false
         },
         "control": {
           "admitted_families": [
-            "wizard.deferred_payload.loaded"
+            "wizard.deferred_payload.loaded",
+            "wizard.opened"
           ],
           "selected_storage_instance_id": "11111111-1111-4111-8111-111111111111",
           "selected_recovery_epoch": 0,
@@ -57684,15 +57686,18 @@
                   ]
                 },
                 "restored_sources": {
-                  "96fa0462994078191ef9117b7e7fd17ad1938b4ef7972b0bfef7816c12b34ffd": "430e639f942fc044c85f9d12c2d13c4a08c31d9af2d5a353e5c1e6d51f41b086"
-                }
+                  "96fa0462994078191ef9117b7e7fd17ad1938b4ef7972b0bfef7816c12b34ffd": "430e639f942fc044c85f9d12c2d13c4a08c31d9af2d5a353e5c1e6d51f41b086",
+                  "6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
+                },
+                "opened_reader_withdrawn": false
               }
             },
             {
               "path": "/control",
               "value": {
                 "admitted_families": [
-                  "wizard.deferred_payload.loaded"
+                  "wizard.deferred_payload.loaded",
+                  "wizard.opened"
                 ],
                 "selected_storage_instance_id": "11111111-1111-4111-8111-111111111111",
                 "selected_recovery_epoch": 1,
@@ -58497,14 +58502,18 @@
                     }
                   ]
                 },
-                "restored_sources": {}
+                "restored_sources": {
+                  "6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
+                },
+                "opened_reader_withdrawn": false
               }
             },
             {
               "path": "/control",
               "value": {
                 "admitted_families": [
-                  "wizard.deferred_payload.loaded"
+                  "wizard.deferred_payload.loaded",
+                  "wizard.opened"
                 ],
                 "selected_storage_instance_id": "11111111-1111-4111-8111-111111111111",
                 "selected_recovery_epoch": 1,
@@ -59297,15 +59306,18 @@
                   "members": []
                 },
                 "restored_sources": {
-                  "96fa0462994078191ef9117b7e7fd17ad1938b4ef7972b0bfef7816c12b34ffd": "430e639f942fc044c85f9d12c2d13c4a08c31d9af2d5a353e5c1e6d51f41b086"
-                }
+                  "96fa0462994078191ef9117b7e7fd17ad1938b4ef7972b0bfef7816c12b34ffd": "430e639f942fc044c85f9d12c2d13c4a08c31d9af2d5a353e5c1e6d51f41b086",
+                  "6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
+                },
+                "opened_reader_withdrawn": false
               }
             },
             {
               "path": "/control",
               "value": {
                 "admitted_families": [
-                  "wizard.deferred_payload.loaded"
+                  "wizard.deferred_payload.loaded",
+                  "wizard.opened"
                 ],
                 "selected_storage_instance_id": "11111111-1111-4111-8111-111111111111",
                 "selected_recovery_epoch": 1,
@@ -59735,6 +59747,10 @@
             {
               "path": "/control/selected_recovery_epoch",
               "value": 1
+            },
+            {
+              "path": "/authority/restored_sources/6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67",
+              "value": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
             }
           ],
           "isolation": {
@@ -60462,6 +60478,10 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "f3a81f296e7739126a336559ec6186613c1fa6bb9cc9bd6ccd99a480e85f2a38"
+            },
+            {
+              "path": "/authority/opened_source/seed/version",
+              "value": "Bearer private-token"
             }
           ],
           "isolation": {
@@ -61204,14 +61224,16 @@
                   },
                   "original_segment_ref": "segment:original-1",
                   "publication": "receipted"
-                }
+                },
+                "opened_reader_withdrawn": false
               }
             },
             {
               "path": "/control",
               "value": {
                 "admitted_families": [
-                  "wizard.deferred_payload.loaded"
+                  "wizard.deferred_payload.loaded",
+                  "wizard.opened"
                 ],
                 "selected_storage_instance_id": "11111111-1111-4111-8111-111111111111",
                 "selected_recovery_epoch": 0,
@@ -61983,14 +62005,16 @@
                   },
                   "original_segment_ref": "segment:original-1",
                   "publication": "receipted"
-                }
+                },
+                "opened_reader_withdrawn": false
               }
             },
             {
               "path": "/control",
               "value": {
                 "admitted_families": [
-                  "wizard.deferred_payload.loaded"
+                  "wizard.deferred_payload.loaded",
+                  "wizard.opened"
                 ],
                 "selected_storage_instance_id": "11111111-1111-4111-8111-111111111111",
                 "selected_recovery_epoch": 0,
@@ -62119,6 +62143,12 @@
             {
               "path": "/authority/seeds/seed:current/warning_refs/0",
               "value": "Bearer private-token"
+            },
+            {
+              "path": "/authority/opened_source/seed/warning_refs",
+              "value": [
+                "Bearer private-token"
+              ]
             }
           ],
           "isolation": {
@@ -62202,6 +62232,10 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "d3137e967552539cd5837f4b8506665a561b1d42ff86f1dcc01f200f90000758"
+            },
+            {
+              "path": "/authority/opened_source/seed/version",
+              "value": "stale"
             }
           ],
           "isolation": {
@@ -62269,12 +62303,18 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "70661fe34bdd0b8655c067a78bc6a1e283b1c21ab010eed5902a1dd100ab9471"
+            },
+            {
+              "path": "/authority/opened_source/seed/seed_kind",
+              "value": "raw_chain_wizard_payload"
             }
           ],
           "isolation": {
             "invariant": "unsupported_raw_legacy_payload",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"seed_kind\",\"enum\"],\"enum\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"seed_kind\",\"enum\"],\"enum\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"seed_kind\",\"enum\"],\"enum\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"seed_kind\",\"enum\"],\"enum\"]",
               "[\"Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json\",null,[\"properties\",\"seed_kind\",\"enum\"],\"enum\"]",
@@ -62294,6 +62334,10 @@
             },
             {
               "path": "/authority/children/child:actual/revision",
+              "value": 2
+            },
+            {
+              "path": "/authority/opened_source/child/revision",
               "value": 2
             }
           ],
@@ -62391,12 +62435,34 @@
             {
               "path": "/authority/children/child:actual/sha256",
               "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_original_hash_append",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62435,12 +62501,34 @@
             {
               "path": "/authority/children/child:actual/sha256",
               "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_original_hash_publish",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62479,12 +62567,34 @@
             {
               "path": "/authority/children/child:actual/sha256",
               "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_original_hash_retry",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62523,12 +62633,34 @@
             {
               "path": "/authority/children/child:actual/sha256",
               "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_stored_request_expected_child_sha256",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62567,12 +62699,34 @@
             {
               "path": "/authority/children/child:actual/sha256",
               "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_stored_child_sha256",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62647,12 +62801,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "53034162651266e96624d6607a033b7445bc253ac75c4334ab3daf65c2c12a2e"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_stored_seed_sha256",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62731,12 +62901,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "febb033e07d569b60c94db12e0c19042901e7cf7c44ead28144549bfed227f78"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_stored_seed_project_context_snapshot_hash",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
@@ -62775,12 +62961,34 @@
             {
               "path": "/authority/children/child:actual/sha256",
               "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_stored_result_child_sha256",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62855,12 +63063,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "53034162651266e96624d6607a033b7445bc253ac75c4334ab3daf65c2c12a2e"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_stored_result_seed_sha256",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -62939,12 +63163,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "febb033e07d569b60c94db12e0c19042901e7cf7c44ead28144549bfed227f78"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_stored_result_project_context_snapshot_hash",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
@@ -63019,12 +63259,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "53034162651266e96624d6607a033b7445bc253ac75c4334ab3daf65c2c12a2e"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_event_payload_seed_sha256",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -63099,12 +63355,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "53034162651266e96624d6607a033b7445bc253ac75c4334ab3daf65c2c12a2e"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_source_prepared_event_payload_seed_sha256",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"seed_sha256\",\"maxLength\"],\"maxLength\"]",
@@ -63183,12 +63455,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "febb033e07d569b60c94db12e0c19042901e7cf7c44ead28144549bfed227f78"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_event_payload_project_context_snapshot_hash",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
@@ -63267,12 +63555,28 @@
             {
               "path": "/authority/opened_source/original_event_value_commitment/sha256",
               "value": "febb033e07d569b60c94db12e0c19042901e7cf7c44ead28144549bfed227f78"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/result/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "trailing_LF_source_prepared_event_payload_project_context_snapshot_hash",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"seed\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"project_context_snapshot_hash\",\"maxLength\"],\"maxLength\"]",
@@ -63880,6 +64184,35 @@
                   "media_type": "application/vnd.puppetmaster.wizard-seed-load-evidence+msgpack"
                 }
               }
+            },
+            {
+              "path": "/authority/opened_source/seed/warning_refs",
+              "value": [
+                "evidence:0:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:2:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:4:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:5:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:6:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:7:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:8:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:9:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:10:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:11:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:12:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:13:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:14:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:15:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:16:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:17:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:18:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:19:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:20:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:21:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:22:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:boundary:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              ]
             }
           ],
           "isolation": {
@@ -64219,6 +64552,35 @@
                   "media_type": "application/vnd.puppetmaster.wizard-seed-load-evidence+msgpack"
                 }
               }
+            },
+            {
+              "path": "/authority/opened_source/seed/warning_refs",
+              "value": [
+                "evidence:0:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:2:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:4:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:5:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:6:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:7:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:8:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:9:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:10:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:11:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:12:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:13:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:14:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:15:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:16:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:17:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:18:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:19:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:20:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:21:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:22:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:boundary:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              ]
             }
           ],
           "isolation": {
@@ -64692,12 +65054,63 @@
                   "media_type": "application/vnd.puppetmaster.wizard-seed-load-evidence+msgpack"
                 }
               }
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/opened_source/seed/warning_refs",
+              "value": [
+                "evidence:0:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:2:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:4:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:5:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:6:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:7:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:8:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:9:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:10:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:11:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:12:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:13:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:14:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:15:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:16:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:17:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:18:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:19:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:20:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:21:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:22:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "evidence:boundary:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              ]
+            },
+            {
+              "path": "/authority/opened_source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ],
           "isolation": {
             "invariant": "source_payload_LF_decoded_hash",
             "guards": [],
             "schema_rules": [
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
+              "[\"Plans/dcw/wizard_open_evidence.schema.json\",null,[\"oneOf\",0,\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"child\",\"properties\",\"sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"request\",\"properties\",\"expected_child_sha256\",\"maxLength\"],\"maxLength\"]",
               "[\"Plans/dcw/wizard_seed_load_evidence.schema.json\",\"inline\",[\"properties\",\"result\",\"properties\",\"child_sha256\",\"maxLength\"],\"maxLength\"]"
@@ -64890,6 +65303,10 @@
             },
             {
               "path": "/authority/custody/evt_wizard_deferred_payload_loaded_77a1d5b25eef05fd78dee0ec2ad19b28e4342c3648449d25eebb1dbb991b8319/storage_instance_id",
+              "value": "22222222-2222-4222-8222-222222222222"
+            },
+            {
+              "path": "/authority/opened_source/storage_instance_id",
               "value": "22222222-2222-4222-8222-222222222222"
             }
           ],
@@ -67322,6 +67739,10 @@
             {
               "path": "/control/selected_recovery_epoch",
               "value": 1
+            },
+            {
+              "path": "/authority/restored_sources/6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67",
+              "value": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
             }
           ],
           "isolation": {
@@ -67344,6 +67765,10 @@
             },
             {
               "path": "/control/selected_recovery_epoch",
+              "value": 2
+            },
+            {
+              "path": "/authority/opened_source/recovery_epoch",
               "value": 2
             }
           ],
@@ -67417,6 +67842,10 @@
             {
               "path": "/control/selected_recovery_epoch",
               "value": 1
+            },
+            {
+              "path": "/authority/restored_sources/6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67",
+              "value": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
             }
           ],
           "isolation": {
@@ -67481,6 +67910,10 @@
             {
               "path": "/control/selected_recovery_epoch",
               "value": 1
+            },
+            {
+              "path": "/authority/restored_sources/6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67",
+              "value": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
             }
           ],
           "isolation": {
@@ -67573,6 +68006,10 @@
             {
               "path": "/control/selected_recovery_epoch",
               "value": 1
+            },
+            {
+              "path": "/authority/restored_sources/6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67",
+              "value": "4c0e529d1221d8d700203a8e0e7c186c4f42c30557a4c13d31514c56f6a71534"
             }
           ],
           "isolation": {
@@ -67615,6 +68052,10 @@
             {
               "path": "/authority/children/child:actual/planning_run_id",
               "value": "foreign-run"
+            },
+            {
+              "path": "/authority/opened_source/child/planning_run_id",
+              "value": "foreign-run"
             }
           ],
           "isolation": {
@@ -67637,6 +68078,10 @@
             },
             {
               "path": "/authority/requests/request:original/permission_snapshot_id",
+              "value": "foreign-permission"
+            },
+            {
+              "path": "/authority/opened_source/request/permission_snapshot_id",
               "value": "foreign-permission"
             }
           ],
@@ -68000,6 +68445,39 @@
             {
               "path": "/authority/requests/request:original/request_id",
               "value": "request:foreign"
+            },
+            {
+              "path": "/source/request/request_ref",
+              "value": "request:loaded-original"
+            },
+            {
+              "path": "/source/result/request_ref",
+              "value": "request:loaded-original"
+            },
+            {
+              "path": "/authority/results/result:wizard.deferred_payload.loaded/request_ref",
+              "value": "request:loaded-original"
+            },
+            {
+              "path": "/authority/requests/request:original/request_id",
+              "value": "request-a"
+            },
+            {
+              "path": "/authority/requests/request:loaded-original",
+              "value": {
+                "request_id": "request:foreign",
+                "request_ref": "request:loaded-original",
+                "actor_ref": "actor:review-owner",
+                "permission_snapshot_id": "x-permission_snapshot_id",
+                "project_id": "project-a",
+                "planning_run_id": "planning-run-a",
+                "named_plan_id": "named-plan-a",
+                "thread_group_id": "group-a",
+                "thread_id": "intake-a",
+                "expected_child_revision": 1,
+                "expected_child_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "command_id": "cmd.project.chain_wizard_open_deferred"
+              }
             }
           ],
           "isolation": {

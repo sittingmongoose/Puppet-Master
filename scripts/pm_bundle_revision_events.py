@@ -47,10 +47,10 @@ def validate(row, payload, envelope, previous):
             assert payload[field] == previous[field], 'predecessor_' + field
 
 
-def main():
+def main(family=None):
     fixtures = json.loads((ROOT / 'Plans/bundle_revision_event_fixtures.json').read_text())
     checks = 0
-    for row in fixtures['families']:
+    for row in (r for r in fixtures['families'] if family is None or r['event_type'] == family):
         payload = row['positive']
         eid, key = identity(payload)
         envelope = dict(event_id=eid, idempotency_key=key, scope_kind='project', project_id=payload['project_id'],
@@ -110,11 +110,14 @@ def main():
         assert row['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
         print(row['event_type'] + ': PASS (static shape/identity/joins/order only)')
     from pm_dcw_event_oracles import run
-    full_checks = run(validate)
+    full_checks = run(validate, family)
     checks += full_checks
     assert all(x['execution_status'] == 'NOT_RUN' for x in fixtures['native_oracles'])
     print(json.dumps({'status': 'PASS', 'checks': checks, 'native': 'NOT_RUN', 'admission': 'ABSENT'}))
 
 
 if __name__ == '__main__':
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family')
+    main(parser.parse_args().family)

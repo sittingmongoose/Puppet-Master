@@ -83,11 +83,12 @@ def probe(family, kind):
         replacements = {path: schema, 'Plans/storage_value_registry.json': registry,
                         'Plans/dcw_event_contract_fixtures.json': rows}
         m.load = lambda p: replacements[p] if p in replacements else original_load(p)
-    main()
+    main(family)
 
 
-def audit():
+def audit(family=None):
     rows = m.load('Plans/dcw_event_contract_fixtures.json')['families']
+    rows = [r for r in rows if family is None or r['event_type'] == family]
     results = []
 
     def test(row, check, name, value, operation, expected):
@@ -184,12 +185,13 @@ def audit():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--family', choices=[r['event_type'] for r in m.load('Plans/dcw_event_contract_fixtures.json')['families']])
     parser.add_argument('--probe', nargs=2, metavar=('FAMILY', 'KIND'))
     args = parser.parse_args()
     if args.probe:
         probe(*args.probe)
     else:
-        report = audit()
+        report = audit(args.family)
         if args.output:
             args.output.write_text(json.dumps(report, indent=2) + '\n')
         print(json.dumps({k: v for k, v in report.items() if k != 'cases'}, indent=2))

@@ -120,6 +120,7 @@ def cases(row):
                 slot['prepared_event']['payload_ref'] = new
         value['event']['payload_ref'] = new; seal_originals(value); source_reference(row, value)
         rules = schema_rules(row['schema'], json.loads(new), 'payload_reference')
-        add('descriptor_' + label, value, 'publish', 'schema', ['domain:625', 'event_reference:171'], rules,
+        add('descriptor_' + label, value, 'publish', 'schema', ['domain:631', 'event_reference:171'], rules,
             'pm-uint schema format, integer-only canonical-JSON domain and exact descriptor re-encoding enforce one numeric representation; opaque descriptor originals are coherent.')
-    return result
+    from pm_dcw_opened_custody_cases import cases as opened_custody_cases
+    return result + opened_custody_cases(row)
