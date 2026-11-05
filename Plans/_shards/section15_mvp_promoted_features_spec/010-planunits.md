@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L1056-L8894
 
-Source SHA256: `8ed800c933a397e589c9b9ef7037634774c077364a4698bb27b4decc9732ca55`
+Source SHA256: `6aea1a2479f49b065d5590275d4126afeae02e7582d4220220992124bb0a8168`
 
 ---
 
@@ -624,7 +624,7 @@ plan_unit_id: SMPFS-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Assistant worktree integration preserves GitHub Integration, WorktreeGitImprovement, FinalGUISpec, Orchestrator/Source Control, and chain-wizard owner splits, consumes the current seven-tab Orchestrator shell from Orchestrator_Page, and keeps Non-MVP exclusions from becoming implicit MVP behavior.
+canonical_text: Assistant worktree integration preserves GitHub Integration, WorktreeGitImprovement, FinalGUISpec, Orchestrator/Source Control, and Planning Wizard (legacy chain wizard compatibility) owner splits, consumes the current seven-tab Orchestrator shell from Orchestrator_Page, and keeps Non-MVP exclusions from becoming implicit MVP behavior.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: true
@@ -663,7 +663,7 @@ preserved_exact_tokens:
 - chain wizard
 - Non-MVP
 negative_constraints:
-- Section 15 must not redefine Source Control, GitHub Integration, or chain-wizard ownership while exposing worktree surfaces.
+- Section 15 must not redefine Source Control, GitHub Integration, or Planning Wizard ownership while exposing worktree surfaces.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
@@ -2189,7 +2189,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
   files, or source code are created by this PlanUnit.
 - Project restore_point_record keeps rp:{project_id}:{restore_point_id}/pm.storage_value.restore_point_record.v1
-  unchanged; F admits a distinct scope-aware app key/schema variant with the same closed status available,
+  unchanged; CV-366/SP-349 select the distinct scope-aware app key/schema variant with the same closed status available,
   expired, deleted, corrupt.
 - Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused
   and failed create none.

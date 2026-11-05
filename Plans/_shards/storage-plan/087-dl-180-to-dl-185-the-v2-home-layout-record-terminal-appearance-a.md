@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27486-L27976
+Source lines: L27595-L28085
 
-Source SHA256: `723139d9411072aefcbcb5ac8f1daf5dd5e25c4ed83858fca74f487f14a6bca3`
+Source SHA256: `b72a18f91857e80a1d9dcf1651939eb758f50f0b4075a076f252f8e0516e058e`
 
 ---
 
@@ -454,7 +454,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
-  Editor appearance overrides are optional appearance fields inside the existing editor tab state of SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created. Absent fields fall through to SSYS-059’s effective code.editing result for the actual field-offered Everywhere, Computer or Device, and optional Project context per SSYS-059 and then F3-651’s defaults. The token-colors map is keyed by scheme/kind and overlays the effective base map per entry; null in a field patch clears that override, never copies all effective defaults into the tab. A tab-scoped appearance command returns a bounded receipt and saves/readbacks this nonstructural state without a layout revision advance or workspace.layout_changed event. All editors and All terminals target Everywhere through the same Settings transactions; explicitly chosen narrower edits use their exact offered level. Compatibility editor/terminal keys authorize no independent writer. The customizer's remembered tab scope is view state separate from the appearance fields; entering from Settings is temporary and does not overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same resolver-owned general.visual.wallpaper value at its offered level; assets are immutable packaged catalog assets, not copied into settings. For the migration admitted by the 2026-10-15 publication, an old concept wallpaper preference may seed the current Project only when its canonical value is absent and its id is valid; an explicit Project choice wins and no other Project is modified. Old glass_background_mode:v1 and Mesh/Depth/Minimal do not map to images; they retire to look when no new choice exists. Legacy keys are cleared only after successful owner write/readback, never before, and no-Project rendering performs no migration write. Import remains SP-331's parsed scheme/asset custody; this unit adds no secret, session, event family or governance authority. SSYS-054’s most-recent-change rule uses the actual level/setting transaction revision as its order: a NieR background edit commits its background value and wallpaper=look together; a later gallery edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store is created. The older concept preference migration remains explicit and Project-targeted only; it never seeds Everywhere/Computer from discovered concept data. SP-348 owns current level custody. App tab appearance uses SP-349 without another buffer or wallpaper store.
+  Editor appearance overrides are optional appearance fields inside the existing editor tab state of SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created. Absent fields fall through to SSYS-059’s effective code.editing result for the actual field-offered Everywhere, Computer or Device, and optional Project context per SSYS-059 and then F3-651’s defaults. The token-colors map is keyed by scheme/kind and overlays the effective base map per entry; null in a field patch clears that override, never copies all effective defaults into the tab. A tab-scoped appearance command returns a bounded receipt and saves/readbacks this nonstructural state without a layout revision advance or workspace.layout_changed event. All editors and All terminals target Everywhere through the same Settings transactions; explicitly chosen narrower edits use their exact offered level. Compatibility editor/terminal keys authorize no independent writer. The customizer's remembered tab scope is view state separate from the appearance fields; entering from Settings is temporary and does not overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same resolver-owned general.visual.wallpaper value at its offered level; assets are immutable packaged catalog assets, not copied into settings. Preserve actual owner-committed wallpaper choices and Settings inheritance. Discovered concept preferences cannot seed a product Project or another Settings level. Import remains SP-331's parsed scheme/asset custody; this unit adds no secret, session, event family or governance authority. SSYS-054’s most-recent-change rule uses the actual level/setting transaction revision as its order: a NieR background edit commits its background value and wallpaper=look together; a later gallery edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store is created. SP-348 owns current level custody. App tab appearance uses SP-349 without another buffer or wallpaper store.
 gui_related: true
 gui_classification_reason: Storage binding across offered Settings levels; visible presentation remains FinalGUISpec-owned.
 split_recommended: false
@@ -463,7 +463,7 @@ unblocks: []
 acceptance_criteria:
 - One resolver/transaction owns level values; tab map overlay and reset semantics remain.
 - No-Project app writes require the actual offered level/writer, not a Project.
-- Wallpaper/currentness and old explicitly admitted concept migration preserve source and readback.
+- Wallpaper choices preserve actual owner-committed values, source and readback; discovered concept preferences cannot seed product settings.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate

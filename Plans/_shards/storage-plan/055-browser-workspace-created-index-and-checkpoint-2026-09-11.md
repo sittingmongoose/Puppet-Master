@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19912-L20262
+Source lines: L19994-L20344
 
-Source SHA256: `723139d9411072aefcbcb5ac8f1daf5dd5e25c4ed83858fca74f487f14a6bca3`
+Source SHA256: `b72a18f91857e80a1d9dcf1651939eb758f50f0b4075a076f252f8e0516e058e`
 
 ---
 
@@ -292,7 +292,7 @@ cleanup. Archived cores never become current by moving them to the root.
 
 This successor requires its closed registered schema, explicit reader/admission
 revisions and native migration, source, permission and crash proofs before
-activation; this conditional target alone grants none of them.
+activation; the 2026-09-23 conditional target alone granted none of them.
 
 **Admission as the current definition — 2026-09-25.** This is newly authored under
 DL-046 for `browser.workspace.created` only. The closed registered schema and the
