@@ -14,6 +14,12 @@ export default async function (t) {
     await t.app.look('nier-dark');
     const viewport = await f.evaluate(() => ({ width: innerWidth, height: innerHeight }));
     await t.check(`${w}x${h} viewport`, viewport.width === w && viewport.height === h, JSON.stringify(viewport), { hard: true });
+    if(t.args.traceHistory) await f.evaluate(() => {
+      window.__historyTrace=[];
+      const record=(event,action) => { window.__historyTrace.push({event,action,at:performance.now(),mode:PM56_DEMO.getState().historyMode,drawer:document.body.dataset.phDrawer,pin:PMW.chatCol.historyPinned()}); if(window.__historyTrace.length>60) window.__historyTrace.shift(); };
+      for(const event of ['pointerdown','pointerup','click']) window.addEventListener(event,e=>record(event,e.target.closest?.('[data-action]')?.dataset.action),true);
+      new MutationObserver(()=>record('mutation')).observe(document.body,{attributes:true,attributeFilter:['data-ph-drawer','data-ph-closing','data-ph-pinning']});
+    });
     await f.evaluate(() => { PMW.chatCol.setKeepOpen(true); PMW.chatCol.show(); PMW.chatCol.setWidth(560); });
     await f.waitForFunction(() => {
       const e=document.querySelector('#chatPanel'), r=e?.getBoundingClientRect();
@@ -24,10 +30,19 @@ export default async function (t) {
       return ready && r?.width>0 && window.__podChatGeometry.count>=4;
     }, null, {polling:'raf',timeout:10000});
     const toggle = f.locator('.chat-header [data-action="toggle-history"]').first();
-    if (await f.evaluate(() => PM56_DEMO.getState().historyMode === 'closed')) await toggle.click();
+    // The app's historyMode can still be a restored value while History's own
+    // rendered drawer is closed. Follow the drawer owner, as the visible toggle does.
+    const drawerMode = await f.evaluate(() => {
+      const drawer=document.body.getAttribute('data-ph-drawer');
+      window.__historyTrace?.push({event:'before-toggle',state:PM56_DEMO.getState().historyMode,drawer});
+      return drawer;
+    });
+    if (drawerMode === 'closed') await toggle.click();
     const pin = f.locator('.history-flyout [data-action="ph-toggle-pin"]').first();
     if (await f.evaluate(() => document.body.getAttribute('data-ph-drawer') !== 'pinned')) {
-      await pin.waitFor({ state: 'visible', timeout: 10000 }); await pin.click();
+      try { await pin.waitFor({ state: 'visible', timeout: 10000 }); }
+      catch(error) { throw Error('History pin unavailable: '+JSON.stringify(await f.evaluate(()=>({state:PM56_DEMO.getState().historyMode,drawer:document.body.dataset.phDrawer,trace:window.__historyTrace})))+'; '+error.message); }
+      await pin.click();
     }
     await f.waitForFunction(() => document.body.getAttribute('data-ph-drawer') === 'pinned' && !!document.querySelector('.history-flyout'), null, { timeout: 10000 });
     const drawer = f.locator('.history-flyout');
