@@ -353,7 +353,7 @@ def check(v):
 
 
 def review_probe(g, trap, memory, uri):
-    """Round-1 reviewer counterexamples, with assertions on specific report rows."""
+    """Reviewer counterexamples, with assertions on specific report rows."""
     kind = trap['kind']
     def failure(report, name):
         return any(f['kind'] == name for f in report['failures'])
@@ -368,6 +368,127 @@ def review_probe(g, trap, memory, uri):
         return cat, suite, select
     def row(report, target):
         return next(r for r in report['rows'] if r['id'] == target)
+    if kind in ('review_assigned_class_append', 'review_annotated_append'):
+        source = ("class Checker:\n    def check(self, value, errors):\n        if value['x'] < 0:\n            discarded = errors.append('bad_x')\n"
+                  if kind == 'review_assigned_class_append' else
+                  "def check(value, errors):\n    if value['x'] < 0:\n        discarded: object = errors.append('bad_x')\n")
+        ns = {}; exec(source, ns)
+        backend = g.AstGuards('assigned', source, ns)
+        def runner(value, state):
+            errors = []
+            subject = state.modules['assigned']
+            check = subject.Checker().check if kind == 'review_assigned_class_append' else subject.check
+            check(value, errors)
+            return g.Outcome.refuse(errors[0]) if errors else g.Outcome.accept()
+        suite = g.Suite(trap['id'], runner, [g.Control('c', {'x': 0}, 'synthetic')], [], modules=[backend])
+        report = g.run(suite, memory=memory)
+        candidates = backend.candidates()
+        independent = g.asdict(runner({'x': -1}, suite.state()))
+        return dict(source=source, report=report, candidates=candidates, independent_negative=independent), (
+            report['status'] == 'FAIL' and report['controls'][0]['outcome'] == g.asdict(g.Outcome.accept()) and
+            independent == g.asdict(g.Outcome.refuse('bad_x')) and len(candidates) == 1 and
+            candidates[0]['function'] == ('Checker.check' if kind == 'review_assigned_class_append' else 'check') and
+            candidates[0]['action'] == 'unsupported' and bool(candidates[0].get('reason')) and
+            candidates[0]['id'] in report['unproved_guards'] and
+            any(x['id'] == candidates[0]['id'] for x in report['inventory']) and
+            failure(report, 'uninventoried_code_site') and not report['rows'])
+    if kind in ('review_cross_dialect', 'review_cross_dialect_child'):
+        from jsonschema import validators
+        from referencing import Registry, Resource
+        legacy_uri = uri + '.legacy'
+        child = kind == 'review_cross_dialect_child'
+        legacy = {'$schema': 'http://json-schema.org/draft-07/schema#', '$id': legacy_uri,
+                  'definitions': {'n': {} if child else {'minimum': 0}}, '$ref': '#/definitions/n',
+                  **({'properties': {'x': {'minimum': 0, 'maximum': 2}}} if child else {'maximum': 2})}
+        docs = {uri: {'$schema': 'https://json-schema.org/draft/2020-12/schema', '$ref': legacy_uri}, legacy_uri: legacy}
+        registry = Registry().with_resources((u, Resource.from_contents(d)) for u, d in docs.items()).crawl()
+        native = validators.validator_for(docs[uri])(docs[uri], registry=registry)
+        direct = validators.validator_for(legacy)(legacy, registry=registry)
+        cat = g.SchemaCatalog(docs, roots=(uri,))
+        def runner(value, state):
+            return g.Outcome.accept() if state.schema.validator(uri).is_valid(value) else g.Outcome.refuse('schema')
+        good, low, high = ({'x': 0}, {'x': -1}, {'x': 3}) if child else (0, -1, 3)
+        suite = g.Suite(trap['id'], runner, [g.Control('c', good, 'synthetic')], [], cat)
+        report = g.run(suite, memory=memory)
+        view = cat.mutated(frozenset()).validator(uri)
+        observations = [dict(value=v, native=native.is_valid(v), direct_legacy=direct.is_valid(v), uncut=view.is_valid(v))
+                        for v in (low, good, high)]
+        bounds = [x for x in cat.guards.values() if x.keyword in ('minimum', 'maximum')]
+        blocked = []
+        for bound in bounds:
+            try: cat.mutated(frozenset([bound.id]))
+            except g.IsolationError: blocked.append(bound.id)
+        # Preserve the review's minimum-only false-PASS attempt. Unsupported
+        # labels must now be refused before any misleading removal row exists.
+        minimum = next(x.id for x in bounds if x.keyword == 'minimum')
+        suite.negatives = [g.Negative('low', low, minimum, 'schema', 'c', 'minimum only')]
+        labelled = g.run(suite, memory=memory)
+        suite.negatives = []
+        suite.controls.append(g.Control('formerly-ignored', high, 'synthetic'))
+        refused_control = g.run(suite, memory=memory)
+        return dict(documents=docs, observations=observations, report=report, minimum_only_report=labelled,
+                    two_control_report=refused_control, blocked_cuts=blocked), (
+            [o['native'] for o in observations] == [False, True, False] and
+            all(o['native'] == o['uncut'] for o in observations) and observations[2]['direct_legacy'] and
+            len(bounds) == 2 and all(x.classification == 'unclassified' and x.id in report['unproved_guards'] and
+                                      'mixed-dialect' in x.evidence for x in bounds) and
+            report['status'] == 'FAIL' and not report['rows'] and len(blocked) == 2 and
+            labelled['status'] == 'FAIL' and failure(labelled, 'infrastructure_or_declaration') and not labelled['rows'] and
+            refused_control['status'] == 'FAIL' and failure(refused_control, 'control_refused') and
+            g.digest(docs) == g.digest(cat.documents))
+    if kind == 'review_mixed_not_call':
+        class Refusal(Exception): pass
+        def require(ok, code):
+            if not ok: raise Refusal(code)
+        source = "def check(v):\n    require(not (v['x'] < 0 or not (v['y'] >= 0)) and not (v['z'] < 0), 'bad')\n    return True\n"
+        ns = {'require': require}; exec(source, ns)
+        backend = g.AstGuards('mixed-not', source, ns); ids, dispositions = {}, {}
+        for candidate in backend.candidates():
+            if candidate['expression'] == 'True':
+                dispositions[candidate['id']] = g.Classification(candidate['id'], 'selector', 'accepting terminal return')
+            else:
+                field = next(f for f in ('x', 'y', 'z') if repr(f) in candidate['expression'])
+                ids[field] = backend.register(candidate, 'bad', g.Invariant('/'+field, 'nonnegative'))
+        def runner(value, state):
+            try:
+                state.modules['mixed-not'].check(value)
+                return g.Outcome.accept()
+            except Refusal as exc: return g.Outcome.refuse(str(exc))
+        good = dict(x=0, y=0, z=0)
+        suite = g.Suite(trap['id'], runner, [g.Control('c', good, 'synthetic')],
+            [g.Negative(f, {**good, f: -1}, target, 'bad', 'c', f+' only') for f, target in ids.items()],
+            modules=[backend], code_dispositions=dispositions)
+        report = g.run(suite, memory=memory)
+        return report, report['status'] == 'PASS' and len(ids) == 3 and len(report['rows']) == 3 and all(
+            row(report, target)['flips'] == [f] and row(report, target)['proved'] and row(report, target)['restored']
+            for f, target in ids.items())
+    if kind == 'review_swallowed_entry':
+        cat = g.SchemaCatalog({uri: {'type': 'object', '$defs': {'hidden': {'minimum': 0}}}})
+        target = next(x.id for x in cat.guards.values() if x.keyword == 'type')
+        def runner(value, state):
+            first = state.schema.validator(uri).is_valid(value['root'])
+            try: second = state.schema.validator(uri+'#/$defs/hidden').is_valid(value['hidden'])
+            except g.IsolationError: second = True
+            return g.Outcome.accept() if first and second else g.Outcome.refuse('schema')
+        suite = g.Suite(trap['id'], runner, [g.Control('c', dict(root={}, hidden=0), 'synthetic')],
+            [g.Negative('root', dict(root=[], hidden=0), target, 'schema', 'c', 'root type')], cat)
+        report = g.run(suite, memory=memory)
+        hidden = [x for x in report['inventory'] if x.get('keyword') == 'minimum']
+        return report, report['status'] == 'FAIL' and failure(report, 'consumed_entry_not_declared') and bool(hidden) and all(
+            x['classification'] == 'unclassified' and x['id'] in report['unproved_guards'] for x in hidden) and report['controls'][0]['outcome']['accepted']
+    if kind == 'review_negated_ref_peer':
+        schema = {'$defs': {'both': {'properties': {'x': {'minimum': 0}, 'y': {'minimum': 0}}}},
+                  'not': {'$ref': '#/$defs/both'}, 'properties': {'z': {'minimum': 0}}}
+        cat, suite, select = schema_case(schema, dict(x=-1, y=-1, z=0),
+            [('z', dict(x=-1, y=-1, z=-1), 'minimum', ('properties', 'z'), None)])
+        report = g.run(suite, memory=memory)
+        negative = [x for x in cat.guards.values() if x.kind == 'schema' and x.polarity < 0]
+        blocked = []
+        for guard in negative:
+            try: cat.mutated(frozenset([guard.id]))
+            except g.IsolationError: blocked.append(guard.id)
+        return report, report['status'] == 'FAIL' and len(negative) == len(blocked) == 2 and all(
+            x.classification == 'unclassified' and x.id in report['unproved_guards'] for x in negative) and len(report['rows']) == 1 and report['rows'][0]['proved']
     if kind=='review_memory_reset':
         now=[0]; samples=[]; sequence=iter([5,6,5,6,7])
         def available():

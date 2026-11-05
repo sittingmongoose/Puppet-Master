@@ -237,9 +237,11 @@ class SchemaCatalog:
         self.guards: dict[str, Guard] = {}
         self.nodes: dict[tuple, Any] = {}
         self.edges: dict[tuple, list[tuple]] = {}
+        self.possible_edges: dict[tuple, list[tuple]] = {}
         self.references: list[dict] = []
         self.entry_targets = {}
         self.special_entries = set()
+        self.mixed_entries = set()
         self.dialects = {}
         self.ineffective = {}
         self._make_registry()
@@ -283,14 +285,19 @@ class SchemaCatalog:
                             dynamic_anchors.setdefault(node[anchor], []).append(key)
             if not isinstance(node, dict):
                 self.edges[key] = []
+                self.possible_edges[key] = []
                 return
             resolver = base_resolver.in_subresource(Resource.from_contents(node, default_specification=DRAFT202012))
             self.edges[key] = []
+            self.possible_edges[key] = []
             for rel, child in children(node):
                 collect(doc, path + rel, child, resolver, scopes, dialect)
                 # $defs/definitions are declarations, not evaluation edges.
-                if rel[0] not in ("$defs", "definitions", "contentSchema") and self._effective(node, rel[0], dialect):
-                    self.edges[key].append(((doc, path + rel), rel[0]))
+                if rel[0] not in ("$defs", "definitions", "contentSchema"):
+                    edge = ((doc, path + rel), rel[0])
+                    self.possible_edges[key].append(edge)
+                    if self._effective(node, rel[0], dialect):
+                        self.edges[key].append(edge)
             for ref_key in ("$ref", "$dynamicRef", "$recursiveRef"):
                 if ref_key in node:
                     try:
@@ -311,6 +318,7 @@ class SchemaCatalog:
             if target is None:
                 raise IsolationError(f"reference escapes the declared schema graph: {ref}")
             ref["target"] = target
+            self.possible_edges[ref["source"]].append((target, ref["keyword"]))
             active = self._effective(self.nodes[ref["source"]], ref["keyword"], self.dialects[ref["source"]])
             if active:
                 self.edges[ref["source"]].append((target, ref["keyword"]))
@@ -322,6 +330,8 @@ class SchemaCatalog:
                 ref["dynamic_candidates"] = dynamic_anchors.get(anchor, [])
                 for alternative in ref["dynamic_candidates"] if active else ():
                     self.edges[ref["source"]].append((alternative, ref["keyword"]))
+                for alternative in ref["dynamic_candidates"]:
+                    self.possible_edges[ref["source"]].append((alternative, ref["keyword"]))
         reachable, contexts = set(), {}
         def reach(key, mode="guard", polarity=1):
             context = (mode, polarity)
@@ -459,6 +469,22 @@ class SchemaCatalog:
         by_node = {}
         for guard in prototypes.values():
             by_node.setdefault((guard.document, guard.path), []).append(guard)
+        # jsonschema's descend may select keywords with the caller's dialect
+        # while dispatching handlers with the evolved target dialect. A resource's
+        # $schema alone cannot prove that its $ref siblings are ignored. Until an
+        # adapter represents that context, retain the original graph and every
+        # potentially evaluated assertion, with no isolated-cut/proof credit.
+        for entry, root in self.entry_targets.items():
+            pending, seen = [root], set()
+            while pending:
+                key = pending.pop()
+                if key in seen:
+                    continue
+                seen.add(key)
+                if self.dialects[key] is not self.dialects[root]:
+                    self.mixed_entries.add(entry)
+                    self.special_entries.add(entry)
+                pending.extend(child for child, _ in self.possible_edges[key])
         result, visited_nodes = {}, set()
         def assertion_count(key, stack=frozenset()):
             if key in stack:
@@ -479,7 +505,9 @@ class SchemaCatalog:
             negative_compound = negative_compound or (polarity < 0 and assertion_count(key) > 1)
             for original in by_node.get(key, []):
                 classification, evidence = original.classification, original.evidence
-                if (original.document, original.path, original.keyword) in self.ineffective:
+                if entry in self.mixed_entries and original.kind not in ("routing", "reference"):
+                    classification, evidence = "unclassified", "mixed-dialect evaluation: caller keyword selection and target handlers require a context-bound adapter; resource dialect alone cannot prove reachability"
+                elif (original.document, original.path, original.keyword) in self.ineffective:
                     classification = "unreachable"
                 elif original.kind in ("routing", "reference"):
                     classification = "selector"
@@ -503,7 +531,8 @@ class SchemaCatalog:
                 result[gid] = replace(original, id=gid, entry_uri=entry, reference_trail=trail,
                     input_path=input_path, polarity=polarity, classification=classification,
                     evidence=evidence, invariant=Invariant(entry + "#" + pointer(input_path), encoded([original.invariant.predicate, polarity])))
-            for child, via in self.edges[key]:
+            edges = self.possible_edges[key] if entry in self.mixed_entries else self.edges[key]
+            for child, via in edges:
                 child_mode, child_polarity, child_input, child_trail = mode, polarity, input_path, trail
                 if via in ("$dynamicRef", "$recursiveRef"):
                     self.special_entries.add(entry)
@@ -536,9 +565,11 @@ class SchemaCatalog:
                     evidence="recursive/dynamic reference occurrences need an explicit context-bound adapter; broad physical cuts are forbidden")
         for entry in self.special_entries:
             gid = "schema-context:" + entry
+            reason = ("mixed-dialect evaluation needs an explicit context-bound adapter; declared resource dialect is not the calling evaluation context"
+                      if entry in self.mixed_entries else "recursive/dynamic occurrence inventory needs an explicit adapter seam")
             result[gid] = Guard(gid, "unsupported_context", entry,
-                Invariant(entry, "context-bound recursive/dynamic evaluation"),
-                classification="unclassified", evidence="recursive/dynamic occurrence inventory needs an explicit adapter seam")
+                Invariant(entry, "context-bound mixed-dialect evaluation" if entry in self.mixed_entries else "context-bound recursive/dynamic evaluation"),
+                classification="unclassified", evidence=reason)
         self.guards = result
 
     def _reference_frames(self):
@@ -771,9 +802,10 @@ class AstGuards:
             yield path, test
 
     def _calls(self, node):
-        refusal = (isinstance(node, ast.Expr) and isinstance(node.value, ast.Call) and
-            ((isinstance(node.value.func, ast.Attribute) and node.value.func.attr == "append") or
-             (isinstance(node.value.func, ast.Name) and node.value.func.id in ("refuse", "reject", "fail"))))
+        call = node.value if isinstance(node, ast.Expr) else node
+        refusal = (isinstance(call, ast.Call) and
+            ((isinstance(call.func, ast.Attribute) and call.func.attr == "append") or
+             (isinstance(call.func, ast.Name) and call.func.id in ("refuse", "reject", "fail"))))
         predicate = isinstance(node, ast.Call) and ast.unparse(node.func) in self.call_predicates
         return refusal, predicate
 
@@ -784,7 +816,7 @@ class AstGuards:
                 if node is not fn and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
                     return
                 refusal_call, checkcall = self._calls(node)
-                if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or refusal_call or checkcall:
+                if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or (refusal_call and isinstance(node, ast.Expr)) or checkcall:
                     # Non-refusal returns are inventoried too; adapter classifies them.
                     predicate = isinstance(node, ast.Return) and condition is None
                     arg_index = self.call_predicates[ast.unparse(node.func)] if checkcall else None
@@ -811,6 +843,8 @@ class AstGuards:
         parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
         for node in ast.walk(self.tree):
             refusal_call, checkcall = self._calls(node)
+            if refusal_call and isinstance(node, ast.Call) and isinstance(parents.get(node), ast.Expr):
+                continue                    # standalone expression already has one site
             if not (isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or refusal_call or checkcall) or (node.lineno, node.col_offset) in inventoried:
                 continue
             owner, ancestry = node, []
@@ -822,7 +856,7 @@ class AstGuards:
             identity = digest([name, ast.dump(node, include_attributes=False)])[:16]
             result.append({"function": name, "line": node.lineno, "column": node.col_offset,
                 "action": "unsupported", "clause": None, "expression": ast.unparse(node),
-                "reason": "nested/class/module guard requires an explicit atomic adapter seam",
+                "reason": "nested/class/module guard or refusal call with a consumed result requires an explicit atomic adapter seam",
                 "fingerprint": identity, "id": f"code:{self.name}:{name}:{identity}"})
         # Identical text at two sites still has two identities (stable occurrence suffix).
         counts = {}

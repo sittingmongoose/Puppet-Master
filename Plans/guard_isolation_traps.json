@@ -738,6 +738,41 @@
       "id": "F4-negated-allof",
       "kind": "review_negated_allof",
       "expected": "allOf inside negation has no unsupported broad atomic cut"
+    },
+    {
+      "id": "F2-round2-assigned-class-append",
+      "kind": "review_assigned_class_append",
+      "expected": "assigned append in a class remains one unsupported, identified, unproved obligation; no empty PASS"
+    },
+    {
+      "id": "F2-round2-annotated-append",
+      "kind": "review_annotated_append",
+      "expected": "annotated assignment of a top-level append result stays inventoried and unproved"
+    },
+    {
+      "id": "F5-round2-cross-dialect",
+      "kind": "review_cross_dialect",
+      "expected": "modern caller enforces legacy ref sibling; minimum-only proof refuses and both bounds remain unclassified/unproved"
+    },
+    {
+      "id": "F5-round2-cross-dialect-child",
+      "kind": "review_cross_dialect_child",
+      "expected": "legacy ref sibling properties evaluate through a modern caller; nested bounds stay unclassified/unproved and match original validation"
+    },
+    {
+      "id": "F1-round2-mixed-not-call",
+      "kind": "review_mixed_not_call",
+      "expected": "three predicates under mixed nested negation each prove while peer negatives retain their codes"
+    },
+    {
+      "id": "F3-round2-swallowed-entry",
+      "kind": "review_swallowed_entry",
+      "expected": "callback swallowing an undeclared-entry error cannot suppress consumed-entry failure or hidden obligation"
+    },
+    {
+      "id": "F4-round2-negated-ref-peer",
+      "kind": "review_negated_ref_peer",
+      "expected": "negated ref to a two-field conjunction refuses cuts while the independent positive z guard proves"
     }
   ]
 }
