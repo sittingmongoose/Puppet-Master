@@ -186,6 +186,67 @@ def strict_equal(a,b):
     return a==b
 
 
+# browser_session_state.v1 (Storage session record): identity/scope live in the resolved
+# record metadata and are joined by record_*; facts contain the original body.
+# Optional string? members preserve absence and null. No live-state default,
+# numeric range, serializer or new historical recipe is introduced here.
+BROWSER_REQUIRED_FACTS = {
+    'session_class': (str,), 'requested_browser_runtime': (str,),
+    'effective_browser_runtime': (str,), 'requested_capabilities': (list,),
+    'effective_capabilities': (list,), 'capability_degradations': (list,),
+    'blocked_actions': (list,), 'permission_tier': (str,), 'profile_scope': (str,),
+    'restore_policy': (str,), 'takeover_state': (str,), 'url': (str,),
+    'viewport': (dict,), 'scroll_position': (dict,), 'zoom_level': (int, float),
+    'dev_tools_open': (bool,), 'lifecycle_state': (str,),
+}
+BROWSER_OPTIONAL_FACTS = {
+    'workspace_tab_id': (str, type(None)), 'preview_subject_id': (str, type(None)),
+    'last_error': (str, type(None)),
+}
+BROWSER_ENUMS = {
+    'session_class': {'workspace_preview', 'detached_preview', 'automation_session', 'normal_browsing'},
+    'permission_tier': {'always_allowed', 'session_granted', 'explicit_confirmation'},
+    'restore_policy': {'restore_intent', 'restore_session', 'do_not_restore'},
+    'takeover_state': {'none', 'offered', 'paused_for_user', 'promoted', 'stopped_keep_browser'},
+    'lifecycle_state': {'open', 'closed'},
+}
+BROWSER_STRING_LISTS = {'requested_capabilities', 'effective_capabilities',
+                        'capability_degradations', 'blocked_actions'}
+
+
+def browser_field_bad(facts, key):
+    if type(facts) is not dict:
+        return False  # the independent object guard owns this prerequisite
+    if '.' in key:
+        parent, member = key.split('.')
+        value = facts.get(parent)
+        if type(value) is not dict:
+            return False  # parent type/missing guard owns this prerequisite
+        kinds = (int,) if parent == 'viewport' else (int, float)
+        return type(value.get(member)) not in kinds
+    if key not in facts:
+        return key in BROWSER_REQUIRED_FACTS
+    value = facts[key]
+    if type(value) not in BROWSER_REQUIRED_FACTS.get(key, BROWSER_OPTIONAL_FACTS[key] if key in BROWSER_OPTIONAL_FACTS else ()):
+        return True
+    if key in BROWSER_ENUMS and value not in BROWSER_ENUMS[key]:
+        return True
+    if key in BROWSER_STRING_LISTS and any(type(v) is not str for v in value):
+        return True
+    return False
+
+
+def browser_fact_bad(e, c, payload_key, fact_key, side):
+    if not e['event_type'].startswith('browser.session.'):
+        return False
+    record = records(c)[side]
+    # A missing/malformed value is refused by its source-field guard before
+    # it can be used as a state observation; it is never filled or coerced.
+    if record is not None and (type(record.get('facts')) is not dict or browser_field_bad(record['facts'], fact_key)):
+        return False
+    return not strict_equal(e['payload'][payload_key], record['facts'][fact_key] if record else None)
+
+
 # §3.1 required semantic facts; identity/scope/revision are the resolved
 # record metadata checked by record_* and source_* below. Optional absence is
 # preserved, never filled with null or a default to make an incomplete record pass.
@@ -346,6 +407,17 @@ def memory_fact_bad(e, c, payload_key, fact_key, side):
         # succeeds. Other field/lineage/record guards still execute normally.
         return False
     record = records(c)[side]
+    if record is not None:
+        facts = record.get('facts')
+        # Completeness and exact types belong to the mandatory source-shape
+        # predicate. Do not turn a missing field into a second join exception.
+        kinds = MEMORY_REQUIRED_FACTS[fact_key]
+        if type(kinds) is not tuple: kinds = (kinds,)
+        if type(facts) is not dict or fact_key not in facts or type(facts[fact_key]) not in kinds:
+            return False
+        if fact_key == 'evidence_refs' and evidence_list_bad(facts[fact_key]): return False
+        if fact_key == 'source' and facts[fact_key] not in {'AutoRunBoundary','AutoMilestone','UserManual','Import'}: return False
+        if fact_key == 'verification_state' and facts[fact_key] not in {'Unverified','Verified','Discarded'}: return False
     expected = record['facts'][fact_key] if record else (False if fact_key == 'pinned' else None)
     return not strict_equal(actual, expected)
 
@@ -430,6 +502,19 @@ event_rule('revision_step', lambda e,c: e['payload']['revision_after'] != e['pay
 rule('real_change', 'append retry history', lambda c: c['owner']['real_change'] is not True)
 
 
+# One field predicate per site keeps completeness/type proof independent of
+# peer fields. Applied to both immutable records on all three paths, including
+# retained replay-only originals; no current writer policy is consulted.
+rule('browser_source_object', 'append retry history',
+     lambda c: c['event']['event_type'].startswith('browser.session.') and
+     any(r is not None and type(r.get('facts')) is not dict for r in records(c)))
+for key in [*BROWSER_REQUIRED_FACTS, *BROWSER_OPTIONAL_FACTS,
+            'viewport.width', 'viewport.height', 'scroll_position.x', 'scroll_position.y']:
+    rule('browser_source_' + key, 'append retry history',
+         lambda c,k=key: c['event']['event_type'].startswith('browser.session.') and
+         any(r is not None and browser_field_bad(r.get('facts'), k) for r in records(c)))
+
+
 def transition_bad(e, c):
     p=e['payload']; n=e['event_type']
     if n=='browser.session.created':
@@ -469,10 +554,11 @@ for payload_key,fact_key,side in [('previous_session_class','session_class',0),(
                                   ('previous_takeover_state','takeover_state',0),('takeover_state','takeover_state',1),
                                   ('previous_lifecycle_state','lifecycle_state',0),('lifecycle_state','lifecycle_state',1)]:
     event_rule('browser_fact_'+payload_key, lambda e,c,p=payload_key,k=fact_key,s=side:
-               e['event_type'].startswith('browser.session.') and e['payload'][p] !=
-               (records(c)[s]['facts'][k] if records(c)[s] else None))
+               browser_fact_bad(e,c,p,k,s))
 event_rule('browser_delta', lambda e,c: e['event_type'].startswith('browser.session.') and
-           e['event_type']!='browser.session.created' and sorted(e['payload']['changed_fields'])!=exact_delta(c))
+           e['event_type']!='browser.session.created' and
+           all(r is None or type(r.get('facts')) is dict for r in records(c)) and
+           sorted(e['payload']['changed_fields'])!=exact_delta(c))
 
 rule('double_record', 'append retry', lambda c: type(c['other_events']) is not list or (type(c['event']['payload']) is dict and any(o['owner_operation_id']==c['event']['payload']['owner_operation_id'] and
      o['change_id']==c['event']['payload']['owner_change_id'] and
@@ -562,7 +648,9 @@ rule('command_only_command','no_event',lambda c:c['command']!='cmd.chat.memory.v
 rule('command_only_outcome','no_event',lambda c:c['outcome'] not in ['requested','failed','success_without_real_change'])
 rule('command_only_source_shape','no_event',lambda c:memory_facts_bad(c['before_facts']) or memory_facts_bad(c['after_facts']))
 rule('command_only_delta','no_event',lambda c:not strict_equal(c['before_facts'],c['after_facts']))
-rule('command_only_verified','no_event',lambda c:c['outcome']=='success_without_real_change' and c['before_facts']['verification_state']!='Verified')
+rule('command_only_verified','no_event',lambda c:c['outcome']=='success_without_real_change' and
+     type(c['before_facts']) is dict and type(c['before_facts'].get('verification_state')) is str and c['before_facts']['verification_state'] in {'Unverified','Verified','Discarded'} and
+     c['before_facts']['verification_state']!='Verified')
 
 
 GUARDS_ORIGINAL_RESOLUTION = GUARDS['record_resolution']
@@ -574,7 +662,7 @@ def failures(c):
         if name=='scenario_shape' and not valid_path: continue
         if name not in ['scenario_path','scenario_shape'] and (not valid_path or ('event' in c)!=(c.get('path')!='no_event')): continue
         if '*' not in PATHS[name] and c.get('path') not in PATHS[name]: continue
-        if name != 'record_resolution' and name.startswith(('record_', 'memory_source_shape', 'memory_verified_claims', 'memory_delta','memory_fact_','browser_fact_','browser_delta')) and GUARDS_ORIGINAL_RESOLUTION(c): continue
+        if name != 'record_resolution' and name.startswith(('record_', 'memory_source_shape', 'memory_verified_claims', 'memory_delta','memory_fact_','browser_source_','browser_fact_','browser_delta')) and GUARDS_ORIGINAL_RESOLUTION(c): continue
         try:
             if guard(c): result.append(name)
         except (KeyError,TypeError,ValueError,IndexError,StopIteration,AttributeError):
@@ -592,10 +680,16 @@ def mutate(base, changes):
     return c
 
 
-def run(fixtures=None):
+def run(fixtures=None, event_type=None):
     for name in ['card2_event_payloads.schema.json','event_record.schema.json','event_record_index_checkpoint.schema.json']:
         local_refs_resolve(load(name))
     fixtures=fixtures or load('card2_event_fixtures.json')
+    if event_type is not None:
+        fixtures = copy.deepcopy(fixtures)
+        fixtures['positives'] = [c for c in fixtures['positives'] if c['event']['event_type'] == event_type]
+        fixtures['no_event_cases'] = fixtures['no_event_cases'] if event_type == 'memory.gist_state_changed' else []
+        selected = {c['id'] for c in fixtures['positives'] + fixtures['no_event_cases']}
+        fixtures['negative_cases'] = [c for c in fixtures['negative_cases'] if c['base'] in selected]
     # json.loads consumes the entire number, so 01/00/-01 never enter an
     # identity, canonical digest or retry as an alternative spelling.
     for case in fixtures.get('parse_rejections', []):
@@ -619,7 +713,10 @@ def run(fixtures=None):
         # Explicit intentional duplicate sets are removed together, not hidden by
         # suppressing a composite function. Every other predicate still runs.
         groups={tuple(sorted(case.get('guards',[case['guard']]))) for case,c in negatives if name in case.get('guards',[case['guard']])}
-        if not groups: errors.append({'guard':name,'error':'unproved guard'})
+        if not groups and event_type is None: errors.append({'guard':name,'error':'unproved guard'})
+        # A named duplicate is also removed site by site. Removing one site
+        # alone must leave the same-defect refusal at every remaining site.
+        groups |= {(name,)} if groups else set()
         for group in sorted(groups):
             saved={g:GUARDS[g] for g in group}; flipped=[]; stayed=[]
             try:
@@ -635,6 +732,7 @@ def run(fixtures=None):
                           'negatives_that_stay_rejected':stayed,'restored':restored})
             if not restored: errors.append({'guard':name,'error':'restoration failed'})
     for f in load('card2_event_contracts.json')['families']:
+        if event_type is not None and f['event_type'] != event_type: continue
         for scope in ['project','application']:
             for path in ['append','retry','history']:
                 if not any(c.get('path')==path and c['event']['event_type']==f['event_type'] and c['event']['scope_kind']==scope for c in bases.values()):
@@ -644,8 +742,8 @@ def run(fixtures=None):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path);parser.add_argument('--fixtures',type=Path);args=parser.parse_args()
-    try: result=run(json.loads(args.fixtures.read_text()) if args.fixtures else None)
+    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path);parser.add_argument('--fixtures',type=Path);parser.add_argument('--family',choices=[f['event_type'] for f in load('card2_event_contracts.json')['families']]);args=parser.parse_args()
+    try: result=run(json.loads(args.fixtures.read_text()) if args.fixtures else None, args.family)
     except Exception as exc: result={'status':'FAIL','errors':[str(exc)]}
     if args.output:args.output.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({k:v for k,v in result.items() if k!='guard_removal_table'},indent=2))
