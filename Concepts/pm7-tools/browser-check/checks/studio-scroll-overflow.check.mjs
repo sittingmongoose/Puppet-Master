@@ -2,6 +2,29 @@
 export default async function (t) {
   await t.viewport(1390, 900);
   const f = await t.app.open(); await t.app.look('glass-light');
+  // The retained historical looks summary identifies Home's whole-page audit as partial.
+  // browser-check caps the unscoped probe at eight scrollers and twelve stops; scope each
+  // visible scroller at every viewport so that cap cannot silently skip its middle.
+  const count = await f.evaluate(() => {
+    const nodes = [document.scrollingElement, ...document.querySelectorAll('body *')].filter((e,i,a) => a.indexOf(e) === i && e.clientHeight > 40 && e.scrollHeight > e.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(e).overflowY) && e.checkVisibility({visibilityProperty:true}));
+    nodes.forEach((e,i)=>e.setAttribute('data-full-scroll',String(i))); return nodes.length;
+  });
+  t.log('Home visible scrollers: '+count);
+  try {
+    for (let i=0;i<count;i++) {
+      const selector=`[data-full-scroll="${i}"]`, e=f.locator(selector); await e.scrollIntoViewIfNeeded();
+      const r=await e.boundingBox(); if(!r)throw Error('Scroller vanished');
+      await t.page.mouse.move(r.x+r.width/2,r.y+Math.min(r.height/2,200)); await t.page.mouse.wheel(0,-100000); await f.waitForTimeout(100);
+      let done=false;
+      for(let n=0;n<200;n++) {
+        await t.noOverflow(`Home scroller ${i} segment ${n}`,{scope:selector});
+        const pos=await e.evaluate(x=>({top:x.scrollTop,height:x.clientHeight,total:x.scrollHeight}));
+        if(pos.top+pos.height>=pos.total-2){done=true;break;}
+        await t.page.mouse.wheel(0,Math.max(40,Math.min(pos.height,900)*.8)); await f.waitForTimeout(100);
+      }
+      await t.check('Home scroller '+i+' reached bottom',done,'',{hard:true});
+    }
+  } finally {await f.evaluate(()=>document.querySelectorAll('[data-full-scroll]').forEach(e=>e.removeAttribute('data-full-scroll')));}
   await f.locator('.pmds-entry').click();
   await f.locator('[data-pmds-tab="onboarding"]').click();
   const scroller = f.locator('#pmds-main');
