@@ -663,8 +663,13 @@
   }
 
 
-  /* Quiet in-screen update: morph the current layer; never replays the entrance. */
+  /* Quiet in-screen update: morph the current layer; never replays the entrance. Removing a focused field mid-morph
+     makes the browser report its last edit (change, blur) right then; a refresh asked for by that handler is not
+     started inside the morph that is still removing nodes (a nested one removes them first: FO-63), it runs whole as
+     soon as that morph ends, in the same turn. */
+  let morphing = false, missed = false;
   function refresh() {
+    if (morphing) { missed = true; return; }
     flushOpen();
     if (!S.open) return;
     if (!onBranch(S.sess.screen)) return transition(null);
@@ -675,7 +680,8 @@
     /* a refusal's reason still showing outlives a redraw (a screen's own 1 s refresh took it away mid-read: RV-19); it
        goes back where it was and its fade carries on from where it was */
     const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
-    U.morph(layer, paneHtml(def));
+    morphing = true;
+    try { U.morph(layer, paneHtml(def)); } finally { morphing = false; }
     if (keepReason && !keepReason.isConnected) { const ft = layer.querySelector('.o55-foot'); if (ft) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; ft.appendChild(keepReason); } }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
@@ -684,6 +690,7 @@
     renderScene(); renderSound();
     if (onBranch(S.sess.screen)) def.mounted && def.mounted(S, layer, false); /* (off the branch: no checks or ops start) */
     skin('refresh', layer);
+    if (missed) { missed = false; refresh(); }
   }
 
   function transition(dir) {

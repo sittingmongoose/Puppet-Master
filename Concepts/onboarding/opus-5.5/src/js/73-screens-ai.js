@@ -73,6 +73,10 @@
   /* A key result reports one account, not the provider's aggregate readiness. Keep the actual record and
      operation generation: removing it, replacing the session, or editing another key ends that result's speech. */
   const keyResults = new WeakMap();
+  /* What each key field last held when it was edited, for this page only (a key is never stored). The field reports
+     the same edit twice (input, then change on blur or when a redraw takes the focused field away): only a value that
+     differs is an edit, so a result's speech ends on every real edit and never on that repeat (FO-63). */
+  const keySeen = new WeakMap();
   function speechOwner(S, key) { return (keyResults.get(S.sess) || new Map()).get(key) || null; }
   function speechLive(S, owner) {
     const a = S.sess.ai || {}, r = (a.accounts || {})[owner.provider];
@@ -527,11 +531,17 @@
     },
     /* a field's input: a key, a pasted code or a server password is only noted as typed; the server's address and
        username are kept (they are not secret) */
-    bind: new Proxy({}, { get: (t, key) => (S, v) => {
+    bind: new Proxy({}, { get: (t, key) => (S, v, el) => {
       const [kind, id] = String(key).split(':'), r = A(S).accounts[id]; if (!r) return;
       if (kind === 'ocAddr' || kind === 'ocUser' || kind === 'project') { r[kind === 'ocAddr' ? 'endpoint' : kind === 'ocUser' ? 'user' : 'project'] = v; S.save(); O55.ui.refresh(); return; }
       const flag = kind === 'paste' ? 'pasteTyped' : kind === 'ocPass' ? 'secretTyped' : 'keyTyped';
-      if (kind === 'key') r.keyRevision = (r.keyRevision || 0) + 1;
+      if (kind === 'key') {
+        /* (a field nothing was typed in holds nothing: a check, Cancel or another way empties it without an event) */
+        const before = !r.keyTyped ? '' : el && keySeen.has(el) ? keySeen.get(el) : null;
+        if (v === before) return;
+        if (el) keySeen.set(el, v);
+        r.keyRevision = (r.keyRevision || 0) + 1;
+      }
       const had = !!r[flag]; r[flag] = v.length > 0;
       /* a new key or code takes the last refusal away from under its field (Opus p62) */
       if (kind === 'key' || kind === 'paste') if (clearRefusal(S, (kind === 'key' ? 'key:' : 'code:') + id + ':' + (r.attempt || 0), r)) return;
