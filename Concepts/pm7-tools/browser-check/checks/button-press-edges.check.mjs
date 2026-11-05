@@ -38,26 +38,27 @@ export default async function(t) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
      const isLink=await c.evaluate(e=>e.matches('.o55-link'));let linkShot=false;
      if(isLink&&t.args.inventoryOut&&motion==='no-preference')await t.crop(`${look}-${screen}-link-rest`,c,'Native underline at rest after moving text into its visual layer.');
-     const rest=await f.evaluate(async({sel,i})=>{
-      const e=document.querySelectorAll(sel)[i];e.__pressId=i;getComputedStyle(e).transform;
-      const ancestors=[];for(let n=e;n&&n!==document.body;n=n.parentElement)ancestors.push(n);
-      await Promise.all(ancestors.flatMap(n=>n.getAnimations()).filter(a=>a.playState==='running'&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));
-      const r=e.getBoundingClientRect(),s=getComputedStyle(e);
-      const rad=Math.min(r.width/2,r.height/2,Math.max(...['TopLeft','TopRight','BottomLeft','BottomRight'].map(k=>parseFloat(s['border'+k+'Radius'])||0)));
-      return {x:r.x,y:r.y,w:r.width,h:r.height,rad};
-     },{sel,i});
-     const k=Math.ceil(rest.rad*0.293)+2,cx=rest.x+rest.w/2,cy=rest.y+rest.h/2,R=rest.x+rest.w,B=rest.y+rest.h;
-     const pts=[['corner top-left',rest.x+k,rest.y+k],['corner top-right',R-k,rest.y+k],['corner bottom-left',rest.x+k,B-k],['corner bottom-right',R-k,B-k]];
-     for(const d of (t.args.twoPx?[1,2]:[1]))pts.push([`top-${d}`,cx,rest.y+d],[`bottom-${d}`,cx,B-d],[`left-${d}`,rest.x+d,cy],[`right-${d}`,R-d,cy]);
-     for(const [name,x,y] of (t.args.point?pts.filter(p=>p[0]===t.args.point):pts)) {
+     const points=['corner top-left','corner top-right','corner bottom-left','corner bottom-right'];
+     for(const d of (t.args.twoPx?[1,2]:[1]))for(const edge of ['top','bottom','left','right'])points.push(`${edge}-${d}`);
+     for(const name of (t.args.point?points.filter(p=>p===t.args.point):points)) {
       const trial=`${tag} ${i} ${name}`;
       await t.page.mouse.move(2,2);
+      // Explanations follow Pip until hovered. Pin the current visual naturally, then
+      // measure this hold's box: moving away between trials must not stale its baseline.
+      const center=await c.boundingBox();await t.page.mouse.move(center.x+center.width/2,center.y+center.height/2);
+      const rest=await f.evaluate(async({sel,i,trial})=>{
+       const e=document.querySelectorAll(sel)[i];e.__pressId=i;getComputedStyle(e).transform;
+       const ancestors=[];for(let n=e;n&&n!==document.body;n=n.parentElement)ancestors.push(n);
+       await Promise.all(ancestors.flatMap(n=>n.getAnimations()).filter(a=>a.playState==='running'&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));
+       const r=e.getBoundingClientRect(),style=getComputedStyle(e);
+       const rad=Math.min(r.width/2,r.height/2,Math.max(...['TopLeft','TopRight','BottomLeft','BottomRight'].map(k=>parseFloat(style['border'+k+'Radius'])||0)));
+       const b={x:r.x,y:r.y,w:r.width,h:r.height,rad};window.__press.trial=trial;window.__press.node=e;window.__press.rest=b;return b;
+      },{sel,i,trial});
+      const k=Math.ceil(rest.rad*.293)+2,d=Number(name.split('-').pop())||1,corner=name.startsWith('corner');
+      const x=corner?(name.includes('left')?rest.x+k:rest.x+rest.w-k):name.startsWith('left')?rest.x+d:name.startsWith('right')?rest.x+rest.w-d:rest.x+rest.w/2;
+      const y=corner?(name.includes('top')?rest.y+k:rest.y+rest.h-k):name.startsWith('top')?rest.y+d:name.startsWith('bottom')?rest.y+rest.h-d:rest.y+rest.h/2;
       const exposed=await f.evaluate(({sel,i,x,y})=>{const e=document.querySelectorAll(sel)[i],p=document.elementFromPoint(x,y);return p===e||e.contains(p);},{sel,i,x,y});
       if(!exposed){covered.push(trial);continue;}
-      await t.page.mouse.move(2,2);
-      await f.evaluate(async({sel,i,trial,rest})=>{const e=document.querySelectorAll(sel)[i];getComputedStyle(e).transform;
-       const ancestors=[];for(let n=e;n&&n!==document.body;n=n.parentElement)ancestors.push(n);
-      await Promise.all(ancestors.flatMap(n=>n.getAnimations()).filter(a=>a.playState==='running'&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));window.__press.trial=trial;window.__press.node=e;window.__press.rest=rest;},{sel,i,trial,rest});
       await t.page.mouse.move(off.x+x,off.y+y);if(t.args.marks)await t.mark(`down ${trial}`);await t.page.mouse.down();
       // Sampling starts in pointerdown capture, before owner press handlers and the first painted frame.
       await f.waitForTimeout(hold);
