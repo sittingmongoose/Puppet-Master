@@ -2441,9 +2441,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    // Tier widths are intrinsic to the bar's content/font/theme, not to the available width (see
-    // syncComposerCompact): keep the container width out of the cache key.
-    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
+    // Hosted container rules tighten padding and type after layout (including
+    // reveal). Cache by the resolved sizing inputs, rather than the theme name
+    // alone: the first visible pass can precede that container style update.
+    // Width itself stays out of the key, so resizing within one style regime
+    // still reuses the intrinsic measurements and the existing hysteresis.
+    const sizing=[bar,...bar.querySelectorAll('.activity-item,.label,.count')].map(el=>{
+      const s=getComputedStyle(el);
+      return [s.font,s.letterSpacing,s.columnGap,s.paddingLeft,s.paddingRight,
+        s.borderLeftWidth,s.borderRightWidth].join(',');
+    }).join(';');
+    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status,sizing].join('|');
     if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
       activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
     const {labeled,compact}=activityMeasureCache;
