@@ -131,6 +131,56 @@ def _special(g, trap, memory):
         shared_right = g._certified_snapshot([right], root, identities=True)
         caught = left == right and left is not right and aliased != detached and aliased == equivalent and shared_left != shared_right
         return caught, {'alias_change_detected': aliased != detached, 'fresh_equivalence': aliased == equivalent, 'shared_rebinding_detected': shared_left != shared_right}
+    if kind == 'snapshot-graph-collision':
+        source = '''import pm_guard_isolation as g
+TOKEN = 16777217
+BOX = (16777217,)
+
+def px(value, context):
+    return 'bad_x' if value['x'] < 0 and context is TOKEN else None
+
+def factory(value, context):
+    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative when context is the canonical token'), 'bad_x', px)])
+    def check(value):
+        table.require('x', value, context)
+        return True
+    return g.Case(table, check, context)
+'''
+        with tempfile.TemporaryDirectory(prefix='guardtool-identity-pair-') as directory:
+            root = Path(directory).resolve()
+            (root / 'subject.py').write_text(source)
+            module = _load(root / 'subject.py', '_method_b_identity_pair')
+            suite = g.Suite('identity-pair', module.factory, [], [], ('subject.py',), root)
+            def build(context):
+                value = {'x': -1}
+                return value, module.factory(value, context)
+            def case_graph(value, case):
+                return g._certified_snapshot([value, case.context, case.check, case.table], root, identities=False)
+            def unchanged_checker(value, case):
+                case.table._bind(value, case.context, frozenset())
+                try:
+                    return 'accepted' if case.check(value) is True else 'other'
+                except g.GuardRefusal as refusal:
+                    return refusal.code
+                finally:
+                    case.table._restore()
+            equal = [int('16777217'), int('16777217')]
+            canonical, other, canonical_again, other_again = build(module.TOKEN), build(equal[0]), build(module.TOKEN), build(equal[1])
+            boxed, equal_box = build(module.BOX), build(tuple([16777217]))
+            diagnostic = [g._certified_snapshot([value, case.context, case.check, case.table], root, identities=False, namespaces=False) for value, case in (canonical, other)]
+            observed = {
+                'equal_inputs_and_contexts': canonical[0] == other[0] and canonical[1].context == other[1].context,
+                'context_identity_differs': canonical[1].context is module.TOKEN and other[1].context is not module.TOKEN,
+                'case_alone_cannot_tell_them_apart': diagnostic[0] == diagnostic[1],
+                'one_graph_tells_them_apart': case_graph(*canonical) != case_graph(*other),
+                'case_snapshot_tells_them_apart': g._case_snapshot(suite, *canonical) != g._case_snapshot(suite, *other),
+                'container_identity_told_apart': g._case_snapshot(suite, *boxed) != g._case_snapshot(suite, *equal_box),
+                'same_input_identity_group': g._case_snapshot(suite, *canonical).input_signature == g._case_snapshot(suite, *other).input_signature,
+                'stable_relation_repeats': g._case_snapshot(suite, *canonical) == g._case_snapshot(suite, *canonical_again),
+                'fresh_identity_stays_erased': g._case_snapshot(suite, *other) == g._case_snapshot(suite, *other_again),
+                'unchanged_checkers': [unchanged_checker(*canonical), unchanged_checker(*other)],
+            }
+        return all(observed.values()) and observed['unchanged_checkers'] == ['bad_x', 'accepted'], observed
     if kind == 'os-temp-scratch':
         with tempfile.TemporaryDirectory(prefix='guardtool-portable-', dir=_scratch_parent(None)) as directory:
             return Path(directory).parent == Path(tempfile.gettempdir()), {'parent': str(Path(directory).parent)}
@@ -193,6 +243,12 @@ def exercise(g, memory, *, scratch=None):
     for trap in corpus['traps']:
         memory.check()
         row = {'id': trap['id'], 'expected': trap['expected'], 'caught': False}
+        if tuple(trap.get('min_python', ())) > sys.version_info[:2]:
+            # This Python cannot parse the trap's syntax, so it cannot accept the form either.
+            row.update(caught=True, skipped_below_python=trap['min_python'])
+            report['traps'].append(row)
+            report['caught'] += 1
+            continue
         old_modules = set(sys.modules)
         old_path = list(sys.path)
         try:

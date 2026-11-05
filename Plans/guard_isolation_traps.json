@@ -7229,6 +7229,3571 @@
       "id": "C4-constructor-hook-audit",
       "kind": "constructor-hook-audit",
       "expected": "Only Guard and Invariant have validation hooks; Guard.id and GuardTable.guards are read-only properties that construction never reads; a new hook must change the written argument."
+    },
+    {
+      "id": "C6-class-binding-is-not-method-binding",
+      "kind": "code",
+      "expected": "A class binding does not certify a method read: the read stays an obligation with zero credit, and the original raises when visited.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                def read(self):\n                    absent\n                    return True\n            box = Local()\n            box.read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "box.read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n\n        def read(self):\n            absent\n            return True\n    box = Local()\n    box.read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n\n    def read(self):\n        absent\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "box.read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-binding-visited",
+      "kind": "code",
+      "expected": "Visiting the same method read raises NameError: refused at runtime as well as statically, with zero credit.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "untracked_refusal",
+        "runtime_untracked_site",
+        "control_refused"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                def read(self):\n                    absent\n                    return True\n            box = Local()\n            box.read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "box.read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n\n        def read(self):\n            absent\n            return True\n    box = Local()\n    box.read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n\n    def read(self):\n        absent\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "box.read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "runtime_type": "NameError"
+    },
+    {
+      "id": "C6-enclosing-binding-for-method-control",
+      "kind": "code",
+      "expected": "The same method with a genuine enclosing-function binding passes both routes automatically.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 2\n            class Local:\n                unrelated = 1\n                def read(self):\n                    absent\n                    return True\n            box = Local()\n            box.read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "box.read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 2\n\n    class Local:\n        unrelated = 1\n\n        def read(self):\n            absent\n            return True\n    box = Local()\n    box.read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    unrelated = 1\n\n    def read(self):\n        absent\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "box.read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-enclosing-binding-with-class-attribute-control",
+      "kind": "code",
+      "expected": "A method read resolves past the class attribute to the genuine enclosing binding, automatically.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 2\n            class Local:\n                absent = 1\n                def read(self):\n                    absent\n                    return True\n            box = Local()\n            box.read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "box.read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 2\n\n    class Local:\n        absent = 1\n\n        def read(self):\n            absent\n            return True\n    box = Local()\n    box.read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n\n    def read(self):\n        absent\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "box.read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-module-binding-beats-class-attribute-control",
+      "kind": "code",
+      "expected": "A method read resolves past the class attribute to the module binding, automatically.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\nabsent = 2\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                def read(self):\n                    absent\n                    return True\n            box = Local()\n            box.read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "box.read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n\n        def read(self):\n            absent\n            return True\n    box = Local()\n    box.read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n\n    def read(self):\n        absent\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "box.read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-binding-nested-def",
+      "kind": "code",
+      "expected": "A def inside a method cannot see the class binding either.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                def read(self):\n                    def inner():\n                        absent\n                    inner()\n                    return True\n            Local().read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local().read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local.read",
+          "kind": "call_review",
+          "source": "inner()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local.read.inner",
+          "kind": "implicit_return",
+          "source": "<implicit None return>",
+          "reason": "Regression fixture: this diagnostic helper returns None and its result is unused."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n\n        def read(self):\n\n            def inner():\n                absent\n            inner()\n            return True\n    Local().read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n\n    def read(self):\n\n        def inner():\n            absent\n        inner()\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "Local().read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-binding-lambda",
+      "kind": "code",
+      "expected": "A lambda in a class body cannot see the class binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                reader = lambda self: absent\n            Local().reader()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local().reader()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n        reader = lambda self: absent\n    Local().reader()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n    reader = lambda self: absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "Local().reader",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-binding-list-comprehension-result",
+      "kind": "code",
+      "expected": "A comprehension result in a class body cannot see the class binding, inlined or not.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                rows = [absent for _item in (1,)]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n        rows = [absent for _item in (1,)]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n    rows = [absent for _item in (1,)]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": " for _item in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-binding-comprehension-condition",
+      "kind": "code",
+      "expected": "A comprehension condition in a class body cannot see the class binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                rows = [1 for _item in (1,) if absent]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n        rows = [1 for _item in (1,) if absent]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n    rows = [1 for _item in (1,) if absent]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": " for _item in (1,) if absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-binding-second-iterable",
+      "kind": "code",
+      "expected": "Only the first iterable runs in the class scope; the second cannot see the class binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = (1,)\n                rows = [1 for _item in (1,) for _other in absent]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = (1,)\n        rows = [1 for _item in (1,) for _other in absent]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = (1,)\n    rows = [1 for _item in (1,) for _other in absent]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": " for _item in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": " for _other in absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-binding-generator-result",
+      "kind": "code",
+      "expected": "A generator result in a class body cannot see the class binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                rows = list(absent for _item in (1,))\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "call_review",
+          "source": "list((absent for _item in (1,)))",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n        rows = list((absent for _item in (1,)))",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n    rows = list((absent for _item in (1,)))",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": " for _item in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-outer-class-binding-in-nested-class",
+      "kind": "code",
+      "expected": "A nested class body cannot see the outer class binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Outer:\n                absent = 1\n                class Inner:\n                    copy = absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Outer:\n        absent = 1\n\n        class Inner:\n            copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Outer",
+          "kind": "data_operation",
+          "source": "class Outer:\n    absent = 1\n\n    class Inner:\n        copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Outer.Inner",
+          "kind": "data_operation",
+          "source": "class Inner:\n    copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-read-skips-enclosing-function",
+      "kind": "code",
+      "expected": "A class-body read of a name the class binds later goes to globals and builtins, never to the enclosing function.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 2\n            class Local:\n                first = absent\n                absent = 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 2\n\n    class Local:\n        first = absent\n        absent = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    first = absent\n    absent = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-first-iterable-control",
+      "kind": "code",
+      "expected": "The first iterable runs in the class scope, so an earlier class binding certifies the read.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = (1,)\n                rows = [1 for _item in absent]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = (1,)\n        rows = [1 for _item in absent]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = (1,)\n    rows = [1 for _item in absent]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": " for _item in absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-body-read-control",
+      "kind": "code",
+      "expected": "An earlier class binding certifies a read in the class body itself.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                copy = absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n        copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n    copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-method-default-control",
+      "kind": "code",
+      "expected": "A method default runs in the class scope, so an earlier class binding certifies it.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                def read(self, copy=absent):\n                    return True\n            Local().read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local().read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n\n        def read(self, copy=absent):\n            return True\n    Local().read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n\n    def read(self, copy=absent):\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "Local().read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-free-read-control",
+      "kind": "code",
+      "expected": "A class body reads a name it does not bind from the enclosing function.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 1\n            class Local:\n                copy = absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 1\n\n    class Local:\n        copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-comprehension-later-target-iterable",
+      "kind": "code",
+      "expected": "A later comprehension target makes the name comprehension-local, so the enclosing binding does not certify an earlier iterable.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = (1,)\n            [1 for _item in (1,) for _other in absent for absent in (1,)]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "UnboundLocalError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = (1,)\n    [1 for _item in (1,) for _other in absent for absent in (1,)]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for _item in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for _other in absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for absent in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-comprehension-later-target-condition",
+      "kind": "code",
+      "expected": "A later comprehension target makes the name comprehension-local, so the enclosing binding does not certify an earlier condition.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = True\n            [1 for _item in (1,) if absent for absent in (1,)]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "UnboundLocalError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = True\n    [1 for _item in (1,) if absent for absent in (1,)]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for _item in (1,) if absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for absent in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-comprehension-target-does-not-leak",
+      "kind": "code",
+      "expected": "A comprehension target is not bound in the function after the comprehension.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            [absent for absent in (1,)]\n            absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    [absent for absent in (1,)]\n    absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for absent in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-generator-target-does-not-leak",
+      "kind": "code",
+      "expected": "A generator target is not bound in the function after the generator.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            list(absent for absent in (1,))\n            absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "list((absent for absent in (1,)))",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    list((absent for absent in (1,)))\n    absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for absent in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-comprehension-result-control",
+      "kind": "code",
+      "expected": "A comprehension result reads its own target, automatically.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            [absent for absent in (1,)]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    [absent for absent in (1,)]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for absent in (1,)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-comprehension-first-iterable-control",
+      "kind": "code",
+      "expected": "The first iterable reads the enclosing binding, even when the target reuses the name.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = (1,)\n            [absent for absent in absent]\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = (1,)\n    [absent for absent in absent]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": " for absent in absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-global-skips-enclosing-function",
+      "kind": "code",
+      "expected": "A global declaration makes the read global, so an enclosing binding does not certify it, even with the declaration reviewed.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef reset():\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 1\n            def read():\n                global absent\n                absent\n                return True\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 1\n\n    def read():\n        global absent\n        absent\n        return True\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check.read",
+          "kind": "shared_state_write",
+          "source": "global absent",
+          "reason": "Regression fixture: this declaration only selects a scope; nothing writes the binding."
+        }
+      ]
+    },
+    {
+      "id": "C6-global-module-binding-control",
+      "kind": "code",
+      "expected": "A global declaration with a real module binding certifies the read.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\nabsent = 1\n\ndef reset():\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            def read():\n                global absent\n                absent\n                return True\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    def read():\n        global absent\n        absent\n        return True\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check.read",
+          "kind": "shared_state_write",
+          "source": "global absent",
+          "reason": "Regression fixture: this declaration only selects a scope; nothing writes the binding."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-global-skips-enclosing-function",
+      "kind": "code",
+      "expected": "A global declaration in a class body reads the module namespace, not the enclosing function.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef reset():\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 1\n            class Local:\n                global absent\n                copy = absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 1\n\n    class Local:\n        global absent\n        copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    global absent\n    copy = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "shared_state_write",
+          "source": "global absent",
+          "reason": "Regression fixture: this declaration only selects a scope; nothing writes the binding."
+        }
+      ]
+    },
+    {
+      "id": "C6-class-global-does-not-reach-method",
+      "kind": "code",
+      "expected": "A class-level global declaration does not reach a method: its read is the enclosing cell, which is not yet bound.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef reset():\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                global absent\n                def read(self):\n                    absent\n                    return True\n            Local().read()\n            absent = 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local().read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        global absent\n\n        def read(self):\n            absent\n            return True\n    Local().read()\n    absent = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    global absent\n\n    def read(self):\n        absent\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "Local().read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "shared_state_write",
+          "source": "global absent",
+          "reason": "Regression fixture: this declaration only selects a scope; nothing writes the binding."
+        }
+      ]
+    },
+    {
+      "id": "C6-nonlocal-binding-after-call",
+      "kind": "code",
+      "expected": "A nonlocal read needs a binding before the nested function exists.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef reset():\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            def read():\n                nonlocal absent\n                absent\n                return True\n            read()\n            absent = 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    def read():\n        nonlocal absent\n        absent\n        return True\n    read()\n    absent = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check.read",
+          "kind": "shared_state_write",
+          "source": "nonlocal absent",
+          "reason": "Regression fixture: this declaration only selects a scope; nothing writes the binding."
+        }
+      ]
+    },
+    {
+      "id": "C6-nonlocal-enclosing-control",
+      "kind": "code",
+      "expected": "A nonlocal read of a binding made before the def is certified.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef reset():\n    return True\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 1\n            def read():\n                nonlocal absent\n                absent\n                return True\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 1\n\n    def read():\n        nonlocal absent\n        absent\n        return True\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check.read",
+          "kind": "shared_state_write",
+          "source": "nonlocal absent",
+          "reason": "Regression fixture: this declaration only selects a scope; nothing writes the binding."
+        }
+      ]
+    },
+    {
+      "id": "C6-type-params-keep-class-exclusion",
+      "kind": "code",
+      "expected": "A generic method still cannot see the class binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                absent = 1\n                def read[T](self):\n                    absent\n                    return True\n            Local().read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "min_python": [
+        3,
+        12
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local().read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        absent = 1\n\n        def read[T](self):\n            absent\n            return True\n    Local().read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    absent = 1\n\n    def read[T](self):\n        absent\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local.read",
+          "kind": "data_operation",
+          "source": "T",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "Local().read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-type-parameter-read-is-an-obligation",
+      "kind": "code",
+      "expected": "A read of a type parameter resolves to its annotation scope, which has no written totality argument.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            def read[T]():\n                T\n                return True\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "T",
+      "min_python": [
+        3,
+        12
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    def read[T]():\n        T\n        return True\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-type-bound-read-is-an-obligation",
+      "kind": "code",
+      "expected": "A lazily evaluated type-parameter bound is an obligation, even with an enclosing binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 1\n            def read[T: absent]():\n                return True\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "min_python": [
+        3,
+        12
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 1\n\n    def read[T: absent]():\n        return True\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.read",
+          "kind": "data_operation",
+          "source": "T: absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-type-alias-read-is-an-obligation",
+      "kind": "code",
+      "expected": "A lazily evaluated type alias value is an obligation, even with an enclosing binding.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 1\n            type Alias = absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "min_python": [
+        3,
+        12
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 1\n    type Alias = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "type Alias = absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-generic-closure-control",
+      "kind": "code",
+      "expected": "A generic function reads a genuine enclosing binding through its type-parameter scope.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            absent = 1\n            def read[T]():\n                absent\n                return True\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "min_python": [
+        3,
+        12
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    absent = 1\n\n    def read[T]():\n        absent\n        return True\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.read",
+          "kind": "data_operation",
+          "source": "T",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-handler-target-in-closure",
+      "kind": "code",
+      "expected": "A closure can outlive the handler, which deletes its target when it ends.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            try:\n                raise ValueError\n            except ValueError as absent:\n                def read():\n                    absent\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "raise",
+          "source": "raise ValueError",
+          "reason": "Regression fixture: this diagnostic raise is caught by the handler beside it."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.read",
+          "kind": "implicit_return",
+          "source": "<implicit None return>",
+          "reason": "Regression fixture: this diagnostic helper returns None and its result is unused."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    try:\n        raise ValueError\n    except ValueError as absent:\n\n        def read():\n            absent\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-nested-handler-deletes-target",
+      "kind": "code",
+      "expected": "A nested handler with the same target deletes it before the later read.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            try:\n                raise ValueError\n            except ValueError as absent:\n                try:\n                    raise KeyError\n                except KeyError as absent:\n                    pass\n                absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "UnboundLocalError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "raise",
+          "source": "raise ValueError",
+          "reason": "Regression fixture: this diagnostic raise is caught by the handler beside it."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "raise",
+          "source": "raise KeyError",
+          "reason": "Regression fixture: this diagnostic raise is caught by the handler beside it."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    try:\n        raise ValueError\n    except ValueError as absent:\n        try:\n            raise KeyError\n        except KeyError as absent:\n            pass\n        absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-handler-deletes-loop-target",
+      "kind": "code",
+      "expected": "A handler in the loop body deletes the loop target before the later read.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            for absent in (1,):\n                try:\n                    raise ValueError\n                except ValueError as absent:\n                    pass\n                absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "absent",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "UnboundLocalError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "raise",
+          "source": "raise ValueError",
+          "reason": "Regression fixture: this diagnostic raise is caught by the handler beside it."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    for absent in (1,):\n        try:\n            raise ValueError\n        except ValueError as absent:\n            pass\n        absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "for absent in (1,):\n    try:\n        raise ValueError\n    except ValueError as absent:\n        pass\n    absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-handler-own-body-control",
+      "kind": "code",
+      "expected": "A read in the handler own body is certified.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            try:\n                raise ValueError\n            except ValueError as absent:\n                absent\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "raise",
+          "source": "raise ValueError",
+          "reason": "Regression fixture: this diagnostic raise is caught by the handler beside it."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    try:\n        raise ValueError\n    except ValueError as absent:\n        absent",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-private-name-in-method",
+      "kind": "code",
+      "expected": "The compiler mangles __hidden in a method, so the module binding of that spelling does not certify it.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\n__hidden = 1\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                def read(self):\n                    __hidden\n                    return True\n            Local().read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "__hidden",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local().read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "Local()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n\n        def read(self):\n            __hidden\n            return True\n    Local().read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n\n    def read(self):\n        __hidden\n        return True",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "Local().read",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-private-name-in-class-body",
+      "kind": "code",
+      "expected": "The compiler mangles __hidden in a class body, so the module binding of that spelling does not certify it.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\n__hidden = 1\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            class Local:\n                copy = __hidden\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_source": "__hidden",
+      "held_out": {
+        "value": {
+          "x": 0,
+          "route": true
+        },
+        "raises": "NameError"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    class Local:\n        copy = __hidden",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check.Local",
+          "kind": "data_operation",
+          "source": "class Local:\n    copy = __hidden",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-private-name-outside-class-control",
+      "kind": "code",
+      "expected": "Outside a class a __hidden name is not mangled, so the module binding certifies it.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "source": "import pm_guard_isolation as g\n\n__hidden = 1\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            def read():\n                __hidden\n                return True\n            read()\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        },
+        {
+          "id": "visited",
+          "value": {
+            "x": 0,
+            "route": true
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "automatic_forms": [
+        "expression:bound-name"
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "read()",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n\n    def read():\n        __hidden\n        return True\n    read()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
+    },
+    {
+      "id": "C6-identity-graph-collision-pair",
+      "kind": "snapshot-graph-collision",
+      "expected": "Equal inputs and equal context values that differ only in being the stable module object fingerprint differently, and their unchanged checkers differ: refusal versus accept. Fresh identities stay erased."
+    },
+    {
+      "id": "C6-noncausal-flip-context-scalar",
+      "kind": "code",
+      "expected": "On the executed cut build alone the context stops being the module token. The unchanged predicate would already accept, so that flip is not caused by the cut: no credit.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "factory_nondeterministic"
+      ],
+      "source": "import pm_guard_isolation as g\n\nTOKEN = 16777217\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and context is TOKEN else None\n\ndef factory(value):\n    import sys\n    builds = sys.modules.setdefault('_method_b_builds', [0])\n    builds[0] += 1\n    context = TOKEN if builds[0] != 13 else int('16777217')\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative when context is the canonical token'), 'bad_x', px)])\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n\ndef reset():\n    return True\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "error_contains": "relation to stable shared state",
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "source": "builds[0] += 1",
+          "reason": "Regression fixture: this writes a counter outside the adapter state to drive a scheduled change."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "source": "sys.modules.setdefault('_method_b_builds', [0])",
+          "reason": "Regression fixture: this writes a counter outside the adapter state to drive a scheduled change."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "int('16777217')",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "import sys",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "TOKEN if builds[0] != 13 else int('16777217')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "sys.modules.setdefault",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "builds[0] != 13",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "sys.modules",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "builds[0]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "shared_state_write",
+          "source": "builds[0] += 1",
+          "reason": "Regression fixture: this counter lives outside the adapter state on purpose, to schedule one build; reset leaves it alone."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "shared_state_write",
+          "source": "sys.modules.setdefault('_method_b_builds', [0])",
+          "reason": "Regression fixture: this counter lives outside the adapter state on purpose, to schedule one build; reset leaves it alone."
+        }
+      ]
+    },
+    {
+      "id": "C6-noncausal-flip-context-container",
+      "kind": "code",
+      "expected": "The same schedule with an equal tuple that is not the module tuple: no credit.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "factory_nondeterministic"
+      ],
+      "source": "import pm_guard_isolation as g\n\nTOKEN = (16777217,)\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and context is TOKEN else None\n\ndef factory(value):\n    import sys\n    builds = sys.modules.setdefault('_method_b_builds', [0])\n    builds[0] += 1\n    context = TOKEN if builds[0] != 13 else tuple([16777217])\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative when context is the canonical token'), 'bad_x', px)])\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n\ndef reset():\n    return True\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "error_contains": "relation to stable shared state",
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "source": "builds[0] += 1",
+          "reason": "Regression fixture: this writes a counter outside the adapter state to drive a scheduled change."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "source": "sys.modules.setdefault('_method_b_builds', [0])",
+          "reason": "Regression fixture: this writes a counter outside the adapter state to drive a scheduled change."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "tuple([16777217])",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "import sys",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "TOKEN if builds[0] != 13 else tuple([16777217])",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "sys.modules.setdefault",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "builds[0] != 13",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "sys.modules",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "builds[0]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "shared_state_write",
+          "source": "builds[0] += 1",
+          "reason": "Regression fixture: this counter lives outside the adapter state on purpose, to schedule one build; reset leaves it alone."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "shared_state_write",
+          "source": "sys.modules.setdefault('_method_b_builds', [0])",
+          "reason": "Regression fixture: this counter lives outside the adapter state on purpose, to schedule one build; reset leaves it alone."
+        }
+      ]
+    },
+    {
+      "id": "C6-noncausal-flip-closure-scalar",
+      "kind": "code",
+      "expected": "The same schedule through a closure the checker compares with the module token: no credit.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "factory_nondeterministic"
+      ],
+      "source": "import pm_guard_isolation as g\n\nTOKEN = 16777217\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory(value):\n    import sys\n    builds = sys.modules.setdefault('_method_b_builds', [0])\n    builds[0] += 1\n    limit = TOKEN if builds[0] != 13 else int('16777217')\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if limit is TOKEN:\n            table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n\ndef reset():\n    return True\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "error_contains": "relation to stable shared state",
+      "reset_function": "reset",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "source": "builds[0] += 1",
+          "reason": "Regression fixture: this writes a counter outside the adapter state to drive a scheduled change."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "mutation_or_error_write",
+          "source": "sys.modules.setdefault('_method_b_builds', [0])",
+          "reason": "Regression fixture: this writes a counter outside the adapter state to drive a scheduled change."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "int('16777217')",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "import sys",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "TOKEN if builds[0] != 13 else int('16777217')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if limit is TOKEN:\n    table.require('x', value, context)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "sys.modules.setdefault",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "builds[0] != 13",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "sys.modules",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "builds[0]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ],
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "shared_state_write",
+          "source": "builds[0] += 1",
+          "reason": "Regression fixture: this counter lives outside the adapter state on purpose, to schedule one build; reset leaves it alone."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "shared_state_write",
+          "source": "sys.modules.setdefault('_method_b_builds', [0])",
+          "reason": "Regression fixture: this counter lives outside the adapter state on purpose, to schedule one build; reset leaves it alone."
+        }
+      ]
+    },
+    {
+      "id": "C6-stable-shared-identity-control",
+      "kind": "code",
+      "expected": "A context that is always the module token proves normally.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import pm_guard_isolation as g\n\nTOKEN = 16777217\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and context is TOKEN else None\n\ndef factory(value):\n    context = TOKEN\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative when context is the canonical token'), 'bad_x', px)])\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "non_guards": []
+    },
+    {
+      "id": "C6-fresh-equal-context-control",
+      "kind": "code",
+      "expected": "A context that is always a fresh equal value proves normally: fresh identities stay erased.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import pm_guard_isolation as g\n\nTOKEN = 16777217\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and context == 16777217 else None\n\ndef factory(value):\n    context = int('16777217')\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative when context equals the limit'), 'bad_x', px)])\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "int('16777217')",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "C6-fresh-container-holding-shared-value-control",
+      "kind": "code",
+      "expected": "A fresh container that always holds the module token proves normally.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import pm_guard_isolation as g\n\nTOKEN = 16777217\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and context['limit'] is TOKEN else None\n\ndef factory(value):\n    context = {'limit': TOKEN}\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative when context is the canonical token'), 'bad_x', px)])\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "non_guards": []
+    },
+    {
+      "id": "C6-uncertifiable-case-global-fails-closed",
+      "kind": "code",
+      "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef factory(value):\n    import helper_mod\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', helper_mod.px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "error_contains": "external module graph",
+      "imports": {
+        "helper_mod.py": "import json\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n"
+      },
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', helper_mod.px)])",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', helper_mod.px)",
+          "reason": "Regression fixture: this exact diagnostic call decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "import helper_mod",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "data_operation",
+          "source": "helper_mod.px",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
+        }
+      ]
     }
   ]
 }

@@ -57,8 +57,12 @@ evidence directory explicitly; the tool has no hard-coded evidence location.
 Before construction and every baseline, matrix, cut and restoration run, the
 engine fingerprints the adapter/factory namespace, closures, classes, defaults
 and reachable module state. It compares binding values, aliases, order and
-identities with the first snapshot. It also compares independently constructed
-case graphs for the same input, erasing only their fresh object identities.
+identities with the first snapshot. It also certifies each independently
+constructed case together with that shared state as one graph, for the same input.
+Addresses are erased, identity edges are not: a case value that is the stable
+shared object differs from an equal value that is not, and only fresh identities
+are treated as interchangeable. Name every module a case depends on in
+`checker_modules`; state a case brings in that cannot be certified fails closed.
 
 Global/nonlocal statements and writes through shared bindings need entries in
 `Suite.reset_seams`, each an exact `NonGuard` of kind `shared_state_write`, and
@@ -79,7 +83,9 @@ and cell aliases. Lazy function annotations are refused without evaluation;
 materialize reviewed builtin-only annotations before running the suite.
 
 Outside predicates, every operation needs a written reason it cannot raise or an
-exact reviewed `NonGuard` declaration. `TOTAL_FORMS` in the tool lists the automatic
+exact reviewed `NonGuard` declaration. Name reads resolve by Python's scope rules:
+a class namespace does not enclose nested functions or comprehensions, so a read
+needs a dominating function, global or builtin binding, or it is an obligation. `TOTAL_FORMS` in the tool lists the automatic
 forms with their reasons, and the adoption guide's allowlist audit records each
 entry and each form that became an obligation. A form with no entry, including new
 syntax, is an obligation by default. Each report's `static.automatic_totals` shows

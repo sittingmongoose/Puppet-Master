@@ -23,6 +23,7 @@ from pathlib import Path
 import resource
 import re
 import struct
+import symtable
 import sys
 import time
 import types
@@ -79,10 +80,10 @@ class _DataSnapshot:
     # Source-backed methods keep our own instrumentation inside the engine's
     # trace boundary even when cwd is the repository root. No synthetic-code
     # exemption is granted to lane code.
-    __slots__ = ('signature', 'keepalive')
+    __slots__ = ('signature', 'keepalive', 'input_signature')
 
     def __init__(self, signature, keepalive):
-        self.signature, self.keepalive = signature, keepalive
+        self.signature, self.keepalive, self.input_signature = signature, keepalive, None
 
     def __eq__(self, other):
         if type(other) is not _DataSnapshot:
@@ -1157,7 +1158,7 @@ TOTAL_FORMS = {
     'binding:name': 'Binding a plain name to a computed value runs no hook; unpacking, attribute and subscript targets and any __builtins__ binding are excluded.',
     'control:literal-test': 'if or a conditional expression on a builtin literal: literal truthiness has no failure path.',
     'expression:literal': 'Loading a compile-time constant cannot raise.',
-    'expression:bound-name': 'A binding dominates the read: parameter, earlier sibling statement, loop, comprehension or handler target in its own body, or the certified module or builtin namespace; a deleted name or a handler name outside its handler is excluded.',
+    'expression:bound-name': 'The name resolves by the language scope rules (class namespaces do not enclose nested functions or comprehensions) and a binding of that scope dominates the read: parameter, earlier sibling statement, loop or comprehension target, its own handler target, or the certified module or builtin namespace. Deleted names, handler targets outside their own handler body, private names under a class and type-parameter scopes are excluded, and the compiler symbol table must agree where it has a table for the scope.',
     'expression:identity-compare': 'is and is not compare identities with no user hook; every other comparison is an obligation.',
     'unary:not-literal': 'not on a builtin literal (None, bool, int, float, complex, str, bytes, Ellipsis): literal truthiness has no failure path.',
     'unary:sign-numeric-literal': 'Unary + or - on an exact int or float literal is defined for every value.',
@@ -1731,41 +1732,153 @@ def static_scan(suite, table):
             if isinstance(statement, (ast.Assign, ast.AnnAssign)):
                 return statement.value is not None and any(name in target_names(target) for target in (statement.targets if isinstance(statement, ast.Assign) else [statement.target]))
             return False
-        def total_name(node):
-            name, child = node.id, node
-            if name in deleted_names:
-                return False
+        comprehensions = (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)
+        def execution_scope(node):
+            """The scope whose names this node uses; None inside a lazily evaluated type-parameter or alias scope."""
+            child, grandchild = node, None
             while child in parents:
                 parent = parents[child]
-                if isinstance(parent, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)):
-                    # Iteration itself is a separate reviewed obligation.
-                    if child not in parent.generators and any(name in target_names(gen.target) for gen in parent.generators):
-                        return True
-                if isinstance(parent, (ast.For, ast.AsyncFor)) and child in parent.body and name in target_names(parent.target):
+                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and child in parent.body:
+                    return parent
+                if isinstance(parent, ast.Lambda) and child is parent.body:
+                    return parent
+                # The first iterable alone runs in the enclosing scope.
+                if isinstance(parent, comprehensions) and not (child is parent.generators[0] and grandchild is child.iter):
+                    return parent
+                if child in getattr(parent, 'type_params', ()) or (type(parent).__name__ == 'TypeAlias' and child is parent.value):
+                    return None
+                if isinstance(parent, ast.ClassDef) and getattr(parent, 'type_params', ()) and (child in parent.bases or child in parent.keywords):
+                    return None
+                grandchild, child = child, parent
+            return tree
+        scope_bindings, scope_globals, scope_nonlocals = {}, {}, {}
+        for part in ast.walk(tree):
+            if isinstance(part, ast.arg):
+                scope_bindings.setdefault(parents[parents[part]], set()).add(part.arg)
+            elif isinstance(part, ast.Global):
+                scope_globals.setdefault(execution_scope(part), set()).update(part.names)
+            elif isinstance(part, ast.Nonlocal):
+                scope_nonlocals.setdefault(execution_scope(part), set()).update(part.names)
+            elif type(part).__name__ not in ('TypeVar', 'ParamSpec', 'TypeVarTuple') and _names_bound_by(part):
+                owner = execution_scope(part)
+                # An assignment expression in a comprehension binds in the scope around the comprehensions.
+                if isinstance(parents.get(part), ast.NamedExpr):
+                    while isinstance(owner, comprehensions):
+                        owner = execution_scope(owner)
+                scope_bindings.setdefault(owner, set()).update(_names_bound_by(part))
+        def binding_scope(scope, name):
+            """Language reference 4.2.2. The scope holding this name's binding: `tree` for the global and builtin
+            namespaces, None for a type-parameter scope. A class namespace is visible only to the class body itself."""
+            current = scope
+            while current is not tree:
+                if current is None:
+                    return None
+                if current is scope or not isinstance(current, ast.ClassDef):
+                    if name in scope_globals.get(current, ()):
+                        return tree
+                    if name in scope_bindings.get(current, ()) and name not in scope_nonlocals.get(current, ()):
+                        return current
+                if any(name in _names_bound_by(parameter) for parameter in getattr(current, 'type_params', ())):
+                    return None
+                current = execution_scope(current)
+            return tree
+        try:
+            module_table = symtable.symtable(source, str(path), 'exec')
+        except (SyntaxError, ValueError):
+            module_table = None
+        scope_tables = {tree: module_table}
+        def scope_table(scope):
+            """The compiler's table for a scope, or None if it has no unique table: an inlined comprehension,
+            a generic definition or a same-line twin. The resolver above still decides those."""
+            if scope not in scope_tables:
+                outer = scope_table(execution_scope(scope))
+                label = {ast.Lambda: 'lambda', ast.GeneratorExp: 'genexpr'}.get(type(scope), getattr(scope, 'name', None))
+                matches = [] if outer is None or label is None or getattr(scope, 'type_params', ()) else [
+                    table for table in outer.get_children() if table.get_name() == label and table.get_lineno() == scope.lineno and table.get_type() in ('function', 'class')]
+                scope_tables[scope] = matches[0] if len(matches) == 1 else None
+            return scope_tables[scope]
+        def table_agrees(scope, name, binding):
+            if module_table is None:
+                return False
+            table = scope_table(scope)
+            if table is None:
+                return True
+            try:
+                symbol = table.lookup(name)
+            except KeyError:
+                return False
+            return symbol.is_global() if binding is tree else symbol.is_local() if binding is scope else symbol.is_free()
+        handler_counts = {}
+        for part in ast.walk(tree):
+            if isinstance(part, ast.ExceptHandler) and part.name:
+                handler_counts[part.name] = handler_counts.get(part.name, 0) + 1
+        def dominated(node, scope):
+            """A binding in `scope` runs before this read or, from a nested scope, before that scope is created."""
+            name, position, nested = node.id, node, False
+            while (owner := execution_scope(position)) is not scope:
+                if owner is None or owner is tree:
+                    return False
+                position, nested = owner, True
+            child = position
+            while child is not scope:
+                parent = parents[child]
+                if parent is scope and isinstance(parent, comprehensions):
+                    # Generator clauses run in order, so only the result expression is after every target.
+                    return not isinstance(child, ast.comprehension) and any(name in target_names(gen.target) for gen in parent.generators)
+                if isinstance(parent, (ast.For, ast.AsyncFor)) and child in parent.body and name in target_names(parent.target) and name not in handler_names:
                     return True
-                if isinstance(parent, ast.ExceptHandler) and child in parent.body and parent.name == name:
+                # A handler target is deleted when its handler ends, so a closure may outlive it.
+                if isinstance(parent, ast.ExceptHandler) and child in parent.body and parent.name == name and not nested and handler_counts[name] == 1:
                     return True
                 for field in ('body', 'orelse', 'finalbody'):
                     siblings = getattr(parent, field, None)
                     if isinstance(siblings, list) and child in siblings:
-                        # A handler target is implicitly deleted when its handler ends.
                         if name not in handler_names and any(statement_binds(statement, name) for statement in siblings[:siblings.index(child)]):
                             return True
-                # Defaults, annotations and decorators run in the enclosing scope.
-                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)) and (child is parent.body or isinstance(parent.body, list) and child in parent.body):
-                    args = parent.args
-                    if name not in handler_names and name in {arg.arg for arg in [*args.posonlyargs, *args.args, *args.kwonlyargs, *([args.vararg] if args.vararg else []), *([args.kwarg] if args.kwarg else [])]}:
-                        return True
-                    # Any binding form makes the name local, including nested
-                    # definitions, imports, handler targets and match captures.
-                    local = any(part is not parent and name in _names_bound_by(part) and not isinstance(part, (ast.Global, ast.Nonlocal)) and
-                                (owners[parents[part]] if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) else owners.get(part)) == owners[parent]
-                                for part in ast.walk(parent))
-                    declared = any(owners.get(part) == owners[parent] and isinstance(part, (ast.Global, ast.Nonlocal)) and name in part.names for part in ast.walk(parent))
-                    if local and not declared:
-                        return False  # binding exists, but does not dominate the read
                 child = parent
-            return module_name_bound(name)
+            if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)) and name not in handler_names:
+                args = scope.args
+                return name in {arg.arg for arg in [*args.posonlyargs, *args.args, *args.kwonlyargs, *([args.vararg] if args.vararg else []), *([args.kwarg] if args.kwarg else [])]}
+            return False
+        def annotation_read(node):
+            child = node
+            while child in parents and not isinstance(child, ast.stmt):
+                parent = parents[child]
+                if isinstance(parent, ast.arg) and child is parent.annotation:
+                    return True
+                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef)) and child is parent.returns:
+                    return True
+                if isinstance(parent, ast.AnnAssign) and child is parent.annotation:
+                    return True
+                child = parent
+            return False
+        def class_private(node):
+            # The compiler mangles __name under a class, so the plain spelling names a different variable.
+            if not node.id.startswith('__') or node.id.endswith('__'):
+                return False
+            child = node
+            while child in parents:
+                child = parents[child]
+                if isinstance(child, ast.ClassDef):
+                    return True
+            return False
+        def total_name(node):
+            name = node.id
+            if name in deleted_names or class_private(node):
+                return False
+            # Evaluation may be deferred or absent, so only a binding that no scope can shadow certifies it.
+            if annotation_read(node):
+                return name not in local_bindings and module_name_bound(name)
+            scope = execution_scope(node)
+            binding = None if scope is None else binding_scope(scope, name)
+            if binding is None or not table_agrees(scope, name, binding):
+                return False
+            if binding is tree:
+                return dominated(node, tree) or module_name_bound(name)
+            if dominated(node, binding):
+                return True
+            # A class-body read that misses the class namespace goes to globals and builtins, never an enclosing function.
+            return binding is scope and isinstance(scope, ast.ClassDef) and module_name_bound(name)
         def unary_form(node):
             # Certified per operator against the exact literal type; all else is an obligation.
             if not isinstance(node.operand, ast.Constant):
@@ -2010,12 +2123,15 @@ def _state_objects(case, root):
     return result
 
 
-def _certified_snapshot(roots, root, *, identities, namespaces=False):
+def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots=0):
     """Observe original objects without hooks; no copying, user equality or repr.
 
-    Shared snapshots retain binding/alias/identity information. Case snapshots
-    erase fresh identities but retain order, aliases, closure state and bits.
-    Unknown graphs are certification errors, never empty/safe fingerprints.
+    Shared snapshots retain binding/alias/identity information. With identities
+    off, numeric addresses go, but every alias edge stays: walking a function's
+    global namespace in the same graph keeps whether a case value IS a shared
+    binding. input_roots marks the leading roots that identify the input.
+    namespaces=False walks one case alone; it cannot see that relation and is
+    only a diagnostic. Unknown graphs are certification errors, never safe.
     """
     engine = Path(__file__).resolve()
     seen, nodes, keepalive = {}, [], []
@@ -2030,8 +2146,17 @@ def _certified_snapshot(roots, root, *, identities, namespaces=False):
     def namespace(mapping):
         # Interpreter-owned import bookkeeping is not adapter state. All other
         # bindings, including private names, are observed, even if unreferenced.
+        # A namespace is one node, so a function's edge to it is an identity edge.
+        if id(mapping) in seen:
+            return ('ref', seen[id(mapping)])
         ignored = {'__builtins__', '__loader__', '__spec__', '__cached__'}
-        return tuple((visit(name), visit(value)) for name, value in mapping.items() if name not in ignored)
+        index = len(nodes)
+        seen[id(mapping)] = index
+        nodes.append(None)
+        keepalive.append(mapping)
+        nodes[index] = ('namespace', id(mapping) if identities else None,
+                        tuple((visit(name), visit(value)) for name, value in mapping.items() if name not in ignored))
+        return ('ref', index)
     def visit(obj):
         kind = type(obj)
         if kind in (type(None), bool, int, float, complex, str, bytes):
@@ -2073,7 +2198,7 @@ def _certified_snapshot(roots, root, *, identities, namespaces=False):
                            visit(obj.__name__), visit(obj.__qualname__), visit(obj.__module__), visit(obj.__doc__),
                            namespace(obj.__globals__) if namespaces else (),
                            tuple((name, visit(obj.__builtins__[name])) for name in sorted(set(obj.__code__.co_names))
-                                 if name not in obj.__globals__ and name in obj.__builtins__) if namespaces else ())
+                                 if name not in obj.__globals__ and name in obj.__builtins__) if namespaces and identities else ())
         elif kind is types.MethodType:
             content = (visit(obj.__func__), visit(obj.__self__))
         elif kind is types.CellType:
@@ -2114,7 +2239,7 @@ def _certified_snapshot(roots, root, *, identities, namespaces=False):
             content = tuple(visit(fn) for fn in (obj.fget, obj.fset, obj.fdel))
         elif kind in metadata_types:
             content = tuple((name, visit(value)) for name, value in vars(obj).items())
-        elif kind is GuardTable and not namespaces:
+        elif kind is GuardTable and not identities:
             content = (visit(_guard_metadata(obj)),
                        tuple(visit(fn) for fn in _predicate_functions(obj)),
                        tuple(visit(fn) for fn in obj._schema.selectors.values()) if obj._schema else ())
@@ -2136,11 +2261,17 @@ def _certified_snapshot(roots, root, *, identities, namespaces=False):
             content = (visit(cls), visit(state))
         nodes[index] = (kind.__name__, id(obj) if identities else None, content)
         return ('ref', index)
-    references = tuple(visit(value) for value in roots)
-    return _DataSnapshot((references, tuple(nodes)), tuple(keepalive))
+    references, input_nodes = [], 0
+    for position, value in enumerate(roots):
+        references.append(visit(value))
+        if position + 1 == input_roots:
+            input_nodes = len(nodes)
+    snapshot = _DataSnapshot((tuple(references), tuple(nodes)), tuple(keepalive))
+    snapshot.input_signature = (tuple(references[:input_roots]), tuple(nodes[:input_nodes]))
+    return snapshot
 
 
-def _adapter_snapshot(suite):
+def _adapter_roots(suite):
     root = Path(suite.repository_root).resolve()
     # Starting at the factory also includes factory-only closures and globals.
     roots = [suite.factory]
@@ -2152,7 +2283,23 @@ def _adapter_snapshot(suite):
             filename = vars(module).get('__file__')
             if filename and Path(filename).resolve() in paths:
                 roots.append(module)
-    return _certified_snapshot(roots, root, identities=True, namespaces=True)
+    return roots
+
+
+def _adapter_snapshot(suite):
+    return _certified_snapshot(_adapter_roots(suite), Path(suite.repository_root).resolve(), identities=True)
+
+
+def _case_snapshot(suite, value, case):
+    """One graph of the input, anchored shared state, context, checker and table.
+
+    Addresses are erased, identity edges are not, so an equal value that is not
+    the stable shared object fingerprints differently. Its input_signature is the
+    input plus the shared state alone, which groups builds of the same input.
+    """
+    anchored = _adapter_roots(suite)
+    return _certified_snapshot([value, *anchored, case.context, case.check, case.table], Path(suite.repository_root).resolve(),
+                               identities=False, input_roots=1 + len(anchored))
 
 
 def _guard_metadata(table):
@@ -2280,9 +2427,10 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
     engine = Path(__file__).resolve()
     root = Path(suite.repository_root).resolve()
     shared_snapshot = None
-    case_snapshots = {}
+    shared_certified = True
+    case_snapshots, anchored_snapshots = {}, {}
     def certify_shared(*, reset=False):
-        nonlocal shared_snapshot
+        nonlocal shared_snapshot, shared_certified
         if reset and suite.reset:
             suite.reset()
         try:
@@ -2290,12 +2438,14 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
         except IsolationError as exc:
             # Still census/observe baselines for diagnostic specificity. Any
             # certification failure withholds ALL credit before matrix/cuts.
+            shared_certified = False
             fail('state_shared_across_cases', error=str(exc))
             return
         report.setdefault('state_snapshots', []).append(hashlib.sha256(repr(snapshot.signature).encode()).hexdigest())
         if shared_snapshot is None:
             shared_snapshot = snapshot
         elif snapshot != shared_snapshot:
+            shared_certified = False
             fail('state_shared_across_cases', error='adapter/factory bindings or reachable state changed from first run')
     def fresh(value):
         nonlocal signature, checker_signature, scanned_paths, exception_sites
@@ -2345,12 +2495,20 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             except TypeError:
                 retained[id(obj)] = obj
         certify_shared(reset=True)
-        key = repr(_certified_snapshot([value], root, identities=False).signature)
-        snapshot = _certified_snapshot([value, case.context, case.check, case.table], root, identities=False)
+        key = repr(_certified_snapshot([value], root, identities=False, namespaces=False).signature)
+        snapshot = _certified_snapshot([value, case.context, case.check, case.table], root, identities=False, namespaces=False)
         if key in case_snapshots and snapshot != case_snapshots[key]:
             fail('factory_nondeterministic', error='same input produced a different table/context/checker closure graph')
         else:
             case_snapshots.setdefault(key, snapshot)
+            # Once shared state has failed, credit is already withheld and its relations cannot be certified.
+            if shared_certified:
+                joined = _case_snapshot(suite, value, case)
+                anchored_key = repr(joined.input_signature)
+                if anchored_key in anchored_snapshots and joined != anchored_snapshots[anchored_key]:
+                    fail('factory_nondeterministic', error='same input changed a case value or function relation to stable shared state')
+                else:
+                    anchored_snapshots.setdefault(anchored_key, joined)
         gate.check()
         return case
 

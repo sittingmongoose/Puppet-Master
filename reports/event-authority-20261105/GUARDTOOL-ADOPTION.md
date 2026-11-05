@@ -72,6 +72,8 @@ The static allowlist requires obligations for conversions, subscripts/lookups, u
 
 Any safety, inventory, matrix or proof failure withholds every row's credit. JSON includes guard metadata, source SHA-256 hashes, the full predicate matrix, exact baseline/cut/restoration outcomes, per-site duplicate checks, masks, static sites and non-guard reasons. Markdown summarizes those same rows. Missing witnesses are unproved. Neither a successful constructor nor a suite-level FAIL excuses a broad credited cut.
 
+Case certification is one graph. Each build of a case is fingerprinted together with the anchored shared state: the input, the factory, reset and checker modules with their namespaces, then the context, checker closure and table. Numeric addresses are erased, because a fresh object has no stable address, but every identity edge stays. A case value that is the stable shared object is an edge to that node; an equal value that is not the shared object is a separate node. Function global namespaces are nodes too. The input plus the shared state groups builds of the same input, and every later build must match the first. A change fails `factory_nondeterministic` with zero credit. A function whose globals bring in state that cannot be certified fails closed with `state_shared_across_cases`, and once shared state has failed, credit is already withheld and these relations are not compared. To use this, name every module whose state a case depends on in `checker_modules`.
+
 ## Outside-predicate allowlist audit
 
 Every operation outside a guard predicate is either in this table or an obligation. An obligation needs a table predicate or an exact reviewed `NonGuard`. The table is `TOTAL_FORMS` in the tool: `static_scan` classifies each syntax node through an explicit allowlist, so a form with no entry here, including syntax added by a later Python, is an obligation by default. Each report's `static.automatic_totals` lists the forms that scan used, with counts and these reasons. Resource exhaustion, interpreter interruption and warnings promoted to errors are outside every argument.
@@ -90,7 +92,7 @@ Every operation outside a guard predicate is either in this table or an obligati
 | `binding:name` | Binding a plain name to a computed value runs no hook; unpacking, attribute and subscript targets and any __builtins__ binding are excluded. |
 | `control:literal-test` | if or a conditional expression on a builtin literal: literal truthiness has no failure path. |
 | `expression:literal` | Loading a compile-time constant cannot raise. |
-| `expression:bound-name` | A binding dominates the read: parameter, earlier sibling statement, loop, comprehension or handler target in its own body, or the certified module or builtin namespace; a deleted name or a handler name outside its handler is excluded. |
+| `expression:bound-name` | The name resolves by the language scope rules (class namespaces do not enclose nested functions or comprehensions) and a binding of that scope dominates the read: parameter, earlier sibling statement, loop or comprehension target, its own handler target, or the certified module or builtin namespace. Deleted names, handler targets outside their own handler body, private names under a class and type-parameter scopes are excluded, and the compiler symbol table must agree where it has a table for the scope. |
 | `expression:identity-compare` | is and is not compare identities with no user hook; every other comparison is an obligation. |
 | `unary:not-literal` | not on a builtin literal (None, bool, int, float, complex, str, bytes, Ellipsis): literal truthiness has no failure path. |
 | `unary:sign-numeric-literal` | Unary + or - on an exact int or float literal is defined for every value. |
@@ -155,6 +157,28 @@ These were automatic at `dec0a57dce`, and each named trap was a credited PASS th
 | `__code__` on a rebound name | The local value need not be a function | Removed from the automatic path; covered by the same local-binding rule |
 | `type` alias statements and generic parameters on `def` | No lane needs them and no argument was written | Removed; covered by the default for unlisted forms |
 
+### Name-read scope audit
+
+`expression:bound-name` follows Python's scope rules (language reference 4.2.2), with `symtable` as a second opinion: wherever the compiler has a table for the scope and disagrees, the read is an obligation. List, set and dict comprehensions have no table of their own from Python 3.12, so the resolver alone decides them. A read is automatic only when it resolves to a scope and a binding of that scope dominates it. These forms were automatic at `07fefa83bd`; each trap holds out the original raising, except the three lazy forms marked below, which do not raise on that path and are obligations because they have no written argument.
+
+| Read | Python's rule | Now | Trap |
+|---|---|---|---|
+| Method, nested `def`, lambda, comprehension result or condition, later iterable, or generator, with a class binding of that name | A class namespace does not enclose them | Resolves past the class; an obligation unless a function, global or builtin binding exists | `C6-class-binding-is-not-method-binding`, `C6-class-binding-nested-def`, `C6-class-binding-lambda`, `C6-class-binding-list-comprehension-result`, `C6-class-binding-comprehension-condition`, `C6-class-binding-second-iterable`, `C6-class-binding-generator-result` |
+| A nested class body, with the outer class binding | Class namespaces do not nest | Obligation | `C6-outer-class-binding-in-nested-class` |
+| A class body read of a name the class binds later | `LOAD_NAME` goes to globals and builtins, never the enclosing function | Obligation unless a module or builtin binding exists | `C6-class-read-skips-enclosing-function` |
+| A comprehension iterable or condition reading a later target of the same comprehension | The target makes the name comprehension-local | Obligation, whatever the enclosing function binds | `C6-comprehension-later-target-iterable`, `C6-comprehension-later-target-condition` |
+| A read under `global` | Skips every enclosing function | Needs a module or builtin binding | `C6-global-skips-enclosing-function`, `C6-class-global-skips-enclosing-function` |
+| A closure read of a handler target | The target is deleted when the handler ends, so the closure can outlive it | Obligation | `C6-handler-target-in-closure` |
+| A read after a nested handler with the same target, or a loop target a handler in the loop reuses | That handler deletes it | Obligation | `C6-nested-handler-deletes-target`, `C6-handler-deletes-loop-target` |
+| A `__private` name under a class | The compiler mangles it, so the module binding is a different name | Obligation | `C6-private-name-in-method`, `C6-private-name-in-class-body` |
+| A generic method | The type-parameter scope is function-like and the class stays excluded | Obligation | `C6-type-params-keep-class-exclusion` |
+| A type-parameter bound, or a type alias value (lazy) | A lazily evaluated annotation scope, with no written argument | Obligation, even with an enclosing binding | `C6-type-bound-read-is-an-obligation`, `C6-type-alias-read-is-an-obligation` |
+| An annotation | Evaluation is deferred or absent, depending on version and future import | Automatic only for a module or builtin binding no scope in the file rebinds | Existing annotation traps |
+
+These stay automatic, each with a paired control: a genuine enclosing-function binding read through a class or a generic definition; a module binding read past a class attribute; a class-body read after a class binding; a first iterable or method default, both of which run in the class scope; a comprehension result reading its own target; `nonlocal` and `global` with a real dominating binding; a read in a handler's own body. A type-parameter read (`C6-type-parameter-read-is-an-obligation`) is valid Python but has no written argument, so it is an obligation.
+
+The other automatic name uses do not resolve scopes: `type`, `bool`, the `except` classes, `g`, `table`, `__code__` and `Guard` predicates each refuse any rebinding anywhere in the file and verify the live binding, so class and comprehension bindings already make them obligations. Predicate bodies stay outside this scan, as before.
+
 ### Already obligations, confirmed
 
 The audit found these forms correct and left them unchanged: subscripts of literals (`(1,)[5]`), comparisons other than `is` and `is not`, including of literals (`1 < 'a'`), every f-string (`f'{1:zz}'`), binary and boolean operators on literals, and truth tests of non-literals (`if`, `while`, `not x` and conditional expressions). So are iteration and comprehension `for` clauses, `with`, `match`, classes, `await`, star items, `**`, and displays with non-literal keys.
@@ -190,6 +214,8 @@ The reproducible external driver also uses the unchanged complete retained-histo
 Run one lane/family process at a time. MemoryGate checks finite limits, fresh available-memory samples, peak RSS before/after factories and evaluations, and RSS again on resume. The default CLI poll is 30 seconds. These are sampled limits, not an allocation sandbox. A fresh child process may be needed to avoid inheriting an unrelated high-water RSS mark; never disable the gate to make a run pass.
 
 Freshness checks retain references to prior mutable state to detect reuse without copying it or mistaking recycled IDs for reuse. Memory therefore grows with the evaluated state graphs. Large lanes must partition complete family/boundary suites to stay under the RSS cap. All adapter/factory-owned module state is checked. External functions, objects/modules and opaque/native graphs outside the small immutable builtin/engine metadata boundary fail certification; a review note alone cannot waive them. External service semantics still need independent review and a supported source-backed seam.
+
+Identity certification compares builds; it cannot predict them. A factory that branches on an address passes only in a run where every build happened to agree, and a checker branch on an address changes no graph at all. A reviewer must reject a `call_review` declaration for `id()` whose result can reach a case value or a branch.
 
 No finite matrix proves arbitrary Python predicate honesty, complete boundary selection, semantic duplicate equality or a non-guard declaration. Review these explicitly. Dynamic imports, non-source callables, unscannable modules, opaque fixture data and unported checker closures cannot receive automatic proof credit. No current lane/family admission or twelve-criterion grade is granted by this tool task.
 
@@ -235,9 +261,10 @@ when a reset is declared. The corpus includes both an effective diagnostic
 scalar reset and a reset that leaves the binding changed.
 
 Every evaluation builds its case twice independently. Table rows, context,
-inputs, checker closure state and original predicate metadata must agree with
-the first construction for that input; cuts and restorations repeat the same
-comparison. Fresh identities alone do not establish deterministic state. Shared
+inputs, checker closure state, original predicate metadata and every identity
+edge to anchored shared state must agree with the first construction for that
+input; cuts and restorations repeat the same comparison. Fresh identities alone
+do not establish deterministic state. Shared
 fingerprints also run before factories and after original execution, with any
 reviewed reset applied first. Certification failures retain census/baseline
 diagnostics but withhold every row and duplicate credit.
