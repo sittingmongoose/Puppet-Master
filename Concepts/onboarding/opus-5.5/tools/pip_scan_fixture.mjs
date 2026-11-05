@@ -54,6 +54,8 @@ function frame(st, seq, v) {
 export async function makeFixture(root, name, v = {}) {
 	const s = script(v);
 	if (v.dropB) { const i = s.findIndex((x, k) => k > 400 && x.look === 'B' && x.cls === 'v' && !x.cal); s[i].head = 'off'; v.dropAt = i + 1; }
+	if (v.collapseB) { const i = s.findIndex((x, k) => k > 430 && x.look === 'B' && x.cls === 'v' && !x.cal); s[i].head = 'off'; s[i].ctl = 'off'; s[i].zeroBox = true; v.dropAt = i + 1; }
+	if (v.collapseLong) { const i = s.findIndex((x, k) => k > 560 && x.look === 'B' && x.cls === 'v' && !x.cal); for (let k = 0; k < 40; k++) { s[i + k].head = 'off'; s[i + k].zeroBox = true; } v.dropAt = i + 1; }
 	if (v.dropCtlA) { const i = s.findIndex((x, k) => k > 230 && x.look === 'A' && x.cls === 'v' && !x.cal && x.occl === 0); s[i].ctl = s[i + 1].ctl = 'off'; v.dropAt = i + 1; }
 	if (v.greyB) { const i = s.findIndex((x, k) => k > 420 && x.look === 'B' && x.cls === 'v' && !x.cal); for (let k = 0; k < 3; k++) s[i + k].tag = 'grey'; }
 	if (v.skipB) { let k = 0; s.forEach((x, i) => { if (x.look === 'B' && x.cls === 'v' && !x.cal && i > 300 && k++ % 5 === 0) x.onFilm = 0; }); }
@@ -71,7 +73,8 @@ export async function makeFixture(root, name, v = {}) {
 		r[F.seq] = i + 1; r[F.t] = i * 16.7; r[F.look] = ix(st.look === 'A' ? 'look-a' : 'look-b'); r[F.pipTheme] = r[F.look]; r[F.cls] = st.cls; r[F.why] = ix(st.why);
 		r[F.cal] = st.cal; r[F.calPhase] = st.calPhase; r[F.label] = ix('selftest'); r[F.screen] = ix('synthetic');
 		[r[F.hx], r[F.hy], r[F.hw], r[F.hh]] = HEAD; [r[F.cx], r[F.cy], r[F.cw], r[F.ch]] = CTL;
-		r[F.placed] = 1; r[F.headVis] = r[F.ctlVis] = r[F.strVis] = 1; r[F.opHead] = r[F.opCtl] = r[F.opStr] = 1000; r[F.clipFrac] = 1000; r[F.occl] = st.occl; r[F.dim] = 1000; r[F.leafArea] = 2000;
+		if (st.zeroBox) { [r[F.hx], r[F.hy], r[F.hw], r[F.hh]] = [0, 0, 0, 0]; r[F.clipFrac] = 0; }
+		r[F.placed] = 1; r[F.headVis] = r[F.ctlVis] = r[F.strVis] = 1; r[F.opHead] = r[F.opCtl] = r[F.opStr] = 1000; r[F.clipFrac] = st.zeroBox ? 0 : 1000; r[F.occl] = st.occl; r[F.dim] = 1000; r[F.leafArea] = 2000;
 		return r;
 	});
 	const header = { kind: 'header', v: 2, fields: FIELDS, dpr: 1, ox: 0, oy: 0, viewport: [W, H], tag: { x: 0, y: 0, block: BL, cells: CELLS, bits: BITS, sync: [1, 0] } };

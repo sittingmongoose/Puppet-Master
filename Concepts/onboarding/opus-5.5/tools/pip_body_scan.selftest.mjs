@@ -29,6 +29,13 @@ try {
 	r = scan(ctlA.film, ctlA.log);
 	assert.equal(r.status, 1); assert.equal(r.j.dips[0].look, 'look-a'); assert.equal(r.j.dips[0].len, 2); assert.equal(r.j.dips[0].frames[0].part, 'ctl'); checks++;
 
+	/* a Pip whose box collapses (display:none, scale(0)) is judged where its look last had a whole box */
+	const col = await makeFixture(root, 'collapseB', { collapseB: true });
+	r = scan(col.film, col.log);
+	assert.equal(r.status, 1, JSON.stringify(r.j)); assert.equal(r.j.dips.length, 1); assert.deepEqual(r.j.dips[0].seqs, [col.v.dropAt]); assert.ok(r.j.dips[0].frames.some((f) => f.part === 'head' && f.collapsed)); checks++;
+	const colL = await makeFixture(root, 'collapseLong', { collapseLong: true });
+	r = scan(colL.film, colL.log);
+	assert.equal(r.status, 1); assert.equal(r.j.dips.length, 1); assert.equal(r.j.dips[0].len, 40); checks++;
 	const uncal = await makeFixture(root, 'uncalB', { uncalB: true });
 	r = scan(uncal.film, uncal.log);
 	assert.equal(r.status, 2); assert.equal(r.j.verdict, 'cannot-evaluate'); assert.match(r.j.cannotEvaluate.join(' '), /look-b: no calibration on film/); checks++;
@@ -75,5 +82,5 @@ try {
 		fs.writeFileSync(path.join(bin, 'ffmpeg'), `#!${process.execPath}\nprocess.stdout.write(Buffer.alloc(${bytes}), () => process.exit(${exit}));\n`, { mode: 0o755 });
 		r = scan(clean.film, clean.log, { ...process.env, PATH: bin }); assert.equal(r.status, 2); checks++;
 	}
-	console.log(`PASS ${checks}: clean (cover untagged, overlay, repeated frame), look B dropout judged by B's own reference, controller dropout, look without calibration, inseparable look, untagged visible frames, low coverage (and its threshold), backwards tags, incomplete log, film past its log, page lost, invalid and missing film, film of another log, no decoder, failed decoder, partial frame`);
+	console.log(`PASS ${checks}: clean (cover untagged, overlay, repeated frame), look B dropout judged by B's own reference, controller dropout, collapsed box (one frame, and past 30 frames), look without calibration, inseparable look, untagged visible frames, low coverage (and its threshold), backwards tags, incomplete log, film past its log, page lost, invalid and missing film, film of another log, no decoder, failed decoder, partial frame`);
 } finally { fs.rmSync(root, { recursive: true, force: true }); }

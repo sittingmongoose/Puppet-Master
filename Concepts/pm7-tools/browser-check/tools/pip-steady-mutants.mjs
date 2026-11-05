@@ -18,7 +18,7 @@ export const MUTATIONS = {
 	'friendly-dark': ['display', 'whole puppet display none'],
 	'retro-light': ['filter', 'head filter opacity(0)'],
 	'retro-dark': ['mask', 'head mask-image transparent'],
-	'glass-light': ['cover', 'a plain box over the head (no change to Pip: only the film can see it)'],
+	'glass-light': ['cover', 'a plain box in the stage ground colour over the head, in the stage overlay (no change to Pip: only the film can see it)'],
 	'glass-dark': ['scale', 'head transform scale(0)'],
 	'nier-light': ['ancestor', 'opacity 0 on the puppet group'],
 	'nier-dark': ['leaves', 'every painted leaf of the head hidden, the head group untouched']
@@ -53,9 +53,11 @@ export function mutantScript(look, kind) {
         return function () { ls.forEach(function (e, i) { e.style.visibility = old[i]; }); };
       }
       case 'cover': {
-        var b = h.getBoundingClientRect(), c = document.createElement('div'), bg = getComputedStyle(st.root).backgroundColor;
-        c.style.cssText = 'position:fixed;left:' + (b.left - 2) + 'px;top:' + (b.top - 2) + 'px;width:' + (b.width + 4) + 'px;height:' + (b.height + 4) + 'px;z-index:2147483646;pointer-events:none;background:' + (bg && bg !== 'rgba(0, 0, 0, 0)' ? bg : '#808080');
-        document.documentElement.appendChild(c); return function () { c.remove(); };
+        /* a plain box in the stage's own ground colour, inside the stage's overlay layer (above Pip, where the bubble
+           is: the onboarding window is in the top layer, so a box on the page itself would stay under it) */
+        var b = h.getBoundingClientRect(), o = st.overlay.getBoundingClientRect(), c = document.createElement('div'), bg = getComputedStyle(st.root).backgroundColor;
+        c.style.cssText = 'position:absolute;left:' + (b.left - o.left - 2) + 'px;top:' + (b.top - o.top - 2) + 'px;width:' + (b.width + 4) + 'px;height:' + (b.height + 4) + 'px;z-index:50;pointer-events:none;margin:0;background:' + (bg && bg !== 'rgba(0, 0, 0, 0)' ? bg : '#808080');
+        st.overlay.appendChild(c); return function () { c.remove(); };
       }
     }
   }

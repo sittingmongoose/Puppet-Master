@@ -12,11 +12,14 @@
  *    record) names the page frame it shows. A frame with no valid tag names nothing.
  * 2. Per look, a reference from the page itself: the look's calibration frames (Pip painted / head and controller
  *    hidden by the witness, same look, same place) give the colours, in quantised RGB, that Pip's head adds to its own
- *    box in that look (P >= 4 A), and so a score for any frame: the share of the head box in those colours. The same
- *    for the controller. The threshold sits 40 % of the way from the hidden frames' highest score to the painted
- *    frames' median. Before it is used it is cross-checked on calibrations it was not learned from (held out): every
- *    held-out hidden frame must score under it and 99 % of held-out painted frames over it, or the look cannot be
- *    evaluated.
+ *    box in that look (P >= 4 A in every calibrated context), and so a score for any frame: for the head, how much of
+ *    Pip's own mix of those colours its box shows (each colour counted up to its share in the painted calibration
+ *    frames: 1 looks like Pip, 0 like its background, a patch of one of Pip's colours only that colour's share); for
+ *    the thin controller bar, the share of its box in its colours. The threshold sits 40 % of the way from the hidden
+ *    frames' highest score to the painted frames' median. Before it is used it must hold on held-out frames (each
+ *    calibration's odd page frames judged by a reference learned from the even ones, and back): every held-out hidden
+ *    frame under it and 99 % of held-out painted frames over it, or the look cannot be evaluated. Each calibration
+ *    judged by the others alone is reported as well (a context no other covers, such as Pip asleep on the floor).
  * 3. Every film frame whose page frame was declared visible (window open, no look cover or product animation on Pip's
  *    ancestors) is judged with the reference of the look its own record names, and no other: head or controller under
  *    threshold is a missing paint. Where the product's own overlays (bubble, tip, Retro's printer, NieR's HUD) or a
@@ -49,6 +52,27 @@ try { ({ width: FW, height: FH } = JSON.parse(probe.stdout).streams[0]); } catch
 const tg = header.tag, TW = Math.ceil(tg.cells * tg.block), TH = Math.ceil(tg.block), TX = Math.round(tg.x), TY = Math.round(tg.y);
 if (TX < 0 || TY < 0 || TX + TW > FW || TY + TH > FH) die(2, `tag ${TX},${TY} ${TW}x${TH} outside the ${FW}x${FH} film`);
 const bySeq = new Map(recs.map((r) => [r[F.seq], r]));
+/* Where to look for Pip in each frame. A visible frame whose box collapsed (display:none, a scale to nothing, a box under
+   a quarter of its look's usual size) is looked at where its look last had a whole box, up to 30 page frames back: a
+   Pip that loses its box loses its paint, and must not be excused as too small to judge. No such box: the frame counts
+   as missing paint. */
+const PARTS = { head: ['hx', 'hy', 'hw', 'hh'], ctl: ['cx', 'cy', 'cw', 'ch'] };
+const boxAt = new Map();
+{
+	const usual = {}, med = (a) => { const t = [...a].sort((x, y) => x - y); return t[t.length >> 1] || 0; };
+	for (const part in PARTS) { const by = {}; for (const r of recs) if (r[F.cls] === 'v' || r[F.cls] === 'h') (by[r[F.look]] ||= []).push(r[F[PARTS[part][2]]] * r[F[PARTS[part][3]]]); usual[part] = Object.fromEntries(Object.entries(by).map(([k, a]) => [k, med(a)])); }
+	const last = {};
+	for (const r of recs) {
+		if (r[F.cls] !== 'v' && r[F.cls] !== 'h') continue;
+		const at = {};
+		for (const part in PARTS) {
+			const [x, y, w, h] = PARTS[part].map((k) => r[F[k]]), key = `${part}:${r[F.look]}`, whole = w >= 6 && h >= 6 && w * h >= 0.25 * (usual[part][r[F.look]] || 0);
+			if (whole) { at[part] = { box: [x, y, w, h] }; last[key] = { box: [x, y, w, h], seq: r[F.seq] }; }
+			else at[part] = last[key] && r[F.seq] - last[key].seq <= 30 ? { box: last[key].box, collapsed: true } : { collapsed: true, none: true };
+		}
+		boxAt.set(r[F.seq], at);
+	}
+}
 /* the decoded area: every box of a visible or calibration frame, padded */
 let ux0 = Infinity, uy0 = Infinity, ux1 = -Infinity, uy1 = -Infinity;
 for (const r of recs) if ((r[F.cls] === 'v' || r[F.cls] === 'h') && r[F.hw] > 0) for (const [x, y, w, h] of [[r[F.hx], r[F.hy], r[F.hw], r[F.hh]], [r[F.cx], r[F.cy], r[F.cw], r[F.ch]]]) { if (w <= 0 || h <= 0) continue; ux0 = Math.min(ux0, x); uy0 = Math.min(uy0, y); ux1 = Math.max(ux1, x + w); uy1 = Math.max(uy1, y + h); }
@@ -103,7 +127,10 @@ ff.stdout.on('data', (d) => {
 		if (dump) { if (dump.has(n)) fs.writeFileSync(`${dir}/f${String(n).padStart(6, '0')}.ppm`, Buffer.concat([Buffer.from(`P6\n${PW} ${TH + UH}\n255\n`), fr])); }
 		else {
 			const seq = readTag(fr), r = seq != null ? bySeq.get(seq) : null, e = { seq: r ? seq : null, raw: seq };
-			if (r && (r[F.cls] === 'v' || r[F.cls] === 'h')) { e.head = region(fr, r[F.hx], r[F.hy], r[F.hw], r[F.hh]); e.ctl = region(fr, r[F.cx], r[F.cy], r[F.cw], r[F.ch]); }
+			if (r && (r[F.cls] === 'v' || r[F.cls] === 'h')) {
+				const at = boxAt.get(seq);
+				for (const part in PARTS) { const b = at[part]; e[part] = b.none ? { none: true } : { ...region(fr, ...b.box), collapsed: !!b.collapsed }; }
+			}
 			frames.push(e);
 		}
 		buf = buf.subarray(FR); n++;
@@ -130,10 +157,20 @@ function judge() {
 		for (const i of P) for (const [b, v] of frac(i.h)) pb.set(b, (pb.get(b) || 0) + v / P.length);
 		for (const i of A) { if (!groups.has(i.id)) groups.set(i.id, []); groups.get(i.id).push(i.h); }
 		for (const g of groups.values()) { const m = new Map(); for (const h of g) for (const [b, v] of frac(h)) m.set(b, (m.get(b) || 0) + v / g.length); for (const [b, v] of m) ab.set(b, Math.max(ab.get(b) || 0, v)); }
-		const D = new Set(); for (const [b, v] of pb) if (v >= 0.002 && v >= 4 * (ab.get(b) || 0) + 0.002) D.add(b);
+		const D = new Map(); for (const [b, v] of pb) if (v >= 0.002 && v >= 4 * (ab.get(b) || 0) + 0.002) D.set(b, v);
+		D.total = [...D.values()].reduce((x, y) => x + y, 0);
 		return D;
 	};
-	const score = (D, h) => { let s = 0; for (let i = 0; i < h.bins.length; i++) if (D.has(h.bins[i])) s += h.counts[i]; return s / h.px; };
+	/* how much of Pip's own mix of colours the box shows: each of Pip's colours counts up to its share in the look's
+	   painted calibration frames (a histogram intersection over Pip's colours, 1 for a box that looks like Pip, 0 for
+	   its background). A box filled with one of Pip's colours scores only that colour's share, so a patch in Pip's
+	   colour cannot stand in for Pip */
+	const intersect = (D, h) => { if (!D.total) return 0; let s = 0; for (let i = 0; i < h.bins.length; i++) { const w = D.get(h.bins[i]); if (w !== undefined) s += Math.min(w, h.counts[i] / h.px); } return s / D.total; };
+	/* the controller is a thin bar whose box it fills more or less as it swings: the plain share of its colours in the
+	   box is the steadier measure there (a fast swing took the intersection to 0.34 against 0.38, the share stayed 0.55) */
+	const share = (D, h) => { let s = 0; for (let i = 0; i < h.bins.length; i++) if (D.has(h.bins[i])) s += h.counts[i]; return s / h.px; };
+	let part = 'head';
+	const score = (D, h) => (part === 'head' ? intersect(D, h) : share(D, h));
 	const q = (arr, p) => { const s = [...arr].sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.max(0, Math.floor(p * (s.length - 1))))] : NaN; };
 	const fit = (P, A, D) => { const sp = P.map((i) => score(D, i.h)), sa = A.map((i) => score(D, i.h)); const pm = q(sp, 0.5), am = Math.max(...sa); return { pm, am, p01: q(sp, 0.01), thr: am + 0.4 * (pm - am) }; };
 	const test = (trP, trA, teP, teA) => { const D = learn(trP, trA), m = fit(trP, trA, D); return { painted: teP.length, paintedUnder: teP.filter((i) => score(D, i.h) < m.thr).length, hidden: teA.length, hiddenOver: teA.filter((i) => score(D, i.h) >= m.thr).length }; };
@@ -150,8 +187,8 @@ function judge() {
 	const refs = {};
 	for (const [k, items] of cal) {
 		const ref = refs[k] = { calibrations: [...new Set(items.map((i) => i.id))].length, painted: items.filter((i) => !i.hidden).length, hidden: items.filter((i) => i.hidden).length, regions: {} };
-		for (const part of ['head', 'ctl']) {
-			const ok = items.filter((i) => i.e[part] && i.e[part].bins).map((i) => ({ ...i, h: i.e[part] }));
+		for (part of ['head', 'ctl']) {
+			const ok = items.filter((i) => i.e[part] && i.e[part].bins && !i.e[part].collapsed).map((i) => ({ ...i, h: i.e[part] }));
 			const P = ok.filter((i) => !i.hidden), A = ok.filter((i) => i.hidden);
 			const R = ref.regions[part] = { painted: P.length, hidden: A.length };
 			if (P.length < 20 || A.length < 10) { R.error = `too few calibration frames on film (${P.length} painted, ${A.length} hidden)`; continue; }
@@ -199,17 +236,18 @@ function judge() {
 		if (!observed.has(e.seq)) { observed.add(e.seq); st.observedPageFrames++; }
 		const ref = refs[k], miss = [];
 		let judged = false, line = `${i},${e.seq},v,`;
-		for (const part of ['head', 'ctl']) {
+		for (part of ['head', 'ctl']) {
 			const R = ref && ref.regions[part], h = e[part];
 			if (!R || R.error) { bump(unevaluable, `${k} ${part}: ${!ref ? 'no calibration on film' : R ? R.error : 'no reference'}`); continue; }
 			if (!h || h.outside) { bump(unevaluable, `${k} ${part}: box outside the decoded area`); continue; }
-			const area = part === 'head' ? r[F.hw] * r[F.hh] : r[F.cw] * r[F.ch];
-			if (h.tiny || area < 0.25 * R.calArea) { bump(covered, `${part} box under a quarter of its calibrated size`); continue; }
-			const vis = part === 'head' ? (r[F.clipFrac] / 1000) * (1 - r[F.occl] / 1000) : 1, rel = Math.min(1, vis / Math.max(0.05, R.calVis || 1));
+			if (h.none) { judged = true; miss.push({ part, collapsed: true, why: 'box collapsed with no whole box in the 30 page frames before' }); continue; }
+			if (h.tiny) { bump(unevaluable, `${k} ${part}: box under 6 px`); continue; }
+			/* (a collapsed box's own clip and overlay shares say nothing: it is judged whole where Pip last was) */
+			const vis = part === 'head' && !h.collapsed ? (r[F.clipFrac] / 1000) * (1 - r[F.occl] / 1000) : 1, rel = Math.min(1, vis / Math.max(0.05, R.calVis || 1));
 			if (rel < 0.5) { bump(covered, `${part} under half visible (product overlay or clip)`); st.coveredByProduct++; continue; }
 			const thr = rel >= 0.9 ? R.thr : R.am + 0.4 * (R.pm * rel - R.am), s = score(R.D, h);
 			judged = true; line += `${part}=${s.toFixed(4)}/${thr.toFixed(4)} `;
-			if (s < thr) miss.push({ part, score: +s.toFixed(4), threshold: +thr.toFixed(4) });
+			if (s < thr) miss.push({ part, score: +s.toFixed(4), threshold: +thr.toFixed(4), ...(h.collapsed ? { collapsed: true } : {}) });
 		}
 		counts.push(line.trim());
 		if (judged) st.judgedFilmFrames++;
