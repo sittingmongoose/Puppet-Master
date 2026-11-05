@@ -44,7 +44,8 @@ export default async function(t) {
   if(t.args.widths) {const widths=String(t.args.widths).split(',').map(Number);await t.page.setViewportSize({width:widths[(ix*2+mode)%widths.length],height:t.args.short ? 500 : 1080});}
   if (t.args.only !== 'token') for (const action of (t.args.action ? [t.args.action] : ['remove','key'])) await t.step(`${look} w${mode} AI cheer ${action}`, async()=>{
    const f = await t.app.open(); await t.app.look(look);
-   if (t.args.motion !== 'reduced') await t.emulate({ reducedMotion:'no-preference' });
+   await t.emulate({ reducedMotion:t.args.motion === 'reduced' ? 'reduce' : 'no-preference' });
+   if(t.args.motion === 'reduced') await t.check('Reduced Motion is applied',await f.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches));
    await openAt(t,f,'ai');
    await wording(t,f,mode);
    const row = '[data-key="pv-cursor"] ';
