@@ -13,9 +13,9 @@ export default async function(t) {
  for(const look of (t.args.look?String(t.args.look).split(','):LOOKS)) {
   await t.page.mouse.move(2,2);
   await f.evaluate(([fam,mode])=>O55.ui.applyLook(fam,mode),look.split('-'));await f.waitForTimeout(1600);
-  await f.evaluate(()=>{document.documentElement.setAttribute('data-motion','full');O55.ui.go('safe',{noHistory:true});});await f.waitForTimeout(1800);
-  for(const kind of ['primary','secondary']) {
-   const sel=`#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-btn.o55-${kind}:not([aria-disabled="true"])`,c=f.locator(sel).first();
+  await f.evaluate(segment=>{document.documentElement.setAttribute('data-motion','full');O55.ui.go(segment?'look':'safe',{noHistory:true});},!!t.args.segment);await f.waitForTimeout(1800);
+  for(const kind of (t.args.segment?['segment']:['primary','secondary'])) {
+   const sel=kind==='segment'?'#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-seg button[aria-checked="false"]':`#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-btn.o55-${kind}:not([aria-disabled="true"])`,c=f.locator(sel).first();
    await t.check(`${look} ${kind} enabled face exists`,await c.count()>0);
    if(!await c.count())continue;
    await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);await f.waitForTimeout(500);
