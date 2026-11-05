@@ -22,10 +22,28 @@
 // requestIdleCallback, as owners did before PM_BUSY.idle, has the owner's function as its native callback.)
 // --set repeats=N (a positive integer, default 1) is the number of holds per look, and the run must complete exactly
 // that many real held drags.
+//
+// The work itself (SW-17 redesign, 2026-11-05). Everything above watches the dispatch path, and every queue it watched had
+// another queue next to it (a timer, a MessageChannel, a frame callback, the owner calling its own function again). So the
+// judge of "owner work ran inside the drag" is the work, not the queue:
+//   source witness: each owner's work entry points (WORK below: the bodies it hands the admission and the functions only
+//     those bodies reach) are found in the built page by their own text and armed as DevTools breakpoints by script URL,
+//     line and column, in the frame the app runs in (the sandbox's own target too). A breakpoint's condition records the
+//     hit into a sealed recorder and returns false, so the page never pauses. Any execution of that code, from any queue,
+//     any caller, any reference, is a hit; where the hit happened (the native idle job running, if any, and its first
+//     frames inside a drag) is kept only to say how it got there.
+//   effect witness: the writes an owner's work makes that nothing else makes, seen by a MutationObserver installed before
+//     the page's scripts (the look covers' data-ready, data-warm being set, data-fx, style and cover creation; the Usage
+//     board's first-drag pre-warm host).
+// Each owner must show no work inside the held gesture by either witness, in every look; each required owner's work must be
+// seen by the source witness after release (the probes are live, and the deferred work did run), and the covers' writes
+// must be seen by the effect witness outside the drag. The dispatch recorder above stays for what it alone can say: the
+// owner's job was pending at the press, the scheduler withheld its native delivery and resumed that same job after release,
+// and the extra PM_BUSY.idle jobs that have no work sites here.
 
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { mutations } from '../helpers/idle-drag-negatives.mjs';
+import { mutations, dispatching } from '../helpers/idle-drag-negatives.mjs';
 
 const HOLD_MS = 3000;
 
@@ -40,20 +58,103 @@ const EXTRA = { key: 'busy', name: 'other PM_BUSY.idle jobs' };
 const nameOf = (key) => (OWNERS.find((o) => o.key === key) || (key === EXTRA.key ? EXTRA : null))?.name || key;
 const needed = (look) => OWNERS.filter((o) => !o.glassOnly || /^glass-/.test(look));
 
-// Line ranges (1-based, as a stack prints them) of each owner's source in the page under test
-async function regionsOf(t) {
+// Each owner's work, read from its source: the bodies it hands PM_BUSY.idle and the work functions only those bodies reach.
+// A site is its own text (anchor, unique inside the owner's source in the page under test) and the statement in it that
+// is armed (at). when: a local the breakpoint's condition reads in the paused frame, for code shared with a path that is
+// not idle work (the board's build slices run per frame for an arrival, in idle time only for the warm build).
+// Not sites, because a held drag legitimately runs them on another path: Usage's tierPass, buildLater and lateHeld (room
+// build timers, the resize pass), the hover census's bind/prepare (hover and title changes), Glass's lensFilterFor (a lens
+// shown at a new size), and the covers' paint() on a pick (no pick happens in this check).
+const WORK = {
+	theme: [
+		{ key: 'paintSoon idle body', anchor: 'painting = false;\n      if (!document.body) return;', at: 'painting' },
+		{ key: 'warm-second idle body', anchor: "whenIdle(() => { if (phase === 'idle') warm(second); });", at: 'if (phase' },
+		{ key: 'paint()', anchor: 'const v = veilFor(mode);\n    try {', at: 'const v' },
+		{ key: 'warm() past its guard', anchor: 'v.__warm = v.__key;', at: 'v.__warm' }
+	],
+	usage: [
+		{ key: 'lateNext idle body', anchor: 'function lateNext(fn) { idleStill(function () { fn(); }', at: 'fn(); }' },
+		{ key: 'late bodies job', anchor: 'lateNext(function () { lateHeld && lateHeld(false); })', at: 'lateHeld &&' },
+		{ key: 'late room bodies job', anchor: 'lateNext(function () { buildLater(false); })', at: 'buildLater(false); }' },
+		{ key: 'warm build slice', anchor: 'function slice(deadline) {\n        if (token !== buildToken) return;', at: 'if (token', when: 'warm' },
+		{ key: 'prewarm()', anchor: 'function prewarm() {\n      var key = prewarmKey();', at: 'var key' },
+		{ key: 'holdPass past its drag guard', anchor: 'if (FILM && FILM.warming && FILM.warming()) return;   /* a warm board holds at its arrival (holdSoon) */', at: 'if (FILM' },
+		{ key: 'holdPass idle step', anchor: 'var step = function () {\n        if (dead || current.room !== room) { wait.cancel(); return; }', at: 'if (dead' }
+	],
+	census: [
+		{ key: 'census idle body', anchor: 'token.h=B.idle(function(deadline){token.h=null;censusRun(token,deadline);}', at: 'token.h=null;' },
+		{ key: 'censusRun past its drag guard', anchor: 'censusDeadline=deadline||null;try{token.fn();}', at: 'censusDeadline' },
+		{ key: 'beginScan', anchor: 'this.ensureRoot();this.syncVisualSetting();this.preparedByElement=new WeakMap();\n    this.scanStartedAt', at: 'this.ensureRoot' },
+		{ key: 'processScanBatch', anchor: 'HoverTagController.prototype.processScanBatch=function(){\n    if(!this.scanning)return;', at: 'if(!this.scanning)' },
+		{ key: 'beginLive', anchor: 'HoverTagController.prototype.beginLive=function(){\n    var self=this;', at: 'var self' },
+		{ key: 'processLiveBatch', anchor: 'HoverTagController.prototype.processLiveBatch=function(){\n    if(!this.liveRunning)return;', at: 'if(!this.liveRunning)' }
+	],
+	glass: [
+		{ key: 'prewarm idle body', anchor: 'var run = function () {\n      prewarmIdle = 0; var q = Array.from(prewarmQ); prewarmQ.clear();', at: 'prewarmIdle = 0' },
+		{ key: 'prewarm()', anchor: 'function prewarm(L, cfg, strip) {\n    if (!gpu() || !isGlass() || cfg.under) return;', at: 'if (!gpu()' }
+	]
+};
+// owners whose work makes writes nothing else makes in this check (the effect witness's classifier is in RECORDER)
+const EFFECTS = { theme: 'cover writes (data-ready, data-warm set, data-fx, style, a cover made)', usage: 'first-drag pre-warm host made' };
+
+async function pageText(t) {
 	const url = t.cfg.pageUrl;
-	const src = /^https?:/i.test(url) ? await (await fetch(url)).text() : fs.readFileSync(fileURLToPath(new URL(url)), 'utf8');
-	const lineAt = (i) => { let n = 1; for (let k = src.indexOf('\n'); k !== -1 && k < i; k = src.indexOf('\n', k + 1)) n++; return n; };
-	const region = (marker) => {
+	return /^https?:/i.test(url) ? await (await fetch(url)).text() : fs.readFileSync(fileURLToPath(new URL(url)), 'utf8');
+}
+
+// Line ranges (1-based, as a stack prints them) of each owner's source in the page under test, and its work sites (0-based
+// line and column in the page document, as DevTools addresses an inline script)
+async function regionsOf(t) {
+	const src = await pageText(t);
+	const nl = []; for (let k = src.indexOf('\n'); k !== -1; k = src.indexOf('\n', k + 1)) nl.push(k);
+	const line0 = (i) => { let lo = 0, hi = nl.length; while (lo < hi) { const m = (lo + hi) >> 1; if (nl[m] < i) lo = m + 1; else hi = m; } return lo; };
+	const lineAt = (i) => line0(i) + 1;
+	const colAt = (i) => { const l = line0(i); return i - (l ? nl[l - 1] + 1 : 0); };
+	const span = (marker) => {
 		const i = src.indexOf(marker);
 		if (i < 0 || src.indexOf(marker, i + 1) >= 0) return null;   // missing or ambiguous: the owner can't be told apart
 		const after = i + marker.length;
 		const ends = [src.indexOf('\n/* ---- ', after), src.indexOf('</script>', after)].filter((k) => k >= 0);
-		return [lineAt(i), lineAt(Math.min(...ends))];
+		return [i, Math.min(...ends)];
 	};
+	const region = (marker) => { const s = span(marker); return s && [lineAt(s[0]), lineAt(s[1])]; };
 	const owners = OWNERS.map((o) => ({ key: o.key, fn: o.fn || null, r: region(o.start) }));
-	return { owners, admission: region(ADMISSION) };
+	const sites = [];
+	for (const o of OWNERS) {
+		const s = span(o.start), text = s ? src.slice(s[0], s[1]) : '';
+		for (const w of WORK[o.key]) {
+			const n = s ? text.split(w.anchor).length - 1 : 0, off = w.anchor.indexOf(w.at);
+			const site = { owner: o.key, key: w.key, n, when: w.when || null };
+			if (n === 1) {
+				const at = s[0] + text.indexOf(w.anchor) + off, eol = w.anchor.indexOf('\n', off);
+				Object.assign(site, { line: line0(at), col: colAt(at), colEnd: colAt(at) + (eol < 0 ? w.anchor.length : eol) - off });
+			}
+			sites.push(site);
+		}
+	}
+	// the app document's scripts, whatever cache-buster or query a load adds
+	const base = t.cfg.pageUrl.replace(/[?#].*$/, '');
+	const urlRegex = '^' + base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?:[?#].*)?$';
+	return { owners, admission: region(ADMISSION), sites, urlRegex };
+}
+
+// The source witness for one load: a DevTools session on the frame the app runs in (the sandbox iframe is its own target
+// when the browser isolates it; otherwise the page's), with one never-pausing breakpoint per work site
+const probeCondition = (s) => `${s.when ? `(typeof ${s.when}==='undefined'||!!${s.when})&&` : ''}!!globalThis.__pmIdleWork&&globalThis.__pmIdleWork.hit(${JSON.stringify(s.owner)},${JSON.stringify(s.key)})`;
+const armedAt = (a) => a.locations.length > 0 && a.locations.every((l) => l.lineNumber === a.line && l.columnNumber >= a.col && l.columnNumber <= a.colEnd);
+async function armWork(t, f, map) {
+	let session, scope = 'frame';
+	try { session = await t.page.context().newCDPSession(f); } catch (_) { session = await t.page.context().newCDPSession(t.page); scope = 'page'; }
+	const probe = { session, scope, paused: [], armed: [] };
+	// a condition never pauses; should anything pause the page while these probes are on, it goes on at once and is reported
+	session.on('Debugger.paused', (ev) => { probe.paused.push(ev.reason); session.send('Debugger.resume').catch(() => {}); });
+	await session.send('Debugger.enable');
+	for (const s of map.sites) {
+		if (s.n !== 1) { probe.armed.push({ ...s, locations: [] }); continue; }
+		const r = await session.send('Debugger.setBreakpointByUrl', { urlRegex: map.urlRegex, lineNumber: s.line, columnNumber: s.col, condition: probeCondition(s) }).catch((e) => ({ locations: [], error: String(e.message || e) }));
+		probe.armed.push({ ...s, locations: r.locations || [], error: r.error || null });
+	}
+	return probe;
 }
 
 // installed before the page's own scripts, in every frame (the sandbox's too)
@@ -66,6 +167,37 @@ const RECORDER = (cfg) => {
 	const ric = window.requestIdleCallback, cic = window.cancelIdleCallback, st = window.setTimeout;
 	const stackOf = () => { const n = Error.stackTraceLimit; Error.stackTraceLimit = 30; const s = new Error().stack || ''; Error.stackTraceLimit = n; return s; };
 	const frames = (s) => s.split('\n').slice(1).map((l) => { const m = /^\s*at (?:(.+?) \()?(.+?):(\d+):(\d+)\)?\s*$/.exec(l); return m ? { fn: m[1] || '', url: m[2], line: +m[3] } : null; }).filter((f) => f && f.url !== '<anonymous>');
+	// The work witnesses' recorder, sealed before any page script runs: the page can neither replace nor read through it, and
+	// the clock and drag test it uses are the platform's own, taken now
+	const now = performance.now.bind(performance), has = DOMTokenList.prototype.contains;
+	const bodyOf = Object.getOwnPropertyDescriptor(Document.prototype, 'body').get, classesOf = Object.getOwnPropertyDescriptor(Element.prototype, 'classList').get;
+	const held = () => { const b = bodyOf.call(document); if (!b) return false; const cl = classesOf.call(b); for (const c of DRAG) if (has.call(cl, c)) return true; return false; };
+	const hits = [], effects = [];
+	const where = () => frames(stackOf()).filter((f) => f.fn !== 'eval' && !/playwright|__puppeteer|pptr:/.test(f.url)).slice(0, 4).map((f) => `${f.fn || '(anonymous)'}:${f.line}`).join(' < ');
+	Object.defineProperty(window, '__pmIdleWork', { configurable: false, enumerable: false, writable: false, value: Object.freeze({
+		// a work site ran (from a breakpoint condition): which owner, which site, when, inside a drag or not, the native idle job
+		// running at the time (0: none, another queue carried it) and, inside a drag, the first frames that got it there
+		hit(owner, site) { try { const drag = held(); hits.push({ owner, site, at: now(), drag, job: R.job ? R.job.id : 0, from: drag ? where() : '' }); } catch (_) { /* never in the page's way */ } return false; },
+		read() { return { hits: hits.map((h) => Object.assign({}, h)), effects: effects.map((e) => Object.assign({}, e)) }; }
+	}) });
+	// effect witness: delivered at the end of the task that wrote, so its time and drag state are that task's
+	const fx = (owner, effect) => effects.push({ owner, effect, at: now(), drag: held() });
+	const isVeil = (n) => n && n.nodeType === 1 && has.call(classesOf.call(n), 'pm-look-veil');
+	const veilStyle = new MutationObserver((rs) => { for (let k = 0; k < rs.length; k++) fx('theme', 'cover style'); });
+	new MutationObserver((rs) => {
+		for (const r of rs) {
+			if (r.type === 'childList') {
+				for (const n of r.addedNodes) {
+					if (isVeil(n)) { fx('theme', 'cover made'); veilStyle.observe(n, { attributes: true, attributeFilter: ['style'] }); }
+					else if (n.nodeType === 1 && n.hasAttribute('data-pmu-prewarm')) fx('usage', 'pre-warm host made');
+				}
+			} else if (isVeil(r.target)) {
+				// data-warm going away ends a warm that began earlier; only its start is the work
+				if (r.attributeName === 'data-warm' && r.oldValue !== null) continue;
+				fx('theme', 'cover ' + r.attributeName);
+			}
+		}
+	}).observe(document, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['data-ready', 'data-warm', 'data-fx'] });
 	const inR = (r, line) => !!r && line >= r[0] && line <= r[1];
 	const admitting = (f) => inR(cfg.admission, f.line) && /(?:^|\.)(?:ask|idleWhenStill)$/.test(f.fn.replace(/ \[as \w+\]$/, ''));
 	// the owner of a request: the first page frame that asked, past the shared admission's own frames
@@ -191,6 +323,7 @@ async function holdDrag(t, f, sel, label, keys) {
 	if (!(await t.check(`${label}: the press lands on the divider`, box.hit === 'the divider', `under the pointer: ${box.hit}`))) return null;
 	const axisX = box.h >= box.w;   // a tall bar moves sideways
 	const at = (d) => (axisX ? [box.x + d, box.y] : [box.x, box.y + d]);
+	const pressAt = await f.evaluate(() => performance.now());   // the work witnesses judge the whole gesture, press to release
 	await t.page.mouse.down();
 	for (let i = 1; i <= 8; i++) { await t.page.mouse.move(...at(-i * 4)); await t.page.waitForTimeout(16); }
 	const began = await f.evaluate(() => performance.now());
@@ -205,7 +338,27 @@ async function holdDrag(t, f, sel, label, keys) {
 	const offered = await t.check(`${label}: native idle delivery was eligible during hold`, await f.evaluate(() => !!window.__pmIdleRec.opportunity?.drag), 'independent native deadline inside the real held gesture');
 	await t.mark(label + ' released');
 	await t.page.mouse.up();
-	return { began, ended, queued, held: !!(dragOn && remained && offered) };
+	const releasedAt = await f.evaluate(() => performance.now());
+	return { began, ended, pressAt, releasedAt, queued, held: !!(dragOn && remained && offered) };
+}
+
+// The work witnesses, for one hold. Inside: anything during the whole held gesture (press to release) with the drag on as
+// it ran, and anything at all between the held drag's first and last measured moments (the drag is on throughout there,
+// so the drag test can't be dodged by taking the class off for a moment). That contains the dispatch judge's window.
+const inHold = (win) => (h) => (h.drag && h.at >= win.pressAt && h.at <= win.releasedAt) || (h.at >= win.began && h.at <= win.ended);
+const whereFrom = (hs) => [...new Set(hs.map((h) => `${h.site} (${h.job ? 'native idle job ' + h.job : 'no native idle job'}${h.from ? '; ' + h.from : ''})`))].slice(0, 4).join(' | ');
+async function witnessWork(t, f, label, win, probe) {
+	const { hits, effects } = await f.evaluate(() => window.__pmIdleWork.read());
+	const inside = inHold(win);
+	const summary = OWNERS.map((o) => { const mine = hits.filter((h) => h.owner === o.key); return `${o.key} ${mine.filter((h) => h.at < win.pressAt).length}/${mine.filter(inside).length}/${mine.filter((h) => h.at > win.releasedAt).length}`; }).join(', ');
+	t.log(`${label}: work site hits before / inside / after the hold so far: ${summary}; effects inside ${effects.filter(inside).length}`);
+	for (const o of OWNERS) {
+		const mine = hits.filter((h) => h.owner === o.key && inside(h));
+		await t.check(`${label}: no ${o.name} work executed inside the drag (source witness)`, mine.length === 0, mine.length ? `${mine.length} work site hits: ${whereFrom(mine)}` : `0 hits at ${probe.armed.filter((a) => a.owner === o.key).length} sites`);
+		if (!EFFECTS[o.key]) continue;
+		const wrote = effects.filter((e) => e.owner === o.key && inside(e));
+		await t.check(`${label}: no ${o.name} work effect inside the drag (effect witness)`, wrote.length === 0, wrote.length ? `${wrote.length}: ${[...new Set(wrote.map((e) => e.effect))].join(', ')}` : '0');
+	}
 }
 
 async function judge(t, f, label, win, owners) {
@@ -252,6 +405,10 @@ export const tests = {
 		for (const o of OWNERS) await t.check(`${o.name}: its source is found once in the page`, !!map.owners.find((m) => m.key === o.key).r, `marker ${o.start}`);
 		await t.check('shared admission (11-motion-start.js) source is found once in the page', !!map.admission, ADMISSION);
 		t.log('owner source lines ' + JSON.stringify(Object.fromEntries(map.owners.map((m) => [m.key, m.r]))) + ' admission ' + JSON.stringify(map.admission));
+		for (const o of OWNERS) {
+			const lost = map.sites.filter((s) => s.owner === o.key && s.n !== 1);
+			await t.check(`${o.name}: each work site is found once in its source`, lost.length === 0, lost.length ? lost.map((s) => `${s.key}: ${s.n} times`).join('; ') : map.sites.filter((s) => s.owner === o.key).map((s) => `${s.key} ${s.line + 1}:${s.col + 1}`).join('; '));
+		}
 		const cdp = await t.page.context().newCDPSession(t.page);
 		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
 		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
@@ -264,6 +421,12 @@ export const tests = {
 		const f = await t.app.open({ settleMs: 200 });
 		await t.check('recorder installed in the app frame', await f.evaluate(() => !!window.__pmIdleRec), '');
 		await t.check('owner callback witness installed on PM_BUSY.idle in the app frame', await f.evaluate(() => !!(window.__pmIdleRec && window.__pmIdleRec.hooked && window.PM_BUSY && typeof PM_BUSY.idle === 'function')), '');
+		await t.check('work recorder sealed in the app frame', await f.evaluate(() => { const d = Object.getOwnPropertyDescriptor(window, '__pmIdleWork'); return !!d && !d.configurable && !d.writable && Object.isFrozen(d.value); }), '');
+		const probe = await armWork(t, f, map);
+		for (const o of OWNERS) {
+			const mine = probe.armed.filter((a) => a.owner === o.key), off = mine.filter((a) => !armedAt(a));
+			await t.check(`${look}: ${o.name}: every work site armed in the app frame`, mine.length > 0 && off.length === 0, off.length ? off.map((a) => `${a.key}: ${a.error || JSON.stringify(a.locations)} (wanted ${a.line}:${a.col}-${a.colEnd})`).join('; ') : `${mine.length} sites, ${probe.scope} session`);
+		}
 		await t.app.resetLayout();
 		await t.app.look(look);
 		// Keep real boot jobs queued even on fast hosts. Usage starts its own warm slices; no synthetic owner callback or
@@ -297,6 +460,12 @@ export const tests = {
 				await t.check(`${look}: ${o.name} has a real idle job pending at the press`, mine.length > 0, mine.length ? brief(mine) : `none; pending ${brief(usage.queued)}`);
 			}
 			await judge(t, f, `${look} Usage`, usage, owners);
+			await witnessWork(t, f, `${look} Usage`, usage, probe);
+			if (dispatching.has(selftest)) {
+				const sent = await f.evaluate((w) => (window.__reviewDispatch || []).concat(window.__reviewLeaks || []).filter((e) => e.drag && e.at >= w.pressAt && e.at <= w.releasedAt).map((e) => e.path || 'park/timer'), usage);
+				t.log(`SELFTEST ${look}: the mutation dispatched owner work inside the held drag through ${sent.join(', ') || 'nothing'}`);
+				await t.check(`selftest ${selftest} ${look}: the mutated path dispatched owner work inside the held drag`, sent.length > 0, sent.join(', ') || '0');
+			}
 			await t.page.waitForTimeout(6000);
 			const { fired, bodies } = await f.evaluate(() => ({ fired: window.__pmIdleRec.fired, bodies: window.__pmIdleRec.bodies }));
 			const during = (j) => fired.filter((c) => c.id === j.id && c.at >= usage.began && c.at <= usage.ended + 50);
@@ -317,7 +486,19 @@ export const tests = {
 				await t.check(`${look}: job ${j.id} (${EXTRA.name}): same queued job resumes after release`, after(j), top(j.stack));
 				await t.check(`${look}: job ${j.id} (${EXTRA.name}): its own callback runs after release`, work(j), top(j.stack));
 			}
+			// the work witnesses are live in this load: each required owner's deferred work is seen at its own sites after
+			// release, and the covers' writes are seen outside the drag
+			const { hits, effects } = await f.evaluate(() => window.__pmIdleWork.read());
+			const inside = inHold(usage);
+			for (const o of owners) {
+				const later = hits.filter((h) => h.owner === o.key && !h.drag && h.at > usage.releasedAt);
+				await t.check(`${look}: ${o.name} work runs after release (source witness live)`, later.length > 0, later.length ? `${later.length} hits: ${[...new Set(later.map((h) => h.site))].join(', ')}` : `no hit at ${probe.armed.filter((a) => a.owner === o.key).map((a) => a.key).join(', ')}`);
+			}
+			const covers = effects.filter((e) => e.owner === 'theme' && !inside(e));
+			await t.check(`${look}: the effect witness sees the look covers' writes outside the drag`, covers.length > 0, covers.length ? `${covers.length}: ${[...new Set(covers.map((e) => e.effect))].join(', ')}` : '0');
 		}
+		await t.check(`${look}: the work probes never paused the page`, probe.paused.length === 0, probe.paused.join(', ') || '0');
+		await probe.session.detach().catch(() => {});
 		}
 		}
 		for (const look of looks) await t.check(`${look}: ${repeats} real held drag${repeats > 1 ? 's' : ''} completed`, holds[look] === repeats, `${holds[look]} of ${repeats}`);
