@@ -33,7 +33,7 @@ export default async function(t) {
     await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility({opacityProperty:true,visibilityProperty:true})&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);window.__pressInventory.push({key,screen:O55.S.sess.screen,classes:e.className,action:e.getAttribute('data-o55-do'),label:e.textContent.trim(),width:e.getBoundingClientRect().width});e.setAttribute('data-press-test','');}}});});
     const sel=L+'button[data-press-test]'+(t.args.button?String(t.args.button):''),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
-    const misses=[],moved=[],scaled=[],covered=[];let presses=0;
+    const misses=[],moved=[],scaled=[],covered=[],undecorated=[];let presses=0;
     for(let i=0;i<count;i++) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
      const rest=await f.evaluate(async({sel,i})=>{
@@ -61,19 +61,21 @@ export default async function(t) {
       await f.waitForTimeout(hold);
       const drift=await f.evaluate(()=>({...window.__press.metrics}));
       const read=()=>f.evaluate(({sel,i})=>{const e=document.querySelectorAll(sel)[i],r=e.getBoundingClientRect(),kid=e.firstElementChild,ks=kid?getComputedStyle(kid):null;
-       return {x:r.x,y:r.y,w:r.width,h:r.height,transform:getComputedStyle(e).transform,active:e.matches(':active'),kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
+       return {x:r.x,y:r.y,w:r.width,h:r.height,transform:getComputedStyle(e).transform,active:e.matches(':active'),linkUnderline:!e.matches('.o55-link')||!kid||ks.textDecorationLine.includes('underline'),kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
       let h=await read();
       if(t.args.marks)await t.mark(`up ${trial}`);await t.page.mouse.up();presses++;
       const got=await f.evaluate(trial=>({c:window.__press.clicks.filter(x=>x.trial===trial),d:window.__press.downs.filter(x=>x.trial===trial)}),trial);
       if(!(got.d.length===1&&got.d[0].id===i&&got.c.length===1&&got.c[0].id===i))misses.push({trial,down:got.d.map(x=>x.id),click:got.c.map(x=>x.id),held:h.transform});
       if(drift.frames<2||drift.worst>.01||Math.abs(h.x-rest.x)>.01||Math.abs(h.y-rest.y)>.01||Math.abs(h.w-rest.w)>.01||Math.abs(h.h-rest.h)>.01)moved.push({trial,drift,rest,held:h});
       const contentScaled=(h.kidScale!=='none'&&h.kidScale!=='1')||/matrix\((?!1, 0, 0, 1,)/.test(h.kidTransform);
+      if(!h.linkUnderline)undecorated.push(trial);
       if(motion!=='no-preference'&&(contentScaled||h.transform!=='none'||!['none','0px','0px 0px'].includes(h.kidTranslate)))scaled.push({trial,transform:h.transform,kidScale:h.kidScale,kidTransform:h.kidTransform});
      }
     }
     await t.page.mouse.move(2,2);
     if(t.args.inventoryOut)await appendFile(String(t.args.inventoryOut)+'.trials.jsonl',JSON.stringify({look,motion,screen,count,presses,covered,misses,moved,scaled})+'\n');
     await t.check(`FO-73 press activates at every edge ${tag}`,!misses.length,`${count} representative button families,  ${presses} held presses (${covered.length} points occluded before press); misses ${JSON.stringify(misses.slice(0,6))}${misses.length>6?` (+${misses.length-6})`:''}`);
+    await t.check(`FO-73 link underline retained ${tag}`,!undecorated.length,JSON.stringify(undecorated));
     await t.check(`FO-73 pressed target stays at rest box ${tag}`,!moved.length,JSON.stringify(moved.slice(0,3)));
     if(motion!=='no-preference')await t.check(`FO-73 no press scale with Reduced Motion ${tag}`,!scaled.length,JSON.stringify(scaled.slice(0,3)));
     

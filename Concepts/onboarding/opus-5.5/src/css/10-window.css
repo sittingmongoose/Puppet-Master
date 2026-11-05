@@ -651,3 +651,7 @@ html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) 
    Keep the look's press transform on a separate CSS layer so both cues compose. */
 #pm-o55-onboarding .o55-segface { display: inline-flex; align-items: center; gap: inherit;
   translate: none; scale: none; transform: translate(var(--o55-button-x), var(--o55-button-y)) scale(var(--o55-button-s)); transition: transform 140ms ease; }
+
+/* An atomic inline content box does not receive propagated decorations. Keep the
+   link's native underline on its visual layer as well as its words. */
+#pm-o55-onboarding .o55-link > span { text-decoration: inherit; }
