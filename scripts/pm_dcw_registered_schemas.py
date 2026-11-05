@@ -37,7 +37,13 @@ def pointer(document, fragment):
             # Reject malformed RFC6901 escapes instead of selecting a different key.
             m.require(re.search(r'~(?![01])', token) is None, 'registered_schema_pointer')
             token = token.replace('~1', '/').replace('~0', '~')
-            value = value[int(token)] if isinstance(value, list) else value[token]
+            if isinstance(value, list):
+                # RFC6901 array indices have no sign or leading zeroes.
+                if re.fullmatch(r'0|[1-9][0-9]*', token) is None:
+                    raise ValueError('invalid array index')
+                value = value[int(token)]
+            else:
+                value = value[token]
         return value
     except (KeyError, IndexError, TypeError, ValueError) as exc:
         raise m.Refusal('registered_schema_pointer') from exc
@@ -125,7 +131,11 @@ def validate_registered(owner, event):
         m.require(ref['schema_id'] == expected_id, 'registered_schema_id')
         document = document_at(ref['path'])
         schema = pointer(document, ref['json_pointer'])
-    m.require(isinstance(schema, dict) and schema.get('$id') == expected_id, 'registered_schema_identity')
+    # Some registered non-root definitions (Goal application, Settings and chat
+    # approvals) carry their identity as a required payload schema_id constant.
+    # A present $id still must match; its mismatch cannot use the alternate form.
+    identity = schema.get('$id', schema.get('properties', {}).get('schema_id', {}).get('const')) if isinstance(schema, dict) else None
+    m.require(identity == expected_id, 'registered_schema_identity')
     try:
         Draft202012Validator.check_schema(document)
         registry = catalog(m.load).with_resource(document['$id'],

@@ -85,6 +85,24 @@ def audit(family):
                '$defs': {'run~/started': copy.deepcopy(document)}}
     variants = [('real_external_closure', {PATH: linked}, 'accept'),
                 ('exact_nonroot_pointer', {PATH: wrapped}, 'accept')]
+    identity_definition = copy.deepcopy(document)
+    identity_definition.pop('$id')
+    identity_definition['properties']['schema_id'] = {'const': document['$id']}
+    constant_wrapper = dict(wrapped, **{'$defs': {'run~/started': identity_definition}})
+    constant_registry = copy.deepcopy(registry)
+    next(f for f in constant_registry['families'] if f['event_type'] == 'run.started')['payload_schema_ref']['json_pointer'] = '#/$defs/run~0~1started'
+    constant_inputs = {PATH: constant_wrapper, REGISTRY: constant_registry}
+    variants.append(('const_identity_definition', constant_inputs, 'accept'))
+    changed = copy.deepcopy(constant_wrapper)
+    changed['$defs']['run~/started']['properties']['schema_id']['const'] = 'urn:pm:wrong-selected-constant'
+    variants.append(('const_identity_mismatch', {PATH: changed, REGISTRY: constant_registry}, 'registered_schema_identity'))
+    array_wrapper = {'$schema': document['$schema'], '$id': 'urn:pm:dcw:registered-array-pointer',
+                     'allOf': [copy.deepcopy(document)]}
+    for suffix, token, expected in (('exact', '0', 'accept'), ('signed', '-1', 'registered_schema_pointer'),
+                                    ('leading_zero', '00', 'registered_schema_pointer')):
+        changed = copy.deepcopy(registry)
+        next(f for f in changed['families'] if f['event_type'] == 'run.started')['payload_schema_ref']['json_pointer'] = '#/allOf/' + token
+        variants.append(('array_pointer_' + suffix, {PATH: array_wrapper, REGISTRY: changed}, expected))
     for name, field, bad, expected in (
         ('ref_schema_id', 'schema_id', 'urn:pm:wrong-reference-id', 'registered_schema_id'),
         ('ref_path', 'path', 'Plans/DCW_MISSING.schema.json', 'registered_schema_path'),
@@ -141,6 +159,11 @@ def audit(family):
                     if name == 'ref_pointer_syntax':
                         repaired = copy.deepcopy(replacements)
                         next(f for f in repaired[REGISTRY]['families'] if f['event_type'] == 'run.started')['payload_schema_ref']['json_pointer'] = '#/$defs/bad~02escape'
+                    elif name == 'const_identity_mismatch':
+                        repaired = constant_inputs
+                    elif name.startswith('array_pointer_'):
+                        repaired = copy.deepcopy(replacements)
+                        next(f for f in repaired[REGISTRY]['families'] if f['event_type'] == 'run.started')['payload_schema_ref']['json_pointer'] = '#/allOf/0'
                     m.load = lambda p: repaired[p] if p in repaired else original_load(p)
                     record('single_fact_repair_' + name, operation, outcome(value, operation), 'accept')
                     m.load = lambda p: inputs[p] if p in inputs else original_load(p)
