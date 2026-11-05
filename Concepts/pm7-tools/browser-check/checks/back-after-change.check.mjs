@@ -486,7 +486,7 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
     nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
-const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* NO_PICK only after completion: these owner screens replace their form with a success banner.
    Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm, token on online-signin. */
 const NO_PICK_DONE = (screen) => {
@@ -496,6 +496,8 @@ const NO_PICK_DONE = (screen) => {
     /* A finished sign-in similarly draws only its signed-in account banner, with no editable token. */
     || (screen === 'online-signin' && O55.S.sess.signin.state === 'done'));
 };
+/* nas-mounted only checks readability of the volume already chosen on nas-find. Its only other action is Back;
+   the volume alternatives are exercised on nas-find, so there is no independent pick or typed field here. */
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
    links: the restore source and place, the NAS device, method and folder, the service, the computer kind, the files
