@@ -178,18 +178,13 @@
   "lane_adoption": "PARTIAL: bounded three-family retained-history exercise; full adoption incomplete",
   "native_product_execution": "NOT_RUN",
   "owner_markdown_changed": false,
-  "real_memory_pauses": [
-    {
-      "resumed_available_gib": 9,
-      "seconds": 240.28493670199532
-    }
-  ],
+  "real_memory_pauses": false,
   "resources": {
-    "host": "ubuntu-agent-nas1",
-    "initial_available_gib": 15,
-    "initial_root_free_gb": 497,
-    "parallel_checker_jobs": 0,
-    "total_gib": 19
+    "host": "VM",
+    "initial_available_gib": 18,
+    "initial_root_free_gb": 110,
+    "total_gib": 38,
+    "max_parallel_checker_jobs": 1
   },
   "review_round_1": {
     "base_sha": "88f7a96a383b6cc8e2137e9a332729ce0956e10f",
@@ -708,8 +703,8 @@
   },
   "self_test": {
     "status": "PASS",
-    "caught": 141,
-    "traps": 141
+    "caught": 148,
+    "traps": 148
   },
   "source_edition": "round 4: live interpreter AST census, scalar comparison operands and conservative control ancestry",
   "status": "PARTIAL",
@@ -1428,5 +1423,205 @@
       "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/verification-manifest.json",
       "sha256": "3782fcc215df39d665ef241dd0dab69345805d9ba1345f2cbe7fe71cfd0beffd"
     }
+  },
+  "review_round_5": {
+    "base": "26bae8267d5e7f9fa2d92e448ff6056756528766",
+    "implementation_commit": "cfafa4f4ed471081bbf11f547903e94f95ea9a35",
+    "C5-B1": "fixed; every refusal kind uses shared controller/own-test composition and generic target-based cut execution",
+    "traps": {
+      "old": 141,
+      "new": 7,
+      "caught": 148,
+      "total": 148
+    },
+    "cross_product": {
+      "control_contexts": 14,
+      "controlling_forms": 3,
+      "credited_cuts": 48,
+      "credited_with_per_atom_cuts": 24,
+      "generated": 630,
+      "refusal_forms": 15,
+      "refusal_kinds": 6,
+      "status": "PASS",
+      "unclassified": 606
+    },
+    "census": {
+      "status": "PASS",
+      "node_classes": 82,
+      "cells": 410,
+      "totals": {
+        "fail_closed": 363,
+        "supported": 47
+      },
+      "errors": []
+    },
+    "gates": {
+      "original_census_injections": 3,
+      "uncovered_kind_or_context_injections": 2,
+      "aggregate_assert_cut_injection": "self-test FAIL; generated cross-product catches"
+    },
+    "cycle5": {
+      "counterexamples": 10,
+      "old_attempts": 20,
+      "adversarial": 29,
+      "supported_cells": 47,
+      "false_passes": 0,
+      "new_sources": 4,
+      "new_attempts": 8,
+      "reviewer_assertions": 435
+    },
+    "final_fix_assertions": 1551,
+    "plan_index": {
+      "exit_code": 1,
+      "top_level_status": "fail",
+      "inherited_failures": 28,
+      "all_named_inputs_unchanged": true
+    },
+    "protected_scope_unchanged": true,
+    "dg6b_rerun": false,
+    "ids_used": [],
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json",
+      "sha256": "ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b"
+    },
+    "checks": [
+      {
+        "tag": "self-test",
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm_guard_isolation.py",
+          "--self-test",
+          "--max-rss",
+          "1536",
+          "--pause-when-low",
+          "6",
+          "--resume-at",
+          "7",
+          "--json",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/self-test.json",
+          "--markdown",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/self-test.md"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix5",
+        "started": "2026-11-05T11:38:31.618086+00:00",
+        "seconds": 7.805,
+        "exit_code": 0,
+        "available_gib": 20.314868927001953,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/self-test.log",
+        "sha256": "fb4bdf578a791dd99d838b5fab7482829beacf60d9de3c13039f0973aa3412ed"
+      },
+      {
+        "tag": "syntax",
+        "command": [
+          "python3",
+          "-B",
+          "-c",
+          "from pathlib import Path; [compile(p.read_text(),str(p),\"exec\") for p in [Path(\"scripts/pm_guard_isolation.py\"),Path(\"scripts/pm_guard_isolation_traps.py\")]]"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix5",
+        "started": "2026-11-05T11:38:39.424883+00:00",
+        "seconds": 0.135,
+        "exit_code": 0,
+        "available_gib": 19.669464111328125,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/syntax.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tag": "example-adapter",
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm_guard_isolation.py",
+          "--adapter",
+          "scripts/pm_guard_isolation_traps.py:example_suite",
+          "--json",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/example-adapter.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix5",
+        "started": "2026-11-05T11:38:39.562424+00:00",
+        "seconds": 0.375,
+        "exit_code": 0,
+        "available_gib": 19.678333282470703,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/example-adapter.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tag": "tiny-rss-refuses",
+        "command": [
+          "python3",
+          "-B",
+          "scripts/pm_guard_isolation.py",
+          "--adapter",
+          "scripts/pm_guard_isolation_traps.py:example_suite",
+          "--max-rss",
+          "1",
+          "--json",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/tiny-rss.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix5",
+        "started": "2026-11-05T11:38:39.939867+00:00",
+        "seconds": 0.315,
+        "exit_code": 1,
+        "available_gib": 19.572509765625,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/tiny-rss-refuses.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "tag": "shards",
+        "command": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix5",
+        "started": "2026-11-05T11:38:40.258116+00:00",
+        "seconds": 21.097,
+        "exit_code": 0,
+        "available_gib": 19.729751586914062,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/shards.log",
+        "sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc"
+      },
+      {
+        "tag": "plan-index",
+        "command": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix5",
+        "started": "2026-11-05T11:39:01.357831+00:00",
+        "seconds": 42.028,
+        "exit_code": 1,
+        "available_gib": 19.615917205810547,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/plan-index.log",
+        "sha256": "02ab79ac04108a692b16df48e9324ece6e34ff6f8a0ff8ad2eac8d215940fad9",
+        "top_level_status": "fail",
+        "report_keys": [
+          "failures",
+          "generated_at_utc",
+          "schema_id",
+          "status",
+          "summary"
+        ]
+      },
+      {
+        "tag": "whitespace",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/guardtool-fix5",
+        "started": "2026-11-05T11:39:43.392055+00:00",
+        "seconds": 0.032,
+        "exit_code": 0,
+        "available_gib": 19.798721313476562,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/whitespace.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
   }
 }

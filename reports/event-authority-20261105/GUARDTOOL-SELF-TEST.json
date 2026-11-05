@@ -1,12 +1,11 @@
 {
   "status": "PASS",
-  "caught": 141,
-  "trap_count": 141,
-  "old": 124,
-  "new": 17,
-  "implementation_commit": "6998371fbe90d3f9ec32e98fdaccb7423966a615",
-  "core_fix_commit": "c34dddebc5b33465fa8b94c1ab5146137d51dc23",
-  "meaning": "Caught means the exact expected observation, often intentional FAIL/unproved; no complete lane proof.",
+  "caught": 148,
+  "trap_count": 148,
+  "old": 141,
+  "new": 7,
+  "implementation_commit": "cfafa4f4ed471081bbf11f547903e94f95ea9a35",
+  "meaning": "Bounded synthetic regressions and census-driven composition cross-product; unsupported source grammar remains unclassified.",
   "python_census": {
     "cells": 410,
     "errors": [],
@@ -20,11 +19,48 @@
       "accumulator_write"
     ],
     "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "refusal_kinds": {
+      "accumulator_write": [
+        "Call",
+        "accumulator_write"
+      ],
+      "assert": [
+        "Assert",
+        "refusal_value"
+      ],
+      "predicate_helper": [
+        "Call",
+        "refusal_value"
+      ],
+      "raise": [
+        "Raise",
+        "refusal_value"
+      ],
+      "refusal_helper": [
+        "Call",
+        "refusal_value"
+      ],
+      "return": [
+        "Return",
+        "refusal_value"
+      ]
+    },
     "status": "PASS",
     "totals": {
       "fail_closed": 363,
       "supported": 47
     }
+  },
+  "composition_cross_product": {
+    "control_contexts": 14,
+    "controlling_forms": 3,
+    "credited_cuts": 48,
+    "credited_with_per_atom_cuts": 24,
+    "generated": 630,
+    "refusal_forms": 15,
+    "refusal_kinds": 6,
+    "status": "PASS",
+    "unclassified": 606
   },
   "traps": [
     {
@@ -731,10 +767,45 @@
       "id": "C4-control-boundaries",
       "expected": "unsupported grammar refuses registration; supported scalar comparison controls retain their per-predicate grammar",
       "caught": true
+    },
+    {
+      "id": "C5-if-or-assert-False",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C5-if-or-assert-zero",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C5-if-not-and-assert-False",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C5-if-tuple-assert-False",
+      "expected": "single and truthful aggregate proofs FAIL/unproved; any available x-only cut retains held-out y; independent narrow cuts preserve peers",
+      "caught": true
+    },
+    {
+      "id": "C5-composition-cross-product",
+      "expected": "all census refusal kinds and controlling contexts through depth two; no credited cut admits both independent field defects",
+      "caught": true
+    },
+    {
+      "id": "C5-uncovered-kind",
+      "expected": "self-test fails before traps when new census support lacks generated composition coverage",
+      "caught": true
+    },
+    {
+      "id": "C5-uncovered-context",
+      "expected": "self-test fails before traps when new census support lacks generated composition coverage",
+      "caught": true
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/self-test.json",
-    "sha256": "7a0990f3e2fbb4342c37297c3c99ee35695d8e7de7dcb228b02ffadc79e73a6d"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json",
+    "sha256": "ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b"
   }
 }

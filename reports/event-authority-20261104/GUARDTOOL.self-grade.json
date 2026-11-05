@@ -12,12 +12,12 @@
       "grade": "PARTIAL"
     },
     {
-      "basis": "Only explicit per-predicate rules receive cuts. Structured comparisons, loops and unsupported nested/else controls now fail closed; symbolic scalar binding still requires review. No generic structured-value splitter.",
+      "basis": "Every refusal uses one controller/own-test composition function and one target-based transformer. Constant refusals never replace controlling atoms. All 48 credited cuts in the generated 630-cell matrix retain the held-out peer; 606 unsupported compositions remain unclassified.",
       "criterion": "predicate_cuts",
       "grade": "PARTIAL"
     },
     {
-      "basis": "Generated CPython 3.14.4 census: 82 classes x five positions, 47 conditional support cells and 363 fail closed. Live-class, missing-position and obsolete-name gates fail self-test. Structured operands and unsupported control ancestry cannot register; native/opaque/dataflow/loop work still needs seams.",
+      "basis": "82 live AST classes x five positions: 47 bounded support cells, 363 fail closed. Shared composition covers all six refusal kinds. Missing-kind/context coverage fails before traps; a broad assertion-cut injection fails the generated regression. Native/opaque/dataflow/nested control still requires explicit seams.",
       "criterion": "code_sites",
       "grade": "PARTIAL"
     },
@@ -42,7 +42,7 @@
       "grade": "PASS"
     },
     {
-      "basis": "141/141 observations: 124 existing plus 17 round-4 traps; all twelve reviewer sources have both held-out-peer and aggregate attempts and independent narrow witnesses. All unsupported registrations refuse.",
+      "basis": "148/148: all 141 unchanged existing traps, four exact C5-B1 sources with single/aggregate and independent witnesses, one generated 630-cell matrix and two new coverage gates. Sol\u2019s cycle-5 audit passes 435 assertions; final fix audit passes 1551.",
       "criterion": "corpus",
       "grade": "PASS"
     },
@@ -58,8 +58,8 @@
     }
   ],
   "evidence": {
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/verification-manifest.json",
-    "sha256": "3782fcc215df39d665ef241dd0dab69345805d9ba1345f2cbe7fe71cfd0beffd"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json",
+    "sha256": "ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b"
   },
   "families": [],
   "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
@@ -68,9 +68,10 @@
     "Only allow-listed single-predicate cuts receive automatic credit. Unsupported grammar remains unclassified/unproved.",
     "No general chain normalizer or regex/format clause splitter. Pattern-bearing lanes cannot claim complete adoption from this tool alone.",
     "Callback invocation, root-to-input occurrences, dynamic subjects, helper/source closure, refusal translation and alias/duplicate declarations require independent reviewer judgment.",
-    "Round-3 real exercise was bounded retained history: 21 selected guards, all three suites FAIL. It was not rerun at round-4 head; no current family grade or admission.",
-    "29 inherited plan-index findings under current origin/main remain; all named inputs match the pinned base. Shards pass. No owner/derived/governance changes.",
-    "Memory is sampled at fresh callback boundaries and resume, not hard allocation/child-process containment."
+    "Round-3 real exercise was bounded retained history: 21 selected guards, all three suites FAIL. It was not rerun at round-5 head; no current family grade or admission.",
+    "28 inherited plan-index findings under current origin/main remain; all named inputs match the pinned base. Shards pass. No owner/derived/governance changes.",
+    "Memory is sampled at fresh callback boundaries and resume, not hard allocation/child-process containment.",
+    "Two-deep/else paths, shared multi-statement controlling bodies, and controllers combined with nonconstant own tests remain unclassified; the cross-product exercises these boundaries without claiming support."
   ],
   "review_round_1": {
     "after": {
@@ -110,7 +111,7 @@
       "total": 86
     }
   },
-  "self_assessment": "PARTIAL overall. All 141 bounded traps pass; Sol completes all round-4 specimens without new false PASS after explicit scratch expectation updates. Unsupported grammar prevents complete adoption. Earlier DG6B observations were not rerun at this head.",
+  "self_assessment": "PARTIAL overall. All 148 traps pass, including a 630-cell refusal/control cross-product. Sol\u2019s cycle-5 sets complete with zero false PASS under documented scratch-only expectation updates. Unsupported compositions remain unclassified; no complete lane adoption or family grade.",
   "subject": "shared check-11 guard-isolation tool",
   "review_round_3": {
     "base_sha": "16bd9ccb0c52e557ef58b2b78b937308f1f28a03",
@@ -228,5 +229,69 @@
       "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/verification-manifest.json",
       "sha256": "3782fcc215df39d665ef241dd0dab69345805d9ba1345f2cbe7fe71cfd0beffd"
     }
+  },
+  "review_round_5": {
+    "base": "26bae8267d5e7f9fa2d92e448ff6056756528766",
+    "implementation_commit": "cfafa4f4ed471081bbf11f547903e94f95ea9a35",
+    "C5-B1": "fixed; every refusal kind uses shared controller/own-test composition and generic target-based cut execution",
+    "traps": {
+      "old": 141,
+      "new": 7,
+      "caught": 148,
+      "total": 148
+    },
+    "cross_product": {
+      "control_contexts": 14,
+      "controlling_forms": 3,
+      "credited_cuts": 48,
+      "credited_with_per_atom_cuts": 24,
+      "generated": 630,
+      "refusal_forms": 15,
+      "refusal_kinds": 6,
+      "status": "PASS",
+      "unclassified": 606
+    },
+    "census": {
+      "status": "PASS",
+      "node_classes": 82,
+      "cells": 410,
+      "totals": {
+        "fail_closed": 363,
+        "supported": 47
+      },
+      "errors": []
+    },
+    "gates": {
+      "original_census_injections": 3,
+      "uncovered_kind_or_context_injections": 2,
+      "aggregate_assert_cut_injection": "self-test FAIL; generated cross-product catches"
+    },
+    "cycle5": {
+      "counterexamples": 10,
+      "old_attempts": 20,
+      "adversarial": 29,
+      "supported_cells": 47,
+      "false_passes": 0,
+      "new_sources": 4,
+      "new_attempts": 8,
+      "reviewer_assertions": 435
+    },
+    "final_fix_assertions": 1551,
+    "plan_index": {
+      "exit_code": 1,
+      "top_level_status": "fail",
+      "inherited_failures": 28,
+      "all_named_inputs_unchanged": true
+    },
+    "protected_scope_unchanged": true,
+    "dg6b_rerun": false,
+    "ids_used": [],
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json",
+      "sha256": "ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b"
+    },
+    "before": "PARTIAL",
+    "after": "PARTIAL",
+    "families": []
   }
 }
