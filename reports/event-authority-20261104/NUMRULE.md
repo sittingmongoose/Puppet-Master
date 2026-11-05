@@ -506,3 +506,75 @@ Evidence is retained at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261
 | `scope-audit.json` | `8ee463372499fbe2f795824d78f1b31b34aa55cb3d6b9149ab0f0702c046e3a2` |
 | `index-validation.json` | `75d26fadb29558848e23d22217325525180f99ceb3b0233be0b25e53b497193c` |
 | `final-checks.json` | `d74150cf63210fd0fa394c94caf820933b4ec207ed0ff3d70bcf47eac313d2d6` |
+
+
+## Review round 9: findings and responses
+
+**NOT_READY: B3 is stopped for missing field-bound owner evidence.** This round repairs B1a, B1b and B2 independently. It does not claim that the round-9 integrity requirement or all former bypasses are closed.
+
+Reviewed base: `5e5c4cfe2ba2e90001c9f9e962ae1d6a1f68b4a3`. Branch: `plans/ea-numrule-20261105`. No owner prose, pinned schema, inventory node, number recipe or corpus case is changed. Families: N/A; membership remains ABSENT; no IDs are minted.
+
+| Finding | Location, cause and response | Verification |
+|---|---|---|
+| **B1a — fixed** | `scripts/pm_event_datetime.py:200` and `StorageSelection` in `scripts/pm_event_datetime_inventory.py:616`: retrieving fresh objects could erase a classified target. The factory now refuses every custom retrieval callback before invocation. All supplied resources, aliases and embedded resources are bound and pinned at construction. Known inventory URIs must carry an authenticated complete-resource fingerprint; duplicate URI conflicts refuse. Complete-resource verification before validation catches replacement/disappearance even when the new object declares no field. Unknown URI lookups and alternate root-schema overrides refuse. Neutral wrappers remain admitted and pinned. | Current/frozen fresh replacements, target disappearance and exact review replay; supported preloaded baselines remain valid. |
+| **B1b — fixed** | `scripts/pm_event_datetime.py:185`: the factory always selected 2020-12. Both initial construction and `evolve` now select the root/resource's declared supported dialect: 2020-12, 2019-09, draft-07 or draft-06. Other declarations refuse. Undeclared schemas default to 2020-12. | Direct/referenced root equivalence controls for ordinary, dynamic-anchor and recursive-anchor references, with current/frozen valid, offset and non-event cases. |
+| **B2 — fixed** | `scripts/pm_event_datetime_inventory.py:256`: unreadable wildcard candidates used a weaker literal-name test. File, Markdown code/HTML and JSON-shaped serialized-string failures now use declaration-aware detection. Exclusion eligibility is derived independently from source roots and references before any pin can suppress a scan. A schema with `$schema`/`$id`, or a file another schema references, cannot be excluded. Every exclusion retains a source citation and stated non-runtime data/lineage purpose. | The review's four wildcard containers fail; executable authentic/unclassified schema copies cannot be excluded. Anonymous referenced declaring and neutral fragments are self-test controls too. |
+| **B3 — stopped; not fixed or disputed** | `Plans/event_datetime_inventory.json` and `validate_inventory`: all 100 current other-owner rows lack a quote containing both their own field and profile. In particular, the 21 generic name maps cite schemas defining permission/tab/hash/settings/reference values; they do not name these spellings as timestamp fields or assign them `date-time`. The CV-1101 envelope sentence is about another field/resource. The brief forbids changing owner prose and says to stop when the needed quote is absent. No invented field/profile authority, label change or exception was added. | The coherent wrong-field mutation remains a known failure of the integrity claim. Its gate/runtime/self-test replay is retained explicitly; it is not reported as a successful negative control. |
+
+### Exact authority question for B3
+
+The controlling [NUMRULE-FIX9 brief](/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/NUMRULE-FIX9.md) says: "No owner prose changes: if evidence needs a quote the owner text lacks, stop and write the exact question."
+
+Which existing owner unit and exact quote bind `observed_at_utc` and `persisted_at_utc` to `owner_profile: "date-time"` for each of the 21 generic name-map rows, beginning with `Plans/section15_browser_program_contracts.schema.json#/$defs/browser_program/properties/result_schema_dependencies` and `Plans/storage_value_registry.json#/families/62/value_schema/properties/resolved_permissions`? Their existing owners define schema-hash and permission-record values, not timestamp values. If no such field/profile authority exists, should these rows retain their exact local non-timestamp schema without claiming a timestamp profile? The round-9 brief requires field-naming evidence, preserves these nodes and prohibits owner prose changes; a worker cannot manufacture that missing authority. The remaining scalar rows likewise need field/resource-bound citations rather than the current generic CV-1101 sentence.
+
+### Exclusion changes and preservation
+
+Removed three old exclusions because their paths are parsed schema roots: `Plans/goal_execution_binding_custody.schema.json`, `Plans/goal_workflow_cancel_contracts/schemas/late-assignment.schema.json`, and the frozen predecessor copy of the custody schema. They declare no timestamp node, so removing their exclusions does not change the census.
+
+Added four exact, cited lineage exclusions for generated `storage_value_registry` shard fragments 128, 165, 170 and 230. The stronger wildcard rule correctly flags their incomplete JSON code blocks. These are source-lineage slices of the canonical registry, not complete runtime resources; the canonical registry is still scanned. No shard or registry bytes were edited. There are now 163 container exclusions across 159 paths.
+
+The 233-node inventory remains byte-identical: 133 Storage, 100 other-owner, zero unclassified, including all 21 new name maps from round 8. Owner documents, pinned schemas, all 13,372 cases, production number recipes, registries, Decision Log, Spec Lock, generated shards/indexes, governance evidence and `.gitignore` remain unchanged. No governance reseal, registry admission, main push, pm-mail or subagent was used.
+
+### Validation and limits
+
+Results and implementation commit are recorded below after the serial replay. Evidence lives at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/`; its `SHA256SUMS` binds retained scripts, inputs and results. Runtime probe adapters record constructor refusals separately, since on-demand retrieval is now unsupported by design. The reviewed 98-file extraction is unchanged except for the implementation overlays, applicable exclusions, and the cited report file. Full-tree verification runs in the actual worktree; a finite extraction is never called the full Plans census.
+
+B3 prevents a READY grade even if the unmutated finite corpus passes. Native custody, complete adopting-lane dependency/reference audits and aggregate guard isolation remain outside this finite shared-helper repair.
+
+
+| Final check | Result |
+|---|---|
+| **Actual worktree self-test** | Exit **0**; **13,372/13,372 cases**, **162/162 integration checks**; 233 nodes = 133 Storage + 100 other-owner; zero unclassified. |
+| **Original runtime replay** | 133/133 preloaded baselines valid; **0/133 escaping preloaded nodes**. All **133/133 on-demand constructions refuse**, with zero callback invocations; this unsupported mode is no longer reported as a valid-baseline route. |
+| **Adversarial runtime / supplemental** | Both current/frozen changed callbacks refuse before invocation; direct and referenced 2019-09 recursion agree on valid/offset/non-event controls. Dynamic recursion and ordinary references preserve their controls. |
+| **Original gate replay** | All **20/20** injections exit **1**; all five original positive detection controls still detect. |
+| **Extended gate replay** | All **16/16** supported-form and container injections exit **1**, including **4/4** wildcard-only containers. |
+| **Exclusion replay** | Authentic schema copy, unclassified schema and canonical source exclusions all fail for `loadable_schema_exclusion_forbidden`. The authentic copy's runtime baseline still passes and its Storage offset negative still fails. |
+| **Coherent wrong-field profile mutation** | **Known B3 failure:** inventory validation returns no errors, runtime installation accepts, gate exits **0**, and actual scoped self-test exits **0** with all **13,372** cases. The pin is recomputed coherently; checksum staleness does not supply authority. This remains unclosed. |
+| **Shard body/path verification** | Exit **0**; no generated files changed. |
+| **Index validation** | Exit **1**, top-level **fail**, **84** failures: 21 inherited ledger-shape failures and 63 removed-unit comparisons against newer `origin/main`. The validator, canonical Plans and generated indexes are byte-identical to the requested base. No index PASS is claimed. The ignored currentness edition's 15 files were copied, hash-verified, and removed after this read-only check. |
+| **Diff / syntax / preservation** | `git diff --check` and changed-module compilation exit **0**. All protected Plans and number recipe/corpus bytes are unchanged. |
+
+The self-test's 24 additional controls relative to round 8 cover wildcard unreadable containers (including a malformed serialized schema), forbidden schema/reference exclusions, current/frozen fresh resource replacement and target disappearance, supported-dialect root equivalence, unsupported dialect/URI refusal and alternate root-schema refusal. The existing finite oracles remain intact; no complete per-predicate isolation or native installation claim is added.
+
+Replay execution used scratch copies under `/tmp/numrule-fix9-probes` and the review's 98 exact source inputs under `/tmp/numrule-fix9-replay`. Construction-refusal adapters preserve the raised typed reason and leave all timestamp/schema predicates unchanged. `phase1-implementation/` and the overlay manifests retain the exact modules for the scoped replay; the final actual-worktree self-test also covers the later malformed-string guard. Whole-tree confirmations use the Git-backed Path adapter with the final branch exclusions and exact Plans bytes; only I/O is adapted. The branch's static census is separately verified by the actual worktree self-test. Evidence scripts copied from review but not rerun do not imply a new result for those probes.
+
+No plan/governance generation or reseal was run. Overall grade: **NOT_READY (B3 authority question open)**. Family grades before/after: **N/A**. Native execution: **NOT_RUN**. Shared guard-isolation adoption: **SWEEP_PENDING**.
+
+
+**Implementation commit:** `f8b2d901beb804356ad3824e256af74aa9e29ad1` fixes B1a, B1b and B2. B3 is stopped, with the exact authority question above. The implementation and report are pushed to `plans/ea-numrule-20261105`.
+
+**Whole-tree wildcard confirmation:** `full_wildcard_gate.py` exits **1**, as required for the injected failing gate. The unmodified gate sees all **8,968 committed Plans blobs** plus four additions, preserves **233 classified nodes**, and reports **exactly four failures**, one `unreadable_mentioning_container` for each injected wildcard HTML/YAML/malformed-JSON file. There are no unrelated failures. The actual-worktree unmutated gate passed as part of the final self-test.
+
+Retained evidence paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/`:
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/final-selftest.json` | `60d0153ce1ad9d8e3639f169f93fea982a89dbc4f78a9e14a4e854bc4653af37` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/runtime-probes.json` | `a1f5eb0e8b16a7f85db64f18ca7116cbd342c4a8001181d2cd47e64d456ed69a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/runtime-adversarial.json` | `339c7ea0f2e7488743448e935750309a6d68782015302f9fa90fc75125adb9b3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/extended-gate-integrity.json` | `c2fdab66dbd0122f921fef4be3b8c018f78e3a9b07eec292a969a8ef42ef2c6c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/full-wildcard-gate.json` | `f2da42015099890f986084cf581af59f0cda224c972d165691da82d4f23735dc` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/coherent-integrity.json` | `46b69a7e26c80d20d8f4df45501946a3435252a74f6822c51f31db7c1993e916` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/index-validation.json` | `84f44442327bbf478d4e18642f75aa8eec8dbc1c7a8d61bc314a842b8893b08c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9/preservation.json` | `625fe7e08d64e7d2bc44141cfb1358f80b5c6cc73462a077cc1d66daec4d87de` |

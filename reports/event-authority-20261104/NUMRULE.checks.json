@@ -1,6 +1,6 @@
 {
-  "round": 5,
-  "implementation_commit": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
+  "round": 9,
+  "implementation_commit": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
   "scope": "Shared static helper, classified inventory and finite fixtures; native authority NOT_RUN. All checker processes ran sequentially with >=6 GiB available memory at preflight.",
   "commands": [
     {
@@ -636,5 +636,102 @@
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix8",
     "native_authority": "NOT_RUN",
     "guard_isolation": "SWEEP_PENDING"
+  },
+  "round9": {
+    "status": "NOT_READY_MISSING_B3_OWNER_QUOTE",
+    "B1a": "FIXED",
+    "B1b": "FIXED",
+    "B2": "FIXED",
+    "B3": "STOPPED_MISSING_OWNER_QUOTE",
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "passed": 13372,
+      "integration_checks": 162
+    },
+    "inventory": {
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 100,
+      "unclassified_nodes": 0,
+      "unchanged": true
+    },
+    "runtime": {
+      "eager_valid_baselines": 133,
+      "eager_escaping_nodes": 0,
+      "on_demand_constructor_refusals": 133,
+      "callback_invocations": 0
+    },
+    "gate_injections": {
+      "original": 20,
+      "original_refused": 20,
+      "extended": 16,
+      "extended_refused": 16,
+      "review_wildcard_containers": 4,
+      "review_wildcard_refused": 4
+    },
+    "coherent_wrong_field_mutation": {
+      "gate_exit": 0,
+      "runtime_inventory_installation": "accepted",
+      "selftest_exit": 0,
+      "case_passes": 13372,
+      "interpretation": "KNOWN_UNFIXED_B3"
+    },
+    "shards_exit": 0,
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9",
+    "index": {
+      "exit": 1,
+      "status": "fail",
+      "failures": 84,
+      "ledger_shape_failures": 21,
+      "newer_main_comparisons": 63,
+      "validator_and_plans_unchanged": true
+    },
+    "implementation_commit": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "whole_tree_wildcard": {
+      "exit": 1,
+      "expected_exit": 1,
+      "plan_blobs": 8968,
+      "classified_nodes": 233,
+      "injected_failures": 4,
+      "unrelated_failures": 0
+    },
+    "commands": [
+      {
+        "name": "final-selftest",
+        "command": [
+          "/tmp/numrule-fix9-venv/bin/python",
+          "scripts/pm_event_numbers.py",
+          "--self-test"
+        ],
+        "exit": 0,
+        "seconds": 298.43779407901457,
+        "available_memory_before": 20446531584
+      },
+      {
+        "name": "shards",
+        "command": [
+          "/tmp/numrule-fix9-venv/bin/python",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit": 0,
+        "seconds": 16.532378954987507,
+        "available_memory_before": 18848436224
+      },
+      {
+        "name": "index",
+        "command": [
+          "/tmp/numrule-fix9-venv/bin/python",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "exit": 1,
+        "seconds": 43.56791160299326,
+        "available_memory_before": 21697474560
+      }
+    ]
   }
 }

@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-NUMRULE-SHARED-FIX8-20261105",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX9-20261105",
   "assessment_kind": "author_shared_prerequisite_scope_assessment",
   "assessed_tree": {
     "branch": "plans/ea-numrule-20261105",
@@ -49,21 +49,21 @@
       "retained_profile_fixtures": "PASS",
       "lane_and_native_profile_integration": "NOT_RUN",
       "integration_status": "PARTIAL",
-      "reference_composition_oracles": "PASS",
+      "reference_composition_oracles": "PASS_FINITE_SUPPORTED_DIALECT_ROOT_EQUIVALENCE",
       "retained_envelope_composition_fixtures": "PASS",
       "embedded_v2_envelope_oracles": "PASS",
       "reviewed_embedded_schema_nodes": 13,
       "pinned_schema_bytes": "PRESERVED",
-      "classified_timestamp_inventory": "PASS",
+      "classified_timestamp_inventory": "STRUCTURAL_CENSUS_PASS_PROFILE_AUTHORITY_BLOCKED",
       "inventory_nodes": 233,
       "storage_classified_nodes": 133,
       "other_owner_nodes": 100,
       "unclassified_nodes": 0,
       "storage_resource_path_oracles": "PASS",
-      "completeness_gate": "PASS_WITHIN_STATED_UNIVERSE",
+      "completeness_gate": "STATIC_DISCOVERY_PASS_INTEGRITY_BLOCKED",
       "native_schema_custody": "NOT_RUN",
-      "runtime_resource_admission": "PASS_FINITE_PRELOADED_AND_LAZY_ROUTES",
-      "inventory_assertion_integrity": "PASS_FINITE_MUTATIONS",
+      "runtime_resource_admission": "PASS_FINITE_CLOSED_PRELOADED_GRAPH",
+      "inventory_assertion_integrity": "BLOCKED_MISSING_FIELD_BOUND_OWNER_EVIDENCE",
       "new_name_map_nodes": 21
     }
   ],
@@ -73,7 +73,7 @@
     "negatives": 6536,
     "labelled_negatives": 6536,
     "passed": 13372,
-    "owner_integration_checks": 138,
+    "owner_integration_checks": 162,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
@@ -89,7 +89,9 @@
     "round5_bounded_cut_rows": 12
   },
   "failed_premise_checks": [],
-  "owner_questions": [],
+  "owner_questions": [
+    "Which existing owner unit and exact quote bind the 21 generic name-map rows' observed_at_utc/persisted_at_utc spellings to owner_profile date-time? If none exists, should these rows retain their exact local non-timestamp schema without claiming a timestamp profile? See the round-9 report for the exact paths and full question."
+  ],
   "ids_used": [
     "CV-1100",
     "SP-1100",
@@ -101,10 +103,11 @@
     "Native original-owner custody/recipe installation and resource authentication",
     "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
     "Integration/governance work belongs to the lead, outside this drafting task",
-    "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8."
+    "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8.",
+    "Round 9 B3: field-bound owner-profile evidence missing; coherent wrong-field inventory mutation still passes gate, runtime installation and self-test. Overall NOT_READY."
   ],
-  "reviewed_head": "b1e66f69d0a0049d773f4535efbec8457fe46493",
-  "review_round": 8,
+  "reviewed_head": "5e5c4cfe2ba2e90001c9f9e962ae1d6a1f68b4a3",
+  "review_round": 9,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -115,7 +118,8 @@
     "CV-1101.enforced_format_oracles": "Astra PARTIAL -> bounded direct/reference/nested/retained composition oracles PASS; complete lane/native integration NOT_RUN",
     "CV-1101.embedded_v2_envelope_oracles": "cycle-4 B1 BLOCKED -> finite cases/probes PASS; native/lane integration NOT_RUN",
     "CV-1101.complete_storage_schema_boundary": "cycle-5 B1 BLOCKED -> complete classified inventory and finite current/frozen schema-path oracles PASS; native/lane installation NOT_RUN",
-    "CV-1101.round8": "Astra B1/B2/B3 BLOCKED -> stated-universe discovery, inventory integrity, and finite eager/lazy current/frozen routes PASS; complete lane/native integration NOT_RUN."
+    "CV-1101.round8": "Astra B1/B2/B3 BLOCKED -> stated-universe discovery, inventory integrity, and finite eager/lazy current/frozen routes PASS; complete lane/native integration NOT_RUN.",
+    "CV-1101.round9": "B1a/B1b/B2 finite controls PASS; B3 stopped under the no-owner-prose/missing-quote instruction. Overall NOT_READY; no family grades or new IDs."
   },
   "implementation_commit": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
   "round1_validation": {
@@ -155,7 +159,10 @@
     "B1_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
     "B2_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
     "B3_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
-    "dependency_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2"
+    "dependency_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "B1a_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "B1b_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "B2_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -358,5 +365,65 @@
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix8",
     "native_authority": "NOT_RUN",
     "guard_isolation": "SWEEP_PENDING"
+  },
+  "round9_validation": {
+    "status": "NOT_READY",
+    "B1a": "FIXED",
+    "B1b": "FIXED",
+    "B2": "FIXED",
+    "B3": "STOPPED_MISSING_OWNER_QUOTE",
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "passed": 13372,
+      "integration_checks": 162
+    },
+    "inventory": {
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 100,
+      "unclassified_nodes": 0,
+      "unchanged": true
+    },
+    "runtime": {
+      "eager_valid_baselines": 133,
+      "eager_escaping_nodes": 0,
+      "on_demand_constructor_refusals": 133,
+      "callback_invocations": 0
+    },
+    "gate_injections": {
+      "original": 20,
+      "original_refused": 20,
+      "extended": 16,
+      "extended_refused": 16,
+      "review_wildcard_containers": 4,
+      "review_wildcard_refused": 4
+    },
+    "coherent_wrong_field_mutation": {
+      "gate_exit": 0,
+      "runtime_inventory_installation": "accepted",
+      "selftest_exit": 0,
+      "case_passes": 13372,
+      "interpretation": "KNOWN_UNFIXED_B3"
+    },
+    "shards_exit": 0,
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9",
+    "index": {
+      "exit": 1,
+      "status": "fail",
+      "failures": 84,
+      "ledger_shape_failures": 21,
+      "newer_main_comparisons": 63,
+      "validator_and_plans_unchanged": true
+    },
+    "implementation_commit": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "whole_tree_wildcard": {
+      "exit": 1,
+      "expected_exit": 1,
+      "plan_blobs": 8968,
+      "classified_nodes": 233,
+      "injected_failures": 4,
+      "unrelated_failures": 0
+    }
   }
 }
