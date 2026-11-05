@@ -19,5 +19,6 @@ export default async function(t) {
     results.push(r); t.log(JSON.stringify(r));
     if(r.scroll-r.width>1) await t.shot('hidden-fit-'+i,'Activity overflow after Chat is revealed, native window');
   }
+  await t.shot('activity-visible-final','Activity strip after six hidden-render/reveal cycles');
   await t.check('activity fit survives hidden rendering',results.length===6&&results.every(r=>r.selected==='query'&&r.scroll-r.width<=1),JSON.stringify(results));
 }

@@ -97,18 +97,22 @@ export default async function (t) {
     if (t.args.selftest === 'blocked-query') {
       const debug = f.locator('.thread-row[data-id="debug"]').first();
       await debug.scrollIntoViewIfNeeded(); await debug.click();
-      await f.evaluate(() => window.addEventListener('click', e => {
+      const prerequisite=await f.evaluate(()=>({selected:PM56_DEMO.getState().selectedThread,
+        active:[...document.querySelectorAll('.thread-row.active')].map(e=>e.dataset.id)}));
+      await t.check('blocked-query starts on debug',prerequisite.selected==='debug' &&
+        prerequisite.active.length===1 && prerequisite.active[0]==='debug',JSON.stringify(prerequisite),{hard:true});
+      await f.evaluate(() => { window.__blockedQuery=0; window.addEventListener('click', e => {
         if (e.target.closest?.('.thread-row[data-id="query"]')) {
-          e.stopImmediatePropagation(); e.preventDefault();
+          window.__blockedQuery++; e.stopImmediatePropagation(); e.preventDefault();
         }
-      }, true));
+      }, true); });
     }
     for (const id of ids) {
       // The row itself carries data-id.
       const item = f.locator(`.thread-row[data-id=${JSON.stringify(id)}]`).first();
       await item.scrollIntoViewIfNeeded(); await item.click();
       const selection = await f.evaluate(() => ({
-        selected: PM56_DEMO.getState().selectedThread,
+        selected: PM56_DEMO.getState().selectedThread, blocked:window.__blockedQuery||0,
         active: [...document.querySelectorAll('.thread-row.active')].map(e => e.dataset.id)
       }));
       await t.check(`${w} ${id} requested thread selected`, selection.selected === id &&
