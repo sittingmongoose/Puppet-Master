@@ -7337,6 +7337,7 @@ canonical_text: History command wrappers cover focus Orchestrator History, switc
   ledger/raw records, include archived, and rebuild projection. Each command carries identity-native payload refs,
   current-project scope, currentness/authority state, stale-projection gating, and non-mutating immutable-history
   semantics.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the History command family is concrete in the History command rows; resume and retry of a historical run use the runtime recovery commands through allowed_action_ids.
 gui_related: true
 gui_classification_reason: Defines user-visible commands/actions for History rows and rebuild controls.
 depends_on:
@@ -7442,6 +7443,22 @@ preserved_exact_tokens:
 - until rebuild succeeds
 - currentness
 - authority
+- cmd.history.focus
+- cmd.history.switch_subview
+- cmd.history.set_include_archived
+- cmd.history.open_row
+- cmd.history.open_artifacts
+- cmd.history.open_evidence
+- cmd.history.compare_versions
+- cmd.history.duplicate_as_draft
+- cmd.history.reopen_in_wizard
+- cmd.history.send_forward
+- cmd.history.export_selected
+- cmd.history.export_bundle
+- cmd.history.export_filtered_view
+- cmd.history.clone_as_new_run
+- cmd.history.inspect_records
+- cmd.history.rebuild_projection
 negative_constraints:
 - Do not reduce historical runs to read-only summaries when the user needs action routes.
 - Do not omit evidence/artifact/Ledger pivots from historical run rows.
@@ -7493,6 +7510,7 @@ canonical_text: Vision bridge command wrappers cover explicit image source selec
   and manage remembered always-accept permission. Commands must show the selected source, avoid ambiguous screenshot
   auto-selection, preserve FileSafe and permission scope, and avoid presenting bridge-derived answers as if the
   non-vision model directly saw the image.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the Vision bridge command family is concrete in the Vision bridge command rows.
 gui_related: true
 gui_classification_reason: Defines inspect/rerun/copy/attach/manage-permission controls for user-visible image bridge
   artifacts.
@@ -7569,6 +7587,13 @@ preserved_exact_tokens:
 - tool id
 - sensitivity/redaction class
 - revocable/resettable
+- cmd.chat.vision_bridge.select_source
+- cmd.chat.vision_bridge.pick_recent_screenshot
+- cmd.chat.vision_bridge.inspect
+- cmd.chat.vision_bridge.rerun
+- cmd.chat.vision_bridge.copy_description
+- cmd.chat.vision_bridge.attach_result
+- cmd.chat.vision_bridge.manage_permission
 negative_constraints:
 - Do not hide bridge outputs inside opaque provider logs only.
 - Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.
@@ -7608,6 +7633,7 @@ canonical_text: Teach guided GUI commands include help-icon launch, /teach launc
   Amended 2026-11-05 under DL-333, following DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture
   and is not a Teacher launch; the Teacher keeps the help-icon launch and the intent-classified natural-language route
   of CS-053.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the Teacher guided GUI command family is concrete in the Teacher guided GUI command rows.
 gui_related: true
 gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
   and degraded action handling.
@@ -7729,6 +7755,15 @@ preserved_exact_tokens:
 - help entry missing
 - model fallback/clamp
 - user stops
+- cmd.teacher.open_from_help
+- cmd.teacher.continue_in_teacher
+- cmd.teacher.guide.open_route
+- cmd.teacher.guide.focus
+- cmd.teacher.guide.highlight
+- cmd.teacher.guide.scroll_to
+- cmd.teacher.guide.inspect
+- cmd.teacher.explain_current_ui
+- cmd.teacher.guide.do_it
 negative_constraints:
 - Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
 - Do not launch Teacher without preserving current surface context needed for useful help.
@@ -8818,8 +8853,8 @@ Common fields for every covered row:
 | `UCC-077` through `UCC-083` | Debug, web/slash dispatcher, web activity, reserved slash alias, and route-mapping command families: `Plans/Commands_System.md` CS-125 (`cmd.debug.*`) and `Plans/assistant-chat-design.md` ACD-639 (`cmd.chat.web.*`, `cmd.chat.stop`). | `thread_id`, `debug_session_id?`, `web_operation_id?`, `slash_command_id?`, `route_target?`, and `provider_route_ref?`; retired slash labels must normalize before dispatch. |
 | `UCC-084` through `UCC-088` | Memory, artifact side-panel, and search command families: `Plans/assistant-memory-subsystem.md` AMS-141 (memory), `Plans/Runtime_Artifacts_Panel.md` RAP-129 (artifacts) and `Plans/FinalGUISpec.md` F3-716 (search). | `memory_item_id?`, `artifact_id?`, `ledger_ref?`, `query_session_id?`, `replacement?`, and `index_scope?` as required by the concrete command. |
 | `UCC-089` through `UCC-095` | Runtime recovery command family: `Plans/Executor_Protocol.md` EP-236. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
-| `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families: `Plans/Goal_Runtime_System.md` GRS-218, `Plans/PRD_Builder.md` PRDB-024, `Plans/Planning_Wizard.md` PWIZ-109 and `Plans/Plan_To_Node_Compilation.md` PNC-037; UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
-| `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families: `Plans/FinalGUISpec.md` F3-717 (notifications and sounds), `Plans/Settings_System.md` SSYS-076 (`cmd.settings.open`) and `Plans/Containers_Registry_and_Unraid.md` CRAU-116 (Docker/Hosts, `cmd.docker.run`, `cmd.docker.container.open`); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
+| `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families: `Plans/Goal_Runtime_System.md` GRS-218, `Plans/PRD_Builder.md` PRDB-024, `Plans/Planning_Wizard.md` PWIZ-109 and `Plans/Plan_To_Node_Compilation.md` PNC-037, and `Plans/Orchestrator_Page.md` OP-049 (History); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
+| `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families: `Plans/FinalGUISpec.md` F3-717 (notifications and sounds), `Plans/Settings_System.md` SSYS-076 (`cmd.settings.open`), `Plans/Containers_Registry_and_Unraid.md` CRAU-116 (Docker/Hosts, `cmd.docker.run`, `cmd.docker.container.open`), `Plans/assistant-chat-design.md` ACD-640 (Vision bridge) and `Plans/FinalGUISpec.md` F3-718 (Teacher guided GUI); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
 | `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its fourteen `ui.onboarding.*` identifiers (`ui.onboarding.choose_look` added by DL-153) are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
 
 Compatibility-only and retired source tokens in these rows remain searchable lineage. They do not become command IDs unless the row's `command_id` rule maps them to a concrete active `cmd.*` value or an explicit `alias_of_command_id`; tokens expressly marked non-alias never normalize or dispatch.
@@ -9172,6 +9207,9 @@ command_payload_definition_map:
       PWIZ-109: Plans/Planning_Wizard.md
       PNC-037: Plans/Plan_To_Node_Compilation.md
       SSYS-076: Plans/Settings_System.md
+      OP-049: Plans/Orchestrator_Page.md
+      ACD-640: Plans/assistant-chat-design.md
+      F3-718: Plans/FinalGUISpec.md
     routes:
     - row_group: UCC-049..UCC-053
       namespace: docker
@@ -9236,6 +9274,15 @@ command_payload_definition_map:
     - row_group: UCC-101..UCC-105
       namespace: docker
       unit: CRAU-116
+    - row_group: UCC-096..UCC-100
+      namespace: history
+      unit: OP-049
+    - row_group: UCC-101..UCC-105
+      namespace: chat.vision_bridge
+      unit: ACD-640
+    - row_group: UCC-101..UCC-105
+      namespace: teacher
+      unit: F3-718
     exceptions:
     - command_id: cmd.orchestrator.push_image
       unit: CRAU-115
@@ -9570,18 +9617,12 @@ command_payload_definition_map:
     basis: No cmd.discovery.* family is needed; cmd.search.* stays canon. Covers cmd.search.find_in_files.
   - unit: UCC-100
     adds: []
-    covers: []
-    basis: No concrete History command id exists yet; Q5 resolution 9b mints ids from the actions this unit lists.
-  - unit: UCC-101
-    adds: []
-    covers: []
-    basis: No concrete Vision bridge command id exists yet; Q5 resolution 9b mints ids from the actions this unit
-      lists.
-  - unit: UCC-102
-    adds: []
-    covers: []
-    basis: No concrete Teach guided GUI command id exists yet; Q5 resolution 9b mints ids from the actions this
-      unit lists.
+    covers:
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.retry_now
+    basis: 'Its History actions are minted as concrete tokens (DL-333 resolution 9b). Resume and retry of a historical
+      run add no History command: they map through allowed_action_ids[] to cmd.runtime.resume_after_prerequisite
+      and cmd.runtime.retry_now (Recovery command definitions).'
   - unit: UCC-104
     adds: []
     covers: []
@@ -9659,6 +9700,14 @@ command_payload_definition_map:
       field: negative_constraints
       quote: cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded
     note: Normalizes to cmd.nav.open_usage_subject (UCC-109, outside UCC-049..UCC-105).
+  - token: cmd.chat.teach.capture
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-102
+      field: canonical_text
+      quote: typing /teach opens the Teach popup through cmd.chat.teach.capture
+    note: The Teach popup command (DL-127, UCC-172); not a Teacher guided GUI command.
   - token: cmd.chat.worktree.*
     disposition: family_alias
     evidence:
@@ -21193,3 +21242,56 @@ The binding companion gives the complete local request/result/availability/error
 | `computer.screen` | Plans/Tools.md#T-186 | Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1 | Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenResultV1 | Chat screen-tool invocation / admitted app-window / Using the screen of [Computer] / targeted Stop; tools::computer::screen |
 | `computer.pointer` | Plans/Tools.md#T-186 | Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1 | Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerResultV1 | Chat screen-tool invocation / admitted app-window / Using the screen of [Computer] / targeted Stop; tools::computer::pointer |
 | `computer.keys` | Plans/Tools.md#T-186 | Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1 | Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysResultV1 | Chat screen-tool invocation / admitted app-window / Using the screen of [Computer] / targeted Stop; tools::computer::keys |
+
+## History, Vision Bridge And Teacher Command Rows Addendum - 2026-11-05
+
+Q5 resolution 9b (DL-333): UCC-100, UCC-101 and UCC-102 named these command families without concrete ids. The rows below mint one id for each action those units list, taking each label, description and precondition from the unit and its owners (History: OP-026, OP-027; Vision bridge: T-165, ACD-425, PS-121; Teacher: F3-403, CS-053, CV-297, PS-122). Two listed actions add no History id: resume and retry of a historical run map through `allowed_action_ids[]` to `cmd.runtime.resume_after_prerequisite` and `cmd.runtime.retry_now`, because the Recovery command definitions forbid a surface-local recovery family. Typing /teach opens the Teach popup (DL-127), not the Teacher. The rows hold no data shapes; UCC-230 routes each id to its owner-doc definition (History OP-049, Vision bridge ACD-640, Teacher F3-718).
+
+### History command rows (UCC-100)
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|---|---|---|---|---|
+| `cmd.history.focus` | Open History | Opens or focuses the current project's Orchestrator History tab | `project_selected` | `navigation_wrapper` |
+| `cmd.history.switch_subview` | Switch History Subview | Switches History between its Documents and Runs subviews as view state | `history_visible` | `shell_view` |
+| `cmd.history.set_include_archived` | Include Archived | Shows or hides archived rows inside All history; archived rows keep a visible label | `history_visible && all_history_selected` | `shell_view` |
+| `cmd.history.open_row` | Open | Opens the selected historical document or run by its stable identity, read-only | `history_row_selected` | `navigation_wrapper` |
+| `cmd.history.open_artifacts` | Open Artifacts | Opens the artifacts linked to the selected row | `history_row_selected && row_artifacts_linked` | `navigation_wrapper` |
+| `cmd.history.open_evidence` | Open Evidence | Opens the evidence linked to the selected row | `history_row_selected && row_evidence_linked` | `navigation_wrapper` |
+| `cmd.history.compare_versions` | Compare Versions | Opens the deep compare of the selected document versions: side-by-side rendered diff, metadata and source-lineage pane, and atom/manifest change table; blocked while the projection is stale | `history_document_versions_selected && history_projection_current` | `navigation_wrapper` |
+| `cmd.history.duplicate_as_draft` | Duplicate As Draft | Creates a new draft from the selected historical document; the historical record is not changed | `history_document_selected` | `domain_action` |
+| `cmd.history.reopen_in_wizard` | Reopen In Wizard | Reopens the selected historical document in the Planning Wizard as new mutable state after currentness and authority checks; the record stays immutable | `history_document_selected && history_projection_current && currentness_allows` | `domain_action` |
+| `cmd.history.send_forward` | Send Forward | Sends the selected historical document forward when currentness allows | `history_document_selected && history_projection_current && currentness_allows` | `domain_action` |
+| `cmd.history.export_selected` | Export | Exports the selected row as zip with manifest, JSON, or rendered Markdown, HTML or PDF, under an explicit evidence/redaction profile | `history_row_selected && history_projection_current` | `domain_action` |
+| `cmd.history.export_bundle` | Export Bundle | Exports the multi-selected rows as one bundle with its manifest | `history_rows_multi_selected && history_projection_current` | `domain_action` |
+| `cmd.history.export_filtered_view` | Export Filtered View | Exports the whole filtered view with its active filter context and manifest | `history_visible && history_projection_current` | `domain_action` |
+| `cmd.history.clone_as_new_run` | Clone As New Run | Starts a new run cloned from the selected historical run under a new identity after currentness and authority checks | `history_run_selected && currentness_allows` | `domain_action` |
+| `cmd.history.inspect_records` | Inspect Records | Opens the ledger and raw records behind the selected row for read-only inspection | `history_row_selected` | `navigation_wrapper` |
+| `cmd.history.rebuild_projection` | Rebuild | Rebuilds the History projection from the immutable source records without changing them; compare, export, reopen and send forward stay blocked until it succeeds | `history_visible` | `domain_action` |
+
+### Vision bridge command rows (UCC-101)
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|---|---|---|---|---|
+| `cmd.chat.vision_bridge.select_source` | Select Image Source | Chooses the image the bridge reads from the allowed source classes (current-turn attachment, selected artifact, project file allowed by FileSafe, clipboard image, recent OS screenshot) and shows the selected source | `vision_bridge_available` | `domain_action` |
+| `cmd.chat.vision_bridge.pick_recent_screenshot` | Choose Recent Screenshot | Opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently | `vision_bridge_available && recent_screenshot_access_allowed` | `domain_action` |
+| `cmd.chat.vision_bridge.inspect` | Inspect | Opens the bridge-derived description with its source image or artifact link, provider/model used, and freshness/cache state | `vision_bridge_result_present` | `navigation_wrapper` |
+| `cmd.chat.vision_bridge.rerun` | Rerun With A Question | Runs the bridge again on the same source with the user's question | `vision_bridge_result_present && permission_allowed` | `domain_action` |
+| `cmd.chat.vision_bridge.copy_description` | Copy Description | Copies the derived description to the clipboard | `vision_bridge_result_present` | `shell_view` |
+| `cmd.chat.vision_bridge.attach_result` | Attach Result | Attaches the bridge result to the current turn or run, labelled as bridge-derived | `vision_bridge_result_present && attach_target_available` | `domain_action` |
+| `cmd.chat.vision_bridge.manage_permission` | Manage Always Accept | Opens the remembered always-accept image permission for inspection, narrowing or revocation in its Permissions owner (PS-121) | `remembered_vision_permission_present` | `navigation_wrapper` |
+
+### Teacher guided GUI command rows (UCC-102)
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|---|---|---|---|---|
+| `cmd.teacher.open_from_help` | Ask Teacher | Opens a new Teacher thread from a help icon with the current surface and control context | `help_icon_visible` | `domain_action` |
+| `cmd.teacher.continue_in_teacher` | Continue With Teacher | Hands an intent-classified natural-language request off into a new or selected Teacher thread with the current surface context (CS-053) | `teach_intent_classified` | `domain_action` |
+| `cmd.teacher.guide.open_route` | Open Route | Guided step: opens a canonical route target to show the user where something is | `teacher_guidance_active && route_target_resolvable` | `navigation_wrapper` |
+| `cmd.teacher.guide.focus` | Focus Panel | Guided step: focuses a tab or panel | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.guide.highlight` | Highlight | Guided step: spotlights or outlines a control or region with an anchored caption that does not cover the target | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.guide.scroll_to` | Scroll To Field | Guided step: scrolls to a section or field | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.guide.inspect` | Show Details | Guided step: expands non-mutating details or previews a selection, read-only | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.explain_current_ui` | Explain This Screen | Asks Teacher to explain the current surface in the Teacher thread | `teacher_thread_available` | `domain_action` |
+| `cmd.teacher.guide.do_it` | Do It | Runs an explicitly safe action for the user through its stable command after confirmation and permission gates; a mutation always needs confirmation | `teacher_guidance_active && action_explicitly_safe && confirmation_given` | `domain_action` |
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Wiring_Matrix.md

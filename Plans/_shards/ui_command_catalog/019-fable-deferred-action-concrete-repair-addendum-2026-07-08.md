@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8788-L10328
+Source lines: L8823-L10377
 
-Source SHA256: `e852be3ec466cc2d357de1901153bd33a907875d4d6dfd3a3217c8e7649e4342`
+Source SHA256: `e6c168a467c0707cdb73eb8317b237ec53b076fcebb63297ff6ceaa795f288ec`
 
 ---
 
@@ -40,8 +40,8 @@ Common fields for every covered row:
 | `UCC-077` through `UCC-083` | Debug, web/slash dispatcher, web activity, reserved slash alias, and route-mapping command families: `Plans/Commands_System.md` CS-125 (`cmd.debug.*`) and `Plans/assistant-chat-design.md` ACD-639 (`cmd.chat.web.*`, `cmd.chat.stop`). | `thread_id`, `debug_session_id?`, `web_operation_id?`, `slash_command_id?`, `route_target?`, and `provider_route_ref?`; retired slash labels must normalize before dispatch. |
 | `UCC-084` through `UCC-088` | Memory, artifact side-panel, and search command families: `Plans/assistant-memory-subsystem.md` AMS-141 (memory), `Plans/Runtime_Artifacts_Panel.md` RAP-129 (artifacts) and `Plans/FinalGUISpec.md` F3-716 (search). | `memory_item_id?`, `artifact_id?`, `ledger_ref?`, `query_session_id?`, `replacement?`, and `index_scope?` as required by the concrete command. |
 | `UCC-089` through `UCC-095` | Runtime recovery command family: `Plans/Executor_Protocol.md` EP-236. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
-| `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families: `Plans/Goal_Runtime_System.md` GRS-218, `Plans/PRD_Builder.md` PRDB-024, `Plans/Planning_Wizard.md` PWIZ-109 and `Plans/Plan_To_Node_Compilation.md` PNC-037; UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
-| `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families: `Plans/FinalGUISpec.md` F3-717 (notifications and sounds), `Plans/Settings_System.md` SSYS-076 (`cmd.settings.open`) and `Plans/Containers_Registry_and_Unraid.md` CRAU-116 (Docker/Hosts, `cmd.docker.run`, `cmd.docker.container.open`); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
+| `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families: `Plans/Goal_Runtime_System.md` GRS-218, `Plans/PRD_Builder.md` PRDB-024, `Plans/Planning_Wizard.md` PWIZ-109 and `Plans/Plan_To_Node_Compilation.md` PNC-037, and `Plans/Orchestrator_Page.md` OP-049 (History); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
+| `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families: `Plans/FinalGUISpec.md` F3-717 (notifications and sounds), `Plans/Settings_System.md` SSYS-076 (`cmd.settings.open`), `Plans/Containers_Registry_and_Unraid.md` CRAU-116 (Docker/Hosts, `cmd.docker.run`, `cmd.docker.container.open`), `Plans/assistant-chat-design.md` ACD-640 (Vision bridge) and `Plans/FinalGUISpec.md` F3-718 (Teacher guided GUI); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
 | `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its fourteen `ui.onboarding.*` identifiers (`ui.onboarding.choose_look` added by DL-153) are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
 
 Compatibility-only and retired source tokens in these rows remain searchable lineage. They do not become command IDs unless the row's `command_id` rule maps them to a concrete active `cmd.*` value or an explicit `alias_of_command_id`; tokens expressly marked non-alias never normalize or dispatch.
@@ -394,6 +394,9 @@ command_payload_definition_map:
       PWIZ-109: Plans/Planning_Wizard.md
       PNC-037: Plans/Plan_To_Node_Compilation.md
       SSYS-076: Plans/Settings_System.md
+      OP-049: Plans/Orchestrator_Page.md
+      ACD-640: Plans/assistant-chat-design.md
+      F3-718: Plans/FinalGUISpec.md
     routes:
     - row_group: UCC-049..UCC-053
       namespace: docker
@@ -458,6 +461,15 @@ command_payload_definition_map:
     - row_group: UCC-101..UCC-105
       namespace: docker
       unit: CRAU-116
+    - row_group: UCC-096..UCC-100
+      namespace: history
+      unit: OP-049
+    - row_group: UCC-101..UCC-105
+      namespace: chat.vision_bridge
+      unit: ACD-640
+    - row_group: UCC-101..UCC-105
+      namespace: teacher
+      unit: F3-718
     exceptions:
     - command_id: cmd.orchestrator.push_image
       unit: CRAU-115
@@ -792,18 +804,12 @@ command_payload_definition_map:
     basis: No cmd.discovery.* family is needed; cmd.search.* stays canon. Covers cmd.search.find_in_files.
   - unit: UCC-100
     adds: []
-    covers: []
-    basis: No concrete History command id exists yet; Q5 resolution 9b mints ids from the actions this unit lists.
-  - unit: UCC-101
-    adds: []
-    covers: []
-    basis: No concrete Vision bridge command id exists yet; Q5 resolution 9b mints ids from the actions this unit
-      lists.
-  - unit: UCC-102
-    adds: []
-    covers: []
-    basis: No concrete Teach guided GUI command id exists yet; Q5 resolution 9b mints ids from the actions this
-      unit lists.
+    covers:
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.retry_now
+    basis: 'Its History actions are minted as concrete tokens (DL-333 resolution 9b). Resume and retry of a historical
+      run add no History command: they map through allowed_action_ids[] to cmd.runtime.resume_after_prerequisite
+      and cmd.runtime.retry_now (Recovery command definitions).'
   - unit: UCC-104
     adds: []
     covers: []
@@ -881,6 +887,14 @@ command_payload_definition_map:
       field: negative_constraints
       quote: cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded
     note: Normalizes to cmd.nav.open_usage_subject (UCC-109, outside UCC-049..UCC-105).
+  - token: cmd.chat.teach.capture
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-102
+      field: canonical_text
+      quote: typing /teach opens the Teach popup through cmd.chat.teach.capture
+    note: The Teach popup command (DL-127, UCC-172); not a Teacher guided GUI command.
   - token: cmd.chat.worktree.*
     disposition: family_alias
     evidence:

@@ -1936,7 +1936,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 656,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1300,
+        # 2026-11-05 Q5 resolution 9b (DL-333, UCC-100..102, UCC-230): +32 production-intent
+        # entries for the minted History, Vision bridge and Teacher guided GUI commands (1300 ->
+        # 1332). No Touch row, profile, alias, exclusion, native handler or proof is added.
+        "production_wiring_entry_count": 1332,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
