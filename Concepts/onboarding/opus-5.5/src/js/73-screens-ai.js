@@ -386,7 +386,8 @@
       installGo(S, id) {
         const p = prov(id), r = R(S, id), alt = r.method === 'alt', w = way(p, r);
         if (!(r.confirmInstall || (p.auth === 'server' && r.state === 'serverPick' && r.mode === 'managed')) || r.state === 'installing') return;
-        const fail = offlineNow(S) ? 'offline' : r.installDemo || 'works';
+        /* aiOffline's one-shot drop belongs to sign-in/checks, not CLI acquisition. */
+        const fail = !S.env.here.internet ? 'offline' : r.installDemo || 'works';
         F.reset(S, 'install:' + id + (alt ? ':alt' : ''));
         Object.assign(r, { confirmInstall: false, state: 'installing', installFailCode: null });
         S.save(); O55.ui.refresh(); O55.sound.play('tap');
