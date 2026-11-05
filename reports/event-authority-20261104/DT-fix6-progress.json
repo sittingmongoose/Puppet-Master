@@ -1,0 +1,23 @@
+{
+  "status": "pending_full_guard_table",
+  "base": "6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
+  "findings": [
+    "F16",
+    "S1",
+    "S2"
+  ],
+  "checker_assertions": 32630,
+  "checker_status": "pass",
+  "type_sweep_families": 17,
+  "numeric_schema_leaves": 543,
+  "boolean_schema_leaves": 108,
+  "index_status": "fail",
+  "index_failures": 22,
+  "guard_state": "Serial run temporarily paused to save this implementation checkpoint. Final proof and grading publication follow.",
+  "new_ids": [],
+  "existing_ids": [
+    "CV-600..616",
+    "SP-580..596",
+    "ATS-290..298"
+  ]
+}

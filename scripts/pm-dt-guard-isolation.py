@@ -18,12 +18,21 @@ def function_mutants(dt):
     """Discover rejecting predicates rather than maintaining a line-number list."""
     functions = ['source_valid', 'checkpoint_result', 'recovery', 'historical_read',
                  'transition', 'gate_score_join', 'tool_request_join',
-                 'usage_values_valid', 'batch_join', 'denial_emission', 'append_model', 'identity', 'decode_source']
+                 'usage_values_valid', 'batch_join', 'denial_emission', 'append_model', 'identity', 'decode_source',
+                 'producer_semantic_bytes', 'current_numbers_valid', 'accounting_totals', 'unsigned_integer_valid', 'retained_schema']
     for name in functions:
         tree = ast.parse(inspect.getsource(getattr(dt, name)))
         function = tree.body[0]
         edits = []
         for node in ast.walk(function):
+            if name == 'retained_schema' and isinstance(node, ast.If) and node.body and isinstance(node.body[0], ast.Continue):
+                edits.append((node.test, False))
+            if name in ['append_model', 'accounting_totals'] and isinstance(node, ast.If) and 'type(' in ast.unparse(node.test):
+                edits.append((node.test, False))
+            if name == 'accounting_totals' and isinstance(node, ast.If) and 'Draft202012Validator' in ast.unparse(node.test):
+                edits.append((node.test, False))
+            if name in ['identity', 'producer_semantic_bytes'] and isinstance(node, ast.If) and ('current_numbers_valid' in ast.unparse(node.test) or 'type(historical)' in ast.unparse(node.test) or "'blocked_sequence' in contract" in ast.unparse(node.test)):
+                edits.append((node.test, False))
             if name == 'decode_source' and isinstance(node, ast.If) and ast.unparse(node.test) == 'len(raw) > 1048576':
                 edits.append((node.test, False))
             if (name == 'identity' and isinstance(node, ast.If) and "operation != application['owner_operation_id']" == ast.unparse(node.test)):
@@ -33,7 +42,7 @@ def function_mutants(dt):
                 # Family dispatch and successful early returns are selectors.
                 refusal = ((isinstance(value, ast.Constant) and (value.value is False or
                             value.value in ['schema_refused', 'original_source_refused', 'scope_refused',
-                                            'payload_unavailable', 'join_refused', 'identity_refused',
+                                            'payload_unavailable', 'join_refused', 'identity_refused', 'numeric_domain_refused',
                                             'transition_refused', 'payload_ref_required', 'source_stage_too_large', 'unavailable',
                                             'cas_lost', 'source_changed', 'coverage_refused', 'no_emission']))
                            or isinstance(value, ast.IfExp) and name == 'source_valid'
@@ -48,7 +57,7 @@ def function_mutants(dt):
             if isinstance(node, ast.Return) and isinstance(node.value, ast.BoolOp) and isinstance(node.value.op, ast.And):
                 # Remove a single clause, retaining every other clause/helper.
                 edits.extend((value, True) for value in node.value.values)
-            if isinstance(node, ast.Return) and isinstance(node.value, ast.Compare) and name in ['batch_join', 'gate_score_join']:
+            if isinstance(node, ast.Return) and isinstance(node.value, ast.Compare) and name in ['batch_join', 'gate_score_join', 'current_numbers_valid']:
                 edits.append((node.value, True))
         for expression, replacement in edits:
             original = ast.unparse(expression)
@@ -499,6 +508,9 @@ def schema_table(dt, c, f, schemas):
             value = case[stage]
             if not dt.Draft202012Validator(schemas[definition], format_checker=dt.FormatChecker()).is_valid(value):
                 add(definition, 'source_join/' + case['case'] + '/' + stage, value)
+    for definition, label, value in dt.schema_type_cases(c, f, schemas):
+        if label.endswith('/True') or label.endswith('/1') or '/bound/' in label:
+            add(definition, 'numeric_boolean/' + label, value)
     validator = lambda schema: dt.Draft202012Validator(schema, format_checker=dt.FormatChecker())
     guards = {}; failures = []
     def leaf_errors(error):
@@ -621,7 +633,7 @@ def checkpoint_schema_controls(dt, c, f, schemas, corpus):
 
 
 def prove_family(dt, c, f, schemas):
-    corpus = source_corpus(dt, c, f, schemas) + checkpoint_corpus(dt, c, f, schemas) + other_corpus(dt, c, f, schemas) + boundary_corpus(dt, c, f)
+    corpus = dt.round6_corpus(c, f, schemas) + source_corpus(dt, c, f, schemas) + checkpoint_corpus(dt, c, f, schemas) + other_corpus(dt, c, f, schemas) + boundary_corpus(dt, c, f)
     baseline = {label: safe_call(call) for label, call, _ in corpus}
     failures = [label + ': negative accepted at baseline' for label, _, expected in corpus if accepts(baseline[label], expected)]
     rows, exact_schema_failures = checkpoint_schema_controls(dt, c, f, schemas, corpus)
@@ -664,6 +676,68 @@ def prove_family(dt, c, f, schemas):
                 'after_predicate_removal': cascade, 'status': 'pass' if ok else 'fail'})
         else:
             guards_without_cases.append(guard['id'])
+    def duplicate_proof(label, selections, *, rfc_integer=False):
+        guards = list(function_mutants(dt)); selected = []
+        for function, fragment in selections:
+            matches = [g for g in guards if g['function'] == function and fragment in g['predicate']]
+            assert len(matches) == 1, (label, function, fragment, len(matches))
+            selected.extend(matches)
+        replacements = {}
+        for function in {g['function'] for g in selected}:
+            tree = ast.parse(inspect.getsource(getattr(dt, function)))
+            expressions = {g['predicate'] for g in selected if g['function'] == function}
+            changed = 0
+            for node in ast.walk(tree):
+                if isinstance(node, ast.If) and ast.unparse(node.test) in expressions:
+                    node.test = ast.Constant(False); changed += 1
+            assert changed == len(expressions)
+            namespace = {}
+            exec(compile(ast.fix_missing_locations(tree), '<DT named duplicate removal>', 'exec'), dt.__dict__, namespace)
+            replacements[function] = namespace[function]
+        ids = [g['id'] for g in selected]
+        with contextlib.ExitStack() as stack:
+            for function, replacement in replacements.items():
+                stack.enter_context(replace_function(dt, function, replacement))
+            if rfc_integer:
+                import rfc8785._impl as impl
+                tree = ast.parse(inspect.getsource(impl.dump)); found = 0
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.If) and ast.unparse(node.test) == 'obj < _INT_MIN or obj > _INT_MAX':
+                        node.test = ast.Constant(False); found += 1
+                assert found == 1
+                namespace = {}
+                exec(compile(ast.fix_missing_locations(tree), '<only RFC8785 duplicate integer-bound guard>', 'exec'), impl.__dict__, namespace)
+                stack.enter_context(replace_function(impl, 'dump', namespace['dump']))
+                ids.append('rfc8785._impl.dump:obj < _INT_MIN or obj > _INT_MAX')
+            flips = []; stayed = []; changed_rejections = []
+            for candidate, call, expected in corpus:
+                value = safe_call(call)
+                if accepts(value, expected):
+                    flips.append(candidate); covered.add(candidate)
+                else:
+                    stayed.append(candidate)
+                    if value != baseline[candidate]:
+                        changed_rejections.append({'case': candidate, 'before': baseline[candidate], 'after': value})
+        if not flips:
+            failures.append(label + ': named duplicate set has no witness')
+        rows.append({'guard': label, 'duplicate_set': ids, 'negatives_that_flip': flips,
+                     'negatives_that_stay_rejected': stayed, 'changed_rejections': changed_rejections})
+    schema_expression = "load('Plans/event_record.schema.json')"
+    duplicate_proof('source_valid/schema_and_typed_envelope_join', [
+        ('source_valid', schema_expression), ('source_valid', "for k in b if k != 'scope_kind'")])
+    if c['scope_policy'] != 'project_only':
+        duplicate_proof('source_valid/schema_and_captured_scope_join', [
+            ('source_valid', schema_expression),
+            ('source_valid', "event['scope_kind'] != completed['envelope_context']['scope_kind']")])
+    for function in ['recovery', 'historical_read']:
+        duplicate_proof(function + '/schema_and_source_schema', [
+            ('source_valid', schema_expression), (function, schema_expression)])
+    duplicate_proof('source_valid/source_and_identity_mode_type', [
+        ('source_valid', 'type(historical) is not bool'), ('identity', 'type(historical) is not bool')])
+    duplicate_proof('producer_semantic_bytes/DT_and_RFC8785_integer_bounds', [
+        ('producer_semantic_bytes', 'not current_numbers_valid(projection)')], rfc_integer=True)
+    paired_ids = {identifier for row in rows if isinstance(row.get('duplicate_set'), list) for identifier in row['duplicate_set']}
+    guards_without_cases = [identifier for identifier in guards_without_cases if identifier not in paired_ids]
     # Schema refusals are proven against that validator; retain the full-path
     # outcome above, but do not mistake downstream missing-field exceptions for acceptance.
     schema_rows, schema_failures = schema_table(dt, c, f, schemas)
@@ -696,6 +770,9 @@ def prove(dt, targets=None):
         import sys
         print(name + ': check11=' + result[name]['status'] + (' ' + repr(result[name]['failures']) if result[name]['failures'] else ''), file=sys.stderr, flush=True)
     covered = {row['id'] for family in result.values() for row in family['guard_removal_table'] if 'id' in row}
+    covered.update(identifier for family in result.values() for row in family['guard_removal_table']
+                   if isinstance(row.get('duplicate_set'), list) for identifier in row['duplicate_set']
+                   if not identifier.startswith('rfc8785.'))
     inventory = {guard['id'] for guard in function_mutants(dt)}
     complete_lane = len(result) == len(dt.load('Plans/dt_event_contracts.json')['families'])
     uncovered = sorted(inventory - covered)

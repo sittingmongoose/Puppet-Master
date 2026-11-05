@@ -1,5 +1,18 @@
 # DT-FIX5 — Event Authority technical fix round 5
 
+## Review round 6: implementation checkpoint — final guard proof pending
+
+F16/S1/S2 are implemented. Complete checker: **32630 assertions / PASS**. All **17** numeric/type sweeps pass, covering **543 numeric / 108 boolean schema declarations**. The full guard table is running serially and is not yet claimed complete; the current self-grade conservatively carries cycle-6's **165 PASS / 24 PARTIAL / 25 ABSENT / 2 CONFLICT**. All seventeen drafted oracle cells remain PARTIAL.
+
+Current writes use the I-JSON safe numeric range; retained originals keep the earlier exact-integer source and identity recipes. Authority flags, writer envelope joins, prior checkpoints, index-prefix rows, batch results, usage accounting and retry digest arguments now check exact types. The compatibility exception restores only numeric bounds and cannot remove other schema guards. Source schemas and exact Storage mirrors agree. Each SP-580..596 owner unit names the current numeric/type rule independently.
+
+Shards and index were regenerated with the fifteen hash-matched currentness files. Shard check passes. Index validation retains the same **22** unrelated Decision Log / old-ledger diagnostics described below; no stale generated artifact is reported. Generated shard changes are confined to the edited storage-plan and storage_value_registry owners.
+
+F2–F15 remain in the source and complete checker. FileSafe's tool.denied facet and tool.custom_headless.skipped remain stopped for Jared; all existing retention exceptions remain fenced. No new PlanUnit IDs, admission, registry append, Decision Log entry, governance seal or main push. See DT-fix6-progress.json for the checkpoint; the sections below describe earlier rounds and do not supersede this pending status.
+
+---
+
+
 Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `34fa8b601872791c8fa292b8e862bc78fb923ca9`. Implementation head: `7b62f6ac834edab6875e09e413bb335f30fbe9ec`. Reports-only publication follows.
 
 **F10–F15 fixed.** Complete checker: **6345 assertions**. Prepared families: **0/17 → 16/17** under the existing wave retention exception (**0/18 → 16/18 assigned rows**). The whole `tool.denied` row and Doctor remain stopped. Membership stays ABSENT and native execution NOT_RUN. Original-owner, pack-reader and SP-278 authentication remain assumed adapters.

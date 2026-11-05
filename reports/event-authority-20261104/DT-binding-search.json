@@ -13,7 +13,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 963,
-          "quote": "Every persisted event family has exactly one registered scope_policy: application_only, project_only, application_or_project or inherits_referenced_event. CV-366’s closed family/payload/version/source table is the current app-workflow selector. The former universal project_only grouping for run, memory, coordination, FileSafe, safe-point and approval consumers is superseded only for the explicitly"
+          "quote": "Every persisted event family has exactly one registered scope_policy: application_only, project_only, application_or_project or inherits_referenced_event. CV-366\u2019s closed family/payload/version/source table is the current app-workflow selector. The former universal project_only grouping for run, memory, coordination, FileSafe, safe-point and approval consumers is superseded only for the explicitly"
         },
         {
           "path": "Plans/Contracts_V0.md",
@@ -43,7 +43,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 606,
-          "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
         },
         {
           "path": "Plans/Executor_Protocol.md",
@@ -52,11 +52,11 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 123172,
+          "line": 123173,
           "quote": "            \"const\": \"approval.requested\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.approval_requested.append.v1@1.0.0",
         "consumer_id": "storage.dt.approval_requested.reader.v1",
@@ -82,7 +82,7 @@
           {
             "path": "Plans/Contracts_V0.md",
             "line": 963,
-            "quote": "Every persisted event family has exactly one registered scope_policy: application_only, project_only, application_or_project or inherits_referenced_event. CV-366’s closed family/payload/version/source table is the current app-workflow selector. The former universal project_only grouping for run, memory, coordination, FileSafe, safe-point and approval consumers is superseded only for the explicitly"
+            "quote": "Every persisted event family has exactly one registered scope_policy: application_only, project_only, application_or_project or inherits_referenced_event. CV-366\u2019s closed family/payload/version/source table is the current app-workflow selector. The former universal project_only grouping for run, memory, coordination, FileSafe, safe-point and approval consumers is superseded only for the explicitly"
           },
           {
             "path": "Plans/Contracts_V0.md",
@@ -122,7 +122,7 @@
           {
             "path": "Plans/Decision_Log.md",
             "line": 606,
-            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+            "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
           },
           {
             "path": "Plans/Executor_Protocol.md",
@@ -178,15 +178,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 606,
-          "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 123477,
+          "line": 123524,
           "quote": "            \"const\": \"approval.granted\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.approval_granted.append.v1@1.0.0",
         "consumer_id": "storage.dt.approval_granted.reader.v1",
@@ -226,27 +226,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24505,
+            "line": 24509,
             "quote": "### CV-601 - approval.granted prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24513,
+            "line": 24517,
             "quote": "  Newly authored owner contract under DL-045 for approval.granted@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode and an authenticated human selecting a member of its ordered allowed_action_ids; PAUSE precedence and live revo"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 606,
-            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+            "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29514,
+            "line": 29521,
             "quote": "### SP-581 - approval.granted prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29522,
+            "line": 29529,
             "quote": "  Newly authored owner contract under DL-045 for approval.granted only. Producer HITLBlockedEpisodeOwner.granted calls storage.dt.approval_granted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resol"
           }
         ],
@@ -288,15 +288,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 606,
-          "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 123782,
+          "line": 123875,
           "quote": "            \"const\": \"approval.denied\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.approval_denied.append.v1@1.0.0",
         "consumer_id": "storage.dt.approval_denied.reader.v1",
@@ -311,7 +311,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7272,
+            "line": 7278,
             "quote": "   For approval.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
           },
           {
@@ -336,27 +336,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24538,
+            "line": 24546,
             "quote": "### CV-602 - approval.denied prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24546,
+            "line": 24554,
             "quote": "  Newly authored owner contract under DL-045 for approval.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode; terminal denial never unblocks or executes the tool. The closed payload is Plans/dt_event_contracts.schema.json"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 606,
-            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+            "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29547,
+            "line": 29561,
             "quote": "### SP-582 - approval.denied prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29555,
+            "line": 29569,
             "quote": "  Newly authored owner contract under DL-045 for approval.denied only. Producer HITLBlockedEpisodeOwner.denied calls storage.dt.approval_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve."
           }
         ],
@@ -398,15 +398,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 606,
-          "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+          "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 124087,
+          "line": 124226,
           "quote": "            \"const\": \"approval.timeout\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.approval_timeout.append.v1@1.0.0",
         "consumer_id": "storage.dt.approval_timeout.reader.v1",
@@ -421,7 +421,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7272,
+            "line": 7278,
             "quote": "   For approval.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
           },
           {
@@ -446,27 +446,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24571,
+            "line": 24583,
             "quote": "### CV-603 - approval.timeout prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24579,
+            "line": 24591,
             "quote": "  Newly authored owner contract under DL-045 for approval.timeout@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode and the original owner timeout expiry evidence; terminal timeout never authorizes work. The closed payload is P"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 606,
-            "quote": "| `Plans/human-in-the-loop.md` | — | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | — |"
+            "quote": "| `Plans/human-in-the-loop.md` | \u2014 | `approval.denied`, `approval.granted`, `approval.requested`, `approval.timeout` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29580,
+            "line": 29601,
             "quote": "### SP-583 - approval.timeout prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29588,
+            "line": 29609,
             "quote": "  Newly authored owner contract under DL-045 for approval.timeout only. Producer HITLBlockedEpisodeOwner.timeout calls storage.dt.approval_timeout.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resol"
           }
         ],
@@ -488,12 +488,12 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 602,
-          "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+          "quote": "| `Plans/WorktreeGitImprovement.md` | \u2014 | `config.migrated`, `worktree.created`, `worktree.deleted` | \u2014 |"
         },
         {
           "path": "Plans/WorktreeGitImprovement.md",
           "line": 611,
-          "quote": "- Migration: on first load, map legacy strings to enum variants (\"single\" → None, \"per_phase\" → Phase, \"per_task\" → Task). Log `config.migrated` seglog event."
+          "quote": "- Migration: on first load, map legacy strings to enum variants (\"single\" \u2192 None, \"per_phase\" \u2192 Phase, \"per_task\" \u2192 Task). Log `config.migrated` seglog event."
         },
         {
           "path": "Plans/WorktreeGitImprovement.md",
@@ -502,11 +502,11 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 124392,
+          "line": 124577,
           "quote": "            \"const\": \"config.migrated\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.config_migrated.append.v1@1.0.0",
         "consumer_id": "storage.dt.config_migrated.reader.v1",
@@ -521,28 +521,28 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7303,
+            "line": 7315,
             "quote": "   For config.migrated alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24604,
+            "line": 24620,
             "quote": "### CV-604 - config.migrated prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24612,
-            "quote": "  Newly authored owner contract under DL-045 for config.migrated@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:594-612). Only first-load single→None, per_phase→Phase and per_task→Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again. The "
+            "line": 24628,
+            "quote": "  Newly authored owner contract under DL-045 for config.migrated@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:594-612). Only first-load single\u2192None, per_phase\u2192Phase and per_task\u2192Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again. The "
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 602,
-            "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+            "quote": "| `Plans/WorktreeGitImprovement.md` | \u2014 | `config.migrated`, `worktree.created`, `worktree.deleted` | \u2014 |"
           },
           {
             "path": "Plans/WorktreeGitImprovement.md",
             "line": 611,
-            "quote": "- Migration: on first load, map legacy strings to enum variants (\"single\" → None, \"per_phase\" → Phase, \"per_task\" → Task). Log `config.migrated` seglog event."
+            "quote": "- Migration: on first load, map legacy strings to enum variants (\"single\" \u2192 None, \"per_phase\" \u2192 Phase, \"per_task\" \u2192 Task). Log `config.migrated` seglog event."
           },
           {
             "path": "Plans/WorktreeGitImprovement.md",
@@ -551,12 +551,12 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29613,
+            "line": 29641,
             "quote": "### SP-584 - config.migrated prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29621,
+            "line": 29649,
             "quote": "  Newly authored owner contract under DL-045 for config.migrated only. Producer SettingsMigrationCoordinator.branch_granularity calls storage.dt.config_migrated.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append"
           }
         ],
@@ -724,15 +724,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 592,
-          "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 124697,
+          "line": 124928,
           "quote": "            \"const\": \"gate.evaluation_started\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.gate_evaluation_started.append.v1@1.0.0",
         "consumer_id": "storage.dt.gate_evaluation_started.reader.v1",
@@ -747,7 +747,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7303,
+            "line": 7315,
             "quote": "   For config.migrated alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after "
           },
           {
@@ -767,27 +767,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24637,
+            "line": 24659,
             "quote": "### CV-605 - gate.evaluation_started prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24645,
+            "line": 24667,
             "quote": "  Newly authored owner contract under DL-045 for gate.evaluation_started@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). A fresh evaluation_id is captured with the exact gate inputs before evaluation. Neither this event nor a previous pass permits progression. The closed payload is Plans"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 592,
-            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+            "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29646,
+            "line": 29682,
             "quote": "### SP-585 - gate.evaluation_started prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29654,
+            "line": 29690,
             "quote": "  Newly authored owner contract under DL-045 for gate.evaluation_started only. Producer ProgressionGateRunner.evaluation_started calls storage.dt.gate_evaluation_started.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.fir"
           }
         ],
@@ -1012,15 +1012,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 592,
-          "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 125002,
+          "line": 125279,
           "quote": "            \"const\": \"gate.failed\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.gate_failed.append.v1@1.0.0",
         "consumer_id": "storage.dt.gate_failed.reader.v1",
@@ -1035,7 +1035,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7334,
+            "line": 7354,
             "quote": "   For gate.failed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
           },
           {
@@ -1055,27 +1055,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24670,
+            "line": 24697,
             "quote": "### CV-606 - gate.failed prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24678,
+            "line": 24705,
             "quote": "  Newly authored owner contract under DL-045 for gate.failed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). Exactly one failed result follows the matching evaluation_started with failure code and evidence. A blocked GATE-012 report with clarification items is BLOCKED, not falsely classi"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 592,
-            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+            "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29679,
+            "line": 29723,
             "quote": "### SP-586 - gate.failed prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29687,
+            "line": 29731,
             "quote": "  Newly authored owner contract under DL-045 for gate.failed only. Producer ProgressionGateRunner.failed calls storage.dt.gate_failed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name"
           }
         ],
@@ -1300,15 +1300,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 592,
-          "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 125307,
+          "line": 125630,
           "quote": "            \"const\": \"gate.passed\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.gate_passed.append.v1@1.0.0",
         "consumer_id": "storage.dt.gate_passed.reader.v1",
@@ -1323,7 +1323,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7334,
+            "line": 7354,
             "quote": "   For gate.failed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
           },
           {
@@ -1343,27 +1343,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24703,
+            "line": 24735,
             "quote": "### CV-607 - gate.passed prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24711,
+            "line": 24743,
             "quote": "  Newly authored owner contract under DL-045 for gate.passed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). Exactly one result follows the matching evaluation_started; all gate-specific PASS predicates and evidence must hold. GATE-012 requires a valid PASS report with zero clarification"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 592,
-            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+            "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29712,
+            "line": 29764,
             "quote": "### SP-587 - gate.passed prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29720,
+            "line": 29772,
             "quote": "  Newly authored owner contract under DL-045 for gate.passed only. Producer ProgressionGateRunner.passed calls storage.dt.gate_passed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name"
           }
         ],
@@ -1593,7 +1593,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 592,
-          "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+          "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
         },
         {
           "path": "Plans/Progression_Gates.md",
@@ -1607,11 +1607,11 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 125612,
+          "line": 125981,
           "quote": "            \"const\": \"requirements.clarification_requested\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.requirements_clarification_requested.append.v1@1.0.0",
         "consumer_id": "storage.dt.requirements_clarification_requested.reader.v1",
@@ -1626,7 +1626,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7365,
+            "line": 7393,
             "quote": "   For requirements.clarification_requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations "
           },
           {
@@ -1651,18 +1651,18 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24736,
+            "line": 24773,
             "quote": "### CV-608 - requirements.clarification_requested prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24744,
+            "line": 24781,
             "quote": "  Newly authored owner contract under DL-045 for requirements.clarification_requested@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Progression_Gates.md:428-475; Contracts_V0.md:1451). Only a schema-valid blocked requirements report with nonempty needs_user_clarification emits. question_ids equals the complete report question set. No automat"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 592,
-            "quote": "| `Plans/Progression_Gates.md` | — | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | — |"
+            "quote": "| `Plans/Progression_Gates.md` | \u2014 | `gate.evaluation_started`, `gate.failed`, `gate.passed`, `requirements.clarification_requested` | \u2014 |"
           },
           {
             "path": "Plans/Progression_Gates.md",
@@ -1676,12 +1676,12 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29745,
+            "line": 29805,
             "quote": "### SP-588 - requirements.clarification_requested prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29753,
+            "line": 29813,
             "quote": "  Newly authored owner contract under DL-045 for requirements.clarification_requested only. Producer RequirementsQualityGate.request_clarification calls storage.dt.requirements_clarification_requested.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adop"
           }
         ],
@@ -1703,7 +1703,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 609,
-          "quote": "| `Plans/storage-plan.md` | — | `coordination.debug_mirror_exported`, `run.background_enqueued` | — |"
+          "quote": "| `Plans/storage-plan.md` | \u2014 | `coordination.debug_mirror_exported`, `run.background_enqueued` | \u2014 |"
         },
         {
           "path": "Plans/storage-plan.md",
@@ -1717,11 +1717,11 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 125917,
+          "line": 126332,
           "quote": "            \"const\": \"run.background_enqueued\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.run_background_enqueued.append.v1@1.0.0",
         "consumer_id": "storage.dt.run_background_enqueued.reader.v1",
@@ -1736,23 +1736,23 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7365,
+            "line": 7393,
             "quote": "   For requirements.clarification_requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations "
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24769,
+            "line": 24811,
             "quote": "### CV-609 - run.background_enqueued prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24777,
+            "line": 24819,
             "quote": "  Newly authored owner contract under DL-045 for run.background_enqueued@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/storage-plan.md (storage-plan.md:1656; CV-365/CV-366). Append only after the durable enqueue intent captures authenticated actual scope/Host/root. Queue release follows receipt. Missing worktree fields never choose main Project or application sco"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 609,
-            "quote": "| `Plans/storage-plan.md` | — | `coordination.debug_mirror_exported`, `run.background_enqueued` | — |"
+            "quote": "| `Plans/storage-plan.md` | \u2014 | `coordination.debug_mirror_exported`, `run.background_enqueued` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
@@ -1766,12 +1766,12 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29778,
+            "line": 29845,
             "quote": "### SP-589 - run.background_enqueued prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29786,
+            "line": 29853,
             "quote": "  Newly authored owner contract under DL-045 for run.background_enqueued only. Producer BackgroundRunQueue.enqueue calls storage.dt.run_background_enqueued.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_rece"
           }
         ],
@@ -1978,7 +1978,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 600,
-          "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
         },
         {
           "path": "Plans/Executor_Protocol.md",
@@ -2048,7 +2048,7 @@
         {
           "path": "Plans/Tools.md",
           "line": 81,
-          "quote": "- **deny** — Tool is blocked; `tool.denied` event emitted."
+          "quote": "- **deny** \u2014 Tool is blocked; `tool.denied` event emitted."
         },
         {
           "path": "Plans/Tools.md",
@@ -2068,12 +2068,12 @@
         {
           "path": "Plans/Tools.md",
           "line": 1496,
-          "quote": "4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6)."
+          "quote": "4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (\u00a710.6)."
         },
         {
           "path": "Plans/Tools.md",
           "line": 1498,
-          "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+          "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per \u00a78.0."
         },
         {
           "path": "Plans/Tools.md",
@@ -2178,12 +2178,12 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 1628,
-          "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+          "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md \u00a78.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
         },
         {
           "path": "Plans/storage-plan.md",
           "line": 1663,
-          "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+          "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
         },
         {
           "path": "Plans/storage-plan.md",
@@ -2202,11 +2202,11 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 126222,
+          "line": 126683,
           "quote": "            \"const\": \"tool.denied\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.tool_denied.append.v1@1.0.0",
         "consumer_id": "storage.dt.tool_denied.reader.v1",
@@ -2241,12 +2241,12 @@
           },
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7396,
+            "line": 7430,
             "quote": "   For tool.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
           },
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7427,
+            "line": 7469,
             "quote": "   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash"
           },
           {
@@ -2411,23 +2411,25 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24802,
+            "line": 24849,
             "quote": "### CV-610 - tool.denied prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24810,
-            "quote": "  Newly authored owner contract under DL-045 for tool.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2; Contracts_V0.md 3 tool.denied, CV-355/CV-366). Denial follows policy/FileSafe/schema refusal and precedes any tool dispatch; never executes or contributes to executed-call tool_usage rollups. Current runtime node denials retain al"
+            "line": 24857,
+            "quote": "  Newly authored owner contract under DL-045 for tool.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2; Contracts_V0.md 3 tool.denied, CV-355/CV-366). Only the already specified policy/user-denial path is prepared, before any dispatch; never executes or contributes to executed-call rollups. Fi",
+            "superseded_quote": "  Newly authored owner contract under DL-045 for tool.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2; Contracts_V0.md 3 tool.denied, CV-355/CV-366). Denial follows policy/FileSafe/schema refusal and precedes any tool dispatch; never executes or contributes to executed-call tool_usage rollups. Current runtime node denials retain al",
+            "refresh_reason": "Cycle-1 search excerpt predates the confirmed F2 policy/user-denial repair; current quote re-adjudicated against CV-610. FileSafe remains stopped."
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24909,
+            "line": 24973,
             "quote": "  Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4). A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used "
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 600,
-            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+            "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
           },
           {
             "path": "Plans/Executor_Protocol.md",
@@ -2497,7 +2499,7 @@
           {
             "path": "Plans/Tools.md",
             "line": 81,
-            "quote": "- **deny** — Tool is blocked; `tool.denied` event emitted."
+            "quote": "- **deny** \u2014 Tool is blocked; `tool.denied` event emitted."
           },
           {
             "path": "Plans/Tools.md",
@@ -2517,12 +2519,12 @@
           {
             "path": "Plans/Tools.md",
             "line": 1496,
-            "quote": "4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6)."
+            "quote": "4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (\u00a710.6)."
           },
           {
             "path": "Plans/Tools.md",
             "line": 1498,
-            "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+            "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per \u00a78.0."
           },
           {
             "path": "Plans/Tools.md",
@@ -2627,12 +2629,12 @@
           {
             "path": "Plans/storage-plan.md",
             "line": 1628,
-            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md \u00a78.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
           },
           {
             "path": "Plans/storage-plan.md",
             "line": 1663,
-            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
           },
           {
             "path": "Plans/storage-plan.md",
@@ -2651,12 +2653,12 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29811,
+            "line": 29886,
             "quote": "### SP-590 - tool.denied prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29819,
+            "line": 29894,
             "quote": "  Newly authored owner contract under DL-045 for tool.denied only. Producer ToolDispatcher.denied calls storage.dt.tool_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, inclu"
           }
         ],
@@ -2755,7 +2757,7 @@
           {
             "path": "Plans/Automated_Testing_System.md",
             "line": 2345,
-            "quote": "The L-020 static oracle scans exactly the nine current command surfaces—UI Command Catalog, production Wiring Matrix, UI Wiring Rules, Commands System, Assistant Chat, Final GUI, Worktree Git Improvement, Executor Protocol, and Orchestrator Page—and requires zero `retry_scope`. The canonical runtime command, Orchestrator wrapper, and compatibility alias must have one production row each, the same `handlers::runtime::restore_safe_point_then_retry`, `safe_point.restored`, event effect, state/disabled projections, idempotency, result, and admission contract. Wrapper and alias accept the same canonical fields plus optional `permission_snapshot_id`; admission validates it against current permissi"
+            "quote": "The L-020 static oracle scans exactly the nine current command surfaces\u2014UI Command Catalog, production Wiring Matrix, UI Wiring Rules, Commands System, Assistant Chat, Final GUI, Worktree Git Improvement, Executor Protocol, and Orchestrator Page\u2014and requires zero `retry_scope`. The canonical runtime command, Orchestrator wrapper, and compatibility alias must have one production row each, the same `handlers::runtime::restore_safe_point_then_retry`, `safe_point.restored`, event effect, state/disabled projections, idempotency, result, and admission contract. Wrapper and alias accept the same canonical fields plus optional `permission_snapshot_id`; admission validates it against current permissi"
           },
           {
             "path": "Plans/Automated_Testing_System.md",
@@ -2890,15 +2892,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 600,
-          "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 126527,
+          "line": 127034,
           "quote": "            \"const\": \"tool.execution_completed\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.tool_execution_completed.append.v1@1.0.0",
         "consumer_id": "storage.dt.tool_execution_completed.reader.v1",
@@ -2913,7 +2915,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7396,
+            "line": 7430,
             "quote": "   For tool.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
           },
           {
@@ -2938,27 +2940,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24835,
+            "line": 24889,
             "quote": "### CV-611 - tool.execution_completed prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24843,
+            "line": 24897,
             "quote": "  Newly authored owner contract under DL-045 for tool.execution_completed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Contracts_V0.md:941-942; Tools.md 8.2). Exactly one terminal record follows a matching execution_started; result_ref joins original result custody and duration_ms is nonnegative. Replay never reexecutes. The closed payload is Plans/dt_"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 600,
-            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+            "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29844,
+            "line": 29928,
             "quote": "### SP-591 - tool.execution_completed prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29852,
+            "line": 29936,
             "quote": "  Newly authored owner contract under DL-045 for tool.execution_completed only. Producer ToolRunner.execution_completed calls storage.dt.tool_execution_completed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_appen"
           }
         ],
@@ -3010,15 +3012,15 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 600,
-          "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 126832,
+          "line": 127385,
           "quote": "            \"const\": \"tool.execution_started\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.tool_execution_started.append.v1@1.0.0",
         "consumer_id": "storage.dt.tool_execution_started.reader.v1",
@@ -3033,7 +3035,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7427,
+            "line": 7469,
             "quote": "   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash"
           },
           {
@@ -3063,27 +3065,27 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24868,
+            "line": 24927,
             "quote": "### CV-612 - tool.execution_started prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24876,
+            "line": 24935,
             "quote": "  Newly authored owner contract under DL-045 for tool.execution_started@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Contracts_V0.md:941-942; Tools.md 8.2). After every dispatch policy/schema/hook gate succeeds, record the admitted tool-use start before invoking the tool. No start is emitted for a policy denial. The closed payload is Plans/dt_event_con"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 600,
-            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+            "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29877,
+            "line": 29969,
             "quote": "### SP-592 - tool.execution_started prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29885,
+            "line": 29977,
             "quote": "  Newly authored owner contract under DL-045 for tool.execution_started only. Producer ToolRunner.execution_started calls storage.dt.tool_execution_started.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_rece"
           }
         ],
@@ -3270,7 +3272,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 600,
-          "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+          "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
         },
         {
           "path": "Plans/LSPSupport.md",
@@ -3340,7 +3342,7 @@
         {
           "path": "Plans/Tools.md",
           "line": 1498,
-          "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+          "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per \u00a78.0."
         },
         {
           "path": "Plans/Tools.md",
@@ -3560,12 +3562,12 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 1628,
-          "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+          "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md \u00a78.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
         },
         {
           "path": "Plans/storage-plan.md",
           "line": 1663,
-          "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+          "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
         },
         {
           "path": "Plans/storage-plan.md",
@@ -3594,7 +3596,7 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 127137,
+          "line": 127736,
           "quote": "            \"const\": \"tool.invoked\""
         },
         {
@@ -3613,7 +3615,7 @@
           "quote": "- 'tool.invoked.index_used'"
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.tool_invoked.append.v1@1.0.0",
         "consumer_id": "storage.dt.tool_invoked.reader.v1",
@@ -3663,7 +3665,7 @@
           },
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7427,
+            "line": 7469,
             "quote": "   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash"
           },
           {
@@ -3793,18 +3795,18 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24901,
+            "line": 24965,
             "quote": "### CV-613 - tool.invoked prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24909,
+            "line": 24973,
             "quote": "  Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4). A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used "
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 600,
-            "quote": "| `Plans/Tools.md` | — | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | — |"
+            "quote": "| `Plans/Tools.md` | \u2014 | `tool.denied`, `tool.execution_completed`, `tool.execution_started`, `tool.invoked` | \u2014 |"
           },
           {
             "path": "Plans/LSPSupport.md",
@@ -3874,7 +3876,7 @@
           {
             "path": "Plans/Tools.md",
             "line": 1498,
-            "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0."
+            "quote": "6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per \u00a78.0."
           },
           {
             "path": "Plans/Tools.md",
@@ -4094,12 +4096,12 @@
           {
             "path": "Plans/storage-plan.md",
             "line": 1628,
-            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md \u00a78.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
           },
           {
             "path": "Plans/storage-plan.md",
             "line": 1663,
-            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
           },
           {
             "path": "Plans/storage-plan.md",
@@ -4123,12 +4125,12 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29910,
+            "line": 30010,
             "quote": "### SP-593 - tool.invoked prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29918,
+            "line": 30018,
             "quote": "  Newly authored owner contract under DL-045 for tool.invoked only. Producer ToolDispatcher.completed_invocation calls storage.dt.tool_invoked.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v"
           },
           {
@@ -4307,7 +4309,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 612,
-          "quote": "| `Plans/usage-feature.md` | — | `usage.event` | — |"
+          "quote": "| `Plans/usage-feature.md` | \u2014 | `usage.event` | \u2014 |"
         },
         {
           "path": "Plans/Executor_Protocol.md",
@@ -4462,12 +4464,12 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 1628,
-          "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+          "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md \u00a78.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
         },
         {
           "path": "Plans/storage-plan.md",
           "line": 1663,
-          "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+          "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
         },
         {
           "path": "Plans/storage-plan.md",
@@ -4492,12 +4494,12 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 2052,
-          "quote": "  Build: analytics scan job (periodic) that scans the Parquet archive of sealed segments plus the unsealed seglog tail, in sequence order, over a time range (SP-341; there is no JSONL source, SP-339), computes 5h/7d usage rollups, tool latency, and tool_usage (per-tool count, p50/p95, error_count per Plans/Tools.md §8.4), writes to redb `rollups` namespace, and stores a scan checkpoint. Usage roll"
+          "quote": "  Build: analytics scan job (periodic) that scans the Parquet archive of sealed segments plus the unsealed seglog tail, in sequence order, over a time range (SP-341; there is no JSONL source, SP-339), computes 5h/7d usage rollups, tool latency, and tool_usage (per-tool count, p50/p95, error_count per Plans/Tools.md \u00a78.4), writes to redb `rollups` namespace, and stores a scan checkpoint. Usage roll"
         },
         {
           "path": "Plans/storage-plan.md",
           "line": 2056,
-          "quote": "  Build: wire chat persistence (thread list and thread content to seglog; open a thread from the derived render-page store, meaning `thread_head`, the newest sealed page and the hot tail (SP-338), and page older items in with mandatory load-older (ACD-242); opening never replays the thread's events; per assistant-chat-design), editor state to redb `editor` namespace (FileManager.md §2.9), Usage/da"
+          "quote": "  Build: wire chat persistence (thread list and thread content to seglog; open a thread from the derived render-page store, meaning `thread_head`, the newest sealed page and the hot tail (SP-338), and page older items in with mandatory load-older (ACD-242); opening never replays the thread's events; per assistant-chat-design), editor state to redb `editor` namespace (FileManager.md \u00a72.9), Usage/da"
         },
         {
           "path": "Plans/storage-plan.md",
@@ -4591,7 +4593,7 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 127442,
+          "line": 128087,
           "quote": "            \"const\": \"usage.event\""
         },
         {
@@ -4607,7 +4609,7 @@
         {
           "path": "Plans/usage-feature.md",
           "line": 394,
-          "quote": "For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/o"
+          "quote": "For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** \u2192 adapter \u2192 **LanguageModelV2Usage** (or equivalent) \u2192 **getUsage-style normalization** (e.g. Session.getUsage) \u2192 **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/o"
         },
         {
           "path": "Plans/usage-feature.md",
@@ -4645,7 +4647,7 @@
           "quote": "  - \"usage.event\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.usage_event.append.v1@1.0.0",
         "consumer_id": "storage.dt.usage_event.reader.v1",
@@ -4670,7 +4672,7 @@
           },
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7458,
+            "line": 7508,
             "quote": "   For usage.event alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
           },
           {
@@ -4730,18 +4732,18 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24934,
+            "line": 25005,
             "quote": "### CV-614 - usage.event prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24942,
+            "line": 25013,
             "quote": "  Newly authored owner contract under DL-045 for usage.event@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/usage-feature.md (usage-feature.md UF-085, UF-108; storage-plan.md SP-341; CV-366). Normalize actual provider/header/CLI/estimate observations; null means unknown, never zero. Cache/reasoning subset fields are not added to inclusive totals. Adjustments repla"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 612,
-            "quote": "| `Plans/usage-feature.md` | — | `usage.event` | — |"
+            "quote": "| `Plans/usage-feature.md` | \u2014 | `usage.event` | \u2014 |"
           },
           {
             "path": "Plans/Executor_Protocol.md",
@@ -4896,12 +4898,12 @@
           {
             "path": "Plans/storage-plan.md",
             "line": 1628,
-            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
+            "quote": "**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md \u00a78.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 "
           },
           {
             "path": "Plans/storage-plan.md",
             "line": 1663,
-            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
+            "quote": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md."
           },
           {
             "path": "Plans/storage-plan.md",
@@ -4926,12 +4928,12 @@
           {
             "path": "Plans/storage-plan.md",
             "line": 2052,
-            "quote": "  Build: analytics scan job (periodic) that scans the Parquet archive of sealed segments plus the unsealed seglog tail, in sequence order, over a time range (SP-341; there is no JSONL source, SP-339), computes 5h/7d usage rollups, tool latency, and tool_usage (per-tool count, p50/p95, error_count per Plans/Tools.md §8.4), writes to redb `rollups` namespace, and stores a scan checkpoint. Usage roll"
+            "quote": "  Build: analytics scan job (periodic) that scans the Parquet archive of sealed segments plus the unsealed seglog tail, in sequence order, over a time range (SP-341; there is no JSONL source, SP-339), computes 5h/7d usage rollups, tool latency, and tool_usage (per-tool count, p50/p95, error_count per Plans/Tools.md \u00a78.4), writes to redb `rollups` namespace, and stores a scan checkpoint. Usage roll"
           },
           {
             "path": "Plans/storage-plan.md",
             "line": 2056,
-            "quote": "  Build: wire chat persistence (thread list and thread content to seglog; open a thread from the derived render-page store, meaning `thread_head`, the newest sealed page and the hot tail (SP-338), and page older items in with mandatory load-older (ACD-242); opening never replays the thread's events; per assistant-chat-design), editor state to redb `editor` namespace (FileManager.md §2.9), Usage/da"
+            "quote": "  Build: wire chat persistence (thread list and thread content to seglog; open a thread from the derived render-page store, meaning `thread_head`, the newest sealed page and the hot tail (SP-338), and page older items in with mandatory load-older (ACD-242); opening never replays the thread's events; per assistant-chat-design), editor state to redb `editor` namespace (FileManager.md \u00a72.9), Usage/da"
           },
           {
             "path": "Plans/storage-plan.md",
@@ -5020,37 +5022,37 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29753,
+            "line": 29813,
             "quote": "  Newly authored owner contract under DL-045 for requirements.clarification_requested only. Producer RequirementsQualityGate.request_clarification calls storage.dt.requirements_clarification_requested.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adop"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29819,
+            "line": 29894,
             "quote": "  Newly authored owner contract under DL-045 for tool.denied only. Producer ToolDispatcher.denied calls storage.dt.tool_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, inclu"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29918,
+            "line": 30018,
             "quote": "  Newly authored owner contract under DL-045 for tool.invoked only. Producer ToolDispatcher.completed_invocation calls storage.dt.tool_invoked.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29943,
+            "line": 30052,
             "quote": "### SP-594 - usage.event prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29951,
+            "line": 30060,
             "quote": "  Newly authored owner contract under DL-045 for usage.event only. Producer UsageTracker.normalize_finish_step calls storage.dt.usage_event.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 b"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29984,
+            "line": 30102,
             "quote": "  Newly authored owner contract under DL-045 for worktree.created only. Producer WorktreeLifecycleOwner.created calls storage.dt.worktree_created.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 30017,
+            "line": 30142,
             "quote": "  Newly authored owner contract under DL-045 for worktree.deleted only. Producer WorktreeLifecycleOwner.deleted calls storage.dt.worktree_deleted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
           },
           {
@@ -5066,7 +5068,7 @@
           {
             "path": "Plans/usage-feature.md",
             "line": 394,
-            "quote": "For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/o"
+            "quote": "For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** \u2192 adapter \u2192 **LanguageModelV2Usage** (or equivalent) \u2192 **getUsage-style normalization** (e.g. Session.getUsage) \u2192 **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/o"
           },
           {
             "path": "Plans/usage-feature.md",
@@ -5333,7 +5335,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 602,
-          "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+          "quote": "| `Plans/WorktreeGitImprovement.md` | \u2014 | `config.migrated`, `worktree.created`, `worktree.deleted` | \u2014 |"
         },
         {
           "path": "Plans/WorktreeGitImprovement.md",
@@ -5347,11 +5349,11 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 127747,
+          "line": 128438,
           "quote": "            \"const\": \"worktree.created\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.worktree_created.append.v1@1.0.0",
         "consumer_id": "storage.dt.worktree_created.reader.v1",
@@ -5366,7 +5368,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7458,
+            "line": 7508,
             "quote": "   For usage.event alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body"
           },
           {
@@ -5391,18 +5393,18 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24967,
+            "line": 25047,
             "quote": "### CV-615 - worktree.created prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 24975,
+            "line": 25055,
             "quote": "  Newly authored owner contract under DL-045 for worktree.created@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947). Original allocation ownership and branch/path custody must exist before created is appended and before a node starts work. Creation replay inspects original allocati"
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 602,
-            "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+            "quote": "| `Plans/WorktreeGitImprovement.md` | \u2014 | `config.migrated`, `worktree.created`, `worktree.deleted` | \u2014 |"
           },
           {
             "path": "Plans/WorktreeGitImprovement.md",
@@ -5416,12 +5418,12 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29976,
+            "line": 30094,
             "quote": "### SP-595 - worktree.created prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 29984,
+            "line": 30102,
             "quote": "  Newly authored owner contract under DL-045 for worktree.created only. Producer WorktreeLifecycleOwner.created calls storage.dt.worktree_created.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
           }
         ],
@@ -5463,7 +5465,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 602,
-          "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+          "quote": "| `Plans/WorktreeGitImprovement.md` | \u2014 | `config.migrated`, `worktree.created`, `worktree.deleted` | \u2014 |"
         },
         {
           "path": "Plans/WorktreeGitImprovement.md",
@@ -5482,11 +5484,11 @@
         },
         {
           "path": "Plans/storage_value_registry.json",
-          "line": 128052,
+          "line": 128789,
           "quote": "            \"const\": \"worktree.deleted\""
         }
       ],
-      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family’s binding.",
+      "negative_evidence": "No exact family-specific versioned append admission, operating consumer and checkpoint tuple was defined in inspected matches. Existing EventRecord identity, SP-278 token/index custody and SP-286/CV-339 first receipt roles are reused explicitly; no sibling binding is treated as this family\u2019s binding.",
       "new_bindings": {
         "append_admission": "storage.dt.worktree_deleted.append.v1@1.0.0",
         "consumer_id": "storage.dt.worktree_deleted.reader.v1",
@@ -5501,7 +5503,7 @@
         "matches": [
           {
             "path": "Plans/Automated_Testing_System.md",
-            "line": 7489,
+            "line": 7547,
             "quote": "   For worktree.deleted alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after"
           },
           {
@@ -5526,18 +5528,18 @@
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 25000,
+            "line": 25085,
             "quote": "### CV-616 - worktree.deleted prepared event contract"
           },
           {
             "path": "Plans/Contracts_V0.md",
-            "line": 25008,
+            "line": 25093,
             "quote": "  Newly authored owner contract under DL-045 for worktree.deleted@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947). Delete only after original result custody, grace period, file-lock and active-lock/safe-point dependency checks pass. Active lock references must be empty or proven "
           },
           {
             "path": "Plans/Decision_Log.md",
             "line": 602,
-            "quote": "| `Plans/WorktreeGitImprovement.md` | — | `config.migrated`, `worktree.created`, `worktree.deleted` | — |"
+            "quote": "| `Plans/WorktreeGitImprovement.md` | \u2014 | `config.migrated`, `worktree.created`, `worktree.deleted` | \u2014 |"
           },
           {
             "path": "Plans/WorktreeGitImprovement.md",
@@ -5556,12 +5558,12 @@
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 30009,
+            "line": 30134,
             "quote": "### SP-596 - worktree.deleted prepared event contract"
           },
           {
             "path": "Plans/storage-plan.md",
-            "line": 30017,
+            "line": 30142,
             "quote": "  Newly authored owner contract under DL-045 for worktree.deleted only. Producer WorktreeLifecycleOwner.deleted calls storage.dt.worktree_deleted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolv"
           }
         ],
@@ -5575,5 +5577,10 @@
         }
       }
     }
-  ]
+  ],
+  "round6_locator_refresh": {
+    "base_head": "6a97cc07e83ff496c00dedbf90c98c6d558e23c6",
+    "changed_locators": 103,
+    "method": "Exact current quoted text; closest matching source occurrence preserves the original locator when a quote repeats. The one retired pre-F2 denial excerpt is preserved explicitly and replaced by its current CV-610 text."
+  }
 }

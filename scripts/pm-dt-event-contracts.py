@@ -160,13 +160,56 @@ def sha(value):
     return hashlib.sha256(canonical(value)).hexdigest()
 
 
+def retained_schema(schema):
+    """Restore only the declared earlier numeric bounds; keep every other guard."""
+    if isinstance(schema, list):
+        return [retained_schema(v) for v in schema]
+    if not isinstance(schema, dict):
+        return schema
+    result = {k: retained_schema(v) for k, v in schema.items() if k != 'x-dt-retained-number-bounds'}
+    for key, value in schema.get('x-dt-retained-number-bounds', {}).items():
+        if key not in ['minimum', 'maximum']:
+            continue
+        if value is None:
+            result.pop(key, None)
+        else:
+            result[key] = value
+    return result
+
+
+def current_numbers_valid(value):
+    """Equivalent to dt_number_domain.schema.json, including finite decimals."""
+    if isinstance(value, dict):
+        return all(current_numbers_valid(v) for v in value.values())
+    if isinstance(value, list):
+        return all(current_numbers_valid(v) for v in value)
+    if type(value) in [int, float, Decimal]:
+        return -9007199254740991 <= value <= 9007199254740991
+    return value is None or type(value) in [str, bool]
+
+
+def unsigned_integer_valid(value):
+    return type(value) in [int, float] and current_numbers_valid(value) and value >= 0 and int(value) == value
+
+
 def producer_semantic_bytes(event):
     """CV-EventRecord's exact caller-owned projection and RFC 8785 hash domain.
 
-    This retry oracle's fixtures use RFC 8785's representable numeric domain;
-    pm.dt.source.json.v1 remains the separate exact-u64 source custody codec.
+    Current caller numbers are finite and within +/- (2**53 - 1). The source
+    custody codec and historical identities retain earlier exact integers.
     """
-    return rfc8785.dumps({key: event[key] for key in PRODUCER_FIELDS})
+    projection = {key: event[key] for key in PRODUCER_FIELDS}
+    if not current_numbers_valid(projection):
+        raise ValueError('numeric_domain_refused')
+    return rfc8785.dumps(projection)
+
+
+def semantic_digest_defined(event):
+    try:
+        producer_semantic_bytes(event)
+        return True
+    except (ValueError, TypeError):
+        return False
 
 
 def producer_semantic_digest(event):
@@ -269,7 +312,13 @@ def source_bytes(value):
     return application_bytes(value) if value['envelope_context']['scope_kind'] == 'application' else canonical(value)
 
 
-def identity(contract, payload, partition='project~cHJvamVjdC0x', application=None):
+def identity(contract, payload, partition='project~cHJvamVjdC0x', application=None, *, historical=False):
+    if type(historical) is not bool:
+        raise ValueError('schema_refused')
+    if not historical and not current_numbers_valid(payload):
+        raise ValueError('numeric_domain_refused')
+    if 'blocked_sequence' in contract['identity_fields'] and not Draft202012Validator({'type': 'integer', 'minimum': 0}).is_valid(payload['blocked_sequence']):
+        raise ValueError('schema_refused')
     # JSON Schema's integer domain includes 1.0. The exact source codec already
     # gives it the same spelling as 1; use that spelling in every identity too.
     # Never convert an exact u64 through binary64.
@@ -289,9 +338,11 @@ def identity(contract, payload, partition='project~cHJvamVjdC0x', application=No
 
 
 def append_model(seen, key, digest, result):
+    if type(key) is not str or type(digest) is not str:
+        return 'schema_refused', None
     if key in seen:
         old_digest, original = seen[key]
-        return ('original', original) if old_digest == digest else ('idempotency_conflict', None)
+        return ('original', original) if type(old_digest) is str and old_digest == digest else ('idempotency_conflict', None)
     seen[key] = (digest, copy.deepcopy(result))
     return 'appended', result
 
@@ -303,35 +354,35 @@ def transition(name, payload, before, outcome):
     if name == 'approval.requested':
         return before['episode_state'] == 'blocked' and bool(payload['allowed_action_ids']) and payload['allowed_action_ids'] == before['allowed_action_ids'] and tool_request_join(payload, before)
     if name == 'approval.granted':
-        return before['episode_state'] == 'requested' and before['human_authenticated'] and not before['paused'] and not before['revoked'] and payload['allowed_action_id'] in before['allowed_action_ids'] and tool_request_join(payload, before)
+        return before['episode_state'] == 'requested' and before['human_authenticated'] is True and before['paused'] is False and before['revoked'] is False and payload['allowed_action_id'] in before['allowed_action_ids'] and tool_request_join(payload, before)
     if name == 'approval.denied':
         return before['episode_state'] == 'requested' and tool_request_join(payload, before)
     if name == 'approval.timeout':
         return before['episode_state'] == 'requested' and time_value(payload['ts']) >= time_value(before['deadline_at_utc']) and tool_request_join(payload, before)
     if name == 'config.migrated':
-        return before['first_load'] and payload['legacy_value'] == before['legacy_value'] and payload['source_ref'] == before['source_ref'] and payload['source_sha256'] == before['source_sha256'] and payload['result_ref'] == outcome['committed_settings_ref'] and {'single': 'None', 'per_phase': 'Phase', 'per_task': 'Task'}.get(payload['legacy_value']) == payload['enum_value']
+        return before['first_load'] is True and payload['legacy_value'] == before['legacy_value'] and payload['source_ref'] == before['source_ref'] and payload['source_sha256'] == before['source_sha256'] and payload['result_ref'] == outcome['committed_settings_ref'] and {'single': 'None', 'per_phase': 'Phase', 'per_task': 'Task'}.get(payload['legacy_value']) == payload['enum_value']
     if name == 'gate.evaluation_started':
         return before['evaluation_state'] == 'allocated' and payload['evaluation_id'] == before['evaluation_id']
     if name == 'gate.failed':
         return before['evaluation_state'] == 'started' and payload['evaluation_id'] == before['evaluation_id'] and payload['gate_id'] == before['gate_id'] and outcome['report_status'] == 'FAIL' and not outcome['question_ids'] and bool(payload['evidence_refs']) and payload['evidence_refs'] == outcome['evidence_refs'] and payload['failure_reason_code'] == outcome['failure_reason_code']
     if name == 'gate.passed':
-        return before['evaluation_state'] == 'started' and payload['evaluation_id'] == before['evaluation_id'] and payload['gate_id'] == before['gate_id'] and outcome['report_status'] == 'PASS' and not outcome['question_ids'] and outcome['all_predicates_pass'] and bool(payload['evidence_refs']) and payload['evidence_refs'] == outcome['evidence_refs']
+        return before['evaluation_state'] == 'started' and payload['evaluation_id'] == before['evaluation_id'] and payload['gate_id'] == before['gate_id'] and outcome['report_status'] == 'PASS' and not outcome['question_ids'] and outcome['all_predicates_pass'] is True and bool(payload['evidence_refs']) and payload['evidence_refs'] == outcome['evidence_refs']
     if name == 'requirements.clarification_requested':
-        return before['report_status'] == 'BLOCKED' and bool(before['question_ids']) and all(payload[k] == before[k] for k in ['question_ids', 'report_ref', 'wizard_id', 'thread_id'])
+        return before['report_status'] == 'BLOCKED' and bool(before['question_ids']) and all(canonical(payload[k]) == canonical(before[k]) for k in ['question_ids', 'report_ref', 'wizard_id', 'thread_id'])
     if name == 'run.background_enqueued':
-        return before['queue_state'] == 'committed' and all(payload[k] == before[k] for k in ['enqueue_id', 'queue_record_ref', 'scope_ref', 'host_ref', 'root_ref'])
+        return before['queue_state'] == 'committed' and all(canonical(payload[k]) == canonical(before[k]) for k in ['enqueue_id', 'queue_record_ref', 'scope_ref', 'host_ref', 'root_ref'])
     if name == 'tool.denied':
         fields = ['denial_reason_code', 'blocked_sequence', 'approval_scope_key', 'blocked_reason_code', 'failure_class', 'allowed_action_ids', 'headless_denied', 'permission_snapshot_id', 'executed_at_all']
-        return denial_emission(before) == 'emit' and all(payload[k] == before[k] for k in fields) and not payload['executed_at_all'] and payload['headless_denied'] == (payload['blocked_reason_code'] == 'headless_ask_denied') and payload['failure_class'] is None
+        return denial_emission(before) == 'emit' and all(canonical(payload[k]) == canonical(before[k]) for k in fields) and payload['executed_at_all'] is False and payload['headless_denied'] is (payload['blocked_reason_code'] == 'headless_ask_denied') and payload['failure_class'] is None
     if name == 'tool.execution_completed':
-        return before['execution_state'] == 'started' and all(payload.get(k) == outcome[k] for k in ['result_ref', 'outcome', 'duration_ms'])
+        return before['execution_state'] == 'started' and all(canonical(payload.get(k)) == canonical(outcome[k]) for k in ['result_ref', 'outcome', 'duration_ms'])
     if name == 'tool.execution_started':
-        return before['execution_state'] == 'admitted' and before['policy_decision'] == 'allow' and before['schema_valid'] and before['hooks_pass']
+        return before['execution_state'] == 'admitted' and before['policy_decision'] == 'allow' and before['schema_valid'] is True and before['hooks_pass'] is True
     if name == 'tool.invoked':
         request = before['web_request']
         meta = payload.get('meta')
-        web_join = request is None and meta is None or request is not None and meta is not None and payload['tool_name'] == meta['tool_id'] and all(meta.get(k) == v for k, v in request.items() if k != 'parent_event_id')
-        return web_join and before['dispatch_state'] == 'started' and outcome['dispatch_state'] == 'attempted_completed' and all(payload.get(k) == outcome[k] for k in ['success', 'latency_ms', 'index_used', 'meta'])
+        web_join = request is None and meta is None or request is not None and meta is not None and payload['tool_name'] == meta['tool_id'] and all(canonical(meta.get(k)) == canonical(v) for k, v in request.items() if k != 'parent_event_id')
+        return web_join and before['dispatch_state'] == 'started' and outcome['dispatch_state'] == 'attempted_completed' and all(canonical(payload.get(k)) == canonical(outcome[k]) for k in ['success', 'latency_ms', 'index_used', 'meta'])
     if name == 'usage.event':
         previous = before['prior_settlement_status']
         state = payload['settlement_status']
@@ -345,11 +396,11 @@ def transition(name, payload, before, outcome):
             return False
         if state == 'adjusted' and not payload.get('adjusted_at_utc'):
             return False
-        return payload.get('parent_run_id') == before['parent_run_id'] and all(payload.get(k) == before[k] for k in ['usage_record_id', 'dedupe_key', 'provider_attempt_ref', 'parent_usage_record_id', 'account_id', 'billing_entity_id', 'provider_account_ref']) and payload['raw_payload_ref'] == before['observation_ref'] and payload['provider_payload_hash'] == before['observation_sha256'] and usage_values_valid(payload)
+        return payload.get('parent_run_id') == before['parent_run_id'] and all(canonical(payload.get(k)) == canonical(before[k]) for k in ['usage_record_id', 'dedupe_key', 'provider_attempt_ref', 'parent_usage_record_id', 'account_id', 'billing_entity_id', 'provider_account_ref']) and payload['raw_payload_ref'] == before['observation_ref'] and payload['provider_payload_hash'] == before['observation_sha256'] and usage_values_valid(payload)
     if name == 'worktree.created':
-        return before['allocation_state'] == 'allocated' and outcome['allocation_state'] == 'created' and all(payload.get(k) == before[k] for k in ['branch_name', 'worktree_path', 'repo_id', 'run_id', 'lane_id', 'package_id'])
+        return before['allocation_state'] == 'allocated' and outcome['allocation_state'] == 'created' and all(canonical(payload.get(k)) == canonical(before[k]) for k in ['branch_name', 'worktree_path', 'repo_id', 'run_id', 'lane_id', 'package_id'])
     if name == 'worktree.deleted':
-        return before['allocation_state'] == 'cleanup_eligible' and outcome['allocation_state'] == 'deleted' and before['elapsed_grace_ms'] >= payload['grace_period_ms'] and before['file_lock_checked'] and payload['file_lock_checked'] and not any(before[k] for k in ['active_lock_refs', 'safe_point_refs', 'terminal_session_refs', 'editor_session_refs', 'blocked_recovery_refs']) and not payload.get('active_lock_refs') and not payload.get('safe_point_refs') and all(payload.get(k) == before[k] for k in ['repo_id', 'run_id', 'lane_id', 'package_id'])
+        return before['allocation_state'] == 'cleanup_eligible' and outcome['allocation_state'] == 'deleted' and unsigned_integer_valid(before['elapsed_grace_ms']) and unsigned_integer_valid(payload['grace_period_ms']) and before['elapsed_grace_ms'] >= payload['grace_period_ms'] and before['file_lock_checked'] is True and payload['file_lock_checked'] is True and not any(before[k] for k in ['active_lock_refs', 'safe_point_refs', 'terminal_session_refs', 'editor_session_refs', 'blocked_recovery_refs']) and not payload.get('active_lock_refs') and not payload.get('safe_point_refs') and all(canonical(payload.get(k)) == canonical(before[k]) for k in ['repo_id', 'run_id', 'lane_id', 'package_id'])
     return False
 
 
@@ -387,9 +438,9 @@ def tool_request_join(payload, before):
 
 def usage_values_valid(p):
     cost = p['cost']
-    if p['cost_microdollars'] != cost['cost_microdollars']:
+    if canonical(p['cost_microdollars']) != canonical(cost['cost_microdollars']):
         return False
-    if any(p[k] != cost[k] for k in ['currency', 'cost_status', 'pricing_snapshot_id', 'pricing_source', 'pricing_effective_at', 'pricing_version']):
+    if any(canonical(p[k]) != canonical(cost[k]) for k in ['currency', 'cost_status', 'pricing_snapshot_id', 'pricing_source', 'pricing_effective_at', 'pricing_version']):
         return False
     if cost['cost_status'] == 'unknown' and (cost['cost_microdollars'] is not None or cost['cost_minor_units'] is not None):
         return False
@@ -409,6 +460,11 @@ def usage_values_valid(p):
 
 
 def accounting_totals(p):
+    if any(type(p['counting_semantics'][k]) is not bool for k in ['cache_is_input_subset', 'reasoning_is_output_subset']):
+        raise ValueError('schema_refused')
+    properties = load('Plans/dt_event_contracts.schema.json')['$defs']['usage_event']['properties']
+    if any(not Draft202012Validator(properties[k]).is_valid(p[k]) for k in ['input_total', 'output_total', 'cache_read', 'cache_write', 'reasoning', 'provider_total', 'cost_microdollars']):
+        raise ValueError('schema_refused')
     # cache_write_1h is a subset of cache_write, never a second bucket.
     incoming, outgoing = p['input_total'], p['output_total']
     if incoming is not None and not p['counting_semantics']['cache_is_input_subset']:
@@ -420,6 +476,10 @@ def accounting_totals(p):
 
 
 def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False, *, historical=False):
+    if type(historical) is not bool:
+        return 'schema_refused'
+    if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
+        return 'schema_refused'
     if not historical and event['replay_policy'] != 'dedupe_by_idempotency_key':
         return 'replay_only_not_appendable' if event['replay_policy'] == 'projector_replay_only' else 'join_refused'
     if event['payload_ref'] is None:
@@ -433,9 +493,11 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     source_definition = slug + ('_application_source' if source_is_app else '_source')
     if source_definition not in schemas:
         return 'scope_refused'
-    validator = Draft202012Validator(schemas[source_definition], format_checker=FormatChecker())
+    validator = Draft202012Validator(retained_schema(schemas[source_definition]) if historical else schemas[source_definition], format_checker=FormatChecker())
     if list(validator.iter_errors(prepared)) or list(validator.iter_errors(completed)):
         return 'schema_refused'
+    if not historical and (not current_numbers_valid(event) or not semantic_digest_defined(event)):
+        return 'numeric_domain_refused'
     if len(source_bytes(prepared)) > 1048576:
         return 'source_stage_too_large'
     if len(source_bytes(completed)) > 1048576:
@@ -443,10 +505,10 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     if prepared['stage'] != 'prepared' or completed['stage'] != 'completed' or completed['prepared_sha256'] != hashlib.sha256(source_bytes(prepared)).hexdigest():
         return 'original_source_refused'
     immutable = (['application_scope', 'original_owner_operation_id', 'owner_operation_id'] if source_is_app else []) + ['storage_instance_id', 'scope_partition', 'event_type', 'event_id', 'idempotency_key', 'producer', 'owner_ref', 'owner_revision', 'subject', 'before', 'captured_at_utc', 'runtime_context']
-    if any(prepared[k] != completed[k] for k in immutable):
+    if any(canonical(prepared[k]) != canonical(completed[k]) for k in immutable):
         return 'original_source_refused'
     a, b = prepared['envelope_context'], completed['envelope_context']
-    if any(a[k] != b[k] for k in a if k != 'occurred_at_utc'):
+    if any(canonical(a[k]) != canonical(b[k]) for k in a if k != 'occurred_at_utc'):
         return 'original_source_refused'
     p = completed['payload']
     partition = partition_for(event)
@@ -458,19 +520,19 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     if partition != completed['scope_partition'] or (c['scope_policy'] == 'project_only' and event['scope_kind'] != 'project'):
         return 'scope_refused'
     if event['payload_ref'] is not None:
-        if not payload_ref_verified or canonical(resolved_payload) != canonical(p):
+        if payload_ref_verified is not True or canonical(resolved_payload) != canonical(p):
             return 'payload_unavailable'
     elif canonical(event['payload']) != canonical(p):
         return 'join_refused'
     # Scope has its own guard above; keep this join independent of that rule.
-    if any(event[k] != b[k] for k in b if k != 'scope_kind'):
+    if any(canonical(event[k]) != canonical(b[k]) for k in b if k != 'scope_kind'):
         return 'join_refused'
     if event['event_type'] != c['event_type'] or event['payload_schema_id'] != c['payload_schema_id']:
         return 'join_refused'
-    if any(p[k] != completed['subject'][k] for k in c['identity_fields']):
+    if any(canonical(p[k]) != canonical(completed['subject'][k]) for k in c['identity_fields']):
         return 'join_refused'
     try:
-        key, eid = identity(c, p, partition, completed if partition == 'app' else None)
+        key, eid = identity(c, p, partition, completed if partition == 'app' else None, historical=historical)
     except ValueError:
         return 'identity_refused'
     if key != event['idempotency_key'] or eid != event['event_id'] or key != completed['idempotency_key'] or eid != completed['event_id']:
@@ -480,7 +542,7 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
             return 'join_refused'
     if event['occurred_at_utc'] != p.get('ts', p.get('observed_at_utc')):
         return 'join_refused'
-    if any(p.get(k) != v for k, v in completed['runtime_context'].items()):
+    if any(canonical(p.get(k)) != canonical(v) for k, v in completed['runtime_context'].items()):
         return 'join_refused'
     if c['event_type'] == 'usage.event' and p['usage_event_ref'] != event['event_id']:
         return 'join_refused'
@@ -497,24 +559,26 @@ def batch_join(parent, children):
         return False
     if pm['child_tool_use_ids'] != [v['event']['payload']['tool_use_id'] for v in children] or len(set(pm['child_tool_use_ids'])) != len(children):
         return False
+    if any(type(child['event']['payload']['success']) is not bool for child in children):
+        return False
     for child in children:
         e = child['event']; q = e['payload']; cm = q['meta']
         if cm.get('batch_role') != 'child' or cm['batch_id'] != pm['batch_id'] or cm['parent_tool_use_id'] != p['tool_use_id'] or e['parent_event_id'] != parent['event']['event_id'] or not q.get('provider_attempt_ref') or q['tool_use_id'] == p['tool_use_id']:
             return False
         if any(e[k] != parent['event'][k] for k in ['run_id', 'attempt_id', 'project_id', 'scope_kind']):
             return False
-    return p['success'] == all(v['event']['payload']['success'] for v in children)
+    return p['success'] is all(v['event']['payload']['success'] for v in children)
 
 
 def recovery(c, f, case, schemas=None):
     """Original-owner/receipt adapters are supplied witnesses, not native authentication."""
     if case.get('replay_policy', f['event_record']['replay_policy']) == 'projector_replay_only':
         return {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}
-    if not case['admitted']:
+    if type(case['admitted']) is not bool or not case['admitted']:
         return {'result': 'admission_refused', 'external_effects': 0, 'append_count': 0, 'value': None}
-    if not case['source_present'] or not case['owner_proven'] or not case['backup_coherent'] or not case['permission'] or case['deleted']:
+    if any(type(case[k]) is not bool for k in ['source_present', 'owner_proven', 'backup_coherent', 'permission', 'deleted']) or not case['source_present'] or not case['owner_proven'] or not case['backup_coherent'] or not case['permission'] or case['deleted']:
         return {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}
-    if not case['outcome_committed']:
+    if type(case['outcome_committed']) is not bool or not case['outcome_committed']:
         return {'result': 'fenced', 'external_effects': 0, 'append_count': 0, 'value': None}
     unavailable = {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}
     schemas = load('Plans/dt_event_contracts.schema.json')['$defs'] if schemas is None else schemas
@@ -529,12 +593,14 @@ def recovery(c, f, case, schemas=None):
         return unavailable
     if canonical(event) != canonical(original['event']):
         return unavailable
+    if type(case['completed_present']) is not bool or type(case['append_issued']) is not bool:
+        return unavailable
     if not case['completed_present']:
         # Only finalize from the authenticated original outcome; never rerun it.
         return {'result': 'finalize_original', 'external_effects': 0, 'append_count': 0, 'value': f['completed_source']}
     if not case['append_issued']:
         return {'result': 'append_original', 'external_effects': 0, 'append_count': 1, 'value': f['event_record']}
-    if not case['receipt_custody'] or not case['full_flush']:
+    if any(type(case[k]) is not bool for k in ['receipt_custody', 'full_flush']) or not case['receipt_custody'] or not case['full_flush']:
         return {'result': 'fenced', 'external_effects': 0, 'append_count': 0, 'value': None}
     receipt = f['first_append_receipt']
     if canonical([receipt['event_id'], receipt['sequence_id']]) != canonical([event['event_id'], event['sequence_id']]):
@@ -545,13 +611,17 @@ def recovery(c, f, case, schemas=None):
 
 
 def checkpoint_result(c, old, proposed, context, schema):
+    if old is not None and not Draft202012Validator(retained_schema(schema), format_checker=FormatChecker()).is_valid(old):
+        return 'schema_refused'
+    if type(context['governed_rebuild']) is not bool:
+        return 'unavailable'
     if list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(proposed)):
         return 'schema_refused'
-    if not context['admitted'] or not context['reader_installed'] or context['withdrawn'] or not context['permission'] or context['deleted']:
+    if any(type(context[k]) is not bool for k in ['admitted', 'reader_installed', 'withdrawn', 'permission', 'deleted']) or not context['admitted'] or not context['reader_installed'] or context['withdrawn'] or not context['permission'] or context['deleted']:
         return 'unavailable'
-    if context['expected_previous'] != old or not context['lease_current']:
+    if type(context['lease_current']) is not bool or canonical(context['expected_previous']) != canonical(old) or not context['lease_current']:
         return 'cas_lost'
-    if proposed['index_read_token'] != context['current_token']:
+    if canonical(proposed['index_read_token']) != canonical(context['current_token']):
         return 'source_changed'
     t = proposed['index_read_token']
     if t['storage_instance_id'] != context['source_storage_instance_id']:
@@ -560,17 +630,19 @@ def checkpoint_result(c, old, proposed, context, schema):
         return 'source_changed'
     if t['checkpoint_key'] != 'event_record_index_checkpoint.v1:' + t['storage_instance_id'] or t['checkpoint_ref'] != t['checkpoint_key'] + '#/generations/' + t['generation_id'] or t['index_dataset_name'] != 'event_record_index.v2@' + t['generation_id']:
         return 'source_changed'
-    if proposed['scope_partition'] != context['scope_partition'] or not context['source_verified'] or not context['coverage_complete'] or not context['versions_supported']:
+    if any(type(context[k]) is not bool for k in ['source_verified', 'coverage_complete', 'versions_supported']) or proposed['scope_partition'] != context['scope_partition'] or not context['source_verified'] or not context['coverage_complete'] or not context['versions_supported']:
         return 'unavailable'
     rows = context['source_rows']
+    if type(rows) is not list or any(type(row) is not dict or not unsigned_integer_valid(row.get('sequence_id')) or any(type(row.get(k)) is not str or not row[k] for k in ['event_type', 'event_id', 'scope_partition']) for row in rows):
+        return 'unavailable'
     prefix = context['verified_prefix']
     expected_prefix = {'index_read_token': proposed['index_read_token'], 'row_set_sha256': sha(rows), 'row_count': len(rows), 'first_sequence_id': rows[0]['sequence_id'] if rows else None, 'through_sequence_id': rows[-1]['sequence_id'] if rows else None}
-    if prefix != expected_prefix:
+    if canonical(prefix) != canonical(expected_prefix):
         return 'unavailable'
     through = rows[-1]['sequence_id'] if rows else None
     matches = [r for r in rows if r['event_type'] == c['event_type'] and r['scope_partition'] == proposed['scope_partition']]
     last = matches[-1]['event_id'] if matches else None
-    if proposed['examined_through_sequence_id'] != through or proposed['last_applied_event_id'] != last or not proposed['filter_complete']:
+    if canonical(proposed['examined_through_sequence_id']) != canonical(through) or proposed['last_applied_event_id'] != last or not proposed['filter_complete']:
         return 'coverage_refused'
     if proposed['state'] != 'current' or proposed['health'] != 'healthy' or proposed['withdrawn_at_utc'] is not None:
         return 'unavailable'
@@ -590,7 +662,7 @@ def historical_read(c, prepared, completed, event, schemas, context):
     about whether an earlier operation was valid at its original occurrence.
     """
     unavailable = {'result': 'unavailable', 'value': None, 'external_effects': 0, 'append_count': 0}
-    if (not context['reader_installed'] or context['withdrawn'] or not context['permission']
+    if (any(type(context[k]) is not bool for k in ['reader_installed', 'withdrawn', 'permission', 'deleted', 'source_present', 'owner_proven', 'versions_supported']) or not context['reader_installed'] or context['withdrawn'] or not context['permission']
             or context['deleted'] or not context['source_present'] or not context['owner_proven']
             or not context['versions_supported']):
         return unavailable
@@ -654,7 +726,7 @@ def historical_results(c, f, schemas):
     return results
 
 
-def recommit(c, values):
+def recommit(c, values, *, historical=False):
     """Update observational identity copies after one semantic fixture change."""
     a, b, e = values
     if b['scope_partition'] == 'app':
@@ -662,7 +734,7 @@ def recommit(c, values):
                     for k in c['identity_fields']]
         operation = sha([c['event_type'], b['original_owner_operation_id']] + subjects)
         a['owner_operation_id'] = b['owner_operation_id'] = operation
-    key, eid = identity(c, b['payload'], b['scope_partition'], b if b['scope_partition'] == 'app' else None)
+    key, eid = identity(c, b['payload'], b['scope_partition'], b if b['scope_partition'] == 'app' else None, historical=historical)
     for value in [a, b, e]:
         value['idempotency_key'] = key; value['event_id'] = eid
     if c['event_type'] == 'usage.event':
@@ -873,10 +945,10 @@ def technical_checks(c, f, schemas, check):
                 if isinstance(value, list):
                     return [replace_sequence(v, number) for v in value]
                 return value
-            a, b, e = recommit(c, replace_sequence(values, integer))
-            check(source_valid(c, a, b, e, schemas) == 'accepted', name + ': exact u64 identity ' + str(integer))
+            a, b, e = recommit(c, replace_sequence(values, integer), historical=True)
+            check(source_valid(c, a, b, e, schemas, historical=True) == 'accepted', name + ': retained exact u64 identity ' + str(integer))
             decoded = [decode_source(canonical(v)) for v in [a, b, e]]
-            check(source_valid(c, *decoded, schemas) == 'accepted', name + ': exact u64 round trip ' + str(integer))
+            check(source_valid(c, *decoded, schemas, historical=True) == 'accepted', name + ': retained exact u64 round trip ' + str(integer))
             if integer == 1:
                 aa, bb, ee = recommit(c, replace_sequence(values, 1.0))
                 check(source_valid(c, aa, bb, ee, schemas) == 'accepted', name + ': schema-valid float integer source')
@@ -889,12 +961,309 @@ def technical_checks(c, f, schemas, check):
                 check(not Draft202012Validator(schemas[slug], format_checker=FormatChecker()).is_valid(replace_sequence(e['payload'], 1.25)), name + ': fractional identity refused')
         for integer in [9007199254740992, 18446744073709549568]:
             values = [f[k] for k in ['prepared_source', 'completed_source', 'event_record']]
-            integers = recommit(c, replace_sequence(values, integer))
-            floats = recommit(c, replace_sequence(values, float(integer)))
-            check(identity(c, integers[1]['payload']) == identity(c, floats[1]['payload']), name + ': large equal integer representation identity ' + str(integer))
-            check(source_valid(c, *floats, schemas) == 'accepted', name + ': large float integer source ' + str(integer))
-            check(source_valid(c, *[decode_source(canonical(v)) for v in floats], schemas) == 'accepted', name + ': large float integer persisted round trip ' + str(integer))
+            integers = recommit(c, replace_sequence(values, integer), historical=True)
+            floats = recommit(c, replace_sequence(values, float(integer)), historical=True)
+            check(identity(c, integers[1]['payload'], historical=True) == identity(c, floats[1]['payload'], historical=True), name + ': large equal integer representation identity ' + str(integer))
+            check(source_valid(c, *floats, schemas, historical=True) == 'accepted', name + ': retained large float integer source ' + str(integer))
+            check(source_valid(c, *[decode_source(canonical(v)) for v in floats], schemas, historical=True) == 'accepted', name + ': retained large float integer persisted round trip ' + str(integer))
             check([canonical(v) for v in floats] == [canonical(v) for v in integers], name + ': large equal integer canonical bytes ' + str(integer))
+
+
+def schema_value_kind(schema):
+    kinds = schema.get('type', [])
+    kinds = [kinds] if isinstance(kinds, str) else kinds
+    return next((kind for kind in ['integer', 'number', 'boolean'] if kind in kinds), None)
+
+
+def typed_values(schema, value, path=()):
+    """Every populated numeric/boolean slot, including nullable/observational copies."""
+    if schema_value_kind(schema) is not None and value is not None:
+        yield path, value, schema
+    if isinstance(value, dict):
+        for key, child in value.items():
+            yield from typed_values(schema.get('properties', {}).get(key, {}), child, path + (key,))
+    if isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from typed_values(schema.get('items', {}), child, path + (index,))
+    for keyword in ['anyOf', 'oneOf', 'allOf']:
+        for branch in schema.get(keyword, []):
+            yield from typed_values(branch, value, path)
+    for keyword in ['then', 'else']:
+        if keyword in schema:
+            yield from typed_values(schema[keyword], value, path)
+
+
+def schema_type_cases(c, f, schemas):
+    slug = c['event_type'].replace('.', '_')
+    variants = [(slug, f['valid_payload']), (slug + '_source', f['prepared_source']),
+                (slug + '_source', f['completed_source']), (slug + '_checkpoint', f['checkpoint'])]
+    for v in f['positive_variants']:
+        definition = slug + ('_application_source' if v['event']['scope_kind'] == 'application' else '_source')
+        variants.extend((definition, v[k]) for k in ['prepared', 'completed'])
+    seen = set()
+    for index, (definition, value) in enumerate(variants):
+        for path, original, rule in typed_values(schemas[definition], value):
+            for replacement in ['false', '0', 'true', '1', [], {}, [False], {'value': False},
+                                1 if schema_value_kind(rule) == 'boolean' else True]:
+                changed = copy.deepcopy(value); set_path(changed, path, replacement)
+                label = definition + '/' + str(index) + '/' + '/'.join(map(str, path)) + '/' + repr(replacement)
+                if label in seen:
+                    continue
+                seen.add(label)
+                # Expected negatives are fixed independently of the validator.
+                # Null is tested at each nonnullable leaf and every authority
+                # adapter, rather than misclassified at nullable union fields.
+                yield definition, label, changed
+            if schema_value_kind(rule) in ['integer', 'number']:
+                for replacement in [2**53, -(2**53), 2**60, -(2**60)]:
+                    changed = copy.deepcopy(value); set_path(changed, path, replacement)
+                    label = definition + '/' + str(index) + '/' + '/'.join(map(str, path)) + '/bound/' + str(replacement)
+                    if label not in seen:
+                        seen.add(label)
+                        yield definition, label, changed
+
+
+def round6_corpus(c, f, schemas):
+    """One-defect numeric, boolean-authority and typed-envelope controls."""
+    name = c['event_type']; slug = name.replace('.', '_'); cases = []
+    a, b, e = copy.deepcopy([f[k] for k in ['prepared_source', 'completed_source', 'event_record']])
+    for replacement in ['false', '0', 'true', '1', 0, 1, None, [], {}, [False], {'value': False}]:
+        token = repr(replacement)
+        recovery_base = next(v['input'] for v in f['recovery_cases'] if v['expected']['result'] == 'original')
+        cp = f['checkpoint_cases'][0]
+        ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
+                   authenticated_original={'prepared': a, 'completed': b, 'event': e})
+        for model, base in [('recovery', recovery_base), ('checkpoint', cp['context']), ('history', ctx)]:
+            for field, value in base.items():
+                if type(value) is not bool:
+                    continue
+                bad = dict(base, **{field: replacement})
+                if model == 'recovery':
+                    call = lambda bad=bad: recovery(c, f, bad, schemas)['result']
+                    accepting = {'original', 'append_original', 'finalize_original'}
+                elif model == 'checkpoint':
+                    call = lambda bad=bad, cp=cp: checkpoint_result(c, cp['previous'], cp['proposed'], bad, schemas[slug + '_checkpoint'])
+                    accepting = 'published'
+                else:
+                    call = lambda bad=bad, ctx=ctx: historical_read(c, a, b, e, schemas, bad)['result']
+                    accepting = 'retained'
+                cases.append(('type/' + model + '/' + field + '/' + token, call, accepting))
+        # A typed adapter must never accept string/number/container truthiness.
+        ref = dict(e, payload={}, payload_ref='payload:fixture-verified-pack-body')
+        cases.append(('type/payload_ref_verified/' + token,
+                      lambda replacement=replacement, ref=ref: source_valid(c, a, b, ref, schemas, b['payload'], replacement), 'accepted'))
+    for replacement in [True, '1', [], {}, [1], {'value': 1}]:
+        bad = dict(e, producer_sequence_id=replacement)
+        cases.append(('type/envelope/producer_sequence_id/' + repr(replacement),
+                      lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
+    bad = dict(e, unexpected='refused')
+    cases.append(('type/envelope/extra_property', lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
+    for replacement in [True, '1', None, [], {}, -1]:
+        bad = dict(e, sequence_id=replacement)
+        cases.append(('type/envelope/sequence_id/' + repr(replacement),
+                      lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
+    cp = f['checkpoint_cases'][0]
+    prior = cp['previous']
+    if prior is not None:
+        paths = set()
+        for path, value, rule in typed_values(retained_schema(schemas[slug + '_checkpoint']), prior):
+            if path in paths:
+                continue
+            paths.add(path)
+            bad = copy.deepcopy(cp)
+            set_path(bad['previous'], path, 1 if schema_value_kind(rule) == 'boolean' else True)
+            bad['context']['expected_previous'] = copy.deepcopy(bad['previous'])
+            cases.append(('type/prior_checkpoint/' + '/'.join(map(str, path)),
+                          lambda bad=bad: checkpoint_result(c, bad['previous'], bad['proposed'], bad['context'], schemas[slug + '_checkpoint']), 'published'))
+    for value in [False, 0, [], {}]:
+        bad = copy.deepcopy(cp); bad['previous'] = value; bad['context']['expected_previous'] = copy.deepcopy(value)
+        cases.append(('type/prior_checkpoint_root/' + repr(value),
+                      lambda bad=bad: checkpoint_result(c, bad['previous'], bad['proposed'], bad['context'], schemas[slug + '_checkpoint']), 'published'))
+    if name == 'worktree.deleted':
+        for field in ['elapsed_grace_ms', 'grace_period_ms']:
+            p = copy.deepcopy(f['valid_payload']); before = copy.deepcopy(f['completed_source']['before']); outcome = copy.deepcopy(f['completed_source']['owner_result'])
+            p['grace_period_ms'] = before['elapsed_grace_ms'] = 1
+            assert transition(name, p, before, outcome)
+            if field == 'elapsed_grace_ms':
+                before[field] = True
+            else:
+                p[field] = True
+            cases.append(('type/worktree_grace/' + field,
+                          lambda p=p, before=before, outcome=outcome: transition(name, p, before, outcome), True))
+    # Coherent prefix copies isolate the row's own type guard. Mutate the
+    # first counter and nonmatching row strings without changing the cursor.
+    for field, index, replacements in [
+        ('sequence_id', 0, [True, '1', None, [], {}, {'value': False}]),
+        ('event_type', 1, [True, 1, None, [], {}, '']),
+        ('event_id', 1, [True, 1, None, [], {}, '']),
+        ('scope_partition', 1, [True, 1, None, [], {}, '']),
+    ]:
+        for value in replacements:
+            bad = copy.deepcopy(f['checkpoint_cases'][0]); rows = bad['context']['source_rows']
+            rows[index][field] = value
+            bad['context']['verified_prefix'] = {
+                'index_read_token': bad['proposed']['index_read_token'], 'row_set_sha256': sha(rows),
+                'row_count': len(rows), 'first_sequence_id': rows[0]['sequence_id'], 'through_sequence_id': rows[-1]['sequence_id']}
+            cases.append(('type/prefix_row/' + field + '/' + repr(value),
+                          lambda bad=bad: checkpoint_result(c, bad['previous'], bad['proposed'], bad['context'], schemas[slug + '_checkpoint']), 'published'))
+    for value in [{}, '']:
+        bad = copy.deepcopy(next(v for v in f['checkpoint_cases'] if v['case'] == 'proven_empty_source'))
+        bad['context']['source_rows'] = value
+        bad['context']['verified_prefix']['row_set_sha256'] = sha(value)
+        cases.append(('type/empty_prefix_container/' + repr(value),
+                      lambda bad=bad: checkpoint_result(c, bad['previous'], bad['proposed'], bad['context'], schemas[slug + '_checkpoint']), 'published'))
+    # Sequence_id is Storage-owned: no caller/source copy is stale here.
+    for number in [2**53, 2**53 + 1, 2**60, 2**64 - 1, -(2**53), -(2**60)]:
+        bad = dict(e, sequence_id=number)
+        cases.append(('numeric/writer/sequence_id/' + str(number),
+                      lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
+        bad = dict(e, producer_sequence_id=number)
+        def digest(bad=bad):
+            try:
+                producer_semantic_digest(bad)
+                return True
+            except ValueError:
+                return False
+        cases.append(('numeric/digest/' + str(number), digest, True))
+        floating = dict(e, producer_sequence_id=float(number))
+        def float_digest(floating=floating):
+            try:
+                producer_semantic_digest(floating)
+                return True
+            except ValueError:
+                return False
+        cases.append(('numeric/digest_float/' + str(number), float_digest, True))
+        if name.startswith('approval.') and number >= 0:
+            payload = dict(b['payload'], blocked_sequence=number)
+            def key(payload=payload):
+                try:
+                    identity(c, payload)
+                    return True
+                except ValueError:
+                    return False
+            cases.append(('numeric/identity/' + str(number), key, True))
+    if name.startswith('approval.'):
+        for replacement in [True, '1', -1, 1.25, None, [], {}]:
+            payload = dict(b['payload'], blocked_sequence=replacement)
+            def identity_type(payload=payload):
+                try:
+                    identity(c, payload)
+                    return True
+                except ValueError:
+                    return False
+            cases.append(('type/identity_integer/' + repr(replacement), identity_type, True))
+    for replacement in ['false', '0', 0, 1, True, None, [], {}, [False], {'value': False}]:
+        if type(replacement) is not str:
+            cases.append(('type/retry_digest/' + repr(replacement),
+                          lambda replacement=replacement: append_model({}, e['idempotency_key'], replacement, None)[0], 'appended'))
+        if name == 'tool.invoked' and type(replacement) is not bool:
+            parent = copy.deepcopy(next(v for v in f['positive_variants'] if v['case'] == 'batch_parent'))
+            children = [copy.deepcopy(next(v for v in f['positive_variants'] if v['case'] == label)) for label in ['batch_url_1', 'batch_url_2']]
+            for record in [parent, children[0]]:
+                for observation in [record['event']['payload'], record['completed']['payload'], record['completed']['owner_result']]:
+                    observation['success'] = bool(replacement)
+                if not bool(replacement):
+                    for observation in [record['event']['payload']['meta'], record['completed']['payload']['meta'], record['completed']['owner_result']['meta']]:
+                        observation['error_code'] = 'fixture-batch-failure'
+                assert source_valid(c, record['prepared'], record['completed'], record['event'], schemas) == 'accepted'
+            assert batch_join(parent, children)
+            # This helper consumes event observations only; pass no stale
+            # unused source snapshots alongside the one-field type defect.
+            parent = {'event': parent['event']}; children = [{'event': v['event']} for v in children]
+            children[0]['event']['payload']['success'] = replacement
+            cases.append(('type/batch_child_success/' + repr(replacement),
+                          lambda parent=parent, children=children: batch_join(parent, children), True))
+        if name == 'usage.event':
+            for field in ['cache_is_input_subset', 'reasoning_is_output_subset']:
+                if type(replacement) is bool:
+                    continue
+                p = copy.deepcopy(f['valid_payload']); p['counting_semantics'][field] = replacement
+                def accounting(p=p):
+                    try:
+                        accounting_totals(p)
+                        return True
+                    except ValueError:
+                        return False
+                cases.append(('type/accounting_flag/' + field + '/' + repr(replacement), accounting, True))
+            for field in ['input_total', 'output_total', 'cache_read', 'cache_write', 'reasoning', 'provider_total', 'cost_microdollars']:
+                if replacement is None or type(replacement) is int:
+                    continue  # Valid nullable/integer forms are not negatives.
+                p = copy.deepcopy(f['valid_payload']); p[field] = replacement
+                def accounting_number(p=p):
+                    try:
+                        accounting_totals(p)
+                        return True
+                    except ValueError:
+                        return False
+                cases.append(('type/accounting_number/' + field + '/' + repr(replacement), accounting_number, True))
+    for mode in ['false', 0, None, [], {}]:
+        cases.append(('type/historical_mode/' + repr(mode),
+                      lambda mode=mode: source_valid(c, a, b, e, schemas, historical=mode), 'accepted'))
+        def identity_mode(mode=mode):
+            try:
+                identity(c, b['payload'], historical=mode)
+                return True
+            except ValueError:
+                return False
+        cases.append(('type/identity_mode/' + repr(mode), identity_mode, True))
+    metadata_probe = {'type': 'boolean', 'x-dt-retained-number-bounds': {'type': None}}
+    assert Draft202012Validator(retained_schema(metadata_probe)).is_valid(False)
+    cases.append(('type/retained_metadata_preserves_non_numeric_guards',
+                  lambda: Draft202012Validator(retained_schema(metadata_probe)).is_valid(0), True))
+    for value in [True, -1, 1.25, 2**53]:
+        cases.append(('numeric/unsigned_integer/' + repr(value), lambda value=value: unsigned_integer_valid(value), True))
+    for value in [2**53, -(2**53), 2**60, -(2**60), float('nan')]:
+        cases.append(('numeric/domain/' + repr(value), lambda value=value: current_numbers_valid(value), True))
+    return cases
+
+
+def round6_checks(c, f, schemas, check):
+    name = c['event_type']; slug = name.replace('.', '_')
+    for label, call, accepting in round6_corpus(c, f, schemas):
+        actual = call()
+        check(actual not in accepting if isinstance(accepting, set) else actual != accepting, name + ': round6 ' + label)
+    for definition, label, value in schema_type_cases(c, f, schemas):
+        check(not Draft202012Validator(schemas[definition], format_checker=FormatChecker()).is_valid(value), name + ': numeric/boolean schema ' + label)
+    # Full coherent caller counters, both accepted safe boundary and refused
+    # unsafe boundaries. Exact old history remains authenticated and readable.
+    variants = [dict(prepared=f['prepared_source'], completed=f['completed_source'], event=f['event_record'])]
+    variants += [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application'][:1]
+    for variant in variants:
+        for number in [2**53 - 1, 2**53, 2**53 + 1, 2**60, 2**64 - 1, -(2**53 - 1), -(2**53), -(2**60)]:
+            for value in [number, float(number)]:
+                a, b, e = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']])
+                a['envelope_context']['producer_sequence_id'] = b['envelope_context']['producer_sequence_id'] = e['producer_sequence_id'] = value
+                b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+                safe = 0 <= value <= 2**53 - 1
+                check((source_valid(c, a, b, e, schemas) == 'accepted') == safe, name + ': coherent numeric counter ' + str(value))
+                try:
+                    digest = producer_semantic_digest(e); digested = True
+                except ValueError as exc:
+                    digested = False
+                    check(str(exc) == 'numeric_domain_refused', name + ': structured numeric refusal')
+                # Digest domain itself permits signed numbers, while the
+                # counter's source schema additionally requires nonnegative.
+                check(digested == (abs(value) <= 2**53 - 1), name + ': retry numeric domain ' + str(value))
+                if value >= 0:
+                    ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
+                               authenticated_original={'prepared': a, 'completed': b, 'event': e})
+                    check(historical_read(c, a, b, e, schemas, ctx)['result'] == 'retained', name + ': retained old counter ' + str(value))
+        if name.startswith('approval.'):
+            for number in [2**53 - 1, 2**53, 2**53 + 1, 2**60, 2**64 - 1]:
+                a, b, e = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']])
+                for value in [a['subject'], b['subject'], a['before'], b['before'], b['payload'], e['payload']]:
+                    if 'blocked_sequence' in value:
+                        value['blocked_sequence'] = number
+                a, b, e = recommit(c, [a, b, e], historical=True)
+                check((source_valid(c, a, b, e, schemas) == 'accepted') == (number <= 2**53 - 1), name + ': approval numeric writer ' + str(number))
+                ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
+                           authenticated_original={'prepared': a, 'completed': b, 'event': e})
+                check(historical_read(c, a, b, e, schemas, ctx)['result'] == 'retained', name + ': retained approval integer ' + str(number))
+    # The generic schema also closes arbitrary nested EventRecord payload data.
+    for number in [2**53 - 1, -(2**53 - 1), 2**53, -(2**53), 2**60, -(2**60)]:
+        good = abs(number) <= 2**53 - 1
+        for v in [number, float(number), {'nested': [number]}]:
+            check(current_numbers_valid(v) == good, name + ': signed recursive numeric schema ' + repr(v))
 
 
 def checker_exit_code(failures):
@@ -1065,7 +1434,8 @@ def main():
             failures.append(message)
     event_schema = load('Plans/event_record.schema.json')
     documents = {'Plans/dt_event_contracts.schema.json': schema_document,
-                 'Plans/event_record.schema.json': event_schema}
+                 'Plans/event_record.schema.json': event_schema,
+                 'Plans/dt_number_domain.schema.json': load('Plans/dt_number_domain.schema.json')}
     mirrors = [(row['family_id'], row['value_schema'], ref) for ref, row in storage_schemas.items()
                if ref.startswith('Plans/dt_event_contracts.schema.json#')]
     reference_errors = schema_reference_errors(documents, mirrors)
@@ -1087,6 +1457,7 @@ def main():
                 check(storage_schemas[ref]['value_schema'] == schemas[definition], name + ': exact Storage schema mirror ' + definition)
         identifier_checks(c, f, schemas, check)
         technical_checks(c, f, schemas, check)
+        round6_checks(c, f, schemas, check)
         standing[name] = standing_results(c, f, schemas)
         for number in map(str, range(1, 11)):
             check(standing[name][number] == f['standing_check_oracles'][number], name + ': standing check ' + number)
