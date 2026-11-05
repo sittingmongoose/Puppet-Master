@@ -144,6 +144,18 @@ def catalogue(m, fixtures):
         # Replay policy is not producer semantic data; retained authority remains
         # the original. Only the current policy check refuses this retry.
         add('retry.current_policy',family+':unknown_retry_policy','current_retry',(row,e,a),(row,unknown,a),no_if("incoming.get('replay_policy') != 'dedupe_by_idempotency_key'"),lambda x:x[0]=='return_original_without_effect')
+        for case in row['retry_envelope_cases']:
+            field = case['field']
+            # The incoming marker is the sole defect. The authentic stored
+            # event, digest, result and receipt remain unchanged.
+            incoming = dict(e, **{field: case['value']})
+            guard = {'schema_id': 'retry.envelope_identity',
+                     'schema_version': 'retry.envelope_version'}[field]
+            expected = {'schema_id': 'pm.event.v0', 'schema_version': '2.0.0'}[field]
+            add(guard, family + ':' + case['case_id'], 'current_retry',
+                (row,e,a), (row,incoming,a),
+                no_if(f"incoming.get({field!r}) != {expected!r}"),
+                lambda x:x[0]=='return_original_without_effect')
         retry_family_edits = no_if("incoming.get('event_type') != row['event_type']")
         retry_schema_edits = no_if("incoming.get('payload_schema_id') != expected_schema")
         mutants['retry.family_schema_duplicate'] = tuple(retry_family_edits + retry_schema_edits)

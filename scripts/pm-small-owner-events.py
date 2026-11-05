@@ -540,6 +540,12 @@ def resolve_full_value(row, requested, authority):
 
 def current_retry(row, incoming, authority):
     """Current writer policy admission precedes immutable semantic resolution."""
+    # Dispatch the current request before resolving its retained original.
+    # These envelope markers are not producer semantics or Storage metadata.
+    if incoming.get('schema_id') != 'pm.event.v0':
+        return ('identity_conflict_without_effect', None, 0)
+    if incoming.get('schema_version') != '2.0.0':
+        return ('identity_conflict_without_effect', None, 0)
     if append_policy_refusal(incoming) is not None:
         return (append_policy_refusal(incoming), None, 0)
     if incoming.get('replay_policy') != 'dedupe_by_idempotency_key':
@@ -1047,6 +1053,16 @@ def main(guard_first=None):
     families = {row['event_type']: row for row in fixtures['families']}
     retry_boundary_count = 0
     for row in families_for_run(fixtures):
+        original = row['positive_event_record']
+        authority = row['receipt_authority']
+        for case in row['retry_envelope_cases']:
+            incoming = dict(original, **{case['field']: case['value']})
+            before = copy.deepcopy((original, authority))
+            assert [k for k in original if incoming[k] != original[k]] == [case['field']], case['case_id']
+            assert producer_digest(incoming) == producer_digest(original), case['case_id']
+            assert current_retry(row, incoming, authority) == (case['expected'], None, 0), case['case_id']
+            assert (original, authority) == before, (case['case_id'], 'authentic original unchanged')
+            retry_boundary_count += 4
         for case in row.get('foreign_family_retry_cases', []):
             foreign = families[case['source_family']]
             assert foreign is not row, case['case_id']

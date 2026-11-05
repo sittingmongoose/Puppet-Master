@@ -10138,7 +10138,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "lsp.server.lifecycle_changed",
@@ -20382,7 +20396,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "model.catalog_refreshed",
@@ -32991,7 +33019,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "subagent.context_rehydrated",
@@ -45746,7 +45788,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "subagent.context_shrunk",
@@ -58527,7 +58583,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "project.added",
@@ -68579,7 +68649,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "project.created",
@@ -78642,7 +78726,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "git.clone.completed",
@@ -88869,7 +88967,21 @@
             "nested": false
           }
         ]
-      }
+      },
+      "retry_envelope_cases": [
+        {
+          "case_id": "retry_wrong_envelope_identity",
+          "field": "schema_id",
+          "value": "pm.foreign.v0",
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "retry_unknown_envelope_version",
+          "field": "schema_version",
+          "value": "99.0.0",
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     }
   ],
   "fixture_only": true,
