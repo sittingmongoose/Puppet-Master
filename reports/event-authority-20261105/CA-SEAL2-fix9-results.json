@@ -1,0 +1,208 @@
+{
+  "schema_id": "pm.assurance.ca_seal2.fix9.v1",
+  "base_commit": "962cdd561c782de7d4ca90e871653059fce39ec6",
+  "code_commit": "ce4d4a1d33f489a869e38f3a0c3f28c16b4fa35e",
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "checker_sha256": "be85f0f66903ce02adaaec1352ee1dbb0c4470b9c0448ebdffe56293de018029",
+  "corpus": {
+    "passed": 194,
+    "checks": 194,
+    "original_map": true,
+    "replay_caches": false,
+    "verified_sources": 597,
+    "prior_tests_retained": 190,
+    "new_tests": [
+      "negative_unlisted_boolean_bitand_assignment",
+      "negative_unlisted_builder_boolean_bitor",
+      "negative_unlisted_isinstance_assignment",
+      "positive_exhaustive_node_type_inventory"
+    ],
+    "changed_prior_result_records": [
+      "negative_outcome_extra_name"
+    ]
+  },
+  "findings": {
+    "B01": "fixed: exhaustive whole-function node inventory and missing-identity insertion controls",
+    "B02": "fixed: sorted extra-name fixture, coherent prior admission, exact-membership refusal"
+  },
+  "inventory": {
+    "syntax_sites": 286,
+    "semantic_expansions": 41,
+    "walker_sites": 327,
+    "supplement_rows": 1617,
+    "combined_sites": 1944,
+    "node_types": {
+      "BinOp(BitAnd)": 9,
+      "BinOp(BitOr)": 3,
+      "BoolOp": 110,
+      "Call": 891,
+      "Compare": 219,
+      "If test": 171,
+      "IfExp": 17,
+      "Try dispatch": 6,
+      "UnaryOp(Not)": 113,
+      "comprehension if": 38,
+      "except alternative": 29,
+      "except dispatch": 6,
+      "parser callback": 5
+    },
+    "outcomes": {
+      "killed by": 433,
+      "non-predicate data operation": 760,
+      "implied": 28,
+      "structural": 9,
+      "same-predicate duplicate": 6,
+      "frozen-input only": 88,
+      "preserved August predicate": 620
+    },
+    "node_outcomes": {
+      "non-predicate data operation": 744,
+      "preserved August predicate": 620,
+      "killed by": 200,
+      "implied": 8,
+      "same-predicate duplicate": 3,
+      "structural": 4,
+      "frozen-input only": 38
+    },
+    "unclassified": 0
+  },
+  "fresh_killed_by_claims": {
+    "matched": 433,
+    "unmatched": 0
+  },
+  "replays": {
+    "historical_263": {
+      "corpus": {
+        "checks": 194,
+        "passed": 194,
+        "restored_results_identical": true,
+        "verified_sources": 597
+      },
+      "Astra_2_original_182": {
+        "killed by": 139,
+        "same-predicate duplicate": 5,
+        "implied": 16,
+        "frozen-input only": 22
+      },
+      "Astra_3_221": {
+        "killed by": 171,
+        "same-predicate duplicate": 5,
+        "implied": 16,
+        "frozen-input only": 22,
+        "structural": 7
+      },
+      "Astra_5_and_supplement_42": {
+        "killed by": 40,
+        "same-predicate duplicate": 2
+      },
+      "variants": 263,
+      "totals": {
+        "killed by": 211,
+        "same-predicate duplicate": 7,
+        "implied": 16,
+        "frozen-input only": 22,
+        "structural": 7
+      },
+      "unclassified": 0
+    },
+    "Astra_6_expression_cuts": {
+      "variants": 10,
+      "each_claim_observed": true
+    },
+    "own_dispatch_cuts": {
+      "variants": 3,
+      "each_own_negative_only": true
+    },
+    "B02_corpus_cuts": {
+      "variants": 2,
+      "exact_membership_failed_tests": [
+        "negative_outcome_missing_name",
+        "negative_outcome_duplicate_name",
+        "negative_outcome_extra_name"
+      ],
+      "admission_failed_tests": [
+        "negative_missing_complete_admission_record"
+      ]
+    },
+    "semantic_cut_executions": 278,
+    "unclassified": 0
+  },
+  "insertion_probes": [
+    {
+      "label": "isinstance_assignment",
+      "missing_identities": 1,
+      "coverage_refused": true
+    },
+    {
+      "label": "boolean_bitand_assignment",
+      "missing_identities": 1,
+      "coverage_refused": true
+    },
+    {
+      "label": "bare_name_filter",
+      "missing_identities": 1,
+      "coverage_refused": true
+    },
+    {
+      "label": "unknown_call",
+      "missing_identities": 1,
+      "coverage_refused": true
+    },
+    {
+      "label": "known_predicate_call",
+      "missing_identities": 1,
+      "coverage_refused": true
+    },
+    {
+      "label": "builder_boolean_bitor",
+      "missing_identities": 3,
+      "coverage_refused": true,
+      "corpus_exit": 1,
+      "corpus_passed": 193
+    }
+  ],
+  "read_only_repository_checks": {
+    "checks": [
+      {
+        "check": "shard-check",
+        "exit": 0,
+        "status": "pass",
+        "failure_count": 0,
+        "report_sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
+      },
+      {
+        "check": "index-validate",
+        "exit": 1,
+        "status": "fail",
+        "failure_count": 89,
+        "report_sha256": "c033e2f77c205f6e00f5dd514bc676a2722d37890b72fbc00da33887bdd4bd82"
+      }
+    ],
+    "all_Plans_and_scripts_identical_to_reviewed_base": true,
+    "regenerated": false
+  },
+  "index_comparison": {
+    "base": "962cdd561c782de7d4ca90e871653059fce39ec6",
+    "prior_fix8_failures": 88,
+    "current_failures": 89,
+    "prior_failures_retained": true,
+    "new_failures": [
+      {
+        "baseline_ref": "origin/main",
+        "error": "plan_unit_removed_without_ledger_decision",
+        "owner_doc": "Plans/Decision_Log.md",
+        "path": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-336"
+      }
+    ],
+    "removed_failures": [],
+    "Plans_and_scripts_unchanged": true,
+    "reason": "origin/main advanced after the pinned branch; the additional DL-336 removal comparison names an unchanged canonical path outside this tests-only task.",
+    "DL_336_unit_presence": {
+      "962cdd561c": false,
+      "origin/main": true
+    }
+  },
+  "resource_floor_pauses": 4,
+  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix9"
+}
