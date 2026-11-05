@@ -88,7 +88,7 @@ Existing IDs retained: **SP-660..666, CV-680..686, F3-700..705, ATS-330..334** (
 | `guard-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/guard-summary.json` | `927d6839683c16060e6a6ce1ba5373102d0168d3ab53a2a2b71e36f15e206790` |
 | `final-family-commands.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-family-commands.json` | `f4aea4f968bac90e270288606a6affaebb1c667eac147195e5ce81ab26b2439f` |
 | `final-cli-commands.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-cli-commands.json` | `ee5ce585097dd2ad5a73cc7d58a2a4021c3ba36cd7e5f9fcca58b7089087a88d` |
-| `cli-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/cli-summary.json` | `dc7c0e1d3807a6d5e71abee97e570dd54d187df10036963e9ee20a26309f9108` |
+| `cli-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/cli-summary.json` | `6b1a36c93fbedcbdb50a2c805caadf57e8ae241f71eaa86621ef8b7347f8f661` |
 | `parser-format-guards.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/parser-format-guards.json` | `00cc18ec8c276aa0ba5b108e015400aa7ecfd47b23e59f7771b7eb378f954cb2` |
 | `parser-format-proof.py` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/parser-format-proof.py` | `2f6ac4402ecf280e51dfb00c78bff373502e4f7d73aa1d95c5c4e13a4cbd0734` |
 | `final-consumed-sources.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-consumed-sources.json` | `fda2a2680b92c46250d67162459bf2f04e97addb49ffbf981156b6094f17860e` |
