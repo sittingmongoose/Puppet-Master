@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8102-L8183
+Source lines: L8123-L8207
 
-Source SHA256: `2799727129b753f2c42a03e35fca9d7d03de933a6d3d69a4b8047b8efbfeaa5d`
+Source SHA256: `3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218`
 
 ---
 
@@ -88,5 +88,8 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly `goal_run.certified` adopts `GRS-1134`, `SP-1136` and `ATS-1118` with complete original `W5` boundaries in `Plans/goal_own_c_contracts/protocol.md`. This is newly authored contract work; the full inherited-root oracle corpus remains an explicit integration obligation, not native execution evidence.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-084, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json

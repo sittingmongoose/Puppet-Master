@@ -2807,6 +2807,9 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1 and SIR-1130 original approval/source/result joins. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Contracts_V0.md#CV-342
 
 ### SIR-050 - Original Cancel acknowledgement terminal and replay
@@ -2865,6 +2868,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2 and ATS-1117 original no-association source/Stop/first-receipt/control/terminal and immutable replay boundaries; it does not borrow the Plan or Workflow source.
+
 
 ##### Original SIR private prepared input
 
@@ -2947,6 +2953,9 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and SIR-1131 original bound-Plan accepted-source/result custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 
 ### SIR-052 - Original Workflow cancellation acceptance, terminal and retained replay
@@ -3038,6 +3047,9 @@ negative_constraints:
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and SIR-1131 original Workflow accepted-source/result custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
 
 
@@ -3118,6 +3130,9 @@ negative_constraints:
 - No native writer/capability, projector/checkpoint, Event depth or runtime qualification
   from source adoption.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2 and SIR-1131 original private current-inspection source selection and final disclosure. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
 
@@ -3292,3 +3307,116 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-055, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### SIR-1130 - Goal update approval source and result joins
+
+```yaml
+plan_unit_id: SIR-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.updated, U1-U7 and W1 adopt original
+  HITL provider capture/resolution into SIR-049 and SP-299. The original proposal dispatch stays read-only;
+  actual approved update dispatch retains its own original identity, input digest, user instruction and still-valid
+  approval before source/body acceptance. Join complete original typed request/approval/resolution and whole
+  update result at each source/terminal/replay boundary; never let a proposal response stand in for accepted
+  mutation or terminal success.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SIR-049
+- HITL-1130
+- PS-1130
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval source and result joins). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SIR-1131 - Goal cancellation migration of original pending command custody
+
+```yaml
+plan_unit_id: SIR-1131
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, M1-M9 adopt SIR-051/052/053
+  original accepted dispatch, pending operation, command outcome and immutable terminal references into source
+  migration. Compare original operation/scope/owner/result custody to Plan, Workflow and Goal originals. Preserve
+  unresolved work and original result/replay; migration neither reexecutes Stop nor issues an acknowledgement,
+  cancellation result or event. Current inspection remains fenced until complete enrolled original mapping
+  exists.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SIR-051
+- SIR-052
+- SIR-053
+- SP-1131
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration of original pending command custody). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json

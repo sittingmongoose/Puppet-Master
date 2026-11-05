@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L7218-L7942
+Source lines: L7227-L7963
 
-Source SHA256: `2799727129b753f2c42a03e35fca9d7d03de933a6d3d69a4b8047b8efbfeaa5d`
+Source SHA256: `3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218`
 
 ---
 
@@ -495,6 +495,9 @@ negative_constraints:
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2, GRS-1131 and SP-1133 for its actual original Workflow cancellation source and M2-M9 migration custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
 
 
@@ -570,6 +573,9 @@ source_lineage:
   - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 source_atom_ids: []
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly `goal_run.started` adopts `GRS-1132`, `SP-1134` and `ATS-1118` with complete original `W3` boundaries in `Plans/goal_own_c_contracts/protocol.md`. This is newly authored contract work; the full inherited-root oracle corpus remains an explicit integration obligation, not native execution evidence.
+
 
 
 Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for goal_run.started v3 follow SP-424.
@@ -653,6 +659,9 @@ source_lineage:
 source_atom_ids: []
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly `goal_run.cancelled` adopts `GRS-1133`, `SP-1135` and `ATS-1118` with complete original `W4` boundaries in `Plans/goal_own_c_contracts/protocol.md`. This is newly authored contract work; the full inherited-root oracle corpus remains an explicit integration obligation, not native execution evidence.
+
+
 
 Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for goal_run.cancelled v3 follow SP-425.
 
@@ -731,5 +740,8 @@ negative_constraints:
 - No native writer/capability, projector/checkpoint, Event depth or runtime qualification
   from source adoption.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2, GRS-1131 and SP-1133 for its complete private current-inspection entry/helper/final boundaries. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json

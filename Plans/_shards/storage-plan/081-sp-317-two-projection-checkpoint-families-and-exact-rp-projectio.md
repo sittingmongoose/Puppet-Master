@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27444-L27515
+Source lines: L27483-L27557
 
-Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
+Source SHA256: `c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16`
 
 ---
 
@@ -78,5 +78,8 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.certified adopts W5/SP-1136 full original P4-P8 consumer, row/checkpoint and cutover oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-317, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json

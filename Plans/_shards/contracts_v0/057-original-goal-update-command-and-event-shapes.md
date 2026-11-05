@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22554-L23274
+Source lines: L22554-L23280
 
-Source SHA256: `b9df78ba8e8ab3c9742ed7d75bb580af67b1bde9003aca3c87712040d7af44e6`
+Source SHA256: `721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1`
 
 ---
 
@@ -92,6 +92,9 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/Contracts_V0.md
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1 and CV-1130 newly selected approval roots while preserving the complete original update resource realm. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 Amended 2026-11-04 (DL-045 depth): ProducerMetadata.event_id and idempotency_key take the values SP-421 derives.
 
@@ -464,6 +467,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and CV-1131 separate migration roots while preserving complete original cancellation realms. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 The exact schema owners are `Plans/goal_cancel_command_custody.schema.json` and `Plans/goal_execution_binding_custody.schema.json`. The central `Plans/goal_runtime_contracts.schema.json` adds only `GoalCancelRequestV2` and `GoalCancelResultV2`; all old central definitions and actual Start/Update schemas remain exact. No generic Pause/Resume contract is inferred. The active event is `pm.goal_runtime_event.goal_cancelled.schema.v3`; its whole unchanged `pm.goal_runtime_event.goal_cancelled.schema.v2` is selected only at `#/legacy_v2_reader` for actual historical reads. This existing event changes revision, not family count, aliases, EventRecord envelope, legacy joins or indefinite event retention.
 

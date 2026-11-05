@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24514-L27210
+Source lines: L24514-L27246
 
-Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
+Source SHA256: `c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16`
 
 ---
 
@@ -211,6 +211,9 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1, SP-1130 and SP-1132. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 Amended 2026-11-04 (DL-045 depth): the v3 event ID and event idempotency key captured in ProducerMetadata follow SP-421.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/goal_update_schema_resources.json
@@ -265,6 +268,9 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts W1/SP-1132 original identity/custody/replay oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 **Members and encoding.** JCS is RFC 8785 over the nine-member array in the order given; every member is the exact nonempty string from its source, with no Unicode normalization, trimming or case folding. SHA-256 output is 64 lowercase hexadecimal digits. `command_id` is the constant `cmd.chat.goal.update` that `NormalizedIdentity` fixes for both the direct Save source and a resolved approval source, so the recipe does not depend on which source authenticated the change. The scope literal is `project`: the application edition keeps its own CV-366 `application@1` identity and is not covered here.
 
@@ -830,6 +836,9 @@ negative_constraints:
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2, SP-1131 and SP-1133. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ##### Original operation stages
 
 C-source captures immutable SourceAudit plus progress epoch zero/head in one actual redb transaction after original SIR/Goal validation, before any Stop effect. SourceAudit includes the exact content-free original request, original normalized nonterminal source, body/history/currentness/Stop preimage commitments, actual execution binding and complete original producer metadata. Event identity, occurrence, actor/account/causality and idempotency originate here; Storage's later observed/persisted/sequence assignments do not become producer time. Original native producer/codec/result preparedness is independently checked before C-stop, without requiring a future event/receipt. Missing exact required provider or known unsupported byte/result route refuses before coupled effects.
@@ -1002,6 +1011,9 @@ owner_hints:
 - Plans/storage-plan.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2/SP-1133 original identity/custody/replay oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 **Members and encoding.** JCS is RFC 8785 over the nine-member array in the order given; members are exact nonempty strings with no normalization, and SHA-256 output is 64 lowercase hexadecimal digits. `command_id` is the constant `cmd.chat.goal.cancel` that the cancellation `NormalizedIdentity` fixes. `operation_id` is the same value SP-304 calls the cancellation operation O and the payload carries as both `operation_id` and `cancellation_id`. The scope literal is `project`; the application edition keeps its own CV-366 identity.
 
 **Search (DL-045).** Scope: GRS-073..078, SP-304, SP-305, SP-306, SP-310, CV-347, SIR-050..052, `Plans/goal_cancel_command_custody.schema.json`, `Plans/goal_cancel_contracts/`, `Plans/goal_workflow_cancel_contracts/` and the Known-37 common-v2 section 7.1, plus a whole-`Plans/` search for `goal.cancelled.v`, `goal.cancelled.command` and `evt_goal_`. Found: SP-304 says "Event identity, occurrence, actor/account/causality and idempotency originate here" (C-source) and GRS-078 says C-event keeps "The original accepted event ID, idempotency key"; ProducerMetadata types both as `non_empty_string`. Negative evidence: no unit derives them. This recipe is new and is not inferred from a sibling.
@@ -1064,6 +1076,9 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/SP-1131 migration/withdrawal and W2/SP-1133 reader fences. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 **Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the installed cancellation mutation role (SP-304's enrolled families and roles, and for the Workflow profile SP-310's three families). It is checked at C-source's final predicate, so a request admitted before the cutoff is the only kind that can still reach C-stop. Such an operation's later stages each recheck their own installed role: a stage whose role is gone stops before its effect and leaves the operation pending with every genuine earlier Stop, receipt, D05/D06 and append effect preserved (SP-304, GRS-078). It never becomes `no_effect` without the original no-effect proof, and it never gets a new event ID or idempotency key (SP-422). No other writer, the application sibling or the v2 root takes over.
 
@@ -1132,6 +1147,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts SP-1131 M1-M9 unenrolled mapping, distinct from fresh enrolled birth and cancellation. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ##### Concrete codec and possible-assignment custody
 
@@ -1947,6 +1965,9 @@ negative_constraints:
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2/SP-1133 original Workflow and late-assignment boundaries. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
 
 
@@ -2060,6 +2081,9 @@ source_lineage:
 source_atom_ids: []
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.started adopts W3/SP-1134 original source, full row/checkpoint and atomic current-cutover oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 
 Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for started-v3 follow SP-424.
 
@@ -2117,6 +2141,9 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.started adopts W3/SP-1134 original source withdrawal and rebuild oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 **Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the original Start publication role under `workflow_start_original.v2` (EP-120, SP-309). The Start publisher checks it at its final predicate before append. A Start whose candidate and commit are already durable (`start_event_pending`) is not rolled back: its retained original custody and SP-286 first-receipt resolution decide whether the event was issued, and an unissued one stays pending with its outbox, never replayed or given a new event value. No v2 writer, application sibling or other route appends `goal_run.started` in its place.
 
@@ -2294,6 +2321,9 @@ source_lineage:
 source_atom_ids: []
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.cancelled adopts W4/SP-1135 original source, combined row/checkpoint and atomic current-cutover oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 
 Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for cancelled-v3 and the combined projector follow SP-425.
 
@@ -2349,6 +2379,9 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.cancelled adopts W4/SP-1135 original source withdrawal and rebuild oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 **Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the original D06 positive-cancellation publication role (EP-118, EP-121) for cancelled-v3. The publisher checks it at its final predicate before append. A run whose native body is already `cancelled` keeps that body and its D06 effects; whether its Event was issued is decided only by retained original custody and SP-286, and an unissued Event stays pending, never re-emitted with a new value. Already-terminal native runs still get no new cancelled Event (GRS-080). No v2 writer or application sibling takes over.
 
@@ -2703,5 +2736,8 @@ negative_constraints:
 - No native writer/capability, projector/checkpoint, Event depth or runtime qualification
   from source adoption.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2/SP-1133 whole private current-inspection entry/helper/final boundaries. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json

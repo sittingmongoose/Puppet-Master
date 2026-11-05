@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6511-L7215
+Source lines: L6511-L7224
 
-Source SHA256: `2799727129b753f2c42a03e35fca9d7d03de933a6d3d69a4b8047b8efbfeaa5d`
+Source SHA256: `3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218`
 
 ---
 
@@ -18,14 +18,14 @@ GRS-064, SP-287 and DL-047 remain controlling. Update replaces the complete exac
 
 The existing `owner.goal.body.mutation@1.0.0` remains the only body writer. SIR remains the original command identity/outcome owner. Goal Runtime authenticates original accepted-change/origin predicates. Storage authenticates original installed physical custody, CAS, retained origin, transaction and first publication evidence. No update-specific body issuer, cloned approval host, peer outcome producer or start source grant exists under this contract.
 
-`cmd.chat.goal.propose_update` is separately read-only and must use its existing approval route. Its already-referenced GoalUpdateProposalRequest / ApprovalRequest definitions, provider-specific actual instruction/approval-resolution capture and admission remain a distinct technical prerequisite. This contract deliberately does not define those missing contracts or fabricate their provider. It defines the mutation-side required acceptance facts and predicates. A direct Save adapter can be reviewed independently; the agent route stays handler_unavailable until the existing approval owner closes and authenticates its exact provider binding. No product question is needed to invent new approval behavior.
+`cmd.chat.goal.propose_update` is separately read-only and uses HITL-1130/PS-1130/SIR-1130/SP-1130/CV-1130's newly authored exact U1-U7 provider and closed GoalUpdateProposalRequest / ApprovalRequest. The agent route stays handler_unavailable until that provider is genuinely installed and authenticated at its actual original boundaries. Direct Save remains independently accepted without another confirmation.
 
 
 SP-299 defines the complete original source → reservation → body commit → frozen event input → shared first publication → SIR terminal sequence. Only the body owner accepts revision n+1 and one matching accepted objective revision/origin, preserving exact identity and created_at. The previous accepted objective hash can predate ordinary metadata revisions; do not substitute the immediately preceding ordinary revision. Empty and unchanged text remain full accepted updates under existing revision rules. A complete body transaction can succeed before event/result settlement becomes unknown; this preserves the accepted body rather than rolling it back or representing a partial body write.
 
 The resulting `goal.updated` observation records only the actual original accepted change, before/after body facts, predecessor and original body/source evidence. It never grants continuation, edits a bound Plan, repairs approval, resumes a paused/blocked Goal or overrides Stop. Existing GoalPlanBinding epoch fencing and material-conflict safe-stop behavior remain independently required. A later current Goal edit cannot rewrite this operation's original event input. Final body admission rechecks actual current source/approval/owner/Stop/access/deletion/origin; later factual event/result settlement has no further body-write authority.
 
-The actual approval-owner provider and the already-referenced `GoalUpdateProposalRequest`/`ApprovalRequest` remain separately unmaterialized technical dependencies. The agent-proposed mutation route stays unavailable until that original provider supplies its exact capture and still-valid resolution. Direct user Save keeps its existing acceptance without another confirmation. No fallback provider or new approval policy is invented here.
+The actual approval owner adopts U1-U7's exact newly authored capture/resolution contract. Actual native installation and complete original source evidence remain required before agent-proposed mutation is available. Direct user Save keeps its existing acceptance without another confirmation.
 
 The two update-only retained audit/input readers have SP-299's distinct precise selectors and final visibility predicates. GRS-064/SP-299 independently adopt the named current Activity/body/control/history consumers and selected active-v3 event inspection; audit/input declarations and Goal-created profiles do not supply that authority. These actual consumers have no additional event-derived Goal state or durable checkpoint. The remaining Goal families, actual agent approval provider and native dispatcher/source/transaction/read-release/runtime evidence remain independent obligations.
 
@@ -111,6 +111,9 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/Contracts_V0.md
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly `goal.updated` adopts `GRS-1130`, `SP-1132` and `ATS-1116` with complete original `W1` boundaries in `Plans/goal_own_c_contracts/protocol.md`. This is newly authored contract work; the full inherited-root oracle corpus remains an explicit integration obligation, not native execution evidence.
+
 
 Amended 2026-11-04 (DL-045 depth): the goal.updated v3 event ID and event idempotency key follow SP-421.
 
@@ -570,6 +573,9 @@ negative_constraints:
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly `goal.cancelled` adopts `GRS-1131`, `SP-1133` and `ATS-1117` with complete original `W2` boundaries in `Plans/goal_own_c_contracts/protocol.md`. This is newly authored contract work; the full inherited-root oracle corpus remains an explicit integration obligation, not native execution evidence.
+
+
 ##### Owner disposition and exact command
 
 The current Goal owner is GRS-051/GRS-064 and the current opening four-state contract, not D-R02's cancelled-state transition. Current cancellation is original explicit user cancellation, its minimal receipt and goal.cancelled, followed by active-projection removal and permanent prohibition on that Goal's continuation. Preserve the entire GoalRecordV2 semantic body, ordinary revision/currentness, accepted objective revision chain/origin and independently owned Workflow records. There is no new state, synthetic paused body, objective revision, body-mutation receipt or Goal child settlement list. The operation mutates shared hidden cancellation control only, through the existing sole owner.goal.body.mutation@1.0.0. GRS-064's every-body-mutation revision rule remains unchanged because cancellation does not mutate body bytes.
@@ -667,6 +673,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9, SP-1131 and GRS-1131 for prior association/Stop/pending mapping; fresh enrolled sources remain distinct. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ##### One original association authority
 

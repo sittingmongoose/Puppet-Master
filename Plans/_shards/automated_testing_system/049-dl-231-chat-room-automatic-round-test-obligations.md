@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7471
+Source lines: L6718-L7477
 
-Source SHA256: `441121857cf08caee41815ac7bd0b3b7feec2957f3fd96cbb297fdd72571134d`
+Source SHA256: `27b512db5cfb4bc66c77d02681a434484b01e0a2f3ff4edee9e821d4cc9b2514`
 
 ---
 
@@ -584,6 +584,9 @@ negative_constraints:
 owner_hints:
 - Plans/Automated_Testing_System.md
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated, goal.cancelled, goal_run.started, goal_run.cancelled and goal_run.certified separately adopt W1, W2, W3, W4 and W5 respectively through ATS-1116/1117/1118. Each retains its own complete original roots and source/custody/final-boundary cases. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 **Per family.** Each family's fixture section lists its owner units and its cases.
 

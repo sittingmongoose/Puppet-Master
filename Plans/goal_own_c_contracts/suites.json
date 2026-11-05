@@ -1,0 +1,122 @@
+{
+  "schema_id": "pm.goal_own_c.suites.v1",
+  "status": "AUTHORED_ORACLE_CONTRACT_NOT_COMPLETE_NATIVE_ROOT_FIXTURES",
+  "suites": [
+    {
+      "event_type": "goal.updated",
+      "protocol_section": "W1",
+      "own_whole_root_documents": [
+        "Plans/goal_update_command_custody.schema.json",
+        "Plans/goal_updated_consumer_contracts.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_update_schema_resources.json",
+        "Plans/goal_updated_consumer_resources.json"
+      ],
+      "whole_method_maps": [],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "goal.cancelled",
+      "protocol_section": "W2",
+      "own_whole_root_documents": [
+        "Plans/goal_cancel_command_custody.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_cancel_schema_resources.json",
+        "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_cancel_contracts/methods.json",
+        "Plans/goal_cancel_contracts/execution-methods.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "goal_run.started",
+      "protocol_section": "W3",
+      "own_whole_root_documents": [
+        "Plans/goal_run_started_consumer_contracts/consumer.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_run_started_consumer_schema_resources.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_run_started_consumer_contracts/methods.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "goal_run.cancelled",
+      "protocol_section": "W4",
+      "own_whole_root_documents": [
+        "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_run_cancelled_consumer_schema_resources.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_run_cancelled_consumer_contracts/methods.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "goal_run.certified",
+      "protocol_section": "W5",
+      "own_whole_root_documents": [
+        "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
+        "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "Plans/goal_run_certified_consumer_contracts/resource-realms.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_certified_event_coordinator_contracts/methods.json",
+        "Plans/goal_run_certified_consumer_contracts/methods.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN"
+    }
+  ]
+}

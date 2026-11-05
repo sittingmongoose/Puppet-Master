@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2717-L3294
+Source lines: L2717-L3309
 
-Source SHA256: `0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1`
+Source SHA256: `661d2ce3d3be4f1a9ef00b390c45fc46a629025a6d2392bf5480e0b20cc201ba`
 
 ---
 
@@ -101,6 +101,9 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1 and SIR-1130 original approval/source/result joins. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Contracts_V0.md#CV-342
 
 ### SIR-050 - Original Cancel acknowledgement terminal and replay
@@ -159,6 +162,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2 and ATS-1117 original no-association source/Stop/first-receipt/control/terminal and immutable replay boundaries; it does not borrow the Plan or Workflow source.
+
 
 ##### Original SIR private prepared input
 
@@ -241,6 +247,9 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and SIR-1131 original bound-Plan accepted-source/result custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 
 ### SIR-052 - Original Workflow cancellation acceptance, terminal and retained replay
@@ -332,6 +341,9 @@ negative_constraints:
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and SIR-1131 original Workflow accepted-source/result custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
 
 
@@ -412,6 +424,9 @@ negative_constraints:
 - No native writer/capability, projector/checkpoint, Event depth or runtime qualification
   from source adoption.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2 and SIR-1131 original private current-inspection source selection and final disclosure. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
 

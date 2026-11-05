@@ -22636,6 +22636,9 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1 and CV-1130 newly selected approval roots while preserving the complete original update resource realm. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 Amended 2026-11-04 (DL-045 depth): ProducerMetadata.event_id and idempotency_key take the values SP-421 derives.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/goal_update_schema_resources.json
@@ -23007,6 +23010,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and CV-1131 separate migration roots while preserving complete original cancellation realms. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 The exact schema owners are `Plans/goal_cancel_command_custody.schema.json` and `Plans/goal_execution_binding_custody.schema.json`. The central `Plans/goal_runtime_contracts.schema.json` adds only `GoalCancelRequestV2` and `GoalCancelResultV2`; all old central definitions and actual Start/Update schemas remain exact. No generic Pause/Resume contract is inferred. The active event is `pm.goal_runtime_event.goal_cancelled.schema.v3`; its whole unchanged `pm.goal_runtime_event.goal_cancelled.schema.v2` is selected only at `#/legacy_v2_reader` for actual historical reads. This existing event changes revision, not family count, aliases, EventRecord envelope, legacy joins or indefinite event retention.
 
@@ -23507,6 +23513,9 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.certified adopts W5 and ATS-1118 whole v7/prepare.v2 identity/append/commit/release and consumer-root oracle obligations. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-352, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
 
@@ -24815,3 +24824,114 @@ owner_hints:
 ```
 
 **Exact `goal.tool_check_recorded` qualification, newly authored under DL-045 applying DL-079/Card 3 A.** This family is historical-only in both scopes. The v2 root `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` is the unchanged whole historical reader resource, never a current writer selection. GRS-207 forbids append/retry/producer adoption before dedupe or any effect, and SP-433 supplies the sole historical consumer `storage.goal_tool_check_recorded_history_read.v1@1.0.0` with SP-420/SP-278 and individual none_required family checkpoint. Preserve original D-R13 row meaning, v1 compatibility and all original Project bytes/retention. This qualification overrides old Known-37/Goal/CV-287 matrix phrases selecting this exact family for new writes. The CV-366 row is historical_only, not pending future source admission. Card 3 A approves withdrawal of the unused app edition at integration's next registry checkpoint; registry/app source/schema edits are deliberately absent from this draft. ATS-211 and the exact family fixture define conditional historical acceptance and current refusal, not actual writer history or native proof.
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### CV-1130 - Goal update approval closed request and resolution roots
+
+```yaml
+plan_unit_id: CV-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.updated, adopt all U1-U7 closed
+  definitions in Plans/goal_own_c_contracts/contracts.schema.json with id https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json.
+  Central GoalUpdateProposalRequest and ApprovalRequest are exact aliases; existing update/start/cancel shapes
+  and union stay unchanged. ApprovalResolution, Target and original byte-image selections have no caller authority.
+  Eagerly resolve the complete graph, check exact types and full-string formats, and bind true original source/whole
+  request bytes rather than a supplied digest.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- CV-342
+- HITL-1130
+- SP-1130
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval closed request and resolution roots). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### CV-1131 - Goal cancellation source migration roots and original realms
+
+```yaml
+plan_unit_id: CV-1131
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, M1-M9 adopt closed
+  MigrationRequest, MigrationResult, OwnerMapping, SourceImage and Selection roots in Plans/goal_own_c_contracts/contracts.schema.json.
+  SourceImage carries exact original physical bytes and schema/codec/key/origin selection; each complete source
+  validates in its own original realm. Actual owner membership, complete inventories, pending/receipt joins,
+  effective Stop preservation and whole destination mapping are semantic predicates, never inferred from a
+  schema-shaped byte carrier. Existing CV-347 and complete Project/app resource graphs remain exact.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- CV-347
+- SP-1131
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation source migration roots and original realms). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json

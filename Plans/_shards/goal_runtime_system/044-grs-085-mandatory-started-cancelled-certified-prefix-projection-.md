@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8186-L8891
+Source lines: L8210-L8918
 
-Source SHA256: `2799727129b753f2c42a03e35fca9d7d03de933a6d3d69a4b8047b8efbfeaa5d`
+Source SHA256: `3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218`
 
 ---
 
@@ -76,6 +76,9 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.started, goal_run.cancelled and goal_run.certified separately adopt W3, W4 and W5 with their own GRS-1132/1133/1134 and SP-1134/1135/1136. Existing unsupported same-run transition halts and old-birth source qualifications remain unchanged. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
 

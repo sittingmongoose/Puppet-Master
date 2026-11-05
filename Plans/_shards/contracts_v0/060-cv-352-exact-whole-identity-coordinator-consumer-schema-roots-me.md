@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23433-L23511
+Source lines: L23439-L23520
 
-Source SHA256: `b9df78ba8e8ab3c9742ed7d75bb580af67b1bde9003aca3c87712040d7af44e6`
+Source SHA256: `721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1`
 
 ---
 
@@ -85,5 +85,8 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.certified adopts W5 and ATS-1118 whole v7/prepare.v2 identity/append/commit/release and consumer-root oracle obligations. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-352, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
