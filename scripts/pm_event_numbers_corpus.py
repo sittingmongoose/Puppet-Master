@@ -2,6 +2,9 @@
 
 This models trusted custody with a separate sealed fixture lookup. It does not
 authenticate a native store, register a family, or run the other drafting lanes.
+
+scope="numbers" selects the number cases and number owner checks and imports no
+date-time module. Date-time code here stays lazy, on date-time routes only.
 """
 from __future__ import annotations
 
@@ -11,6 +14,19 @@ from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
+import sys
+
+# Corpus operations that execute no date-time code. A history case selects a
+# date-time profile only through date_time_profile, so number_case excludes it.
+NUMBER_OPS = frozenset(("token", "slot", "integer", "boolean", "parse_token", "parse", "current_json",
+                        "jcs", "jcs_value", "jcs_kind_declaration", "physical", "uint64", "decode",
+                        "append_policy", "history", "payload", "recipe_constructor",
+                        "full_value_commitment"))
+SCOPES = ("all", "numbers")
+
+
+def number_case(case):
+    return case["op"] in NUMBER_OPS and not case.get("date_time_profile")
 
 
 @dataclass
@@ -308,6 +324,14 @@ def execute(m, case, corpus):
                                type_sensitive_paths={()} if case.get("typed") else set(),
                                sign_sensitive_paths={()} if case.get("sign") else set(),
                                numeric_kinds={(): case["kind"]} if "kind" in case else {}).decode()
+    if op == "jcs_kind_declaration":
+        # Boundary: declaration admission only, by explicit fixture adapter. It
+        # stops before the separate kind-preservation predicate in qualified_jcs,
+        # so cutting that predicate cannot mask or satisfy this case. The full
+        # route, with both predicates, stays covered by the jcs_value cases.
+        return m._declared_numeric_kind(_value(case["value"]), (),
+                                        type_sensitive_paths={()} if case.get("typed") else set(),
+                                        numeric_kinds={(): case["kind"]} if "kind" in case else {})
     if op == "datetime":
         from pm_event_datetime import datetime_validator
         from jsonschema import ValidationError
@@ -392,37 +416,8 @@ def evaluate(m, case, corpus):
     return {"outcome": "acceptance", "output": output}, result
 
 
-def run_corpus(path):
-    import pm_event_numbers as m
-    corpus = json.loads(Path(path).read_text(), object_pairs_hook=m._unique_object)
-    root = Path(__file__).resolve().parents[1]
-    from pm_event_datetime_inventory import check_inventory
-    inventory_check = check_inventory(root)
-    if inventory_check["status"] != "pass":
-        # Admission is a prerequisite. Do not repeatedly attempt to install
-        # invalid selections while reporting thousands of derivative failures.
-        return {"status": "fail", "corpus_cases": len(corpus["cases"]),
-                "case_passes": 0, "case_execution": "NOT_RUN_ADMISSION_REFUSED",
-                "positives": sum("output" in c for c in corpus["cases"]),
-                "negatives": sum("error" in c for c in corpus["cases"]),
-                "outcomes": {}, "datetime_inventory": inventory_check,
-                "owner_integration_checks": {"datetime_inventory_complete_and_classified": False},
-                "failures": [{"integration_check": "datetime_inventory_complete_and_classified"}],
-                "native_authority": "NOT_RUN"}
-    failures, outcomes = [], {}
-    for c in corpus["cases"]:
-        actual, result = evaluate(m, c, corpus)
-        expected = ({"outcome": "refusal", "error": c["error"]} if "error" in c
-                    else {"outcome": "acceptance", "output": c["output"]})
-        outcomes[c["id"]] = actual
-        if actual != expected:
-            failures.append({"id": c["id"], "expected": expected, "actual": actual})
-        elif "output" in c:
-            for error in success_errors(result):
-                failures.append({"id": c["id"], "postcondition": error})
-        if not c.get("target_predicate"):
-            failures.append({"id": c["id"], "missing_target_predicate": True})
-    # Real unchanged owner vectors, not self-generated expected bytes.
+def number_integration_checks(m, root):
+    """Real unchanged owner vectors, not self-generated expected bytes. No date-time code."""
     wire = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())
     frame = bytes.fromhex(wire["base_frame_hex"])
     header_length = int.from_bytes(frame[9:11], "little")
@@ -431,7 +426,47 @@ def run_corpus(path):
         "frozen_complete_event_bytes": m.storage_value_bytes(wire["base_event"]) == original_payload,
         "frozen_complete_event_decode": m.decode_storage_value(original_payload) == wire["base_event"],
     }
-    checks["datetime_inventory_complete_and_classified"] = inventory_check["status"] == "pass"
+    # These full-route endpoints exercise more than one required exactness
+    # predicate. They are controls, not purported single-predicate negatives.
+    for value, reason in (((1 << 53) + 1, "jcs_binary64"), ((1 << 64) - 1, "jcs_binary64")):
+        try:
+            m.qualified_jcs(value)
+            checks["full_jcs_endpoint_refusal_" + str(value)] = False
+        except m.Refusal as error:
+            checks["full_jcs_endpoint_refusal_" + str(value)] = error.reason == reason
+    full = json.loads((root / "Plans/event_append_receipt_full_value_fixtures.json").read_text())
+    checks["frozen_full_value_commitment"] = m.full_value_commitment(full["base_original_event"]) == full["commitment_sha256"]
+    event = wire["base_event"]
+    producer = m.producer_semantic_digest(event)
+    for field, val in (("sequence_id", (1 << 64) - 1), ("observed_at_utc", "2099-01-01T00:00:00Z"),
+                       ("persisted_at_utc", "2099-01-01T00:00:00Z")):
+        changed = dict(event, **{field: val})
+        checks["producer_excludes_" + field] = m.producer_semantic_digest(changed) == producer
+        checks["full_value_includes_" + field] = m.full_value_commitment(changed) != m.full_value_commitment(event)
+    for field in m.PRODUCER_FIELDS:
+        changed = dict(event, **{field: "changed-caller-value"})
+        checks["producer_includes_" + field] = m.producer_semantic_digest(changed) != producer
+        omitted = {k: v for k, v in event.items() if k != field}
+        try:
+            m.producer_semantic_digest(omitted)
+            checks["producer_requires_present_" + field] = False
+        except m.Refusal as error:
+            checks["producer_requires_present_" + field] = error.reason == "producer_projection"
+    from pm_projects_refresh_contracts import semantic_hash
+    for left, right in ((1, 1.0), (0.0, -0.0), (True, 1)):
+        checks["app_typed_" + repr(left) + "_vs_" + repr(right)] = semantic_hash("accepted_source", left) != semantic_hash("accepted_source", right)
+    checks["app_arbitrary_integer"] = semantic_hash("accepted_source", 1 << 100) != semantic_hash("accepted_source", (1 << 100) + 1)
+    import blake3
+    for n in (16384, 16385):
+        raw = b"x" * n
+        checks["payload_exact_size_" + str(n)] = len(raw) == n and blake3.blake3(raw).digest() != blake3.blake3(raw + b"\n").digest()
+    return checks
+
+
+def datetime_integration_checks(m, root, inventory_check):
+    """The date-time suite. Only scope="all" calls this."""
+    wire = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())
+    checks = {"datetime_inventory_complete_and_classified": inventory_check["status"] == "pass"}
     from pm_event_datetime_admission_checks import regression_checks
     checks.update(regression_checks(root))
     # Reviews C6-B1 and C7-B1/B2: schema fences inside any Markdown container,
@@ -482,54 +517,70 @@ def run_corpus(path):
                                           "2026-01-01T00:00:00Z\n")):
             checks["eventrecord_format_enforced_" + field + "_" + str(index)] = not envelope_validator.is_valid(
                 dict(wire["base_event"], **{field: invalid}))
-    # These full-route endpoints exercise more than one required exactness
-    # predicate. They are controls, not purported single-predicate negatives.
-    for value, reason in (((1 << 53) + 1, "jcs_binary64"), ((1 << 64) - 1, "jcs_binary64")):
-        try:
-            m.qualified_jcs(value)
-            checks["full_jcs_endpoint_refusal_" + str(value)] = False
-        except m.Refusal as error:
-            checks["full_jcs_endpoint_refusal_" + str(value)] = error.reason == reason
-    full = json.loads((root / "Plans/event_append_receipt_full_value_fixtures.json").read_text())
-    checks["frozen_full_value_commitment"] = m.full_value_commitment(full["base_original_event"]) == full["commitment_sha256"]
-    event = wire["base_event"]
-    producer = m.producer_semantic_digest(event)
-    for field, val in (("sequence_id", (1 << 64) - 1), ("observed_at_utc", "2099-01-01T00:00:00Z"),
-                       ("persisted_at_utc", "2099-01-01T00:00:00Z")):
-        changed = dict(event, **{field: val})
-        checks["producer_excludes_" + field] = m.producer_semantic_digest(changed) == producer
-        checks["full_value_includes_" + field] = m.full_value_commitment(changed) != m.full_value_commitment(event)
-    for field in m.PRODUCER_FIELDS:
-        changed = dict(event, **{field: "changed-caller-value"})
-        checks["producer_includes_" + field] = m.producer_semantic_digest(changed) != producer
-        omitted = {k: v for k, v in event.items() if k != field}
-        try:
-            m.producer_semantic_digest(omitted)
-            checks["producer_requires_present_" + field] = False
-        except m.Refusal as error:
-            checks["producer_requires_present_" + field] = error.reason == "producer_projection"
-    from pm_projects_refresh_contracts import semantic_hash
-    for left, right in ((1, 1.0), (0.0, -0.0), (True, 1)):
-        checks["app_typed_" + repr(left) + "_vs_" + repr(right)] = semantic_hash("accepted_source", left) != semantic_hash("accepted_source", right)
-    checks["app_arbitrary_integer"] = semantic_hash("accepted_source", 1 << 100) != semantic_hash("accepted_source", (1 << 100) + 1)
-    import blake3
-    for n in (16384, 16385):
-        raw = b"x" * n
-        checks["payload_exact_size_" + str(n)] = len(raw) == n and blake3.blake3(raw).digest() != blake3.blake3(raw + b"\n").digest()
+    return checks
+
+
+def run_corpus(path, *, scope="all"):
+    if scope not in SCOPES:
+        raise ValueError("unknown self-test scope: " + repr(scope))
+    import pm_event_numbers as m
+    modules_before = set(sys.modules)
+    corpus = json.loads(Path(path).read_text(), object_pairs_hook=m._unique_object)
+    root = Path(__file__).resolve().parents[1]
+    cases = corpus["cases"] if scope == "all" else [c for c in corpus["cases"] if number_case(c)]
+    inventory_check = None
+    if scope == "all":
+        from pm_event_datetime_inventory import check_inventory
+        inventory_check = check_inventory(root)
+        if inventory_check["status"] != "pass":
+            # Admission is a prerequisite. Do not repeatedly attempt to install
+            # invalid selections while reporting thousands of derivative failures.
+            return {"status": "fail", "corpus_cases": len(cases),
+                    "case_passes": 0, "case_execution": "NOT_RUN_ADMISSION_REFUSED",
+                    "positives": sum("output" in c for c in cases),
+                    "negatives": sum("error" in c for c in cases),
+                    "outcomes": {}, "datetime_inventory": inventory_check,
+                    "owner_integration_checks": {"datetime_inventory_complete_and_classified": False},
+                    "failures": [{"integration_check": "datetime_inventory_complete_and_classified"}],
+                    "native_authority": "NOT_RUN", "self_test_scope": scope}
+    failures, outcomes = [], {}
+    for c in cases:
+        actual, result = evaluate(m, c, corpus)
+        expected = ({"outcome": "refusal", "error": c["error"]} if "error" in c
+                    else {"outcome": "acceptance", "output": c["output"]})
+        outcomes[c["id"]] = actual
+        if actual != expected:
+            failures.append({"id": c["id"], "expected": expected, "actual": actual})
+        elif "output" in c:
+            for error in success_errors(result):
+                failures.append({"id": c["id"], "postcondition": error})
+        if not c.get("target_predicate"):
+            failures.append({"id": c["id"], "missing_target_predicate": True})
+    checks = number_integration_checks(m, root)
+    if scope == "all":
+        checks.update(datetime_integration_checks(m, root, inventory_check))
+    else:
+        checks["number_scope_imported_no_datetime_code"] = not any(
+            name.startswith("pm_event_datetime") for name in set(sys.modules) - modules_before)
     for name, ok in checks.items():
         if not ok:
             failures.append({"integration_check": name})
-    return {"status": "fail" if failures else "pass", "corpus_cases": len(corpus["cases"]),
-            "case_passes": len(corpus["cases"]) - sum("id" in f for f in failures),
-            "positives": sum("output" in c for c in corpus["cases"]),
-            "negatives": sum("error" in c for c in corpus["cases"]),
-            "labelled_cases": sum(bool(c.get("target_predicate")) for c in corpus["cases"]),
-            "labelled_negatives": sum("error" in c and bool(c.get("target_predicate")) for c in corpus["cases"]),
+    return {"status": "fail" if failures else "pass", "corpus_cases": len(cases),
+            "case_passes": len(cases) - sum("id" in f for f in failures),
+            "positives": sum("output" in c for c in cases),
+            "negatives": sum("error" in c for c in cases),
+            "labelled_cases": sum(bool(c.get("target_predicate")) for c in cases),
+            "labelled_negatives": sum("error" in c and bool(c.get("target_predicate")) for c in cases),
             "outcomes": outcomes,
             "guard_isolation": {"status": "SWEEP_PENDING", "tool": "scripts/pm_guard_isolation.py",
                                 "items": corpus["guard_isolation_sweep"]},
             "owner_integration_checks": checks,
-            "datetime_inventory": inventory_check,
-            "conflicts_covered": sorted({x for c in corpus["cases"] for x in c["conflicts"]}),
-            "failures": failures, "native_authority": "NOT_RUN",
-            "scope": "Shared adapter/corpus only; no complete lane checker or family admission."}
+            "datetime_inventory": (inventory_check if scope == "all" else
+                                   {"status": "NOT_RUN_SEPARATE_SUITE",
+                                    "command": "python3 scripts/pm_event_numbers.py --self-test --scope all",
+                                    "excluded_cases": len(corpus["cases"]) - len(cases)}),
+            "conflicts_covered": sorted({x for c in cases for x in c["conflicts"]}),
+            "failures": failures, "native_authority": "NOT_RUN", "self_test_scope": scope,
+            "scope": ("Shared adapter/corpus only; no complete lane checker or family admission." if scope == "all" else
+                      "Number recipes only; CV-1101 date-time stays a separately required gate. "
+                      "No complete lane checker or family admission.")}

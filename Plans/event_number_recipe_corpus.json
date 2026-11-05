@@ -9553,6 +9553,190 @@
       "target_predicate": "physical.canonical_bytes"
     },
     {
+      "id": "decode-app-float64-1.0",
+      "op": "decode",
+      "hex": "cb3ff0000000000000",
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted",
+      "target_predicate": "physical.profile_selected_decoder"
+    },
+    {
+      "id": "decode-app-float64-negative-zero",
+      "op": "decode",
+      "hex": "cb8000000000000000",
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted",
+      "target_predicate": "physical.profile_selected_decoder"
+    },
+    {
+      "id": "decode-app-binary",
+      "op": "decode",
+      "hex": "c40100",
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted",
+      "target_predicate": "physical.profile_selected_decoder"
+    },
+    {
+      "id": "decode-binding-uint",
+      "op": "decode",
+      "hex": "01",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted",
+      "target_predicate": "physical.profile_selected_decoder"
+    },
+    {
+      "id": "decode-binding-uint64-max",
+      "op": "decode",
+      "hex": "cfffffffffffffffff",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted",
+      "target_predicate": "physical.profile_selected_decoder"
+    },
+    {
+      "id": "decode-binding-map",
+      "op": "decode",
+      "hex": "81a16101",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted",
+      "target_predicate": "physical.profile_selected_decoder"
+    },
+    {
+      "id": "decode-app-float32",
+      "op": "decode",
+      "hex": "ca3f800000",
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "physical_noncanonical",
+      "target_predicate": "msgpack.app_float.binary64_width",
+      "enforcement": "authored",
+      "single_defect": "msgpack.app_float.binary64_width"
+    },
+    {
+      "id": "decode-binding-float32",
+      "op": "decode",
+      "hex": "ca3f800000",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding.numeric_type",
+      "enforcement": "authored",
+      "single_defect": "binding.numeric_type"
+    },
+    {
+      "id": "decode-binding-float64",
+      "op": "decode",
+      "hex": "cb3ff0000000000000",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding.numeric_type",
+      "enforcement": "authored",
+      "single_defect": "binding.numeric_type"
+    },
+    {
+      "id": "decode-binding-negative-fixint",
+      "op": "decode",
+      "hex": "ff",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding.integer.minimum",
+      "enforcement": "authored",
+      "single_defect": "binding.integer.minimum"
+    },
+    {
+      "id": "decode-binding-int64-min",
+      "op": "decode",
+      "hex": "d38000000000000000",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding.integer.minimum",
+      "enforcement": "authored",
+      "single_defect": "binding.integer.minimum"
+    },
+    {
+      "id": "decode-binding-nested-negative",
+      "op": "decode",
+      "hex": "91ff",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding.integer.minimum",
+      "enforcement": "authored",
+      "single_defect": "binding.integer.minimum"
+    },
+    {
+      "id": "decode-binding-binary",
+      "op": "decode",
+      "hex": "c40100",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding.value_type",
+      "enforcement": "authored",
+      "single_defect": "binding.value_type"
+    },
+    {
+      "id": "decode-unknown-profile",
+      "op": "decode",
+      "hex": "01",
+      "profile": "fixture.unregistered.profile",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "physical_profile",
+      "target_predicate": "physical_profile",
+      "enforcement": "authored",
+      "single_defect": "physical_profile"
+    },
+    {
       "id": "append-append_once",
       "op": "append_policy",
       "value": "append_once",
@@ -10370,7 +10554,88 @@
       "error": "jcs_kind_undeclared",
       "target_predicate": "jcs_kind_undeclared",
       "enforcement": "authored",
-      "single_defect": "jcs_kind_undeclared"
+      "full_route_predicates": [
+        "jcs_kind_undeclared",
+        "jcs_kind"
+      ],
+      "fixture_boundary": "Full-route control: a bare Decimal at a type-sensitive path fails both kind declaration and kind preservation. The single-defect proof for declaration is jcs-declaration-decimal-undeclared."
+    },
+    {
+      "id": "jcs-declaration-decimal-undeclared",
+      "op": "jcs_kind_declaration",
+      "value": {
+        "@decimal": "1.5"
+      },
+      "typed": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_kind_undeclared",
+      "target_predicate": "jcs_kind_undeclared",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind_undeclared",
+      "fixture_boundary": "Declaration admission only, through the jcs_kind_declaration fixture adapter. The separate kind-preservation predicate is outside this boundary and is not reached. Not a route acceptance."
+    },
+    {
+      "id": "jcs-declaration-decimal-declared",
+      "op": "jcs_kind_declaration",
+      "value": {
+        "@decimal": "1.5"
+      },
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "float",
+      "target_predicate": "jcs_kind_undeclared",
+      "fixture_boundary": "Declaration admission only, through the jcs_kind_declaration fixture adapter. The separate kind-preservation predicate is outside this boundary and is not reached. Not a route acceptance."
+    },
+    {
+      "id": "jcs-declaration-native-float",
+      "op": "jcs_kind_declaration",
+      "value": {
+        "@float": "1.5"
+      },
+      "typed": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "float",
+      "target_predicate": "jcs_kind_undeclared",
+      "fixture_boundary": "Declaration admission only, through the jcs_kind_declaration fixture adapter. The separate kind-preservation predicate is outside this boundary and is not reached. Not a route acceptance."
+    },
+    {
+      "id": "jcs-declaration-native-integer",
+      "op": "jcs_kind_declaration",
+      "value": {
+        "@int": "1"
+      },
+      "typed": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "integer",
+      "target_predicate": "jcs_kind_undeclared",
+      "fixture_boundary": "Declaration admission only, through the jcs_kind_declaration fixture adapter. The separate kind-preservation predicate is outside this boundary and is not reached. Not a route acceptance."
+    },
+    {
+      "id": "jcs-declaration-untyped-decimal",
+      "op": "jcs_kind_declaration",
+      "value": {
+        "@decimal": "1.5"
+      },
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": null,
+      "target_predicate": "jcs_kind_undeclared",
+      "fixture_boundary": "Declaration admission only, through the jcs_kind_declaration fixture adapter. The separate kind-preservation predicate is outside this boundary and is not reached. Not a route acceptance."
     },
     {
       "id": "jcs-invalid-kind",
