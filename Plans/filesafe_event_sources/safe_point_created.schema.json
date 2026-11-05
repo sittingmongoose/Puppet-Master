@@ -392,7 +392,8 @@
         },
         "writer_epoch": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "description": "Current admission requires type(value) is int (not float or bool), before any hash or epoch join. Retained sources retain their original versioned commitment recipe."
         },
         "original_commit_ref": {
           "type": "string",
@@ -666,7 +667,8 @@
         },
         "writer_epoch": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "description": "Current admission requires type(value) is int (not float or bool), before any hash or epoch join. Retained sources retain their original versioned commitment recipe."
         },
         "original_commit_ref": {
           "type": "string",

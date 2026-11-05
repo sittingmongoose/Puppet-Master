@@ -77,7 +77,7 @@ def graph_failures(family):
     value={k:v for k,v in graph.items() if k!='graph_sha256'}
     if semantic_hash('source_graph',value) != graph['graph_sha256']: failures.append('graph_hash')
     if tuple(s['role'] for s in graph['ordered_stages']) != STAGES: failures.append('stage_order')
-    if [s['ordinal'] for s in graph['ordered_stages']] != list(range(len(STAGES))): failures.append('stage_ordinals')
+    if any(type(s['ordinal']) is not int for s in graph['ordered_stages']) or [s['ordinal'] for s in graph['ordered_stages']] != list(range(len(STAGES))): failures.append('stage_ordinals')
     if len(graph['methods']) != 2: failures.append('method_count')
     for kind,method in zip(('project','application'),graph['methods']):
         expected=f'owner.filesafe.{family.replace(".","_")}.original_source.{kind}@1.0.0'
@@ -169,7 +169,7 @@ def event_payload(family, event, bank):
     try:
         descriptor = json.loads(ref)
         _, validator = context(family)
-        if list(validator('payload_reference').iter_errors(descriptor)):
+        if not integer_numbers(descriptor) or list(validator('payload_reference').iter_errors(descriptor)):
             return None, ['payload_reference_schema']
         if payload_owner.payload_bytes(descriptor).decode('utf-8') != ref or inline != {}:
             return None, ['payload_reference_shape']
@@ -243,6 +243,7 @@ def application_original_failures(family, candidate, bank):
                     except (TypeError,ValueError):body=None
                     require(body is not None and len(body)==blob['length']==entry['length']
                         and hashlib.sha256(body).hexdigest()==blob['sha256']==entry['blob_sha256'],'blob_value')
+                    require(body is not None and 'blake3:' + blake3.blake3(body).hexdigest()==blob['payload_id']==entry['payload_id'],'blob_address')
                     require(bank.get('payloads',{}).get(blob['payload_id'])==raw,'payload_store_selection')
             elif entry['kind']=='symlink' and entry['present']:
                 require(entry['symlink_target_hex'] is not None and entry['payload_id'] is None,'symlink_value')
@@ -331,6 +332,7 @@ def materialization_failures(family, candidate, bank):
     graph,validator=context(family)
     if list(validator('materialization').iter_errors(candidate)): return ['materialization_schema']
     source,event,custody=(candidate[k] for k in ('source','event','custody'))
+    if not integer_numbers(candidate) or type(bank['writer_epoch']) is not int: return ['numeric_representation']
     if event['replay_policy']=='projector_replay_only':return ['replay_only_not_appendable']
     p, payload_errors = event_payload(family, event, bank)
     if payload_errors: return payload_errors
@@ -414,18 +416,19 @@ def issued_failures(family, value, expected, bank):
     _, validator = context(family)
     if value != expected:
         return ['issued_original_changed']
+    if not integer_numbers(value): return ['issued_numeric_representation']
     event, custody = value['event'], value['custody']
-    payload, payload_errors = event_payload(family, event, bank)
-    if payload_errors: return payload_errors
-    _, selected = context(family)
-    if list(selected('Result').iter_errors(payload)) or not payload_owner.semantic(payload, inline=event['payload_ref'] is None):
-        return ['issued_payload']
     schema = load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
     # Validate the two exact imported roots, without requiring an original command/grant.
     for key in ('event', 'custody'):
         selected = Draft202012Validator(schema['$defs']['materialization']['properties'][key],
             registry=validator('materialization')._registry, format_checker=FormatChecker())
         if list(selected.iter_errors(value[key])): return ['issued_schema']
+    payload, payload_errors = event_payload(family, event, bank)
+    if payload_errors: return payload_errors
+    _, selected = context(family)
+    if list(selected('Result').iter_errors(payload)) or not payload_owner.semantic(payload, inline=event['payload_ref'] is None):
+        return ['issued_payload']
     if (custody['event_id'] != event['event_id'] or custody['event_type'] != family
         or custody['idempotency_key'] != event['idempotency_key']
         or custody['producer_semantic_digest'] != storage_owner().event_producer_semantic_digest(event)
@@ -458,7 +461,7 @@ class ProtocolOracle:
         return None if (self.bank['storage_instance_id']!=original['custody']['storage_instance_id']
             or issued_failures(self.family,value,expected,self.bank)) else value
     def coverage_valid(self):
-        return (self.bank['source_generation']==self.source_generation
+        return (type(self.bank['source_generation']) is int and type(self.source_generation) is int and self.bank['source_generation']==self.source_generation
             and set(self.bank['issued'])==set(self.boundary)
             and all(not issued_failures(self.family,self.bank['issued'].get(k),v,self.bank)
                     for k,v in self.boundary.items()))
@@ -540,7 +543,7 @@ class ProtocolOracle:
         if action=='publish_reader':
             if (not self.reader_fenced or self.rebuilt is None
                 or self.rebuilt != self.bank['issued'] or not self.coverage_valid()
-                or self.bank['reader_generation']!=self.reader_generation):return 'verified_rebuild_required'
+                or type(self.bank['reader_generation']) is not int or type(self.reader_generation) is not int or self.bank['reader_generation']!=self.reader_generation):return 'verified_rebuild_required'
             self.bank['reader_generation']+=1;self.reader_generation+=1
             self.reader_fenced=False;return 'reader_generation_published'
         if action in ('read','read_body'):
@@ -552,14 +555,14 @@ class ProtocolOracle:
             if (expected is None or self.bank['retained_boundary'].get(eid)!=expected
                 or {k:c[k] for k in ('event','custody')}!=expected
                 or self.bank['storage_instance_id']!=expected['custody']['storage_instance_id']
-                or self.bank['reader_generation']!=self.reader_generation
+                or type(self.bank['reader_generation']) is not int or type(self.reader_generation) is not int or self.bank['reader_generation']!=self.reader_generation
                 or issued_failures(self.family,value,expected,self.bank)):
                 return 'read_unavailable'
             if action=='read_body':
                 # A separate body-dependent request retains the original owner's
                 # availability fence. An event-row read never recreates a body.
                 source=c['source'];request=source['original_request']
-                if (self.bank['sources'].get(source['source_ref'])!=source
+                if (list(context(self.family)[1]('source').iter_errors(source)) or self.bank['sources'].get(source['source_ref'])!=source
                     or source_commitment(source)!=source['accepted_source_sha256']
                     or source['original_result']!=event_payload(self.family,c['event'],self.bank)[0]):
                     return 'read_unavailable'
@@ -570,6 +573,8 @@ class ProtocolOracle:
                     if (not isinstance(raw,str)
                         or hashlib.sha256(bytes.fromhex(raw)).hexdigest()!=member['sha256']):
                         return 'read_unavailable'
+                if self.family.startswith('safe_point.') and request['scope']['scope_kind']=='application' and application_original_failures(self.family,c,self.bank):
+                    return 'read_unavailable'
             return 'original_history_no_effect'
         raise ValueError('unknown action '+action)
 
@@ -580,10 +585,11 @@ def mutate(document,path,value,remove=False):
     if remove:del node[key]
     else:node[key]=copy.deepcopy(value)
 
-def check():
+def check(families=FAMILIES):
     pack=load('Plans/filesafe_event_authority_fixtures.json');failures=[];counts={}
     if tuple(r['event_type'] for r in pack['families'])!=FAMILIES:failures.append('fixture_family_census')
     for row in pack['families']:
+        if row['event_type'] not in families: continue
         family=row['event_type'];counts[family]={'positive':0,'negative':0,'protocol':0}
         graph_errors=graph_failures(family)
         failures += [family+':'+f for f in graph_errors]
@@ -629,5 +635,16 @@ def check():
             counts[family]['protocol']+=1
     return {'status':'fail' if failures else 'pass','families':counts,'failures':failures,'native_execution':'NOT_RUN','membership':'ABSENT','authority':'synthetic contract cases only'}
 
+def integer_numbers(value):
+    """Current admission uses integer numbers; retained source recipes stay unchanged."""
+    return (all(integer_numbers(v) for v in value.values()) if isinstance(value, dict) else
+            all(integer_numbers(v) for v in value) if isinstance(value, list) else
+            type(value) is not float)
+
+
 if __name__=='__main__':
-    result=check();print(json.dumps(result,indent=2));raise SystemExit(result['status']!='pass')
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family', choices=FAMILIES)
+    args=parser.parse_args()
+    result=check((args.family,) if args.family else FAMILIES);print(json.dumps(result,indent=2));raise SystemExit(result['status']!='pass')

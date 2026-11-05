@@ -541,7 +541,11 @@ class Suite:
                 found = fn(f, c, b)
                 code = case.get('expected_error') or next(iter(dict.fromkeys(found)))
                 key = ('authority:reported:' if code.startswith('application_body_decode:') else 'authority:require:') + code
-                if code == 'replay_only_not_appendable':
+                if code == 'numeric_representation':
+                    key = next(k for k, valid in self.a.observed.items() if not valid and ':materialization_failures:' in k)
+                    layer = 'complete materialization'
+                    evaluate = lambda family=f, candidate=c, bank=b: not self.ans['materialization_failures'](family, candidate, bank)
+                elif code == 'replay_only_not_appendable':
                     keys = [k for k, valid in self.a.observed.items() if not valid]
                     key = next(k for k in keys if ':materialization_failures:' in k)
                     # Eligibility precedes typed materialization. Its duplicate
@@ -929,6 +933,8 @@ class Suite:
                 ('hash', lambda q: q.update(graph_sha256='0' * 64)),
                 ('stage_order', lambda q: q['ordered_stages'][0].update(role='wrong-role')),
                 ('stage_ordinals', lambda q: q['ordered_stages'][0].update(ordinal=1)),
+                ('stage_ordinal_float', lambda q: q['ordered_stages'][1].update(ordinal=1.0)),
+                ('stage_ordinal_bool', lambda q: q['ordered_stages'][1].update(ordinal=True)),
                 ('method_count', lambda q: q['methods'].pop()),
                 ('method_binding', lambda q: q['methods'][0].update(component='other-component')),
                 ('native_adoption', lambda q: q['methods'][0].update(adoption_disposition='implemented')),
@@ -985,36 +991,46 @@ class Suite:
         # unrelated missing prerequisite causing a Python exception.
         keys = {int(k.rsplit(':', 1)[1]): k for k in self.a.sites if ':step:' in k}
         plans = [
-            (469, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'replay'),
-            (471, 4, 'withdraw_writer', 'writer_fenced', 'crashed'),
-            (474, 0, 'owner_commit', 'owner_committed', 'writer_fenced'),
-            (475, 0, 'owner_commit', 'owner_committed', 'source_epoch'),
-            (476, 0, 'owner_commit', 'owner_committed', 'phase_committed'),
-            (481, 1, 'prepare', 'prepared', 'already_prepared'),
-            (482, 1, 'prepare', 'prepared', 'recovery_refused'),
-            (483, 1, 'prepare', 'prepared', 'missing_reference'),
-            (487, 2, 'append', 'appended', 'already_appended'),
-            (488, 2, 'append', 'appended', 'recovery_refused'),
-            (489, 2, 'append', 'appended', 'missing_reference'),
-            (493, 3, 'receipt', 'receipted', 'already_receipted'),
-            (494, 3, 'receipt', 'receipted', 'recovery_refused'),
-            (498, 4, 'terminal', 'original_terminal', 'recovery_refused'),
-            (499, 4, 'terminal', 'original_terminal', 'receipt_missing'),
-            (500, 4, 'terminal', 'original_terminal', 'issued_missing'),
-            (513, 1, 'recover', 'owner_committed', 'source_epoch_after_crash'),
-            (522, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'recovery_refused'),
-            (525, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'retry_thread'),
-            (528, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'receipt_missing'),
-            (532, 5, 'withdraw_reader', 'reader_fenced', 'writer_not_cutoff'),
-            (533, 1, 'withdraw_reader', 'reader_fenced', 'pending_cutoff'),
-            (536, 5, 'rebuild', 'retained_survivors_verified', 'reader_not_fenced'),
-            (538, 5, 'rebuild', 'retained_survivors_verified', 'source_generation'),
-            (541, 5, 'publish_reader', 'reader_generation_published', 'missing_rebuild'),
-            (547, 5, 'read', 'original_history_no_effect', 'reader_fenced'),
-            (552, 5, 'read', 'original_history_no_effect', 'forged_reader'),
-            (562, 5, 'read_body', 'original_history_no_effect', 'body_source_epoch'),
-            (570, 5, 'read_body', 'original_history_no_effect', 'body_bytes'),
+            (472, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'replay'),
+            (474, 4, 'withdraw_writer', 'writer_fenced', 'crashed'),
+            (477, 0, 'owner_commit', 'owner_committed', 'writer_fenced'),
+            (478, 0, 'owner_commit', 'owner_committed', 'source_epoch'),
+            (479, 0, 'owner_commit', 'owner_committed', 'phase_committed'),
+            (484, 1, 'prepare', 'prepared', 'already_prepared'),
+            (485, 1, 'prepare', 'prepared', 'recovery_refused'),
+            (486, 1, 'prepare', 'prepared', 'missing_reference'),
+            (490, 2, 'append', 'appended', 'already_appended'),
+            (491, 2, 'append', 'appended', 'recovery_refused'),
+            (492, 2, 'append', 'appended', 'missing_reference'),
+            (496, 3, 'receipt', 'receipted', 'already_receipted'),
+            (497, 3, 'receipt', 'receipted', 'recovery_refused'),
+            (501, 4, 'terminal', 'original_terminal', 'recovery_refused'),
+            (502, 4, 'terminal', 'original_terminal', 'receipt_missing'),
+            (503, 4, 'terminal', 'original_terminal', 'issued_missing'),
+            (516, 1, 'recover', 'owner_committed', 'source_epoch_after_crash'),
+            (525, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'recovery_refused'),
+            (528, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'retry_thread'),
+            (531, 4, 'retry', 'ORIGINAL_FULL_RESULT', 'receipt_missing'),
+            (535, 5, 'withdraw_reader', 'reader_fenced', 'writer_not_cutoff'),
+            (536, 1, 'withdraw_reader', 'reader_fenced', 'pending_cutoff'),
+            (539, 5, 'rebuild', 'retained_survivors_verified', 'reader_not_fenced'),
+            (541, 5, 'rebuild', 'retained_survivors_verified', 'source_generation'),
+            (544, 5, 'publish_reader', 'reader_generation_published', 'missing_rebuild'),
+            (550, 5, 'read', 'original_history_no_effect', 'reader_fenced'),
+            (555, 5, 'read', 'original_history_no_effect', 'forged_reader'),
+            (565, 5, 'read_body', 'original_history_no_effect', 'body_source_epoch'),
+            (573, 5, 'read_body', 'original_history_no_effect', 'body_bytes'),
         ]
+        # Keep published control IDs stable when production guard lines move.
+        case_id_lines = {472: 469, 474: 471, 477: 474, 478: 475, 479: 476, 484: 481, 485: 482, 486: 483, 490: 487, 491: 488, 492: 489, 496: 493, 497: 494, 501: 498, 502: 499, 503: 500, 516: 513, 525: 522, 528: 525, 531: 528, 535: 532, 536: 533, 539: 536, 541: 538, 544: 541, 550: 547, 555: 552, 565: 562, 573: 570}
+        plans += [(line, count, action, after, defect + '_' + form)
+                  for line, count, action, after, defect in plans if defect == 'source_generation'
+                  for form in ('float', 'bool')]
+        read_line = next(k for k,v in self.a.sites.items() if ':step:' in k and "self.bank['reader_generation']" in v and 'expected is None' in v)
+        publish_line = next(k for k,v in self.a.sites.items() if ':step:' in k and "self.bank['reader_generation']" in v and 'self.rebuilt is None' in v)
+        plans += [(int(key.rsplit(':',1)[1]), 5, action, after, 'reader_generation_' + form)
+                  for key,action,after in [(read_line,'read','original_history_no_effect'),(publish_line,'publish_reader','reader_generation_published')]
+                  for form in ('float','bool')]
         for row in self.pack['families']:
             f = row['event_type']
             for scope in ('project', 'application'):
@@ -1065,6 +1081,8 @@ class Suite:
                         c['custody']['original_event_value_commitment']['sha256'] = authority.full_commitment(c['event'])
                     elif defect == 'pending_cutoff': pass
                     elif defect == 'source_generation': b['source_generation'] += 1
+                    elif defect.startswith('source_generation_'): b['source_generation'] = float(b['source_generation']) if defect.endswith('float') else True
+                    elif defect.startswith('reader_generation_'): b['reader_generation'] = float(b['reader_generation']) if defect.endswith('float') else True
                     elif defect == 'pending_rebuild':
                         o.writer_fenced = o.reader_fenced = True
                         o.durable['pending'] = True
@@ -1082,15 +1100,24 @@ class Suite:
                     def evaluate(snapshot=snapshot, action=action, expected=expected):
                         c, b, o = copy.deepcopy(snapshot)
                         return o.step(action, c) == expected
-                    self.probes.append(Probe(f.replace('.', '_') + '.fix5.protocol.' + scope + '.' + str(line),
-                        f, 'complete protocol step', keys[line], evaluate,
+                    target = keys[line]
+                    if defect == 'body_bytes' and scope == 'application' and f.startswith('safe_point.'):
+                        duplicate = next(k for k,v in self.a.sites.items() if ':step:' in k and 'application_original_failures' in v)
+                        group = 'duplicates:historical_body_bytes:' + target + ':' + duplicate
+                        self.guard_groups[group] = frozenset((target, duplicate))
+                        self.duplicate_groups[group] = {
+                            'guards_removed_together': [target, duplicate],
+                            'reason': 'The original byte-SHA guard and complete original decoder both refuse the same changed historical body.'}
+                        target = group
+                    self.probes.append(Probe(f.replace('.', '_') + '.fix5.protocol.' + scope + '.' + str(case_id_lines.get(line, line)) + ('.' + defect if defect.endswith(('_float','_bool')) else ''),
+                        f, 'complete protocol step', target, evaluate,
                         {'defect': defect, 'action': action, 'setup_actions': count,
                          'valid_base': base['id'], 'positive_control_verified': True, 'source_line': line}))
                 c, b = copy.deepcopy((base['candidate'], base['bank']))
                 staged = self.ans['ProtocolOracle'](f, c, b)
                 staged.step('owner_commit', c);staged.step('prepare', c)
                 good_stage = copy.deepcopy(staged);good_stage.step('append')
-                line = 523;key = keys[line]
+                line = 526;key = keys[line]
                 node = next(n for n in ast.walk(ast.parse((ROOT/'scripts/pm_filesafe_event_authority.py').read_text())) if isinstance(n, ast.If) and n.lineno == line)
                 predicate = compile(ast.Expression(node.test), '<retry durable-stage predicate>', 'eval')
                 assert not eval(predicate, {'self': good_stage}) and eval(predicate, {'self': staged})
@@ -1101,7 +1128,7 @@ class Suite:
                 # Nullable result is a typed result boundary. Running subsequent
                 # dereferences after its guard is removed would test Python,
                 # not acceptance; its exact predicate is tested directly.
-                line = 527
+                line = 530
                 key = keys[line]
                 node = next(n for n in ast.walk(ast.parse((ROOT/'scripts/pm_filesafe_event_authority.py').read_text())) if isinstance(n, ast.If) and n.lineno == line)
                 predicate = compile(ast.Expression(node.test), '<retry issued-result predicate>', 'eval')
@@ -1110,6 +1137,41 @@ class Suite:
                     lambda key=key, predicate=predicate: not self.a.deny(key, eval(predicate, {'value': None})),
                     {'valid_result': 'own original issued row', 'negative_result': None,
                      'source_line': line}))
+
+    def add_round6(self):
+        # Current integer admission is distinct from retained source hash verification.
+        tree = ast.parse((ROOT/'scripts/pm_filesafe_event_authority.py').read_text())
+        fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'issued_failures')
+        node = next(n for n in ast.walk(fn) if isinstance(n, ast.If) and 'integer_numbers' in ast.unparse(n.test))
+        key = 'authority:issued_failures:' + str(node.lineno)
+        predicate = compile(ast.Expression(node.test), '<issued numeric admission predicate>', 'eval')
+        assert not eval(predicate, self.ans, {'value': {'sequence_id': 1}})
+        assert eval(predicate, self.ans, {'value': {'sequence_id': 1.0}})
+        self.probes.append(Probe('safe_point_created.fix6.issued.numeric', 'safe_point.created',
+            'issued numeric type predicate before Storage integer codec', key,
+            lambda key=key, predicate=predicate: not self.a.deny(key, eval(predicate, self.ans, {'value': {'sequence_id': 1.0}})),
+            {'valid_value': {'sequence_id': 1}, 'invalid_value': {'sequence_id': 1.0}, 'source_line': node.lineno}))
+        # Full body reads must refuse the same coherent address defects as writing.
+        fn = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'ProtocolOracle')
+        node = next(n for n in ast.walk(fn) if isinstance(n, ast.If) and 'application_original_failures' in ast.unparse(n.test))
+        key = 'authority:step:' + str(node.lineno)
+        for row in self.pack['families']:
+            f = row['event_type']
+            for case in row['negative']:
+                epoch_type = '.fix6.epoch_type.' in case['id']
+                if not epoch_type and not case['id'].endswith(('.fix6.forged_address', '.fix6.swapped_blob', '.fix6.truncated_blob')): continue
+                target = (next(k for k,v in self.a.sites.items() if ':step:' in k and "'source'" in v and 'iter_errors(source)' in v) if epoch_type else key)
+                base = row['positive'][case['positive_index']]
+                assert self.ans['ProtocolOracle'](f, base['candidate'], base['bank']).step('read_body', base['candidate']) == 'original_history_no_effect'
+                c, b = copy.deepcopy((base['candidate'], base['bank']))
+                for edit in case['edits']:
+                    authority.mutate(c if edit['target']=='candidate' else b, edit['path'], edit.get('value'), edit.get('remove', False))
+                def evaluate(c=c,b=b,f=f):
+                    o = self.ans['ProtocolOracle'](f, c, b)
+                    return o.step('read_body', c) == 'original_history_no_effect'
+                assert not evaluate(), case['id']
+                self.probes.append(Probe(case['id'] + '.read_body', f, 'complete historical body read', target, evaluate,
+                    {'positive_control_verified': True, 'lower_guard': 'authority:require:application_blob_address'}))
 
     @contextmanager
     def removed(self, guard):
@@ -1141,6 +1203,10 @@ class Suite:
             self.select(None)
 
     def guard_row(self, guard, matrix, by_id, trace_proof):
+        import subprocess
+        available_gib = int(subprocess.check_output(['free', '-g'], text=True).splitlines()[1].split()[6])
+        if available_gib < 6:
+            raise RuntimeError('PAUSE: fewer than 6 GB available before guard ' + guard)
         own = [p for p in self.probes if p.guard == guard]
         others = [p for p in self.probes if p.guard != guard]
         flip, stay, unexpected, exceptions, related = [], [], [], [], []
@@ -1172,7 +1238,7 @@ class Suite:
         errors = []
         if set(flip) != expected or unexpected or exceptions:
             errors.append(guard + ': guard-removal isolation failed')
-        row = {'guard': guard, 'layers': sorted({p.layer for p in own}),
+        row = {'guard': guard, 'memory_available_gib': available_gib, 'layers': sorted({p.layer for p in own}),
                      'negatives_that_flip': flip, 'negatives_that_stay_rejected': stay,
                      'related_cross_layer_flips': related,
                      'executed_mutant_probes': executed, 'unchanged_refusal_traces': unchanged,
@@ -1290,6 +1356,7 @@ def main():
     suite.add_owner_predicates()
     suite.add_issued_guards()
     suite.add_protocols()
+    suite.add_round6()
     if args.progress: print('DF guard matrix: baseline ' + str(len(suite.probes)) + ' controls', file=__import__('sys').stderr, flush=True)
     result = suite.check(matrix=not args.own_only, trace_proof=args.trace_proof, progress=args.progress, jobs=args.jobs)
     if args.output:
