@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L5883
+Source lines: L13-L5887
 
-Source SHA256: `c985a5f39ef84f3cb502ddbd1eddca2d4151e81eadc5e6bcec4007ffa8145f04`
+Source SHA256: `15c85f5c44a15f3e4528728d52524accc3b920961b67e970c8af574d4d00e09c`
 
 ---
 
@@ -5036,6 +5036,10 @@ Jared’s verbatim answer:
 SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`. Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`, SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned by the presented deck’s Source revisions section.
 
 Coordinator pm7-build’s relayed reading (not Jared’s words): item **3.b** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+**Card’s presented context (not Jared’s words):**
+
+**Gap:** Debug has eight allowed investigation states, but its ending rules send six failures to a missing Failed state: verification failed; the problem could not be reproduced; the budget ran out; or the execution environment, target, or debug connection was unavailable.
 
 **Exact approved option text from the presented cards:**
 

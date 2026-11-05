@@ -5039,6 +5039,10 @@ SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-0
 
 Coordinator pm7-build’s relayed reading (not Jared’s words): item **3.b** selects **A**. The presented deck’s fast-reply rule is: "`approve all` selects **A** on all 38 items."
 
+**Card’s presented context (not Jared’s words):**
+
+**Gap:** Debug has eight allowed investigation states, but its ending rules send six failures to a missing Failed state: verification failed; the problem could not be reproduced; the budget ran out; or the execution environment, target, or debug connection was unavailable.
+
 **Exact approved option text from the presented cards:**
 
 - **A (recommended):** Add Failed as the ending state for exactly those six reasons and save the specific reason. Opening it later shows history; starting new work creates a linked investigation under the existing reopening rule. Failure to undo temporary debugging changes keeps its separate Cleanup failed state. You see a truthful Failed outcome.
@@ -6870,6 +6874,4488 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not treat pm7-build’s reading as Jared’s words.
 - Do not grant automatic registration or waive depth, reviews or seal protections.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-415 - The 90-day history clock starts at the first durable save
+
+```yaml
+plan_unit_id: DL-415
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **1.a**. **Question:** When does the 90-day history clock start?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Start at the record’s first successful save that survives a restart. Retrying a save,
+  reprocessing old history and recovering after a restart never restart the clock. You get a full 90 days of
+  saved history even if recording was delayed.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000.
+  History needed for a legal investigation, an active reference, recovery or a protected backup stays protected
+  even past normal expiry. Remove only expired records with none of those protections; never remove them early
+  to make room. If none can expire at the limit, refuse new records. A shared count does not combine private
+  memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding
+  to an app action; model-list refresh means checking which models are available.
+
+
+  **Sources:** `MAIN:Plans/storage-plan.md:17414-17419`; `RET:Plans/storage-plan.md:17437-17437`; `RET:Plans/storage-plan.md:17476-17479`;
+  `evidence:reviews/CA-RET-sol/REVIEW.md:11-21`; `evidence:reviews/CA-RET-sol/REVIEW-astra.md:13-14`.
+
+
+  **Supersession and boundaries:** Completes the starting-moment question left open by DL-401’s 90-day assignment
+  for the 13 surviving names. It does not change that duration, its Project limit or its protected-expiry and
+  refusal rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Completes the starting-moment question left open by DL-401’s 90-day assignment for the 13 surviving names.
+  It does not change that duration, its Project limit or its protected-expiry and refusal rules.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-416 - No-project Debug history has its own bounded allowance
+
+```yaml
+plan_unit_id: DL-416
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **1.b**. **Question:** How are no-project Debug histories counted?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.b** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the nine Debug investigation history types, allow up to 2,000,000 records together
+  outside Projects in this Puppet Master installation. Keep 2,555 days from the original recorded transition
+  that finishes the operation. Reprocessing old history or recovering it never restarts that clock. Count records
+  belonging to a Project under their existing Project limit. Remove only expired records that no investigation,
+  active reference, recovery or backup still protects; never remove records early to make room. If the limit
+  is reached and none can expire, refuse new records. Existing features remain available; saving a new history
+  record can be refused.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000.
+  History needed for a legal investigation, an active reference, recovery or a protected backup stays protected
+  even past normal expiry. Remove only expired records with none of those protections; never remove them early
+  to make room. If none can expire at the limit, refuse new records. A shared count does not combine private
+  memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding
+  to an app action; model-list refresh means checking which models are available.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4467-4467`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/assistant-chat-design.md:183-183`;
+  `evidence:reviews/CA-RET-sol/REVIEW.md:112-112`; `MAIN:Plans/storage_value_registry.json:362-375`.
+
+
+  **Supersession and boundaries:** Completes DL-401 G02’s missing no-project counting rule for exactly the
+  nine Debug investigation history types. This is their separate application allowance; the existing Project
+  limit and seven-year duration remain.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Completes DL-401 G02’s missing no-project counting rule for exactly the nine Debug investigation history
+  types. This is their separate application allowance; the existing Project limit and seven-year duration remain.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-417 - No-project memory-maintenance history has its own bounded allowance
+
+```yaml
+plan_unit_id: DL-417
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **1.c**. **Question:** How is no-project memory-maintenance history
+  counted?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.c** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the twelve memory-maintenance history types for private chat memory, allow up
+  to 2,000,000 records together outside Projects in this Puppet Master installation. Keep 2,555 days from the
+  original recorded transition that finishes the operation. Reprocessing old history or recovering it never
+  restarts that clock. Count records belonging to a Project under their existing Project limit. Remove only
+  expired records that no investigation, active reference, recovery or backup still protects; never remove
+  records early to make room. If the limit is reached and none can expire, refuse new records. Existing features
+  remain available; saving a new history record can be refused.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000.
+  History needed for a legal investigation, an active reference, recovery or a protected backup stays protected
+  even past normal expiry. Remove only expired records with none of those protections; never remove them early
+  to make room. If none can expire at the limit, refuse new records. A shared count does not combine private
+  memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding
+  to an app action; model-list refresh means checking which models are available.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4469-4469`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/assistant-memory-subsystem.md:3063-3068`;
+  `evidence:reviews/CA-RET-sol/REVIEW.md:113-113`; `MAIN:Plans/storage_value_registry.json:362-375`.
+
+
+  **Supersession and boundaries:** Completes DL-401 G04’s missing no-project counting rule for exactly the
+  twelve private-chat memory-maintenance history types. Counting history together neither pools private memory
+  content nor grants access or permission to run maintenance outside Projects.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Completes DL-401 G04’s missing no-project counting rule for exactly the twelve private-chat memory-maintenance
+  history types. Counting history together neither pools private memory content nor grants access or permission
+  to run maintenance outside Projects.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-418 - No-project plugin load, tool and permission history has its own allowance
+
+```yaml
+plan_unit_id: DL-418
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **1.d**. **Question:** How are no-project plugin load, tool and permission
+  histories counted?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.d** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the five plugin load, tool and permission history types, allow up to 2,000,000
+  records together outside Projects in this Puppet Master installation. Keep 2,555 days from the original recorded
+  transition that finishes the operation. Reprocessing old history or recovering it never restarts that clock.
+  Count records belonging to a Project under their existing Project limit. Remove only expired records that
+  no investigation, active reference, recovery or backup still protects; never remove records early to make
+  room. If the limit is reached and none can expire, refuse new records. Existing features remain available;
+  saving a new history record can be refused.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000.
+  History needed for a legal investigation, an active reference, recovery or a protected backup stays protected
+  even past normal expiry. Remove only expired records with none of those protections; never remove them early
+  to make room. If none can expire at the limit, refuse new records. A shared count does not combine private
+  memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding
+  to an app action; model-list refresh means checking which models are available.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4473-4473`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/Plugins_System.md:256-256`;
+  `evidence:reviews/CA-RET-sol/REVIEW.md:114-114`; `MAIN:Plans/storage_value_registry.json:362-375`.
+
+
+  **Supersession and boundaries:** Completes DL-401 G08’s missing no-project counting rule for exactly the
+  five plugin load, tool and permission history types. The three plugin-hook types have the separate rule in
+  DL-419; the GitHub sign-in allowance is not widened.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Completes DL-401 G08’s missing no-project counting rule for exactly the five plugin load, tool and permission
+  history types. The three plugin-hook types have the separate rule in DL-419; the GitHub sign-in allowance
+  is not widened.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-419 - No-project plugin-hook history has its own 90-day allowance
+
+```yaml
+plan_unit_id: DL-419
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **1.e**. **Question:** How is no-project plugin-hook history counted?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.e** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the three plugin-hook history types, allow up to 2,000,000 records together outside
+  Projects in this Puppet Master installation. Use the approved 90-day window and the starting moment you choose
+  in 1.a. Count records belonging to a Project under their existing Project limit. Remove only expired records
+  that no investigation, active reference, recovery or backup still protects; never remove records early to
+  make room. If the limit is reached and none can expire, refuse new records. Existing features remain available;
+  saving a new history record can be refused.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000.
+  History needed for a legal investigation, an active reference, recovery or a protected backup stays protected
+  even past normal expiry. Remove only expired records with none of those protections; never remove them early
+  to make room. If none can expire at the limit, refuse new records. A shared count does not combine private
+  memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding
+  to an app action; model-list refresh means checking which models are available.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4473-4473`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/Plugins_System.md:256-256`;
+  `evidence:reviews/CA-RET-sol/REVIEW.md:115-115`.
+
+
+  **Supersession and boundaries:** Completes DL-401 G08’s missing no-project counting rule for exactly the
+  three plugin-hook history types. Its starting moment is 1.a, recorded in DL-415; the five other G08 histories
+  retain their separate seven-year rule in DL-418.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+- DL-415
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Completes DL-401 G08’s missing no-project counting rule for exactly the three plugin-hook history types.
+  Its starting moment is 1.a, recorded in DL-415; the five other G08 histories retain their separate seven-year
+  rule in DL-418.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-420 - No-project model-list refresh history has its own 90-day allowance
+
+```yaml
+plan_unit_id: DL-420
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **1.f**. **Question:** How is a no-project refresh of the available
+  model list counted?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.f** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the model-list refresh history type, allow up to 2,000,000 records together outside
+  Projects in this Puppet Master installation. Use the approved 90-day window and the starting moment you choose
+  in 1.a. Count records belonging to a Project under their existing Project limit. Remove only expired records
+  that no investigation, active reference, recovery or backup still protects; never remove records early to
+  make room. If the limit is reached and none can expire, refuse new records. Existing features remain available;
+  saving a new history record can be refused.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000.
+  History needed for a legal investigation, an active reference, recovery or a protected backup stays protected
+  even past normal expiry. Remove only expired records with none of those protections; never remove them early
+  to make room. If none can expire at the limit, refuse new records. A shared count does not combine private
+  memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding
+  to an app action; model-list refresh means checking which models are available.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4491-4491`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/UI_Command_Catalog.md:8578-8578`;
+  `evidence:reviews/CA-RET-sol/REVIEW.md:116-116`.
+
+
+  **Supersession and boundaries:** Completes DL-401 G26’s missing no-project counting rule for the model-list
+  refresh history type only. Its starting moment is 1.a, recorded in DL-415; this grants no allowance by analogy
+  to other telemetry.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+- DL-415
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Completes DL-401 G26’s missing no-project counting rule for the model-list refresh history type only. Its
+  starting moment is 1.a, recorded in DL-415; this grants no allowance by analogy to other telemetry.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-421 - No-project preview history has its own 90-day allowance
+
+```yaml
+plan_unit_id: DL-421
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **1.g**. **Question:** How is no-project preview history counted?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **1.g** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the preview history types whose owners confirm they can occur outside a Project,
+  allow up to 2,000,000 records together outside Projects in this Puppet Master installation. Use the approved
+  90-day window and the starting moment you choose in 1.a. Count records belonging to a Project under their
+  existing Project limit. Remove only expired records that no investigation, active reference, recovery or
+  backup still protects; never remove records early to make room. If the limit is reached and none can expire,
+  refuse new records. Existing features remain available; saving a new history record can be refused.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  All choices preserve the approved durations. Seven years means 2,555 days. Each Project limit stays 2,000,000.
+  History needed for a legal investigation, an active reference, recovery or a protected backup stays protected
+  even past normal expiry. Remove only expired records with none of those protections; never remove them early
+  to make room. If none can expire at the limit, refuse new records. A shared count does not combine private
+  memory content or grant access. No choice widens the GitHub sign-in allowance. A hook is plugin code responding
+  to an app action; model-list refresh means checking which models are available.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4477-4477`; `RET:Plans/storage-plan.md:17489-17489`; `MAIN:Plans/assistant-chat-design.md:183-183`;
+  `MAIN:Plans/UI_Command_Catalog.md:919-919`; `evidence:reviews/CA-RET-sol/REVIEW.md:117-117`.
+
+
+  **Supersession and boundaries:** Completes DL-401 G12’s missing no-project counting rule for the owner-confirmed
+  preview history types only. Its starting moment is 1.a, recorded in DL-415; no additional history type or
+  seventh allowance is inferred.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+- DL-415
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Completes DL-401 G12’s missing no-project counting rule for the owner-confirmed preview history types only.
+  Its starting moment is 1.a, recorded in DL-415; no additional history type or seventh allowance is inferred.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-422 - filesafe.command_denied is seven-year troubleshooting history
+
+```yaml
+plan_unit_id: DL-422
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **2.a**. **Question:** Is a blocked-command event lasting proof of
+  a refusal or seven-year troubleshooting history?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **2.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this event about a command FileSafe refused as troubleshooting history for seven
+  years under the limits above. It may disappear after expiry and protection checks; the original approval
+  or action result keeps its own lifetime.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  For a seven-year choice, keep 2,555 days from the saved original refusal, override request or startup-failure
+  result, up to 2,000,000 records per Project. Retrying a save, reprocessing old history or recovering after
+  a restart never resets that clock. Remove only expired entries no investigation, active reference, recovery
+  or backup protects; refuse new entries when full and none may expire. Supporting approvals, source snapshots
+  and recovery logs keep their own lifetimes.
+
+
+  **“Permanent” means:** no expiry by age or count. Deleting the file or chat an entry describes does not remove
+  that entry. For Project entries, explicit **Delete Puppet Master project data** removes them under existing
+  deletion and protection rules; **Remove project from list** does not delete that data. If space runs out,
+  refuse new entries instead of dropping old ones. These five choices add no counting or deletion rule for
+  future entries outside Projects; each such version still needs its own exact approved rules before recording.
+
+
+  **Sources:** `MAIN:Plans/storage-plan.md:17403-17410`; `DF:Plans/storage-plan.md:29530-29530`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:42-42`;
+  `evidence:surveys/RT/RETENTION.jsonl:171-171`; `evidence:reviews/DF-sol/REVIEW-astra.md:84-105`; `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-132`;
+  `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-137`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:29-29`.
+
+
+  **Supersession and boundaries:** Resolves the exact classification of filesafe.command_denied as seven-year
+  troubleshooting history under Card 2’s limits. Supporting approvals and original action results keep their
+  own lifetimes; future entries outside Projects still require their own exact approved counting and deletion
+  rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the exact classification of filesafe.command_denied as seven-year troubleshooting history under
+  Card 2’s limits. Supporting approvals and original action results keep their own lifetimes; future entries
+  outside Projects still require their own exact approved counting and deletion rules.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-423 - filesafe.destructive_override_denied is permanent decision proof
+
+```yaml
+plan_unit_id: DL-423
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **2.b**. **Question:** Is an override-refusal event lasting proof
+  of a decision or seven-year troubleshooting history?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **2.b** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this event about a refused destructive override as permanent proof of the request,
+  refusal or failure. It never expires by age or count and survives deletion of the described file or chat.
+  For Project entries, only explicit Delete Puppet Master project data removes it under existing protections;
+  Remove project from list does not. You can inspect it after seven years unless that Project data has been
+  explicitly deleted.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  For a seven-year choice, keep 2,555 days from the saved original refusal, override request or startup-failure
+  result, up to 2,000,000 records per Project. Retrying a save, reprocessing old history or recovering after
+  a restart never resets that clock. Remove only expired entries no investigation, active reference, recovery
+  or backup protects; refuse new entries when full and none may expire. Supporting approvals, source snapshots
+  and recovery logs keep their own lifetimes.
+
+
+  **“Permanent” means:** no expiry by age or count. Deleting the file or chat an entry describes does not remove
+  that entry. For Project entries, explicit **Delete Puppet Master project data** removes them under existing
+  deletion and protection rules; **Remove project from list** does not delete that data. If space runs out,
+  refuse new entries instead of dropping old ones. These five choices add no counting or deletion rule for
+  future entries outside Projects; each such version still needs its own exact approved rules before recording.
+
+
+  **Sources:** `MAIN:Plans/storage-plan.md:17403-17410`; `DF:Plans/storage-plan.md:29596-29596`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:42-42`;
+  `evidence:surveys/RT/RETENTION.jsonl:172-172`; `evidence:reviews/DF-sol/REVIEW-astra.md:84-105`; `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-132`;
+  `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-137`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:29-29`.
+
+
+  **Supersession and boundaries:** Resolves the exact classification of filesafe.destructive_override_denied
+  as permanent proof, with Card 2’s explicit Project-data deletion and storage-pressure boundaries. It is not
+  subject to the seven-year troubleshooting expiry; future entries outside Projects still require their own
+  exact approved rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the exact classification of filesafe.destructive_override_denied as permanent proof, with Card 2’s
+  explicit Project-data deletion and storage-pressure boundaries. It is not subject to the seven-year troubleshooting
+  expiry; future entries outside Projects still require their own exact approved rules.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-424 - filesafe.destructive_override_requested is permanent request proof
+
+```yaml
+plan_unit_id: DL-424
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **2.c**. **Question:** Is an override-request event lasting proof
+  of an approval request or seven-year troubleshooting history?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **2.c** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this event about the request for a destructive override as permanent proof of
+  the request, refusal or failure. It never expires by age or count and survives deletion of the described
+  file or chat. For Project entries, only explicit Delete Puppet Master project data removes it under existing
+  protections; Remove project from list does not. You can inspect it after seven years unless that Project
+  data has been explicitly deleted.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  For a seven-year choice, keep 2,555 days from the saved original refusal, override request or startup-failure
+  result, up to 2,000,000 records per Project. Retrying a save, reprocessing old history or recovering after
+  a restart never resets that clock. Remove only expired entries no investigation, active reference, recovery
+  or backup protects; refuse new entries when full and none may expire. Supporting approvals, source snapshots
+  and recovery logs keep their own lifetimes.
+
+
+  **“Permanent” means:** no expiry by age or count. Deleting the file or chat an entry describes does not remove
+  that entry. For Project entries, explicit **Delete Puppet Master project data** removes them under existing
+  deletion and protection rules; **Remove project from list** does not delete that data. If space runs out,
+  refuse new entries instead of dropping old ones. These five choices add no counting or deletion rule for
+  future entries outside Projects; each such version still needs its own exact approved rules before recording.
+
+
+  **Sources:** `MAIN:Plans/storage-plan.md:17403-17410`; `DF:Plans/storage-plan.md:29729-29729`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:42-42`;
+  `evidence:surveys/RT/RETENTION.jsonl:174-174`; `evidence:reviews/DF-sol/REVIEW-astra.md:84-105`; `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-132`;
+  `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-137`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:29-29`.
+
+
+  **Supersession and boundaries:** Resolves the exact classification of filesafe.destructive_override_requested
+  as permanent proof, with Card 2’s explicit Project-data deletion and storage-pressure boundaries. It is not
+  subject to the seven-year troubleshooting expiry; future entries outside Projects still require their own
+  exact approved rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the exact classification of filesafe.destructive_override_requested as permanent proof, with Card
+  2’s explicit Project-data deletion and storage-pressure boundaries. It is not subject to the seven-year troubleshooting
+  expiry; future entries outside Projects still require their own exact approved rules.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-425 - filesafe.guard_init_failed is seven-year troubleshooting history
+
+```yaml
+plan_unit_id: DL-425
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **2.d**. **Question:** Is a guard-startup failure event lasting proof
+  of a refusal or seven-year troubleshooting history?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **2.d** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this event about FileSafe failing to initialize and refusing unsafe execution
+  as troubleshooting history for seven years under the limits above. It may disappear after expiry and protection
+  checks; the original approval or action result keeps its own lifetime.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  For a seven-year choice, keep 2,555 days from the saved original refusal, override request or startup-failure
+  result, up to 2,000,000 records per Project. Retrying a save, reprocessing old history or recovering after
+  a restart never resets that clock. Remove only expired entries no investigation, active reference, recovery
+  or backup protects; refuse new entries when full and none may expire. Supporting approvals, source snapshots
+  and recovery logs keep their own lifetimes.
+
+
+  **“Permanent” means:** no expiry by age or count. Deleting the file or chat an entry describes does not remove
+  that entry. For Project entries, explicit **Delete Puppet Master project data** removes them under existing
+  deletion and protection rules; **Remove project from list** does not delete that data. If space runs out,
+  refuse new entries instead of dropping old ones. These five choices add no counting or deletion rule for
+  future entries outside Projects; each such version still needs its own exact approved rules before recording.
+
+
+  **Sources:** `MAIN:Plans/storage-plan.md:17403-17410`; `DF:Plans/storage-plan.md:29795-29795`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:42-42`;
+  `evidence:surveys/RT/RETENTION.jsonl:175-175`; `evidence:reviews/DF-sol/REVIEW-astra.md:84-105`; `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-132`;
+  `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-137`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:29-29`.
+
+
+  **Supersession and boundaries:** Resolves the exact classification of filesafe.guard_init_failed as seven-year
+  troubleshooting history under Card 2’s limits. Supporting approvals and original action results keep their
+  own lifetimes; future entries outside Projects still require their own exact approved counting and deletion
+  rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the exact classification of filesafe.guard_init_failed as seven-year troubleshooting history under
+  Card 2’s limits. Supporting approvals and original action results keep their own lifetimes; future entries
+  outside Projects still require their own exact approved counting and deletion rules.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-426 - filesafe.path_denied is seven-year troubleshooting history
+
+```yaml
+plan_unit_id: DL-426
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **2.e**. **Question:** Is a denied-path event lasting proof of a
+  refusal or seven-year troubleshooting history?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **2.e** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep this event about FileSafe refusing a path as troubleshooting history for seven
+  years under the limits above. It may disappear after expiry and protection checks; the original approval
+  or action result keeps its own lifetime.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  For a seven-year choice, keep 2,555 days from the saved original refusal, override request or startup-failure
+  result, up to 2,000,000 records per Project. Retrying a save, reprocessing old history or recovering after
+  a restart never resets that clock. Remove only expired entries no investigation, active reference, recovery
+  or backup protects; refuse new entries when full and none may expire. Supporting approvals, source snapshots
+  and recovery logs keep their own lifetimes.
+
+
+  **“Permanent” means:** no expiry by age or count. Deleting the file or chat an entry describes does not remove
+  that entry. For Project entries, explicit **Delete Puppet Master project data** removes them under existing
+  deletion and protection rules; **Remove project from list** does not delete that data. If space runs out,
+  refuse new entries instead of dropping old ones. These five choices add no counting or deletion rule for
+  future entries outside Projects; each such version still needs its own exact approved rules before recording.
+
+
+  **Sources:** `MAIN:Plans/storage-plan.md:17403-17410`; `DF:Plans/storage-plan.md:29861-29861`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:42-42`;
+  `evidence:surveys/RT/RETENTION.jsonl:176-176`; `evidence:reviews/DF-sol/REVIEW-astra.md:84-105`; `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-132`;
+  `evidence:reviews/DF-sol/REVIEW-cycle4.md:120-137`; `evidence:decision-answers/E-CARDS-1.as-presented-578a6774.md:29-29`.
+
+
+  **Supersession and boundaries:** Resolves the exact classification of filesafe.path_denied as seven-year
+  troubleshooting history under Card 2’s limits. Supporting approvals and original action results keep their
+  own lifetimes; future entries outside Projects still require their own exact approved counting and deletion
+  rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the exact classification of filesafe.path_denied as seven-year troubleshooting history under Card
+  2’s limits. Supporting approvals and original action results keep their own lifetimes; future entries outside
+  Projects still require their own exact approved counting and deletion rules.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-427 - Chat and Storage may define the missing saved Stop outcome
+
+```yaml
+plan_unit_id: DL-427
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **3.a**. **Question:** May Chat and Storage define the missing saved
+  Stop-outcome record?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **3.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Authorize Chat and Storage to define that saved result for the actual assistant reply
+  and its work. Keep the link to the Stop request, exact work targeted, cancellation versus timeout, and outcome
+  time. Wait up to three seconds for the targeted work to stop, then save cancellation or timeout before queued
+  messages may proceed. A separate user action must still release the queue after Stop. Retire old outcome
+  names only after this replacement record is fully specified and verified to survive restart and recovery.
+  You keep one request-history entry and a reliable saved outcome.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4566-4580`; `MAIN:Plans/assistant-chat-design.md:275-275`; `DCH:Plans/assistant-chat-design.md:26556-26560`;
+  `evidence:reviews/DCH-sol/REVIEW-astra-2.md:88-108`; `evidence:reviews/DCH-sol/REVIEW-cycle4.md:114-122`;
+  `evidence:reviews/DCH-sol/REVIEW-cycle4.md:116-118`; `evidence:reviews/DCH-sol/REVIEW-cycle4.md:110-124`.
+
+
+  **Supersession and boundaries:** Satisfies DL-406’s requirement to return to Jared if no existing saved outcome
+  record can be named: Chat and Storage are authorized to define the missing replacement. The one-request design,
+  three-second wait and separate user action to release the queue remain. Retirement of the two old outcome
+  names still waits for a fully specified replacement verified to survive restart and recovery; this answer
+  does not claim that implementation condition is already proved.'
+gui_related: true
+gui_classification_reason: Records the Stop action, queued-message release and saved outcome shown in chat.
+split_recommended: false
+depends_on:
+- DL-406
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Satisfies DL-406’s requirement to return to Jared if no existing saved outcome record can be named: Chat
+  and Storage are authorized to define the missing replacement. The one-request design, three-second wait and
+  separate user action to release the queue remain. Retirement of the two old outcome names still waits for
+  a fully specified replacement verified to survive restart and recovery; this answer does not claim that implementation
+  condition is already proved.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-428 - Debug investigations may end Failed for exactly six reasons
+
+```yaml
+plan_unit_id: DL-428
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **3.b**. **Question:** Does an unsuccessful Debug investigation get
+  its own Failed state?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **3.b** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Card’s presented context (not Jared’s words):**
+
+
+  **Gap:** Debug has eight allowed investigation states, but its ending rules send six failures to a missing
+  Failed state: verification failed; the problem could not be reproduced; the budget ran out; or the execution
+  environment, target, or debug connection was unavailable.
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Add Failed as the ending state for exactly those six reasons and save the specific
+  reason. Opening it later shows history; starting new work creates a linked investigation under the existing
+  reopening rule. Failure to undo temporary debugging changes keeps its separate Cleanup failed state. You
+  see a truthful Failed outcome.
+
+
+  **Sources:** `MAIN:Plans/assistant-chat-design.md:1174-1207`; `DDBG:Plans/Contracts_V0.md:2587-2597`; `evidence:reviews/DDBG-sol/REVIEW-astra-3.md:123-124`.
+
+
+  **Supersession and boundaries:** Resolves the conflict between Debug’s allowed states and its six specified
+  unsuccessful endings by adding Failed for exactly those reasons. Cleanup failed remains separate; opening
+  history does not restart work, and later work uses the existing linked-investigation reopening rule.'
+gui_related: true
+gui_classification_reason: Records the Failed state and historical Debug investigation presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the conflict between Debug’s allowed states and its six specified unsuccessful endings by adding
+  Failed for exactly those reasons. Cleanup failed remains separate; opening history does not restart work,
+  and later work uses the existing linked-investigation reopening rule.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-429 - Debug probes preserve the complete status and cleanup transition proposal
+
+```yaml
+plan_unit_id: DL-429
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **3.c**. **Question:** Which temporary Debug-probe and cleanup changes
+  should be saved?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **3.c** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Approve the complete proposal below. Keep the six probe labels and a separate cleanup
+  result. Save each actual change in either value once, with its reason and before/after values. Re-reading,
+  reprocessing old history, or repeating an unchanged result creates no duplicate change entry. A failure proved
+  to have left nothing ends as **Cleaned / Not needed** and records that transition; it does not sit forever
+  at Planned. Failed collection does not excuse earlier installed changes. You see every outstanding cleanup
+  and outcome.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **A’s proposed meanings:** A lane is one identified set of temporary changes on one target. Cleanup/rollback
+  means undoing those changes and removing temporary connections. A durable fix is an explicitly accepted lasting
+  code change, distinct from temporary debugging. Planned = installation not complete; Active = installed and
+  ready; Collecting = gathering evidence; Cleanup pending = removal owed or underway; Cleanup failed = a removal
+  attempt failed; Cleaned = this probe is finished with no temporary changes or debug connections left. Cleanup
+  results are **Not needed** (nothing required undoing), **Pending** (undoing is still owed), **Succeeded**
+  (undoing was verified), **Failed** (the attempt failed), and **Superseded** (responsibility handed over,
+  with remaining work still visible). Pending while Active/Collecting means later removal is owed, not that
+  removal is running.
+
+
+  **A’s complete allowed changes** (each arrow saves a change entry; “/” separates probe status and cleanup
+  result):
+
+
+  | What happens | Before → after | What is recorded or preserved |
+
+  |---|---|---|
+
+  | Installation succeeds | Planned / Not needed → Active / Pending | Installation succeeded; later removal
+  is owed. |
+
+  | Evidence collection starts | Active / Pending → Collecting / Pending | Collection began. |
+
+  | Collection pauses or finishes while the probe remains installed | Collecting / Pending → Active / Pending
+  | Collection outcome; removal is still owed. |
+
+  | Installation or collection fails, or work ends, and proof shows the entire lane never needed any undoing
+  and has no leftover change, process or attachment | Planned / Not needed, Active / Pending, or Collecting
+  / Pending → Cleaned / Not needed | Save failure/end reason and no-leftovers proof. “Collection changed nothing”
+  alone is insufficient if an earlier installation remains. |
+
+  | Installation partly fails, collection fails, or work resolves/is cancelled with known or possible leftovers
+  | Planned / Not needed, Active / Pending, or Collecting / Pending → Cleanup pending / Pending | Save reason,
+  exact remaining obligations and recovery link; attempt cleanup automatically. |
+
+  | Inspection after an uncertain failure proves that removal was never needed | Cleanup pending / Pending,
+  Cleanup pending / Superseded, or Cleanup failed / Failed → Cleaned / Not needed | Save whole-lane proof that
+  no temporary change, process or attachment ever required undoing. Retain the earlier uncertainty/failure;
+  never relabel actual removal as Not needed. |
+
+  | Removal or undoing temporary changes succeeds and no temporary resources remain | Cleanup pending / Pending
+  → Cleaned / Succeeded | Save proof of removal, including detaching temporary debugger/profiler connections.
+  |
+
+  | Removal, rollback or detach fails | Cleanup pending / Pending → Cleanup failed / Failed | Save remaining
+  files, settings, processes or connections; show failure even when disk files are clean. |
+
+  | An authorized cleanup retry begins | Cleanup failed / Failed → Cleanup pending / Pending | Save retry and
+  attempt number; at most two retries after the initial attempt. |
+
+  | Retry succeeds or fails | Cleanup pending / Pending → Cleaned / Succeeded or Cleanup failed / Failed |
+  Same success proof or visible leftovers as above. |
+
+  | Newer work replaces an unfinished probe, or responsibility passes to an explicitly approved durable fix,
+  while cleanup may still be owed | Planned / Not needed, Active / Pending, Collecting / Pending, Cleanup pending
+  / Pending, or Cleanup failed / Failed → Cleanup pending / Superseded | Save old/new responsible owners, linked
+  work, remaining obligations and retry count. Handoff proves no removal. Replacement triggers automatic cleanup;
+  promotion uses the existing approval route. |
+
+  | Receiving owner starts or resumes that cleanup | Cleanup pending / Superseded → Cleanup pending / Pending
+  | Save acceptance and resumed removal; handoff never resets the retry ceiling. Resuming after a failed attempt
+  is a retry under that ceiling. |
+
+  | Receiving owner accepts cleanup after an earlier failed attempt but no retry is authorized or both retries
+  are already used | Cleanup pending / Superseded → Cleanup failed / Failed | Save acceptance and the still-failed
+  outcome; do not run another attempt or claim cleanup succeeded. |
+
+  | Newer work replaces a lane proved never to have needed cleanup | Planned / Not needed, Active / Pending,
+  or Collecting / Pending → Cleaned / Not needed | Save replacement reason and linked work with proof there
+  are no leftovers anywhere in that lane. |
+
+
+  The initial probe record is **Planned / Not needed**; creation is not a previous-to-next change. No other
+  status/result pair or transition is allowed by A. Failed cleanup with no authorized retry, or both retries
+  used, stays **Cleanup failed / Failed** with leftovers visible. A requirement to preserve a change or an
+  accepted follow-up does not claim Cleaned; handed-over cleanup stays **Cleanup pending / Superseded** until
+  its receiving owner acts. A second handoff waits for that acceptance; reprocessing the same handoff adds
+  nothing. Failed or uncertain handoff leaves previous responsibility and status in place. A Cleaned probe
+  never restarts; later installation gets a new linked probe. No new code-changing debugging starts on the
+  same target until leftovers are resolved, undone or explicitly promoted into the durable fix. Two investigations
+  may not add overlapping temporary changes. Recovery snapshots taken before temporary changes, exact setting
+  restoration and hiding secrets remain required. This chooses no additional history lifetime.
+
+
+  **Sources:** `MAIN:Plans/feature-list.md:31-37`; `MAIN:Plans/MiscPlan.md:1323-1343`; `MAIN:Plans/assistant-chat-design.md:1189-1207`;
+  `MAIN:Plans/MiscPlan.md:6427-6427`; `evidence:reviews/DDBG-sol/REVIEW-cycle3.md:57-77`; `evidence:reviews/DDBG-sol/REVIEW-astra-3.md:121-122`.
+
+
+  **Supersession and boundaries:** Approves the complete 3.c proposal, including every status/result meaning,
+  transition, whole-lane no-leftovers proof, cleanup handoff and retry ceiling reproduced here. Supersedes
+  the incomplete pairing and transition rules only as specified. A Cleaned probe never restarts, unresolved
+  cleanup remains visible, and this choice selects no additional history lifetime.'
+gui_related: true
+gui_classification_reason: Records Debug probe status labels and visible unresolved cleanup.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Approves the complete 3.c proposal, including every status/result meaning, transition, whole-lane no-leftovers
+  proof, cleanup handoff and retry ceiling reproduced here. Supersedes the incomplete pairing and transition
+  rules only as specified. A Cleaned probe never restarts, unresolved cleanup remains visible, and this choice
+  selects no additional history lifetime.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-430 - A FileSafe block records only the FileSafe refusal
+
+```yaml
+plan_unit_id: DL-430
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **3.d**. **Question:** Does a FileSafe block also create the general
+  tool-denied event?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **3.d** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Save only the FileSafe refusal entry when FileSafe blocks an action. Reserve general
+  tool-denial history for policy or user refusals. Show FileSafe’s reason and allowed recovery actions in the
+  tool view. Correct both Tools and FileSafe to say this. A block stays distinct from execution failure and
+  never retries automatically.
+
+
+  **Sources:** `MAIN:Plans/Tools.md:1493-1498`; `MAIN:Plans/FileSafe.md:2836-2846`; `DT:Plans/Contracts_V0.md:24855-24875`;
+  `evidence:reviews/DT-sol/REVIEW-cycle3.md:82-92`; `evidence:reviews/DT-sol/REVIEW-cycle4.md:93-103`; `evidence:reviews/DT-sol/REVIEW-cycle4.md:93-107`;
+  `evidence:reviews/DT-sol/REVIEW-cycle5.md:7-7`.
+
+
+  **Supersession and boundaries:** Resolves the Tools/FileSafe conflict in favor of the dedicated FileSafe
+  refusal entry for a FileSafe block. No tool.denied is saved for that block; general tool-denial history remains
+  for policy or user refusals. Both owners must align to the answer, with FileSafe’s reason and allowed recovery
+  actions visible and no automatic retry.'
+gui_related: true
+gui_classification_reason: Records FileSafe refusal reasons and recovery actions visible to the user.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the Tools/FileSafe conflict in favor of the dedicated FileSafe refusal entry for a FileSafe block.
+  No tool.denied is saved for that block; general tool-denial history remains for policy or user refusals.
+  Both owners must align to the answer, with FileSafe’s reason and allowed recovery actions visible and no
+  automatic retry.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-431 - Wizard Blocked belongs to the whole Planning Run
+
+```yaml
+plan_unit_id: DL-431
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **4.a**. **Question:** Does a Wizard blockage belong to the whole
+  Planning Run or one topic?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **4.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Attach Blocked to the whole Planning Run. Save it only when the component responsible
+  for planning records a blockage or repair attempt that prevents every otherwise permitted next step. A stalled
+  topic does not block the run if another can continue. Count completed repair attempts for that blockage;
+  add no three-round trigger. You see the whole run’s blockage and report.
+
+
+  **Sources:** `MAIN:Plans/Contracts_V0.md:2683-2695`; `MAIN:Plans/Planning_Wizard.md:124-125`; `evidence:drafts/DCW/DCW.md:59-62`;
+  `evidence:reviews/DCW-sol/REVIEW-astra.md:58-58`; `evidence:reviews/DCW-sol/REVIEW-cycle5.md:158-168`.
+
+
+  **Supersession and boundaries:** Chooses the whole Planning Run as the subject of Blocked, only when every
+  otherwise permitted next step is prevented. Topic-only stalls do not block a run that can continue elsewhere.
+  The current Planning Wizard remains the owner; no retired three-round trigger is restored.'
+gui_related: true
+gui_classification_reason: Records the Planning Wizard Blocked state for the whole Planning Run.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses the whole Planning Run as the subject of Blocked, only when every otherwise permitted next step is
+  prevented. Topic-only stalls do not block a run that can continue elsewhere. The current Planning Wizard
+  remains the owner; no retired three-round trigger is restored.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-432 - Wizard Unblocked records clearance of every required condition
+
+```yaml
+plan_unit_id: DL-432
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **4.b**. **Question:** When is that same Wizard blockage recorded
+  as unblocked?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **4.b** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Save Unblocked when the responsible planning component records that all required blocking
+  conditions for that same run/topic have cleared. Link the authorized action that actually cleared it to the
+  original blockage. Clearing another topic, opening a page, reprocessing old history or merely editing a report
+  does not count. You see clearance as soon as that work can resume.
+
+
+  **Sources:** `MAIN:Plans/Contracts_V0.md:2697-2702`; `MAIN:Plans/Planning_Wizard.md:124-125`; `evidence:drafts/DCW/DCW.md:59-62`;
+  `evidence:reviews/DCW-sol/REVIEW-astra.md:58-58`; `evidence:reviews/DCW-sol/REVIEW-cycle5.md:158-168`.
+
+
+  **Supersession and boundaries:** Applies 4.b’s same-run/topic rule to the whole Planning Run selected in
+  4.a and recorded in DL-431. All required conditions for that same blockage must clear, linked to the authorized
+  clearing action; unrelated progress or editing a report cannot clear it.'
+gui_related: true
+gui_classification_reason: Records when the Planning Wizard clears its Blocked state.
+split_recommended: false
+depends_on:
+- DL-431
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Applies 4.b’s same-run/topic rule to the whole Planning Run selected in 4.a and recorded in DL-431. All required
+  conditions for that same blockage must clear, linked to the authorized clearing action; unrelated progress
+  or editing a report cannot clear it.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-433 - Browser sharing has a separate grant for each recipient chat
+
+```yaml
+plan_unit_id: DL-433
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **4.c**. **Question:** Can a browser session be shared with several
+  chats, and what does Stop sharing without a named chat remove?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **4.c** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep a separate sharing grant for each recipient chat. Sharing with another chat keeps
+  earlier grants. Stop sharing with a named chat removes only that grant; Stop sharing without a chat removes
+  every grant for the selected browser session. Sharing itself never copies page contents into chat.
+
+
+  **Sources:** `MAIN:Plans/UI_Command_Catalog.md:830-831`; `MAIN:Plans/UI_Command_Catalog.md:843-846`; `DS15:reports/event-authority-20261104/DS15.md:91-94`;
+  `evidence:reviews/DS15-sol/REVIEW.md:55-61`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:99-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`.
+
+
+  **Supersession and boundaries:** Resolves coexistence and revocation of recipient-chat sharing grants. An
+  unnamed-chat Stop sharing removes every grant for the selected session; a named-chat Stop sharing removes
+  only that grant. Sharing remains separate from capture and never copies page contents into chat.'
+gui_related: true
+gui_classification_reason: Records recipient-chat sharing and the Stop sharing action.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves coexistence and revocation of recipient-chat sharing grants. An unnamed-chat Stop sharing removes
+  every grant for the selected session; a named-chat Stop sharing removes only that grant. Sharing remains
+  separate from capture and never copies page contents into chat.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-434 - Catalog updates wait for the next safe reload or start
+
+```yaml
+plan_unit_id: DL-434
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **4.d**. **Question:** When should a catalog update take effect in
+  the listed uses?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **4.d** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the listed uses, keep the current verified version and queue the update until
+  the next safe reload or start allowed by the component that uses it. Save completion only when the new version
+  takes effect. You keep using the old version until it is safe to switch.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **Exact scope — derived by the writer from the current plans, corrected after the blind review.** These are
+  practical uses or saved references whose update/removal timing is missing, not new stored states. “Persona”
+  means a saved agent profile; a “hook” runs plugin code at a named app action. Installable MCP settings tell
+  the app how to connect to an external tool server. Existing stricter outcomes are excluded.
+
+
+  | Catalog item | Current use or reference | Unresolved choice |
+
+  |---|---|---|
+
+  | **Catalog-installed command** | Open in an edit session | When an update takes effect. |
+
+  | **Catalog-installed command** | Named by another app component that requires replacement or confirmation
+  but gives no update/removal timing | When an update takes effect. |
+
+  | **Catalog-installed skill** | Selected for the current request before instructions are loaded or it is
+  called; includes a request explicitly naming the skill with no saved agent profile | When an update takes
+  effect. |
+
+  | **Catalog-installed skill** | Instructions loaded for the current agent, or a validated skill call in progress
+  | When an update takes effect. |
+
+  | **Catalog-installed skill** | Named in a saved agent profile (Persona) | When an update takes effect. |
+
+  | **Catalog-installed plugin or hook** | Enabled, not currently loaded | When an update takes effect. |
+
+  | **Catalog-installed plugin or hook** | Loaded for the session, including plugin code currently running
+  in response to an app action | When an update takes effect. |
+
+  | **Catalog-installed plugin or hook** | Named in saved agent-profile settings | When an update takes effect.
+  |
+
+  | **Catalog-installed tool-server connection settings (MCP)** | Used by an enabled or configured tool server,
+  or a working connection to it | When an update takes effect. |
+
+  | **Catalog-installed tool-server connection settings (MCP)** | Named in saved agent-profile settings | When
+  an update takes effect. |
+
+
+  **Already settled outside this choice:** deleting a command open in an editor is refused; valid edits to
+  the active theme apply immediately. Each in-progress request keeps the exact skill content/version it already
+  selected, including before loading or invocation. Updates/removals cannot rewrite that saved request. Plugin
+  versions still require any existing renewed approval and recovery after failed updates. Server connections
+  still require valid credentials and the current connection version. Personal customizations and external-service
+  data stay protected. No extra catalog item type is covered.
+
+
+  **Sources:** `MAIN:Plans/UI_Command_Catalog.md:936-938`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:563-564`;
+  `DS15:reports/event-authority-20261104/DS15.md:97-100`; `evidence:reviews/DS15-sol/REVIEW.md:63-69`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:100-104`;
+  `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:98-104`;
+  `MAIN:Plans/Commands_System.md:505-514`; `MAIN:Plans/Commands_System.md:7089-7102`; `MAIN:Plans/Skills_System.md:35-35`;
+  `MAIN:Plans/Skills_System.md:157-189`; `MAIN:Plans/Skills_System.md:315-325`; `MAIN:Plans/Plugins_System.md:511-519`;
+  `MAIN:Plans/Plugins_System.md:43-48`; `MAIN:Plans/Plugins_System.md:4288-4292`; `MAIN:Plans/MCP_Integration.md:119-149`;
+  `MAIN:Plans/MCP_Integration.md:161-174`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:561-565`; `MAIN:Plans/FinalGUISpec.md:2322-2326`;
+  `MAIN:Plans/Skills_System.md:152-169`.
+
+
+  **Supersession and boundaries:** Chooses queued updates for exactly the listed unresolved catalog uses and
+  saved references. Existing stricter outcomes and all already-settled rules reproduced here remain in force;
+  no additional catalog item type is covered and completion is recorded only after the new verified version
+  takes effect.'
+gui_related: true
+gui_classification_reason: Records pending catalog updates and when the verified version takes effect.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses queued updates for exactly the listed unresolved catalog uses and saved references. Existing stricter
+  outcomes and all already-settled rules reproduced here remain in force; no additional catalog item type is
+  covered and completion is recorded only after the new verified version takes effect.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-435 - Catalog removal is refused while any listed use or reference remains
+
+```yaml
+plan_unit_id: DL-435
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **4.e**. **Question:** Should removal of a catalog item in the listed
+  uses be refused or queued?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **4.e** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** For the listed uses, refuse removal until the person releases or disables every current
+  use or saved reference. Keep the installed item available. A refused request is not completed and is never
+  silently queued. You decide when to release its uses and try again.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **Exact scope — derived by the writer from the current plans, corrected after the blind review.** These are
+  practical uses or saved references whose update/removal timing is missing, not new stored states. “Persona”
+  means a saved agent profile; a “hook” runs plugin code at a named app action. Installable MCP settings tell
+  the app how to connect to an external tool server. Existing stricter outcomes are excluded.
+
+
+  | Catalog item | Current use or reference | Unresolved choice |
+
+  |---|---|---|
+
+  | **Catalog-installed command** | Named by another app component that requires replacement or confirmation
+  but gives no update/removal timing | Refuse now or queue removal until uses/references are released. |
+
+  | **Catalog-installed skill** | Selected for the current request before instructions are loaded or it is
+  called; includes a request explicitly naming the skill with no saved agent profile | Refuse now or queue
+  removal until uses/references are released. |
+
+  | **Catalog-installed skill** | Instructions loaded for the current agent, or a validated skill call in progress
+  | Refuse now or queue removal until uses/references are released. |
+
+  | **Catalog-installed skill** | Named in a saved agent profile (Persona) | Refuse now or queue removal until
+  uses/references are released. |
+
+  | **Catalog-installed plugin or hook** | Enabled, not currently loaded | Refuse now or queue removal until
+  uses/references are released. |
+
+  | **Catalog-installed plugin or hook** | Loaded for the session, including plugin code currently running
+  in response to an app action | Refuse now or queue removal until uses/references are released. |
+
+  | **Catalog-installed plugin or hook** | Named in saved agent-profile settings | Refuse now or queue removal
+  until uses/references are released. |
+
+  | **Catalog-installed tool-server connection settings (MCP)** | Used by an enabled or configured tool server,
+  or a working connection to it | Refuse now or queue removal until uses/references are released. |
+
+  | **Catalog-installed tool-server connection settings (MCP)** | Named in saved agent-profile settings | Refuse
+  now or queue removal until uses/references are released. |
+
+  | **Catalog-installed custom theme** | Selected as the current theme or referenced by a saved theme choice
+  | Refuse now or queue removal until uses/references are released. |
+
+
+  **Already settled outside this choice:** deleting a command open in an editor is refused; valid edits to
+  the active theme apply immediately. Each in-progress request keeps the exact skill content/version it already
+  selected, including before loading or invocation. Updates/removals cannot rewrite that saved request. Plugin
+  versions still require any existing renewed approval and recovery after failed updates. Server connections
+  still require valid credentials and the current connection version. Personal customizations and external-service
+  data stay protected. No extra catalog item type is covered.
+
+
+  **Sources:** `MAIN:Plans/UI_Command_Catalog.md:936-938`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:563-564`;
+  `evidence:reviews/DS15-sol/REVIEW.md:63-69`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:100-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`;
+  `evidence:reviews/DS15-sol/REVIEW-cycle4.md:98-104`; `MAIN:Plans/Commands_System.md:505-514`; `MAIN:Plans/Commands_System.md:7089-7102`;
+  `MAIN:Plans/Skills_System.md:35-35`; `MAIN:Plans/Skills_System.md:157-189`; `MAIN:Plans/Skills_System.md:315-325`;
+  `MAIN:Plans/Plugins_System.md:511-519`; `MAIN:Plans/Plugins_System.md:43-48`; `MAIN:Plans/Plugins_System.md:4288-4292`;
+  `MAIN:Plans/MCP_Integration.md:119-149`; `MAIN:Plans/MCP_Integration.md:161-174`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:561-565`;
+  `MAIN:Plans/FinalGUISpec.md:2322-2326`; `MAIN:Plans/Skills_System.md:152-169`.
+
+
+  **Supersession and boundaries:** Chooses refusal, without silent queuing, for exactly the listed unresolved
+  catalog uses and saved references. The person must release or disable every current use or saved reference
+  and retry. Existing stricter outcomes and all already-settled rules reproduced here remain in force; no additional
+  catalog item type is covered.'
+gui_related: true
+gui_classification_reason: Records refusal and retry behavior for the catalog removal action.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses refusal, without silent queuing, for exactly the listed unresolved catalog uses and saved references.
+  The person must release or disable every current use or saved reference and retry. Existing stricter outcomes
+  and all already-settled rules reproduced here remain in force; no additional catalog item type is covered.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-436 - Doctor’s skipped notice uses the first check that finds the setting absent
+
+```yaml
+plan_unit_id: DL-436
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **4.f**. **Question:** When may Doctor save its one-time notice that
+  the optional custom browser tool is not configured?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **4.f** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Save the notice the first time Doctor’s readiness check finds the setting for that
+  optional custom browser tool absent for that Project. An earlier run with the setting present leaves the
+  chance unused. Once issued, the notice never resets for configuration edits or removing/re-adding the setting.
+  A clone or import gets a fresh chance only if it creates a separate new Project with its own saved ID. Restoring
+  the same Project preserves whether the notice was already shown. If an older backup cannot prove that, do
+  not guess and show a duplicate. Later checks still save their ordinary check result.
+
+
+  **Sources:** `MAIN:Plans/newtools.md:498-511`; `DT:reports/event-authority-20261104/DT.md:272-273`; `evidence:reviews/DT-sol/REVIEW.md:118-122`;
+  `evidence:reviews/DT-sol/REVIEW-cycle3.md:86-92`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:45-50`; `evidence:reviews/DT-sol/REVIEW-cycle4.md:93-103`;
+  `evidence:reviews/DT-sol/REVIEW-cycle4.md:93-107`; `evidence:reviews/DT-sol/REVIEW-cycle5.md:7-7`.
+
+
+  **Supersession and boundaries:** Resolves the first-eligible-check and reset rules for tool.custom_headless.skipped.
+  The first readiness check finding the setting absent is eligible; an earlier configured check does not consume
+  it. DS15 owns the prepared contract and applies this answer; DT drops its blocked row and cites DS15. Configuration
+  edits, removal/re-addition and same-Project restores do not create a fresh notice; uncertain old backup evidence
+  never justifies a duplicate.'
+gui_related: true
+gui_classification_reason: Records the one-time user-visible skipped notice.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the first-eligible-check and reset rules for tool.custom_headless.skipped. The first readiness check
+  finding the setting absent is eligible; an earlier configured check does not consume it. DS15 owns the prepared
+  contract and applies this answer; DT drops its blocked row and cites DS15. Configuration edits, removal/re-addition
+  and same-Project restores do not create a fresh notice; uncertain old backup evidence never justifies a duplicate.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-437 - Notes record creation once and each later status change once
+
+```yaml
+plan_unit_id: DL-437
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **5.a**. **Question:** Should each note change save one history event
+  or two?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Save one note-created event for creation and one note-status-changed event for each
+  later status change. Keep old entries under the general note-change name readable, but stop creating new
+  entries under that name only after owners prove and approve how each old entry maps to creation/status history.
+  Set ambiguous old entries aside for inspection. Preserve existing note statuses and where each note came
+  from. You see one history entry per change.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the
+  work, including the controller overseeing a package or the connection between two parts. **Responsible owner**
+  means the person, agent or component assigned that concern; assignment alone grants no extra permission.
+  Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval
+  rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain
+  proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition
+  for your choice.
+
+
+  **Sources:** `MAIN:Plans/Contracts_V0.md:907-907`; `MAIN:Plans/Contracts_V0.md:951-951`; `MAIN:Plans/storage-plan.md:1168-1174`;
+  `evidence:reviews/DG6A-sol/REVIEW.md:34-40`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
+
+
+  **Supersession and boundaries:** Resolves the general annotation-change versus split note-history conflict
+  in favor of one creation event and one event per later status change. Historical general-name entries remain
+  readable. New general-name writes stop only after owners prove and approve the mapping, with ambiguous old
+  entries set aside for inspection; existing statuses and provenance remain.'
+gui_related: true
+gui_classification_reason: Records planning-note creation and later status presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the general annotation-change versus split note-history conflict in favor of one creation event
+  and one event per later status change. Historical general-name entries remain readable. New general-name
+  writes stop only after owners prove and approve the mapping, with ambiguous old entries set aside for inspection;
+  existing statuses and provenance remain.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-438 - Concern reassignment is recorded by the authorized controller
+
+```yaml
+plan_unit_id: DL-438
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **5.b**. **Question:** Who records and confirms a transfer of concern
+  responsibility?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.b** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Only the authorized Puppet Master controller for that area records reassignment; users
+  and workers request it. Within the same area of responsibility, require no added confirmation beyond existing
+  rules. Crossing to another area requires **an authorized human for the outgoing area to approve and the receiving
+  responsible owner (person, agent or component) to explicitly accept** before the change is saved. The outgoing
+  concern owner has no additional veto merely for holding the old assignment. If either required confirmer
+  is unavailable or declines, leave the old assignment in place. Save both confirmations, who gave each and
+  in which role, old/new owners, reason and proof of permission. The controller recording the transfer cannot
+  treat its own recording as either confirmation; if it is the receiving owner, it must separately record acceptance
+  and still obtain the human’s approval. You see who approved and who accepted. If this reassignment also moves
+  the concern to a wider area of responsibility, follow your selected 5.d rule as well, including its promotion
+  recorder and required approvals.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the
+  work, including the controller overseeing a package or the connection between two parts. **Responsible owner**
+  means the person, agent or component assigned that concern; assignment alone grants no extra permission.
+  Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval
+  rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain
+  proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition
+  for your choice.
+
+
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8573-8573`;
+  `evidence:reviews/DG6A-sol/REVIEW.md:27-27`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
+  `MAIN:Plans/Orchestrator_Page.md:60-60`.
+
+
+  **Supersession and boundaries:** Chooses controller recording of reassignment and the stated cross-area human
+  approval plus receiving-owner acceptance, distinct from recording itself. A transfer that also promotes the
+  concern must additionally follow 5.d, recorded in DL-440; ordinary assignment alone grants no permission
+  or veto.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses controller recording of reassignment and the stated cross-area human approval plus receiving-owner
+  acceptance, distinct from recording itself. A transfer that also promotes the concern must additionally follow
+  5.d, recorded in DL-440; ordinary assignment alone grants no permission or veto.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-439 - Authorized users and controllers may add concern evidence
+
+```yaml
+plan_unit_id: DL-439
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **5.c**. **Question:** Who may add evidence to a concern?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.c** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Let authorized users and the authorized Puppet Master controller add evidence through
+  the concern action, after checking source access and the latest saved concern version. Ordinary additions
+  need no extra confirmation. Removing or replacing evidence needs its separate authorized action. Save who
+  linked what.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the
+  work, including the controller overseeing a package or the connection between two parts. **Responsible owner**
+  means the person, agent or component assigned that concern; assignment alone grants no extra permission.
+  Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval
+  rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain
+  proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition
+  for your choice.
+
+
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8576-8576`;
+  `evidence:reviews/DG6A-sol/REVIEW.md:29-29`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
+
+
+  **Supersession and boundaries:** Chooses authorized user/controller evidence additions through the concern
+  action, after source-access and latest-version checks. Ordinary additions require no extra confirmation.
+  Removal and replacement retain their separate authorized actions; worker proposals confer no direct recording
+  permission.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses authorized user/controller evidence additions through the concern action, after source-access and
+  latest-version checks. Ordinary additions require no extra confirmation. Removal and replacement retain their
+  separate authorized actions; worker proposals confer no direct recording permission.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-440 - The authorized controller records concern promotion
+
+```yaml
+plan_unit_id: DL-440
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **5.d**. **Question:** Who may promote a concern to a wider area
+  of responsibility?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.d** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** The authorized Puppet Master controller records the move after required evidence and
+  approval checks. Users request it or answer a required human approval; workers nominate. Ordinary automation
+  stays automatic. Existing critical, security and governance approval rules still require their stated approval.
+  You are asked only at a required human approval step. If this promotion also changes the responsible owner,
+  follow your selected 5.b rule as well, including its reassignment recorder and transfer confirmations.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the
+  work, including the controller overseeing a package or the connection between two parts. **Responsible owner**
+  means the person, agent or component assigned that concern; assignment alone grants no extra permission.
+  Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval
+  rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain
+  proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition
+  for your choice.
+
+
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8577-8577`;
+  `evidence:reviews/DG6A-sol/REVIEW.md:30-30`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
+
+
+  **Supersession and boundaries:** Chooses controller-recorded promotion after required evidence and approval
+  checks, with human prompts only where existing rules require them. A promotion that changes the responsible
+  owner must additionally follow 5.b, recorded in DL-438, including its transfer confirmations.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses controller-recorded promotion after required evidence and approval checks, with human prompts only
+  where existing rules require them. A promotion that changes the responsible owner must additionally follow
+  5.b, recorded in DL-438, including its transfer confirmations.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-441 - The responsible authorized owner records evidence-backed concern reopening
+
+```yaml
+plan_unit_id: DL-441
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **5.e**. **Question:** Who reopens a resolved or dismissed concern?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.e** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** The currently responsible, authorized concern owner records reopening on that new
+  evidence. Users and workers may request it. Save the reason and prior closure history; ask for extra confirmation
+  only where existing critical/human-approval policy requires it. Valid new evidence can reopen the issue without
+  a routine prompt.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the
+  work, including the controller overseeing a package or the connection between two parts. **Responsible owner**
+  means the person, agent or component assigned that concern; assignment alone grants no extra permission.
+  Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval
+  rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain
+  proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition
+  for your choice.
+
+
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8575-8575`;
+  `evidence:reviews/DG6A-sol/REVIEW.md:31-31`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`.
+
+
+  **Supersession and boundaries:** Chooses recording by the currently responsible, authorized concern owner
+  on new evidence that invalidates the earlier resolution or dismissal. Prior closure history remains; extra
+  confirmation applies only where existing critical/human-approval rules require it.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses recording by the currently responsible, authorized concern owner on new evidence that invalidates
+  the earlier resolution or dismissal. Prior closure history remains; extra confirmation applies only where
+  existing critical/human-approval rules require it.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-442 - Controllers record seven concern outcomes and humans choose accepted risk
+
+```yaml
+plan_unit_id: DL-442
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **5.f**. **Question:** Who may resolve a concern or accept its remaining
+  risk?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.f** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** The authorized Puppet Master controller may choose and record seven evidence-backed
+  outcomes: `fixed` (a genuine fix), `superseded` (replaced by a successor concern), `merged` (combined with
+  another concern), `split` (divided into linked concerns), `invalidated` (shown to be invalid), `obsoleted_by_patch`
+  (made obsolete by a patch), and `obsoleted_by_recovery` (made obsolete by recovery). Users and workers may
+  request these outcomes but gain no recording permission. Only an authorized human may choose `accepted_risk`
+  (accepting remaining risk), by an explicit decision that the controller records with the evidence and remaining
+  risk. Every resolution requires current evidence that the underlying issue changed, a reason, and all existing
+  critical/security/human approvals. Supersession, merge and split use guided, audited lineage actions and
+  preserve links and history; they do not prove a fix. Any resulting transfer follows your selected 5.b rule,
+  and any promotion to a wider area follows your selected 5.d rule. Acknowledge/dismiss stays separate and
+  cannot erase a live blocker. You get controller choice and recording for all seven non-risk outcomes, and
+  an explicit human choice for accepted risk.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the
+  work, including the controller overseeing a package or the connection between two parts. **Responsible owner**
+  means the person, agent or component assigned that concern; assignment alone grants no extra permission.
+  Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval
+  rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain
+  proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition
+  for your choice.
+
+
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8574-8574`;
+  `evidence:reviews/DG6A-sol/REVIEW.md:32-32`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
+  `MAIN:Plans/Orchestrator_Page.md:60-60`; `MAIN:Plans/Orchestrator_Page.md:168-168`; `MAIN:Plans/Orchestrator_Page.md:273-275`.
+
+
+  **Supersession and boundaries:** Chooses controller choice and recording for the seven specified non-risk
+  outcomes, with an explicit authorized human decision for accepted_risk. All current-evidence, reason and
+  existing approval requirements remain. Lineage outcomes do not prove a fix; resulting transfers and promotions
+  also follow DL-438 and DL-440, and acknowledge/dismiss cannot erase a live blocker.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses controller choice and recording for the seven specified non-risk outcomes, with an explicit authorized
+  human decision for accepted_risk. All current-evidence, reason and existing approval requirements remain.
+  Lineage outcomes do not prove a fix; resulting transfers and promotions also follow DL-438 and DL-440, and
+  acknowledge/dismiss cannot erase a live blocker.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-443 - The authorized controller records concern assessment changes
+
+```yaml
+plan_unit_id: DL-443
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **5.g**. **Question:** Who records assessment changes to a concern’s
+  severity, category or authority?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **5.g** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** The authorized Puppet Master controller records assessment changes within its permitted
+  area, limited here to changes that neither reassign the responsible owner nor move the concern to a wider
+  area. Users and workers request them. Save current evidence, exact saved version and reason for severity,
+  category or authority changes. An authority assessment identifies the already-authorized role whose decision
+  is needed; it grants no new action permission. A severity, category or authority change that amounts to a
+  transfer follows your selected 5.b rule; one that amounts to promotion follows your selected 5.d rule, even
+  when requested as part of an update. Any linked evidence addition, reopening or resolution follows 5.c, 5.e
+  or 5.f respectively; an assessment update cannot perform those actions instead. Editing the screen’s display
+  copy is insufficient. You see the current assessment, subject to existing human-approval rules.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Here, **authorized controller** means Puppet Master’s permitted coordinating software for that part of the
+  work, including the controller overseeing a package or the connection between two parts. **Responsible owner**
+  means the person, agent or component assigned that concern; assignment alone grants no extra permission.
+  Keep access checks, current supporting proof, allowed status changes, and existing critical/security/human-approval
+  rules. Workers may propose actions but gain no direct recording permission. Sol’s role recommendations remain
+  proposals; Astra confirms the questions are open. The exact confirmers proposed in 5.b are the writer’s addition
+  for your choice.
+
+
+  **Sources:** `MAIN:Plans/Orchestrator_Page.md:176-176`; `MAIN:Plans/Orchestrator_Page.md:354-382`; `MAIN:Plans/UI_Command_Catalog.md:8572-8572`;
+  `evidence:reviews/DG6A-sol/REVIEW.md:33-33`; `evidence:reviews/DG6A-sol/REVIEW-cycle4.md:77-94`; `evidence:reviews/DG6A-sol/REVIEW-astra.md:120-138`;
+  `MAIN:Plans/UI_Command_Catalog.md:8572-8577`.
+
+
+  **Supersession and boundaries:** Limits this answer to severity, category or authority assessments that neither
+  reassign the responsible owner nor widen the area. An authority assessment identifies an already-authorized
+  role and grants no permission. Any actual transfer, promotion, evidence addition, reopening or resolution
+  follows its separate answer in DL-438 through DL-442; a display edit cannot substitute for the authorized
+  action.'
+gui_related: true
+gui_classification_reason: Records concern assessment display edits and their action boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Limits this answer to severity, category or authority assessments that neither reassign the responsible owner
+  nor widen the area. An authority assessment identifies an already-authorized role and grants no permission.
+  Any actual transfer, promotion, evidence addition, reopening or resolution follows its separate answer in
+  DL-438 through DL-442; a display edit cannot substitute for the authorized action.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-444 - The oldest eligible duplicate memory keeps its identity
+
+```yaml
+plan_unit_id: DL-444
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **6.a**. **Question:** Which eligible identical memory keeps its
+  identity after a merge?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **6.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Keep the oldest eligible memory by original creation time, breaking a tie by the unchanging
+  note ID. Preserve every original evidence reference and the record of which copies were merged. If pin protection
+  prevents that merge, skip it. You keep the earliest note ID and its history links.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Deletion stays your action. Pins, versions, audit history and evidence references stay protected. A protected
+  memory does not become mergeable through these choices. **6.a/6.b** govern duplicates; **6.c/6.d** govern
+  separate archive jobs. The **usefulness score is a computed ranking, not a percentage of usefulness**. Its
+  existing formula combines how strongly a memory matches keyword and meaning searches, how often/recently
+  it was used, and its kind/status. Its contribution falls with age at the existing rate for that kind; Done
+  memories lose weight faster. Each missing search score contributes zero. A pin protects the memory before
+  scoring. Both age AND score must qualify, using values captured when the job chooses memories. A crowded
+  list alone never triggers archiving. Automatic jobs and panel buttons stay unavailable until your answer
+  is applied and all remaining definition, review and recording approvals pass.
+
+
+  **Sources:** `MAIN:Plans/assistant-memory-subsystem.md:398-412`; `DMEM:Plans/assistant-memory-subsystem.md:3156-3174`;
+  `ANS:Plans/Decision_Log.md:4514-4516`; `evidence:reviews/DMEM-sol/REVIEW-astra-2.md:74-80`; `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`.
+
+
+  **Supersession and boundaries:** Resolves the duplicate sweep survivor choice left open by DL-402: oldest
+  eligible original creation time, then unchanging note ID. Pin protection can require skipping the merge.
+  Evidence references and merge lineage remain; DL-402’s separate monthly-summary and prune/archive rules stand.'
+gui_related: true
+gui_classification_reason: Records which memory remains visible after a duplicate merge.
+split_recommended: false
+depends_on:
+- DL-402
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Resolves the duplicate sweep survivor choice left open by DL-402: oldest eligible original creation time,
+  then unchanging note ID. Pin protection can require skipping the merge. Evidence references and merge lineage
+  remain; DL-402’s separate monthly-summary and prune/archive rules stand.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-445 - Other merged memory originals are archived and never automatically deleted
+
+```yaml
+plan_unit_id: DL-445
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **6.b**. **Question:** Are the other merged memory copies archived
+  or left visible?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **6.b** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Archive the other eligible originals, preserving their identities, evidence references,
+  versions and links to the survivor. They remain available in history and are never automatically deleted.
+  You see one active memory for the merged group.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Deletion stays your action. Pins, versions, audit history and evidence references stay protected. A protected
+  memory does not become mergeable through these choices. **6.a/6.b** govern duplicates; **6.c/6.d** govern
+  separate archive jobs. The **usefulness score is a computed ranking, not a percentage of usefulness**. Its
+  existing formula combines how strongly a memory matches keyword and meaning searches, how often/recently
+  it was used, and its kind/status. Its contribution falls with age at the existing rate for that kind; Done
+  memories lose weight faster. Each missing search score contributes zero. A pin protects the memory before
+  scoring. Both age AND score must qualify, using values captured when the job chooses memories. A crowded
+  list alone never triggers archiving. Automatic jobs and panel buttons stay unavailable until your answer
+  is applied and all remaining definition, review and recording approvals pass.
+
+
+  **Sources:** `MAIN:Plans/assistant-memory-subsystem.md:404-406`; `ANS:Plans/Decision_Log.md:4514-4516`; `RET:Plans/storage-plan.md:17487-17487`;
+  `evidence:reviews/DMEM-sol/REVIEW-astra-2.md:74-80`; `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`.
+
+
+  **Supersession and boundaries:** Resolves the duplicate sweep disposition left open by DL-402, paired with
+  the survivor in DL-444. Other eligible originals are archived with identities, evidence, versions and survivor
+  links preserved. Automatic deletion is not authorized; deletion remains the user’s action.'
+gui_related: true
+gui_classification_reason: Records memory archive disposition and user deletion behavior.
+split_recommended: false
+depends_on:
+- DL-402
+- DL-444
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the duplicate sweep disposition left open by DL-402, paired with the survivor in DL-444. Other eligible
+  originals are archived with identities, evidence, versions and survivor links preserved. Automatic deletion
+  is not authorized; deletion remains the user’s action.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-446 - Monthly summary uses both 90 idle days and score below 0.10
+
+```yaml
+plan_unit_id: DL-446
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **6.c**. **Question:** Which age and usefulness-score cutoffs may
+  monthly summary use?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **6.c** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness
+  score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives
+  its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the
+  test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last
+  edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking
+  with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must
+  never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every
+  selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff
+  choice supplies no separate permission to run outside a Project.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Deletion stays your action. Pins, versions, audit history and evidence references stay protected. A protected
+  memory does not become mergeable through these choices. **6.a/6.b** govern duplicates; **6.c/6.d** govern
+  separate archive jobs. The **usefulness score is a computed ranking, not a percentage of usefulness**. Its
+  existing formula combines how strongly a memory matches keyword and meaning searches, how often/recently
+  it was used, and its kind/status. Its contribution falls with age at the existing rate for that kind; Done
+  memories lose weight faster. Each missing search score contributes zero. A pin protects the memory before
+  scoring. Both age AND score must qualify, using values captured when the job chooses memories. A crowded
+  list alone never triggers archiving. Automatic jobs and panel buttons stay unavailable until your answer
+  is applied and all remaining definition, review and recording approvals pass.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4514-4532`; `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:709-718`;
+  `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:786-799`;
+  `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`; `MAIN:Plans/assistant-memory-subsystem.md:344-359`; `MAIN:Plans/assistant-memory-subsystem.md:464-481`;
+  `evidence:reviews/cards2-sol/REVIEW.md:173-173`.
+
+
+  **Supersession and boundaries:** Answers DL-403’s returned-cutoff condition for monthly summary only: Note
+  memories must meet both thresholds, separately per Project, with the exact idle-time recipe and captured
+  ranking inputs in A. DL-402’s archive-only and pin protections remain. Automatic and panel runs still wait
+  for application of this answer and all remaining definition, review and recording approvals; no outside-Project
+  execution permission is supplied.'
+gui_related: true
+gui_classification_reason: Records monthly-summary availability for automatic and Memory-panel runs.
+split_recommended: false
+depends_on:
+- DL-402
+- DL-403
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Answers DL-403’s returned-cutoff condition for monthly summary only: Note memories must meet both thresholds,
+  separately per Project, with the exact idle-time recipe and captured ranking inputs in A. DL-402’s archive-only
+  and pin protections remain. Automatic and panel runs still wait for application of this answer and all remaining
+  definition, review and recording approvals; no outside-Project execution permission is supplied.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-447 - Prune archive uses both 180 idle days and score below 0.05
+
+```yaml
+plan_unit_id: DL-447
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **6.d**. **Question:** Which age and usefulness-score cutoffs may
+  prune/archive use?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **6.d** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Allow prune/archive to select eligible memories of any kind idle for at least 180
+  days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside
+  a Project later receives its own fully specified and reviewed saved maintenance record and separate approval
+  to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days
+  from the later of the last edit and last access, using creation time when either is absent. Use the existing
+  computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring.
+  A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence
+  references and versions. Deletion remains your action. This cutoff choice supplies no separate permission
+  to run outside a Project.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  Deletion stays your action. Pins, versions, audit history and evidence references stay protected. A protected
+  memory does not become mergeable through these choices. **6.a/6.b** govern duplicates; **6.c/6.d** govern
+  separate archive jobs. The **usefulness score is a computed ranking, not a percentage of usefulness**. Its
+  existing formula combines how strongly a memory matches keyword and meaning searches, how often/recently
+  it was used, and its kind/status. Its contribution falls with age at the existing rate for that kind; Done
+  memories lose weight faster. Each missing search score contributes zero. A pin protects the memory before
+  scoring. Both age AND score must qualify, using values captured when the job chooses memories. A crowded
+  list alone never triggers archiving. Automatic jobs and panel buttons stay unavailable until your answer
+  is applied and all remaining definition, review and recording approvals pass.
+
+
+  **Sources:** `ANS:Plans/Decision_Log.md:4514-4532`; `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:709-718`;
+  `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:786-799`;
+  `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`; `MAIN:Plans/assistant-memory-subsystem.md:344-359`; `MAIN:Plans/assistant-memory-subsystem.md:464-481`;
+  `evidence:reviews/cards2-sol/REVIEW.md:173-173`.
+
+
+  **Supersession and boundaries:** Answers DL-403’s returned-cutoff condition for prune/archive independently
+  of DL-446: eligible memories of any kind must meet both thresholds, separately per Project, with the exact
+  idle-time recipe and captured ranking inputs in A. DL-402’s archive-only and pin protections remain. Automatic
+  and panel runs still wait for application of this answer and all remaining definition, review and recording
+  approvals; no outside-Project execution permission is supplied.'
+gui_related: true
+gui_classification_reason: Records prune/archive availability for automatic and Memory-panel runs.
+split_recommended: false
+depends_on:
+- DL-402
+- DL-403
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- 'Answers DL-403’s returned-cutoff condition for prune/archive independently of DL-446: eligible memories
+  of any kind must meet both thresholds, separately per Project, with the exact idle-time recipe and captured
+  ranking inputs in A. DL-402’s archive-only and pin protections remain. Automatic and panel runs still wait
+  for application of this answer and all remaining definition, review and recording approvals; no outside-Project
+  execution permission is supplied.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-448 - Prepare a distinct application edition of goal_run.stopped
+
+```yaml
+plan_unit_id: DL-448
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **7.a**. **Question:** For ordinary application-scope runs that can
+  already be stopped, should Stop save an application edition of `goal_run.stopped`, or should application
+  Stop use its existing owner state/receipts without that event?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **7.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Author a distinct application `goal_run.stopped` payload, source/admission/read/backup
+  contract and admit its selector at a separately approved registry checkpoint. Keep all app producers refused
+  until adoption; keep original Project bytes and scope joins exact.
+
+
+  **Sources:** `MAIN:Plans/Contracts_V0.md:24237-24239`; `MAIN:Plans/Goal_Runtime_System.md:8211-8235`; `MAIN:Plans/Decision_Log.md:1613-1637`;
+  `DG:reports/event-authority-20261104/DG.md:108-108`; `evidence:reviews/DG-sol/REVIEW.md:116-125`; `evidence:surveys/A1/ANSWERS.jsonl:41-41`.
+
+
+  **Supersession and boundaries:** Extends stopped-run contract preparation to a distinct application edition
+  only, beyond the earlier Project-only scope recorded by DL-080. Its selector requires a separately approved
+  registry checkpoint; every application producer remains refused until adoption. Original Project bytes and
+  exact scope joins remain unchanged. This entry performs no admission.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-080
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Extends stopped-run contract preparation to a distinct application edition only, beyond the earlier Project-only
+  scope recorded by DL-080. Its selector requires a separately approved registry checkpoint; every application
+  producer remains refused until adoption. Original Project bytes and exact scope joins remain unchanged. This
+  entry performs no admission.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-449 - Retired terminal history requires no new inspection view
+
+```yaml
+plan_unit_id: DL-449
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **8.a**. **Question:** Should the retired terminal move get a new
+  read-only history view?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **8.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Preserve the original meaning and lifetime of any saved event, the refusal of new
+  writes and checks that prevent old events being fabricated again. Explicitly remove the obligation to build
+  a new terminal-history view, saved results from viewing it, saved original-move/results records and obsolete
+  move tests from both owner documents. Keep only the checks needed to interpret and protect old data. No new
+  history-viewing feature is built.
+
+
+  **Sources:** `MAIN:Plans/Decision_Log.md:413-414`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:12411-12413`;
+  `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:12601-12608`; `DS:reports/event-authority-20261104/DS.md:124-134`;
+  `MAIN:Plans/storage-plan.md:27035-27081`; `evidence:reviews/DS-sol/REVIEW.md:51-61`; `evidence:reviews/DS-sol/REVIEW-cycle2.md:69-71`;
+  `evidence:reviews/DS-sol/REVIEW-cycle2.md:53-71`.
+
+
+  **Supersession and boundaries:** Resolves the terminal owner/Storage conflict by removing the new history-view,
+  viewing-result, saved original-move/results and obsolete move-test obligations exactly as A states. The original
+  meaning and lifetime, historical-data protection and refusal of new writes remain. The earlier provisional
+  registration/citation condition is preserved, without restoring terminal workgroups.'
+gui_related: true
+gui_classification_reason: Records removal of a new terminal history inspection view obligation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Resolves the terminal owner/Storage conflict by removing the new history-view, viewing-result, saved original-move/results
+  and obsolete move-test obligations exactly as A states. The original meaning and lifetime, historical-data
+  protection and refusal of new writes remain. The earlier provisional registration/citation condition is preserved,
+  without restoring terminal workgroups.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-450 - Technical drafting permission extends to exactly 148 appendix names
+
+```yaml
+plan_unit_id: DL-450
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **9.a**. **Question:** May the owners finish saved-history definitions
+  for these 148 additional names?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **9.a** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Give all 148 appendix names permission to receive complete saved-history definitions
+  under the same limits as your earlier grant. Each owner must document its search, reuse existing definitions
+  first and label missing definitions it writes as new. Prepare registration only after all required reviews
+  and completeness checks pass. Send the three proposed alternative continuity names to their owners for proof;
+  exclude the optional planning-budget entry only if its owner proves the required saved result already covers
+  it. Keep the question about where information came from open until its owners supply evidence. This chooses
+  no feature, lifetime/deletion rule or winner between conflicting plans; adds no approved event; allows no
+  app code to record one; and skips no requirement. All 148 can progress under these limits.
+
+
+  **Approved scope and conditions from the presented cards:**
+
+
+  **Exact 148-name scope from the presented appendix:**
+
+
+  Exactly the reviewed additional-name list, grouped above. Forge means a repository-hosting service. Continuity
+  means preserving who acted, information sources and links as history is rebuilt. Session prompts are requests
+  sent to agent chats. “Current owner evidence” identifies the plan responsible for each name. Every name remains
+  listed even when the recount proposes another name for the same fact, a conditional exclusion or further
+  owner investigation. These are proposed histories; presence here permits no app code to record them and chooses
+  no lifetime.
+
+
+  **Packet-freeze recount check:** Astra round 2 confirms **148** additions, **249** total list entries and
+  **8** unresolved spellings outside that list. The eight are listed with their owners under Card 9 and Still
+  open; the separate information-source question remains inside the 148. Neither the exact names nor recommendations
+  changed; the earlier report repairs are now independently confirmed. Sources: `evidence:reviews/CA-COUNT-sol/REVIEW-astra-2.md:1-12`.
+
+
+  **Frozen list:** `COUNT:reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json`; SHA-256
+  `2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c`. The file has 249 objects; this appendix
+  selects exactly its 148 objects marked as the new cohort.
+
+
+  **Forge — 35 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `forge.api.compatibility_changed` | Whether Puppet Master can still communicate correctly with the repository
+  service after its interface changes. | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.connection.capabilities_changed` | Which repository-service actions a connection now supports. |
+  `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.connection.reauthorized` | Renewed permission to use a repository-service connection. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.connection.validated` | The result of checking that the exact repository-service connection is valid.
+  | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.mirror.connected` | A synchronized copy of a repository was connected. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.mirror.degraded` | A synchronized repository copy can no longer provide its full expected service.
+  | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.mirror.detached` | A synchronized repository copy was disconnected. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.mirror.status_changed` | The current condition of a synchronized repository copy changed. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.mirror.sync_completed` | Copying changes between a repository and its synchronized copy finished.
+  | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.mirror.sync_started` | Copying changes between a repository and its synchronized copy began. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.pipeline.cancelled` | A repository automation run was cancelled. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.pipeline.completed` | A repository automation run finished. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.pipeline.retried` | A repository automation run was tried again. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.pipeline.started` | A repository automation run began. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.repository.authority_changed` | Which repository-service binding is responsible for a function such
+  as hosting, reviews or checks changed. Actor-permission changes are separate. | `MAIN:Plans/Forge_Integrations.md:632-666`;
+  `MAIN:Plans/Forge_Integrations.md:125-148` |
+
+  | `forge.repository.created` | A repository was created at its hosting service. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.repository.discovered` | A repository was found at its hosting service. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.repository.eligibility_changed` | Whether a repository qualifies for the requested app operation
+  changed. | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.review.approved` | A code review was approved. | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.review.changes_requested` | A reviewer asked for changes to the proposed code. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.review.closed` | A code review was closed. | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.review.created` | A code review was created. | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.review.marked_ready` | A code review was marked ready for review. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.review.merged` | The proposed code was merged through its review. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.review.reopened` | A closed code review was reopened. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.review.thread.reopened` | A previously resolved review discussion was reopened. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.review.thread.replied` | Someone replied in a code-review discussion. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.review.thread.resolved` | A code-review discussion was marked resolved. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.review.updated` | A code review was updated. | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.review.version_created` | A fixed, separately identifiable version of a code review was saved. |
+  `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.webhook.delivery_failed` | Processing a notification from the repository service failed. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.webhook.delivery_recovered` | Processing repository-service notifications recovered after failure.
+  | `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.webhook.received` | A notification from the repository service arrived. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+  | `forge.webhook.redelivery_queued` | Another delivery of a repository-service notification was queued. |
+  `MAIN:Plans/Forge_Integrations.md:632-666` |
+
+  | `forge.webhook.rejected` | A notification from the repository service was refused. | `MAIN:Plans/Forge_Integrations.md:632-666`
+  |
+
+
+  **Source Control — 19 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `source_control.backend.detected` | Which source-control system was found in the exact work environment.
+  | `MAIN:Plans/Source_Control_System.md:395-413` |
+
+  | `source_control.backend.selected` | Which source-control system was selected for use. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.checkpoint.created` | A restorable source-control position was saved. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.checkpoint.restored` | Work was restored to a saved source-control position. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.remote.fetch_completed` | Downloading repository changes finished. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.remote.fetch_started` | Downloading repository changes began. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.remote.publish_completed` | Sending repository changes to the remote service finished.
+  | `MAIN:Plans/Source_Control_System.md:395-413` |
+
+  | `source_control.remote.publish_started` | Sending repository changes to the remote service began. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.remote.sync_completed` | Reconciling local and remote repository changes finished. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.remote.sync_started` | Reconciling local and remote repository changes began. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.repository.bound` | A repository was linked to the app context responsible for it. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.repository.unbound` | A repository’s link to its responsible app context was removed. |
+  `MAIN:Plans/Source_Control_System.md:395-413` |
+
+  | `source_control.status.refreshed` | The app checked the repository’s current changes and state. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.workspace.created` | A working copy was created using the selected source-control system’s
+  own workspace feature. | `MAIN:Plans/Source_Control_System.md:395-413` |
+
+  | `source_control.workspace.opened` | An existing working copy was opened using its source-control system.
+  | `MAIN:Plans/Source_Control_System.md:395-413` |
+
+  | `source_control.workspace.removed` | A working copy was removed through its source-control system. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.workspace.switched` | The app switched to the exact requested working copy. | `MAIN:Plans/Source_Control_System.md:395-413`
+  |
+
+  | `source_control.writer_lease.granted` | A process received permission to write the specified working copy
+  under its source-control rules. | `MAIN:Plans/Source_Control_System.md:395-413`; `MAIN:Plans/Source_Control_System.md:165-180`;
+  `MAIN:Plans/source_control_contracts.schema.json:385-400`; `MAIN:Plans/WorktreeGitImprovement.md:4978-4978`
+  |
+
+  | `source_control.writer_lease.lost` | A process lost permission to write the specified working copy under
+  its source-control rules. | `MAIN:Plans/Source_Control_System.md:395-413`; `MAIN:Plans/Source_Control_System.md:165-180`;
+  `MAIN:Plans/source_control_contracts.schema.json:385-400`; `MAIN:Plans/WorktreeGitImprovement.md:4978-4978`
+  |
+
+
+  **Test capture — 20 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `artifacts.capture_provenance.inspected` | Someone inspected a test recording and the evidence of where
+  it came from. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183` |
+
+  | `artifacts.demonstration_video.created` | A demonstration video was made from identified original test
+  recordings. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183` |
+
+  | `artifacts.demonstration_video.failed` | An attempt to make a demonstration video failed. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.bookmarked` | A point in a test recording was bookmarked. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.clip_saved` | A clip was saved with a link to its original recording. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.effective_quality_changed` | The quality actually being recorded changed. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.health_degraded` | The recording could no longer maintain its expected operation or quality.
+  | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183` |
+
+  | `testing.capture.health_recovered` | The recording recovered from an operation or quality problem. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.interrupted` | A recording was interrupted and lost continuous coverage. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.paused` | A recording was paused. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.provenance_rejected` | The claimed source of a recording was rejected. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.provenance_verified` | Checks verified the recording’s source. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.redaction_applied` | Sensitive content was hidden or removed from recorded evidence under
+  the existing rules. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183` |
+
+  | `testing.capture.resumed` | A paused recording resumed. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.segment_corrupt` | A damaged part of a recording was detected. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.segment_finalized` | One part of the original recording was finished and saved. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.segment_recovered` | An interrupted part of a recording was recovered. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.started` | Recording began for an exactly identified target. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.stopped` | Recording stopped. | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`
+  |
+
+  | `testing.capture.target_changed` | The recording target changed, preserving the link to the preceding target.
+  | `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183` |
+
+
+  **Back Seat Driver — 15 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `bsd.advice_emitted` | The advising agent delivered advice at an allowed point between steps of the main
+  agent’s work. | `MAIN:Plans/Back_Seat_Driver.md:371-371` |
+
+  | `bsd.assignment_paused` | The advising agent’s assignment paused, with its reason. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.assignment_resumed` | The advising agent’s paused assignment resumed. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.assignment_started` | An advising assignment began for an identified main run. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.assignment_stopped` | An advising assignment ended. | `MAIN:Plans/Back_Seat_Driver.md:371-371` |
+
+  | `bsd.finding_cleared` | An advising agent’s finding was cleared. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.finding_held` | A finding was held back until it could be checked again. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.finding_reconfirmed` | A held finding was checked and confirmed again. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.finding_suppressed` | A finding was withheld under the existing advising rules. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.output_quarantined` | Rejected advising output was set aside so it could not be used as accepted advice.
+  | `MAIN:Plans/Back_Seat_Driver.md:371-371` |
+
+  | `bsd.policy_changed` | The rules governing the advising agent changed. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.review_failed` | An advising review failed. | `MAIN:Plans/Back_Seat_Driver.md:371-371` |
+
+  | `bsd.review_started` | An advising review began against an exact version of the main agent’s work. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.review_timed_out` | An advising review ran out of time. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+  | `bsd.workflow_binding_created` | Advising rules were assigned to a workflow and its stages. | `MAIN:Plans/Back_Seat_Driver.md:371-371`
+  |
+
+
+  **Server — 9 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `server.catalog_changed` | The saved list of Servers changed. | `MAIN:Plans/Server_System.md:1004-1012`
+  |
+
+  | `server.client_pairing_state_changed` | A Client app’s pairing status changed. | `MAIN:Plans/Server_System.md:1004-1012`
+  |
+
+  | `server.client_revoked` | A Client app’s access was revoked. | `MAIN:Plans/Server_System.md:1004-1012`
+  |
+
+  | `server.client_trust_changed` | The recorded relationship saying which Client app is trusted changed. |
+  `MAIN:Plans/Server_System.md:1004-1012` |
+
+  | `server.connection_state_changed` | The Client app’s connection to its Server changed state. | `MAIN:Plans/Server_System.md:1004-1012`
+  |
+
+  | `server.discovery_expired` | An observation of an available Server became too old to use as current. |
+  `MAIN:Plans/Server_System.md:1004-1012` |
+
+  | `server.discovery_observed` | An available Server was observed, with the observation’s expiry. | `MAIN:Plans/Server_System.md:1004-1012`
+  |
+
+  | `server.endpoint_changed` | A Server’s connection address changed. | `MAIN:Plans/Server_System.md:1004-1012`
+  |
+
+  | `server.identity_mismatch_detected` | The Server reached did not match the expected identity. | `MAIN:Plans/Server_System.md:1004-1012`
+  |
+
+
+  **Remote Access — 8 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `remote_access.private_endpoint_state_changed` | The state of a private connection address changed. | `MAIN:Plans/Remote_Access_System.md:653-660`
+  |
+
+  | `remote_access.proxy_state_changed` | The state of a server forwarding the remote connection changed. |
+  `MAIN:Plans/Remote_Access_System.md:653-660` |
+
+  | `remote_access.public_security_violation_detected` | A security violation was detected on a publicly reachable
+  connection address. | `MAIN:Plans/Remote_Access_System.md:653-660` |
+
+  | `remote_access.remote_link_state_changed` | The state of a Remote Link connection changed. | `MAIN:Plans/Remote_Access_System.md:653-660`
+  |
+
+  | `remote_access.route_migration_state_changed` | Progress changed while switching from one remote connection
+  path to another. | `MAIN:Plans/Remote_Access_System.md:653-660` |
+
+  | `remote_access.route_preference_changed` | The preferred remote connection path changed. | `MAIN:Plans/Remote_Access_System.md:653-660`
+  |
+
+  | `remote_access.route_state_changed` | The state of a remote connection path changed. | `MAIN:Plans/Remote_Access_System.md:653-660`
+  |
+
+  | `remote_access.route_test_completed` | A test of a remote connection path finished. | `MAIN:Plans/Remote_Access_System.md:653-660`
+  |
+
+
+  **Discovery — 8 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `discovery.backpressure` | File search slowed or refused more work because resource limits were reached.
+  | `MAIN:Plans/Contracts_V0.md:18551-18559`; `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`
+  |
+
+  | `discovery.candidates_returned` | How many file-search results were allowed to be shown and how current
+  they were. | `MAIN:Plans/Contracts_V0.md:18551-18559`; `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`
+  |
+
+  | `discovery.disabled` | File search was refused or reduced because it was switched off. | `MAIN:Plans/Contracts_V0.md:18551-18559`;
+  `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641` |
+
+  | `discovery.fallback` | File search used an alternative method, with its reason. | `MAIN:Plans/Contracts_V0.md:18551-18559`;
+  `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641` |
+
+  | `discovery.invoked` | A file search was requested, with the rules and work context applying to it. | `MAIN:Plans/Contracts_V0.md:18551-18559`;
+  `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641` |
+
+  | `discovery.selected` | A file-search result was selected by its protected identifier rather than revealing
+  hidden path details. | `MAIN:Plans/Contracts_V0.md:18551-18559`; `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`;
+  `MAIN:Plans/storage-plan.md:15641-15641` |
+
+  | `discovery.unsupported` | File search was refused or reduced because this environment did not support it.
+  | `MAIN:Plans/Contracts_V0.md:18551-18559`; `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`
+  |
+
+  | `discovery.verified` | The exact check performed on a selected file-search result. | `MAIN:Plans/Contracts_V0.md:18551-18559`;
+  `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641` |
+
+
+  **Assistant Plan — 7 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `assistant_plan.build_started` | Work began against an exactly identified saved Assistant Plan version.
+  | `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010` |
+
+  | `assistant_plan.cancelled` | An Assistant Plan run was cancelled. | `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010`
+  |
+
+  | `assistant_plan.completed` | An Assistant Plan run finished. | `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010`
+  |
+
+  | `assistant_plan.created` | An Assistant Plan was created in chat. | `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010`
+  |
+
+  | `assistant_plan.exported` | An exactly identified Assistant Plan version was exported. | `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010`
+  |
+
+  | `assistant_plan.version_created` | A fixed, separately identifiable Assistant Plan version was saved. |
+  `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010` |
+
+  | `assistant_plan.wizard_handoff_created` | An exact Assistant Plan version was handed to Planning Wizard.
+  | `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010` |
+
+
+  **Notebook — 5 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `notebook.checkpoint_committed` | A set of required notebook entry versions was saved together as a recovery
+  position. | `MAIN:Plans/Working_Notebook.md:872-876` |
+
+  | `notebook.checkpoint_failed` | Saving the required notebook entry versions failed, with a specific failure
+  reason. | `MAIN:Plans/Working_Notebook.md:872-876` |
+
+  | `notebook.entry_committed` | An exact notebook entry version was saved. | `MAIN:Plans/Working_Notebook.md:872-876`
+  |
+
+  | `notebook.entry_superseded` | A notebook entry version was replaced by a newer version, preserving the
+  relationship. | `MAIN:Plans/Working_Notebook.md:872-876` |
+
+  | `notebook.transition_state_changed` | Progress changed while switching the assistant to fresh context.
+  | `MAIN:Plans/Working_Notebook.md:872-876` |
+
+
+  **External Research — 5 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `external_research.budget_denied` | A research request was refused by its budget check, including expected
+  and unresolved costs. | `MAIN:Plans/External_Research.md:715-719`; `MAIN:Plans/External_Research.md:387-398`
+  |
+
+  | `external_research.finding_classified` | A research finding’s classification and whether it received credit,
+  including credited, partial, refused and candidate results. | `MAIN:Plans/External_Research.md:715-719`;
+  `MAIN:Plans/External_Research.md:214-224`; `MAIN:Plans/External_Research.md:695-695` |
+
+  | `external_research.job_terminal` | A research job ended, with its outcome and reason, including any limit
+  that stopped it. | `MAIN:Plans/External_Research.md:715-719`; `MAIN:Plans/External_Research.md:691-691` |
+
+  | `external_research.packet_delivered` | A research evidence packet for a decision was delivered. | `MAIN:Plans/External_Research.md:715-719`
+  |
+
+  | `external_research.topic_started` | A research topic started with an exact saved plan version and brief.
+  | `MAIN:Plans/External_Research.md:715-719` |
+
+
+  **Continuity — 4 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `continuity.actor_identified` | Who acted, so the saved history can be traced to them. | `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730`
+  |
+
+  | `continuity.provenance_recorded` | Where information in the saved history came from; whether another event
+  covers the same fact remains open. | `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730` |
+
+  | `continuity.redaction_applied` | Which sensitive information was hidden from a history record. | `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730`
+  |
+
+  | `continuity.replay_checkpointed` | How far rebuilding history had reached, so it can continue from that
+  saved position. | `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730` |
+
+
+  **Session prompts — 4 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `session_prompt.admitted` | A request was accepted into the exact agent chat’s incoming-request list. |
+  `MAIN:Plans/Contracts_V0.md:20438-20450` |
+
+  | `session_prompt.cancelled` | A request to an agent chat was cancelled. | `MAIN:Plans/Contracts_V0.md:20438-20450`
+  |
+
+  | `session_prompt.expired` | A request to an agent chat expired. | `MAIN:Plans/Contracts_V0.md:20438-20450`
+  |
+
+  | `session_prompt.rejected` | A request to an agent chat was refused. | `MAIN:Plans/Contracts_V0.md:20438-20450`
+  |
+
+
+  **Backup and restore — 3 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `backup.destination_changed` | The destination for saved backups changed. | `MAIN:Plans/Backup_Restore_System.md:793-795`
+  |
+
+  | `backup.state_changed` | Progress or outcome of a backup run changed. | `MAIN:Plans/Backup_Restore_System.md:793-795`
+  |
+
+  | `restore.state_changed` | Progress or outcome of a restore run changed. | `MAIN:Plans/Backup_Restore_System.md:793-795`
+  |
+
+
+  **Goal pause and resume — 2 names**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `goal.paused` | An existing Goal paused under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`;
+  `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
+
+  | `goal.resumed` | A paused Goal resumed under its own permission rules. | `MAIN:Plans/Goal_Runtime_System.md:270-272`;
+  `MAIN:Plans/Goal_Runtime_System.md:6862-6862` |
+
+
+  **Testing readiness — 1 name**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `testing.runtime_enabled_for_adapter` | The proof and approval allowing a particular test-tool connection
+  to be used by the app. | `MAIN:Plans/Automated_Testing_System.md:2590-2590` |
+
+
+  **Execution graph — 1 name**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `run.graph_canonical_locked` | The exact approved task/dependency map was fixed for execution, including
+  a newly approved replacement map. | `MAIN:Plans/Wiring_Matrix.md:335-337`; `MAIN:Plans/Executor_Protocol.md:903-905`
+  |
+
+
+  **Permissions — 1 name**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `autonomy.ceiling_checked` | The app checked how much independent action was permitted after reading the
+  request and before executing it. | `MAIN:Plans/Permissions_System.md:9069-9069` |
+
+
+  **Planning question budget — 1 name**
+
+
+  | Exact name | What it records | Current owner evidence |
+
+  |---|---|---|
+
+  | `planning.question_budget_exhausted` | Optional extra history that planning used its question allowance
+  and moved to assembling the plan; exclusion still needs the owner’s proof that an existing result covers
+  it. | `MAIN:Plans/Contracts_V0.md:21402-21408` |
+
+
+  **Sources:** `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:46-62`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:315-331`;
+  `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:413-428`; `evidence:reviews/CA-COUNT-sol/REVIEW.md:91-103`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-cycle2.md:108-112`; `ANS:Plans/Decision_Log.md:4657-4666`; `ANS:Plans/Decision_Log.md:4700-4710`;
+  `MAIN:Plans/Test_Capture_and_Motion_Evidence.md:183-183`; `MAIN:Plans/Assistant_Plan_Runtime.md:1003-1010`;
+  `MAIN:Plans/Permissions_System.md:9069-9069`; `MAIN:Plans/Backup_Restore_System.md:793-795`; `MAIN:Plans/Back_Seat_Driver.md:371-371`;
+  `MAIN:Plans/orchestrator-subagent-integration.md:31730-31730`; `MAIN:Plans/Contracts_V0.md:18551-18559`;
+  `MAIN:Plans/Runtime_Artifacts_Panel.md:976-976`; `MAIN:Plans/storage-plan.md:15641-15641`; `MAIN:Plans/External_Research.md:715-719`;
+  `MAIN:Plans/Forge_Integrations.md:632-666`; `MAIN:Plans/Goal_Runtime_System.md:270-272`; `MAIN:Plans/Goal_Runtime_System.md:6862-6862`;
+  `MAIN:Plans/Working_Notebook.md:872-876`; `MAIN:Plans/Contracts_V0.md:21402-21408`; `MAIN:Plans/Remote_Access_System.md:653-660`;
+  `MAIN:Plans/Wiring_Matrix.md:335-337`; `MAIN:Plans/Executor_Protocol.md:903-905`; `MAIN:Plans/Server_System.md:1004-1012`;
+  `MAIN:Plans/Contracts_V0.md:20438-20450`; `MAIN:Plans/Source_Control_System.md:395-413`; `MAIN:Plans/Automated_Testing_System.md:2590-2590`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:1-8`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:16-35`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-cycle3.md:1-12`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra-2.md:1-12`;
+  `MAIN:Plans/External_Research.md:214-224`; `MAIN:Plans/External_Research.md:695-695`; `MAIN:Plans/Forge_Integrations.md:125-148`;
+  `MAIN:Plans/Source_Control_System.md:165-180`; `MAIN:Plans/source_control_contracts.schema.json:385-400`;
+  `MAIN:Plans/WorktreeGitImprovement.md:4978-4978`.
+
+
+  **Supersession and boundaries:** Extends DL-411’s exact 35-name technical grant to exactly the 148 appendix
+  names reproduced here, under the same DL-045 limits. Per-name documented search, reuse first, new-definition
+  labels, reviews and completeness checks remain. Continuity alternatives and provenance require owner proof;
+  planning-budget exclusion remains conditional. No feature, lifetime/deletion rule, owner-conflict winner,
+  event admission, app writer or depth waiver is granted; DL-414’s per-row disposition requirement remains.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-045
+- DL-411
+- DL-414
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Extends DL-411’s exact 35-name technical grant to exactly the 148 appendix names reproduced here, under the
+  same DL-045 limits. Per-name documented search, reuse first, new-definition labels, reviews and completeness
+  checks remain. Continuity alternatives and provenance require owner proof; planning-budget exclusion remains
+  conditional. No feature, lifetime/deletion rule, owner-conflict winner, event admission, app writer or depth
+  waiver is granted; DL-414’s per-row disposition requirement remains.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-451 - Fourth recorded seal-check change may read the frozen recount
+
+```yaml
+plan_unit_id: DL-451
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **9.b**. **Question:** May the final approval check be changed to
+  count the separately frozen new list?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **9.b** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A (recommended):** Approve a fourth recorded change so the final approval check can read the separately
+  frozen recount and verified proof of its source files. Review the change before and after; keep a saved change
+  record (“receipt”) stating exactly what changed and which requirements remain. Preserve August’s list and
+  fingerprints as history. Keep every per-name decision, complete saved-record requirement and other approval
+  condition. This permits checking the new list; it grants no definition-writing permission, registers no event,
+  enables no app recording and awards no final approval.
+
+
+  **Sources:** `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:46-62`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:315-331`;
+  `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:413-428`; `evidence:reviews/CA-COUNT-sol/REVIEW.md:91-103`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-cycle2.md:108-112`; `ANS:Plans/Decision_Log.md:4640-4645`; `MAIN:Plans/Decision_Log.md:419-424`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:1-8`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:126-131`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-astra-2.md:1-12`.
+
+
+  **Supersession and boundaries:** Answers DL-410’s returned input-change question. DL-412 is the third recorded
+  seal-check change; this answer authorizes a fourth, solely to read the separately frozen recount and verified
+  proof of its sources. It extends the earlier change limit only for that recorded change, with its own receipt
+  and reviews before and after; DL-400’s review requirements remain. August’s list and fingerprints stay historical.
+  It grants no definition-writing permission, registration, app writer or final approval. The check change
+  itself is separate CA-SEAL2 work, not performed by this entry.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on:
+- DL-400
+- DL-410
+- DL-412
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Answers DL-410’s returned input-change question. DL-412 is the third recorded seal-check change; this answer
+  authorizes a fourth, solely to read the separately frozen recount and verified proof of its sources. It extends
+  the earlier change limit only for that recorded change, with its own receipt and reviews before and after;
+  DL-400’s review requirements remain. August’s list and fingerprints stay historical. It grants no definition-writing
+  permission, registration, app writer or final approval. The check change itself is separate CA-SEAL2 work,
+  not performed by this entry.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-452 - Sibling cancellation requests remain delivery only
+
+```yaml
+plan_unit_id: DL-452
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: '**Card item:** E-CARDS-2 **9.c**. **Question:** When one required subagent fails and Puppet
+  Master asks its cancellable siblings to stop, should each stop request be kept as its own history event,
+  `subagent.cancel_requested`, or should it remain a live cancellation signal with no new history family?
+
+
+  Jared’s verbatim answer:
+
+
+  > i approve all of it
+
+
+  SourceRef: T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream
+  E by pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.
+
+
+  Coordinator pm7-build’s relayed reading (not Jared’s words): item **9.c** selects **A**. The presented deck’s
+  fast-reply rule is: "`approve all` selects **A** on all 38 items."
+
+
+  **Exact approved option text from the presented cards:**
+
+
+  - **A — Delivery only.** Keep the specified cancellation delivery. Add no persisted `subagent.cancel_requested`
+  family. Preserve the existing group-failure and sibling-terminal contracts.
+
+
+  **Sources:** `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:46-62`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:315-331`;
+  `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:413-428`; `evidence:reviews/CA-COUNT-sol/REVIEW.md:91-103`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-cycle2.md:108-112`; `evidence:reviews/CA-COUNT-sol/REVIEW.md:39-53`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-cycle2.md:43-53`; `COUNT:reports/event-authority-20261104/census-recount-20261104/REPORT.md:294-303`;
+  `MAIN:Plans/orchestrator-subagent-integration.md:31693-31697`; `evidence:reviews/CA-COUNT-sol/REVIEW-astra.md:1-8`;
+  `evidence:reviews/CA-COUNT-sol/REVIEW-astra-2.md:1-12`.
+
+
+  **Supersession and boundaries:** Chooses delivery only for subagent.cancel_requested, which is outside the
+  148-name list and earlier grants. No persisted family is authorized. Existing sibling cancellation delivery,
+  group-failure and sibling-terminal contracts remain; the exclusion record is separate wave-3 work.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or authorized recording without visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings and presented card context are attributed separately from Jared’s verbatim answer.
+- Chooses delivery only for subagent.cancel_requested, which is outside the 148-name list and earlier grants.
+  No persisted family is authorized. Existing sibling cancellation delivery, group-failure and sibling-terminal
+  contracts remain; the exclusion record is separate wave-3 work.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards2_20261105
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z, relayed to stream E by
+  pm7-build (mail 1105043336-06d3). Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`,
+  SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. Source aliases below are pinned
+  by the presented deck’s Source revisions section.'
+preserved_exact_tokens:
+- i approve all of it
+- 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30
+negative_constraints:
+- Do not treat the coordinator reading or presented card context as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
 owner_hints:
 - Plans/Decision_Log.md
 ```
