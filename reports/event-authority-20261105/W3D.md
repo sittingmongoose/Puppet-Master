@@ -1,6 +1,6 @@
 # W3D — Back Seat Driver, phase 1 (2026-11-05)
 
-Branch: `plans/ea-w3-back-seat-driver-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Assessed code head: `recorded in the report-only follow-up`.
+Branch: `plans/ea-w3-back-seat-driver-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Assessed code head: `c9ee26fd9e73407506a9667a90568a7ac0963227`.
 
 **Outcome:** 15 prepared; 0 merged; 0 excluded; 0 stopped. These are definition drafts prepared without admission, with no runtime evidence. All 15 central event memberships remain ABSENT. Criterion 12 is PARTIAL for every row.
 

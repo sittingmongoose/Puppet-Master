@@ -225,5 +225,20 @@
     "seconds": 2.0,
     "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/git-diff-check.log",
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "phase1-commit",
+    "command": [
+      "git",
+      "commit",
+      "--quiet",
+      "-F",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/commit-message.txt"
+    ],
+    "exit_code": 0,
+    "available_gib_before": 12.89,
+    "seconds": 2.0,
+    "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/phase1-commit.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   }
 ]
