@@ -221,7 +221,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "048e5da55b7cc3fe1009461554f5433781a7ab03ecde1054f96d953b063b7c67",
+      "sha256": "5466826b89fbf926dc6617fdc15e90402df21ad440998f2c2329ca3ce506b4aa",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 69
@@ -4586,7 +4586,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24482,
+      "line_count": 24485,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 361,
       "plan_unit_ids": [
@@ -5311,7 +5311,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "078ea0299d9a8cbba000a9e5b550f2c95ca1f02c7d8a4525dc53c6427bdad8c5",
+      "sha256": "a0660a24f4ddf7eab642d0133b57475b095144ff4593d62f920b4f8619dcc221",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 360,
@@ -5759,10 +5759,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 99,
+        "False": 100,
         "True": 226
       },
-      "heading_count": 553,
+      "heading_count": 554,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5857,6 +5857,8 @@
         "Plans/human-in-the-loop.md",
         "Plans/jujutsu_integration_contract_fixtures.json",
         "Plans/jujutsu_integration_contracts.schema.json",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/events.jsonl",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl",
         "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/events.jsonl",
         "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/corrections.jsonl",
         "Plans/newtools.md",
@@ -5887,9 +5889,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 28587,
+      "line_count": 28646,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 325,
+      "plan_unit_count": 326,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -6215,7 +6217,8 @@
         "DL-330",
         "DL-331",
         "DL-332",
-        "DL-334"
+        "DL-334",
+        "DL-336"
       ],
       "reasoning_tiers": [
         "high",
@@ -6345,6 +6348,7 @@
         "rail_presentation_drift",
         "reduce_motion_drift",
         "reopen_revocation_policy_gap",
+        "repair_strategy_owner_drift",
         "repeated_node_reference_breaks_selection_anchoring",
         "retired_provider_route_revived",
         "retired_token_revived_or_ledger_unrecorded",
@@ -6397,15 +6401,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "3aeadcce054340ef7efe9b896a38bfd0a926741dc27f41bb1f650bb474ca4e20",
+      "sha256": "1f90a19f9e56e6ef7c23267c85707f2d69b4c079de107e69bd9e0add3906212d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 325
+        "accepted": 326
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 209,
+        "decision": 210,
         "decision_record": 24,
         "requirement": 91
       },
@@ -6444,6 +6448,7 @@
         "python3 -m unittest tests.test_pm_wiring_vocabulary",
         "python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
         "python3 scripts/pm-audit-closure.py self-test",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff",
         "python3 scripts/pm-browser-event-admission.py",
         "python3 scripts/pm-event-authority-currentness.py validate",
@@ -6994,7 +6999,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 9103,
+      "line_count": 9140,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 129,
       "plan_unit_ids": [
@@ -7166,7 +7171,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "25e1a7941289d3f647a8a0d558b6ffea5d143be8cea1d7595d75fdfeb108a31b",
+      "sha256": "9c0410e167ba897b0a47edc1b957d464d777bde6a57087844b2bb7387b2eec9a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 129
@@ -12689,7 +12694,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 32158,
+      "line_count": 32164,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 441,
       "plan_unit_ids": [
@@ -13580,7 +13585,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "a5ff69d2472c5d5935bc2f9da119c526ab5bbbf3d86eeff28e50426a28d98928",
+      "sha256": "975d158680edb20c2d1c08e1338ce73e63356d69d02d268a31b73be19b0c7e3d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 440,
@@ -21633,7 +21638,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T13:57:35Z",
+  "generated_at_utc": "2026-11-05T14:25:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21641,13 +21646,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3674,
+      "False": 3675,
       "True": 3813
     },
-    "plan_unit_count": 7487,
+    "plan_unit_count": 7488,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7269,
       "retired": 196,
       "superseded": 23
     },
@@ -21680,7 +21685,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 232,
+      "decision": 233,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

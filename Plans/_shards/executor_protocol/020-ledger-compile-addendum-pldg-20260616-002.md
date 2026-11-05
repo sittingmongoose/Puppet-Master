@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6086-L6146
+Source lines: L6086-L6154
 
-Source SHA256: `25e1a7941289d3f647a8a0d558b6ffea5d143be8cea1d7595d75fdfeb108a31b`
+Source SHA256: `9c0410e167ba897b0a47edc1b957d464d777bde6a57087844b2bb7387b2eec9a`
 
 ---
 
@@ -19,6 +19,7 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. High-end controller/planner decomposition may decompose objectives into a WorkGraph and bounded WorkNodes as runnable work requests, but concrete dispatch remains gated by Executor readiness and scheduler policy. WorkNode execution success is provisional until verification and receipt certification complete.
+  A failed VerificationCycle yields typed VerificationFinding records grouped in a DefectBundle; Executor schedules bounded RepairWorkNodes under its intake, readiness, write-authority, and retry policies, then verification reruns against the affected target plus regression scope after each repair. The loop continues until zero findings remain or a true blocker or authority boundary is reached; a failed verification cannot be reported as successful completion.
 gui_related: false
 gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacity, and provisional execution semantics are runtime behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, PNC-009, PS-115, W-071]
@@ -27,6 +28,7 @@ acceptance_criteria:
   - Goal Runtime does not dispatch concrete graph nodes directly.
   - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
   - RepairWorkNodes and WorkNode retries remain bounded by scheduler and write-surface policy.
+  - Failed VerificationCycles produce VerificationFindings in a DefectBundle, bounded RepairWorkNodes, and verification reruns against the affected target and regression scope until zero findings remain or a true blocker or authority boundary is reached.
   - Controller/planner decomposition can produce WorkGraph and bounded WorkNode runnable work requests without bypassing Executor readiness or scheduler authority.
   - WorkNode success alone does not certify parent GoalRun or final completion.
 validation_surfaces:
@@ -44,6 +46,7 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0020
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0041
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0042
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0043
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0048
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0049
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0054
@@ -52,6 +55,11 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0007
 preserved_exact_tokens:
+  - "VerificationFinding"
+  - "DefectBundle"
+  - "RepairWorkNode"
+  - "zero findings remain"
+  - "true blocker"
   - "readiness"
   - "blocked state"
   - "retry/backoff"

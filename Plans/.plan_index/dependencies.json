@@ -6118,6 +6118,7 @@
     "ACD-422",
     "SP-218",
     "F3-563",
+    "DL-336",
     "GRS-030",
     "SP-231",
     "F2-202",
@@ -29592,6 +29593,36 @@
       "edge_type": "depends_on",
       "from": "DL-334",
       "to": "PLS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-336",
+      "to": "0PI-056"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-336",
+      "to": "CV-288"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-336",
+      "to": "EP-098"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-336",
+      "to": "EP-102"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-336",
+      "to": "EP-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-336",
+      "to": "OSI-428"
     },
     {
       "edge_type": "depends_on",
@@ -117789,7 +117820,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T13:57:35Z",
+  "generated_at_utc": "2026-11-05T14:25:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -143709,8 +143740,8 @@
       "source_location": {
         "heading": "CV-289 - Plans-To-Code Shared Contract Envelope",
         "heading_level": 3,
-        "heading_line": 18240,
-        "line": 18242,
+        "heading_line": 18243,
+        "line": 18245,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143726,8 +143757,8 @@
       "source_location": {
         "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
         "heading_level": 3,
-        "heading_line": 18336,
-        "line": 18338,
+        "heading_line": 18339,
+        "line": 18341,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143743,8 +143774,8 @@
       "source_location": {
         "heading": "CV-291 - Discovery Schema, Enums, Events, And Receipt Payloads",
         "heading_level": 3,
-        "heading_line": 18565,
-        "line": 18567,
+        "heading_line": 18568,
+        "line": 18570,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143811,8 +143842,8 @@
       "source_location": {
         "heading": "CV-295 - History Identity Projection And Action Envelope",
         "heading_level": 3,
-        "heading_line": 18723,
-        "line": 18725,
+        "heading_line": 18726,
+        "line": 18728,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143828,8 +143859,8 @@
       "source_location": {
         "heading": "CV-296 - Vision Bridge Result Envelope",
         "heading_level": 3,
-        "heading_line": 18875,
-        "line": 18877,
+        "heading_line": 18878,
+        "line": 18880,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143845,8 +143876,8 @@
       "source_location": {
         "heading": "CV-297 - Teacher Guided Help Activity Envelope",
         "heading_level": 3,
-        "heading_line": 19033,
-        "line": 19035,
+        "heading_line": 19036,
+        "line": 19038,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143862,8 +143893,8 @@
       "source_location": {
         "heading": "CV-298 - Notification Delivery Envelope Destination Receipt And Predicate Contract",
         "heading_level": 3,
-        "heading_line": 19239,
-        "line": 19241,
+        "heading_line": 19242,
+        "line": 19244,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143879,8 +143910,8 @@
       "source_location": {
         "heading": "CV-299 - DRY Provenance And Effective State Contract",
         "heading_level": 3,
-        "heading_line": 19342,
-        "line": 19344,
+        "heading_line": 19345,
+        "line": 19347,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143896,8 +143927,8 @@
       "source_location": {
         "heading": "CV-300 - Inline Visualizer Bridge Registry And Native Host Boundary",
         "heading_level": 3,
-        "heading_line": 19409,
-        "line": 19411,
+        "heading_line": 19412,
+        "line": 19414,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143913,8 +143944,8 @@
       "source_location": {
         "heading": "CV-301 - Free Models Trusted Import Material And Adapter Receipt Contract",
         "heading_level": 3,
-        "heading_line": 19482,
-        "line": 19484,
+        "heading_line": 19485,
+        "line": 19487,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143930,8 +143961,8 @@
       "source_location": {
         "heading": "CV-302 - Free Models Wrapper Identity And Route Eligibility Contract",
         "heading_level": 3,
-        "heading_line": 19539,
-        "line": 19541,
+        "heading_line": 19542,
+        "line": 19544,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143947,8 +143978,8 @@
       "source_location": {
         "heading": "CV-303 - Host Capability Identity Receipt And Blocker Envelope",
         "heading_level": 3,
-        "heading_line": 19598,
-        "line": 19600,
+        "heading_line": 19601,
+        "line": 19603,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143964,8 +143995,8 @@
       "source_location": {
         "heading": "CV-304 - HostCapabilityCommand And HostOperationRequest Envelope",
         "heading_level": 3,
-        "heading_line": 19689,
-        "line": 19691,
+        "heading_line": 19692,
+        "line": 19694,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143981,8 +144012,8 @@
       "source_location": {
         "heading": "CV-305 - Onboarding Setup State And Health Summary Contract",
         "heading_level": 3,
-        "heading_line": 19784,
-        "line": 19786,
+        "heading_line": 19787,
+        "line": 19789,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -143998,8 +144029,8 @@
       "source_location": {
         "heading": "CV-306 - P0-WEBSOCKET-SECURITY-BOUNDARIES",
         "heading_level": 3,
-        "heading_line": 19869,
-        "line": 19871,
+        "heading_line": 19872,
+        "line": 19874,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144015,8 +144046,8 @@
       "source_location": {
         "heading": "CV-307 - P0-RUNTIME-SURFACE-READINESS-PROBE",
         "heading_level": 3,
-        "heading_line": 19944,
-        "line": 19946,
+        "heading_line": 19947,
+        "line": 19949,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144032,8 +144063,8 @@
       "source_location": {
         "heading": "CV-308 - prompt_admission_execution",
         "heading_level": 3,
-        "heading_line": 20016,
-        "line": 20018,
+        "heading_line": 20019,
+        "line": 20021,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144049,8 +144080,8 @@
       "source_location": {
         "heading": "CV-309 - EventRecord Canonical Envelope",
         "heading_level": 3,
-        "heading_line": 20092,
-        "line": 20094,
+        "heading_line": 20095,
+        "line": 20097,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144066,8 +144097,8 @@
       "source_location": {
         "heading": "CV-310 - Active-Agent Coordination Event Family Contract",
         "heading_level": 3,
-        "heading_line": 20183,
-        "line": 20185,
+        "heading_line": 20186,
+        "line": 20188,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144083,8 +144114,8 @@
       "source_location": {
         "heading": "CV-311 - Provider Model Capability Snapshot Reference Envelope",
         "heading_level": 3,
-        "heading_line": 20245,
-        "line": 20247,
+        "heading_line": 20248,
+        "line": 20250,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144100,8 +144131,8 @@
       "source_location": {
         "heading": "CV-312 - FileSafe Fail Closed Security Event Payloads",
         "heading_level": 3,
-        "heading_line": 20305,
-        "line": 20307,
+        "heading_line": 20308,
+        "line": 20310,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144117,8 +144148,8 @@
       "source_location": {
         "heading": "CV-313 - FABLE Contract Runtime Core Schema Closure",
         "heading_level": 3,
-        "heading_line": 20365,
-        "line": 20367,
+        "heading_line": 20368,
+        "line": 20370,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144134,8 +144165,8 @@
       "source_location": {
         "heading": "CV-314 - FABLE Residual Contracts Feature Boundary",
         "heading_level": 3,
-        "heading_line": 20443,
-        "line": 20445,
+        "heading_line": 20446,
+        "line": 20448,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144151,8 +144182,8 @@
       "source_location": {
         "heading": "CV-315 - Governance Runtime Record Schemas And State Machines",
         "heading_level": 3,
-        "heading_line": 20601,
-        "line": 20603,
+        "heading_line": 20604,
+        "line": 20606,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144168,8 +144199,8 @@
       "source_location": {
         "heading": "CV-316 - GUI Usage Route Subject Payload Contract",
         "heading_level": 3,
-        "heading_line": 20660,
-        "line": 20662,
+        "heading_line": 20663,
+        "line": 20665,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144185,8 +144216,8 @@
       "source_location": {
         "heading": "CV-317 - Case L EventRecord Scope, Legacy Normalization, And Replay Contract",
         "heading_level": 3,
-        "heading_line": 20819,
-        "line": 20821,
+        "heading_line": 20822,
+        "line": 20824,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144202,8 +144233,8 @@
       "source_location": {
         "heading": "CV-318 - Case L Durable Append And Recovery Event Envelopes",
         "heading_level": 3,
-        "heading_line": 20877,
-        "line": 20879,
+        "heading_line": 20880,
+        "line": 20882,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144219,8 +144250,8 @@
       "source_location": {
         "heading": "CV-319 - Case L Retention And Quarantine Event Envelopes",
         "heading_level": 3,
-        "heading_line": 20922,
-        "line": 20924,
+        "heading_line": 20925,
+        "line": 20927,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144236,8 +144267,8 @@
       "source_location": {
         "heading": "CV-320 - Case L Restore Outcomes And Restore-Point Events",
         "heading_level": 3,
-        "heading_line": 20967,
-        "line": 20969,
+        "heading_line": 20970,
+        "line": 20972,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144253,8 +144284,8 @@
       "source_location": {
         "heading": "CV-321 - Case L Storage Compatibility And Migration Status Envelope",
         "heading_level": 3,
-        "heading_line": 21019,
-        "line": 21021,
+        "heading_line": 21022,
+        "line": 21024,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144270,8 +144301,8 @@
       "source_location": {
         "heading": "CV-322 - Case L Fallback Divergence Command Envelopes",
         "heading_level": 3,
-        "heading_line": 21076,
-        "line": 21078,
+        "heading_line": 21079,
+        "line": 21081,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144304,8 +144335,8 @@
       "source_location": {
         "heading": "CV-324 - Shared Runtime Closed Typed Envelope Catalog",
         "heading_level": 3,
-        "heading_line": 21176,
-        "line": 21178,
+        "heading_line": 21179,
+        "line": 21181,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144321,8 +144352,8 @@
       "source_location": {
         "heading": "CV-325 - Provider Permit And Durable Admission Receipt Identity",
         "heading_level": 3,
-        "heading_line": 21215,
-        "line": 21217,
+        "heading_line": 21218,
+        "line": 21220,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144338,8 +144369,8 @@
       "source_location": {
         "heading": "CV-326 - Touch Closure Registry And Static Production-Intent Boundary",
         "heading_level": 3,
-        "heading_line": 21259,
-        "line": 21261,
+        "heading_line": 21262,
+        "line": 21264,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144355,8 +144386,8 @@
       "source_location": {
         "heading": "CV-327 - Cross-Owner Route Scope, Immutable Selection, And Provenance Binding",
         "heading_level": 3,
-        "heading_line": 21319,
-        "line": 21321,
+        "heading_line": 21322,
+        "line": 21324,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144372,8 +144403,8 @@
       "source_location": {
         "heading": "CV-328 - Research Decision Questionnaire Profile And Disposition Envelope",
         "heading_level": 3,
-        "heading_line": 21528,
-        "line": 21530,
+        "heading_line": 21531,
+        "line": 21533,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144389,8 +144420,8 @@
       "source_location": {
         "heading": "CV-329 - Compaction Completion Envelope Consumer",
         "heading_level": 3,
-        "heading_line": 21611,
-        "line": 21613,
+        "heading_line": 21614,
+        "line": 21616,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144406,8 +144437,8 @@
       "source_location": {
         "heading": "CV-330 — Jujutsu Planned Action Envelope Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 21744,
-        "line": 21746,
+        "heading_line": 21747,
+        "line": 21749,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144423,8 +144454,8 @@
       "source_location": {
         "heading": "CV-331 — Qualified Publication And Recovery Envelope Boundaries",
         "heading_level": 3,
-        "heading_line": 21857,
-        "line": 21859,
+        "heading_line": 21860,
+        "line": 21862,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144440,8 +144471,8 @@
       "source_location": {
         "heading": "CV-332 - Browser Event Payload Identity Scope And Replay Admission",
         "heading_level": 3,
-        "heading_line": 21660,
-        "line": 21662,
+        "heading_line": 21663,
+        "line": 21665,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144457,8 +144488,8 @@
       "source_location": {
         "heading": "CV-333 - Central UI Command Response And Typed Owner Result Join",
         "heading_level": 3,
-        "heading_line": 21703,
-        "line": 21705,
+        "heading_line": 21706,
+        "line": 21708,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144474,8 +144505,8 @@
       "source_location": {
         "heading": "CV-334 - Exact historical child-status writer exclusion",
         "heading_level": 3,
-        "heading_line": 21941,
-        "line": 21943,
+        "heading_line": 21944,
+        "line": 21946,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144491,8 +144522,8 @@
       "source_location": {
         "heading": "CV-335 - Exact historical Goal degradation writer exclusion",
         "heading_level": 3,
-        "heading_line": 22013,
-        "line": 22015,
+        "heading_line": 22016,
+        "line": 22018,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144508,8 +144539,8 @@
       "source_location": {
         "heading": "CV-336 - Exact historical Goal scheduling contract",
         "heading_level": 3,
-        "heading_line": 22111,
-        "line": 22113,
+        "heading_line": 22114,
+        "line": 22116,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144525,8 +144556,8 @@
       "source_location": {
         "heading": "CV-339 - First AppendReceipt Shared Shapes And Interfaces",
         "heading_level": 3,
-        "heading_line": 22343,
-        "line": 22345,
+        "heading_line": 22346,
+        "line": 22348,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144542,8 +144573,8 @@
       "source_location": {
         "heading": "CV-340 - Original Standard Certification Schemas And Source Bytes",
         "heading_level": 3,
-        "heading_line": 22435,
-        "line": 22437,
+        "heading_line": 22438,
+        "line": 22440,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144559,8 +144590,8 @@
       "source_location": {
         "heading": "CV-341 - Goal start original command shapes",
         "heading_level": 2,
-        "heading_line": 22501,
-        "line": 22503,
+        "heading_line": 22504,
+        "line": 22506,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144576,8 +144607,8 @@
       "source_location": {
         "heading": "CV-342 - Original Goal Update Request Result And Event Contract",
         "heading_level": 3,
-        "heading_line": 22578,
-        "line": 22579,
+        "heading_line": 22581,
+        "line": 22582,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144593,8 +144624,8 @@
       "source_location": {
         "heading": "CV-343 - Exact historical goal.progressed writer exclusion",
         "heading_level": 3,
-        "heading_line": 22648,
-        "line": 22650,
+        "heading_line": 22651,
+        "line": 22653,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144610,8 +144641,8 @@
       "source_location": {
         "heading": "CV-344 - Exact historical goal.replanned writer exclusion",
         "heading_level": 3,
-        "heading_line": 22723,
-        "line": 22725,
+        "heading_line": 22726,
+        "line": 22728,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144627,8 +144658,8 @@
       "source_location": {
         "heading": "CV-345 - Exact historical goal.stopped writer exclusion",
         "heading_level": 3,
-        "heading_line": 22798,
-        "line": 22800,
+        "heading_line": 22801,
+        "line": 22803,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144644,8 +144675,8 @@
       "source_location": {
         "heading": "CV-346 - Exact historical goal.verification_decided writer exclusion",
         "heading_level": 3,
-        "heading_line": 22873,
-        "line": 22875,
+        "heading_line": 22876,
+        "line": 22878,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144661,8 +144692,8 @@
       "source_location": {
         "heading": "CV-347 - Current cancelled-v3 and exact cancellation resource graph",
         "heading_level": 3,
-        "heading_line": 22948,
-        "line": 22950,
+        "heading_line": 22951,
+        "line": 22953,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144678,8 +144709,8 @@
       "source_location": {
         "heading": "Preparation release and original effect admission",
         "heading_level": 4,
-        "heading_line": 23062,
-        "line": 23080,
+        "heading_line": 23065,
+        "line": 23083,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144695,8 +144726,8 @@
       "source_location": {
         "heading": "Primitive, codec and original publication semantics",
         "heading_level": 4,
-        "heading_line": 23195,
-        "line": 23207,
+        "heading_line": 23198,
+        "line": 23210,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144712,8 +144743,8 @@
       "source_location": {
         "heading": "CV-350 — Whole versioned successful source composition and authority boundaries (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 23268,
-        "line": 23270,
+        "heading_line": 23271,
+        "line": 23273,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144729,8 +144760,8 @@
       "source_location": {
         "heading": "CV-351 — Whole certified producer schema transport and isolated source realms (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 23365,
-        "line": 23367,
+        "heading_line": 23368,
+        "line": 23370,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144746,8 +144777,8 @@
       "source_location": {
         "heading": "CV-352 — Exact whole identity/coordinator/consumer schema roots, method tuple closure and isolated literal resource banks (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 23424,
-        "line": 23426,
+        "heading_line": 23427,
+        "line": 23429,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144780,8 +144811,8 @@
       "source_location": {
         "heading": "CV-355 - Approval Requested Carries Its Tool Use Id",
         "heading_level": 3,
-        "heading_line": 23506,
-        "line": 23508,
+        "heading_line": 23509,
+        "line": 23511,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144797,8 +144828,8 @@
       "source_location": {
         "heading": "CV-360 - Placement Fields On Every Open Route",
         "heading_level": 3,
-        "heading_line": 23612,
-        "line": 23614,
+        "heading_line": 23615,
+        "line": 23617,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144814,8 +144845,8 @@
       "source_location": {
         "heading": "CV-361 - The workspace.layout_changed 2.0.0 Payload",
         "heading_level": 3,
-        "heading_line": 23703,
-        "line": 23705,
+        "heading_line": 23706,
+        "line": 23708,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144831,8 +144862,8 @@
       "source_location": {
         "heading": "CV-362 - The Terminal's Attribution, Write Grant And Refusal Fields",
         "heading_level": 3,
-        "heading_line": 23804,
-        "line": 23806,
+        "heading_line": 23807,
+        "line": 23809,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144848,8 +144879,8 @@
       "source_location": {
         "heading": "CV-363 - Wonderer And Grilling Companion Shape Registry",
         "heading_level": 3,
-        "heading_line": 23904,
-        "line": 23906,
+        "heading_line": 23907,
+        "line": 23909,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144865,8 +144896,8 @@
       "source_location": {
         "heading": "CV-364 - Chat Room Pause Field And Reconfiguration Shape",
         "heading_level": 3,
-        "heading_line": 23968,
-        "line": 23970,
+        "heading_line": 23971,
+        "line": 23973,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144882,8 +144913,8 @@
       "source_location": {
         "heading": "CV-365 - Application Scope Routes And Existing Thread Facades",
         "heading_level": 3,
-        "heading_line": 24023,
-        "line": 24025,
+        "heading_line": 24026,
+        "line": 24028,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144899,8 +144930,8 @@
       "source_location": {
         "heading": "CV-366 - App Versions Semantic Hashes And Whole Source Graphs",
         "heading_level": 3,
-        "heading_line": 24100,
-        "line": 24102,
+        "heading_line": 24103,
+        "line": 24105,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144916,8 +144947,8 @@
       "source_location": {
         "heading": "CV-367 - Immutable Conversion Manifest And Destination Admission",
         "heading_level": 3,
-        "heading_line": 24295,
-        "line": 24297,
+        "heading_line": 24298,
+        "line": 24300,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -144933,8 +144964,8 @@
       "source_location": {
         "heading": "CV-368 - App Assistant Plan Scheduler And Operational Pause Editions",
         "heading_level": 3,
-        "heading_line": 24405,
-        "line": 24407,
+        "heading_line": 24408,
+        "line": 24410,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -153067,6 +153098,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "closure_grs027_lost_rules_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-336",
+      "reasoning_tier": "high",
+      "risk_class": "repair_strategy_owner_drift",
+      "source_location": {
+        "heading": "DL-336 - Settings Names Govern Verification Repair Strategies",
+        "heading_level": 3,
+        "heading_line": 28589,
+        "line": 28593,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "event_authority_batching_20261104",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
@@ -158618,8 +158666,8 @@
       "source_location": {
         "heading": "EP-099 - Executor Intake For WorkNode Requests",
         "heading_level": 3,
-        "heading_line": 6150,
-        "line": 6152,
+        "heading_line": 6158,
+        "line": 6160,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158635,8 +158683,8 @@
       "source_location": {
         "heading": "EP-100 - Source-Control And Model Preflight Execution Context",
         "heading_level": 3,
-        "heading_line": 6193,
-        "line": 6195,
+        "heading_line": 6201,
+        "line": 6203,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158652,8 +158700,8 @@
       "source_location": {
         "heading": "EP-101 - Automated Test Binding Intake",
         "heading_level": 3,
-        "heading_line": 6256,
-        "line": 6258,
+        "heading_line": 6264,
+        "line": 6266,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158669,8 +158717,8 @@
       "source_location": {
         "heading": "EP-102 - Failure Signatures, Loop Breakers, And Plan Changes",
         "heading_level": 3,
-        "heading_line": 6306,
-        "line": 6308,
+        "heading_line": 6314,
+        "line": 6316,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158686,8 +158734,8 @@
       "source_location": {
         "heading": "EP-103 - Plans-To-Code Execution Receipt Chain",
         "heading_level": 3,
-        "heading_line": 6363,
-        "line": 6365,
+        "heading_line": 6396,
+        "line": 6398,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158703,8 +158751,8 @@
       "source_location": {
         "heading": "EP-104 - Three-Stage Executor Intake And Required Graph Acceptance",
         "heading_level": 3,
-        "heading_line": 6431,
-        "line": 6433,
+        "heading_line": 6468,
+        "line": 6470,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158720,8 +158768,8 @@
       "source_location": {
         "heading": "EP-105 - Runtime WorkNodeRecord Identity, Receipts, And Activation Consumers",
         "heading_level": 3,
-        "heading_line": 6547,
-        "line": 6549,
+        "heading_line": 6584,
+        "line": 6586,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158737,8 +158785,8 @@
       "source_location": {
         "heading": "EP-106 - Executor Discovery Orientation And Verification Handoff",
         "heading_level": 3,
-        "heading_line": 6501,
-        "line": 6503,
+        "heading_line": 6538,
+        "line": 6540,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158754,8 +158802,8 @@
       "source_location": {
         "heading": "EP-107 - Free Models Dispatch Fallback Attempt Bounds And In-Flight Isolation",
         "heading_level": 3,
-        "heading_line": 6644,
-        "line": 6646,
+        "heading_line": 6681,
+        "line": 6683,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158771,8 +158819,8 @@
       "source_location": {
         "heading": "EP-108 - Free Models PM-Owned Runtime Adapter Activation Boundary",
         "heading_level": 3,
-        "heading_line": 6701,
-        "line": 6703,
+        "heading_line": 6738,
+        "line": 6740,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158788,8 +158836,8 @@
       "source_location": {
         "heading": "EP-109 - HostCapabilityCommand Executor Intake Boundary",
         "heading_level": 3,
-        "heading_line": 6762,
-        "line": 6764,
+        "heading_line": 6799,
+        "line": 6801,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158805,8 +158853,8 @@
       "source_location": {
         "heading": "EP-110 - P0-STREAM-HISTORY-COALESCER",
         "heading_level": 3,
-        "heading_line": 6857,
-        "line": 6859,
+        "heading_line": 6894,
+        "line": 6896,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158822,8 +158870,8 @@
       "source_location": {
         "heading": "EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY",
         "heading_level": 3,
-        "heading_line": 6929,
-        "line": 6931,
+        "heading_line": 6966,
+        "line": 6968,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158839,8 +158887,8 @@
       "source_location": {
         "heading": "EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
         "heading_level": 3,
-        "heading_line": 7002,
-        "line": 7004,
+        "heading_line": 7039,
+        "line": 7041,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158856,8 +158904,8 @@
       "source_location": {
         "heading": "EP-113 - P1-STREAM-HISTORY-COALESCER-REPLAY",
         "heading_level": 3,
-        "heading_line": 7071,
-        "line": 7073,
+        "heading_line": 7108,
+        "line": 7110,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158873,8 +158921,8 @@
       "source_location": {
         "heading": "EP-114 - FABLE Wake Coalescing And Transport Receipt Closure",
         "heading_level": 3,
-        "heading_line": 7156,
-        "line": 7158,
+        "heading_line": 7193,
+        "line": 7195,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158890,8 +158938,8 @@
       "source_location": {
         "heading": "Transition In-Flight Safety Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 7281,
-        "line": 7285,
+        "heading_line": 7318,
+        "line": 7322,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158907,8 +158955,8 @@
       "source_location": {
         "heading": "EP-116 - Run-start identity and recovery consumer",
         "heading_level": 3,
-        "heading_line": 7349,
-        "line": 7351,
+        "heading_line": 7386,
+        "line": 7388,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158924,8 +158972,8 @@
       "source_location": {
         "heading": "Complete later native dependencies remain separately admitted",
         "heading_level": 4,
-        "heading_line": 7491,
-        "line": 7514,
+        "heading_line": 7528,
+        "line": 7551,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158941,8 +158989,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 7637,
-        "line": 7643,
+        "heading_line": 7674,
+        "line": 7680,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158958,8 +159006,8 @@
       "source_location": {
         "heading": "Event registry, terminal caller and remaining proof boundary",
         "heading_level": 4,
-        "heading_line": 8317,
-        "line": 8327,
+        "heading_line": 8354,
+        "line": 8364,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158975,8 +159023,8 @@
       "source_location": {
         "heading": "EP-120 - Original started Event to native publication custody join",
         "heading_level": 3,
-        "heading_line": 8393,
-        "line": 8407,
+        "heading_line": 8430,
+        "line": 8444,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -158992,8 +159040,8 @@
       "source_location": {
         "heading": "EP-121 - Whole original positive D06 event and causal custody consumption",
         "heading_level": 3,
-        "heading_line": 8450,
-        "line": 8468,
+        "heading_line": 8487,
+        "line": 8505,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159009,8 +159057,8 @@
       "source_location": {
         "heading": "EP-122 — Original successful native lifecycle source and prebirth admission (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 8515,
-        "line": 8517,
+        "heading_line": 8552,
+        "line": 8554,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159026,8 +159074,8 @@
       "source_location": {
         "heading": "EP-123 — Original certified producer source hooks and fresh installation boundary (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8614,
-        "line": 8616,
+        "heading_line": 8651,
+        "line": 8653,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159043,8 +159091,8 @@
       "source_location": {
         "heading": "EP-124 — Fresh all_writers.v7 before-birth installation and exact producer prepare.v2; whole native participants, original source acquisition, Q1–Q4 and joint certification lifecycle (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8674,
-        "line": 8676,
+        "heading_line": 8711,
+        "line": 8713,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159060,8 +159108,8 @@
       "source_location": {
         "heading": "EP-128 - Assistant Turn Presentation Stream",
         "heading_level": 3,
-        "heading_line": 8752,
-        "line": 8754,
+        "heading_line": 8789,
+        "line": 8791,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159077,8 +159125,8 @@
       "source_location": {
         "heading": "EP-129 - Collaboration Helper Message In Progress",
         "heading_level": 3,
-        "heading_line": 8832,
-        "line": 8834,
+        "heading_line": 8869,
+        "line": 8871,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159094,8 +159142,8 @@
       "source_location": {
         "heading": "EP-130 - One Finished Message Per Helper Message In Progress",
         "heading_level": 3,
-        "heading_line": 8901,
-        "line": 8903,
+        "heading_line": 8938,
+        "line": 8940,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159111,8 +159159,8 @@
       "source_location": {
         "heading": "EP-131 - A Helper Message In Progress That Does Not Finish",
         "heading_level": 3,
-        "heading_line": 8964,
-        "line": 8966,
+        "heading_line": 9001,
+        "line": 9003,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -159128,8 +159176,8 @@
       "source_location": {
         "heading": "EP-132 - Application Dispatch And Historical Project Source Boundaries",
         "heading_level": 3,
-        "heading_line": 9036,
-        "line": 9038,
+        "heading_line": 9073,
+        "line": 9075,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -204059,8 +204107,8 @@
       "source_location": {
         "heading": "OSI-429 - Ambient Orchestrator Discovery For Agent Context",
         "heading_level": 3,
-        "heading_line": 31501,
-        "line": 31503,
+        "heading_line": 31507,
+        "line": 31509,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204076,8 +204124,8 @@
       "source_location": {
         "heading": "OSI-430 - Orchestrator DRY Consumer Retarget",
         "heading_level": 3,
-        "heading_line": 31553,
-        "line": 31555,
+        "heading_line": 31559,
+        "line": 31561,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204110,8 +204158,8 @@
       "source_location": {
         "heading": "OSI-432 - Coordination Canon Record Projection And Mirror Contract",
         "heading_level": 3,
-        "heading_line": 31614,
-        "line": 31616,
+        "heading_line": 31620,
+        "line": 31622,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204127,8 +204175,8 @@
       "source_location": {
         "heading": "OSI-433 - Durable Thread And Agent Lineage Consumer",
         "heading_level": 3,
-        "heading_line": 31774,
-        "line": 31776,
+        "heading_line": 31780,
+        "line": 31782,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204144,8 +204192,8 @@
       "source_location": {
         "heading": "OSI-434 - Sustainable Waves, Operational Awareness, And Truthful Work",
         "heading_level": 3,
-        "heading_line": 31820,
-        "line": 31822,
+        "heading_line": 31826,
+        "line": 31828,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204161,8 +204209,8 @@
       "source_location": {
         "heading": "OSI-435 - Agent Requested Thread Operations",
         "heading_level": 3,
-        "heading_line": 31854,
-        "line": 31856,
+        "heading_line": 31860,
+        "line": 31862,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204178,8 +204226,8 @@
       "source_location": {
         "heading": "Working Notebook Scopes Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 31893,
-        "line": 31897,
+        "heading_line": 31899,
+        "line": 31903,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204195,8 +204243,8 @@
       "source_location": {
         "heading": "Working Notebook Scopes Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 31893,
-        "line": 31929,
+        "heading_line": 31899,
+        "line": 31935,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204229,8 +204277,8 @@
       "source_location": {
         "heading": "OSI-439 - Application Thread Requests And Receiver Authority",
         "heading_level": 3,
-        "heading_line": 31959,
-        "line": 31961,
+        "heading_line": 31965,
+        "line": 31967,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204246,8 +204294,8 @@
       "source_location": {
         "heading": "OSI-440 - Application Crew Coordination And Root Identity",
         "heading_level": 3,
-        "heading_line": 32028,
-        "line": 32030,
+        "heading_line": 32034,
+        "line": 32036,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -204263,8 +204311,8 @@
       "source_location": {
         "heading": "OSI-441 - Project Build Grant Consumption And Child Ceiling",
         "heading_level": 3,
-        "heading_line": 32099,
-        "line": 32101,
+        "heading_line": 32105,
+        "line": 32107,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -245077,10 +245125,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18855,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22065,
+    "node_count": 7488,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
