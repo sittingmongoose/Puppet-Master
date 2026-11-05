@@ -1,0 +1,989 @@
+{
+  "status": "pass",
+  "fixture_only": true,
+  "native_execution": "NOT_RUN",
+  "existing_full_value_vector": "pass",
+  "families": {
+    "goal.child_status_changed": {
+      "cases": 4948,
+      "positives": 210,
+      "negatives": 4738
+    },
+    "goal.degraded": {
+      "cases": 5416,
+      "positives": 258,
+      "negatives": 5158
+    },
+    "goal.scheduled": {
+      "cases": 5290,
+      "positives": 312,
+      "negatives": 4978
+    },
+    "goal.progressed": {
+      "cases": 5278,
+      "positives": 216,
+      "negatives": 5062
+    },
+    "goal.replanned": {
+      "cases": 5086,
+      "positives": 222,
+      "negatives": 4864
+    },
+    "goal.stopped": {
+      "cases": 5272,
+      "positives": 210,
+      "negatives": 5062
+    },
+    "goal.verification_decided": {
+      "cases": 5188,
+      "positives": 192,
+      "negatives": 4996
+    },
+    "goal.evidence_captured": {
+      "cases": 5116,
+      "positives": 216,
+      "negatives": 4900
+    },
+    "goal.receipt_recorded": {
+      "cases": 5086,
+      "positives": 204,
+      "negatives": 4882
+    },
+    "goal.tool_check_recorded": {
+      "cases": 4990,
+      "positives": 210,
+      "negatives": 4780
+    }
+  },
+  "cases": 51670,
+  "positives": 2250,
+  "negatives": 49420,
+  "failures": [],
+  "sweep_items": [
+    "S1/formats",
+    "O12/S2/shared-number-and-retained-recipe",
+    "C3-F1/C3-F3/shared-guard-isolation-tool"
+  ],
+  "guard_negative_inventory": {
+    "admission/accepted_edition": {
+      "negative_count": 120,
+      "examples": [
+        "child_status/entry/presented_original/admission/owner_unit",
+        "child_status/entry/coherent_forged_writer",
+        "child_status/resolver/presented_original/admission/owner_unit"
+      ]
+    },
+    "admission/approved_checkpoint": {
+      "negative_count": 120,
+      "examples": [
+        "child_status/entry/presented_original/admission/registry_checkpoint",
+        "child_status/entry/coherent_forged_checkpoint",
+        "child_status/resolver/presented_original/admission/registry_checkpoint"
+      ]
+    },
+    "admission/checkpoint/event_type": {
+      "negative_count": 102,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "admission/checkpoint/owner_unit": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/checkpoints/owner_unit",
+        "child_status/resolver/admission/checkpoints/owner_unit",
+        "child_status/row_validator/admission/checkpoints/owner_unit"
+      ]
+    },
+    "admission/checkpoint/payload_schema_id": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/checkpoints/payload_schema_id",
+        "child_status/resolver/admission/checkpoints/payload_schema_id",
+        "child_status/row_validator/admission/checkpoints/payload_schema_id"
+      ]
+    },
+    "admission/checkpoint/registry_checkpoint": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/checkpoints/registry_checkpoint",
+        "child_status/resolver/admission/checkpoints/registry_checkpoint",
+        "child_status/row_validator/admission/checkpoints/registry_checkpoint"
+      ]
+    },
+    "admission/checkpoint/source_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/checkpoints/source_contract",
+        "child_status/resolver/admission/checkpoints/source_contract",
+        "child_status/row_validator/admission/checkpoints/source_contract"
+      ]
+    },
+    "admission/edition/event_type": {
+      "negative_count": 102,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "admission/edition/owner_unit": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/editions/owner_unit",
+        "child_status/resolver/admission/editions/owner_unit",
+        "child_status/row_validator/admission/editions/owner_unit"
+      ]
+    },
+    "admission/edition/payload_schema_id": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/editions/payload_schema_id",
+        "child_status/resolver/admission/editions/payload_schema_id",
+        "child_status/row_validator/admission/editions/payload_schema_id"
+      ]
+    },
+    "admission/edition/registry_checkpoint": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/editions/registry_checkpoint",
+        "child_status/resolver/admission/editions/registry_checkpoint",
+        "child_status/row_validator/admission/editions/registry_checkpoint"
+      ]
+    },
+    "admission/edition/source_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/admission/editions/source_contract",
+        "child_status/resolver/admission/editions/source_contract",
+        "child_status/row_validator/admission/editions/source_contract"
+      ]
+    },
+    "admission/recipe_selection": {
+      "negative_count": 120,
+      "examples": [
+        "child_status/entry/admission/editions/recipe_ref",
+        "child_status/entry/admission/checkpoints/recipe_ref",
+        "child_status/resolver/admission/editions/recipe_ref"
+      ]
+    },
+    "answer_builder/final_candidate": {
+      "negative_count": 1747,
+      "examples": [
+        "child_status/answer_builder/input/kind",
+        "child_status/answer_builder/last_helper/kind",
+        "child_status/answer_builder/last_helper/reader_binding"
+      ]
+    },
+    "answer_builder/final_owner_fence": {
+      "negative_count": 4257,
+      "examples": [
+        "child_status/answer_builder/owner_after_helper/key",
+        "child_status/answer_builder/owner_after_helper/protocol/source/event/schema_id",
+        "child_status/answer_builder/owner_after_helper/protocol/source/event/schema_version"
+      ]
+    },
+    "current_writer/prohibited": {
+      "negative_count": 40,
+      "examples": [
+        "child_status/current_writer/project/new",
+        "child_status/current_writer/project/equal_retry",
+        "child_status/current_writer/application/new"
+      ]
+    },
+    "disclosure/final_candidate": {
+      "negative_count": 1747,
+      "examples": [
+        "child_status/disclosure/input/kind",
+        "child_status/disclosure/last_helper/kind",
+        "child_status/disclosure/last_helper/reader_binding"
+      ]
+    },
+    "disclosure/final_owner_fence": {
+      "negative_count": 4257,
+      "examples": [
+        "child_status/disclosure/owner_after_helper/key",
+        "child_status/disclosure/owner_after_helper/protocol/source/event/schema_id",
+        "child_status/disclosure/owner_after_helper/protocol/source/event/schema_version"
+      ]
+    },
+    "entry/final_candidate": {
+      "negative_count": 1747,
+      "examples": [
+        "child_status/entry/input/kind",
+        "child_status/entry/last_helper/kind",
+        "child_status/entry/last_helper/reader_binding"
+      ]
+    },
+    "entry/final_owner_fence": {
+      "negative_count": 4257,
+      "examples": [
+        "child_status/entry/owner_after_helper/key",
+        "child_status/entry/owner_after_helper/protocol/source/event/schema_id",
+        "child_status/entry/owner_after_helper/protocol/source/event/schema_version"
+      ]
+    },
+    "evidence/content_hash": {
+      "negative_count": 6,
+      "examples": [
+        "evidence_captured/entry/original_provenance/bytes",
+        "evidence_captured/resolver/original_provenance/bytes",
+        "evidence_captured/row_validator/original_provenance/bytes"
+      ]
+    },
+    "evidence/original/currentness_state": {
+      "negative_count": 6,
+      "examples": [
+        "evidence_captured/entry/original_provenance/currentness_state",
+        "evidence_captured/resolver/original_provenance/currentness_state",
+        "evidence_captured/row_validator/original_provenance/currentness_state"
+      ]
+    },
+    "evidence/original/evidence_ref": {
+      "negative_count": 6,
+      "examples": [
+        "evidence_captured/entry/original_provenance/evidence_ref",
+        "evidence_captured/resolver/original_provenance/evidence_ref",
+        "evidence_captured/row_validator/original_provenance/evidence_ref"
+      ]
+    },
+    "evidence/original/redaction_profile": {
+      "negative_count": 6,
+      "examples": [
+        "evidence_captured/entry/original_provenance/redaction_profile",
+        "evidence_captured/resolver/original_provenance/redaction_profile",
+        "evidence_captured/row_validator/original_provenance/redaction_profile"
+      ]
+    },
+    "evidence/original/source_spans": {
+      "negative_count": 6,
+      "examples": [
+        "evidence_captured/entry/original_provenance/source_spans",
+        "evidence_captured/resolver/original_provenance/source_spans",
+        "evidence_captured/row_validator/original_provenance/source_spans"
+      ]
+    },
+    "evidence/source_line_bounds": {
+      "negative_count": 6,
+      "examples": [
+        "evidence_captured/entry/span_beyond_original_source",
+        "evidence_captured/resolver/span_beyond_original_source",
+        "evidence_captured/row_validator/span_beyond_original_source"
+      ]
+    },
+    "evidence_captured/provenance_members": {
+      "negative_count": 30,
+      "examples": [
+        "evidence_captured/entry/missing_provenance_member/bytes",
+        "evidence_captured/entry/missing_provenance_member/evidence_ref",
+        "evidence_captured/entry/missing_provenance_member/source_spans"
+      ]
+    },
+    "frame/crc32": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/frame/crc32",
+        "child_status/resolver/frame/crc32",
+        "child_status/row_validator/frame/crc32"
+      ]
+    },
+    "frame/durable_end": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/frame/durable_end_offset",
+        "child_status/resolver/frame/durable_end_offset",
+        "child_status/row_validator/frame/durable_end_offset"
+      ]
+    },
+    "frame/full_cursor": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/relocation_without_translation",
+        "child_status/resolver/relocation_without_translation",
+        "child_status/row_validator/relocation_without_translation"
+      ]
+    },
+    "frame/original_value": {
+      "negative_count": 102,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "frame/selected_cursor": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/frame/cursor",
+        "child_status/resolver/frame/cursor",
+        "child_status/row_validator/frame/cursor"
+      ]
+    },
+    "frame/within_watermark": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/frame/beyond_watermark",
+        "child_status/resolver/frame/beyond_watermark",
+        "child_status/row_validator/frame/beyond_watermark"
+      ]
+    },
+    "inspection/final_candidate": {
+      "negative_count": 1747,
+      "examples": [
+        "child_status/inspection/input/kind",
+        "child_status/inspection/last_helper/kind",
+        "child_status/inspection/last_helper/reader_binding"
+      ]
+    },
+    "inspection/final_owner_fence": {
+      "negative_count": 4257,
+      "examples": [
+        "child_status/inspection/owner_after_helper/key",
+        "child_status/inspection/owner_after_helper/protocol/source/event/schema_id",
+        "child_status/inspection/owner_after_helper/protocol/source/event/schema_version"
+      ]
+    },
+    "malformed_input/KeyError": {
+      "negative_count": 42,
+      "examples": [
+        "child_status/entry/missing_required_role/source_contract",
+        "child_status/resolver/missing_required_role/source_contract",
+        "child_status/row_validator/missing_required_role/source_contract"
+      ]
+    },
+    "original/owner/admission": {
+      "negative_count": 420,
+      "examples": [
+        "child_status/entry/presented_original/admission/writer_at_receipt",
+        "child_status/entry/presented_original/admission/event_type",
+        "child_status/entry/presented_original/admission/payload_schema_id"
+      ]
+    },
+    "original/owner/facts": {
+      "negative_count": 354,
+      "examples": [
+        "child_status/entry/presented_original/facts/state_before",
+        "child_status/entry/presented_original/facts/state_after",
+        "child_status/entry/presented_original/facts/child/goal_id"
+      ]
+    },
+    "original/owner/first_receipt": {
+      "negative_count": 540,
+      "examples": [
+        "child_status/entry/presented_original/first_receipt/event_id",
+        "child_status/entry/presented_original/first_receipt/event_type",
+        "child_status/entry/presented_original/first_receipt/payload_schema_id"
+      ]
+    },
+    "original/owner/members": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_original/foreign_member",
+        "child_status/resolver/presented_original/foreign_member",
+        "child_status/row_validator/presented_original/foreign_member"
+      ]
+    },
+    "original/owner/predecessor": {
+      "negative_count": 180,
+      "examples": [
+        "child_status/entry/presented_original/predecessor/goal_revision",
+        "child_status/entry/presented_original/predecessor/goal_id",
+        "child_status/entry/presented_original/predecessor/project_id"
+      ]
+    },
+    "original/owner/producer_digest": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_original/producer_digest",
+        "child_status/resolver/presented_original/producer_digest",
+        "child_status/row_validator/presented_original/producer_digest"
+      ]
+    },
+    "original/owner/references": {
+      "negative_count": 2268,
+      "examples": [
+        "child_status/entry/presented_original/resolved_records/source_contract/requested_ref",
+        "child_status/entry/presented_original/resolved_records/source_contract/resolved_ref",
+        "child_status/entry/presented_original/resolved_records/source_contract/owner_ref"
+      ]
+    },
+    "original/owner/runtime": {
+      "negative_count": 480,
+      "examples": [
+        "child_status/entry/presented_original/runtime/actor_ref",
+        "child_status/entry/presented_original/runtime/execution_role",
+        "child_status/entry/presented_original/runtime/requested_provider_ref"
+      ]
+    },
+    "progress/artifact_bytes/artifact:1": {
+      "negative_count": 6,
+      "examples": [
+        "progressed/entry/original_provenance/artifact:1",
+        "progressed/resolver/original_provenance/artifact:1",
+        "progressed/row_validator/original_provenance/artifact:1"
+      ]
+    },
+    "progress/artifact_set": {
+      "negative_count": 6,
+      "examples": [
+        "progressed/entry/missing_artifact_source",
+        "progressed/resolver/missing_artifact_source",
+        "progressed/row_validator/missing_artifact_source"
+      ]
+    },
+    "receipt/event_id": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/receipt/event_id",
+        "child_status/resolver/receipt/event_id",
+        "child_status/row_validator/receipt/event_id"
+      ]
+    },
+    "receipt/event_type": {
+      "negative_count": 102,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "receipt/first/event_id": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/receipt/first/event_id",
+        "child_status/resolver/receipt/first/event_id",
+        "child_status/row_validator/receipt/first/event_id"
+      ]
+    },
+    "receipt/first/sequence_id": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/receipt/first/sequence_id",
+        "child_status/resolver/receipt/first/sequence_id",
+        "child_status/row_validator/receipt/first/sequence_id"
+      ]
+    },
+    "receipt/full_value_commitment": {
+      "negative_count": 102,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "receipt/idempotency_key": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/receipt/idempotency_key",
+        "child_status/resolver/receipt/idempotency_key",
+        "child_status/row_validator/receipt/idempotency_key"
+      ]
+    },
+    "receipt/scope_partition": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/receipt/scope_partition",
+        "child_status/resolver/receipt/scope_partition",
+        "child_status/row_validator/receipt/scope_partition"
+      ]
+    },
+    "receipt/semantic_digest": {
+      "negative_count": 102,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "receipt/storage_instance_id": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/receipt/storage_instance_id",
+        "child_status/resolver/receipt/storage_instance_id",
+        "child_status/row_validator/receipt/storage_instance_id"
+      ]
+    },
+    "reference/access/fixture.original.accepted_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/reference/authorized",
+        "child_status/resolver/reference/authorized",
+        "child_status/row_validator/reference/authorized"
+      ]
+    },
+    "reference/blake3/fixture.original.accepted_contract": {
+      "negative_count": 120,
+      "examples": [
+        "child_status/entry/reference/blake3",
+        "child_status/entry/reference/bytes",
+        "child_status/resolver/reference/blake3"
+      ]
+    },
+    "reference/declared/foreign:source": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/reference/foreign",
+        "child_status/resolver/reference/foreign",
+        "child_status/row_validator/reference/foreign"
+      ]
+    },
+    "reference/media_type/fixture.original.accepted_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/reference/media_type",
+        "child_status/resolver/reference/media_type",
+        "child_status/row_validator/reference/media_type"
+      ]
+    },
+    "reference/owner/fixture.original.accepted_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/reference/owner_ref",
+        "child_status/resolver/reference/owner_ref",
+        "child_status/row_validator/reference/owner_ref"
+      ]
+    },
+    "reference/ref/fixture.original.accepted_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/reference/ref",
+        "child_status/resolver/reference/ref",
+        "child_status/row_validator/reference/ref"
+      ]
+    },
+    "reference/retained/fixture.original.accepted_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/reference/retained",
+        "child_status/resolver/reference/retained",
+        "child_status/row_validator/reference/retained"
+      ]
+    },
+    "reference/size/fixture.original.accepted_contract": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/reference/byte_size",
+        "child_status/resolver/reference/byte_size",
+        "child_status/row_validator/reference/byte_size"
+      ]
+    },
+    "references/complete_roles": {
+      "negative_count": 336,
+      "examples": [
+        "child_status/entry/missing_required_role/child_identity",
+        "child_status/entry/missing_required_role/legal_child_transition",
+        "child_status/entry/missing_required_role/parent_state_preserved"
+      ]
+    },
+    "request/binding": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/input/reader_binding",
+        "child_status/resolver/input/reader_binding",
+        "child_status/row_validator/input/reader_binding"
+      ]
+    },
+    "request/family_dispatch": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "request/selector": {
+      "negative_count": 234,
+      "examples": [
+        "child_status/entry/input/selector/project_id",
+        "child_status/entry/input/selector/event_id",
+        "child_status/entry/input/selector/sequence_id"
+      ]
+    },
+    "resolver/final_candidate": {
+      "negative_count": 1747,
+      "examples": [
+        "child_status/resolver/input/kind",
+        "child_status/resolver/last_helper/kind",
+        "child_status/resolver/last_helper/reader_binding"
+      ]
+    },
+    "resolver/final_owner_fence": {
+      "negative_count": 4257,
+      "examples": [
+        "child_status/resolver/owner_after_helper/key",
+        "child_status/resolver/owner_after_helper/protocol/source/event/schema_id",
+        "child_status/resolver/owner_after_helper/protocol/source/event/schema_version"
+      ]
+    },
+    "row/degraded_boolean/exception_required": {
+      "negative_count": 60,
+      "examples": [
+        "degraded/entry/original_type/typed_boolean_exception_required_wrong_zero",
+        "degraded/resolver/original_type/typed_boolean_exception_required_wrong_zero",
+        "degraded/row_validator/original_type/typed_boolean_exception_required_wrong_zero"
+      ]
+    },
+    "row/degraded_boolean/mutation_affected": {
+      "negative_count": 60,
+      "examples": [
+        "degraded/entry/original_type/typed_boolean_mutation_affected_wrong_zero",
+        "degraded/resolver/original_type/typed_boolean_mutation_affected_wrong_zero",
+        "degraded/row_validator/original_type/typed_boolean_mutation_affected_wrong_zero"
+      ]
+    },
+    "row/degraded_boolean/required_check_affected": {
+      "negative_count": 60,
+      "examples": [
+        "degraded/entry/original_type/typed_boolean_required_check_affected_wrong_zero",
+        "degraded/resolver/original_type/typed_boolean_required_check_affected_wrong_zero",
+        "degraded/row_validator/original_type/typed_boolean_required_check_affected_wrong_zero"
+      ]
+    },
+    "row/degraded_boolean/risk_accepted": {
+      "negative_count": 60,
+      "examples": [
+        "degraded/entry/original_type/typed_boolean_risk_accepted_wrong_zero",
+        "degraded/resolver/original_type/typed_boolean_risk_accepted_wrong_zero",
+        "degraded/row_validator/original_type/typed_boolean_risk_accepted_wrong_zero"
+      ]
+    },
+    "row_validator/final_candidate": {
+      "negative_count": 1747,
+      "examples": [
+        "child_status/row_validator/input/kind",
+        "child_status/row_validator/last_helper/kind",
+        "child_status/row_validator/last_helper/reader_binding"
+      ]
+    },
+    "row_validator/final_owner_fence": {
+      "negative_count": 4257,
+      "examples": [
+        "child_status/row_validator/owner_after_helper/key",
+        "child_status/row_validator/owner_after_helper/protocol/source/event/schema_id",
+        "child_status/row_validator/owner_after_helper/protocol/source/event/schema_version"
+      ]
+    },
+    "schema/19b6d9e01e8052c0/const": {
+      "negative_count": 6,
+      "examples": [
+        "stopped/entry/foreign_family_dispatch",
+        "stopped/resolver/foreign_family_dispatch",
+        "stopped/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/2d20fbaf8b6ad507/const": {
+      "negative_count": 6,
+      "examples": [
+        "replanned/entry/foreign_family_dispatch",
+        "replanned/resolver/foreign_family_dispatch",
+        "replanned/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/6a63d9fe4dc121d5/const": {
+      "negative_count": 6,
+      "examples": [
+        "evidence_captured/entry/foreign_family_dispatch",
+        "evidence_captured/resolver/foreign_family_dispatch",
+        "evidence_captured/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/8437078f285129d6/const": {
+      "negative_count": 6,
+      "examples": [
+        "scheduled/entry/foreign_family_dispatch",
+        "scheduled/resolver/foreign_family_dispatch",
+        "scheduled/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/91a315ba7844081d/const": {
+      "negative_count": 6,
+      "examples": [
+        "receipt_recorded/entry/foreign_family_dispatch",
+        "receipt_recorded/resolver/foreign_family_dispatch",
+        "receipt_recorded/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/b43cb5dcad32eab1/const": {
+      "negative_count": 6,
+      "examples": [
+        "degraded/entry/foreign_family_dispatch",
+        "degraded/resolver/foreign_family_dispatch",
+        "degraded/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/ba1962aff8607b09/const": {
+      "negative_count": 6,
+      "examples": [
+        "progressed/entry/foreign_family_dispatch",
+        "progressed/resolver/foreign_family_dispatch",
+        "progressed/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/c40b8cff5aaeadeb/const": {
+      "negative_count": 6,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/f669a6f32c57a842/const": {
+      "negative_count": 6,
+      "examples": [
+        "tool_check_recorded/entry/foreign_family_dispatch",
+        "tool_check_recorded/resolver/foreign_family_dispatch",
+        "tool_check_recorded/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "schema/f93b4276db4f9a52/const": {
+      "negative_count": 6,
+      "examples": [
+        "verification_decided/entry/foreign_family_dispatch",
+        "verification_decided/resolver/foreign_family_dispatch",
+        "verification_decided/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "source/full_original": {
+      "negative_count": 42,
+      "examples": [
+        "child_status/entry/foreign_family_dispatch",
+        "child_status/resolver/foreign_family_dispatch",
+        "child_status/row_validator/foreign_family_dispatch"
+      ]
+    },
+    "source/owner/authorized": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/authorized",
+        "child_status/resolver/presented_source/authorized",
+        "child_status/row_validator/presented_source/authorized"
+      ]
+    },
+    "source/owner/captured_fence": {
+      "negative_count": 240,
+      "examples": [
+        "child_status/entry/presented_source/captured_fence/root",
+        "child_status/entry/presented_source/captured_fence/maintenance_epoch",
+        "child_status/entry/presented_source/captured_fence/permission_revision"
+      ]
+    },
+    "source/owner/event": {
+      "negative_count": 3264,
+      "examples": [
+        "child_status/entry/presented_source/event/schema_id",
+        "child_status/entry/presented_source/event/schema_version",
+        "child_status/entry/presented_source/event/scope_kind"
+      ]
+    },
+    "source/owner/final_fence": {
+      "negative_count": 240,
+      "examples": [
+        "child_status/entry/presented_source/final_fence/root",
+        "child_status/entry/presented_source/final_fence/maintenance_epoch",
+        "child_status/entry/presented_source/final_fence/permission_revision"
+      ]
+    },
+    "source/owner/frame_verified": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/frame_verified",
+        "child_status/resolver/presented_source/frame_verified",
+        "child_status/row_validator/presented_source/frame_verified"
+      ]
+    },
+    "source/owner/index_key": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/index_key",
+        "child_status/resolver/presented_source/index_key",
+        "child_status/row_validator/presented_source/index_key"
+      ]
+    },
+    "source/owner/members": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/foreign_member",
+        "child_status/resolver/presented_source/foreign_member",
+        "child_status/row_validator/presented_source/foreign_member"
+      ]
+    },
+    "source/owner/reader_available": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/reader_available",
+        "child_status/resolver/presented_source/reader_available",
+        "child_status/row_validator/presented_source/reader_available"
+      ]
+    },
+    "source/owner/retained": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/retained",
+        "child_status/resolver/presented_source/retained",
+        "child_status/row_validator/presented_source/retained"
+      ]
+    },
+    "source/owner/secret_safe": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/secret_safe",
+        "child_status/resolver/presented_source/secret_safe",
+        "child_status/row_validator/presented_source/secret_safe"
+      ]
+    },
+    "source/owner/token": {
+      "negative_count": 1320,
+      "examples": [
+        "child_status/entry/presented_source/token/storage_instance_id",
+        "child_status/entry/presented_source/token/checkpoint_key",
+        "child_status/entry/presented_source/token/checkpoint_ref"
+      ]
+    },
+    "source/owner/translation_verified": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/presented_source/translation_verified",
+        "child_status/resolver/presented_source/translation_verified",
+        "child_status/row_validator/presented_source/translation_verified"
+      ]
+    },
+    "stopped/original/child_settlement_refs": {
+      "negative_count": 6,
+      "examples": [
+        "stopped/entry/original_provenance/child_settlement_refs",
+        "stopped/resolver/original_provenance/child_settlement_refs",
+        "stopped/row_validator/original_provenance/child_settlement_refs"
+      ]
+    },
+    "stopped/original/interruption_boundary": {
+      "negative_count": 6,
+      "examples": [
+        "stopped/entry/original_provenance/interruption_boundary",
+        "stopped/resolver/original_provenance/interruption_boundary",
+        "stopped/row_validator/original_provenance/interruption_boundary"
+      ]
+    },
+    "stopped/original/resumable": {
+      "negative_count": 6,
+      "examples": [
+        "stopped/entry/original_provenance/resumable",
+        "stopped/resolver/original_provenance/resumable",
+        "stopped/row_validator/original_provenance/resumable"
+      ]
+    },
+    "stopped/original/safe_point_ref": {
+      "negative_count": 6,
+      "examples": [
+        "stopped/entry/original_provenance/safe_point_ref",
+        "stopped/resolver/original_provenance/safe_point_ref",
+        "stopped/row_validator/original_provenance/safe_point_ref"
+      ]
+    },
+    "stopped/original/tool_settlement_refs": {
+      "negative_count": 6,
+      "examples": [
+        "stopped/entry/original_provenance/tool_settlement_refs/0",
+        "stopped/resolver/original_provenance/tool_settlement_refs/0",
+        "stopped/row_validator/original_provenance/tool_settlement_refs/0"
+      ]
+    },
+    "stopped/provenance_members": {
+      "negative_count": 30,
+      "examples": [
+        "stopped/entry/missing_provenance_member/interruption_boundary",
+        "stopped/entry/missing_provenance_member/resumable",
+        "stopped/entry/missing_provenance_member/safe_point_ref"
+      ]
+    },
+    "tool_check_recorded/original/check_kind": {
+      "negative_count": 6,
+      "examples": [
+        "tool_check_recorded/entry/original_provenance/check_kind",
+        "tool_check_recorded/resolver/original_provenance/check_kind",
+        "tool_check_recorded/row_validator/original_provenance/check_kind"
+      ]
+    },
+    "tool_check_recorded/original/check_result": {
+      "negative_count": 6,
+      "examples": [
+        "tool_check_recorded/entry/original_provenance/check_result",
+        "tool_check_recorded/resolver/original_provenance/check_result",
+        "tool_check_recorded/row_validator/original_provenance/check_result"
+      ]
+    },
+    "tool_check_recorded/original/policy_decision": {
+      "negative_count": 6,
+      "examples": [
+        "tool_check_recorded/entry/original_provenance/policy_decision",
+        "tool_check_recorded/resolver/original_provenance/policy_decision",
+        "tool_check_recorded/row_validator/original_provenance/policy_decision"
+      ]
+    },
+    "tool_check_recorded/original/tool_call_id": {
+      "negative_count": 6,
+      "examples": [
+        "tool_check_recorded/entry/original_provenance/tool_call_id",
+        "tool_check_recorded/resolver/original_provenance/tool_call_id",
+        "tool_check_recorded/row_validator/original_provenance/tool_call_id"
+      ]
+    },
+    "tool_check_recorded/original/tool_name": {
+      "negative_count": 6,
+      "examples": [
+        "tool_check_recorded/entry/original_provenance/tool_name",
+        "tool_check_recorded/resolver/original_provenance/tool_name",
+        "tool_check_recorded/row_validator/original_provenance/tool_name"
+      ]
+    },
+    "tool_check_recorded/provenance_members": {
+      "negative_count": 30,
+      "examples": [
+        "tool_check_recorded/entry/missing_provenance_member/tool_call_id",
+        "tool_check_recorded/entry/missing_provenance_member/tool_name",
+        "tool_check_recorded/entry/missing_provenance_member/check_kind"
+      ]
+    },
+    "translation/original_cursor": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/translation/original_cursor",
+        "child_status/resolver/translation/original_cursor",
+        "child_status/row_validator/translation/original_cursor"
+      ]
+    },
+    "translation/original_value": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/translation/original_value",
+        "child_status/resolver/translation/original_value",
+        "child_status/row_validator/translation/original_value"
+      ]
+    },
+    "translation/selected_cursor": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/translation/selected_cursor",
+        "child_status/resolver/translation/selected_cursor",
+        "child_status/row_validator/translation/selected_cursor"
+      ]
+    },
+    "translation/selected_value": {
+      "negative_count": 60,
+      "examples": [
+        "child_status/entry/translation/selected_value",
+        "child_status/resolver/translation/selected_value",
+        "child_status/row_validator/translation/selected_value"
+      ]
+    }
+  },
+  "full_case_and_guard_artifact": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-final.json.gz",
+    "sha256": "971554f570ac2a7b106cbb40b716f6c47c13e29ffee05d358f6fb69dfe36f73a"
+  },
+  "full_guard_negative_inventory": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-guard-negative-inventory.json",
+    "sha256": "b60072b7bf6df60a1fdb687a2b1139ae8b8e67455f145cfbdf246af815d0a31b"
+  }
+}

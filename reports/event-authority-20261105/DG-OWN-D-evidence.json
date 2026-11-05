@@ -1,0 +1,518 @@
+{
+  "schema_id": "pm.assurance.event_authority.dg_own_d_evidence.v1",
+  "base": "cfb7e550746c08a989bb41583286d72acc47e68d",
+  "implementation_head": "bea730cca994dedd8811f0a8d030d68971fa95b3",
+  "claim": "Static TEST_ONLY source-model evidence; no native/admission claim. Index and emit-only baseline failures are retained.",
+  "checks": {
+    "history": {
+      "command": [
+        "python3",
+        "scripts/pm_goal_history_reader_fixtures.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/history-guard-table.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2077.08,
+      "available_GB": 10
+    },
+    "own-d-final": {
+      "command": [
+        "python3",
+        "scripts/pm_goal_own_d_oracles.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-final.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 256.68,
+      "available_GB": 11
+    },
+    "positive-smoke": {
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/positive-smoke.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 10.01,
+      "available_GB": 8
+    },
+    "current-writers": {
+      "command": [
+        "python3",
+        "scripts/pm_goal_current_writer_oracles.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/current-writers-guard-table.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 30.03,
+      "available_GB": 11
+    },
+    "stop-block": {
+      "command": [
+        "python3",
+        "scripts/pm_goal_run_stop_block_oracles.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/stop-block-guard-table.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 20.09,
+      "available_GB": 10
+    },
+    "lifecycle": {
+      "command": [
+        "python3",
+        "scripts/pm_goal_lifecycle_successor_oracles.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lifecycle-guard-table.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 10.02,
+      "available_GB": 10
+    },
+    "copy-currentness": {
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/copy-currentness.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.01,
+      "available_GB": 7
+    },
+    "shard-generate-final": {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.01,
+      "available_GB": 7
+    },
+    "index-generate-final": {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 50.04,
+      "available_GB": 8
+    },
+    "shard-check-final": {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 25.03,
+      "available_GB": 8
+    },
+    "index-validate": {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 55.05,
+      "available_GB": 6
+    },
+    "emit-only": {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_emit_only_event_boundaries.py"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 65.12,
+      "available_GB": 8
+    },
+    "attribution": {
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/attribute-checks.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.02,
+      "available_GB": 10
+    },
+    "lineage": {
+      "command": [
+        "python3",
+        "scripts/pm-goal-runtime-lineage.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.01,
+      "available_GB": 8
+    },
+    "python-compile": {
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "scripts/pm_goal_history_reader_fixtures.py",
+        "scripts/pm_goal_own_d_oracles.py",
+        "scripts/pm_goal_own_d_event_value_codec.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.01,
+      "available_GB": 9
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.01,
+      "available_GB": 7
+    },
+    "grade-citations": {
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/write-grade.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 20.02,
+      "available_GB": 9
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/history.out",
+      "sha256": "95f61edd4a7deabca69063326ea3cf4f7246b62adbe723524b34895349b469ce",
+      "bytes": 573
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/history.err",
+      "sha256": "6f0fb43f5ee79d5842b425c8993df213a45752e36a6ab849b33697998175d3b2",
+      "bytes": 1476
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/history.result.json",
+      "sha256": "651a83a545f23f490b7ccc0bf1f23d4857e9f39c4bfebab5eb9653f44021fb96",
+      "bytes": 285
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-final.out",
+      "sha256": "dff52701b2a4cb04a5c5787d794605b4ad65b15784299c3cc928360ba9e253a9",
+      "bytes": 1400
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-final.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-final.result.json",
+      "sha256": "79dd0107ca76b334c2125d411264d5716ce327d2d8b35a42b33eb5af3b149ebe",
+      "bytes": 261
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/positive-smoke.out",
+      "sha256": "41c38bd097ae6449fec2aa28f0a434be2a42814647447dc12190b9a6171f87a3",
+      "bytes": 57
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/positive-smoke.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/positive-smoke.result.json",
+      "sha256": "8b284fd8223cc79c5d130b189f7244ff9224e7501e2d9bcad16f4cd0cbcada60",
+      "bytes": 204
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/current-writers.out",
+      "sha256": "b98b0d24fbfe8f258120a9a80277ea30119e75be815b0d1061d681a99c94f5e9",
+      "bytes": 1034
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/current-writers.err",
+      "sha256": "6395db802ae8a092cb0834543f98c2664910265a4fc22f6aa33129223974f588",
+      "bytes": 397
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/current-writers.result.json",
+      "sha256": "707a6a200f7740c4a24eef0f0ce5353290587291f340dc68ed8270097721786a",
+      "bytes": 290
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/stop-block.out",
+      "sha256": "93b034b2b4b12e7fb158553f72898e1d4eef2e24523451d078d2f0c9f5fff49e",
+      "bytes": 587
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/stop-block.err",
+      "sha256": "f4d8f4f4dd383711bd2c76c821459f7d045d4601eb8a00622f81c04f9f3ec54d",
+      "bytes": 292
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/stop-block.result.json",
+      "sha256": "d3e38b367a0ec62037d9aebfabe4ac61df8c7909d2e72d1fc46324216b780364",
+      "bytes": 285
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lifecycle.out",
+      "sha256": "cdd9be3fc76a20db819c091f7afeb94e7a05614e2a04972ee02e3ad9b301fc41",
+      "bytes": 529
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lifecycle.err",
+      "sha256": "0fba5774d72579df8aee28cfb2a326f8cb0c586e16b61542ea94f908fe410111",
+      "bytes": 377
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lifecycle.result.json",
+      "sha256": "4fbf4adfffaf54a0db1464381022f6603aac0b672bbc3fb521e4af3c299b3ced",
+      "bytes": 289
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/copy-currentness.out",
+      "sha256": "57c94e5844ccb64505de0f1250fc8be10fa2ce53b795a7742344ab8a11ec65d1",
+      "bytes": 17
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/copy-currentness.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/copy-currentness.result.json",
+      "sha256": "21d65162ec586d8466e16bdc85827ba9165295b488ef4c00f8acb4053feb8da1",
+      "bytes": 205
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/shard-generate-final.out",
+      "sha256": "a1b755aca068e1e693855581334ce7338b5041bb754d01fe26eff219ab44dfcb",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/shard-generate-final.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/shard-generate-final.result.json",
+      "sha256": "2caa09384971aa7467138ac8b50a4cbdb9053fcbca97b06d94b703a0e0461251",
+      "bytes": 204
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/index-generate-final.out",
+      "sha256": "06752aebb885c69efd549a20d00b21ed98b604d44d37608e02af094d9b81b922",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/index-generate-final.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/index-generate-final.result.json",
+      "sha256": "23bdac72db40c230cd5094a3a49de7d01539754104c71a3107fb38e4e2b278d1",
+      "bytes": 152
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/shard-check-final.out",
+      "sha256": "f7098585425a7a5ae8983e2f82cbb1454b2e1797a0a0c3bb6fbbcc0ddbd99c4f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/shard-check-final.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/shard-check-final.result.json",
+      "sha256": "21bc5e7aa5f5481fb9bd46eb3f1ed62788ef0c3dbb5facfd184b981b68a91b44",
+      "bytes": 202
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/index-validate.out",
+      "sha256": "3a8fc07555b2d749f34611117a8ebe154ecf775d558ba8266aed7335ea06c318",
+      "bytes": 5364
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/index-validate.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/index-validate.result.json",
+      "sha256": "c82be9b288573b5e588157e226299168eaf0fb5d4886a8d0b172bb41984dd7e1",
+      "bytes": 152
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/emit-only.out",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/emit-only.err",
+      "sha256": "803d832106ab11626adf4f0c3c5572f0abc47e17a8494922db4250ba2f245686",
+      "bytes": 1065
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/emit-only.result.json",
+      "sha256": "bd07aa00df981fde2d9d6f09b3ce996928c9c840528315dbd67ffd005ee1e5d3",
+      "bytes": 224
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/attribution.out",
+      "sha256": "035995df834c1d46458196b25ef810724227a4af58cbb308ac5ce2a9d709877c",
+      "bytes": 785
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/attribution.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/attribution.result.json",
+      "sha256": "25a42fe9890a7998f412b56d0e9aa7a1ca9cbbc13c614b8bb3f83feb013e47f2",
+      "bytes": 206
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lineage.out",
+      "sha256": "00c588e5bcd1c3ac0fa42cca5fb71270b5884209be6391c21c53ffdb63d9e918",
+      "bytes": 381
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lineage.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lineage.result.json",
+      "sha256": "20345576d1af82148f80e26d6dd192d297fb7e4aa7812ab93aeb195f1ba731a4",
+      "bytes": 164
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/python-compile.out",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/python-compile.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/python-compile.result.json",
+      "sha256": "a82df5462d831e8ab28d0d534b1a3e49b1763f8d5a9f2b5ed791bed957a241bd",
+      "bytes": 271
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/diff-check.out",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/diff-check.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/diff-check.result.json",
+      "sha256": "c84b7ff264312c8821dab1d58a247f81f04e0ccccb796997b53cd12fd193bef6",
+      "bytes": 126
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/grade-citations.out",
+      "sha256": "86022b87ec0f9d3a105f6cc9388657201bb2062fceb1e98ddc4e174a4d90bfcd",
+      "bytes": 164
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/grade-citations.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/grade-citations.result.json",
+      "sha256": "f4b37870dacd7e49a3d284b5906d51e2fd2ec2bf2f7364ce722895f4b075abff",
+      "bytes": 201
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/id-audit.json",
+      "sha256": "825431b26f2c4232eac4c9ca46c9ddbf18eb1f5b139d475054df733b998cf084",
+      "bytes": 57759
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/per-family-search.json",
+      "sha256": "380d0e02e9c9e6ad3cdff182e820622a52d2c84d832090c8972a12b9a5f4118c",
+      "bytes": 467066
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/source-search-summary.json",
+      "sha256": "511a6829433a1ed44f53a03eb9f191b84e94c85c2d0edd8ba8f1d77c1538b483",
+      "bytes": 534
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/currentness-sha256.json",
+      "sha256": "5c99f673f4396a206bc852dafe6ba4c976ec1cb26b3a3ce75cdad69d6e4db75a",
+      "bytes": 3539
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/currentness-inputs.tar.gz",
+      "sha256": "b6ae0785ab267cda51dbe1d805601050fb14e0be264fc4c7d16375f2093cb243",
+      "bytes": 1786394
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-guard-negative-inventory.json",
+      "sha256": "b60072b7bf6df60a1fdb687a2b1139ae8b8e67455f145cfbdf246af815d0a31b",
+      "bytes": 4265389
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/run-serial.py",
+      "sha256": "8101e5efa832a0cab6cc2333accb3cb07ec3d9dc8809bca40f40c1c337d42df2",
+      "bytes": 1735
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/attribute-checks.py",
+      "sha256": "b5a21c6fa0067c8e949a3660abe5422ddc0d44e2b18ffe83314c0c6e6df1d575",
+      "bytes": 1391
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/positive-smoke.py",
+      "sha256": "9fe5af509dfe8c51e8e38477f5f9be3f264db655d02c42052f09e21b138f5d86",
+      "bytes": 963
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/own-d-final.json.gz",
+      "sha256": "971554f570ac2a7b106cbb40b716f6c47c13e29ffee05d358f6fb69dfe36f73a",
+      "bytes": 593604
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/history-guard-table.json.gz",
+      "sha256": "1ff4c5734eb53e54859a46a9b8c070f3dd0b898aefa97e2fa905e2427ceffd4c",
+      "bytes": 15996946
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/current-writers-guard-table.json.gz",
+      "sha256": "8b15e67b993820fd698c21ad6042edde84416bcf99a5ff8b1a70237b622728cb",
+      "bytes": 573197
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/stop-block-guard-table.json.gz",
+      "sha256": "6f76134c4f453953f811e76ee885ff3618e18179c390b2ad05d581961a4330d6",
+      "bytes": 33464
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-D/lifecycle-guard-table.json.gz",
+      "sha256": "2f39d4ce14db285b6a0c6c0ac1e67c8b4e49778c48922d684600ccf534008162",
+      "bytes": 39106
+    }
+  ]
+}
