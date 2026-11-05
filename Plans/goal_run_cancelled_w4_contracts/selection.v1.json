@@ -1,0 +1,332 @@
+{
+  "schema_id": "pm.goal_run_cancelled.w4_selection.v1",
+  "status": "NEWLY_AUTHORED_UNINSTALLED_SUCCESSOR",
+  "predecessor": {
+    "path": "Plans/goal_run_cancelled_consumer_schema_resources.json",
+    "sha256": "b616a2b1c219dceb152f1d67fee0b23a00afe8c98c0e821bff04a2592704869c"
+  },
+  "routing": {
+    "path": "Plans/goal_run_cancelled_w4_contracts/routing.v1.json",
+    "sha256": "27e66bef15130d95986a37ef97b8da214f76b6ccd03a1c9525e462a134d4fc4d"
+  },
+  "projection_selection": {
+    "path": "Plans/goal_run_projection_reference_contracts/cancelled.physical.json",
+    "sha256": "be83b9c196c154bbf5c274ded6ed39682ce2696def2f2f4ee1dc716974505358"
+  },
+  "projection_resources": {
+    "path": "Plans/goal_run_projection_reference_contracts/cancelled.resources.json",
+    "sha256": "9da4e4b9a056606c02aa60ebe826afa0aa85bc6fcc255589f07e33af11f95455"
+  },
+  "whole_resource_locations": {
+    "path": "Plans/goal_run_projection_reference_contracts/original-locations.json",
+    "sha256": "b83d749845578546662b666889ee8601f583307a529cc746fe72e6c14796ee12"
+  },
+  "methods": [
+    {
+      "method": "owner.goal_run.cancelled.read_retained_native.v1",
+      "complete_method": {
+        "method": "owner.goal_run.cancelled.read_retained_native.v1",
+        "request_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        "success_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_causal_arguments.v1.schema.json#/$defs/RetainedNativeCancellation"
+        },
+        "unavailable_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Unavailable"
+        },
+        "private_arguments": [
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "filesafe_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          }
+        ],
+        "effects": "none",
+        "protocol": "Plans/storage-plan.md#SP-312",
+        "independent_full_entry_and_final_predicate": true,
+        "caller_supplied_afterimages": false,
+        "authority": "new uninstalled passive consumer/projector; actual original native owner custody required"
+      },
+      "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+      "routing": "Plans/goal_run_cancelled_w4_contracts/routing.v1.json"
+    },
+    {
+      "method": "owner.goal_run.cancelled.inspect_original.v1",
+      "complete_method": {
+        "method": "owner.goal_run.cancelled.inspect_original.v1",
+        "request_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        "success_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/OriginalCancelled"
+        },
+        "unavailable_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Unavailable"
+        },
+        "private_arguments": [
+          {
+            "realm": "native_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/InspectCancelledPrivate"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "filesafe_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          }
+        ],
+        "effects": "none",
+        "protocol": "Plans/storage-plan.md#SP-312",
+        "independent_full_entry_and_final_predicate": true,
+        "caller_supplied_afterimages": false,
+        "authority": "new uninstalled passive consumer/projector; actual original native owner custody required"
+      },
+      "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+      "routing": "Plans/goal_run_cancelled_w4_contracts/routing.v1.json"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled.project_prefix.reference.v1",
+      "complete_method": {
+        "method": "owner.goal_run.started_cancelled.project_prefix.reference.v1",
+        "request_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        "success_schema": {
+          "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CombinedProjectorResult"
+        },
+        "unavailable_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Unavailable"
+        },
+        "private_arguments": [
+          {
+            "realm": "native_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CombinedProjectPrivate"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "filesafe_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          }
+        ],
+        "effects": "own complete projection and checkpoint only in one Storage transaction",
+        "protocol": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+        "independent_full_entry_and_final_predicate": true,
+        "caller_supplied_afterimages": false,
+        "authority": "new uninstalled passive consumer/projector; actual original native owner custody required",
+        "original_method": "owner.goal_run.started_cancelled.project_prefix.v1",
+        "representation_adapter": "Validate the entire new private/return root; decode wrappers into complete logical records and this edition's LogicalCheckpoint. Apply all original semantic/source predicates parameterized ONLY by the new derived key/table/checkpoint/profile selection. Never cast a new checkpoint to an old header, or adapt original native sources, producer custody, schema IDs or birth descriptors."
+      },
+      "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+      "routing": "Plans/goal_run_cancelled_w4_contracts/routing.v1.json"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled.read_historical.reference.v1",
+      "complete_method": {
+        "method": "owner.goal_run.started_cancelled.read_historical.reference.v1",
+        "request_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        "success_schema": {
+          "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CombinedHistoricalRead"
+        },
+        "unavailable_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Unavailable"
+        },
+        "private_arguments": [
+          {
+            "realm": "native_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CombinedProjectPrivate"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "filesafe_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          }
+        ],
+        "effects": "none",
+        "protocol": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+        "independent_full_entry_and_final_predicate": true,
+        "caller_supplied_afterimages": false,
+        "authority": "new uninstalled passive consumer/projector; actual original native owner custody required",
+        "original_method": "owner.goal_run.started_cancelled.read_historical.v1",
+        "representation_adapter": "Validate the entire new private/return root; decode wrappers into complete logical records and this edition's LogicalCheckpoint. Apply all original semantic/source predicates parameterized ONLY by the new derived key/table/checkpoint/profile selection. Never cast a new checkpoint to an old header, or adapt original native sources, producer custody, schema IDs or birth descriptors."
+      },
+      "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+      "routing": "Plans/goal_run_cancelled_w4_contracts/routing.v1.json"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled.read_current_started.reference.v1",
+      "complete_method": {
+        "method": "owner.goal_run.started_cancelled.read_current_started.reference.v1",
+        "request_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        "success_schema": {
+          "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CombinedCurrentRead"
+        },
+        "unavailable_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Unavailable"
+        },
+        "private_arguments": [
+          {
+            "realm": "native_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CurrentStartedPrivate"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/CurrentStartedGoal"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "filesafe_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          }
+        ],
+        "effects": "none",
+        "protocol": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+        "independent_full_entry_and_final_predicate": true,
+        "caller_supplied_afterimages": false,
+        "authority": "new uninstalled passive consumer/projector; actual original native owner custody required",
+        "original_method": "owner.goal_run.started_cancelled.read_current_started.v1",
+        "representation_adapter": "Validate the entire new private/return root; decode wrappers into complete logical records and this edition's LogicalCheckpoint. Apply all original semantic/source predicates parameterized ONLY by the new derived key/table/checkpoint/profile selection. Never cast a new checkpoint to an old header, or adapt original native sources, producer custody, schema IDs or birth descriptors."
+      },
+      "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+      "routing": "Plans/goal_run_cancelled_w4_contracts/routing.v1.json"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled.read_current_cancelled.reference.v1",
+      "complete_method": {
+        "method": "owner.goal_run.started_cancelled.read_current_cancelled.reference.v1",
+        "request_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        "success_schema": {
+          "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CombinedCurrentRead"
+        },
+        "unavailable_schema": {
+          "$ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Unavailable"
+        },
+        "private_arguments": [
+          {
+            "realm": "native_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/cancelled/1.0.0#/$defs/CurrentCancelledPrivate"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/CurrentCancelledGoal"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "goal_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          },
+          {
+            "realm": "filesafe_consumer",
+            "schema": {
+              "$ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+            },
+            "source": "actual original owner-private full values; independently admitted; serialized payload is not a capability"
+          }
+        ],
+        "effects": "none",
+        "protocol": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+        "independent_full_entry_and_final_predicate": true,
+        "caller_supplied_afterimages": false,
+        "authority": "new uninstalled passive consumer/projector; actual original native owner custody required",
+        "original_method": "owner.goal_run.started_cancelled.read_current_cancelled.v1",
+        "representation_adapter": "Validate the entire new private/return root; decode wrappers into complete logical records and this edition's LogicalCheckpoint. Apply all original semantic/source predicates parameterized ONLY by the new derived key/table/checkpoint/profile selection. Never cast a new checkpoint to an old header, or adapt original native sources, producer custody, schema IDs or birth descriptors."
+      },
+      "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+      "routing": "Plans/goal_run_cancelled_w4_contracts/routing.v1.json"
+    }
+  ],
+  "native_v7_dispatch": "Separate exact existing Plans/goal_run_certified_consumer_contracts/source-method-composition.json and its imports; never adapt native-v7 originals to this older source profile.",
+  "qualification": "Every selected realm and every reference in every whole resource must resolve eagerly. Whole-root schema qualification establishes no original issuance, native installation or complete W4 semantic corpus.",
+  "projection_protocol": {
+    "path": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+    "sha256": "80df93179da6cd1ddd83af460e0af051f2e3ca6f725a651846f54fcdc1a000aa"
+  },
+  "key_component_recipe": {
+    "owner": "Plans/storage-plan.md#SP-312",
+    "recipe": "unpadded base64url of exact UTF-8 identity bytes; no Unicode normalization",
+    "correction": "The part-2 cancelled.md description of the unchanged SP-312 component as lower-hex was incorrect. No stored historical key or original bytes are rewritten."
+  },
+  "method_maps": [
+    {
+      "path": "Plans/goal_run_cancelled_consumer_contracts/methods.json",
+      "sha256": "5a44e6eafffb116ee0210c2decf199734d7699dd2d8a15a5afd44bb571b7d6d2"
+    },
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/cancelled.methods.json",
+      "sha256": "33fc432eac3627c5810bcdff13496b3b84a774f54e242c4ad64e789b5e8a27a7"
+    }
+  ]
+}
