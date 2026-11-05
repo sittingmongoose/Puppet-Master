@@ -187,8 +187,12 @@
       this.btext = this.bubble.querySelector('.pst-bt');
       /* new words that change the bubble's size are placed before they are painted, past Retro's stepped draw: a stepped
          stage left a grown bubble over a prop for up to a tenth of a second */
+      /* (placed here, from Pip's last drawn pose, not only on the next drawn frame: a screen change holds the stage while
+         the new screen comes in, and its line was written then, so the bubble grew where the old line had stood and was
+         painted there, over the page leaving with the old screen, until the stage was let go: Basic Dark at 740x768,
+         Begin to Away, FO-34 R1) */
       if (this.bubbleMO) this.bubbleMO.disconnect();
-      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; this.kick(); } });
+      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } });
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
@@ -825,6 +829,18 @@
     }
     toScreen(p) { const m = this.map || { k: 1, ox: 0, oy: 0 }; return [m.ox + p[0] * m.k, m.oy + p[1] * m.k]; }
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
+    /* Pip's control bar (the two sticks and the screw eyes under them) as a box in the bubble's pixels, from the kit's own
+       geometry and the pose this frame draws it in (ctlXf: the transform render() writes), widened by gap (FO-59) */
+    barBox(gap) {
+      const ps = this.ps; if (!ps || this.famName === 'nier') return null;
+      const K = KIT().kit, g = K.GEO.full, st = K.sticks(g), r = g.w / 2, ring = (g.ring || 0) + (g.ringW || 0);
+      /* in the kit's units: the sticks' ends with their round caps, and the screw eyes hanging under them */
+      const q = st.s1.concat(st.s2).map(([x, y]) => [x - r, y - r, x + r, y + r]).concat((this.barPts || []).map(([x, y]) => [x - ring, y - ring, x + ring, y + ring]));
+      const x0 = Math.min(...q.map((b) => b[0])), y0 = Math.min(...q.map((b) => b[1])), x1 = Math.max(...q.map((b) => b[2])), y1 = Math.max(...q.map((b) => b[3]));
+      /* its four corners where this frame draws the bar (it rocks while Pip works) */
+      const sc = [[x0, y0], [x1, y0], [x0, y1], [x1, y1]].map((p) => this.toScreen(this.ctlXf(p, ps.C, ps.phi)));
+      return [Math.min(...sc.map((p) => p[0])) - gap, Math.min(...sc.map((p) => p[1])) - gap, Math.max(...sc.map((p) => p[0])) + gap, Math.max(...sc.map((p) => p[1])) + gap];
+    }
     propCentre(pr) { return pr.pos ? [pr.pos[0], pr.pos[1]] : this.slotXY(pr.spec); }
     /* ------------------------------------------------------------- loop */
     loop() {
@@ -1077,6 +1093,9 @@
       this.props.forEach((pr) => { if (pr.box && pr.op > .05) { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
+      /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
+         from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
+      const bar = this.barBox(gap); if (bar) obs.push(bar);
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
       const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
@@ -1099,7 +1118,7 @@
       if (!claimed) this.bubbleKeepOff = null;
       if (!at) {
         /* nowhere clear: off Pip's face at least, nearest its usual place; the props keep off it next frame */
-        const cand = [[x, y], [x, face[1] - bh], [x, face[3]], [face[0] - bw, y], [face[2], y], [X0, Y0], [X1, Y0]].map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]).filter(([cx, cy]) => !over(cx, cy, face));
+        const cand = [[x, y], [x, face[1] - bh], [x, face[3]], [face[0] - bw, y], [face[2], y], [X0, Y0], [X1, Y0]].map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]).filter(([cx, cy]) => !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
         at = cand.sort((p, q) => Math.hypot(p[0] - x, p[1] - y) - Math.hypot(q[0] - x, q[1] - y))[0] || [x, y];
         this.bubbleClaim = talking ? at.slice() : null;
       }

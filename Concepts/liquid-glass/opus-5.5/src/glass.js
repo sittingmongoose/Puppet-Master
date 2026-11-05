@@ -1745,7 +1745,10 @@
     var due = settleDue, list = []; settleDue = []; cvSeen = new Map();
     try {
       due.forEach(function (L) {
-        if (lenses.get(L.strip) !== L || !L.strip.isConnected || L.dragging || L.pending || !switchOn()) return;
+        /* (a strip parked since, such as a wizard screen leaving, stays out: its chip is put out at the park, and this
+           check, 480 ms after the chip's arrival, showed it again over the next screen until the following sync; a screen
+           changed just after a switch into Glass, whose chips all arrive anew: SW-24) */
+        if (lenses.get(L.strip) !== L || !L.strip.isConnected || stripParked(L.strip) || L.dragging || L.pending || !switchOn()) return;
         if (cvSkipped(L.strip)) cvSkip(L.strip); else list.push([L.cfg, L.strip]);
       });
       syncStrips(list);
@@ -2663,7 +2666,10 @@
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
       if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
       found.forEach(function (s) {
-        if (stripParked(s)) { var P = lenses.get(s); if (P && P.rect) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
+        /* (a shown chip is put out whatever its box says: a look change clears every lens's box for the next sync to place
+           it again, and a screen that left in that same sync kept its chip on screen at full opacity until the screen was
+           removed, 2-7 frames over the next one; T3's sandbox, Continue during the reveal of a switch into Glass: SW-24) */
+        if (stripParked(s)) { var P = lenses.get(s); if (P && (P.rect || P.lens.style.opacity !== '0')) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
         /* under a look's cover, a strip whose lens is not on screen yet waits for the lift; a shown lens follows now */
         if (covered && !(lenses.get(s) && lenses.get(s).rect) && !s.closest('#pm-o55-onboarding')) { deferStrip(s); return; }
         if (cvSkipped(s)) { cvSkip(s); return; }
@@ -2957,7 +2963,9 @@
     window.addEventListener('resize', viewportVars);
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
+    /* data-col-top: the onboarding window's column, held at a top and centred again on a window resize, moves its tab strips
+       with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25) */
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
        project's name, a long name, its badge, the density fold) the tabs move, and the chosen tab's chip is this lens. On
