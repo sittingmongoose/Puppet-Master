@@ -718,8 +718,8 @@
     if (a === 'sound') { O55.sound.toggle('tour'); renderBar(); return; }
     /* the look, after setup: saved through Settings at once (the tour follows the change) */
     if (a === 'lookMenu') { lookMenu(!st.lookOpen); return; }
-    if (a === 'lookFamily') { O55.lookMenu.save(arg, O55.theme().mode); return; }
-    if (a === 'lookMode') { O55.lookMenu.save(O55.theme().chosen, arg); return; }
+    if (a === 'lookFamily') { O55.lookMenu.save(arg); return; }
+    if (a === 'lookMode') { O55.lookMenu.save(null, arg); return; }
     /* NieR Mode in the look menu: the checkbox and Adjust NieR look (O55.lookMenu.nier, after setup: live) */
     if (a === 'lookNier' || a === 'lookNierAdjust') {
       if (!(O55.lookMenu && O55.lookMenu.nier)) return;
