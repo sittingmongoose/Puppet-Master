@@ -56,6 +56,7 @@ export default async function(t){
   app.on('Runtime.executionContextCreated',created);
   await app.send('Runtime.enable');await app.send('Page.enable');
   const {identifier}=await app.send('Page.addScriptToEvaluateOnNewDocument',{source:'('+boot.toString()+')('+JSON.stringify(look)+','+JSON.stringify(key)+')'});
+  if(t.args.profile){await app.send('Profiler.enable');await app.send('Profiler.start');}
   await top.send('Tracing.start',{categories:'devtools.timeline,v8.execute,blink.user_timing,disabled-by-default-devtools.timeline.stack',transferMode:'ReturnAsStream'});
   try{
    await app.send('Page.navigate',{url:target.href,frameId:frame.id});
@@ -90,6 +91,7 @@ export default async function(t){
    await t.check(key+': first trusted gesture opened the bell',after?.r?.events===1&&after.r.bell&&after.open,JSON.stringify(after));
    t.log('cold bell native sample '+JSON.stringify({key,before,after}));
   }finally{
+   if(t.args.profile){const {profile}=await app.send('Profiler.stop');if(t.args.evidence)writeFileSync(t.args.evidence+'/'+key+'-profile.json',JSON.stringify(profile));}
    const done=new Promise(resolve=>top.once('Tracing.tracingComplete',resolve));
    await top.send('Tracing.end');const {stream}=await done;
    let data='';for(;;){const x=await top.send('IO.read',{handle:stream});data+=x.data;if(x.eof)break;}
