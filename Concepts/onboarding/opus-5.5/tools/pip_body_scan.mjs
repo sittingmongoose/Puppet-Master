@@ -238,7 +238,7 @@ function judge() {
 	const lookErrors = Object.entries(refs).flatMap(([k, R]) => Object.entries(R.regions).filter(([, x]) => x.error && lookStat[k] && lookStat[k].visiblePageFrames).map(([p, x]) => `${k} ${p}: ${x.error}`));
 	const shownLooks = Object.keys(lookStat).filter((k) => lookStat[k].visiblePageFrames);
 	const uncal = shownLooks.filter((k) => !refs[k]);
-	const cannot = [...lookErrors, ...uncal.map((k) => `${k}: no calibration on film`), ...[...unevaluable.entries()].map(([k, v]) => `${v} frames: ${k}`)];
+	const cannot = [...(unknown ? [`${unknown} film frames name page frames the witness log does not have`] : []), ...lookErrors, ...uncal.map((k) => `${k}: no calibration on film`), ...[...unevaluable.entries()].map(([k, v]) => `${v} frames: ${k}`)];
 	const fails = [];
 	if (dips.length) fails.push(`${dips.length} runs of frames with Pip's paint missing`);
 	if (hiddenVisible.length) fails.push(`${hiddenVisible.length} runs of untagged frames hide visible page frames`);
@@ -262,17 +262,20 @@ function judge() {
 /* the witness log (helpers/pip-witness.mjs readWitness, repeated here so this tool stands alone) */
 function readLog(text) {
 	let header = null, end = null;
-	const recs = [];
+	const recs = [], strings = [];
 	for (const line of text.split('\n')) {
 		if (!line.trim()) continue;
 		const o = JSON.parse(line);
-		if (o.kind === 'header') header = o; else if (o.kind === 'recs') for (const r of o.recs) recs.push(r); else if (o.kind === 'end') end = o;
+		if (o.kind === 'header') header = o;
+		else if (o.kind === 'recs') { for (const r of o.recs) recs.push(r); if (o.strings) { if (o.stringsFrom !== strings.length) throw new Error(`strings out of order at ${o.stringsFrom}`); strings.push(...o.strings); } }
+		else if (o.kind === 'end') end = o;
 	}
 	if (!header) throw new Error('no header');
 	if (!end) throw new Error('no end record: the run stopped before the witness was read out');
+	if (end.lost) throw new Error(`the page was lost before its last records were read (${end.lost})`);
 	if (end.count !== recs.length) throw new Error(`${recs.length} records, the end says ${end.count}`);
 	const F = Object.fromEntries(header.fields.map((k, i) => [k, i]));
 	for (let i = 1; i < recs.length; i++) if (recs[i][F.seq] !== recs[i - 1][F.seq] + 1) throw new Error(`records skip from ${recs[i - 1][F.seq]} to ${recs[i][F.seq]}`);
 	if (!recs.length) throw new Error('no records');
-	return { header, recs, strings: end.strings || [], F };
+	return { header, recs, strings: strings.length ? strings : end.strings || [], F };
 }

@@ -28,7 +28,7 @@ export function installWitness(cfg) {
 	if (window.__pipSteady && window.__pipSteady.on) return window.__pipSteady.header;
 	const FIELDS = cfg.fields, NF = FIELDS.length, F = {}; FIELDS.forEach((k, i) => { F[k] = i; });
 	const B = cfg.block, NB = cfg.bits, N = 2 + 2 * NB, dpr = window.devicePixelRatio || 1;
-	const W = window.__pipSteady = { on: true, seq: 0, recs: [], strings: [], cals: [], calN: 0, label: 0, err: 0, errMsg: '' };
+	const W = window.__pipSteady = { on: true, seq: 0, recs: [], strings: [], cals: [], calN: 0, label: 0, err: 0, errMsg: '', prof: { classify: 0, geom: 0, chain: 0, leaves: 0, overlays: 0, n: 0 } };
 	const strIx = new Map();
 	const str = (s) => { s = String(s); let i = strIx.get(s); if (i === undefined) { i = W.strings.length; W.strings.push(s); strIx.set(s, i); } return i; };
 	str('');
@@ -64,18 +64,20 @@ export function installWitness(cfg) {
 	};
 	const finiteRunning = (a) => { try { if (a.playState !== 'running' && !a.pending) return false; return Number.isFinite(a.effect.getComputedTiming().endTime); } catch (_) { return false; } };
 	const nameOf = (a, n) => `${a.animationName || a.transitionProperty || a.id || 'animation'}@${(n.getAttribute('class') || n.id || n.tagName).split(' ')[0]}`;
-	const classify = (host, S) => {
+	const classify = (host, S, anims) => {
 		const O5 = window.O55, r = doc.getElementById('pm-o55-onboarding');
 		if (!O5 || !O5.S || !O5.S.open || !r || !host || !S || S.dead || !S.gHead || !S.gHead.isConnected || !S.active || doc.hidden) return ['o', 'stage closed'];
 		const hr = host.getBoundingClientRect(); if (hr.width < 40 || hr.height < 40) return ['o', 'no stage'];
 		if (r.matches('.o55-opening, .o55-closing')) return ['x', 'window morph'];
 		try { if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) return ['x', 'look cover']; } catch (_) { return ['x', 'look cover (unreadable)']; }
 		if (html.hasAttribute('data-o55-vt') || O5.S.vt) return ['x', 'view transition'];
-		if (doc.querySelector('#o55np-reboot, #o55np-calm')) return ['x', 'NieR plate'];
+		if (doc.getElementById('o55np-reboot') || doc.getElementById('o55np-calm')) return ['x', 'NieR plate'];   /* (a selector list costs 1 ms here) */
 		if (window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()) return ['x', 'look cover lift'];
 		if (O5.nierLook && O5.nierLook.busy && O5.nierLook.busy()) return ['x', 'NieR moment'];
 		if (S.gSlice && S.gSlice.getAttribute('display') !== 'none') return ['a', 'NieR slice'];
-		for (let n = S.gPip.parentNode; n && n.nodeType === 1; n = n.parentNode) for (const a of n.getAnimations()) if (finiteRunning(a) && kindOf(a)) return ['a', nameOf(a, n)];
+		/* one document.getAnimations() a frame (Element.getAnimations() walks the document's animations on every call) */
+		const chain = new Set(); for (let n = S.gPip.parentNode; n && n.nodeType === 1; n = n.parentNode) chain.add(n);
+		for (const a of anims) { const n = a.effect && a.effect.target; if (n && chain.has(n) && finiteRunning(a) && kindOf(a)) return ['a', nameOf(a, n)]; }
 		return ['v', ''];
 	};
 
@@ -94,12 +96,27 @@ export function installWitness(cfg) {
 		return { op, blur, dim };
 	};
 	const SHAPES = 'path,rect,circle,ellipse,polygon,polyline,line,use,image,text';
+	/* the product's overlays that can stand over the head: the bubble, the tip, Retro Light's printer, and the parts of
+	   Retro's terminal and NieR's HUD that paint a ground (their containers span the stage and paint nothing) */
+	let ovKey = null, ovList = [], ovAge = 0;
+	const alphaOf = (bg) => { if (!bg || bg === 'transparent') return 0; const m = /rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/.exec(bg) || /\/\s*([\d.]+%?)\s*\)$/.exec(bg); return m ? (m[1].endsWith('%') ? parseFloat(m[1]) / 100 : +m[1]) : 1; };
+	const overlaysOf = (S) => {
+		if (ovKey !== S.hudEl || ++ovAge > 30) {
+			ovKey = S.hudEl; ovAge = 0;
+			ovList = [...S.root.querySelectorAll('.pst-term *, .pst-nhud *')].filter((e) => { const cs = getComputedStyle(e); return alphaOf(cs.backgroundColor) > 0.5 || cs.backgroundImage !== 'none'; });
+		}
+		return [S.bubble, S.tipBox, S.root.querySelector('.pst-printer'), ...ovList];
+	};
 	const measure = (seq, t0) => {
 		const rec = new Array(NF).fill(0);
 		rec[F.seq] = seq; rec[F.t] = Math.round(t0 * 10) / 10; rec[F.label] = W.label; rec[F.look] = -1; rec[F.pipTheme] = -1; rec[F.screen] = -1;
-		const host = doc.querySelector('#pm-o55-onboarding .o55-stage');
+		const win = doc.getElementById('pm-o55-onboarding'), host = win && win.querySelector('.o55-stage');
 		const S = host && window.O55 && window.O55.pipStage && window.O55.pipStage.of(host);
-		let [cls, why] = classify(host, S);
+		const P = W.prof, pt = () => performance.now();
+		let tp = pt();
+		const anims = doc.getAnimations();
+		let [cls, why] = classify(host, S, anims);
+		P.classify += pt() - tp;
 		/* calibration: a steady look only; aborted by anything the page declares, a rebuild or a look change */
 		const C = W.cal;
 		if (C) {
@@ -122,6 +139,7 @@ export function installWitness(cfg) {
 		[rec[F.hx], rec[F.hy], rec[F.hw], rec[F.hh]] = film(hb);
 		[rec[F.cx], rec[F.cy], rec[F.cw], rec[F.ch]] = film(cb);
 		/* placed and hanging: a transform on the head, a path on each string, both string ends on the head's box */
+		tp = pt();
 		const placed = S.gHead.hasAttribute('transform') && S.pstrs.every((p) => !!p.getAttribute('d'));
 		const m = S.svg.getScreenCTM();
 		let offBy = 0;
@@ -131,8 +149,9 @@ export function installWitness(cfg) {
 			offBy = Math.max(offBy, hb[0] - pad - e.x, e.x - hb[0] - hb[2] - pad, hb[1] - pad - e.y, e.y - hb[1] - hb[3] - pad, 0);
 		}
 		rec[F.placed] = placed ? 1 : 0; rec[F.offBy] = Math.round(offBy);
-		rec[F.rigAnim] = S.gPip.getAnimations({ subtree: true }).filter((a) => a.playState === 'running' || a.pending).length;
+		rec[F.rigAnim] = anims.filter((a) => { const n = a.effect && a.effect.target; return n && S.gPip.contains(n) && (a.playState === 'running' || a.pending); }).length;
 		/* paint: the shared chain above Pip's group, then each part's own */
+		P.geom += pt() - tp; tp = pt();
 		let chainOp = 1, chainBlur = 0, chainDim = 1, chainShown = true, clip = [0, 0, innerWidth, innerHeight];
 		const sig = [];
 		for (let n = S.gPip; n && n.nodeType === 1; n = n.parentNode) {
@@ -156,6 +175,7 @@ export function installWitness(cfg) {
 		rec[F.sig] = str(sig.join(' / '));
 		rec[F.clipFrac] = area(hb) > 0 ? Math.round(area(inter(hb, clip)) / area(hb) * 1000) : 0;
 		/* the head's painted leaves (body, face, eyelets), each with its own display, visibility, opacity and paint */
+		P.chain += pt() - tp; tp = pt();
 		let leaf = 0;
 		const memo = new Map(), csOf = (n) => { let c = memo.get(n); if (!c) { c = getComputedStyle(n); memo.set(n, c); } return c; };
 		for (const e of S.gHead.querySelectorAll(SHAPES)) {
@@ -170,13 +190,15 @@ export function installWitness(cfg) {
 		}
 		rec[F.leafArea] = Math.round(leaf * dpr * dpr);
 		/* the product's own overlays over the head box (bubble, tip, Retro's printer, NieR's HUD boxes, the terminal) */
+		P.leaves += pt() - tp; tp = pt();
 		let occ = 0;
-		const overlays = [S.bubble, S.tipBox, ...S.root.querySelectorAll('.pst-printer, .pst-term, .pst-nhud > div')];
+		const overlays = overlaysOf(S);
 		for (const o of overlays) {
 			if (!o || !o.isConnected || !o.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
 			occ += area(inter(hb, rect(o)));
 		}
 		rec[F.occl] = area(hb) > 0 ? Math.round(Math.min(1, occ / area(hb)) * 1000) : 0;
+		P.overlays += pt() - tp; P.n++;
 		return rec;
 	};
 	const sample = () => {
@@ -220,17 +242,21 @@ export const idx = (fields) => Object.fromEntries(fields.map((k, i) => [k, i]));
 
 /* Read a witness log (JSON lines: header, recs chunks, strings, cals, end). Throws on an incomplete log. */
 export function readWitness(text) {
-	let header = null, end = null, strings = [], cals = [];
-	const recs = [];
+	let header = null, end = null;
+	const recs = [], strings = [], cals = [];
 	for (const line of text.split('\n')) {
 		if (!line.trim()) continue;
 		const o = JSON.parse(line);
 		if (o.kind === 'header') header = o;
-		else if (o.kind === 'recs') for (const r of o.recs) recs.push(r);
-		else if (o.kind === 'end') { end = o; strings = o.strings || []; cals = o.cals || []; }
+		else if (o.kind === 'recs') {
+			for (const r of o.recs) recs.push(r);
+			if (o.strings) { if (o.stringsFrom !== strings.length) throw new Error(`witness strings out of order at ${o.stringsFrom}`); strings.push(...o.strings); }
+			if (o.cals) cals.push(...o.cals);
+		} else if (o.kind === 'end') end = o;
 	}
 	if (!header) throw new Error('witness log has no header');
 	if (!end) throw new Error('witness log has no end record (the run stopped before the witness was read out)');
+	if (end.lost) throw new Error(`the page was lost before the witness's last records were read (${end.lost})`);
 	if (end.count !== recs.length) throw new Error(`witness log holds ${recs.length} records, its end says ${end.count}`);
 	const F = idx(header.fields);
 	for (let i = 1; i < recs.length; i++) if (recs[i][F.seq] !== recs[i - 1][F.seq] + 1) throw new Error(`witness records skip from ${recs[i - 1][F.seq]} to ${recs[i][F.seq]}`);

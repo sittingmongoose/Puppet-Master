@@ -55,6 +55,12 @@ try {
 	r = scan(noEnd.film, noEnd.log);
 	assert.equal(r.status, 2); assert.match(r.j.error, /no end record/); checks++;
 
+	/* the film goes on past the log (the page lost before its last records were read out) */
+	const tail = await makeFixture(root, 'tail', { extraTail: 30 });
+	r = scan(tail.film, tail.log);
+	assert.equal(r.status, 2); assert.match(r.j.cannotEvaluate.join(' '), /name page frames the witness log does not have/); checks++;
+	const lost = path.join(root, 'lost.jsonl'); fs.writeFileSync(lost, fs.readFileSync(clean.log, 'utf8').replace('"kind":"end"', '"kind":"end","lost":"Error: page closed"'));
+	r = scan(clean.film, lost); assert.equal(r.status, 2); assert.match(r.j.error, /lost/); checks++;
 	const invalid = path.join(root, 'invalid.mp4'); fs.writeFileSync(invalid, 'not a movie');
 	r = scan(invalid, clean.log); assert.equal(r.status, 2); checks++;
 	r = scan(path.join(root, 'missing.mp4'), clean.log); assert.equal(r.status, 2); checks++;
@@ -69,5 +75,5 @@ try {
 		fs.writeFileSync(path.join(bin, 'ffmpeg'), `#!${process.execPath}\nprocess.stdout.write(Buffer.alloc(${bytes}), () => process.exit(${exit}));\n`, { mode: 0o755 });
 		r = scan(clean.film, clean.log, { ...process.env, PATH: bin }); assert.equal(r.status, 2); checks++;
 	}
-	console.log(`PASS ${checks}: clean (cover untagged, overlay, repeated frame), look B dropout judged by B's own reference, controller dropout, look without calibration, inseparable look, untagged visible frames, low coverage (and its threshold), backwards tags, incomplete log, invalid and missing film, film of another log, no decoder, failed decoder, partial frame`);
+	console.log(`PASS ${checks}: clean (cover untagged, overlay, repeated frame), look B dropout judged by B's own reference, controller dropout, look without calibration, inseparable look, untagged visible frames, low coverage (and its threshold), backwards tags, incomplete log, film past its log, page lost, invalid and missing film, film of another log, no decoder, failed decoder, partial frame`);
 } finally { fs.rmSync(root, { recursive: true, force: true }); }

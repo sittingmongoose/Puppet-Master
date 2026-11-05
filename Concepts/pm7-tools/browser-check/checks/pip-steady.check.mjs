@@ -105,7 +105,14 @@ async function surface(t, sandbox) {
 	const file = path.join(t.run.dir, `pip-witness-${sandbox ? 'sandbox' : 'normal'}.jsonl`);
 	if (fs.existsSync(file)) throw new Error(`${file} exists: one witness log per surface and run`);
 	let count = 0;
-	const flush = async () => { for (;;) { const recs = await f.evaluate(() => window.__pipSteady.take(3000)); if (!recs.length) break; count += recs.length; fs.appendFileSync(file, JSON.stringify({ kind: 'recs', recs }) + '\n'); } };
+	/* everything recorded so far, in one read (a loop until empty never ends while the page draws) */
+	let nStr = 0, nCal = 0;
+	const flush = async () => {
+		const o = await f.evaluate(([a, b]) => { const W = window.__pipSteady; return { recs: W.take(1e9), strings: W.strings.slice(a), cals: W.cals.slice(b) }; }, [nStr, nCal]);
+		if (!o.recs.length && !o.strings.length && !o.cals.length) return;
+		fs.appendFileSync(file, JSON.stringify({ kind: 'recs', stringsFrom: nStr, ...o }) + '\n');
+		count += o.recs.length; nStr += o.strings.length; nCal += o.cals.length;
+	};
 
 	await f.evaluate(() => window.O55.ui.open({ fresh: true }));
 	await settle();
@@ -230,7 +237,7 @@ async function surface(t, sandbox) {
 		await f.evaluate(() => window.__pipSteady.stop()).catch(() => {});
 		await sleep(100);
 		await flush().catch(() => {});
-		const tail = await f.evaluate(() => ({ strings: window.__pipSteady.strings, cals: window.__pipSteady.cals, err: window.__pipSteady.err, errMsg: window.__pipSteady.errMsg, seq: window.__pipSteady.seq })).catch((e) => ({ lost: String(e) }));
+		const tail = await f.evaluate(() => ({ err: window.__pipSteady.err, errMsg: window.__pipSteady.errMsg, seq: window.__pipSteady.seq, prof: window.__pipSteady.prof })).catch((e) => ({ lost: String(e) }));
 		fs.appendFileSync(file, JSON.stringify({ kind: 'end', count, ...tail }) + '\n');
 	}
 	/* structural judgement of every recorded frame */
@@ -238,10 +245,11 @@ async function surface(t, sandbox) {
 	const S = (i) => (i >= 0 ? w.strings[i] : '');
 	const vis = w.recs.filter((r) => r[w.F.cls] === 'v');
 	const costs = w.recs.map((r) => r[w.F.cost]).sort((a, b) => a - b), p95 = costs[Math.floor(costs.length * 0.95)] || 0;
+	t.log(`witness cost by part (ms per frame): ${JSON.stringify(Object.fromEntries(Object.entries(w.end.prof || {}).filter(([k]) => k !== 'n').map(([k, v]) => [k, +(v / Math.max(1, w.end.prof.n)).toFixed(3)])))}`);
 	t.log(`witness: ${w.recs.length} frames, ${vis.length} visible, cost p95 ${(p95 / 1000).toFixed(2)} ms, ${w.cals.filter((c) => c.ok).length} calibrations, log ${file}`);
 	for (const r of evaluateWitness(w)) await t.check(r.name, r.ok, r.detail);
 	for (const p of ['welcome', 'tiles', 'begin', 'smb'].filter((x) => phases.includes(x))) for (const r of evaluateWitness(w, { phase: p }).slice(1, 3)) await t.check(r.name, r.ok, r.detail);
-	await t.check(`the witness costs under 4 ms a frame (p95 ${(p95 / 1000).toFixed(2)} ms)`, p95 < 4000, 'a heavy witness could change what the page paints');
+	await t.check(`the witness costs under 2 ms a frame (p95 ${(p95 / 1000).toFixed(2)} ms)`, p95 < 2000, 'a heavy witness could change what the page paints');
 	const shown = [...new Set(vis.map((r) => S(r[w.F.look])))];
 	await t.check(`every requested look was shown (${looks.join(', ')})`, looks.every((l) => shown.includes(l)), `shown: ${shown.join(', ')}`);
 }

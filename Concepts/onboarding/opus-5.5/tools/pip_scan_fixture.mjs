@@ -75,8 +75,10 @@ export async function makeFixture(root, name, v = {}) {
 		return r;
 	});
 	const header = { kind: 'header', v: 2, fields: FIELDS, dpr: 1, ox: 0, oy: 0, viewport: [W, H], tag: { x: 0, y: 0, block: BL, cells: CELLS, bits: BITS, sync: [1, 0] } };
-	const lines = [JSON.stringify(header), JSON.stringify({ kind: 'recs', recs })];
-	if (!v.noEnd) lines.push(JSON.stringify({ kind: 'end', count: recs.length, strings, cals: [] }));
+	const half = recs.length >> 1, s1 = strings.slice(0, 3);
+	const lines = [JSON.stringify(header), JSON.stringify({ kind: 'recs', stringsFrom: 0, recs: recs.slice(0, half), strings: s1, cals: [] }), JSON.stringify({ kind: 'recs', stringsFrom: s1.length, recs: recs.slice(half), strings: strings.slice(s1.length), cals: [] })];
+	if (v.extraTail) lines[2] = JSON.stringify({ kind: 'recs', stringsFrom: s1.length, recs: recs.slice(half, -v.extraTail), strings: strings.slice(s1.length), cals: [] });
+	if (!v.noEnd) lines.push(JSON.stringify({ kind: 'end', count: recs.length - (v.extraTail || 0) }));
 	fs.writeFileSync(log, lines.join('\n') + '\n');
 	return { film, log, v };
 }
