@@ -1,6 +1,6 @@
 # CA-SEAL2 — fourth recorded seal-check input change
 
-**ROUND 2 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX2 (Codex), stream E, VM, 2026-11-05. Branch `plans/ea-seal-check-recount-20261105`, round-2 fixes from reviewed head `1362ee57d6026b546df3f80831dcf91332cd2bf2`, on CA-SEAL FIX8 `17c842445a2623bb0334ba8d6932e7a6bf088967`. All three round-2 coverage fixes: `616c1a7a275153f1850010976a1b3f1c884ecafa`. Round-1 implementation remains `60913cb906590662c97696146edcb10960c2ed09`. This file is both the change record and branch report; the final documentation head, push and cleanup are recorded in external `fix2/DELIVERY.json`. Coordinated landing and independent review remain required.
+**ROUND 3 (ASTRA) FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX3 (Codex), stream E, VM, 2026-11-05. Branch `plans/ea-seal-check-recount-20261105`, round-3 fixes from Astra-reviewed head `e9d34a4dcc2bdc3d5369952dee2e7fd9b4d85112`, on CA-SEAL FIX8 `17c842445a2623bb0334ba8d6932e7a6bf088967`. Earlier fixes remain `616c1a7a275153f1850010976a1b3f1c884ecafa` (round 2) and `60913cb906590662c97696146edcb10960c2ed09` (round 1). This file is both the change record and branch report. The round-3 section records findings, commits and fresh evidence; `fix3/DELIVERY.json` records the final documentation head, push and cleanup. Coordinated landing and independent review remain required.
 
 ## Design in five lines
 
@@ -112,11 +112,15 @@ Digest/source recomputation, contradictory joined snapshots, historical/current 
 
 ## Landing order and exact receipt anchor
 
-1. Land the answered-card authority/test allowances and frozen recount dependencies as required by stream E. Re-read the DL-451 section and frozen input bytes on the assembled tree. Preserve the two snapshots and every earlier record.
-2. Assemble **CA-SEAL before CA-SEAL2 in the same final reviewed E landing**. Fill CA-SEAL's authorized actual lander/receipt first, keeping its prior history and required DL-412 anchor contract.
-3. The actual lander runs `python3 -I -B reports/event-authority-20261105/write_recount_receipt.py <landing-tree> --lander <actual-lander-task>`. This writes only the new fourth receipt, pinning the actual final third-receipt bytes and live validator/DL-451 section.
-4. **claude-projects-refresh** supplies the exact third and fourth receipt entries in `canonical_ssot_hashes.files` at that same landing. The pending fourth receipt's null lander and its pending digest are not final anchors. This worker does not edit Spec Lock.
-5. Apply the named fixture companion in its authorized integration step and perform independent Sol/Astra reviews before and after, plus the prescribed landing checks. The unanchored preparation tree must not be merged alone. Real outcome/depth work and every existing approval condition remain required before final approval.
+First land the answered-card authority/test allowances and frozen recount dependencies as required by stream E. Re-read the DL-451 section and frozen input bytes on the assembled tree. Preserve the two snapshots and every earlier record.
+
+The lead's binding instruction, copied exactly from `state/INTEGRATION-NOTES.md`:
+
+> CA-SEAL/CA-SEAL2 landing order (Astra N01, binding): (1) finalize CA-SEAL's receipt with the actual lander against the third validator 319f6bff; (2) apply CA-SEAL2's code; (3) finalize the fourth receipt against the fourth validator and the finalized third receipt; (4) claude-projects-refresh adds both exact Spec Lock entries; all in one reviewed landing. Running both writers on an assembled fourth-validator tree re-stamps the third receipt and must not happen.
+
+At stage (3), the actual lander runs `python3 -I -B reports/event-authority-20261105/write_recount_receipt.py <landing-tree> --lander <actual-lander-task>`. This writes only the new fourth receipt and pins the finalized third receipt and fourth executable. The pending fourth receipt's null lander and pending digest are not final anchors. The separately required third entry is `reports/event-authority-20261104/seal-check-multifamily-step-receipt.json`; it hashes that receipt's complete finalized bytes. This worker does not run either writer on the real tree or edit Spec Lock.
+
+Apply the named fixture companion in its authorized integration step and perform independent Sol/Astra reviews before and after, plus the prescribed landing checks. The unanchored preparation tree must not be merged alone. Real outcome/depth work and every existing approval condition remain required before final approval.
 
 Exact **new fourth-receipt** entry template:
 
@@ -129,7 +133,9 @@ Exact **new fourth-receipt** entry template:
 
 The existing DL-412 entry/template remains separately required exactly as CA-SEAL specifies; there is no new DL-077 entry. Later changes to the new receipt require its authorized byte anchor to follow the final bytes.
 
-**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
+**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), CA-SEAL2-FIX3 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
+
+**CA2-A02 — lead adjudication (07:35Z):** separation follows CA-SEAL's approved B′ model (pm7-build 01:27Z). The receipt records the author and actual lander. Both, the stream lead and every fix worker are barred from **applying the seal**. The lander is not required to differ from the author. The lead explicitly adjudicated Astra's stronger lander-separation criterion as beyond the approved model; this is the lead's adjudication, not a new Jared answer. In practice the actual lander is the stream lead's landing step, and a separate assignee applies the seal. No frozen-code or receipt change is made for A02.
 
 ## Scope, resources and open items
 
@@ -259,3 +265,131 @@ All full paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authorit
 | `index-validate.json` | `debc4588403411f5b023c704b846e9c155722a191b414d3a339fcdf4044aea13` |
 | `commands.json` | `0b29503bb1697a4ea3dc7685a0d503801c484d8483b89d76d6714a04eb7331b2` |
 | `CA-SEAL2-fix2-results.json` | `3671027326f31f8ea870649dbd43f60da456e03b826ac201077678a4773b2f37` |
+
+## Review round 3 (Astra): findings and responses
+
+Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-astra.md`, with its `astra/` evidence (the review's `E` alias). All 38 retained manifest entries verify; JSON evidence decodes completely. The two lead notes are preserved exactly in `fix3/lead-adjudications.txt`. **CA2-A01 is fixed in `4e3b2a1db0f8e234189223082ef6859bb21f1ab0`. CA2-A02 is explicitly adjudicated by the lead; CA2-N01 is recorded verbatim in the landing-order section above.** No finding is silently skipped and no owner question is invented.
+
+| Finding | Where / cause | Response and verification |
+|---|---|---|
+| **CA2-A01 — eight missing negatives** | `recount_outcomes`, validator lines 994–1032; the 102-case corpus never exercised eight independent refusals. | Add exactly eight negatives to the committed corpus, from passing complete 249-name parents. Each narrow guard cut makes exactly its own negative accept, while all 109 peer results and refusal strings stay identical. No guard is unreachable; validator behavior is unchanged. The eight exact sites/fixtures are listed below. |
+| **CA2-A02 — separation scope** | Astra's additional lander-separation criterion exceeded the approved B′ model. | Record the lead's 07:35Z adjudication: author and actual lander are recorded; both, the lead and every fix worker are barred from applying the seal; lander need not differ from author. No code or receipt change. In practice the lead performs the landing step and a separate assignee applies the seal. |
+| **CA2-N01 — executable stage in landing** | Running the third receipt writer on fourth-validator bytes would re-stamp the third receipt. | Copy the lead's binding four-stage order exactly above. Replayed Astra's fixture assembly accepts all three receipt-state helpers in that order; running both writers on a fourth-validator tree makes the fourth helper refuse. Both exact Spec Lock anchors remain for claude-projects-refresh in the single reviewed landing. |
+
+`V` below is `Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py`; `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py` at implementation commit `4e3b2a1db0f8e234189223082ef6859bb21f1ab0`. Each parent calls the actual helper successfully before mutation. Admission sets are explicitly injected helper inputs, never new admission records or final approvals.
+
+| Guard | Location | One defect in the new negative | Negative |
+|---|---|---|---|
+| **Outcome schema identity** | `V:994`, `H:246` | Only schema_id becomes wrong.schema. | `negative_outcome_schema_id` |
+| **Outcome recount receipt fingerprint** | `V:995`, `H:247` | Only the receipt pin becomes canonical wrong 64-hex; list pin stays correct. | `negative_outcome_receipt_sha256` |
+| **Registered row exact field set** | `V:1008`, `H:248` | Add one extra key to a valid registered row. | `negative_outcome_registered_extra_field` |
+| **Excluded row exact field set** | `V:1011`, `H:290` | Add one extra key to a valid excluded row. | `negative_exclusion_extra_field` |
+| **Exclusion disposition** | `V:1012`, `H:291` | Only disposition becomes KEEP_REGISTERED. | `negative_exclusion_disposition` |
+| **Exact event token in decision section** | `V:1020`, `H:303` | Replace the decision token with its dotted sibling; synchronize the section digest; own-name source evidence stays valid. | `negative_exclusion_decision_dotted_sibling` |
+| **Citation exact field set** | `V:1026`, `H:292` | Add one extra citation key; path, hash and span stay valid. | `negative_exclusion_citation_extra_field` |
+| **Resolved evidence containment in Plans** | `V:1032`, `H:320` | Symlink the same relative evidence path to identical bytes outside Plans; all citation fields stay valid. | `negative_exclusion_evidence_symlink_outside_Plans` |
+
+The decision mutation refreshes the section's observational digest and leaves own-name source evidence valid. The containment mutation preserves relative spelling, complete bytes, digest and span, changing only the symlink's resolved location. Both paths are restored before peer cases run. No second defect, stale copy or stale digest masks a target refusal. Every cut is an in-memory AST substitution at one asserted expression; the executable file is never rewritten.
+
+### Round-3 tests and limits
+
+| Check | Exit / result |
+|---|---|
+| Expanded committed corpus | **0; 110/110 pass**, with 26 positive/witness records and **84 negative product calls**. All 597 actual frozen source hashes and byte counts verify. All 102 parent results/refusals remain identical. |
+| Guard removal / restoration | **0; 38 variants × 110 checks = 4,180 cells**. Rerun all 30 prior rows plus eight Astra rows. Each Astra row flips exactly one negative and preserves all 109 peer results, including 83 exact peer refusals. Fresh restored corpus **110/110 pass**, with its complete result array equal to baseline. |
+| Default-path actual CLI / August differential | **0 for witness; actual base/new/new exits 1/1/1**. Ten August failures/order, original named checks, original input pins and original computation prefix remain. Two pending recount failures remain. Four historical receipt identities resolve after two default-path writes. |
+| Astra extra input probes | **0; all 14 negatives reject** after the actual 597-source / 249-name positive; includes reordering/truncation/substitution and malformed or unknown source-map entries. |
+| Staged two-receipt assembly | **0 for witness**. Correct third-executable → fourth-executable writer order accepts all three receipt-state helpers; the wrong order refuses the fourth receipt. Writers run only in disposable fixture trees. |
+| Shard check | **0; top-level pass**, 99 source documents / 3,092 shards. |
+| Index validation | **1; top-level fail**. Exactly Astra's **24 identical failure records**, compared as full arrays: 21 ledger record-shape failures, missing newer-main DL-302 and PLS-025, and stale untouched readiness. Zero introduced. |
+| Evidence / protected bytes | **0; pass**. 1467 protected files byte-identical to Astra-reviewed head; no `Plans/` path changed; receipt after-pin matches unchanged validator; CRLF preserved. |
+| Currentness edition | 15 files copied without metadata operations and hash-compared byte-for-byte. These are separate from the frozen recount's saved source editions. |
+| Whitespace | Final corpus/report/result diff checked before commit/push. |
+| Full governance / final approval / landing | Not performed. The preparation stack retains its prerequisites and earns no final approval. |
+
+### Round-3 guard-removal table
+
+Every row replays all 110 tests. All peer positives and negative refusal strings retain their complete baseline records. The last column counts peer negatives that stay rejected. For each before/after pin, direct and bridge sites enforce the same field/predicate: single-site and paired cuts remain separately proved. No unrelated predicates are merged. S1 full shared-tool inventory/adoption remains separate sweep work; this finite table is not a replacement generic proof engine.
+
+| Guard / site removed | Negatives that accept | Other negatives still reject |
+|---|---|---:|
+| `R02_exact_source_event_token` | `negative_exclusion_dotted_sibling`, `negative_exclusion_prefix`, `negative_exclusion_suffix` | 81 |
+| `R03_fourth_anchor_only` | `negative_missing_fourth_anchor` | 83 |
+| `R03_source_member_count_only` | `negative_missing_source_member` | 83 |
+| `R03_path_control_only` | `negative_unsafe_source_path_control` | 83 |
+| `R04_receipt_complete_byte_pin` | `negative_one_changed_receipt_byte` | 83 |
+| `R04_source_byte_count_only` | `negative_wrong_source_byte_count` | 83 |
+| `R04_validator_before_sha256_direct_only` | None; named same-field bridge duplicate still rejects | 84 |
+| `R04_validator_before_sha256_bridge_only` | `legacy_predicate_preserved_under_validator_before_sha256` | 83 |
+| `R04_validator_before_sha256_both_same_predicate_sites` | `legacy_predicate_preserved_under_validator_before_sha256`, `negative_change_validator_before_sha256` | 82 |
+| `R04_validator_after_sha256_direct_only` | None; named same-field bridge duplicate still rejects | 84 |
+| `R04_validator_after_sha256_bridge_only` | `legacy_predicate_preserved_under_validator_after_sha256` | 83 |
+| `R04_validator_after_sha256_both_same_predicate_sites` | `legacy_predicate_preserved_under_validator_after_sha256`, `negative_change_validator_after_sha256` | 82 |
+| `R04_schema_id_value_only` | `negative_change_schema_id` | 83 |
+| `R04_authority_ref_value_only` | `negative_change_authority_ref` | 83 |
+| `R04_authority_section_sha256_value_only` | `negative_change_authority_section_sha256` | 83 |
+| `R04_validator_path_value_only` | `negative_change_validator_path` | 83 |
+| `R04_validator_id_value_only` | `negative_change_validator_id` | 83 |
+| `R04_prior_receipt_value_only` | `negative_change_prior_receipt` | 83 |
+| `R04_recount_receipt_value_only` | `negative_change_recount_receipt` | 83 |
+| `R04_recount_list_value_only` | `negative_change_recount_list` | 83 |
+| `R04_certification_scope_value_only` | `negative_change_certification_scope` | 83 |
+| `R04_author_task_value_only` | `negative_change_author_task` | 83 |
+| `R04_seal_authorized_only` | `negative_change_seal_authorized` | 83 |
+| `R04_admission_authorized_only` | `negative_change_admission_authorized` | 83 |
+| `R04_definition_writing_authorized_only` | `negative_change_definition_writing_authorized` | 83 |
+| `R04_app_recording_authorized_only` | `negative_change_app_recording_authorized` | 83 |
+| `R04_contract_depth_complete_only` | `negative_change_contract_depth_complete` | 83 |
+| `CA2-C2-01_fourth_anchor_digest` | `negative_wrong_fourth_anchor_digest` | 83 |
+| `CA2-C2-02_nonblank_lander` | `negative_blank_lander` | 83 |
+| `CA2-C2-03_seal_applier_list` | `negative_missing_lander_from_seal_applier_list` | 83 |
+| `CA2-A01_outcome_schema_identity` | `negative_outcome_schema_id` | 83 |
+| `CA2-A01_outcome_receipt_fingerprint` | `negative_outcome_receipt_sha256` | 83 |
+| `CA2-A01_registered_row_fields` | `negative_outcome_registered_extra_field` | 83 |
+| `CA2-A01_excluded_row_fields` | `negative_exclusion_extra_field` | 83 |
+| `CA2-A01_exclusion_disposition` | `negative_exclusion_disposition` | 83 |
+| `CA2-A01_decision_exact_name` | `negative_exclusion_decision_dotted_sibling` | 83 |
+| `CA2-A01_citation_fields` | `negative_exclusion_citation_extra_field` | 83 |
+| `CA2-A01_Plans_realpath_containment` | `negative_exclusion_evidence_symlink_outside_Plans` | 83 |
+
+### Round-3 recurring defect classes, grades and boundaries
+
+The new cases probe mismatched identities/fingerprints, exact object shapes, contradictory disposition, exact token interpretation and custody through resolved paths. Existing cases retain source/hash recomputation, historical/current identity separation, strict JSON representations/types, complete-byte lengths and custody before outcomes. No runtime Storage metadata, payload externalization, schema-reference/format contract, number cap or serializer changes. Number-domain work and full shared-tool adoption remain sweep scope. The actual CLI failures are unchanged unfinished prerequisites, not evidence of a newly impossible August check; any demonstrated canon-drift impossibility still stops for pm7-build without a re-stamp.
+
+**Family grades before → after: N/A → N/A.** No families, admissions, product bindings, PlanUnits or Decision Log IDs are authored. Existing DL-451 is referenced; DL-998 remains fixture-only. The eight A01 coverage cells move from unproved to self-assessed proved, pending independent re-review; A02 is lead-adjudicated and N01 is recorded. CA-SEAL2-FIX3 joins the procedural seal-applier exclusion above.
+
+Round-3 resources: **110 GB free disk / 18 GB available RAM** before sparse-worktree creation. Guard-row available RAM ranged from **22 to 26 GB**; checkers ran one at a time and no resource stop was triggered. No canonical owner, validator, receipt or generated artifact changed, so regeneration was unnecessary. No admission, registry/real-outcome edit, August re-stamp, Spec Lock/evidence/auto-decision edit, seal, main push, mailbox or subagent occurred. Temporary fixture trees self-delete. Final forced worktree removal uses the literal requested path after push/export; `fix3/DELIVERY.json` records it.
+
+**Stopped question: none.** Coordinated assembly, actual landers/final anchors, fixture companion, real per-name outcomes/depth, unchanged August prerequisites, independent before/after reviews, landing checks and S1 remain integration work. No final approval or scope extension is awarded.
+
+### Retained evidence — round 3
+
+All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/`; combine that absolute prefix with each filename. The compact committed bundle is `reports/event-authority-20261105/CA-SEAL2-fix3-results.json`. `README.md` gives replay commands; `SHA256SUMS` inventories the final package. Older evidence is unchanged.
+
+| File | SHA-256 |
+|---|---|
+| `CA-SEAL2-checks.py` | `6a4e8b6d996ed945be5ec8c55ac4172941952ce6384c96496ab62a5637f2ddb3` |
+| `guard_removal.py` | `31cc427c74f464ab6b93d23fa4aa42b81a91354b1cfd2c9beb9c313bf6120028` |
+| `default_entrypoint.py` | `150394c7e80647ce3e2461bff3b9c81d8f58393cc27943aef9077bf4fb2a2e06` |
+| `audit_evidence.py` | `eb3b04a28b260e7de549112b575174ff0812293b47cab96a7afa36f044038299` |
+| `hostile_inputs.py` | `263e5919954a4d2ccf845240a2e9fc0759d1c58c8f582c8266b9852028114f53` |
+| `stack_assembly.py` | `4d572335c750cc373220fc2ce43203cac5e6658fa782cddac8af64d9446a878d` |
+| `setup.py` | `af93ff2dd76e93cbf5983e370e638fecdc35069798278564c3084a8a54000021` |
+| `run_verification.py` | `c6f8f84dbadc5b1edc4172ec328d07fed314278fe512ecef60cce9337c08e377` |
+| `lead-adjudications.txt` | `085e6d81c54396e45b1d930f8476f58b5b64088d09785f839aeefa38dcba2910` |
+| `check-results.json` | `89f7f856ee10a5085fe7260d5fbeac774a8260efe8d261845e6ee7d447a3dde8` |
+| `restored-check-results.json` | `89f7f856ee10a5085fe7260d5fbeac774a8260efe8d261845e6ee7d447a3dde8` |
+| `guard-removal-results.json` | `72f0110bdc44d9288f9a9d10934726e237bb83203fe76a6e6ebd3614b972fee8` |
+| `snapshot-default-path-results.json` | `c8c9d3e21ad3057b40059582e3127f7e7a4c73776947b51bb537316a29d788b4` |
+| `legacy-differential.json` | `a22aed1a377a572cc467df150adaee5d7659b61f1bc79c92663a7f2e4e07a890` |
+| `hostile-inputs.json` | `8b09273e90853e3dafc804c1d9b871e449cd6ff878ca506b8c365d7561e891c3` |
+| `stack-assembly.json` | `e4f653318c0695625c38a47a62e266ddf5bbda0015e2c30244e3eba389219d9c` |
+| `scope-and-pins.json` | `70d33e9a97b41c1c59267a111765afe4300dc66950365403b5d358854c86fa2f` |
+| `original-corpus-comparison.json` | `2349c45b4c148ca0d73ac32a6c2e52dd0ff5bb8dacce0d3c5d74612fad7d59c4` |
+| `index-comparison.json` | `82f162ca569c6f286a6494312ade8ef3cce598bd2b19ef53d72ef8993d8fb6c8` |
+| `currentness-copy.json` | `acfee3f751d912494b37637df596eb16f4f11d6910ab46acf45f42cc4024d8c2` |
+| `review-evidence-audit.json` | `17d6f4d77d6dfeb3aecc99ee9a87241ad35be193ac4c8422ebaf18e1971fa6e8` |
+| `shard-check.json` | `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21` |
+| `index-validate.json` | `f4a64f681f28f53968029ae38d7f33d93fe2291231a01183f935bfa6967e4d81` |
+| `commands.json` | `eb99de1c748bc9a0759fe12cb7a6bd8ad236df3a7aeac97522160caed7dd9c17` |
+| `CA-SEAL2-fix3-results.json` | `e53d9f9375a18c4908acb448478089e309b0e5c3c75fe8f0ce5f4d1db4160b8c` |

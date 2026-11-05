@@ -1,0 +1,766 @@
+{
+  "schema_id": "pm.assurance.event_authority.CA_SEAL2_fix3_results.v1",
+  "status": "targeted_pass_repository_findings_unchanged",
+  "reviewed_head": "e9d34a4dcc2bdc3d5369952dee2e7fd9b4d85112",
+  "implementation_commit": "4e3b2a1db0f8e234189223082ef6859bb21f1ab0",
+  "findings": [
+    {
+      "finding": "CA2-A01",
+      "status": "fixed",
+      "commit": "4e3b2a1db0f8e234189223082ef6859bb21f1ab0",
+      "guards": [
+        {
+          "guard": "outcome_schema_identity",
+          "validator_line": 994,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 246,
+          "title": "Outcome schema identity",
+          "one_defect": "Only schema_id becomes wrong.schema.",
+          "negative": "negative_outcome_schema_id",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        },
+        {
+          "guard": "outcome_receipt_fingerprint",
+          "validator_line": 995,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 247,
+          "title": "Outcome recount receipt fingerprint",
+          "one_defect": "Only the receipt pin becomes canonical wrong 64-hex; list pin stays correct.",
+          "negative": "negative_outcome_receipt_sha256",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        },
+        {
+          "guard": "registered_row_fields",
+          "validator_line": 1008,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 248,
+          "title": "Registered row exact field set",
+          "one_defect": "Add one extra key to a valid registered row.",
+          "negative": "negative_outcome_registered_extra_field",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        },
+        {
+          "guard": "excluded_row_fields",
+          "validator_line": 1011,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 290,
+          "title": "Excluded row exact field set",
+          "one_defect": "Add one extra key to a valid excluded row.",
+          "negative": "negative_exclusion_extra_field",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        },
+        {
+          "guard": "exclusion_disposition",
+          "validator_line": 1012,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 291,
+          "title": "Exclusion disposition",
+          "one_defect": "Only disposition becomes KEEP_REGISTERED.",
+          "negative": "negative_exclusion_disposition",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        },
+        {
+          "guard": "decision_exact_name",
+          "validator_line": 1020,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 303,
+          "title": "Exact event token in decision section",
+          "one_defect": "Replace the decision token with its dotted sibling; synchronize the section digest; own-name source evidence stays valid.",
+          "negative": "negative_exclusion_decision_dotted_sibling",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        },
+        {
+          "guard": "citation_fields",
+          "validator_line": 1026,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 292,
+          "title": "Citation exact field set",
+          "one_defect": "Add one extra citation key; path, hash and span stay valid.",
+          "negative": "negative_exclusion_citation_extra_field",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        },
+        {
+          "guard": "Plans_realpath_containment",
+          "validator_line": 1032,
+          "corpus_path": "reports/event-authority-20261105/CA-SEAL2-checks.py",
+          "corpus_line": 320,
+          "title": "Resolved evidence containment in Plans",
+          "one_defect": "Symlink the same relative evidence path to identical bytes outside Plans; all citation fields stay valid.",
+          "negative": "negative_exclusion_evidence_symlink_outside_Plans",
+          "peer_checks_unchanged": 109,
+          "peer_negative_refusals_unchanged": 83
+        }
+      ]
+    },
+    {
+      "finding": "CA2-A02",
+      "status": "lead_adjudicated_no_code_change",
+      "approved_model": "B\u2032",
+      "author_and_actual_lander_recorded": true,
+      "author_actual_lander_lead_and_every_fix_worker_barred_from_applying_seal": true,
+      "lander_must_differ_from_author": false,
+      "source": "CA-SEAL2 Astra A02 adjudication (lead, 07:35Z): my Astra brief added \"a lander who could also be the author or a fix worker\" as a break target, which goes beyond the approved model. CA-SEAL's approved B' contract (pm7-build 01:27Z) records author and actual lander in the receipt and bars both, plus the lead and every fix worker, from APPLYING THE SEAL; it does not require the lander to differ from the author. CA-SEAL2 follows that narrower separation; the change record must say so explicitly. In practice the lander is the stream lead's landing step (not the author), and the seal applier is a separate assignee. No frozen-code change for this."
+    },
+    {
+      "finding": "CA2-N01",
+      "status": "recorded",
+      "binding_order_exact": "CA-SEAL/CA-SEAL2 landing order (Astra N01, binding): (1) finalize CA-SEAL's receipt with the actual lander against the third validator 319f6bff; (2) apply CA-SEAL2's code; (3) finalize the fourth receipt against the fourth validator and the finalized third receipt; (4) claude-projects-refresh adds both exact Spec Lock entries; all in one reviewed landing. Running both writers on an assembled fourth-validator tree re-stamps the third receipt and must not happen."
+    }
+  ],
+  "validator_pins": {
+    "status": "pass",
+    "reviewed_head": "e9d34a4dcc2bdc3d5369952dee2e7fd9b4d85112",
+    "protected_files_verified_byte_identical": 1467,
+    "plans_changed": [],
+    "validator_unchanged": true,
+    "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+    "fourth_receipt_unchanged": true,
+    "CRLF_preserved": true
+  },
+  "checks": {
+    "status": "pass",
+    "checks": 110,
+    "passed": 110,
+    "failed": 0
+  },
+  "negative_calls": 84,
+  "frozen_sources_verified": 597,
+  "original_corpus": {
+    "status": "pass",
+    "original_checks": 102,
+    "every_original_result_and_refusal_unchanged": true,
+    "new_negatives": [
+      "negative_exclusion_citation_extra_field",
+      "negative_exclusion_decision_dotted_sibling",
+      "negative_exclusion_disposition",
+      "negative_exclusion_evidence_symlink_outside_Plans",
+      "negative_exclusion_extra_field",
+      "negative_outcome_receipt_sha256",
+      "negative_outcome_registered_extra_field",
+      "negative_outcome_schema_id"
+    ]
+  },
+  "guard_removal": {
+    "status": "pass",
+    "variants": 38,
+    "checks_per_variant": 110,
+    "mutation_cells": 4180,
+    "rows": [
+      {
+        "guard": "R02_exact_source_event_token",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_exclusion_dotted_sibling",
+          "negative_exclusion_prefix",
+          "negative_exclusion_suffix"
+        ],
+        "peer_checks_unchanged": 107,
+        "peer_negatives_still_reject": 81,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R03_fourth_anchor_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_missing_fourth_anchor"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R03_source_member_count_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_missing_source_member"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R03_path_control_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_unsafe_source_path_control"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_receipt_complete_byte_pin",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_one_changed_receipt_byte"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_source_byte_count_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_wrong_source_byte_count"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_before_sha256_direct_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [],
+        "peer_checks_unchanged": 110,
+        "peer_negatives_still_reject": 84,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_before_sha256_bridge_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_before_sha256"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_before_sha256_both_same_predicate_sites",
+        "predicate_sites_removed": 2,
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_before_sha256",
+          "negative_change_validator_before_sha256"
+        ],
+        "peer_checks_unchanged": 108,
+        "peer_negatives_still_reject": 82,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_after_sha256_direct_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [],
+        "peer_checks_unchanged": 110,
+        "peer_negatives_still_reject": 84,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_after_sha256_bridge_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_after_sha256"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_after_sha256_both_same_predicate_sites",
+        "predicate_sites_removed": 2,
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_after_sha256",
+          "negative_change_validator_after_sha256"
+        ],
+        "peer_checks_unchanged": 108,
+        "peer_negatives_still_reject": 82,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_schema_id_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_schema_id"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_authority_ref_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_authority_ref"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_authority_section_sha256_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_authority_section_sha256"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_path_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_validator_path"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_validator_id_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_validator_id"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_prior_receipt_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_prior_receipt"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_recount_receipt_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_recount_receipt"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_recount_list_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_recount_list"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_certification_scope_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_certification_scope"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_author_task_value_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_author_task"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_seal_authorized_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_seal_authorized"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_admission_authorized_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_admission_authorized"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_definition_writing_authorized_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_definition_writing_authorized"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_app_recording_authorized_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_app_recording_authorized"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "R04_contract_depth_complete_only",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_change_contract_depth_complete"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-C2-01_fourth_anchor_digest",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_wrong_fourth_anchor_digest"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-C2-02_nonblank_lander",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_blank_lander"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-C2-03_seal_applier_list",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_missing_lander_from_seal_applier_list"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_outcome_schema_identity",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_outcome_schema_id"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_outcome_receipt_fingerprint",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_outcome_receipt_sha256"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_registered_row_fields",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_outcome_registered_extra_field"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_excluded_row_fields",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_exclusion_extra_field"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_exclusion_disposition",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_exclusion_disposition"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_decision_exact_name",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_exclusion_decision_dotted_sibling"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_citation_fields",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_exclusion_citation_extra_field"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      },
+      {
+        "guard": "CA2-A01_Plans_realpath_containment",
+        "predicate_sites_removed": 1,
+        "negatives_that_accept": [
+          "negative_exclusion_evidence_symlink_outside_Plans"
+        ],
+        "peer_checks_unchanged": 109,
+        "peer_negatives_still_reject": 83,
+        "peer_results_and_refusals_identical": true
+      }
+    ],
+    "restored_checks": 110,
+    "restored_all_pass": true
+  },
+  "legacy_differential": {
+    "status": "pass",
+    "old_exit": 1,
+    "new_exit": 1,
+    "old_failures": 10,
+    "new_failures": 12,
+    "all_original_failures_and_order_preserved": true,
+    "all_original_named_checks_equal": true,
+    "all_original_input_pins_equal": true,
+    "original_main_AST_prefix_unchanged": true,
+    "original_functions_changed": [
+      "multi_family_receipt_state",
+      "post_august_validator_pin",
+      "main",
+      "build_receipt"
+    ],
+    "new_only_failures": [
+      {
+        "error": "recount_change_receipt_invalid",
+        "detail": "DL-451 prose entry missing or duplicated"
+      },
+      {
+        "error": "recount_input_or_outcome_invalid",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/PM-Experiments/CA-SEAL2-default-5xqb5dv2/Plans/.audits/event-authority-2026-08-12/recount/OUTCOMES.json'"
+      }
+    ]
+  },
+  "index_comparison": {
+    "status": "pass",
+    "index_top_level_status": "fail",
+    "findings": 24,
+    "failure_array_identical_to_reviewed_head": true,
+    "review_index_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra/index-head.json",
+    "review_index_sha256": "b8e3358fd8ed6a19f4d8bddfa6f2f1896388433d3754632b95fafd6a10c9b0c9"
+  },
+  "commands": [
+    {
+      "check": "default-entrypoint",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/default_entrypoint.py"
+      ],
+      "exit": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "available_gb": 23
+    },
+    {
+      "check": "hostile-inputs",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/hostile_inputs.py"
+      ],
+      "exit": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "available_gb": 22
+    },
+    {
+      "check": "stack-assembly",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/stack_assembly.py"
+      ],
+      "exit": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "available_gb": 22
+    },
+    {
+      "check": "shard-check",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "available_gb": 22
+    },
+    {
+      "check": "index-validate",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 1,
+      "expected_exit_codes": [
+        1
+      ],
+      "available_gb": 22
+    },
+    {
+      "check": "evidence-audit",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/audit_evidence.py"
+      ],
+      "exit": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "available_gb": 21
+    }
+  ],
+  "family_grades_before_after": "N/A -> N/A; no family or admission authored",
+  "ids_used": [],
+  "retained_evidence": [
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/CA-SEAL2-checks.py",
+      "sha256": "6a4e8b6d996ed945be5ec8c55ac4172941952ce6384c96496ab62a5637f2ddb3"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/guard_removal.py",
+      "sha256": "31cc427c74f464ab6b93d23fa4aa42b81a91354b1cfd2c9beb9c313bf6120028"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/default_entrypoint.py",
+      "sha256": "150394c7e80647ce3e2461bff3b9c81d8f58393cc27943aef9077bf4fb2a2e06"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/audit_evidence.py",
+      "sha256": "eb3b04a28b260e7de549112b575174ff0812293b47cab96a7afa36f044038299"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/hostile_inputs.py",
+      "sha256": "263e5919954a4d2ccf845240a2e9fc0759d1c58c8f582c8266b9852028114f53"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/stack_assembly.py",
+      "sha256": "4d572335c750cc373220fc2ce43203cac5e6658fa782cddac8af64d9446a878d"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/setup.py",
+      "sha256": "af93ff2dd76e93cbf5983e370e638fecdc35069798278564c3084a8a54000021"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/run_verification.py",
+      "sha256": "c6f8f84dbadc5b1edc4172ec328d07fed314278fe512ecef60cce9337c08e377"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/lead-adjudications.txt",
+      "sha256": "085e6d81c54396e45b1d930f8476f58b5b64088d09785f839aeefa38dcba2910"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/check-results.json",
+      "sha256": "89f7f856ee10a5085fe7260d5fbeac774a8260efe8d261845e6ee7d447a3dde8"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/restored-check-results.json",
+      "sha256": "89f7f856ee10a5085fe7260d5fbeac774a8260efe8d261845e6ee7d447a3dde8"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/guard-removal-results.json",
+      "sha256": "72f0110bdc44d9288f9a9d10934726e237bb83203fe76a6e6ebd3614b972fee8"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/snapshot-default-path-results.json",
+      "sha256": "c8c9d3e21ad3057b40059582e3127f7e7a4c73776947b51bb537316a29d788b4"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/legacy-differential.json",
+      "sha256": "a22aed1a377a572cc467df150adaee5d7659b61f1bc79c92663a7f2e4e07a890"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/hostile-inputs.json",
+      "sha256": "8b09273e90853e3dafc804c1d9b871e449cd6ff878ca506b8c365d7561e891c3"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/stack-assembly.json",
+      "sha256": "e4f653318c0695625c38a47a62e266ddf5bbda0015e2c30244e3eba389219d9c"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/scope-and-pins.json",
+      "sha256": "70d33e9a97b41c1c59267a111765afe4300dc66950365403b5d358854c86fa2f"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/original-corpus-comparison.json",
+      "sha256": "2349c45b4c148ca0d73ac32a6c2e52dd0ff5bb8dacce0d3c5d74612fad7d59c4"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/index-comparison.json",
+      "sha256": "82f162ca569c6f286a6494312ade8ef3cce598bd2b19ef53d72ef8993d8fb6c8"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/currentness-copy.json",
+      "sha256": "acfee3f751d912494b37637df596eb16f4f11d6910ab46acf45f42cc4024d8c2"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/review-evidence-audit.json",
+      "sha256": "17d6f4d77d6dfeb3aecc99ee9a87241ad35be193ac4c8422ebaf18e1971fa6e8"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/shard-check.json",
+      "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/index-validate.json",
+      "sha256": "f4a64f681f28f53968029ae38d7f33d93fe2291231a01183f935bfa6967e4d81"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix3/commands.json",
+      "sha256": "eb99de1c748bc9a0759fe12cb7a6bd8ad236df3a7aeac97522160caed7dd9c17"
+    }
+  ],
+  "limits": [
+    "No validator, receipt, Plans or generated artifact changes in round 3.",
+    "No admission, registry change, August restamp, Spec Lock/evidence/auto-decision edit, real outcome, seal, main push, mailbox or subagent.",
+    "S1 shared guard-isolation inventory/adoption remains a separate sweep item.",
+    "Real approval retains all ten August prerequisites and two pending recount failures; index retains the same 24 findings as Astra.",
+    "Independent re-review and coordinated reviewed landing remain required."
+  ]
+}
