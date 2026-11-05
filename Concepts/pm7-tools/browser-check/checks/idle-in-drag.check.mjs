@@ -15,6 +15,13 @@
 //
 // --set selftest=omit-usage|omit-theme|omit-census|omit-glass suppresses that one owner's real requests at the shared
 // admission (by its function names, independently of the classifier) and the check must FAIL on that owner.
+//
+// A native idle callback is the scheduler's wrapper (PM_BUSY.idle's run), not the owner's work, so a resume is proven
+// by the owner's own callback: each function an owner hands PM_BUSY.idle is wrapped, and its entry is recorded against
+// the native job it ran inside. A resumed job whose owner callback never ran fails by owner. (A request made straight to
+// requestIdleCallback, as owners did before PM_BUSY.idle, has the owner's function as its native callback.)
+// --set repeats=N (a positive integer, default 1) is the number of holds per look, and the run must complete exactly
+// that many real held drags.
 
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -52,7 +59,7 @@ async function regionsOf(t) {
 const RECORDER = (cfg) => {
 	if (window.__pmIdleRec) return;
 	try { localStorage.clear(); } catch (_) { /* opaque surface */ }
-	const R = window.__pmIdleRec = { fired: [], jobs: [], gated: true };
+	const R = window.__pmIdleRec = { fired: [], jobs: [], bodies: [], gated: true, hooked: false };
 	const DRAG = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
 	const inDrag = () => document.body && DRAG.some(c => document.body.classList.contains(c));
 	const ric = window.requestIdleCallback, cic = window.cancelIdleCallback, st = window.setTimeout;
@@ -70,20 +77,53 @@ const RECORDER = (cfg) => {
 	R.ownerOf = ownerOf;
 	const identities = new WeakMap(), pending = new Map(); let seq = 0, handle = 1000000000;
 	const note = (kind, owner, stack, t0, drag, id) => R.fired.push({ kind, owner, stack, at: t0, ms: performance.now() - t0, drag, id });
+	// an owner callback's entry, tied to the native job it runs inside and to the PM_BUSY.idle request that wrapped it
+	const entered = (token) => R.bodies.push({ job: R.job ? R.job.id : 0, owner: R.job ? R.job.owner : null, token, at: performance.now(), drag: inDrag() });
 	const ask = j => { j.native = ric.call(window, dl => {
 		pending.delete(j.handle); j.pending = false;
 		const at = performance.now(), drag = inDrag();
-		const was = R.running; R.running = j.owner;
-		try { return j.fn(dl); } finally { R.running = was; note('idle', j.owner, j.stack, at, drag, j.id); }
+		const was = R.running, wasJob = R.job; R.running = j.owner; R.job = j;
+		try { if (!j.via) entered(0); return j.fn(dl); } finally { R.running = was; R.job = wasJob; note('idle', j.owner, j.stack, at, drag, j.id); }
 	}, j.options); };
+	// PM_BUSY.idle: wrap the owner's function to witness its entry (the scheduler's handling is untouched), and, for a
+	// selftest, drop one owner's real requests there, picked by the owner's own function names (plain text, not the
+	// classifier above), as the review's Glass omission did
+	const omitHit = { usage: (s) => /\bat idleStill\b/.test(s), theme: (s) => /\bat whenIdle\b/.test(s), census: (s) => /\bat censusSchedule\b/.test(s),
+		glass: (s) => s.includes('prewarmSoon') && s.includes('syncStripNow') }[cfg.omit] || null;
+	if (omitHit) window.__pmIdleOmit = { key: cfg.omit, count: 0 };
+	let tokens = 0, busy;
+	Object.defineProperty(window, 'PM_BUSY', { configurable: true, enumerable: true, get() { return busy; }, set(value) {
+		busy = value;
+		if (!value || (typeof value !== 'function' && typeof value !== 'object')) return;
+		let idle;
+		Object.defineProperty(value, 'idle', { configurable: true, enumerable: true, get() { return idle; }, set(real) {
+			if (typeof real !== 'function') { idle = real; return; }
+			R.hooked = true;
+			idle = function (fn, ...rest) {
+				if (omitHit && omitHit(new Error().stack || '')) { window.__pmIdleOmit.count++; return { cancel() {} }; }
+				if (typeof fn !== 'function') return real.call(this, fn, ...rest);
+				const token = ++tokens;
+				const body = function (...a) { entered(token); return fn.apply(this, a); };
+				const was = R.admitting; R.admitting = token;
+				try { return real.call(this, body, ...rest); } finally { R.admitting = was; }
+			};
+		} });
+	} });
 	// Delay delivery only, never execute the callback ourselves. Cancellation is honoured, and a scheduler re-admission
 	// keeps the function's original identity (and owner).
 	if (ric) {
 		window.requestIdleCallback = function (fn, options) {
 			const stack = stackOf();
 			let identity = identities.get(fn);
-			if (!identity) { const owner = ownerOf(stack); if (!owner || owner === 'drag') return ric.call(window, fn, options); identity = { id: ++seq, stack, owner }; identities.set(fn, identity); }
-			const j = { id: identity.id, owner: identity.owner, handle: ++handle, fn, options, stack: identity.stack, pending: true, native: 0 };
+			if (!identity) {
+				const owner = ownerOf(stack); if (!owner || owner === 'drag') return ric.call(window, fn, options);
+				// via: asked by the shared admission, so the native callback is its wrapper and the owner's entry is witnessed
+				// inside it; token: the PM_BUSY.idle request it was first asked under (0 for a re-admission of a job parked
+				// before it ever reached requestIdleCallback)
+				identity = { id: ++seq, stack, owner, via: !!R.admitting || frames(stack).some(admitting), token: R.admitting || 0 };
+				identities.set(fn, identity);
+			}
+			const j = { id: identity.id, owner: identity.owner, via: identity.via, token: identity.token, handle: ++handle, fn, options, stack: identity.stack, pending: true, native: 0 };
 			R.jobs.push(j); pending.set(j.handle, j);
 			if (!R.gated) ask(j);
 			return j.handle;
@@ -99,7 +139,7 @@ const RECORDER = (cfg) => {
 		// Independent native deadline proves this hold actually offered idle delivery.
 		ric.call(window, () => { R.opportunity = { at: performance.now(), drag: inDrag() }; }, { timeout: 500 });
 	};
-	R.pending = () => R.jobs.filter(j => j.pending).map(({ id, handle, owner, stack }) => ({ id, handle, owner, stack }));
+	R.pending = () => R.jobs.filter(j => j.pending).map(({ id, handle, owner, stack, via, token }) => ({ id, handle, owner, stack, via, token }));
 	// jobs an owner withdrew itself, outside any drag (a census torn down, a scan superseded): not the drag's doing
 	R.withdrawn = (handles) => R.jobs.filter((j) => handles.includes(j.handle) && j.cancelled && !j.cancelDrag).map((j) => j.handle);
 	// a timer set by an owner's idle callback carries that idle work on: it belongs to the owner (the drag's own
@@ -111,23 +151,6 @@ const RECORDER = (cfg) => {
 	};
 };
 
-// The expected-failing counterexample: one owner's real requests never reach the shared admission. Picked by the
-// owner's own function names (plain text, not the classifier above), as the review's Glass omission did.
-const OMIT = (key) => {
-	const hit = { usage: (s) => /\bat idleStill\b/.test(s), theme: (s) => /\bat whenIdle\b/.test(s), census: (s) => /\bat censusSchedule\b/.test(s),
-		glass: (s) => s.includes('prewarmSoon') && s.includes('syncStripNow') }[key];
-	if (!hit || window.__pmIdleOmit) return;
-	window.__pmIdleOmit = { key, count: 0 };
-	let busy;
-	Object.defineProperty(window, 'PM_BUSY', { configurable: true, get() { return busy; }, set(value) {
-		busy = value; let idle;
-		Object.defineProperty(busy, 'idle', { configurable: true, get() { return idle; }, set(real) { idle = function (...args) {
-			if (hit(new Error().stack || '')) { window.__pmIdleOmit.count++; return { cancel() {} }; }
-			return real.apply(this, args);
-		}; } });
-	} });
-};
-
 // the first page frames that asked, past the recorder's and the admission's own: "name:line" (line in the built page)
 const top = (stack) => stack.split('\n').slice(1).map((l) => /^\s*at (?:(.+?) \()?(.+?):(\d+):\d+\)?\s*$/.exec(l)).filter((m) => m && m[2] !== '<anonymous>' && !/(?:^|\.)(?:ask|idleWhenStill)(?: \[as \w+\])?$/.test(m[1] || '')).slice(0, 3).map((m) => `${m[1] || '(anonymous)'}:${m[3]}`).join(' < ');
 const brief = (jobs) => JSON.stringify(jobs.map((j) => ({ id: j.id, owner: j.owner, at: top(j.stack) })));
@@ -137,10 +160,11 @@ async function holdDrag(t, f, sel, label, keys) {
 		const vis = (e) => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(e).display !== 'none'; };
 		const e = s.split('|').map((q) => [...document.querySelectorAll(q)].find(vis)).find(Boolean);
 		if (!e) return null;
-		const r = e.getBoundingClientRect();
-		return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height, id: e.id || e.className };
+		const r = e.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, hit = document.elementFromPoint(x, y);
+		return { x, y, w: r.width, h: r.height, id: e.id || e.className, hit: hit === e ? 'itself' : hit ? (hit.id ? '#' + hit.id : hit.tagName.toLowerCase() + '.' + String(hit.className).split(' ').join('.')) : 'nothing' };
 	}, sel);
 	if (!(await t.check(`${label}: a divider to hold`, !!box, sel))) return null;
+	t.log(`${label}: holding ${box.id} at ${Math.round(box.x)},${Math.round(box.y)} (${Math.round(box.w)}x${Math.round(box.h)}); the element at that point before the move: ${box.hit}`);
 	const axisX = box.h >= box.w;   // a tall bar moves sideways
 	const at = (d) => (axisX ? [box.x + d, box.y] : [box.x, box.y + d]);
 	await t.page.mouse.move(...at(0)); await t.page.waitForTimeout(120);
@@ -152,21 +176,22 @@ async function holdDrag(t, f, sel, label, keys) {
 		await f.waitForFunction((ks) => { const p = window.__pmIdleRec.pending(); return ks.every((k) => p.some((j) => j.owner === k)); }, keys, { timeout: 5000 }).catch(() => {});
 		queued = await f.evaluate(() => window.__pmIdleRec.pending());
 	}
+	const under = await f.evaluate(([x, y, id]) => { const h = document.elementFromPoint(x, y); return !h ? 'nothing' : (h.id === id || h.className === id) ? 'the divider' : (h.id ? '#' + h.id : h.tagName.toLowerCase() + '.' + String(h.className).split(' ').join('.')); }, [box.x, box.y, box.id]);
 	await t.page.mouse.down();
 	for (let i = 1; i <= 8; i++) { await t.page.mouse.move(...at(-i * 4)); await t.page.waitForTimeout(16); }
 	const began = await f.evaluate(() => performance.now());
 	const dragOn = await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag()) || document.body.classList.contains('pm-resizing'));
-	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)));
+	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)) + '; under the pointer at the press: ' + under);
 	await f.evaluate(() => window.__pmIdleRec.release());
 	await t.mark(label + ' held');
 	// held: the hand rests on the bar, with the small moves a held hand makes
 	for (let k = 0; k < HOLD_MS / 100; k++) { await t.page.mouse.move(...at(-32 + (k % 2 ? 1 : -1))); await t.page.waitForTimeout(100); }
 	const ended = await f.evaluate(() => performance.now());
-	await t.check(`${label}: drag remains held`, await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag())), 'the whole measurement must be a held drag');
-	await t.check(`${label}: native idle delivery was eligible during hold`, await f.evaluate(() => !!window.__pmIdleRec.opportunity?.drag), 'independent native deadline inside the real held gesture');
+	const remained = await t.check(`${label}: drag remains held`, await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag())), 'the whole measurement must be a held drag');
+	const offered = await t.check(`${label}: native idle delivery was eligible during hold`, await f.evaluate(() => !!window.__pmIdleRec.opportunity?.drag), 'independent native deadline inside the real held gesture');
 	await t.mark(label + ' released');
 	await t.page.mouse.up();
-	return { began, ended, queued };
+	return { began, ended, queued, held: !!(dragOn && remained && offered) };
 }
 
 async function judge(t, f, label, win, owners) {
@@ -180,6 +205,12 @@ async function judge(t, f, label, win, owners) {
 		const idle = (byOwner[o.key] || []).filter((c) => c.kind === 'idle');
 		await t.check(`${label}: no idle callback from ${o.name} inside the drag`, idle.length === 0, idle.length ? `${idle.length} callbacks (jobs ${[...new Set(idle.map((c) => c.id))].join(', ')}), ${idle.reduce((s, c) => s + c.ms, 0).toFixed(1)} ms; first requested at ${top(idle[0].stack)}` : '0');
 	}
+	// the owners' own callbacks: none entered inside the drag (whatever native callback carried them)
+	const bodies = await f.evaluate(([a, b]) => window.__pmIdleRec.bodies.filter((c) => c.drag && c.at >= a && c.at <= b + 50), [win.began, win.ended]);
+	for (const o of [...owners, EXTRA]) {
+		const mine = bodies.filter((c) => c.owner === o.key);
+		await t.check(`${label}: no ${o.name} callback body entered inside the drag`, mine.length === 0, mine.length ? `${mine.length} entries (jobs ${[...new Set(mine.map((c) => c.job))].join(', ')})` : '0');
+	}
 	// a timer an owner's idle work set may fire in a drag (a delay that ends there), but it starts nothing there
 	const timers = [...owners, EXTRA].flatMap((o) => (byOwner[o.key] || []).filter((c) => c.kind === 'timeout' && c.ms > 2));
 	await t.check(`${label}: no timer of those owners does work inside the drag`, timers.length === 0, timers.map((c) => `${nameOf(c.owner)} ${c.ms.toFixed(1)} ms at ${top(c.stack)}`).join('; ') || '0');
@@ -188,6 +219,9 @@ async function judge(t, f, label, win, owners) {
 export const tests = {
 	async 'idle work waits out a held drag (SW-17)'(t) {
 		const looks = String(t.args.looks || 'glass-dark,basic-dark').split(',');
+		// holds per look: a positive integer, or nothing is exercised (repeats=0 once ran no hold and passed)
+		const repeats = t.args.repeats === undefined ? 1 : Number(String(t.args.repeats).trim() === '' ? NaN : t.args.repeats);
+		if (!(await t.check('repeats is a positive whole number of holds per look', Number.isInteger(repeats) && repeats >= 1, `repeats=${JSON.stringify(t.args.repeats)}`))) return;
 		const selftest = String(t.args.selftest || '');
 		const omit = /^omit-(usage|theme|census|glass)$/.exec(selftest)?.[1] || null;
 		if (selftest) await t.check(`selftest ${selftest} is a known omission`, !!omit, 'omit-usage | omit-theme | omit-census | omit-glass');
@@ -200,14 +234,15 @@ export const tests = {
 		const cdp = await t.page.context().newCDPSession(t.page);
 		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
 		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
-		if (omit) await t.page.addInitScript(OMIT, omit);
-		await t.page.addInitScript(RECORDER, map);
+		await t.page.addInitScript(RECORDER, { ...map, omit });
 		if (!t.args.film) await t.viewport(Number(t.args.width || 1390), Number(t.args.height || 900));
-		for (let repeat = 0; repeat < Number(t.args.repeats || 1); repeat++) {
+		const holds = Object.fromEntries(looks.map((l) => [l, 0]));
+		for (let repeat = 0; repeat < repeats; repeat++) {
 		for (const look of looks) {
 		const owners = needed(look);
 		const f = await t.app.open({ settleMs: 200 });
 		await t.check('recorder installed in the app frame', await f.evaluate(() => !!window.__pmIdleRec), '');
+		await t.check('owner callback witness installed on PM_BUSY.idle in the app frame', await f.evaluate(() => !!(window.__pmIdleRec && window.__pmIdleRec.hooked && window.PM_BUSY && typeof PM_BUSY.idle === 'function')), '');
 		await t.app.resetLayout();
 		await t.app.look(look);
 		// Keep real boot jobs queued even on fast hosts. Usage starts its own warm slices; no synthetic owner callback or
@@ -229,6 +264,7 @@ export const tests = {
 			await t.check(`selftest ${look}: the ${nameOf(omit)} omission actually suppressed real requests`, n > 0, String(n));
 		}
 		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`, keys);
+		if (usage && usage.held) holds[look]++;
 		if (usage) {
 			// an owner's own withdrawal outside the drag (after the press snapshot, before the drag class) is not judged;
 			// every owner still needs at least one witnessed job the drag itself had to hold back
@@ -241,22 +277,29 @@ export const tests = {
 			}
 			await judge(t, f, `${look} Usage`, usage, owners);
 			await t.page.waitForTimeout(6000);
-			const fired = await f.evaluate(() => window.__pmIdleRec.fired);
+			const { fired, bodies } = await f.evaluate(() => ({ fired: window.__pmIdleRec.fired, bodies: window.__pmIdleRec.bodies }));
 			const during = (j) => fired.filter((c) => c.id === j.id && c.at >= usage.began && c.at <= usage.ended + 50);
 			const after = (j) => fired.some((c) => c.id === j.id && !c.drag && c.at > usage.ended);
+			// the owner's own callback entered inside this job's native delivery after release (and, when the job's first
+			// request was witnessed, it is the function that request wrapped)
+			const work = (j) => bodies.some((b) => b.job === j.id && !b.drag && b.at > usage.ended && (!j.token || b.token === j.token));
 			for (const o of owners) {
 				const mine = usage.queued.filter((j) => j.owner === o.key);
 				const ran = mine.filter((j) => during(j).length);
 				await t.check(`${look}: ${o.name}'s pending jobs are withheld through the hold`, mine.length > 0 && ran.length === 0, mine.length ? (ran.length ? `ran inside: ${brief(ran)}` : `${mine.length} withheld`) : 'no pending job to withhold');
 				const lost = mine.filter((j) => !after(j));
 				await t.check(`${look}: ${o.name}'s same pending jobs resume after release`, mine.length > 0 && lost.length === 0, mine.length ? (lost.length ? `never resumed: ${brief(lost)}` : `${mine.length} resumed: ids ${mine.map((j) => j.id).join(', ')}`) : 'no pending job to resume');
+				const idle = mine.filter((j) => !work(j));
+				await t.check(`${look}: ${o.name}'s own callback runs for each resumed job`, mine.length > 0 && idle.length === 0, mine.length ? (idle.length ? `resumed without the owner's callback: ${brief(idle)}` : `${mine.length} ran: ids ${mine.map((j) => j.id).join(', ')}`) : 'no pending job to run');
 			}
 			for (const j of usage.queued.filter((q) => q.owner === EXTRA.key)) {
 				await t.check(`${look}: job ${j.id} (${EXTRA.name}): same queued job resumes after release`, after(j), top(j.stack));
+				await t.check(`${look}: job ${j.id} (${EXTRA.name}): its own callback runs after release`, work(j), top(j.stack));
 			}
 		}
 		}
 		}
+		for (const look of looks) await t.check(`${look}: ${repeats} real held drag${repeats > 1 ? 's' : ''} completed`, holds[look] === repeats, `${holds[look]} of ${repeats}`);
 		await cdp.detach();
 	}
 };
