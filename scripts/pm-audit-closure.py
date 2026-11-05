@@ -3156,6 +3156,16 @@ def legacy_audit_state(audit_dir: Path) -> dict[str, Any] | None:
         expected = contained_path(ROOT, rel_dir)
         if not expected.is_dir() or audit_dir.resolve() != expected:
             return None
+        # The path as supplied must itself be ROOT/Plans/.audits/<name>, not an alias that resolves
+        # to it: no symlink in any supplied component below the repository root (Q7 Astra r1).
+        supplied = Path(os.path.normpath(str(audit_dir)))
+        if supplied != Path(os.path.normpath(str(ROOT / rel_dir))):
+            return None
+        probe = supplied
+        while probe != ROOT and probe != probe.parent:
+            if probe.is_symlink():
+                return None
+            probe = probe.parent
     except (AnchorError, OSError):
         return None
     inventory = _legacy_inventory()
@@ -3353,7 +3363,8 @@ def validate_audit_dir(
         # Any input the run reads that is a symbolic link disqualifies the directory: what a
         # diagnostic names is then not the file that was read.
         "symlinked_inputs": sorted(
-            name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX}
+            name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX,
+                              EFFECTIVE_STATUS}
             if (audit_dir / name).is_symlink()
         ),
         "report_has_status": isinstance(audit_report, dict) and "status" in audit_report,
@@ -5083,6 +5094,16 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             external = tmp / "elsewhere" / legacy_name
             write_fixture(external, historical)
             check("legacy_state_external_alias_is_none", legacy_audit_state(external) is None)
+            # A symlink outside the tree whose name is the listed name and whose target is the real
+            # frozen directory, and a symlinked parent pointing at the real Plans/.audits.
+            alias_leaf = tmp / "aliases" / legacy_name
+            alias_leaf.parent.mkdir(parents=True, exist_ok=True)
+            alias_leaf.symlink_to(legacy_dir, target_is_directory=True)
+            alias_parent = tmp / "alias-audits"
+            alias_parent.symlink_to(legacy_dir.parent, target_is_directory=True)
+            check("legacy_state_alias_to_real_dir_is_none",
+                  legacy_audit_state(alias_leaf) is None and legacy_audit_state(alias_parent / legacy_name) is None
+                  and legacy_audit_state(legacy_dir) is not None)
             shutil.rmtree(second_dir)
             second_dir.symlink_to(external, target_is_directory=True)
             check("legacy_state_leaf_symlink_is_none", legacy_audit_state(second_dir) is None)
