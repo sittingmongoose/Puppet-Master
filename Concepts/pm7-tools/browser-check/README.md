@@ -103,3 +103,5 @@ browser-check diff $OUT/base $OUT/tip            # opens nothing; lists CHANGED 
 ```
 
 The concept demo is live: clocks, usage numbers and toasts move between runs. A changed frame whose box sits only on a live widget is expected. Look at the diff image before reporting it.
+
+| `onboarding-auto.check.mjs` | Q2: prior Auto, both onboarding controls, five families/system changes, draft and Back retention; Reduced Motion; both surfaces. |
