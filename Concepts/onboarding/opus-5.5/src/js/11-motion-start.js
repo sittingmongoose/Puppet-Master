@@ -136,10 +136,10 @@
      PM_BUSY.drag() -> true while a drag class is on the body. PM_BUSY.idle(fn, timeout?, { quiet }?) is the one admission
      for idle work: fn runs in an idle callback (requestIdleCallback with that timeout), but never inside a held drag:
      asked during one, it waits for the spell's end ('pm-idle') and asks again; a callback that lands in one does the same.
-     quiet (ms) is for a job that holds the main thread long in one task: its callback runs fn only once no pointer
+     quiet (ms) admits a background phase only once no pointer
      move, press, key, wheel or touch has come for that long and none is pending, else it asks again when that time is
-     up, so a press that was on its way does not wait behind the job (SW-01: a cold first Activity click waited 229 ms
-     behind the editor sheet's idle build).
+     up. Long jobs must yield between bounded phases and ask through this admission again; quiet cannot preempt
+     a callback already running (SW-01: the editor sheet now separates construction and layout phases).
      A hidden tab is not busy by itself (callers keep their own document.hidden check). It reads attributes and ids only,
      never style or layout, so it costs nothing in any frame. 'pm-idle' is sent on window in the first frame after a
      busy spell ends: every spell this script sees begin (one of those markers appearing) or that a call finds. */
