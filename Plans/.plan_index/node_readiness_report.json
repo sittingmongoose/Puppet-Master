@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18755,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 21963,
+    "node_count": 7424,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T02:24:50Z",
+  "generated_at_utc": "2026-11-05T03:20:29Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -28699,8 +28699,8 @@
         "source_location": {
           "heading": "PDS-016 - Planning Implementation Readiness And Claim Traceability",
           "heading_level": 3,
-          "heading_line": 799,
-          "line": 801,
+          "heading_line": 800,
+          "line": 802,
           "path": "Plans/Plan_Document_System.md"
         }
       },
@@ -28710,8 +28710,8 @@
         "source_location": {
           "heading": "PDS-022 - Scoped Unit To-Do Mapping And Explicit Promotion Only",
           "heading_level": 3,
-          "heading_line": 1282,
-          "line": 1284,
+          "heading_line": 1283,
+          "line": 1285,
           "path": "Plans/Plan_Document_System.md"
         }
       },
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7422,
+  "plan_unit_count": 7424,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2744,
+      "high": 2746,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -43275,7 +43275,7 @@
       "governance_boundary": 2,
       "governance_false_buildability": 1,
       "governance_gap_loss": 1,
-      "governance_integrity": 1,
+      "governance_integrity": 3,
       "governance_label_copy_drift": 1,
       "governance_role_conflation": 1,
       "governance_runtime_record_schema_gap": 1,
@@ -45864,7 +45864,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7205,
+      "accepted": 7207,
       "retired": 194,
       "superseded": 23
     },
@@ -45897,7 +45897,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 174,
+      "decision": 175,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -45934,7 +45934,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5615,
+      "requirement": 5616,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46122,6 +46122,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Decision_Log.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/FinalGUISpec.md"
       },
       {
@@ -46139,6 +46143,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Permissions_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plan_Document_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

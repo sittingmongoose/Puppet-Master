@@ -4545,6 +4545,8 @@
     "WS-011",
     "WS-013",
     "PLS-013",
+    "DL-334",
+    "PLS-026",
     "PSMERA-009",
     "PSMERA-010",
     "PSMERA-011",
@@ -29430,6 +29432,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "DL-334",
+      "to": "PDS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-334",
+      "to": "PLS-025"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "DP-003",
       "to": "DP-002"
     },
@@ -53287,6 +53299,21 @@
       "edge_type": "depends_on",
       "from": "PLS-025",
       "to": "PLS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-026",
+      "to": "PDS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-026",
+      "to": "PLS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-026",
+      "to": "PLS-025"
     },
     {
       "edge_type": "depends_on",
@@ -117219,7 +117246,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T02:24:48Z",
+  "generated_at_utc": "2026-11-05T03:20:28Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -152355,6 +152382,23 @@
         "heading_level": 3,
         "heading_line": 21037,
         "line": 21039,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-334",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "DL-334 - June Audit Directories Get A Bounded Legacy Format Rule; Uncovered Rows Get A Supplemental Closure Pass",
+        "heading_level": 3,
+        "heading_line": 21108,
+        "line": 21110,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -203897,8 +203941,8 @@
       "source_location": {
         "heading": "PDS-015 - Owner Consumer Reference Scan Gate",
         "heading_level": 3,
-        "heading_line": 721,
-        "line": 723,
+        "heading_line": 722,
+        "line": 724,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -203914,8 +203958,8 @@
       "source_location": {
         "heading": "PDS-016 - Planning Implementation Readiness And Claim Traceability",
         "heading_level": 3,
-        "heading_line": 799,
-        "line": 801,
+        "heading_line": 800,
+        "line": 802,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -203931,8 +203975,8 @@
       "source_location": {
         "heading": "PDS-017 - Retired Compatibility Retrieval Exclusion",
         "heading_level": 3,
-        "heading_line": 906,
-        "line": 908,
+        "heading_line": 907,
+        "line": 909,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -203948,8 +203992,8 @@
       "source_location": {
         "heading": "PDS-018 - PDS-018",
         "heading_level": 3,
-        "heading_line": 962,
-        "line": 964,
+        "heading_line": 963,
+        "line": 965,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -203965,8 +204009,8 @@
       "source_location": {
         "heading": "PDS-019 - Implementation Readiness Blocker Registry",
         "heading_level": 3,
-        "heading_line": 1016,
-        "line": 1018,
+        "heading_line": 1017,
+        "line": 1019,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -203982,8 +204026,8 @@
       "source_location": {
         "heading": "PDS-020 - Non-Executable Readiness Closure Evidence Registry",
         "heading_level": 3,
-        "heading_line": 1105,
-        "line": 1107,
+        "heading_line": 1106,
+        "line": 1108,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -203999,8 +204043,8 @@
       "source_location": {
         "heading": "PDS-021 - Scoped Assistant Deep Plan PlanUnit Profile",
         "heading_level": 3,
-        "heading_line": 1214,
-        "line": 1216,
+        "heading_line": 1215,
+        "line": 1217,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -204016,8 +204060,8 @@
       "source_location": {
         "heading": "PDS-022 - Scoped Unit To-Do Mapping And Explicit Promotion Only",
         "heading_level": 3,
-        "heading_line": 1282,
-        "line": 1284,
+        "heading_line": 1283,
+        "line": 1285,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -204033,8 +204077,8 @@
       "source_location": {
         "heading": "PDS-023 - Application Deep Plan Scoped Bundle Boundary",
         "heading_level": 3,
-        "heading_line": 1333,
-        "line": 1335,
+        "heading_line": 1334,
+        "line": 1336,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -205701,6 +205745,23 @@
         "heading_level": 3,
         "heading_line": 1545,
         "line": 1547,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-026",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "PLS-026 - Legacy Audit Format Rule And Supplemental Closure Passes",
+        "heading_level": 3,
+        "heading_line": 1621,
+        "line": 1623,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -243402,10 +243463,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18755,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 21963,
+    "node_count": 7424,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -626,6 +626,7 @@ acceptance_criteria:
   - Repair closure matrix rows fail validation when source_artifact, source_row, finding_key, closure_status, closure_evidence, closure_reason, or registry_closure_id linkage is missing.
   - Reopened registry rows fail validation unless they reference a prior closed finding_key and prove changed source/PlanUnit/owner/closure hashes.
   - Duplicate open finding_keys fail validation while historical closed rows can remain durable evidence.
+  - For the 55 June 2026 audit directories that PLS-026 names, the legacy format rule reports the format and schema-evolution errors PLS-026 lists as warnings; every other check above still fails them, and no missing closure row is excused.
 validation_surfaces:
   - python3 scripts/pm-audit-closure.py validate
   - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix

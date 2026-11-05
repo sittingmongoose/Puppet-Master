@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-04T18:14:34Z",
+  "generated_at_utc": "2026-11-05T03:19:31Z",
   "index_path": "Plans/_shards/planning_ledger_system/00-index.md",
-  "index_sha256": "d993a5897f6f6da2fb256054cb9bcc71ec7e4424ad97cc5d58b4737d7a23364c",
+  "index_sha256": "011b44e43ef425075b4f6eb41418b62f21274c03f7f34c760526007e18a37382",
   "manifest_path": "Plans/_shards/planning_ledger_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/planning_ledger_system/001-preamble.md",
-      "sha256": "0697df307355820f9c95a6146e8e4788cd61ad3139c6dbe15f1ab1d71a575f5e",
+      "sha256": "ea085506e8c81cd07144ba4e54c16722daf4aa8045934c9ed020c45e92104538",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/planning_ledger_system/002-0.-scope.md",
-      "sha256": "9816c0e961c95783fe118aceb55928d6412902e486fa549474320da2e292e890",
+      "sha256": "654c12bb0fee1bfba61666e10435330e4b021252c746c866bfc128964d98e669",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Architecture Summary",
       "path": "Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
-      "sha256": "44ae406e2aff015d47788b6cdf407d1f781afb15b810eec2c0ef4b6a48056ebc",
+      "sha256": "a2fd8fc0d8f40288c3ebfdfa5fea3fff9970021241877548c9ef8b09f60c4ccf",
       "shard_id": "003",
       "source_line_end": 25,
       "source_line_start": 13,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/planning_ledger_system/004-2.-planunits.md",
-      "sha256": "f36689605e7a573cfee7b37bdca15fe397891866338ef34f730b3d277ebfb64e",
+      "sha256": "588410e7696361a40a586cc6a97376ce4f2b3b97a47fa0065bbb606e87e4b8a2",
       "shard_id": "004",
       "source_line_end": 419,
       "source_line_start": 27,
@@ -44,7 +44,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "64573605d0c95e2eb5d030b86b31f85d7023d5a5c23db886959646c899cdc372",
+      "sha256": "f8f3a058fbc354a164f65a2d0e65ba0d82e664f850d81b095f6fb076ad4baf36",
       "shard_id": "005",
       "source_line_end": 511,
       "source_line_start": 421,
@@ -53,7 +53,7 @@
     {
       "heading": "Semantic Audit Closure Addendum - 2026-06-17",
       "path": "Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md",
-      "sha256": "83498ca2b3017da7c6d6f1d288c1323e7097ec2ba2e5f80618616f2310b49ebe",
+      "sha256": "efd82b927e4f0630d45f50bbf988ada1595fe15fb7ea1a039a467d844ae9918e",
       "shard_id": "006",
       "source_line_end": 673,
       "source_line_start": 513,
@@ -62,7 +62,7 @@
     {
       "heading": "3. Compilation Coverage",
       "path": "Plans/_shards/planning_ledger_system/007-3.-compilation-coverage.md",
-      "sha256": "713b4c28ba445b3215a1cb0eb511d94103d5b0c73e1a8e06f20bee29fbe95e53",
+      "sha256": "2c38e704fc1e49504f1c60ee9e27cd36a18df99d082a1a3a9ac61d44dce5f5a8",
       "shard_id": "007",
       "source_line_end": 699,
       "source_line_start": 675,
@@ -71,7 +71,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/planning_ledger_system/008-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "708aea0b00ab78fd3619cc9a470d3d9962d934050da1d70240a8b3841a568e00",
+      "sha256": "32ed89b0f524c33d2db68a46d4bec917a310726f79d203660024f9d1d7979078",
       "shard_id": "008",
       "source_line_end": 758,
       "source_line_start": 701,
@@ -80,7 +80,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/planning_ledger_system/009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "89746cf67ff1e51baa6dff2522514d10590b53862061c4abe67690ee6f7dd86f",
+      "sha256": "8ea8ed26d09934574a758935b4f545fd54d01daec20aadb559d125acff5b4309",
       "shard_id": "009",
       "source_line_end": 957,
       "source_line_start": 761,
@@ -89,7 +89,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/planning_ledger_system/010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "923765e2465953b0df44e4123cbb696216fc10d2df8c20812e8c93e863ed5124",
+      "sha256": "fba54d8c48d1a6632b48c5a1ba488b9ccce144aefb8182408b4e2cae3bacdb2e",
       "shard_id": "010",
       "source_line_end": 1032,
       "source_line_start": 959,
@@ -98,7 +98,7 @@
     {
       "heading": "FABLE Residual Planning Ledger Service Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/planning_ledger_system/011-fable-residual-planning-ledger-service-cleanup-addendum-2026-07-.md",
-      "sha256": "4f3e2ce56c52c073655c0f6c3a377205c9ef03962eee8eb576b5cc83c582c3c6",
+      "sha256": "fdf34075b9ea7b011db89608e924a95f668ea3f69903de5bb0a4d102dbcb55b9",
       "shard_id": "011",
       "source_line_end": 1229,
       "source_line_start": 1034,
@@ -107,7 +107,7 @@
     {
       "heading": "4. Assistant Deep Plan Ledger Profile",
       "path": "Plans/_shards/planning_ledger_system/012-4.-assistant-deep-plan-ledger-profile.md",
-      "sha256": "acf5a431ed7847435bd1cebef791bb22d4a9cab7005d64e1298bc4e82bc38a99",
+      "sha256": "ae87b6caef0c25c3dc4cd31eb5652e0eb1bdc5f824ad5348f852fbac4decb45a",
       "shard_id": "012",
       "source_line_end": 1379,
       "source_line_start": 1231,
@@ -116,7 +116,7 @@
     {
       "heading": "Additive Correction v4 \u2014 One Question Registry Per Run (2026-09-03)",
       "path": "Plans/_shards/planning_ledger_system/013-additive-correction-v4-one-question-registry-per-run-2026-09-03.md",
-      "sha256": "62bcd373f73d6bbc554dbc76cd349889ea3ad94c69a4780a04108b64c3428aa7",
+      "sha256": "cc19c7e4981ff64ae7c4902cbaa3144774f00678bf7b5f74f6ccef86faf34a7f",
       "shard_id": "013",
       "source_line_end": 1398,
       "source_line_start": 1381,
@@ -125,7 +125,7 @@
     {
       "heading": "Working Notebook Boundary Addendum (2026-09-05)",
       "path": "Plans/_shards/planning_ledger_system/014-working-notebook-boundary-addendum-2026-09-05.md",
-      "sha256": "4d4dacd0728e81f62d4ca1667500d0a64767b9fa0f0e586b2323b0d2c4067ae0",
+      "sha256": "840e509032e6165654f735846339491be638513c5e1a89137cdd5a4fe9adf8b3",
       "shard_id": "014",
       "source_line_end": 1434,
       "source_line_start": 1400,
@@ -134,7 +134,7 @@
     {
       "heading": "External Research Landing Boundary Addendum (2026-09-17)",
       "path": "Plans/_shards/planning_ledger_system/015-external-research-landing-boundary-addendum-2026-09-17.md",
-      "sha256": "dd4075bcd162608137d4b97d19517310a6e6e37ecdf83dea97e8ecbbb2255112",
+      "sha256": "963549b04e9dbaa5322c7a8c2e24da8e93092f42327c52b24a9dbba4d690e5b9",
       "shard_id": "015",
       "source_line_end": 1539,
       "source_line_start": 1436,
@@ -143,16 +143,25 @@
     {
       "heading": "Closure Re-Audit And Anchor-Scoped Evidence Addendum (2026-11-04)",
       "path": "Plans/_shards/planning_ledger_system/016-closure-re-audit-and-anchor-scoped-evidence-addendum-2026-11-04.md",
-      "sha256": "853562dfcde0cf854fad33370a42faff742955dceb72f8c587b516d2aa6ec559",
+      "sha256": "e61f7d45dd2a31bf4ea8da68da979b699e85c136fbfcd344edb12edd6c32dc17",
       "shard_id": "016",
       "source_line_end": 1615,
       "source_line_start": 1541,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Legacy Audit Format Rule And Supplemental Closure Addendum (2026-11-05)",
+      "path": "Plans/_shards/planning_ledger_system/017-legacy-audit-format-rule-and-supplemental-closure-addendum-2026-.md",
+      "sha256": "66226be34c672f03486f0dfd7d6aaa73a89528641b79119b1d26ada066b5d21c",
+      "shard_id": "017",
+      "source_line_end": 1695,
+      "source_line_start": 1617,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1615,
+    "line_count": 1695,
     "path": "Plans/Planning_Ledger_System.md",
-    "sha256": "ff00e83d946ec4402128d0228c55a8e709589e57f2d232c1fa3499a930eac5e4"
+    "sha256": "82252cfc58c1c7eafee34c7519b8c5621a52ae725871d648b8d4d22bbfb5d89a"
   }
 }
