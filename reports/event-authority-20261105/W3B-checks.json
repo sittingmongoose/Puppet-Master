@@ -1,0 +1,116 @@
+{
+  "phase": 1,
+  "claim_boundary": "Syntax/structure, shard/index and existing Source Control regression checks only. New per-family oracle fixtures, shared number/date-time adoption and guard-isolation proof remain phase 2. Native NOT_RUN.",
+  "checks": [
+    {
+      "check": "shard-generate",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/shard-generate.log",
+      "evidence_sha256": "4580172d0223709a6fb4d9b19629202b9fa567c072acac77a03bdc874e57c543",
+      "top_level_status": "pass"
+    },
+    {
+      "check": "index-generate",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/index-generate.log",
+      "evidence_sha256": "9e0e2127dd51dfa5a315ac6a8719af3567fb148c7faee2b48b2cfd1f2a03727f",
+      "top_level_status": "pass"
+    },
+    {
+      "check": "structure",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/structure.log",
+      "evidence_sha256": "6d7abdc0da6f629d807ee4566c0c3d8998870e8ddda0079a104d4ee584df1627",
+      "top_level_status": "pass",
+      "coverage": {
+        "families": 19,
+        "schema_definitions": 83,
+        "eager_resolved_refs": 70,
+        "staged_storage_rows": 38,
+        "local_guard_plans": 2629
+      }
+    },
+    {
+      "check": "shard-check",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/shard-check.log",
+      "evidence_sha256": "fba1c36054a83d9c3416be7e4daee87e6c4b513f0a6d9855ec799ece79702957",
+      "top_level_status": "pass"
+    },
+    {
+      "check": "index-validate",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/index-validate.log",
+      "evidence_sha256": "86bedcccf2c837379a22b0891bbba631ab38aac47b74730313d680f075a6aaa4",
+      "top_level_status": "pass"
+    },
+    {
+      "check": "source-control-effects",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/source-control-effects.log",
+      "evidence_sha256": "c4021716d69660f21368c665e60b69fe1d8adbc20be10e01f3e3c16252719068",
+      "tests_passed": 13
+    },
+    {
+      "check": "source-control-response",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/source-control-response.log",
+      "evidence_sha256": "38eb6e4abb44ee18acb61b4dfa679e32434f79cf2de962c37e12b1ebb93fe27b",
+      "tests_passed": 12
+    },
+    {
+      "check": "new-contracts",
+      "exit_code": 0,
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3B/new-contracts.log",
+      "evidence_sha256": "9e315376e2c190e8c42440c89cb858fb30f5a64a4edabaf8f97ecad378404c11",
+      "top_level_status": "pass",
+      "failures": 0,
+      "counts": {
+        "contract_pairs": 40,
+        "expansion_alias_records_checked": 36,
+        "expansion_alias_records_valid": 36,
+        "expansion_command_records_checked": 264,
+        "expansion_command_records_valid": 264,
+        "expansion_fixture_packs": 1,
+        "expansion_local_records_checked": 28,
+        "expansion_local_records_valid": 28,
+        "expansion_metaschemas_valid": 1,
+        "expansion_negative_records_checked": 21,
+        "expansion_negative_records_rejected": 21,
+        "internal_self_tests": 13,
+        "internal_self_tests_passed": 13,
+        "metaschemas_valid": 40,
+        "negative_cases": 4021,
+        "negative_cases_rejected": 4021,
+        "onboarding_storage_contracts_checked": 1,
+        "onboarding_storage_contracts_valid": 1,
+        "owner_compat_command_records_checked": 240,
+        "owner_compat_command_records_valid": 240,
+        "owner_local_records_checked": 28,
+        "owner_local_records_valid": 28,
+        "platform_policy_checks": 1,
+        "platform_policy_checks_passed": 1,
+        "positive_cases": 1658,
+        "positive_cases_valid": 1658,
+        "root_positive_cases_checked": 1421,
+        "root_positive_cases_valid": 1421,
+        "update_schedule_storage_checks": 1,
+        "update_schedule_storage_checks_passed": 1
+      }
+    }
+  ],
+  "resource_handling": "Serial checks; broad verifier paused below 6 GB available, rechecked at two-minute intervals, resumed above 7 GB.",
+  "changed_shard_sources": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md"
+  ],
+  "unrelated_changed_shard_sources": [],
+  "protected_central_files_unchanged": [
+    "Plans/event_family_registry.json",
+    "Plans/storage_value_registry.json",
+    "Plans/Spec_Lock.json",
+    "Plans/auto_decisions.jsonl",
+    "Plans/Decision_Log.md"
+  ]
+}

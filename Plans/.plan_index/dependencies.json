@@ -5220,6 +5220,25 @@
     "SRV-006",
     "JJI-003",
     "SCS-005",
+    "SCS-1250",
+    "SCS-1251",
+    "SCS-1252",
+    "SCS-1253",
+    "SCS-1254",
+    "SCS-1255",
+    "SCS-1256",
+    "SCS-1257",
+    "SCS-1258",
+    "SCS-1259",
+    "SCS-1260",
+    "SCS-1261",
+    "SCS-1262",
+    "SCS-1263",
+    "SCS-1264",
+    "SCS-1265",
+    "SCS-1266",
+    "SCS-1267",
+    "SCS-1268",
     "BS-028",
     "CV-324",
     "LSPS-113",
@@ -5344,6 +5363,16 @@
     "FGI-008",
     "SCS-006",
     "SCS-011",
+    "ATS-1210",
+    "ATS-1211",
+    "ATS-1212",
+    "ATS-1213",
+    "ATS-1214",
+    "ATS-1215",
+    "ATS-1216",
+    "ATS-1217",
+    "ATS-1218",
+    "ATS-1219",
     "SIR-016",
     "SIR-018",
     "N2-152",
@@ -6135,6 +6164,25 @@
     "SP-336",
     "GRS-061",
     "GRS-065",
+    "SP-1250",
+    "SP-1251",
+    "SP-1252",
+    "SP-1253",
+    "SP-1254",
+    "SP-1255",
+    "SP-1256",
+    "SP-1257",
+    "SP-1258",
+    "SP-1259",
+    "SP-1260",
+    "SP-1261",
+    "SP-1262",
+    "SP-1263",
+    "SP-1264",
+    "SP-1265",
+    "SP-1266",
+    "SP-1267",
+    "SP-1268",
     "SP-265",
     "SP-271",
     "SP-285",
@@ -6167,6 +6215,25 @@
     "ATS-028",
     "OP-028",
     "OSI-431",
+    "CV-1250",
+    "CV-1251",
+    "CV-1252",
+    "CV-1253",
+    "CV-1254",
+    "CV-1255",
+    "CV-1256",
+    "CV-1257",
+    "CV-1258",
+    "CV-1259",
+    "CV-1260",
+    "CV-1261",
+    "CV-1262",
+    "CV-1263",
+    "CV-1264",
+    "CV-1265",
+    "CV-1266",
+    "CV-1267",
+    "CV-1268",
     "CV-341",
     "SIR-046",
     "SP-270",
@@ -15530,6 +15597,101 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-1210",
+      "to": "SCS-1250"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1210",
+      "to": "SCS-1251"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1211",
+      "to": "SCS-1252"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1211",
+      "to": "SCS-1253"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1212",
+      "to": "SCS-1254"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1212",
+      "to": "SCS-1255"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1213",
+      "to": "SCS-1256"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1213",
+      "to": "SCS-1257"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1214",
+      "to": "SCS-1258"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1214",
+      "to": "SCS-1259"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1215",
+      "to": "SCS-1260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1215",
+      "to": "SCS-1261"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1216",
+      "to": "SCS-1262"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1216",
+      "to": "SCS-1263"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1217",
+      "to": "SCS-1264"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1217",
+      "to": "SCS-1265"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1218",
+      "to": "SCS-1266"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1218",
+      "to": "SCS-1267"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1219",
+      "to": "SCS-1268"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -23565,8 +23727,293 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-1250",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1250",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1250",
+      "to": "SCS-1250"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1251",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1251",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1251",
+      "to": "SCS-1251"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1252",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1252",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1252",
+      "to": "SCS-1252"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1253",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1253",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1253",
+      "to": "SCS-1253"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1254",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1254",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1254",
+      "to": "SCS-1254"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1255",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1255",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1255",
+      "to": "SCS-1255"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1256",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1256",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1256",
+      "to": "SCS-1256"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1257",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1257",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1257",
+      "to": "SCS-1257"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1258",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1258",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1258",
+      "to": "SCS-1258"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1259",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1259",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1259",
+      "to": "SCS-1259"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-126",
       "to": "CV-125"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1260",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1260",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1260",
+      "to": "SCS-1260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1261",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1261",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1261",
+      "to": "SCS-1261"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1262",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1262",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1262",
+      "to": "SCS-1262"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1263",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1263",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1263",
+      "to": "SCS-1263"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1264",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1264",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1264",
+      "to": "SCS-1264"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1265",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1265",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1265",
+      "to": "SCS-1265"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1266",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1266",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1266",
+      "to": "SCS-1266"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1267",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1267",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1267",
+      "to": "SCS-1267"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1268",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1268",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1268",
+      "to": "SCS-1268"
     },
     {
       "edge_type": "depends_on",
@@ -68085,6 +68532,101 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SCS-1250",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1251",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1252",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1253",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1254",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1255",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1256",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1257",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1258",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1259",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1260",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1261",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1262",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1263",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1264",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1265",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1266",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1267",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-1268",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SIR-001",
       "to": "PDS-003"
     },
@@ -77530,6 +78072,256 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1250",
+      "to": "SCS-1250"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1250",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1250",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1250",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1250",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1251",
+      "to": "SCS-1251"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1251",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1251",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1251",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1251",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1252",
+      "to": "SCS-1252"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1252",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1252",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1252",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1252",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1253",
+      "to": "SCS-1253"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1253",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1253",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1253",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1253",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1254",
+      "to": "SCS-1254"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1254",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1254",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1254",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1254",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1255",
+      "to": "SCS-1255"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1255",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1255",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1255",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1255",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1256",
+      "to": "SCS-1256"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1256",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1256",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1256",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1256",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1257",
+      "to": "SCS-1257"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1257",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1257",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1257",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1257",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1258",
+      "to": "SCS-1258"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1258",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1258",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1258",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1258",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1259",
+      "to": "SCS-1259"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1259",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1259",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1259",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1259",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-126",
       "to": "DL-180"
     },
@@ -77562,6 +78354,231 @@
       "edge_type": "depends_on",
       "from": "SP-126",
       "to": "SP-330"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1260",
+      "to": "SCS-1260"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1260",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1260",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1260",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1260",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1261",
+      "to": "SCS-1261"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1261",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1261",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1261",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1261",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1262",
+      "to": "SCS-1262"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1262",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1262",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1262",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1262",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1263",
+      "to": "SCS-1263"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1263",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1263",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1263",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1263",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1264",
+      "to": "SCS-1264"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1264",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1264",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1264",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1264",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1265",
+      "to": "SCS-1265"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1265",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1265",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1265",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1265",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1266",
+      "to": "SCS-1266"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1266",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1266",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1266",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1266",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1267",
+      "to": "SCS-1267"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1267",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1267",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1267",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1267",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1268",
+      "to": "SCS-1268"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1268",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1268",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1268",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1268",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -117219,7 +118236,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:55Z",
+  "generated_at_utc": "2026-11-05T05:14:03Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131332,6 +132349,176 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1210",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1210 — Source Control phase-1 oracle plans 1",
+        "heading_level": 3,
+        "heading_line": 7242,
+        "line": 7244,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1211",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1211 — Source Control phase-1 oracle plans 2",
+        "heading_level": 3,
+        "heading_line": 7292,
+        "line": 7294,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1212",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1212 — Source Control phase-1 oracle plans 3",
+        "heading_level": 3,
+        "heading_line": 7342,
+        "line": 7344,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1213",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1213 — Source Control phase-1 oracle plans 4",
+        "heading_level": 3,
+        "heading_line": 7392,
+        "line": 7394,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1214",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1214 — Source Control phase-1 oracle plans 5",
+        "heading_level": 3,
+        "heading_line": 7442,
+        "line": 7444,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1215",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1215 — Source Control phase-1 oracle plans 6",
+        "heading_level": 3,
+        "heading_line": 7492,
+        "line": 7494,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1216",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1216 — Source Control phase-1 oracle plans 7",
+        "heading_level": 3,
+        "heading_line": 7542,
+        "line": 7544,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1217",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1217 — Source Control phase-1 oracle plans 8",
+        "heading_level": 3,
+        "heading_line": 7592,
+        "line": 7594,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1218",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1218 — Source Control phase-1 oracle plans 9",
+        "heading_level": 3,
+        "heading_line": 7642,
+        "line": 7644,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_phase_1_oracle_plan",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1219",
+      "reasoning_tier": "high",
+      "risk_class": "masked_negative_or_unproved_contract",
+      "source_location": {
+        "heading": "ATS-1219 — Source Control phase-1 oracle plans 10",
+        "heading_level": 3,
+        "heading_line": 7692,
+        "line": 7694,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -140359,6 +141546,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1250",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1250 — source_control.backend.detected closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24474,
+        "line": 24476,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1251",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1251 — source_control.backend.selected closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24542,
+        "line": 24544,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1252",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1252 — source_control.checkpoint.created closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24609,
+        "line": 24611,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1253",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1253 — source_control.checkpoint.restored closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24677,
+        "line": 24679,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1254",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1254 — source_control.remote.fetch_completed closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24746,
+        "line": 24748,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1255",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1255 — source_control.remote.fetch_started closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24815,
+        "line": 24817,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1256",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1256 — source_control.remote.publish_completed closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24883,
+        "line": 24885,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1257",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1257 — source_control.remote.publish_started closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 24953,
+        "line": 24955,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1258",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1258 — source_control.remote.sync_completed closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25022,
+        "line": 25024,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1259",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1259 — source_control.remote.sync_started closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25095,
+        "line": 25097,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "auth_subject_billing_server_profile",
       "gui_related": false,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -140370,6 +141727,159 @@
         "heading_level": 3,
         "heading_line": 9515,
         "line": 9517,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1260",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1260 — source_control.repository.bound closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25167,
+        "line": 25169,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1261",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1261 — source_control.repository.unbound closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25235,
+        "line": 25237,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1262",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1262 — source_control.status.refreshed closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25303,
+        "line": 25305,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1263",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1263 — source_control.workspace.created closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25371,
+        "line": 25373,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1264",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1264 — source_control.workspace.opened closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25439,
+        "line": 25441,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1265",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1265 — source_control.workspace.removed closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25507,
+        "line": 25509,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1266",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1266 — source_control.workspace.switched closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25575,
+        "line": 25577,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1267",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1267 — source_control.writer_lease.granted closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25643,
+        "line": 25645,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1268",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "CV-1268 — source_control.writer_lease.lost closed payload and joins",
+        "heading_level": 3,
+        "heading_line": 25711,
+        "line": 25713,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -218406,6 +219916,329 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1250",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1250 — source_control.backend.detected prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2144,
+        "line": 2146,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1251",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1251 — source_control.backend.selected prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2287,
+        "line": 2289,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1252",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1252 — source_control.checkpoint.created prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2430,
+        "line": 2432,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1253",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1253 — source_control.checkpoint.restored prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2573,
+        "line": 2575,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1254",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1254 — source_control.remote.fetch_completed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2718,
+        "line": 2720,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1255",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1255 — source_control.remote.fetch_started prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 2862,
+        "line": 2864,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1256",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1256 — source_control.remote.publish_completed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3004,
+        "line": 3006,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1257",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1257 — source_control.remote.publish_started prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3150,
+        "line": 3152,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1258",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1258 — source_control.remote.sync_completed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3295,
+        "line": 3297,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1259",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1259 — source_control.remote.sync_started prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3445,
+        "line": 3447,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1260",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1260 — source_control.repository.bound prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3593,
+        "line": 3595,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1261",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1261 — source_control.repository.unbound prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3736,
+        "line": 3738,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1262",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1262 — source_control.status.refreshed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 3879,
+        "line": 3881,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1263",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1263 — source_control.workspace.created prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 4021,
+        "line": 4023,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1264",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1264 — source_control.workspace.opened prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 4164,
+        "line": 4166,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1265",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1265 — source_control.workspace.removed prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 4306,
+        "line": 4308,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1266",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1266 — source_control.workspace.switched prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 4449,
+        "line": 4451,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1267",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1267 — source_control.writer_lease.granted prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 4592,
+        "line": 4594,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-1268",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SCS-1268 — source_control.writer_lease.lost prepared owner contract",
+        "heading_level": 3,
+        "heading_line": 4735,
+        "line": 4737,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "shared_runtime_owner_boundary",
       "gui_related": false,
       "owner_doc": "Plans/Shared_Integration_Runtime.md",
@@ -224424,6 +226257,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1250",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1250 — source_control.backend.detected source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 29482,
+        "line": 29484,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1251",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1251 — source_control.backend.selected source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 29596,
+        "line": 29598,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1252",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1252 — source_control.checkpoint.created source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 29710,
+        "line": 29712,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1253",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1253 — source_control.checkpoint.restored source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 29824,
+        "line": 29826,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1254",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1254 — source_control.remote.fetch_completed source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 29938,
+        "line": 29940,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1255",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1255 — source_control.remote.fetch_started source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30053,
+        "line": 30055,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1256",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1256 — source_control.remote.publish_completed source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30167,
+        "line": 30169,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1257",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1257 — source_control.remote.publish_started source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30282,
+        "line": 30284,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1258",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1258 — source_control.remote.sync_completed source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30397,
+        "line": 30399,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1259",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1259 — source_control.remote.sync_started source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30511,
+        "line": 30513,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "storage_batch_177_runtime_terminal_storage",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -224435,6 +226438,159 @@
         "heading_level": 3,
         "heading_line": 9743,
         "line": 9745,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1260",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1260 — source_control.repository.bound source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30625,
+        "line": 30627,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1261",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1261 — source_control.repository.unbound source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30739,
+        "line": 30741,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1262",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1262 — source_control.status.refreshed source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30853,
+        "line": 30855,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1263",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1263 — source_control.workspace.created source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 30967,
+        "line": 30969,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1264",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1264 — source_control.workspace.opened source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 31081,
+        "line": 31083,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1265",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1265 — source_control.workspace.removed source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 31195,
+        "line": 31197,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1266",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1266 — source_control.workspace.switched source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 31309,
+        "line": 31311,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1267",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1267 — source_control.writer_lease.granted source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 31423,
+        "line": 31425,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "w3b_source_control_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1268",
+      "reasoning_tier": "high",
+      "risk_class": "source_control_history_identity_custody_or_duplicate_effect",
+      "source_location": {
+        "heading": "SP-1268 — source_control.writer_lease.lost source custody and filtered checkpoint",
+        "heading_level": 3,
+        "heading_line": 31537,
+        "line": 31539,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -243402,10 +245558,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18940,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22148,
+    "node_count": 7489,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

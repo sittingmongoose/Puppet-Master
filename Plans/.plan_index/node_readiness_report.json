@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18940,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22148,
+    "node_count": 7489,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T01:50:32Z",
+  "generated_at_utc": "2026-11-05T05:14:04Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7422,
+  "plan_unit_count": 7489,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2743,
+      "high": 2810,
       "low": 9,
       "medium": 30,
       "standard": 4640
@@ -43657,6 +43657,7 @@
       "manifest_metadata_chat_cards": 1,
       "manual_clean_worktrees_preview_drift": 1,
       "manual_only_completion": 1,
+      "masked_negative_or_unproved_contract": 10,
       "matrix_owner_consumer_boundary": 1,
       "matrix_schema_drift": 1,
       "mcp_adapter_injection_cwd_boundary": 1,
@@ -45148,6 +45149,7 @@
       "source_control_command_catalog_gap": 2,
       "source_control_cta_loss": 1,
       "source_control_forge_identity_or_automation_authority_conflation": 1,
+      "source_control_history_identity_custody_or_duplicate_effect": 57,
       "source_control_lane_worktree_boundary_drift": 1,
       "source_control_lane_worktree_historical_drift": 1,
       "source_control_operation_owner_drift": 1,
@@ -45863,7 +45865,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7271,
       "retired": 195,
       "superseded": 23
     },
@@ -45933,7 +45935,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5614,
+      "requirement": 5681,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46060,7 +46062,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "1ad373a826436fda9f6808820677f15f2bc7a02f5008e571fa29f96cd23f4ef6",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46098,6 +46100,22 @@
         "error": "pnc019_source_hash_stale",
         "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Contracts_V0.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Source_Control_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage-plan.md"
       },
       {
         "bulk_registration_allowed": false,
