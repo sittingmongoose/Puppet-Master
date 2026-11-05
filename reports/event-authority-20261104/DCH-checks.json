@@ -1,6 +1,6 @@
 {
   "review_round": 8,
-  "assessed_commit": "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6",
+  "assessed_commit": "57bf750d97400f7c3b6877b71eb34d3c7c828951",
   "fixture_commit": "1a61d45b2100a9990a7d469e7e5fc13eb373d0af",
   "prepared_contracts_without_admission": 17,
   "DCH_static_checks": 41339,
@@ -52,5 +52,7 @@
     "S2-NUM",
     "S3-NUM",
     "S4-NUM"
-  ]
+  ],
+  "source_fix_commit": "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6",
+  "generated_shard_completion_commit": "57bf750d97400f7c3b6877b71eb34d3c7c828951"
 }

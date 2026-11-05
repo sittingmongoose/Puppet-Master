@@ -22,13 +22,15 @@
   "assessment_id": "EA-W2-DCH-FIX8-SELF-20261105",
   "assessed_tree": {
     "branch": "plans/ea-w2-chat-20261104",
-    "commit": "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6",
+    "commit": "57bf750d97400f7c3b6877b71eb34d3c7c828951",
     "reviewed_head": "3a994263ef63354fd9e2fde754f06faec92c84be",
     "fix_commits": [
       "1a61d45b2100a9990a7d469e7e5fc13eb373d0af",
-      "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6"
+      "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6",
+      "57bf750d97400f7c3b6877b71eb34d3c7c828951"
     ],
-    "final_edition": "Round 8 owner domains, isolated pointer fixture and regenerated companions. Report commit follows. Shared isolation proof pending; Stop remains held; native NOT_RUN."
+    "final_edition": "Round 8 source and regenerated companions, including both new shard tail files. Report-pin commit follows. Shared isolation proof pending; Stop held; native NOT_RUN.",
+    "source_fix_commit": "7c7b7abe3d665ab661f8c9a5b41246924f17e8e6"
   },
   "rows": [
     {
