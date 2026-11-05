@@ -224,7 +224,7 @@ def strict_equal(a,b):
 
 # browser_session_state.v1 (Storage session record): identity/scope live in the resolved
 # record metadata and are joined by record_*; facts contain the original body.
-# Optional string? members preserve absence and null. No live-state default,
+# Nullable string? slots are required and accept null. No live-state default,
 # numeric range, serializer or new historical recipe is introduced here.
 BROWSER_REQUIRED_FACTS = {
     'session_class': (str,), 'requested_browser_runtime': (str,),
@@ -235,7 +235,7 @@ BROWSER_REQUIRED_FACTS = {
     'viewport': (dict,), 'scroll_position': (dict,), 'zoom_level': (int, float),
     'dev_tools_open': (bool,), 'lifecycle_state': (str,),
 }
-BROWSER_OPTIONAL_FACTS = {
+BROWSER_NULLABLE_FACTS = {
     'workspace_tab_id': (str, type(None)), 'preview_subject_id': (str, type(None)),
     'last_error': (str, type(None)),
 }
@@ -261,9 +261,9 @@ def browser_field_bad(facts, key):
         kinds = (int,) if parent == 'viewport' else (int, float)
         return type(value.get(member)) not in kinds
     if key not in facts:
-        return key in BROWSER_REQUIRED_FACTS
+        return True
     value = facts[key]
-    if type(value) not in BROWSER_REQUIRED_FACTS.get(key, BROWSER_OPTIONAL_FACTS[key] if key in BROWSER_OPTIONAL_FACTS else ()):
+    if type(value) not in BROWSER_REQUIRED_FACTS.get(key, BROWSER_NULLABLE_FACTS[key] if key in BROWSER_NULLABLE_FACTS else ()):
         return True
     if key in BROWSER_ENUMS and value not in BROWSER_ENUMS[key]:
         return True
@@ -545,7 +545,7 @@ rule('real_change', 'append retry history', lambda c: c['owner']['real_change'] 
 rule('browser_source_object', 'append retry history',
      lambda c: c['event']['event_type'].startswith('browser.session.') and
      any(r is not None and type(r.get('facts')) is not dict for r in records(c)))
-for key in [*BROWSER_REQUIRED_FACTS, *BROWSER_OPTIONAL_FACTS,
+for key in [*BROWSER_REQUIRED_FACTS, *BROWSER_NULLABLE_FACTS,
             'viewport.width', 'viewport.height', 'scroll_position.x', 'scroll_position.y']:
     rule('browser_source_' + key, 'append retry history',
          lambda c,k=key: c['event']['event_type'].startswith('browser.session.') and
@@ -765,10 +765,16 @@ def _run(fixtures=None, event_type=None):
                     if not expected: flipped.append(case['id'])
                     else: stayed.append(case['id'])
             finally: GUARDS.update(saved)
-            restored=all(set(failures(c))==set(case.get('guards',[case['guard']])) for case,c in negatives)
+            # Restore the exact callable before the next mutation. The next
+            # row rechecks every negative, and the final pass below rechecks
+            # the complete restored set once more. No guard result is reused.
+            restored=all(GUARDS[g] is saved[g] for g in group)
             table.append({'guard':name,'removed_together':list(group),'negatives_that_flip':flipped,
                           'negatives_that_stay_rejected':stayed,'restored':restored})
             if not restored: errors.append({'guard':name,'error':'restoration failed'})
+    for case,c in negatives:
+        actual=set(failures(c)); expected=set(case.get('guards',[case['guard']]))
+        if actual!=expected: errors.append({'case':case['id'],'error':'final restored set differs','expected':sorted(expected),'actual':sorted(actual)})
     for f in load('card2_event_contracts.json')['families']:
         if event_type is not None and f['event_type'] != event_type: continue
         for scope in ['project','application']:
