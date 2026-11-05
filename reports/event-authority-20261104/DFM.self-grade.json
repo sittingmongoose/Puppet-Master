@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_kind": "self_grade_round7_resource_stopped_prepared_without_admission",
+  "assessment_kind": "self_grade_round7_prepared_without_admission",
   "assessed_tree": {
     "branch": "plans/ea-w2-filemanager-20261104",
-    "commit": "9234e434abf501bd1e8cb013a9e860d942b85090",
-    "read_method": "Owner normative clauses remain in force. B1/B2/B3 are implemented, but final twelve-family check-11 and regression runs are incomplete because VM RAM fell below 6 GiB. Q remains PARTIAL per Astra review; no preparation PASS claimed."
+    "commit": "cadf31fcb5596671fe1ad3a6db14bfdd14c28154",
+    "read_method": "All twelve complete family checkers; every authored negative has a narrow runtime/schema/implicit removal witness and restoration refusal; exact duplicates additionally checked site by site. Prior-finding, independent Astra, type/history, harness and process controls rerun. Source citations checked. Native NOT_RUN, membership ABSENT and retention pending remain explicit."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -25,8 +25,8 @@
   },
   "status_counts": {
     "ABSENT": 12,
-    "PASS": 108,
-    "PARTIAL": 24
+    "PASS": 120,
+    "PARTIAL": 12
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -54,7 +54,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -76,7 +76,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -96,7 +96,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -130,7 +130,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -150,7 +150,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -170,7 +170,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -211,7 +211,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -231,7 +231,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -272,7 +272,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -292,7 +292,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -319,7 +319,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -360,12 +360,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -373,14 +373,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-150",
+              "line_start": 11451,
+              "line_end": 11451,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -392,7 +399,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.created",
@@ -418,7 +425,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -440,7 +447,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -460,7 +467,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -494,7 +501,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -514,7 +521,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -534,7 +541,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -575,7 +582,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -595,7 +602,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -636,7 +643,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -656,7 +663,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -683,7 +690,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -724,12 +731,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -737,14 +744,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-151",
+              "line_start": 134295,
+              "line_end": 134295,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -756,7 +770,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.deleted",
@@ -782,7 +796,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -804,7 +818,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -824,7 +838,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -858,7 +872,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -878,7 +892,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -898,7 +912,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -939,7 +953,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -959,7 +973,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1000,7 +1014,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -1020,7 +1034,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1047,7 +1061,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1088,12 +1102,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -1101,14 +1115,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-152",
+              "line_start": 214836,
+              "line_end": 214836,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -1120,7 +1141,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.exported",
@@ -1146,7 +1167,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -1168,7 +1189,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1188,7 +1209,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -1222,7 +1243,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1242,7 +1263,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1262,7 +1283,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1303,7 +1324,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1323,7 +1344,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1364,7 +1385,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -1384,7 +1405,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1411,7 +1432,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1452,12 +1473,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -1465,14 +1486,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-153",
+              "line_start": 293220,
+              "line_end": 293220,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -1484,7 +1512,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.moved",
@@ -1510,7 +1538,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -1532,7 +1560,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1552,7 +1580,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -1586,7 +1614,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1606,7 +1634,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1626,7 +1654,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1667,7 +1695,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1687,7 +1715,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1728,7 +1756,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -1748,7 +1776,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1775,7 +1803,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1816,12 +1844,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -1829,14 +1857,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-154",
+              "line_start": 379154,
+              "line_end": 379154,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -1848,7 +1883,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "file.renamed",
@@ -1874,7 +1909,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -1896,7 +1931,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1916,7 +1951,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -1950,7 +1985,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1970,7 +2005,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1990,7 +2025,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2031,7 +2066,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2051,7 +2086,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2092,7 +2127,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -2112,7 +2147,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2139,7 +2174,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2180,12 +2215,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -2193,14 +2228,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-155",
+              "line_start": 467992,
+              "line_end": 467992,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -2212,7 +2254,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.copied",
@@ -2238,7 +2280,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -2260,7 +2302,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2280,7 +2322,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -2314,7 +2356,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2334,7 +2376,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2354,7 +2396,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2395,7 +2437,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2415,7 +2457,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2456,7 +2498,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -2476,7 +2518,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2503,7 +2545,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2544,12 +2586,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -2557,14 +2599,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-156",
+              "line_start": 553747,
+              "line_end": 553747,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -2576,7 +2625,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.created",
@@ -2602,7 +2651,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -2624,7 +2673,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2644,7 +2693,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -2678,7 +2727,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2698,7 +2747,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2718,7 +2767,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2759,7 +2808,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2779,7 +2828,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2820,7 +2869,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -2840,7 +2889,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2867,7 +2916,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2908,12 +2957,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -2921,14 +2970,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-157",
+              "line_start": 640273,
+              "line_end": 640273,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -2940,7 +2996,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.deleted",
@@ -2966,7 +3022,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -2988,7 +3044,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3008,7 +3064,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -3042,7 +3098,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3062,7 +3118,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3082,7 +3138,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3123,7 +3179,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3143,7 +3199,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3184,7 +3240,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -3204,7 +3260,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3231,7 +3287,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3272,12 +3328,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -3285,14 +3341,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-158",
+              "line_start": 720976,
+              "line_end": 720976,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -3304,7 +3367,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.exported",
@@ -3330,7 +3393,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -3352,7 +3415,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3372,7 +3435,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -3406,7 +3469,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3426,7 +3489,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3446,7 +3509,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3487,7 +3550,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3507,7 +3570,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3548,7 +3611,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -3568,7 +3631,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3595,7 +3658,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3636,12 +3699,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -3649,14 +3712,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-159",
+              "line_start": 801023,
+              "line_end": 801023,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -3668,7 +3738,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.moved",
@@ -3694,7 +3764,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -3716,7 +3786,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3736,7 +3806,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -3770,7 +3840,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3790,7 +3860,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3810,7 +3880,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3851,7 +3921,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3871,7 +3941,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3912,7 +3982,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -3932,7 +4002,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3959,7 +4029,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4000,12 +4070,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -4013,14 +4083,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-160",
+              "line_start": 888565,
+              "line_end": 888565,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -4032,7 +4109,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     },
     {
       "event_type": "folder.renamed",
@@ -4058,7 +4135,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -4080,7 +4157,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4100,7 +4177,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "producer": {
           "status": "PASS",
@@ -4134,7 +4211,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4154,7 +4231,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4174,7 +4251,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4215,7 +4292,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4235,7 +4312,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4276,7 +4353,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "transitions": {
           "status": "PASS",
@@ -4296,7 +4373,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4323,7 +4400,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4364,12 +4441,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative support retained; Q is not upgraded without complete final verification."
+          "change_reason": "Current normative support is unchanged. Retention and membership remain qualified."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "authored_oracles_incomplete_execution",
-          "finding": "B1/B2/B3 fixes and one-defect controls are authored. Final complete predicate/schema/lookup/harness proofs and all earlier-finding controls did not finish above the mandatory RAM floor. No preparation PASS is claimed.",
+          "status": "PASS",
+          "representation": "executed_static_oracles",
+          "finding": "B1/B2/B3 complete-path controls and negatives pass; all authored negatives have per-field/clause runtime, schema or exact lookup removal witnesses. Exact duplicates also pass single-site and joint removal/restoration proofs. Earlier findings, actual false-success processes and retained-history controls pass. Shared NUM/date-time sweeps and native execution are not claimed closed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -4377,14 +4454,21 @@
               "line_start": 782,
               "line_end": 782,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
+            },
+            {
+              "path": "Plans/filemanager_event_contract_fixtures.json",
+              "unit": "F-161",
+              "line_start": 977901,
+              "line_end": 977901,
+              "quote": "\"name\": \"round7:settled-time\""
             }
           ],
           "prior": {
             "source": "DFM-sol/REVIEW-astra-2.md at f70cb3ad5a883de839c27012c90a2b8ee156149a",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Astra Q PARTIAL retained: implementation fixes do not substitute for the unfinished complete guard-removal and regression run."
+          "change": "upgraded",
+          "change_reason": "Astra Q PARTIAL upgrades only after all twelve complete family suites, narrow guard proofs, earlier-finding regressions and actual harness/process controls completed."
         }
       },
       "remaining_gaps": [
@@ -4396,7 +4480,7 @@
         "fix3/guard-proof.json: twelve per-family weakening mutations detected, including six tail replacements and six pattern removals.",
         "fix3/standing-checks.json, graph-proof.json and review-cycle1/2/3.json: all applicable checks and original review mutations pass."
       ],
-      "notes": "Round 7 code fixes are committed. Q remains PARTIAL after resource stop; retention pending, membership ABSENT, native NOT_RUN."
+      "notes": "Round 7: complete static family and narrow runtime/schema/lookup/harness proofs. Shared NUM and date-time sweeps remain explicit; native NOT_RUN, membership ABSENT, retention pending."
     }
   ],
   "review_round": 7,
@@ -4406,12 +4490,12 @@
     "ABSENT": 12
   },
   "prepared_families": 12,
-  "review_cap_note": "Resource-stopped implementation round; no independent review or complete final guard certification.",
+  "review_cap_note": "Round 7 technical fixes and completed static checks; retention remains Jared\u2019s question and admission is not performed.",
   "guard_table_ref": "reports/event-authority-20261104/DFM.guard-table.json",
   "limitations": [
-    "Final guard audit and earlier-finding regressions NOT_COMPLETED at mandatory RAM floor.",
-    "SWEEP-NUM: digest spelling and authenticated historical recipe dispatch. No new number cap or serializer.",
-    "SWEEP-12: date-time enforcement deferred.",
-    "Retention remains PENDING_RETENTION_DECISION for Jared, membership ABSENT, native execution NOT_RUN."
+    "Membership ABSENT, event-history retention PENDING_RETENTION_DECISION, native execution/alias authentication NOT_RUN.",
+    "SWEEP-NUM: producer digest spelling and authenticated historical recipe dispatch remain for the shared rule.",
+    "SWEEP-12: date-time validation remains for the cross-lane sweep.",
+    "Index validation retains the explicitly reported pre-existing/currentness qualifications."
   ]
 }
