@@ -3189,13 +3189,6 @@
     "SMPFS-317",
     "SMPFS-318",
     "SMPFS-319",
-    "SMPFS-320",
-    "SMPFS-321",
-    "SMPFS-322",
-    "SMPFS-323",
-    "SMPFS-324",
-    "SMPFS-325",
-    "SMPFS-326",
     "SP-640",
     "SP-642",
     "SP-643",
@@ -3428,6 +3421,13 @@
     "DL-424",
     "DL-425",
     "DL-426",
+    "SMPFS-320",
+    "SMPFS-321",
+    "SMPFS-322",
+    "SMPFS-323",
+    "SMPFS-324",
+    "SMPFS-325",
+    "SMPFS-326",
     "DL-450",
     "DL-410",
     "DL-093",
@@ -75617,8 +75617,28 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-320",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-320",
+      "to": "DL-433"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-321",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-321",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-321",
+      "to": "DL-433"
     },
     {
       "edge_type": "depends_on",
@@ -75627,8 +75647,28 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-322",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-322",
+      "to": "DL-434"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-323",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-323",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-323",
+      "to": "DL-434"
     },
     {
       "edge_type": "depends_on",
@@ -75637,13 +75677,43 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-324",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-324",
+      "to": "DL-435"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-325",
       "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-325",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-325",
+      "to": "DL-435"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-326",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-326",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-326",
+      "to": "DL-436"
     },
     {
       "edge_type": "depends_on",
@@ -118301,7 +118371,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T20:08:23Z",
+  "generated_at_utc": "2026-11-05T20:28:34Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -225311,8 +225381,8 @@
       "source_location": {
         "heading": "SMPFS-321 — browser.context_share_revoked deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 13953,
-        "line": 13955,
+        "heading_line": 13955,
+        "line": 13957,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -225328,8 +225398,8 @@
       "source_location": {
         "heading": "SMPFS-322 — catalog.update.started deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 14005,
-        "line": 14007,
+        "heading_line": 14009,
+        "line": 14011,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -225345,8 +225415,8 @@
       "source_location": {
         "heading": "SMPFS-323 — catalog.update.completed deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 14058,
-        "line": 14060,
+        "heading_line": 14064,
+        "line": 14066,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -225362,8 +225432,8 @@
       "source_location": {
         "heading": "SMPFS-324 — catalog.remove.started deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 14111,
-        "line": 14113,
+        "heading_line": 14119,
+        "line": 14121,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -225379,8 +225449,8 @@
       "source_location": {
         "heading": "SMPFS-325 — catalog.remove.completed deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 14164,
-        "line": 14166,
+        "heading_line": 14174,
+        "line": 14176,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -225396,8 +225466,8 @@
       "source_location": {
         "heading": "SMPFS-326 — tool.custom_headless.skipped deck-2 owner contract",
         "heading_level": 3,
-        "heading_line": 14217,
-        "line": 14219,
+        "heading_line": 14229,
+        "line": 14231,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -246813,9 +246883,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18937,
+    "depends_on_edge_count": 18951,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22147,
+    "edge_count": 22161,
     "node_count": 7559,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
