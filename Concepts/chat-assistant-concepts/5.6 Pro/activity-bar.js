@@ -612,6 +612,12 @@
       window.PM56_AB.suppressNextFocusPreview = false;
       return;
     }
+    /* Keyboard focus opens the preview at once. The focus a press gives the button does not: the press goes on to open
+       or close Activity Detail, so the preview was built, laid out and dropped again inside that click (on the first
+       Activity click after a reload, SW-01), or showed for as long as the button was held. Hover opens it for a pointer. */
+    var keyboard = true;
+    try { keyboard = e.target.matches(':focus-visible'); } catch (_) {}
+    if (!keyboard) return;
     clearTimeout(leaveTimer);
     var ext = window.PM56_EXT;
     if (!ext || typeof ext.ctx !== 'function') return;

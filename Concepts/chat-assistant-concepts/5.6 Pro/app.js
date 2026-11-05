@@ -5256,8 +5256,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(actBtn&&!actBtn.closest('.ab-card')){
       clearTimeout(hoverTimer);
       if(window.PM56_AB&&window.PM56_AB.dismissActivityHover)window.PM56_AB.dismissActivityHover();
-      state.hover=null;
-      renderOverlays();
+      /* with nothing open there is nothing to take down (SW-01: every first Activity press re-rendered the overlays) */
+      if(state.hover){ state.hover=null; renderOverlays(); }
     }
     const resizeHandle=e.target.closest('[data-dialog-resize]');
     if(resizeHandle&&state.dialog?.type==='demo'){
