@@ -157,6 +157,13 @@ tests/
 /tests/fixtures/runtime_artifacts/golden/*
 !/tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json
 !/tests/fixtures/runtime_artifacts/golden/application_scope_contract_cases.json
+!/tests/fixtures/event_record/
+/tests/fixtures/event_record/*
+!/tests/fixtures/event_record/legacy_normalization/
+/tests/fixtures/event_record/legacy_normalization/*
+!/tests/fixtures/event_record/legacy_normalization/golden/
+/tests/fixtures/event_record/legacy_normalization/golden/*
+!/tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json
 Concepts/**/evidence/
 **/simulator_runs/
 **/staged_windows_build*/
