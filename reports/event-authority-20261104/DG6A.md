@@ -1,3 +1,119 @@
+# DG6A — review round 10
+
+Branch `plans/ea-w2-gui-concerns-20261104`; reviewed input `22fc9d0ef738e700efd16ed185dea91d6e058c83`. **B1 fixed in `d065f3c664cfee2627a116ad8c4e99f11b4a24b5`; B2 fixed in `e635cb861fe7470e593858b358bfde5a54b40245`.** The final report/grade commit is self-inclusive. Complete family reruns consume technical head `e635cb861fe7470e593858b358bfde5a54b40245`. Exact source hashes are in `fix10/consumed-sources.json`.
+
+All sixteen are **self-graded PASS AS PREPARED**, versus six passing preparations in cycle 9; independent re-review remains pending. Every twelve-cell grade remains **9 PASS / 2 PARTIAL / 1 ABSENT**. Admission is ABSENT; retention is PARTIAL / PENDING_RETENTION_DECISION; C12 is PARTIAL for shared guard-tool/number-rule adoption; native execution is NOT_RUN. No new Jared choice is required. Card 5's DL-437..443 answers and round 8's retained-original repair are unchanged.
+
+## Review round 10: findings and responses
+
+| Finding | Where / why / fix | Verification |
+|---|---|---|
+| **B1 — fixed (`d065f3c664cfee2627a116ad8c4e99f11b4a24b5`)** | `scripts/pm-card5-event-contracts-check.py:50` and `:388`. The nine new family entry points validated companion files but skipped the seventeen authoritative Storage copies. Load each exact declared row, require one row and its exact companion ref/schema ID, validate its metaschema, eagerly resolve every ref including unused definitions, and require exact type-aware schema content equality. Then run operation/checkpoint validators on those registered copies. Generic annotation remains checkpoint-only. | All seventeen rows receive separate unused-dangling-ref and open-schema mutations: the review's **34 counterexamples now refuse**. **136 actual CLI negatives** (eight per row) refuse with their precise single diagnostic, and nine unmodified CLI controls pass. The complete normal family suites also execute the 136 named negatives plus nine positive registry controls. |
+| **B2 — fixed (`e635cb861fe7470e593858b358bfde5a54b40245`)** | `scripts/pm-dg6a-final-regression-check.py:66`, `:140`; `scripts/pm-concern-created-contracts-check.py:163`; additive `payload_cases` in `Plans/concern_created_contracts/concern_created.fixtures.json`. The old timestamp mutation changed an operation payload but left its frozen command and digest stale. Use the review's standalone-payload option for first-validator probes in every kind. Concern now has a genuine valid standalone payload; its command, canonical record and request commitment remain exactly unchanged. The same audit covers concern's numeric-probe branch; numeric policy remains S2. | **25 malformed timestamp CLI negatives** refuse (exit 1), with an unmodified full-checker positive (exit 0). Every input changes exactly one standalone leaf, fails only `format:ts`, passes with only that exact timestamp predicate weakened, and refuses after restoration. `ts='false'` additionally passes the **entire 622-case concern checker** under that same exact predicate cut. Six permitted calendar/case/fraction/offset values pass. No format/product guard is weakened in shipped code. |
+| **S1 — sweep, unchanged** | `scripts/pm-dg6a-guard-check.py` retains the cycle-8 early-return/navigation proof defects; its bytes are unchanged. Adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105` across all sixteen. Inventory all runtime, schema, retained-retry and Card 5 predicates. Cut compound rules per field/predicate. Duplicates require the **same field and same predicate**, site-by-site single removals and all-site removal; a shared refusal/enforcement site is insufficient. | No old 509-row count or new complete lane proof is claimed. The focused B2 timestamp cuts prove only those repaired standalone cases. New Storage guard/negative names are listed below for shared-tool adoption. C12 stays PARTIAL for every family. |
+| **S2 — sweep, unchanged** | Adopt CV-1100/SP-1100/SP-1101 for `pm-dg6a-domain.py:66–69`, CV-680..686, existing embedded operation/state schemas, F3-706..714 codecs and authenticated historical dispatch. Align `pm-dg6a-domain-check.py:140–142` and the final-regression numeric boundary expectations with the shared owner domains. | No new cap, serializer, physical-float normalization, signed-zero erasure or Storage-uint64 2^53 cap. Round 8's eighteen earlier-recipe originals and exact retries remain exercised by the unchanged alert/panel suites. The stale six alert/panel domain-driver failures are carried as sweep items, not reported as passing reruns. |
+| **Formats — retained** | Existing date-time/UUID grammars and old historical schema editions are unchanged. | Invalid timestamp forms and valid edge controls rerun for B2; no new format-domain rule or weaker historical recipe is introduced. |
+| **Derived/integration state — recorded** | No owner Markdown/schema/registry/index/shard changes. Read-only index validation exits 1 / top-level fail with **23 failures**: 21 legacy ledger-shape rows, the older branch's DL-302 comparison, and PLS-025 now present only on newer `origin/main` (`57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5`). | Both owner files and every generated input are unchanged from the reviewed head. `index-failure-context.json` proves the two newer-main units are absent at the pinned branch and present on fetched main. Shard check passes. No generation, currentness restamping, governance reseal, migration snapshot or baseline refresh is performed. |
+
+## Family grades before and after
+
+P/p/A = PASS/PARTIAL/ABSENT; every row's criteria statuses are unchanged from cycle 9. B1/B2 are additional local oracle blockers that are now repaired; S1/S2 remain explicit preparation limits. All 192 cells were re-graded against current source/citations. The seven older and nine Card 5 families retain their own separate contracts and oracles.
+
+| Family | Cycle-9 preparation verdict | Before P/p/A | After P/p/A | Round-10 self-verdict | Cases / exit |
+|---|---|---|---|---|---|
+| `alert.acknowledged` | PASS AS PREPARED | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 460 / 0 |
+| `alert.dismissed` | PASS AS PREPARED | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 463 / 0 |
+| `alert.rule_muted` | PASS AS PREPARED | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 463 / 0 |
+| `alert.snoozed` | PASS AS PREPARED | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 476 / 0 |
+| `bundle.annotation_state_changed` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 337 / 0 |
+| `bundle.note_created` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 946 / 0 |
+| `bundle.note_status_changed` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 953 / 0 |
+| `concern.assigned` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 980 / 0 |
+| `concern.created` | NOT_READY — B2 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 622 / 0 |
+| `concern.evidence_linked` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 959 / 0 |
+| `concern.promoted` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 981 / 0 |
+| `concern.reopened` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 960 / 0 |
+| `concern.resolved` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 1006 / 0 |
+| `concern.updated` | NOT_READY — B1 | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 960 / 0 |
+| `panel.redocked` | PASS AS PREPARED | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 516 / 0 |
+| `panel.undocked` | PASS AS PREPARED | 9/2/1 | 9/2/1 | PASS AS PREPARED; S1/S2 | 516 / 0 |
+
+**11,598 complete-family static cases**, all sixteen exact-family selections exit 0, one family at a time. Relative to round 9's 11,452, the ordinary suites add **145 registered-schema observations** (136 negatives and nine controls) and **one concern standalone positive**. The separate actual registry-CLI and timestamp-isolation/CLI campaigns are not added to that total. Minimum recorded family-start available memory: 13 GiB.
+
+## New guards and one-defect inputs
+
+Each row applies separately to every declared stored schema (seventeen rows). The normal family checker calls `storage_schema_cases`; `registry-cli.json` runs the same eight independent mutations through the complete entry point, with exact refusal expectations. These names are an inventory for the shared proof tool, **not a claim of complete guard isolation**.
+
+| Input invariant | Negative name / mutation | Expected refusal |
+|---|---|---|
+| Exactly one declared row | `missing_row`: remove only that row; `duplicate_row`: add only a copy of that row | `storage_row_count:<family_id>` |
+| Companion path | `companion_ref`: change only `value_schema_ref` | `storage_companion_ref:<family_id>` |
+| Registered schema identity | `schema_id`: change only `value_schema_id` | `storage_schema_id:<family_id>` |
+| Schema is valid JSON Schema | `invalid_schema`: change only embedded `type` to 0 | `storage_schema_invalid:<family_id>` |
+| Every reference resolves | `unvisited_ref`: add one unused definition pointing at a missing local definition | `storage_schema_reference:<family_id>` |
+| Registered content equals tested companion | `open_schema`: change only `additionalProperties` false -> true; `embedded_identity`: change only embedded `$id` | `storage_schema_drift:<family_id>` |
+
+B2's negatives cover missing zone, wrong separators, invalid calendar/time/offset fields, LF/space suffixes, leap seconds and malformed fractions. They use a valid standalone payload rather than an incomplete canonical operation. All existing operation/digest/command/record joins remain active and all retained fixture sections remain identical. Number-range/spelling assertions remain explicitly delegated to S2.
+
+## Standing checks and recurring defect classes
+
+The complete family suites retain checks 1–10 for each exact family: current replay-only refusal (unconditional no-new-write refusal for generic history), CV-366 app keys or Project-only refusal, encoded Project partitions, complete stored/emitted byte limits and SP-337 routing, trailing-LF refusal, caller-only retry semantics, checkpoint/original Storage identity, failure-exit refusal, eager schema closure, and retained-history validity. B1 closes the nine families' registered-schema gap. Check 11 remains **PENDING_SHARED_TOOL** for all sixteen; only the focused repaired B2 witness is credited here.
+
+| Recurring class | Round-10 evidence / limit |
+|---|---|
+| 1 Forgery / contradictory facts | Existing recomputed identity/request digests and command/snapshot/source mutations rerun in each complete family suite. Registered schema identity/content forgeries additionally refuse in all seventeen rows. |
+| 2 Storage-assigned metadata | Existing independent original-event, receipt, source-selection and full-result mutation cases rerun; caller data does not become Storage authority. |
+| 3 Historical direction | Existing retained current/v1/replay-only and generic history positives survive live changes; forged/foreign/withdrawn controls refuse. Round-8 retained-original sources/fixtures are unchanged. |
+| 4 Multiple representations | Existing exact-type nested joins, digest representation and authority-type cases rerun. No new lane-local cross-type comparison is introduced. |
+| 5 Unvisited references | All seventeen registered copies now reject the review's unused dangling-ref mutation through their exact family CLI; companion closure remains active. |
+| 6 Partial byte limits | Existing complete operation/checkpoint/response, boundary and 1000-match traversal cases rerun. No byte-size or SP-337 contract changes. |
+| 7 Custody paths | Existing prepared/committed/settled, retry/recovery and historical joins rerun; no new custody path is authored. |
+| 8 Masked negatives | B2 is repaired and directly isolated; all operation copies stay unchanged. General compound/navigation/proof machinery remains S1. |
+| 9 Overgrading | All C12 cells stay PARTIAL; membership stays ABSENT, exact retention pending, native NOT_RUN. Local blocker repair does not claim a completed shared proof. |
+| 10 / 10a Numbers and old recipes | Shared-rule adoption and stale boundary expectations remain S2; no numeric rule is added. Old admitted-original editions and recipe dispatch are preserved exactly. |
+| 11 Confused types | Existing string Boolean/number, null/array/object and source/role shape negatives rerun. New schema metadata/content joins use exact recursive types. |
+| 12 Formats | Twenty-five malformed standalone timestamp inputs refuse, six valid edge controls pass, and the exact predicate cut exposes only the named standalone defect. |
+
+## Verification, unchanged scope and resources
+
+| Check | Exit / result |
+|---|---|
+| Sixteen complete family selections at `e635cb861fe7470e593858b358bfde5a54b40245` | 0 each; **11,598** cases. |
+| Registered-schema full CLI campaign | Nine positive controls exit 0; **136 negatives exit 1**, every exact expected refusal. Includes all 34 review counterexamples. |
+| Concern timestamp full CLI campaign | Baseline exit 0; **25 malformed inputs exit 1**. Executed before the B2 commit with the same source bytes committed in `e635cb861fe7470e593858b358bfde5a54b40245`; result metadata retains its actual then-HEAD `d065f3c664cfee2627a116ad8c4e99f11b4a24b5`. |
+| Concern first-validator isolation / edge controls | 0; 25 exact one-leaf refusals/own-predicate flips/restored refusals; six valid values; whole-checker `ts='false'` cut passes 622 cases. |
+| Grade/citation audit | 0 / pass; 379 exact citations; all sixteen intended grade shapes. |
+| Scope / retained-source audit | 0 / pass; every pre-existing concern fixture key unchanged, all owner docs/registries/Card 5 choices/old-recipe code and other fixtures unchanged; no new PlanUnit ID. |
+| Shard check | 0 / pass. No regeneration required because no owner Markdown changed. |
+| Index validation | 1 / top-level fail; 23 failures with the unchanged-input/newer-main context above. |
+| `git diff --check` | 0 after inputs restored. |
+
+Initial root free disk / available RAM: **107 GB / 10 GiB**, above the prescribed worktree gates. Sparse detached worktree: `/home/sittingmongoose/pm-worktrees/DG6A-fix10`. All family jobs and mutation campaigns run serially. No under-6-GiB pause was needed; the reproduction driver pauses below 6 and rechecks every two minutes until at least 7. Two read-only Git scans initially overlapped a registry replacement and exited 135 (mmap/SIGBUS); the file was restored byte-for-byte and the scans passed when serialized after mutations. No repository/index repair was required.
+
+All six changed paths are lane-local: three scripts, the additive concern fixture probe, this report and its self-grade. No event registry/admission/Decision Log/governance/frozen-validator/ignore edit, main push, pm-mail, subagent, browser or server. No standard aggregate landing gates or native execution are claimed. Reports/self-grade and retained reproduction evidence are copied to `drafts/DG6A/`; the worktree is removed with the literal prescribed `git worktree remove --force` path after push.
+
+**IDs retained:** SP-660..666, CV-680..686, ATS-330..334, F3-700..714 (34 existing definitions). **New IDs: none.** DL-437..443 are decision references only. Shared CV-1100/SP-1100/SP-1101 are sweep references. Remaining items: admission by integration; exact retention binding; shared S1/S2 adoption; actual note mapping inventory proof/owner approval; independent re-review; native NOT_RUN.
+
+## Round-10 evidence
+
+All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/`; SHA-256 pins the complete artifact, including exact commands/results and restoration checks. `SHA256SUMS.json` additionally covers the exported report/grade and reproduction scripts.
+
+| Artifact | SHA-256 |
+|---|---|
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/family-commands.json` | `cce9d2e90376c1e3016f8100bb77639e6817bcf20689eaabd80c8c34c58ef463` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/registry-cli.json` | `f2eced3eb5035bf4eb1f1e2fa8400ecc6cd6e74c0c566db49b2f3a5b66cb2925` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/concern_created.format.json` | `4fb00dfa9a2a82f1c87b4d51b490d6890d4778ed8bbb3aa69d68ea3fef0aba5b` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/concern-probe-isolation.json` | `b1282d1d171b7942288648446b631dab1341d40c4bea5cfe8d54cc9a6772bc43` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/repository-checks.json` | `c9bf6ce026dda0db46ca33b86318ca9f086d36bfdf04a24e56096a02e3b3c268` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/scope-and-regrades.json` | `a147330315d83d0c888ea41ff56119ab76684d3c206f9b9470012ddc7940aba6` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/consumed-sources.json` | `6258959d1f7b330cbc9519297f67443cc939fbb0561427b835231376a9af59c3` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/index-failure-context.json` | `bdbdfef872de7010ceddc30de70c8e8bfb61673b1292630f6feae5ba7e61c3a3` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/currentness-copy.json` | `daf80cdc1395935c791eed463d54ff4d0405f90ce97f39f12e10fbb0a547f8ac` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/run-checks.py` | `f8b98d5db67e8970ada6cc2fb3b84e5709f0a6c213b06115a723bfa2054be90a` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix10/scope-audit.py` | `57896119be20d2af7847d251525598e8020b4b63e19410838856537d132fb033` |
+
+## Earlier rounds — preserved historical record
+
 # DG6A — Round 9: deck-2 Card 5 applied
 
 Branch `plans/ea-w2-gui-concerns-20261104`; input `4b8147737ca4674db837e95bb3cbee548e8be7e0`. This is application of Jared’s deck-2 answers, not a review-fix round. The final report commit is self-inclusive; `r9/consumed-source-hashes.json` pins the verified source bytes.

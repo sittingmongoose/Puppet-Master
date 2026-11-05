@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DG6A-R9-20261105",
+  "assessment_id": "DG6A-FIX10-20261105",
   "assessment_kind": "self_grade_preparation",
-  "source_base": "4b8147737ca4674db837e95bb3cbee548e8be7e0",
+  "source_base": "22fc9d0ef738e700efd16ed185dea91d6e058c83",
   "rubric": {
     "criteria": [
       "membership_version",
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -84,11 +84,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -111,11 +111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -145,11 +145,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -172,11 +172,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -213,11 +213,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -233,11 +233,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -274,11 +274,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -294,11 +294,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -328,11 +328,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -362,16 +362,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-660 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
+          "finding": "SP-660 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -438,11 +438,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -496,11 +496,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -523,11 +523,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -550,11 +550,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -584,11 +584,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -611,11 +611,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -652,11 +652,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -672,11 +672,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -713,11 +713,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -733,11 +733,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -767,11 +767,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -801,16 +801,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-661 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
+          "finding": "SP-661 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -877,11 +877,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -935,11 +935,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -962,11 +962,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -989,11 +989,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1023,11 +1023,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1050,11 +1050,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1091,11 +1091,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1111,11 +1111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1152,11 +1152,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -1172,11 +1172,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1206,11 +1206,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1240,16 +1240,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-662 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
+          "finding": "SP-662 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1316,11 +1316,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -1374,11 +1374,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1401,11 +1401,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -1428,11 +1428,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1462,11 +1462,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1489,11 +1489,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1530,11 +1530,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1550,11 +1550,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1591,11 +1591,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -1611,11 +1611,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1645,11 +1645,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1679,16 +1679,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-663 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
+          "finding": "SP-663 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1755,11 +1755,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -1810,11 +1810,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1830,11 +1830,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -1850,11 +1850,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1870,11 +1870,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1890,11 +1890,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1910,11 +1910,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1930,11 +1930,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1950,11 +1950,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -1970,11 +1970,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1990,11 +1990,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2010,16 +2010,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "historical_only_disposition",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2027,14 +2027,21 @@
               "line_start": 51032,
               "line_end": 51032,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -2090,11 +2097,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2110,11 +2117,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -2130,11 +2137,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2150,11 +2157,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2170,11 +2177,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2190,11 +2197,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2210,11 +2217,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2230,11 +2237,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -2250,11 +2257,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2270,11 +2277,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2290,16 +2297,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2307,14 +2314,21 @@
               "line_start": 50902,
               "line_end": 50902,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -2369,11 +2383,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2389,11 +2403,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -2409,11 +2423,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2429,11 +2443,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2449,11 +2463,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2469,11 +2483,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2489,11 +2503,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2509,11 +2523,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -2529,11 +2543,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2549,11 +2563,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2569,16 +2583,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2586,14 +2600,21 @@
               "line_start": 50970,
               "line_end": 50970,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.a A / DL-437 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -2648,11 +2669,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2668,11 +2689,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -2688,11 +2709,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2708,11 +2729,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2728,11 +2749,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2748,11 +2769,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2768,11 +2789,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2788,11 +2809,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -2808,11 +2829,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2828,11 +2849,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2848,16 +2869,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2865,14 +2886,21 @@
               "line_start": 51100,
               "line_end": 51100,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.b A / DL-438 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -2939,11 +2967,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2966,11 +2994,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -2993,11 +3021,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3027,11 +3055,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3054,11 +3082,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3095,11 +3123,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3115,11 +3143,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3156,11 +3184,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -3176,11 +3204,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3210,11 +3238,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3237,16 +3265,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OP-002 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
+          "finding": "B2 repaired: first-validator timestamp/number probes mutate a genuine standalone payload, leaving all frozen operation command/record/digest copies unchanged. Twenty-five malformed timestamp CLI cases refuse; exact timestamp-predicate cuts admit only the standalone defect. Shared guard-isolation/number-rule sweep remains pending. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3310,14 +3338,21 @@
               "line_start": 96,
               "line_end": 96,
               "quote": "def run(kind, m, family, fixture):"
+            },
+            {
+              "path": "scripts/pm-concern-created-contracts-check.py",
+              "unit": "standalone payload oracle",
+              "line_start": 163,
+              "line_end": 163,
+              "quote": "for case in fixture['payload_cases']:"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -3372,11 +3407,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3392,11 +3427,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -3412,11 +3447,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3432,11 +3467,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3452,11 +3487,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3472,11 +3507,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3492,11 +3527,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3512,11 +3547,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -3532,11 +3567,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3552,11 +3587,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3572,16 +3607,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -3589,14 +3624,21 @@
               "line_start": 51168,
               "line_end": 51168,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.c A / DL-439 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -3651,11 +3693,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3671,11 +3713,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -3691,11 +3733,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3711,11 +3753,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3731,11 +3773,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3751,11 +3793,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3771,11 +3813,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3791,11 +3833,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -3811,11 +3853,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3831,11 +3873,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3851,16 +3893,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -3868,14 +3910,21 @@
               "line_start": 51236,
               "line_end": 51236,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.d A / DL-440 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -3930,11 +3979,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3950,11 +3999,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -3970,11 +4019,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3990,11 +4039,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4010,11 +4059,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4030,11 +4079,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4050,11 +4099,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4070,11 +4119,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -4090,11 +4139,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4110,11 +4159,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4130,16 +4179,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -4147,14 +4196,21 @@
               "line_start": 51304,
               "line_end": 51304,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.e A / DL-441 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -4209,11 +4265,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4229,11 +4285,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -4249,11 +4305,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4269,11 +4325,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4289,11 +4345,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4309,11 +4365,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4329,11 +4385,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4349,11 +4405,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -4369,11 +4425,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4389,11 +4445,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4409,16 +4465,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -4426,14 +4482,21 @@
               "line_start": 51372,
               "line_end": 51372,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.f A / DL-442 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -4488,11 +4551,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4508,11 +4571,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -4528,11 +4591,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4548,11 +4611,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4568,11 +4631,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4588,11 +4651,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4608,11 +4671,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4628,11 +4691,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -4648,11 +4711,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4668,11 +4731,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4688,16 +4751,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family fixture checker passes. New runtime and schema guards have named negative inputs; shared guard-isolation and number-domain adoption remain pending, so no complete proof PASS is claimed.",
+          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -4705,14 +4768,21 @@
               "line_start": 51440,
               "line_end": 51440,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+            },
+            {
+              "path": "scripts/pm-card5-event-contracts-check.py",
+              "unit": "registered Storage schema oracle",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "def storage_schema_errors(registry, family, schemas):"
             }
           ],
           "prior": {
-            "source": "DG6A round 8 @4b8147737ca4674db837e95bb3cbee548e8be7e0",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 5.g A / DL-443 now supplies the previously held decision; new exact-family owner contract and fixtures are preparation only."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -4770,11 +4840,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4797,11 +4867,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -4824,11 +4894,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4858,11 +4928,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4885,11 +4955,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4926,11 +4996,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4946,11 +5016,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4987,11 +5057,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -5007,11 +5077,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5041,11 +5111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5075,16 +5145,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-664 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
+          "finding": "SP-664 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5151,11 +5221,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -5209,11 +5279,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5236,11 +5306,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "producer": {
           "status": "PASS",
@@ -5263,11 +5333,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5297,11 +5367,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5324,11 +5394,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5365,11 +5435,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5385,11 +5455,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5426,11 +5496,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "transitions": {
           "status": "PASS",
@@ -5446,11 +5516,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5480,11 +5550,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 agrees; current owner evidence and preparation boundary remain."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5514,16 +5584,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8 restores exact earlier-recipe retained reads and retries for B1."
+          "change": "carried",
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-665 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN.",
+          "finding": "SP-665 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5590,11 +5660,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REVIEW-cycle8.md@ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
+            "source": "DG6A-sol/REVIEW-cycle9.md@22fc9d0ef738e700efd16ed185dea91d6e058c83",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 8 evidence rechecked; B2 remains a shared guard-tool sweep item, with no claim of completed isolation."
+          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
         }
       },
       "remaining_gaps": [
@@ -5613,7 +5683,15 @@
       "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply. Round 8 fixes cycle-8 B1 with prior 2^53-1/2^53/2^53+1 retained-original and exact-retry cases. Cycle-8 B2 is deferred by the explicit shared-tool instruction; C12 stays PARTIAL. Nine held records unchanged."
     }
   ],
-  "reviewed_head": "ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f",
-  "revision_binding": "Technical source hashes and serial results in drafts/DG6A/fix8; final report/grade commit is self-inclusive. No admission or native execution.",
-  "round9": "Deck-2 Card 5 A applied; seven pre-round prepared family records are structurally unchanged."
+  "reviewed_head": "22fc9d0ef738e700efd16ed185dea91d6e058c83",
+  "revision_binding": "Technical code commits d065f3c664cfee2627a116ad8c4e99f11b4a24b5 and e635cb861fe7470e593858b358bfde5a54b40245; final report/grade commit is self-inclusive. Exact source hashes and serial results are pinned in drafts/DG6A/fix10. No admission or native execution.",
+  "round9": "Deck-2 Card 5 A applied; seven pre-round prepared family records are structurally unchanged.",
+  "round10": {
+    "review": "DG6A-sol/REVIEW-cycle9.md",
+    "B1": "fixed d065f3c664cfee2627a116ad8c4e99f11b4a24b5",
+    "B2": "fixed e635cb861fe7470e593858b358bfde5a54b40245",
+    "S1": "PENDING_SHARED_GUARD_TOOL: scripts/pm_guard_isolation.py; full field/predicate isolation and exact duplicate proofs across all sixteen remain sweep work. Old 509-row machinery is not credited as complete proof.",
+    "S2": "PENDING_SHARED_NUMBER_RULE: CV-1100/SP-1100/SP-1101, historical recipe selection, physical number bytes/ranges and stale domain-driver expectations. No new lane caps or serializers.",
+    "prepared_verdict": "PASS AS PREPARED for all sixteen, subject to S1/S2, admission ABSENT, retention PARTIAL and native NOT_RUN."
+  }
 }
