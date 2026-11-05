@@ -1,7 +1,6 @@
 // FO-63/64: real actions invalidate the result they abandon. Film the AI remove transition at 60 fps.
 import { LOOKS } from '../browser-check.config.mjs';
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
-const CASES = [['gitea', null], ['forgejo', null], ['github_enterprise', null], ['gitlab', 'self_managed'], ['azure_devops', 'self_managed'], ['bitbucket_cloud', 'data_center']];
 
 const settled = (f, screen) => f.waitForFunction(([L, s]) => {
  const l = document.querySelector(L);
@@ -34,6 +33,11 @@ async function works(t, f) {
 	await el.scrollIntoViewIfNeeded(); await el.click(); await settled(f); return true;
 }
 
+async function wording(t,f,mode) {
+ const want=mode ? 'Expert' : 'ELI5';
+ if(await f.evaluate(()=>O55.talk.mode())!==want) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+ await t.check('requested wording is applied',await f.evaluate(()=>O55.talk.mode())===want,want);
+}
 export default async function(t) {
  const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
  for (const [ix,look] of looks.entries()) for (const mode of [0,1]) {
@@ -42,7 +46,7 @@ export default async function(t) {
    const f = await t.app.open(); await t.app.look(look);
    if (t.args.motion !== 'reduced') await t.emulate({ reducedMotion:'no-preference' });
    await openAt(t,f,'ai');
-   if(mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+   await wording(t,f,mode);
    const row = '[data-key="pv-cursor"] ';
    await click(t,f,row+'[data-o55-do="key"]');
    async function key(v) { await f.locator('#o55f-key-cursor').fill(v); await click(t,f,row+'[data-o55-do="keyCheck"]'); }
@@ -76,7 +80,7 @@ export default async function(t) {
   });
   if(t.args.only !== 'ai') await t.step(`${look} w${mode} token abandoned`,async()=>{
    const f=await t.app.open();await t.app.look(look);await openAt(t,f,'online-service');
-   if(mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+   await wording(t,f,mode);
    await click(t,f,'[data-o55-do="others"]');await click(t,f,'[data-o55-do="pick"][data-arg="github_enterprise"]');await works(t,f);await click(t,f,'.o55-primary');await f.waitForFunction(()=>O55.S.sess.screen==='online-signin');await settled(f,'online-signin');
    await click(t,f,'[data-o55-do="tokenOn"]');
    await f.locator('#o55f-token').fill('pm-demo-token-7f3a9c41');
