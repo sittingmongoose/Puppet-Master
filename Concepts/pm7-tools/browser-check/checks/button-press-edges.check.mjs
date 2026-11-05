@@ -60,23 +60,27 @@ export default async function(t) {
       const y=corner?(name.includes('top')?rest.y+k:rest.y+rest.h-k):name.startsWith('top')?rest.y+d:name.startsWith('bottom')?rest.y+rest.h-d:rest.y+rest.h/2;
       const exposed=await f.evaluate(({sel,i,x,y})=>{const e=document.querySelectorAll(sel)[i],p=document.elementFromPoint(x,y);return p===e||e.contains(p);},{sel,i,x,y});
       if(!exposed){const allowed=await c.evaluate((e,{x,y,name})=>{
+       window.__lastClipProof=null;
        // Fractional scroll rounding can map bottom-1 to the footer just below it.
        // These exact control/family cuts are witnessed on the pinned control too.
+       // The covering element must be the footer itself, with no own pseudo.
+       // NieR button decorations inside it cannot cover this boundary.
        // A footer-button top cover, a sibling control, or any unknown cut fails.
        if(!e.matches('.o55-toggle[data-o55-do="filesafe"],.o55-sheet .o55-primary[data-o55-do="sheet-close"]'))return false;
        const sc=e.closest('.o55-scroll'),foot=e.closest('.o55-layer')?.querySelector('.o55-foot'),hit=document.elementFromPoint(x,y);
-       if(!sc||!foot||name!=='bottom-1'||!(hit===foot||foot.contains(hit)))return false;
+       if(!sc||!foot||name!=='bottom-1'||hit!==foot)return false;
        const r=e.getBoundingClientRect(),sr=sc.getBoundingClientRect(),fr=foot.getBoundingClientRect();
        const boundary=sr.top+sc.clientTop+sc.clientHeight,clip=r.bottom-boundary,family=(window.PM_NIER&&PM_NIER.on())?'nier':O55.S.root.dataset.family;
        const expected=e.matches('.o55-toggle')?({friendly:.4375,nier:.359375})[family]:({basic:.25,friendly:.1875,retro:.40625})[family];
+       window.__lastClipProof={family,theme:document.documentElement.dataset.theme,nier:window.PM_NIER?.on(),expected,clip,boundary,footerTop:fr.top,hitTag:hit?.tagName,pointY:y,bottom2Owned:e.contains(document.elementFromPoint(x,r.bottom-2)),scrollTop:sc.scrollTop,scrollMax:sc.scrollHeight-sc.clientHeight,pseudos:[foot,...foot.querySelectorAll('*')].flatMap(n=>['::before','::after'].map(ps=>({tag:n.tagName,cls:n.className,ps,content:getComputedStyle(n,ps).content}))).filter(p=>!['none','normal'].includes(p.content))};
        return expected!==undefined&&Math.abs(clip-expected)<.001&&Math.abs(fr.top-boundary)<.01
         &&y>=boundary-1&&y<boundary&&e.contains(document.elementFromPoint(x,r.bottom-2))
         &&x>=sr.left&&x<=sr.right&&sc.scrollHeight>sc.clientHeight&&sc.scrollTop<sc.scrollHeight-sc.clientHeight
-        &&[foot,...foot.querySelectorAll('*')].every(n=>['::before','::after'].every(ps=>['none','normal'].includes(getComputedStyle(n,ps).content)));
+        &&['::before','::after'].every(ps=>['none','normal'].includes(getComputedStyle(foot,ps).content));
       },{x,y,name});await t.check('FO-73 only proven fractional own-scroller clip '+trial,allowed,'Unknown cover is a failure');covered.push(trial);coveredTargets.push(await f.evaluate(({sel,i,x,y,trial})=>{
        const e=document.querySelectorAll(sel)[i],describe=n=>{const r=n.getBoundingClientRect(),s=getComputedStyle(n);return {tag:n.tagName,classes:n.className?.baseVal??n.className,x:r.x,y:r.y,w:r.width,h:r.height,pointerEvents:s.pointerEvents,overflow:s.overflow,clientTop:n.clientTop,clientHeight:n.clientHeight,scrollTop:n.scrollTop,scrollHeight:n.scrollHeight,position:s.position,before:{content:getComputedStyle(n,'::before').content,inset:getComputedStyle(n,'::before').inset},after:{content:getComputedStyle(n,'::after').content,inset:getComputedStyle(n,'::after').inset}};};
        const ancestors=[];for(let n=e.parentElement;n&&n!==document.body;n=n.parentElement)ancestors.push(describe(n));
-       return {trial,x,y,target:describe(e),ancestors,stack:document.elementsFromPoint(x,y).slice(0,6).map(describe)};
+       return {trial,x,y,proof:window.__lastClipProof,target:describe(e),ancestors,stack:document.elementsFromPoint(x,y).slice(0,6).map(describe)};
       },{sel,i,x,y,trial}));if(t.args.occlusionShots)await t.shot(`pre-down-occluded-${trial.replaceAll(' ','-')}`,'Before pointer-down; native covering-element geometry is in coveredTargets.');continue;}
       await t.page.mouse.move(off.x+x,off.y+y);if(t.args.marks)await t.mark(`down ${trial}`);await t.page.mouse.down();
       // Sampling starts in pointerdown capture, before owner press handlers and the first painted frame.
