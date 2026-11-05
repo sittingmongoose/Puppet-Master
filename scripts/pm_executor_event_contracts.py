@@ -26,7 +26,7 @@ def identity(contract, payload, storage_instance_id):
             'evt_executor_' + digest(canonical([storage_instance_id, contract['event_type'], inner])))
 
 def validate(contract, payload, context):
-    from pm_executor_event_semantics import schema_validate, validate_append_policy, validate_payload_transport, validate_canonical_domain, same_value
+    from pm_executor_event_semantics import schema_validate, validate_append_policy, validate_payload_transport, validate_canonical_domain, same_value, instant
     validate_append_policy(contract, context['envelope']['replay_policy'])
     validate_payload_transport(payload, context['envelope'], context['payload_packs'], context['viewer'])
     validate_canonical_domain(context)
@@ -63,13 +63,13 @@ def validate(contract, payload, context):
         raise ValueError('fixed without child success')
     if name == 'remediation.spawned' and payload['child_attempt_id'] == payload['remediation_parent_attempt_id']:
         raise ValueError('child is parent')
-    if name == 'run.node_backoff_started' and datetime.fromisoformat(payload['backoff_until_utc']) < datetime.fromisoformat(payload['ts']):
+    if name == 'run.node_backoff_started' and instant(payload['backoff_until_utc']) < instant(payload['ts']):
         raise ValueError('backoff before recorded observation')
     if name == 'plan.decomposition_degraded' and context['graph_locked'] is not False:
         raise ValueError('graph already locked')
     if name == 'run.completed' and context['packaging_passed'] is not True:
         raise ValueError('Document Set packaging')
-    if name == 'run.node_backoff_expired' and datetime.fromisoformat(context['now_utc']) < datetime.fromisoformat(context['backoff_until_utc']):
+    if name == 'run.node_backoff_expired' and instant(context['now_utc'], utc=True) < instant(context['backoff_until_utc'], utc=True):
         raise ValueError('backoff not elapsed')
     if name in ('run.node_backoff_started', 'run.node_retry_scheduled') and payload['failure_class'] in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'):
         raise ValueError('non-retryable failure')

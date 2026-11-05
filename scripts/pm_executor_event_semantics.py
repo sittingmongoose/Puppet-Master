@@ -6,6 +6,10 @@ import hashlib
 import json
 import math
 import re
+import sys
+from contextvars import ContextVar
+from contextlib import contextmanager
+from functools import lru_cache
 from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -16,9 +20,77 @@ import msgpack
 from blake3 import blake3
 import rfc8785
 
+if __name__ == '__main__':
+    # The identity module imports this name lazily. Keep one recipe context when
+    # invoked as a CLI as well as when imported by the sensitivity harness.
+    sys.modules['pm_executor_event_semantics'] = sys.modules[__name__]
+
 ROOT = Path(__file__).resolve().parents[1]
-DATE_TIME_CHECKER = jsonschema.FormatChecker()
 DATE_TIME = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:[Zz]|[+-][0-9]{2}:[0-9]{2})')
+UTC_TIME = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z')
+CURRENT_RECIPE = 'executor-jcs-binary64-v1'
+RETAINED_RECIPE = 'executor-json-integer-v0'
+_RECIPE = ContextVar('executor_record_recipe', default=CURRENT_RECIPE)
+UNCLAIMED_RECIPE = object()
+
+
+@lru_cache(maxsize=1)
+def _custody_catalogue(path, mtime_ns, size):
+    return json.loads(path.read_text())['records']
+
+
+def custody_entry(source_sha256):
+    path = ROOT / 'Plans/executor_event_recipe_custody_fixtures.json'
+    stat = path.stat()
+    return _custody_catalogue(path, stat.st_mtime_ns, stat.st_size).get(source_sha256, {})
+
+
+def record_rules(retained_source_sha256=None, claimed_recipe=UNCLAIMED_RECIPE, *, retained=False):
+    """One edition selector for numbers, formats and every stored-value codec.
+
+    The fixture catalogue represents an independently authenticated Storage
+    append-custody read, never a caller-provided edition or hash fallback. Its
+    keys pin the *complete original*, including every source/dependency digest.
+    Native readers must resolve that binding from Storage's original custody.
+    Every retained original has a catalogue custody binding. An uncatalogued
+    newly supplied source body uses the current writer recipe only.
+    """
+    if retained_source_sha256 is None:
+        return _RECIPE.get()
+    entry = custody_entry(retained_source_sha256)
+    edition = entry.get('recipe_version', CURRENT_RECIPE)
+    require(edition in (CURRENT_RECIPE, RETAINED_RECIPE)
+            and (not retained or bool(entry))
+            and entry.get('source_sha256', retained_source_sha256) == retained_source_sha256
+            and (claimed_recipe is UNCLAIMED_RECIPE
+                 or (type(claimed_recipe) is str and claimed_recipe == edition)),
+            'authenticated retained recipe binding')
+    return edition
+
+
+@contextmanager
+def stored_rules(source_sha256, claimed_recipe=UNCLAIMED_RECIPE, *, retained=False):
+    token = _RECIPE.set(record_rules(source_sha256, claimed_recipe, retained=retained))
+    try:
+        yield
+    finally:
+        _RECIPE.reset(token)
+
+
+def stored_digest(value, source_sha256):
+    with stored_rules(source_sha256):
+        return digest(value)
+
+
+def validate_capture_domain(capture):
+    for field, value in capture.items():
+        if field in ('records', 'dependencies'):
+            for record in value.values():
+                validate_canonical_domain({key: child for key, child in record.items() if key != 'body'})
+                with stored_rules(record['sha256']):
+                    validate_canonical_domain(record['body'])
+        else:
+            validate_canonical_domain(value)
 
 
 def require(condition, reason):
@@ -79,6 +151,8 @@ def canonical(value):
     # Preserve the owner's RFC8785 recipe, including ECMAScript number bytes and
     # UTF-16 property ordering. The fixture input domain still refuses floats.
     validate_canonical_domain(value)
+    if record_rules() == RETAINED_RECIPE:
+        return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
     def binary64(item):
         if type(item) is dict:
             return {key: binary64(child) for key, child in item.items()}
@@ -102,7 +176,7 @@ def validate_canonical_domain(value):
             validate_canonical_domain(item)
     else:
         require(value is None or type(value) in (str, bool, int), 'canonical integer value domain')
-        if type(value) is int:
+        if type(value) is int and record_rules() == CURRENT_RECIPE:
             try:
                 number = float(value)
             except OverflowError:
@@ -175,8 +249,26 @@ def schema_validate(path, value, *, whole_schema_refs=True):
 
 
 def valid_timestamp(value):
-    return (type(value) is str and DATE_TIME.fullmatch(value) is not None
-            and DATE_TIME_CHECKER.conforms(value, 'date-time'))
+    if type(value) is not str or DATE_TIME.fullmatch(value) is None:
+        return False
+    if record_rules() == RETAINED_RECIPE:
+        # Frozen write-time v0 schema recipe had spelling checks only. Original
+        # semantic clock parsing below still applies wherever v0 required it.
+        return True
+    return calendar_valid(value)
+
+
+def calendar_valid(value):
+    # Do not depend on jsonschema's optional date-time implementation. Explicit
+    # range/calendar checks also reject offset hours that fromisoformat carries.
+    try:
+        datetime(int(value[:4]), int(value[5:7]), int(value[8:10]),
+                 int(value[11:13]), int(value[14:16]), int(value[17:19]))
+        if value[-1:] not in ('Z', 'z'):
+            return int(value[-5:-3]) <= 23 and int(value[-2:]) <= 59
+        return True
+    except ValueError:
+        return False
 
 
 def validate_append_policy(contract, policy):
@@ -256,9 +348,9 @@ def source_observation(adapter, records):
     return observed
 
 
-def instant(value):
-    require(valid_timestamp(value), 'whole-string source timestamp')
-    result = datetime.fromisoformat(value)
+def instant(value, *, utc=False):
+    require(valid_timestamp(value) and (not utc or UTC_TIME.fullmatch(value) is not None), 'whole-string source timestamp')
+    result = datetime.fromisoformat(value.upper())
     validate_source_timezone(result)
     return result
 
@@ -358,7 +450,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
     else:
         validate_append_policy(contract, capture['envelope']['replay_policy'])
     validate_payload_transport(payload, capture['envelope'], capture['payload_packs'], capture['viewer'])
-    validate_canonical_domain(capture)
+    validate_capture_domain(capture)
     adapter = contract['semantic_adapter']
     require(capture['adapter'] == adapter['id'], 'adapter dispatch')
     require(capture['family'] == contract['event_type'], 'family dispatch')
@@ -392,7 +484,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
         require(type(record['revision']) is int and record['revision'] >= 0
                 and type(capture['expected_revisions'][slot]) is int
                 and same_value(record['revision'], capture['expected_revisions'][slot]), 'source revision ' + slot)
-        require(record['sha256'] == digest(record['body']), 'source digest ' + slot)
+        require(record['sha256'] == stored_digest(record['body'], record['sha256']), 'source digest ' + slot)
         require(record['parents'] == {parent: records[parent]['ref'] for parent in adapter['parent_joins'][slot]}, 'source parents ' + slot)
     for field, path in adapter['joins'].items():
         if field in payload:
@@ -510,14 +602,15 @@ def validate_dependencies(contract, payload, capture):
         require(payload.get(field) == ref, 'dependency payload ref ' + field)
         require(dependency['project_id'] == payload['project_id'], 'dependency scope ' + field)
         require(dependency['storage_instance_id'] == scope['storage_instance_id'], 'dependency root ' + field)
-        require(dependency['sha256'] == digest(dependency['body']), 'dependency hash ' + field)
+        require(dependency['sha256'] == stored_digest(dependency['body'], dependency['sha256']), 'dependency hash ' + field)
         require(dependency['deleted_at'] is None, 'deleted dependency ' + field)
         require(string_list_contains(capture['viewer'], dependency['readers']), 'dependency authorization ' + field)
         if field == 'execution_unit_context_ref':
             # Shared dependency instances keep their existing owner validation.
             # The DX whole-document gate owns the sixteen payloads and proof schema.
-            schema_validate('Plans/execution_unit_context.schema.json', dependency['body'],
-                            whole_schema_refs=False)
+            with stored_rules(dependency['sha256']):
+                schema_validate('Plans/execution_unit_context.schema.json', dependency['body'],
+                                whole_schema_refs=False)
         if field in ('runtime_snapshot_ref', 'execution_unit_context_ref'):
             for key in ('project_id', 'run_id', 'thread_id', 'node_id', 'attempt_id'):
                 if key in dependency['body'] and key in payload:
@@ -531,12 +624,17 @@ def validate_dependencies(contract, payload, capture):
             dependency = capture['dependencies'].get(ref)
             require(dependency is not None and dependency['project_id'] == payload['project_id']
                     and dependency['storage_instance_id'] == scope['storage_instance_id']
-                    and dependency['sha256'] == digest(dependency['body'])
+                    and dependency['sha256'] == stored_digest(dependency['body'], dependency['sha256'])
                     and dependency['deleted_at'] is None and string_list_contains(capture['viewer'], dependency['readers']),
                     'evidence list dependency ' + field)
 
 
 def validate_history(contract, payload, original, retained_source_sha256, disclosure):
+    with stored_rules(retained_source_sha256, disclosure.get('recipe_version', UNCLAIMED_RECIPE), retained=True):
+        return _validate_history(contract, payload, original, retained_source_sha256, disclosure)
+
+
+def _validate_history(contract, payload, original, retained_source_sha256, disclosure):
     """Finite retained-source read oracle, independent of today's live lifecycle.
 
     The hash is a test observation of immutable retained-source custody, not a new
@@ -544,6 +642,11 @@ def validate_history(contract, payload, original, retained_source_sha256, disclo
     use the original owner reads; disclosure uses current access/withdrawal fences.
     """
     require(digest(original) == retained_source_sha256, 'retained original source custody')
+    from pm_executor_event_contracts import identity
+    stored_identity = identity(contract, payload, original['capture']['scope']['storage_instance_id'])
+    require(custody_entry(retained_source_sha256).get('stored_identity', list(stored_identity)) == list(stored_identity)
+            and disclosure.get('stored_identity', list(stored_identity)) == list(stored_identity),
+            'retained original identity')
     # Authenticate the immutable original and its then-valid lifecycle first.
     # The recorded viewer is evidence of original disclosure, never a current grant.
     validate_capture(contract, payload, original['capture'], historical=True)
@@ -870,8 +973,11 @@ def main(family_name=None):
             try:
                 # Test each schema's exact-end guard independently of our stricter
                 # format checker and of every relational/source comparison.
-                schema = json.loads((ROOT / contract['schema_ref']).read_text())
-                jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(case['payload'])
+                if case.get('format_route') == 'strict':
+                    schema_validate(contract['schema_ref'], case['payload'])
+                else:
+                    schema = json.loads((ROOT / contract['schema_ref']).read_text())
+                    jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(case['payload'])
                 result = 'accept'
             except (ValueError, jsonschema.ValidationError):
                 result = 'reject'
