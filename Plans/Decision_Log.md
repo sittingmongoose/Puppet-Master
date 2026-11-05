@@ -28585,3 +28585,62 @@ preserved_exact_tokens:
 owner_hints:
   - Plans/Planning_Ledger_System.md
 ```
+
+### DL-336 - Settings Names Govern Verification Repair Strategies
+
+Coordinator resolution A1 (pm7-build, 2026-11-05; mail `1105125610-4b4f` answering stream C's `1105125445-d6fd`) makes the Settings repair-strategy names and order canonical. The three GRS-027 spellings are retired through an append-only ledger correction. The restored rules live in EP-098, EP-102, EP-103, CV-288, OSI-428, and the corrected 0PI-056 owner map.
+
+```yaml
+plan_unit_id: DL-336
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-336 records coordinator resolution A1 by pm7-build on 2026-11-05 (mail 1105125610-4b4f answering stream C's 1105125445-d6fd): Settings planning.verification.repair-strategies supplies the canonical repair-strategy names and their order. The GRS-027 spellings escalate_capability_lane, assign_specialist_subagents, and manual_decision are retired by append-only ledger correction corr-0010; their replacements are escalate_capability, assign_specialists, and manual. The atom-0046 record remains unchanged, and GRS-027 remains superseded source lineage.
+  The five restored rules live in active owners: repeated-defect thresholds in EP-102 with repair-loop owner routing corrected in 0PI-056; the failed VerificationCycle, DefectBundle, bounded RepairWorkNode, and verification-rerun loop in EP-098 with the DefectBundle definition in CV-288; the Settings-ordered ten-value repair-strategy set in EP-102; cost controls that preserve required verification, receipts, and certification gates in OSI-428; and the certified complete gate in EP-103. Independent review by risk tier and degraded finish remain open product questions and are not resolved by this decision.
+gui_related: false
+gui_classification_reason: Records runtime repair-strategy naming and owner routing; no GUI contract changes.
+split_recommended: false
+depends_on: [0PI-056, CV-288, EP-098, EP-102, EP-103, OSI-428]
+unblocks: []
+acceptance_criteria:
+  - EP-102 lists patch, replan, split_node, merge_node, widen_context, rollback, escalate_capability, assign_specialists, manual, and authority_blocked in Settings order.
+  - The ledger records corr-0010 and evt-0017 retiring the three GRS-027 spellings without changing atom-0046.
+  - Active owner units carry all five restored rules, and 0PI-056 routes verification repair-loop policy to Executor_Protocol.
+  - This decision does not settle independent review by risk tier or degraded finish.
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
+  - python3 scripts/pm-plan-index.py validate
+risk_class: repair_strategy_owner_drift
+reasoning_tier: high
+context_scope: closure_grs027_lost_rules_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/00-plans-index.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl
+  - Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/events.jsonl
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "pm7-build coordinator resolution A1, 2026-11-05, mail 1105125610-4b4f answering stream C mail 1105125445-d6fd"
+  - "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl#corr-0010"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/qc/widen/fix-packet/FIX-PACKET-BRIEF.md"
+preserved_exact_tokens:
+  - "DL-336"
+  - "A1"
+  - "escalate_capability_lane"
+  - "assign_specialist_subagents"
+  - "manual_decision"
+  - "escalate_capability"
+  - "assign_specialists"
+  - "manual"
+owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+```
