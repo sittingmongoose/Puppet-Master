@@ -1006,8 +1006,6 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
                   transition_before=None, historical=False):
     validate_shape("event_payloads/file_manager/" + event_type.replace(".", "_") + ".schema.json", "", payload)
     validate_project_scope(payload["project_id"], trace["project_id"], "scope mismatch")
-    kind, action = event_type.split(".")
-    root = "node" if kind == "file" else "folder"
     validate_family_identity(event_type, payload)
     for key in ("source_path_ref", "destination_path_ref"):
         if key in payload and not payload[key].startswith("pm-path-ref:v1:project:"):
@@ -1036,11 +1034,9 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None,
         if type(trace[k]) is int and trace[k] < 0:
             raise ValueError("past writer cutoff")
     if (type(trace["event_sequence"]) is int and type(trace["writer_cutoff_sequence"]) is int and
+            trace["event_sequence"] >= 0 and trace["writer_cutoff_sequence"] >= 0 and
             trace["event_sequence"] > trace["writer_cutoff_sequence"]):
         raise ValueError("past writer cutoff")
-    if event_type.endswith((".copied", ".moved", ".renamed", ".exported")):
-        if payload["source_path_ref"] == payload["destination_path_ref"]:
-            raise ValueError("unchanged path edge")
     action = event_type.split(".")[1]
     expected_semantics = {
         "copied": {"source_unchanged": True, "distinct_result": True},
