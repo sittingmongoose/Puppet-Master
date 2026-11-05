@@ -1758,6 +1758,9 @@ def refresh_prepared(case, owner_changed=False):
         case["source_context"]["owner_record_sha256"]=v["owner_record_sha256"]
         if "application_wrapper" in case:
             case["application_wrapper"].update(record=copy.deepcopy(v["owner_record"]),record_ref=None)
+            # Scope is an observation of the top-level record, not the independent
+            # wrapper Server header. Keep it fresh when probing a nested join.
+            case["application_wrapper"]["scope"]=copy.deepcopy(v["owner_record"]["application_context"]["scope"])
     v["semantic_sha256"]=producer_digest(p)
     case["event"]["payload"]=copy.deepcopy(p)
     case["event"]["payload_ref"]=None
@@ -1873,14 +1876,14 @@ def round_two_probes(root=ROOT):
                     if field=="server_id":ac["scope"][field]+="x"
                     elif field=="storage_instance_id":ac[field]="00000000-0000-4000-8000-000000000000"
                     else:ac[field]+="x"
-                    prepared(refresh_prepared(c,True),"app_context:"+str(index)+":"+field,"source_application_context")
+                    prepared(refresh_prepared(c,True),"app_context:"+str(index)+":"+field+":nested_join_only","source_application_context")
         if "application_wrapper" in original:
             c=copy.deepcopy(original);del c["application_wrapper"]
             prepared(c,"wrapper_missing","application_wrapper_schema")
             c=copy.deepcopy(original);c["application_wrapper"]["record"]["schema_version"]="0.0.0"
             prepared(c,"wrapper_record_schema","application_wrapper_schema")
             c=copy.deepcopy(original);c["application_wrapper"]["server_id"]+="x"
-            prepared(c,"wrapper_identity","application_wrapper_identity")
+            prepared(c,"wrapper_identity:outer_server_only","application_wrapper_identity")
             c=copy.deepcopy(original);rec=c["application_wrapper"]["record"]
             field=next(k for k in ("thread_id","collaboration_run_id","participant_slot_id") if k in rec)
             rec[field]+="x";prepared(c,"wrapper_record","application_wrapper_record")
