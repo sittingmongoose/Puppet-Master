@@ -33,7 +33,7 @@ This reseal changes exactly seven tracked files and adds this record:
 | `…/shard_report.json`, `…/shard-check-report.json` | `6fbb4dc8ddfe…`, `a8e646703118…` | `78a8fa8ed889…`, `05d1e754100b…` | Live shard reports. 99 documents and 3,095 shards. No shard body or path changed (stop condition held). |
 | `Plans/.implementation_readiness/buildability_gate_report.json` | `498aa0b38377…` | `dd648fdbcd78…` | Regenerated once. A probe after the final index differed only in `generated_at_utc`, so the first generation is kept. The report-to-Spec-Lock cycle stays closed. |
 | `Plans/.plan_index/node_readiness_report.json` | `2b0b6c8998b8…` | `d71fdfd0553a…` | Final index generation with the new currentness edition present. Three index files that differed only in timestamps were restored. |
-| `Plans/auto_decisions.jsonl` | `7612af5ed1eb…` | `a662070dc1dc…` | One row appended through `upsert_auto_decision`, taking the file from 224 to 225 rows: `dec-2026-11-04-governance-reseal-checkpoint`. `validate-auto-decisions` passes. Its contract refs name real anchors only (`Plans/Decision_Log.md#DL-039`, `#DL-040`, `#DL-300`). |
+| `Plans/auto_decisions.jsonl` | `7612af5ed1eb…` | `8ad88a7d3f1e…` | One row appended through `upsert_auto_decision`, taking the file from 224 to 225 rows: `dec-2026-11-04-governance-reseal-checkpoint`. `validate-auto-decisions` passes. Its contract refs resolve to real anchors: `Plans/Decision_Log.md#DL-039`, `#dl-040-compaction-completion-binding-and-permanent-content-free-audit-history` (DL-040 has only its heading anchor) and `#DL-300`. The Sol review caught the earlier `#DL-040` spelling, and the row was re-upserted. The 224 earlier rows are byte-identical. |
 
 **Not changed:**
 - the PNC-019 receipt, the event family registry and any Event Authority row;
@@ -103,7 +103,7 @@ The driver is `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261104-chec
    The shared landing check runs against the old shared currentness edition. It is expected to report `event_authority_currentness_source_drift` for the edited sources as governance staleness, with exit 1.
 3. Push `main` to both remotes, then verify both tips.
 4. While still holding the lock, back up the shared checkout's ignored edition. Install only the seven generated files from `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261104-checkpoint/currentness-final/`, keep the eight frozen files, and validate.
-5. In a full local worktree at the new `main`, run `snapshot-current` first and then `pm-landing-check.py --record-baseline` with the local `--readiness-audit-root`. Commit them as one follow-up, fast-forward, push, and release the lock.
+5. In a full local worktree at the new `main`, run `snapshot-current` first and then `pm-landing-check.py --record-baseline` with the local `--readiness-audit-root`. Commit them as one follow-up, then fast-forward and push. Remove the landed reseal worktree and delete its landed branch, then release the lock.
 6. Mail `pm-closure-lead`, `pm-ea-lead`, `pm7-build` and `pm-fo-lead` with the landed SHA.
 
 ## Evidence
