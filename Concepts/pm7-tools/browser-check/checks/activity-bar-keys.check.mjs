@@ -46,8 +46,11 @@ const lum = (r, g, b) => { const c = [r, g, b].map(v => { v /= 255; return v <= 
 function boxOf(key) {
   const el = key === 'activityBarToggle' ? document.getElementById(key) : document.querySelector(`#activityBar .icon[data-ab-id="${key}"]`);
   if (!el) return null;
-  const r = el.getBoundingClientRect();
-  return { x: r.x, y: r.y, w: r.width, h: r.height, lit: el.classList.contains('active') };
+  // the name's own text (a block label's box spans the whole item, its letters do not)
+  const r = el.getBoundingClientRect(), n = el.querySelector(':scope > .icon-label');
+  let l = null;
+  if (n && getComputedStyle(n).display !== 'none' && n.getClientRects().length) { const g = document.createRange(); g.selectNodeContents(n); l = g.getBoundingClientRect(); }
+  return { x: r.x, y: r.y, w: r.width, h: r.height, lit: el.classList.contains('active'), label: l && { x: l.x, y: l.y, w: l.width, h: l.height } };
 }
 function paintDiff(rest, focus) {
   let changed = 0; const ratios = [];
@@ -112,12 +115,14 @@ export default async function (t) {
     if (!b) return null;
     const P = 9, x = Math.max(0, Math.floor(off.x + b.x) - P), y = Math.max(0, Math.floor(off.y + b.y) - P);
     const region = { x, y, width: Math.ceil(off.x + b.x + b.w) + P + 1 - x, height: Math.ceil(off.y + b.y + b.h) + P + 1 - y };
-    const rest = await t.pixels(region);
+    // with the names shown, the name's own box: a ring must not cross it (no pixel of it may change)
+    const L = b.label, lr = L && { x: Math.floor(off.x + L.x), y: Math.floor(off.y + L.y), width: Math.ceil(L.w), height: Math.ceil(L.h) };
+    const rest = await t.pixels(region), restL = lr && await t.pixels(lr);
     await reach();
     await f.waitForTimeout(450);
     const now = await key();
-    const focus = await t.pixels(region);
-    return { key: target, lit: b.lit, focused: now.key === target, ...paintDiff(rest, focus) };
+    const focus = await t.pixels(region), focusL = lr && await t.pixels(lr);
+    return { key: target, lit: b.lit, focused: now.key === target, ...paintDiff(rest, focus), ...(lr ? { nameChanged: paintDiff(restL, focusL).changed } : {}) };
   };
   const byTab = target => async () => { for (let i = 0; i < controls.length; i++) { await kb.press('Tab'); if ((await key()).key === target) return; } };
   await t.page.mouse.move(off.x + 1200, off.y + 600);
@@ -269,6 +274,21 @@ export default async function (t) {
     await t.check(`${look}: Chat and Files are lit, Search and More are not`, rows[0]?.lit && rows[1]?.lit && rows[2] && !rows[2].lit && rows[3] && !rows[3].lit, JSON.stringify(rows.map(r => r && [r.key, r.lit])));
     await t.check(`${look}: a painted key focus ring of ${known ? 'some contrast (3:1 held back for FO-99)' : '3:1 or more'} on lit Chat and Files, on Search and on More`, rows.every(ok), JSON.stringify(rows));
     if (known) t.log(`${look}: FO-99 ring contrast (not enforced here) ${rows.map(r => r && `${r.key} ${r.median}:1`).join(', ')}`);
+    // the bar with its names shown (the toggle): the ring on lit Files and unlit Search, and the names untouched
+    await f.evaluate(() => document.getElementById('activityBarToggle').click());
+    await f.waitForFunction(() => !document.getElementById('activityBar').classList.contains('collapsed'), null, { timeout: 5000 }).catch(() => {});
+    await f.waitForTimeout(900);
+    const wide = [await painted('files', byTab('files')), await painted('search', byTab('search'))];
+    t.log(`${look} names shown, painted rings ${JSON.stringify(wide)}`);
+    await t.check(`${look}, names shown: a painted key focus ring of ${known ? 'some contrast (FO-99)' : '3:1 or more'} on lit Files and on Search, and neither name is crossed`,
+      wide.every(ok) && wide[0]?.lit && wide.every(r => r && r.nameChanged != null && r.nameChanged <= 2), JSON.stringify(wide));
+    if (t.args.crops) {
+      await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);
+      await t.crop(`names-files-focus-${surface}-${look}`, f.locator('#activityBar'), `${look}: names shown, lit Files with the key focus ring`);
+    }
+    await f.evaluate(() => document.getElementById('activityBarToggle').click());
+    await f.waitForFunction(() => document.getElementById('activityBar').classList.contains('collapsed'), null, { timeout: 5000 }).catch(() => {});
+    await f.waitForTimeout(900);
     if (t.args.crops) {
       await moreReach();
       await t.crop(`more-focus-${surface}-${look}`, f.locator('#activityBar'), `${look}: More with the key focus ring`);
