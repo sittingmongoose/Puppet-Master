@@ -13,14 +13,11 @@ Entries: (script, old, new, count).
    40 px clear a side for it), the Deep Plan thread's labelled bar landed in that band in a 1440 and a 1512 window
    (neon-verify 18: "bar overflows 10 px", and its clipped last item's box reached 1 px under the Pod). The row width
    now includes the bar's inline padding and borders, so the labelled tier is kept only when the whole bar fits.
+
+Retired 2026-11-06 (FO-76): app.js no longer sums the items. syncActivityCompact reads the border box of a hidden
+max-content copy of the bar (renderActivityBar's sizer), which already holds the bar's padding and borders, in the
+standalone and the hosted build alike, so this file has nothing left to patch.
 """
 from __future__ import annotations
 
-_GAP = "    const gap=parseFloat(getComputedStyle(bar).columnGap||getComputedStyle(bar).gap)||0;\n"
-_SUM = "kids.reduce((n,el)=>n+el.getBoundingClientRect().width,0)+gap*Math.max(0,kids.length-1)"
-
-HOSTED_JS_PATCHES = [
-    ('app.js', _GAP + '    return ' + _SUM + ';',
-     _GAP + '    const box=getComputedStyle(bar), edge=k=>parseFloat(box[k])||0;\n'
-     "    return " + _SUM + "+edge('paddingLeft')+edge('paddingRight')+edge('borderLeftWidth')+edge('borderRightWidth');", 1),
-]
+HOSTED_JS_PATCHES: list = []

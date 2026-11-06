@@ -2123,7 +2123,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const defs=activityDefs();
     const items=Object.entries(defs);
     if(!items.length) return '';
-    return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
+    // The hidden sizer holds the bar twice, labelled and compact, laid out at max-content inside the live wrap: the
+    // same cascade, container and media regime and inherited host variables, so syncActivityCompact's observer reads
+    // every tier width from layout. The copies carry no action, domain id or accessible name (aria-hidden, inert);
+    // data-hover-domain and .active stay, because the bar's rules size items by them.
+    const inner=(id,d)=>`<i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span>`;
+    const isActive=id=>state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;
+    const fitRow=tier=>`<div class="activity-fit${tier?' is-ab-compact':''}"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}">${items.map(([id,d])=>`<button class="activity-item ${isActive(id)?'active':''}" data-hover-domain="${id}" tabindex="-1">${inner(id,d)}</button>`).join('')}</div></div>`;
+    return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=isActive(id);return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}">${inner(id,d)}</button>`;}).join('')}</div><div class="activity-sizer" data-k="activity-sizer" aria-hidden="true" inert>${fitRow(0)}${fitRow(1)}</div></div>`;
   }
   function renderJumpBottom(){
     const working=turnBusy();
@@ -2338,7 +2345,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderStatusBar(){ return `<footer class="status-bar"><span>${icon('check-circle',10)} Agent · ${esc(selectedModel().name)} · ${formatElapsed(state.work.elapsed)}</span><span class="center">${esc(state.worktree)} · Local server</span><span class="right">Ready · ${state.context.compacted?'Context compacted':`Context ${(window.PM56_CTX&&window.PM56_CTX.ringPct)?window.PM56_CTX.ringPct():64}%`} ${icon('info',10)}</span></footer>`; }
 
   let composerRO=null, composerCompact=false, labeledToolsMin=0, measuringCompact=false;
-  let abCompactTier=0, abMeasuring=false;
+  let abCompactTier=0;
   function toolsContentWidth(tools){
     const kids=[...tools.children];
     if(!kids.length) return 0;
@@ -2353,7 +2360,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     measuringCompact=false;
     return w;
   }
-  let composerMeasureCache=null, activityMeasureCache=null;
+  let composerMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
     const box=document.querySelector('.composer-box');
@@ -2407,39 +2414,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(strip) observeLensStrip(strip);
     else if(lensStripObserved&&composerRO){ composerRO.unobserve(lensStripObserved); lensStripObserved=null; }
   }
-  function activityRowWidth(bar){
-    const kids=[...bar.querySelectorAll(':scope > .activity-item')];
-    if(!kids.length) return 0;
-    const gap=parseFloat(getComputedStyle(bar).columnGap||getComputedStyle(bar).gap)||0;
-    return kids.reduce((n,el)=>n+el.getBoundingClientRect().width,0)+gap*Math.max(0,kids.length-1);
-  }
-  function measureActivityTier(wrap, bar, tier){
-    abMeasuring=true;
-    wrap.classList.add('is-measuring');
-    wrap.classList.toggle('is-ab-compact', tier>=1);
-    wrap.classList.toggle('is-ab-icon-only', tier>=2);
-    const w=activityRowWidth(bar);
-    wrap.classList.remove('is-measuring');
-    abMeasuring=false;
-    return w;
-  }
-  function syncActivityCompact(){
-    if(abMeasuring) return;
-    const wrap=document.querySelector('.activity-wrap');
-    const bar=wrap&&wrap.querySelector('.activity-bar');
-    if(!wrap||!bar||!bar.querySelector('.activity-item')){
-      abCompactTier=0;
-      return;
-    }
-    const cs=getComputedStyle(wrap);
-    const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  /* Activity tiers (FO-76). renderActivityBar puts a hidden sizer in the wrap: the bar again, labelled and compact,
+     at max-content. One ResizeObserver reads the sizer's content box (the wrap's content width, through inherited
+     padding) and both copies' border boxes as layout delivers them, so text, counts, fonts, hosted rules, generated
+     content and the container and media regimes all reach the fit through layout, a Chat revealed after hiding
+     included, and a resize step reads three stored numbers instead of probing the live strip. The copies' widths do
+     not depend on the tier chosen, so the 8 px hysteresis below cannot feed back into them. */
+  const abFit={ro:null,sizer:null,rows:[],avail:0,labeled:0,compact:0};
+  function applyActivityTier(){
+    const wrap=abFit.sizer&&abFit.sizer.parentElement;
+    const {avail,labeled,compact}=abFit;
+    // A hidden Chat lays nothing out: keep the tier until the observer reports the revealed sizes.
+    if(!wrap||avail<=0||labeled<=0||compact<=0) return;
     const slack=8;
-    // Tier widths are intrinsic to the bar's content/font/theme, not to the available width (see
-    // syncComposerCompact): keep the container width out of the cache key.
-    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
-    if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
-      activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
-    const {labeled,compact}=activityMeasureCache;
     let tier=abCompactTier;
     if(tier===0){
       if(avail+0.5<labeled) tier=avail+0.5<compact?2:1;
@@ -2451,6 +2438,32 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     abCompactTier=tier;
     wrap.classList.toggle('is-ab-compact', tier>=1);
     wrap.classList.toggle('is-ab-icon-only', tier>=2);
+  }
+  function onActivityFit(entries){
+    for(const e of entries){
+      const box=e.target===abFit.sizer?e.contentBoxSize:e.borderBoxSize;
+      const w=box&&box[0]?box[0].inlineSize:e.contentRect.width;
+      if(e.target===abFit.sizer) abFit.avail=w;
+      else if(e.target===abFit.rows[0]) abFit.labeled=w;
+      else if(e.target===abFit.rows[1]) abFit.compact=w;
+    }
+    applyActivityTier();
+  }
+  // Called on every chrome sync: it only (re)arms the observer when render replaced the sizer, and reads no layout.
+  function syncActivityCompact(){
+    const sizer=document.querySelector('.activity-wrap > .activity-sizer');
+    const rows=sizer?[...sizer.querySelectorAll(':scope > .activity-fit > .activity-bar')]:[];
+    if(!sizer||rows.length!==2){
+      if(abFit.sizer){ abFit.ro.disconnect(); abFit.sizer=null; abFit.rows=[]; }
+      abCompactTier=0;
+      return;
+    }
+    if(sizer===abFit.sizer&&rows[0]===abFit.rows[0]&&rows[1]===abFit.rows[1]) return;
+    if(!abFit.ro) abFit.ro=new ResizeObserver(onActivityFit);
+    else abFit.ro.disconnect();
+    Object.assign(abFit,{sizer,rows,avail:0,labeled:0,compact:0});
+    abFit.ro.observe(sizer);
+    for(const row of rows) abFit.ro.observe(row,{box:'border-box'});
   }
   function syncChatChrome(){
     syncComposerCompact();
@@ -2464,12 +2477,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     // Hosted resize drags resize the chat column every frame; the chrome syncs below read rects and
     // scroll metrics after each width write. Dock heights and the jump pill may lag one cadence
     // mid-drag (the editor/terminal kinds use the same 120ms rule); a trailing sync lands on release.
-    // The two compact tiers are not held: they compare a cached intrinsic width against the current
-    // one (no measuring), and on the pass-3 tape their one-cadence lag showed as labels overflowing
-    // for 1-2 frames at each threshold crossing.
+    // The composer's compact tier is not held: it compares a cached intrinsic width against the current
+    // one (no measuring), and on the pass-3 tape a one-cadence lag showed as labels overflowing for
+    // 1-2 frames at each threshold crossing. The Activity tier needs no call here: its own observer
+    // decides it at layout delivery in the same frame (syncActivityCompact).
     if(document.body && document.body.classList.contains('pm-resizing') && performance.now()-chromeLastSync<100){
       syncComposerCompact();
-      syncActivityCompact();
       if(!chromeTrailT) chromeTrailT=setTimeout(()=>{chromeTrailT=null;chromeLastSync=performance.now();syncChatChrome();},100);
       return;
     }
