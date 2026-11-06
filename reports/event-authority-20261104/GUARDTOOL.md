@@ -1182,3 +1182,35 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOO
 | `results/lane-trial-tb3.json` | `1c84f1fb13909f50911ef31f57b61302b4e933a798b33dbd25d1e91573ff1f22` |
 | `results/selftest-final.json.gz` | `8fcb8d08545e55e7039a50bfc2874fec25b86673236abcebd19caf661e36c29f` |
 | `results/dg6b.summary.jsonl` | `aafe0ee66456c835d0c7fd7872b7a20f6ab26cc0de5dc1c3c2f104bb9b0f74ae` |
+
+## Tool batch 4: findings and responses
+
+**REVIEW-etools-tb3-opus findings 1 and 2 (TOOLBATCH4 T61) are fixed; nothing is disputed.** Base: `71d22ed85f`. Fix: `fb0f12411e` on `plans/ea-guardtool-20261105`. Both findings are HYPOTHETICAL (synthetic suites); every real-lane credit was right before and is right now.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **1: a certified `module.attr` read was judged at its first hop only — fixed** | `static_scan`, `_certified_chain_hop`. The T48 rule ran only when the read's parent was the module name, so `textwrap.re._cache` (re's compile cache), `textwrap.re.__all__`, `re.functools.__all__` and `json.dumps.__globals__` each passed its first hop and reached shared state. Every hop of an attribute chain rooted at a certified name is now read statically (the module's own namespace, else `inspect.getattr_static`, so no property or `__getattr__` runs) and judged in every loaded instance: a module at any hop is refused, a dunder at any hop is refused, and every other hop must be what a first hop may be, or one of two immutable additions (see Soundness). A refused later hop is `external_binding_chain_read`, unwaivable and a stop kind. The review's reset-seam route (G07c: `cache = textwrap.re.__all__` then `cache.append(...)`, declared as a seam over a no-op reset) is closed at its source: the alias's read is itself refused, and a first-hop read of mutable data was already refused by T48. | Traps `TB4-T61-G07-textwrap-re-cache`, `-G07b-textwrap-re-all-iadd`, `-G07c-alias-noop-reset`, `-G10-re-functools-all`, `-G11-dumps-globals` (the review's five suites). On `71d22ed85f` each passes with `x` credited (G07b and G07c leave `re.__all__` armed; G11 leaves `tb3_armed` in json's namespace); now each stops before import with `external_binding_chain_read`, 0 factories, 0 evaluations, nothing armed. Control `TB4-T61-chain-control` credits on both. |
+| **2: module-level checker code ran at import, before the static stop — fixed** | `prescan_sources`, the adapter command line and the trap loader. They imported the checker first, so a module-level `json.tb3_review_marker = 1` reached the engine's `json` although the run then stopped. The checker's source closure (the start file and every module of its own repository it imports, found from its import statements, nothing outside the standard library executed) is now scanned from its text first for the stop kinds the text alone shows: writes through, escapes of and refused chains from names bound to an allowlisted standard-library module, star imports, dynamic-code and reflection names, and reset seams (where declared before the import) that name such a binding. Any of them stops the run before anything of the checker is imported (`static_error_stop`, stage `before import`). The text scan can only stop a run, never credit one; the full scan still runs after the import. The closure is bounded by the checker's own git root, so third-party packages are not followed. | `TB4-T61-G08-module-level-write`: on `71d22ed85f` the run stops before the factory but `json` gains `tb3_review_marker`; now it stops before import and `json` gains nothing. |
+
+**Soundness: every widening.** Two, both immutable, both needed because the chain rule now judges hops the T48 rule never saw: (1) a C method, class-method, slot, getset or member descriptor of a class CPython marks immutable (`string.ascii_letters.upper`, `itertools.chain.from_iterable`); (2) a builtin method bound to an immutable literal or such a class (`math.pi.is_integer`). Neither has settable state: setting an attribute on either raises. Trap: `TB4-T61-chain-control` credits exactly these three reads; the five refusal traps show that a module or a dunder at any hop, and mutable data at any hop, stay refused. Everything else in this batch narrows: the review's read-only chain control (`'compile' in textwrap.re.__all__`) is now refused too (strict, not wrong).
+
+### Rerun results
+
+| Check | `71d22ed85f` | Now |
+|---|---|---|
+| Self-test | 328/328 | **335/335** (328 + 7 `TB4-T61-*`) |
+| The 7 new traps on the base engine | 5 refusals pass with `x` credited; G08 stops before the factory but leaves `json.tb3_review_marker`; control credits | all 6 stop before import, nothing armed; control credits |
+| Real-lane trial (`lane_trial_tb2.py`, lane `e66effc3aa`) | 11 rows match ground truth | **11 rows match ground truth**, the same credit row by row; M0 full case with all controls 5/5 in 61.4 s |
+| DG6B example, normal and `-O` | PASS 7/7, 176 evaluations | **the same**: PASS, 7 of 7 rows proved, 176 evaluations, 0 failures, both modes |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH4/guard/`.
+
+| File | SHA-256 |
+|---|---|
+| `probes/new-traps.json` | `ae841b0b4ccbfdddd497eb43a605e43dc71abfe7dd403688b7f1e205ad954e1c` |
+| `probes/run_one4.py` | `e17ee9201a0cec1cebadf946c9f601500c1c1dcb09ed0ffc61670982dc55df6f` |
+| `probes/lane_trial_tb2.py` | `e7f6d08e16f6a89739d4af24f0d55e6aed96ca9eb5d9d8c016e04659232d38c6` |
+| `results/new-traps-base-fix.jsonl` | `039a900953c98c91af6e9b20ace5dbd9c5c4d16e4e5499d9b3ca8e3604f8833c` |
+| `results/lane-trial-tb4.json` | `e5a403ac945e3467827ecda3f36d5798b442db54150c0e54f1781f77611acf58` |
+| `results/selftest-final.json.gz` | `5812c90946a520bf366840eabdd2f412e1e4cdd0a54da8a5a10e9b4b7a161512` |
+| `results/dg6b.summary.jsonl` | `7fcff088285748fbe8ed2ebe17e669baad886f8380ff0d8e1ddd68e1c2104e60` |
