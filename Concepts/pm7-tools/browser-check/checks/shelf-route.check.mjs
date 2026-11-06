@@ -319,22 +319,59 @@ export default async function (t) {
     // Inventory every wrapper PMMenu upgrades, even before its route is visible.
     const panel=f.locator(`#${target}`), exercised=new Set(), inventory=new Set(), popupDone=new Set(), probed=new Set();
     // Reach a control the way a person does: scroll its own scroller with the wheel when it has one.
-    const reach = async (loc) => {
+    // Reach a control the way a person does, and return where to press it. A short panel's scroller can be mostly
+    // under its sticky strips (Source Control at 1280x500: a 56 px scroller whose top 40 px lie under the tab strip),
+    // so when the press point is not on top, the wheel (over the scroller, at a point that hit-tests to it) moves the
+    // press point into the band of the scroller that is exposed. at: the press point inside the element (default: centre).
+    const reach = async (loc, at = null) => {
       await loc.scrollIntoViewIfNeeded();
-      // The wheel goes where the pointer is: a point of the scroller that hit-tests to it (a short panel's sticky
-      // footer covers the scroller's centre at 1280x500).
-      const scroll = await loc.evaluate(e=>{
-        for(let a=e.parentElement;a;a=a.parentElement)if(a.scrollHeight>a.clientHeight && /auto|scroll/.test(getComputedStyle(a).overflowY)) {
-          const r=e.getBoundingClientRect(),s=a.getBoundingClientRect(),x=s.x+s.width/2;
-          for(let y=s.y+8;y<s.bottom-4;y+=8){const h=document.elementFromPoint(x,y);if(h&&a.contains(h))return {delta:r.y+r.height/2-s.y-s.height/2,x,y};}
-          return null;
-        }
-      });
-      if(scroll) {
-        await t.page.mouse.move(off.x+scroll.x,off.y+scroll.y);
-        await t.page.mouse.wheel(0,scroll.delta);
+      let p = null;
+      for (let pass = 0; pass < 3; pass++) {
+        p = await loc.evaluate((e, at) => {
+          const r = e.getBoundingClientRect(), px = r.x + (at ? at.x : r.width / 2), py = r.y + (at ? at.y : r.height / 2);
+          const h0 = document.elementFromPoint(px, py);
+          if (h0 && (h0 === e || e.contains(h0))) return { x: px, y: py, onTop: true };
+          let sc = null;
+          for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight && /auto|scroll/.test(getComputedStyle(a).overflowY)) { sc = a; break; }
+          if (!sc) return { x: px, y: py, onTop: false, hit: h0?.className?.baseVal ?? h0?.className };
+          const s = sc.getBoundingClientRect(), x = Math.min(Math.max(px, s.left + 2), s.right - 2);
+          let best = null, run = null;
+          for (let y = s.top + 1; y < s.bottom - 1; y += 2) {
+            const h = document.elementFromPoint(x, y);
+            if (h && sc.contains(h)) { run = run || { a: y, b: y }; run.b = y; if (!best || run.b - run.a > best.b - best.a) best = { a: run.a, b: run.b }; } else run = null;
+          }
+          if (!best) return { x: px, y: py, onTop: false, hit: h0?.className?.baseVal ?? h0?.className };
+          const ty = (best.a + best.b) / 2;
+          return { x: px, y: py, onTop: false, hit: h0?.className?.baseVal ?? h0?.className, wheel: { x, y: ty, delta: py - ty } };
+        }, at);
+        if (p.onTop || !p.wheel || Math.abs(p.wheel.delta) < 1) break;
+        await t.page.mouse.move(off.x + p.wheel.x, off.y + p.wheel.y);
+        await t.page.mouse.wheel(0, p.wheel.delta);
         await f.waitForTimeout(150);
       }
+      return p;
+    };
+    // A short window (1280x500) can leave a panel's list scroller almost entirely under its strips and cards (Source
+    // Control with Publish and review open exposes about 16 px of list). As a person would, fold the panel's expanded
+    // regions outside its scrollers (real clicks on aria-expanded="true" controls that are not tabs or popup triggers)
+    // when a scroller exposes less than 40 px, and say so.
+    const makeRoom = async (state) => {
+      const folds = await panel.evaluate(p => {
+        document.querySelectorAll('[data-shelf-fold]').forEach(e => e.removeAttribute('data-shelf-fold'));
+        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
+        const band = sc => { const s = sc.getBoundingClientRect(), x = s.left + s.width / 2; let n = 0; for (let y = s.top + 1; y < s.bottom - 1; y += 2) { const h = document.elementFromPoint(x, y); if (h && sc.contains(h)) n += 2; } return n; };
+        const short = scs.map(sc => ({ sc, px: band(sc) })).filter(o => o.px < 40);
+        if (!short.length) return [];
+        return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && e.getAttribute('role') !== 'tab' && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
+          .map((e, i) => { e.setAttribute('data-shelf-fold', String(i)); return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), exposed: short.map(o => o.px) }; });
+      });
+      for (const fo of folds) {
+        const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), fp = await reach(ctl);
+        await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
+        const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
+        await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded, JSON.stringify(fo));
+      }
+      if (folds.length) await f.waitForTimeout(500);
     };
     // Every popup trigger the panel shows (PMMenu wrappers and the rail skin's own), by mouse and by Enter.
     const popupCensus = async (state) => {
@@ -353,18 +390,19 @@ export default async function (t) {
         if (c.hidden || c.disabled || popupDone.has(dedupe)) continue;
         popupDone.add(dedupe);
         const trig = panel.locator(`[data-shelf-pop="${c.i}"]`), tag = `${target} ${state} popup ${c.controls || c.sig}`;
-        await reach(trig);
-        await t.visible(`#${target} [data-shelf-pop="${c.i}"]`, `${tag} reachable`);
+        const tp = await reach(trig);
+        await t.check(`${tag} reachable`, tp.onTop, JSON.stringify(tp), { hard: true });
+        const pressTrig = async () => { const q = await reach(trig); await t.page.mouse.click(off.x + q.x, off.y + q.y); };
         const got = {};
         for (const input of ['mouse', 'enter']) {
           // A wrapper's mouse route is the census above; its keyboard route is new here.
           if (input === 'mouse' && c.controls && exercised.has(c.controls)) continue;
           const before = await f.evaluate(() => __shelf.keys());
-          if (input === 'mouse') await trig.click(); else { await trig.focus(); await t.page.keyboard.press('Enter'); }
+          if (input === 'mouse') await pressTrig(); else { await trig.focus(); await t.page.keyboard.press('Enter'); }
           const key = await f.waitForFunction(b => __shelf.keys().find(k => !b.includes(k)), before, { timeout: 5000 }).then(h => h.jsonValue(), () => null);
           await t.check(`${tag} opens a menu by ${input}`, !!key, JSON.stringify({ blocked: await f.evaluate(() => window.__blockedPopup || 0) }), { hard: true });
           got[input] = key;
-          await assertMenu(key, `${tag} by ${input}`, true, async () => { if (input === 'mouse') await trig.click(); else { await trig.focus(); await t.page.keyboard.press('Enter'); } }, trig);
+          await assertMenu(key, `${tag} by ${input}`, true, async () => { if (input === 'mouse') await pressTrig(); else { await trig.focus(); await t.page.keyboard.press('Enter'); } }, trig);
           if (await trig.getAttribute('aria-expanded') !== null)
             await t.check(`${tag} by ${input} trigger collapsed after Escape`, await trig.getAttribute('aria-expanded') === 'false', '', { hard: true });
         }
@@ -394,14 +432,8 @@ export default async function (t) {
         const row = panel.locator(`[data-shelf-probe="${i}"]`), got = {}, unreachable = [];
         if (!await row.count()) continue;
         await t.page.mouse.move(2, 2);
-        // One reach per row kind: into view, and the wheel on its scroller only when its centre is not on top.
-        const point = () => row.evaluate(e => {
-          const r = e.getBoundingClientRect(), x = r.x + r.width / 2, y = r.y + r.height / 2, h = document.elementFromPoint(x, y);
-          return { at: h && (h === e || e.contains(h)) ? { x, y } : null, open: __shelf.keys() };
-        });
-        await row.scrollIntoViewIfNeeded();
-        let p = await point();
-        if (!p.at) { await reach(row); p = await point(); }
+        // One reach per row kind; the press point comes from reach (on top, or unreachable for the mouse).
+        const q = await reach(row), p = { at: q.onTop ? { x: q.x, y: q.y } : null, open: await f.evaluate(() => __shelf.keys()) };
         await t.check(`${target} ${state} no menu open before probing ${sig}`, !p.open.length, JSON.stringify(p.open), { hard: true });
         for (const input of INPUTS) {
           if (input === 'mouse') {
@@ -416,7 +448,7 @@ export default async function (t) {
           // Branches once per pane, input and menu; every route still asserts open, items and Escape.
           const once = `${state}|${input}|${key}`;
           await assertMenu(key, tag, !branchDone.has(once), async () => {
-            if (input === 'mouse') await t.page.mouse.click(off.x + p.at.x, off.y + p.at.y, { button: 'right' });
+            if (input === 'mouse') { const q2 = await reach(row); await t.page.mouse.click(off.x + q2.x, off.y + q2.y, { button: 'right' }); }
             else { await row.focus(); await t.page.keyboard.press(KEY[input]); }
           }, row);
           branchDone.add(once);
@@ -436,6 +468,7 @@ export default async function (t) {
       await t.check(`${target} engine ${engine} selected`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engine), '', { hard: true });
       await f.waitForTimeout(400);
     }
+    await makeRoom(engine || 'panel');
     const tabs=await panel.locator('[role="tab"]').evaluateAll(es=>{
       document.querySelectorAll('[data-shelf-tab]').forEach(e=>e.removeAttribute('data-shelf-tab'));
       return es.filter(e=>e.checkVisibility()).map((e,i)=>{e.setAttribute('data-shelf-tab',String(i));return e.dataset.tab||e.dataset.jjTab||e.textContent.trim();});
@@ -455,7 +488,9 @@ export default async function (t) {
         for(const head of heads) if(await head.isVisible() && !await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open'))) {
           // Centre it in its own scroller with the wheel: at the scroller's edge a short panel's sticky
           // footer (Source Control's Publish card at 1280x500) covers it.
-          await reach(head); await head.click({position:{x:8,y:8}});
+          const hp = await reach(head, {x:8,y:8});
+          await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
+          await t.page.mouse.click(off.x + hp.x, off.y + hp.y);
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),'',{hard:true});
           opened=true;
         }
@@ -483,9 +518,9 @@ export default async function (t) {
             for(let a=e;a;a=a.parentElement)if(getComputedStyle(a).display==='none')return true;
             return false;
           }))continue;
-          await reach(trigger);
-          await t.visible(`#${target} [data-shelf-route="${c.index}"]`,`${target} ${c.key} reachable`);
-          await trigger.click();
+          const rp = await reach(trigger);
+          await t.visible(`#${target} [data-shelf-route="${c.index}"]`,`${target} ${c.key} reachable`,{scroll:false});
+          await t.page.mouse.click(off.x + rp.x, off.y + rp.y);
           await t.check(`${target} ${c.key} opens its menu`,await trigger.getAttribute('aria-expanded')==='true',
             JSON.stringify({blocked:t.args.blockMenu||null,hits:await f.evaluate(()=>window.__blockedShelfMenu||0)}),{hard:true});
           const menu=f.locator('.pmr-menu.is-open');
@@ -500,7 +535,8 @@ export default async function (t) {
           if(c.key==='rdCfgMenu' && !await panel.locator('#rdAddForm').isVisible()) {
             // Enter this branch while the launch selector is still in view;
             // later shelf scrolling must not race the menu's scroll-close owner.
-            await trigger.click();
+            const lp = await reach(trigger);
+            await t.page.mouse.click(off.x + lp.x, off.y + lp.y);
             await t.check('launch selector reopens for Add Configuration',await trigger.getAttribute('aria-expanded')==='true','',{hard:true});
             await menu.waitFor({state:'visible',timeout:5000});
             await menu.getByRole('menuitem',{name:/Add Configuration/}).click();
@@ -559,5 +595,5 @@ export default async function (t) {
   await t.check('at least 6 popup menus beyond the PMMenu wrappers exercised', new Set(popupRows.filter(r => !r.controls).map(r => r.identity)).size >= 6, JSON.stringify(popupRows));
   for (const [arg, hits] of [['blockContext', '__blockedContext'], ['blockPopup', '__blockedPopup'], ['blockBranch', '__blockedBranch']])
     if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, await f.evaluate(h => window[h] || 0, hits) > 0, String(t.args[arg]));
-  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch],[data-shelf-pick]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch'])e.removeAttribute(a);}));
+  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch],[data-shelf-pick],[data-shelf-fold]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold'])e.removeAttribute(a);}));
 }
