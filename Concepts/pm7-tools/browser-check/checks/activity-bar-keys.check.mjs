@@ -51,8 +51,10 @@ function ringOf(key) {
     const box = [Math.min(...c.map(b => b.left)), Math.min(...c.map(b => b.top)), Math.max(...c.map(b => b.right)), Math.max(...c.map(b => b.bottom))];
     reticle = [r.left - 3, r.top - 3, r.right + 3, r.bottom + 3].every((v, i) => Math.abs(v - box[i]) <= 8);
   }
-  return { focusVisible: el.matches(':focus-visible'), reticle, parts: parts.map(e => { const cs = getComputedStyle(e);
-    return { outline: cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 1.5 && alpha(cs.outlineColor) > 0.5 ? `${cs.outlineWidth} ${cs.outlineStyle} ${cs.outlineColor}` : null, shadow: cs.boxShadow }; }) };
+  // the opacity the ring is painted at: its own and every ancestor's up to the bar (a muted tile mutes its ring)
+  const shown = e => { let o = 1; for (let n = e; n && n !== document.documentElement; n = n.parentElement) o *= parseFloat(getComputedStyle(n).opacity); return o; };
+  return { focusVisible: el.matches(':focus-visible'), reticle, parts: parts.map(e => { const cs = getComputedStyle(e), op = shown(e);
+    return { outline: cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 1.5 && alpha(cs.outlineColor) * op > 0.85 ? `${cs.outlineWidth} ${cs.outlineStyle} ${cs.outlineColor}` : null, opacity: +op.toFixed(2), shadow: cs.boxShadow }; }) };
 }
 const ringShown = (focus, rest) => !!focus && focus.focusVisible && (focus.reticle || focus.parts.some((p, i) => p.outline || (p.shadow !== 'none' && rest && p.shadow !== rest.parts[i]?.shadow)));
 
