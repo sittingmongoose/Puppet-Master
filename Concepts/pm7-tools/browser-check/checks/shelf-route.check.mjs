@@ -188,15 +188,22 @@ export default async function (t) {
       chosen?.setAttribute('data-shelf-pick', '');
       const inert = [all.find(off), all.find(it => it.hasAttribute('aria-haspopup') && !off(it))].filter(Boolean);
       inert.forEach((it, i) => it.setAttribute('data-shelf-inert', String(i)));
-      return { pick: chosen ? chosen.textContent.trim().replace(/\s+/g, ' ') : null, inert: inert.map(it => (it.hasAttribute('aria-haspopup') ? 'branch ' : 'disabled ') + it.textContent.trim().replace(/\s+/g, ' ')) };
+      return { pick: chosen ? chosen.textContent.trim().replace(/\s+/g, ' ') : null, allDisabled: all.length > 0 && all.every(off),
+        inert: inert.map(it => (it.hasAttribute('aria-haspopup') ? 'branch ' : 'disabled ') + it.textContent.trim().replace(/\s+/g, ' ')) };
     }, key);
     const settled = () => f.waitForFunction(k => !__shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
     await reopened('for a pick');
     const m1 = await mark();
-    await t.check(`${tag} has an item to pick`, !!m1.pick, JSON.stringify(m1), { hard: true });
+    // A menu whose items are all disabled (Jujutsu's Move here… on this fixture) has nothing to pick.
+    await t.check(`${tag} has an item to pick, or only disabled items`, !!m1.pick || m1.allDisabled, JSON.stringify(m1), { hard: true });
     for (const [i, what] of m1.inert.entries()) {
       await f.locator(`[data-shelf-inert="${i}"]`).click();
       await t.check(`${tag} a ${what.split(' ')[0]} item (${what.slice(what.indexOf(' ') + 1)}) does not close the menu`, await open(), '', { hard: true });
+    }
+    if (!m1.pick) {
+      await t.page.keyboard.press('Escape');
+      await settled();
+      return;
     }
     await f.locator('[data-shelf-pick]').click();
     const closed = await settled();
