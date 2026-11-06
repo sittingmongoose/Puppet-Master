@@ -74,6 +74,11 @@
 §B:not(.collapsed) > .activity-bar-toggle::before { transform: rotate(180deg); }
 §B > .activity-bar-toggle:hover { background: var(--d-hover) !important; color: var(--d-text) !important; }
 §B > .activity-bar-toggle:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+/* FO-96: the icons and More are buttons in the tab order (shell.html); a key focus rings the tile they light, the
+   symbol box, as the toggle's ring sits on its own tile. NieR's target brackets take a key focus instead of a ring
+   (19-nier-parts.js, as on the toggle), so the tile ring stands down while that part is on. */
+§B .icon:focus-visible { outline: none; }
+§R:not([data-o55-nier-parts~="brackets"]) #activityBar .icon:focus-visible .symbol { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 §R[data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro

@@ -1981,6 +1981,8 @@
     }
     .activity-bar .icon .symbol { display: flex; align-items: center; justify-content: center; height: 20px; }
     .activity-bar .icon:hover { color: var(--text-primary); }
+    /* FO-96: the icons and More are buttons in the tab order; a key focus rings the item */
+    .activity-bar .icon:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
     .activity-bar .icon.active {
       color: var(--accent-lime);
     }
