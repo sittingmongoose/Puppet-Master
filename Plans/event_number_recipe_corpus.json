@@ -13128,6 +13128,21 @@
       "single_defect": "full_value.schema_version"
     },
     {
+      "id": "full-value-wrong-version-2.0.1",
+      "op": "full_value_commitment",
+      "changes": {
+        "schema_version": "2.0.1"
+      },
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.schema_version",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.schema_version"
+    },
+    {
       "id": "full-value-wrong-schema-id",
       "op": "full_value_commitment",
       "changes": {
@@ -24964,6 +24979,22 @@
       "length": 6,
       "descriptor": {
         "id": "26bebb121169d80246a4531d34864f8092849462dd92d2f2bc88800f23fdbac6"
+      },
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "payload_digest",
+      "target_predicate": "payload_digest",
+      "enforcement": "authored",
+      "single_defect": "payload_digest.whole-digest"
+    },
+    {
+      "id": "payload-id-first-byte",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "id": "27bebb121169d80246a4531d34864f8092849462dd92d2f2bc88800f23fdbac7"
       },
       "conflicts": [
         "C05",

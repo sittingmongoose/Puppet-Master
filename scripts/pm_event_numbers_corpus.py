@@ -1404,6 +1404,38 @@ def _unit_unselected_text(lines, unit, fields):
     return "\n".join(out)
 
 
+def _unit_section_unselected_text(lines, unit, fields):
+    """The whole of one owner unit's section less the selected field text (T50, TOOLBATCH2 pre-check finding 8): from
+    the unit's heading line to the line before the next heading of the same or a higher level (outside fences), every
+    line but those of the selected YAML fields in the unit's own YAML block. The heading title, the prose and the
+    ContractRef: line after the fence, and the unselected fields, are what the rules table does not read; a rule added
+    to any of them fails until the pin is reviewed and refreshed."""
+    headings = [i for i, line in enumerate(lines) if line.startswith("### " + unit + " - ")]
+    if len(headings) != 1:
+        raise ValueError("owner unit heading not found exactly once: " + unit)
+    start = headings[0]
+    end, fence = len(lines), False
+    for i in range(start + 1, len(lines)):
+        stripped = lines[i].strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            fence = not fence
+        elif not fence and re.match(r"#{1,3} ", lines[i]):
+            end = i
+            break
+    yaml_open = next(i for i in range(start + 1, end) if lines[i].strip() == "```yaml")
+    yaml_close = next(i for i in range(yaml_open + 1, end) if lines[i].strip() == "```")
+    out, field = [], None
+    for i in range(start, end):
+        if yaml_open < i < yaml_close:
+            key = re.match(r"([a-z_]+):(.*)$", lines[i])
+            if key:
+                field = key.group(1)
+            if field in fields:
+                continue
+        out.append(lines[i])
+    return "\n".join(out)
+
+
 def _guide_section_texts(lines):
     """{section: raw text} for every "## " section of the guide, fences respected (T33 pins)."""
     texts, section, fence = {}, "(preamble)", False
@@ -1503,6 +1535,17 @@ def owner_statements(root, owner_text):
             problems.append("owner text %s %s: unselected YAML fields changed (sha256 %s, pinned %s); review them for "
                             "number rules and refresh unselected_sha256" % (unit["path"], unit["unit"], unselected,
                                                                           unit.get("unselected_sha256")))
+        # T50: and so is the whole unit section less the selected fields: its heading, the prose and ContractRef: line
+        # outside the YAML fence, and every other line up to the next heading.
+        try:
+            section = _pin(_unit_section_unselected_text(lines, unit["unit"], unit["fields"]))
+        except (ValueError, StopIteration) as error:
+            problems.append("owner text %s %s: unit section unreadable: %s" % (unit["path"], unit["unit"], error))
+            section = None
+        if section is not None and unit.get("section_unselected_sha256") != section:
+            problems.append("owner text %s %s: the unit section outside its selected fields changed (sha256 %s, pinned %s); "
+                            "review its heading, prose and ContractRef: line for number rules and refresh "
+                            "section_unselected_sha256" % (unit["path"], unit["unit"], section, unit.get("section_unselected_sha256")))
         ordinals = {}
         for field, block in blocks:
             ordinals[field] = ordinals.get(field, 0) + 1

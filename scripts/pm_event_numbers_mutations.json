@@ -2402,6 +2402,30 @@
       "replace": "    if type(value) is not str or value.strip() not in (",
       "witness": "append-policy-trailing-space",
       "rule": "append-policy.exact-string"
+    },
+    {
+      "id": "review-tb2-N05",
+      "api": "full_value_commitment",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "source": "review-toolbatch2",
+      "note": "full_value_commitment accepts any 2.0.x schema_version instead of exactly 2.0.0 (TOOLBATCH2 pre-check blind N05).",
+      "find": "event.get(\"schema_version\") != \"2.0.0\":",
+      "replace": "not str(event.get(\"schema_version\")).startswith(\"2.0.\"):",
+      "witness": "full-value-wrong-version-2.0.1",
+      "rule": "full-value.edition"
+    },
+    {
+      "id": "review-tb2-N07",
+      "api": "verify_payload_bytes",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "source": "review-toolbatch2",
+      "note": "Payload digest compared without its first byte (TOOLBATCH2 pre-check blind N07).",
+      "find": "    if bytes.fromhex(payload_id) != blake3.blake3(raw).digest():",
+      "replace": "    if bytes.fromhex(payload_id)[1:] != blake3.blake3(raw).digest()[1:]:",
+      "witness": "payload-id-first-byte",
+      "rule": "payload.blake3-id"
     }
   ],
   "rules_source": "Predicate-level rows. Each rule names hand-written mutation ids (each of which names it back through its rule field) and generated point keys; every one must be caught with its witness failing. A control rule's mutations must survive instead. Statement rows (statements) name these rules.",
@@ -2955,7 +2979,8 @@
         "predicate:site:full_value_commitment:full_value_edition#1:false event.get('schema_id') != 'pm.event.v0'#1",
         "full-value-no-edition-refusal",
         "full-value-version-unchecked",
-        "review-fix4-X2"
+        "review-fix4-X2",
+        "review-tb2-N05"
       ]
     },
     {
@@ -3499,7 +3524,8 @@
       "rule": "Payload IDs are BLAKE3 of the exact original bytes, never another hash.",
       "mutations": [
         "payload-sha256",
-        "review-fix4-X3"
+        "review-fix4-X3",
+        "review-tb2-N07"
       ]
     },
     {
@@ -4040,7 +4066,8 @@
           "acceptance_criteria",
           "negative_constraints"
         ],
-        "unselected_sha256": "62e9e98fc10a02b815dc160bb491b48b2bc6d1cc0e1ac241da409cf4d1868c5b"
+        "unselected_sha256": "62e9e98fc10a02b815dc160bb491b48b2bc6d1cc0e1ac241da409cf4d1868c5b",
+        "section_unselected_sha256": "64c9f7093156d441bd97f00d082638162bfad2d648e76c17e91f0c2adf783115"
       },
       {
         "path": "Plans/storage-plan.md",
@@ -4050,7 +4077,8 @@
           "acceptance_criteria",
           "negative_constraints"
         ],
-        "unselected_sha256": "f5ad8aa7bbf485bd974feb481997b7ec32dae64e5f8b2a8c0c327edbbce6017a"
+        "unselected_sha256": "f5ad8aa7bbf485bd974feb481997b7ec32dae64e5f8b2a8c0c327edbbce6017a",
+        "section_unselected_sha256": "f7985daa5adae08028418c6db20bebf6db738b327ed7a95a54c23c4bf17340fc"
       },
       {
         "path": "Plans/storage-plan.md",
@@ -4060,7 +4088,8 @@
           "acceptance_criteria",
           "negative_constraints"
         ],
-        "unselected_sha256": "d053f85da702165355bb0cdfa48caf7eb3664a2e736e12d5f55a007dc3574fe0"
+        "unselected_sha256": "d053f85da702165355bb0cdfa48caf7eb3664a2e736e12d5f55a007dc3574fe0",
+        "section_unselected_sha256": "ed9e897f2f794954d23ff994a4919b58576276e53b890bb2b0131de09885dca0"
       }
     ],
     "guide": {
