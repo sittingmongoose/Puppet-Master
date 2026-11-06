@@ -157,6 +157,7 @@ function ownerFilter(menuId, hover, classes, start, onChange) {
       },
     });
   });
+  PMR.menu.keys(trig);
   return { trig, reset() { chosen.clear(); show(); onChange(chosen); } };
 }
 

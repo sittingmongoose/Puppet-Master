@@ -93,6 +93,8 @@ function lfMountMore() {
     setTimeout(() => { if (D.on && !PMR.menu.isOpen(btn)) open(); }, 0);
   }, true);
 
+  PMR.menu.keys(btn, on);
+
   return {
     destroy() {
       offs.forEach(off => off());

@@ -34,6 +34,7 @@ function installSwitcher() {
     ev.preventDefault();
     PMR.menu.toggle(switcherMenu(), btn, { width: 300, onPick: it => PMR.concepts.set(it.value) });
   });
+  PMR.menu.keys(btn);
   const group = PMR.h('div.pm7-statusbar-group.pmr-switch-group', btn);
   bar.insertBefore(group, bar.firstChild);
   document.addEventListener('pmr:concept', ev => { strong.textContent = switcherText(ev.detail.id); });

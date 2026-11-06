@@ -94,7 +94,7 @@ function jjBtn(c, base) {
   const b = jh('button', a, c.icon && base === 'pm-minibtn' ? jjIco(c.icon) : null, base === 'pm-minibtn' ? null : jh('span', { text: c.label }), c.menu && base !== 'pm-minibtn' ? jjIco('chevD', 'd-jj-chev') : null);
   PMR.hover(b, c.hover || c.label, c.reason ? reasonText(c.reason) : c.detail);
   if (base === 'pm-minibtn') b.setAttribute('aria-label', c.hover || c.label);
-  if (c.menu) b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); jjMenu(b, c.menu()); });
+  if (c.menu) { b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); jjMenu(b, c.menu()); }); PMR.menu.keys(b); }
   return b;
 }
 /* menu items: { label, cmd, arg, reason, danger, icon, meta } in groups [{ label, items }] -> PMR.menu */

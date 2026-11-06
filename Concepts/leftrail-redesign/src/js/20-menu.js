@@ -279,10 +279,25 @@ function trigger(def, opts) {
       },
     }));
   });
-  btn.addEventListener('keydown', ev => { if (ev.key === 'ArrowDown') { ev.preventDefault(); if (!isOpenFor(btn)) btn.click(); } });
-  return btn;
+  return keyTrigger(btn);
 }
 const isOpenFor = anchor => MENU_STACK.some(e => e.anchor === anchor);
+/* FO-95: the keys of a popup trigger, shared by every rail-skin trigger that opens a PMR menu from its own click (trigger()
+   above, PMR.button's menus, the skin's Owner filters, the automation service select, Jujutsu's menu buttons, the
+   activity bar's More and the rail switcher): ArrowDown opens the menu when it is shut, and a trigger that is not a
+   native button also opens on Enter and Space (a button clicks on them by itself). The open follows a key, so openMenu
+   puts the focus on the menu's selected item, else its first (lastInputWasKey). on(target, type, fn) lets a caller that
+   removes its own listeners (41-more's destroy) hold this one too. */
+function keyTrigger(btn, on) {
+  const fn = ev => {
+    const native = btn.tagName === 'BUTTON';
+    if (ev.key !== 'ArrowDown' && (native || (ev.key !== 'Enter' && ev.key !== ' '))) return;
+    ev.preventDefault();
+    if (ev.key !== 'ArrowDown' || !isOpenFor(btn)) btn.click();
+  };
+  if (on) on(btn, 'keydown', fn); else btn.addEventListener('keydown', fn);
+  return btn;
+}
 function toggle(def, anchor, opts) {
   const open = MENU_STACK.find(e => e.anchor === anchor && !e.opts.parent);
   if (open) { closeEntry(open, { returnFocus: false }); return null; }
@@ -290,7 +305,7 @@ function toggle(def, anchor, opts) {
 }
 
 PMR.menu = {
-  open: openMenu, toggle, trigger, closeAll,
+  open: openMenu, toggle, trigger, closeAll, keys: keyTrigger,
   close(el) { const e = MENU_STACK.find(x => x.el === el) || MENU_STACK[MENU_STACK.length - 1]; if (e) closeEntry(e); },
   isOpen: anchor => (anchor ? isOpenFor(anchor) : MENU_STACK.length > 0),
   /* what an open menu holding node hangs from: the trigger of its top menu (a submenu answers for its whole chain),
