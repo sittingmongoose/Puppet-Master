@@ -13,7 +13,8 @@ TestPMConcept.html, shell_motion.py and wizorch_layer.py are history. The split 
 Unconditional shell edits are already in base/; the fork-owned Doctor edit is in src/settings/managers/55-doctor.js.
 Settings (step 0), Usage (2b), O55 (3), rail (4), glyphs (5), Home/Glass/wallpapers (6) remain authored layers.
 The NieR registry (tools/nier_registry.py) emits their list contributions after composition.
-Step 7 applies active_descendant_rewrite and css_bucket_split over the finished page; page lint sees the unsplit CSS.
+Step 7 applies active_descendant_rewrite, css_bucket_split and css_media_split over the finished page; page lint sees
+the unsplit CSS, and the layers' published checks see the page before css_media_split.
 Concepts/PMConcept7.html is the only published page (2026-10-20 user direction). Plain runs and --publish-pm7 write
 that file; --check fails while it is missing or differs from a fresh build by even one byte.
 """
@@ -32,6 +33,7 @@ import settings_layer
 import base_source
 import active_descendant_rewrite
 import css_bucket_split
+import css_media_split
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -524,6 +526,8 @@ def duplicate_keys() -> list[str]:
 SETTINGS_NOTES: dict = {}
 # the page as it was before step 7, keyed by the built text: the page lint ratchet counts what the sources wrote
 UNSPLIT: dict = {}
+# the page before css_media_split, keyed by the built text: the layers' published checks read each sheet whole
+MEDIA_WHOLE: dict = {}
 
 
 def _rail():
@@ -659,8 +663,20 @@ def build_text() -> str:
     #    parts with the same matches and the same specificity, in every <style> block, last, so every layer is covered.
     unsplit = note + text
     built, SETTINGS_NOTES['bucket_split'] = css_bucket_split.apply(unsplit)
+    # 7. Viewport sheet split (SW-36): a media query that flips when the window crosses a width restyles everything
+    #    any rule of its sheet matches, so every viewport @media block goes in a <style> of its own, in place, with its
+    #    condition as the element's media attribute (css_media_split's docstring has the measurements). The home shim
+    #    reads #pm6-css-dashboard and deletes its two drag-gesture rules, which must stay in that sheet's first part.
+    whole = built
+    try:
+        built, SETTINGS_NOTES['media_split'] = css_media_split.apply(whole, {'pm6-css-dashboard': [
+            'body.pm-home-dragging * { cursor: grabbing', 'body.pm-home-dragging { -webkit-user-select']})
+    except ValueError as exc:
+        raise BuildError(str(exc)) from exc
     UNSPLIT.clear()
     UNSPLIT[built] = unsplit
+    MEDIA_WHOLE.clear()
+    MEDIA_WHOLE[built] = whole
     return built
 
 
@@ -858,8 +874,11 @@ def main() -> int:
             print('CHECK:', p)
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
-    problems = (lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
-                + _home().published_problems(built) + _chat56().published_problems(built))
+    whole = MEDIA_WHOLE.get(built, built)
+    problems = (lint_sources() + syntax_check(built) + _rail().published_problems(whole) + _glyphs().published_problems(whole)
+                + _home().published_problems(whole) + _chat56().published_problems(whole))
+    if css_media_split.join(built) != whole:
+        problems.append('css_media_split: the published page with its viewport parts joined is not the page before the split')
     if problems:
         for p in problems:
             print('LINT:', p)

@@ -65,7 +65,9 @@
      identity step is SSH's, so it applies only on the SSH way, and pairing only on the pairing way (reader-795-f: Back
      after the owned chain was rebuilt showed pairing for a NAS reached over SSH) */
   const byPm = (S) => { const n = nasN(S), d = (S.env.devices || []).find((x) => x.id === n.device); return !!(d && d.pm) && !n.useSsh; };
-  const sshAt = (step) => (S) => nasBy('ssh')(S) && !!nasN(S).device && (step === 'identity' ? !byPm(S) : step === 'pmpair' ? byPm(S) : step === 'folder' ? verified(S) : !!nasN(S).trusted);
+  /* (the key, sign-in and install steps are SSH's too: a device reached by pairing never has them, whatever a record says
+     of its trust; Muse's P2 note) */
+  const sshAt = (step) => (S) => nasBy('ssh')(S) && !!nasN(S).device && (step === 'identity' ? !byPm(S) : step === 'pmpair' ? byPm(S) : step === 'folder' ? verified(S) : !byPm(S) && !!nasN(S).trusted);
   /* a Project being set up now: Later sets none up, so its name, settings and safety steps are not on the way (final-onb
      FO22-Later: Back after Later walked the abandoned Project's Safe and Name) */
   const project = (S) => began(S) !== 'later';

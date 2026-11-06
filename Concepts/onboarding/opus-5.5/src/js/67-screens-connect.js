@@ -176,7 +176,8 @@
       F.op(S, runKey(r, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: ms(700), fail: () => failOnce(S, 'reach') }], { payload, sound: CODE_SOUND, onFail: (S2, st) => failed(S, r, st.code) });
       return;
     }
-    const mid = r.method === 'qr' ? { key: 'qr', ms: ms(1900), fail: () => failOnce(S, 'qr') } : { key: 'approve', ms: ms(2800), fail: () => failOnce(S, 'approve') };
+    const approvalMs = (S.env.timings || {}).pairApprovalMs || 2800;
+    const mid = r.method === 'qr' ? { key: 'qr', ms: ms(1900), fail: () => failOnce(S, 'qr') } : { key: 'approve', ms: ms(approvalMs), fail: () => failOnce(S, 'approve') };
     F.op(S, runKey(r), 'cmd.client.pair.start', [{ key: 'reach', ms: ms(700), fail: () => failOnce(S, 'reach') }, mid, { key: 'trust', ms: 800 }],
       { payload, sound: PAIR_SOUND, onDone: () => adopt(S, r), onFail: (S2, st) => failed(S, r, st.code) });
   }
@@ -502,7 +503,7 @@
         const kept = m.server_mode === 'existing_server' && !!m.server_ref && m.server_ref === c.server_ref;
         S.sess.connect.newProject = true; S.sess.active = 'main';
         O55.draft.set(m, Object.assign(kept ? {} : { journey: 'new_or_local', project_mode: 'new', storage_mode: 'with_server' }, {
-          theme_family: th.chosen, theme_mode: th.mode, server_mode: 'existing_server', server_ref: c.server_ref,
+          theme_family: th.chosen, theme_mode: th.selectedMode, server_mode: 'existing_server', server_ref: c.server_ref,
           server_connection_mode: c.server_connection_mode, remote_mode: c.remote_mode, remote_more: c.remote_more, include_vpn_networks: c.include_vpn_networks,
           connection_pairing: c.connection_pairing, tailscale_control: c.tailscale_control, headscale_url: c.headscale_url, remote_endpoint: c.remote_endpoint,
           proxy_hostname: c.proxy_hostname, proxy_hosting: c.remote_mode === 'reverse_proxy' ? 'existing_proxy' : null, proxy_kind: null, proxy_tls: null,

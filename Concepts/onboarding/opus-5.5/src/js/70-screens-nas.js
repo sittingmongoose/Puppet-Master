@@ -67,6 +67,11 @@
     S.save();
   }
 
+  const canPairInstead = (S) => {
+    const n = N(S), d = n.manual ? S.env.devices.find((x) => sameHost(x.address, n.addr)) : picked(S);
+    return (n.method || 'ssh') === 'ssh' && n.useSsh && !!d && d.pm && d.id === n.device;
+  };
+
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {
     chapter: 'project', stage: 'server_storage_client',
@@ -83,7 +88,9 @@
            address (QA round 2, Q7) */
         const d = picked(S);
         let about = '';
-        if (d && d.pm) about += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
+        /* (the committed device reached by SSH instead says so: its pairing note told a person on the SSH way that no key
+           or password was needed, FO-48; a device only picked here still pairs, as Continue would start it) */
+        if (d && d.pm) about += d.id === n.device && n.useSsh ? C.note(T('nas.find.sshNote', { name: d.name }), 'info', 'key') : C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
         if (d && !d.ssh && !d.pm) {
           const cs = F.state(S, 'sshcheck:' + d.id);
           about += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
@@ -135,7 +142,9 @@
         else if (!d) reason = T('nas.find.choose');
       }
       else if (m === 'mounted') ok = !!n.volume && volumes(S).includes(n.volume); else { ok = !!shareOf(S); reason = n.shareManual ? T('nas.find.shareBad.' + m) : T('missing.storage'); }
-      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !ok, reason } };
+      return { secondary: canPairInstead(S)
+        ? [{ label: T('nas.pmpair.pairInstead'), do: 'pairInstead' }] : [],
+        primary: { label: T('chrome.continue'), do: 'next', disabled: !ok, reason } };
     },
     do: {
       /* another way of reaching the files drops a share of the old way (FF-18) */
@@ -163,6 +172,13 @@
       /* (another volume picked keeps the check of the one before: each check is the volume's own, and an un-continued pick
          changes nothing it cannot take back, lead's ruling 1103040758) */
       volume(S, v) { const n = N(S); n.volume = v; S.save(); O55.ui.refresh(); },
+      /* The mirror of Use SSH instead changes only the way into this committed NAS. A pending different device
+         must never redirect pairing or discard the SSH facts and pairing choice already held for this one. */
+      pairInstead(S) {
+        const n = N(S);
+        if (!canPairInstead(S)) return;
+        n.useSsh = false; S.save(); O55.ui.go('nas-pmpair');
+      },
       manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       next(S) {
         const n = N(S), m = n.method || 'ssh';
@@ -716,15 +732,18 @@
   });
 
   /* ------------------------------------------------------------------ choose a folder (SFTP browser) */
-  function readOnlyAt(S, path) { const d = dev(S); return (d.readOnly || []).some((p) => path === p || path.startsWith(p + '/')); }
+  function readOnlyAt(S, path) { const d = dev(S); return !!d && (d.readOnly || []).some((p) => path === p || path.startsWith(p + '/')); }
   def('nas-folder', {
     seed: (S) => seedNas(S, 'nas-folder'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S, { folder: (N(S).at || '').split('/').pop() || undefined }) }),
     eyebrow: () => T('nas.folder.eyebrow'),
-    title: (S) => T('nas.folder.title', { name: dname(S) }),
+    title: (S) => (dev(S) ? T('nas.folder.title', { name: dname(S) }) : T('nas.folder.eyebrow')),
     lead: (S) => (N(S).purpose === 'storage' ? T('nas.folder.leadStorage') : T('nas.folder.lead')),
     body(S) {
+      /* (opened with no device chosen, as a direct jump or a record naming a device this network no longer has: it says
+         so and offers nothing, never a page error reading the device's folders, sweep SW-39) */
+      if (!dev(S)) return C.note(T('nas.folder.noDevice'), 'warn', 'server');
       const n = N(S), d = dev(S), root = d.roots[0], at = n.at || root;
       const kids = (S.env.folders[at] || []).map((name) => ({ name, isNew: false })).concat((n.newFolders || []).filter((f) => f.parent === at).map((f) => ({ name: f.name, isNew: true })));
       const crumbs = at.split('/').filter(Boolean).map((part, i, arr) => C.link(part, 'cd', '/' + arr.slice(0, i + 1).join('/'))).join(' <span aria-hidden="true">›</span> ');
@@ -737,17 +756,18 @@
       else out += C.note(n.viaPm ? T('nas.install.donePaired', { name: d.name }) : T('nas.install.done'), 'ok', 'lock');
       return out;
     },
-    foot(S) { const n = N(S), d = dev(S), at = n.at || d.roots[0]; const bad = readOnlyAt(S, at) || at === d.roots[0]; return { primary: { label: T('nas.folder.use'), do: 'use', disabled: bad, reason: readOnlyAt(S, at) ? T('nas.folder.readOnly', { user: n.user || d.user }) : T('missing.storage') } }; },
+    foot(S) { const n = N(S), d = dev(S); if (!d) return { primary: { label: T('nas.folder.use'), do: 'use', disabled: true, reason: T('nas.folder.noDevice') } };
+      const at = n.at || d.roots[0]; const bad = readOnlyAt(S, at) || at === d.roots[0]; return { primary: { label: T('nas.folder.use'), do: 'use', disabled: bad, reason: readOnlyAt(S, at) ? T('nas.folder.readOnly', { user: n.user || d.user }) : T('missing.storage') } }; },
     do: {
-      cd(S, path) { N(S).at = path; S.save(); O55.ui.refresh(); O55.sound.play('move', depth(path)); },
+      cd(S, path) { if (!dev(S)) return false; N(S).at = path; S.save(); O55.ui.refresh(); O55.sound.play('move', depth(path)); },
       adding(S) { N(S).adding = true; S.save(); O55.ui.refresh(); },
-      addFolder(S) { const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
+      addFolder(S) { if (!dev(S)) return false; const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
       use(S) {
         /* (a folder is used only over an access verified for this device, port, account and key, or a pairing: Sol R5) */
-        if (!(N(S).paired || N(S).viaPm || keyOk(S))) return false;
+        if (!dev(S) || !(N(S).paired || N(S).viaPm || keyOk(S))) return false;
         /* (an SSH folder is named by its connection profile, so two accounts or ports on one device never collide: SCR-10) */
         const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' + U.slug(String((pmOf(S) || {}).id || d.id).replace(/^pm:/, '')) : 'ssh:' + (n.profile || profileId(S))) + at, dd = md(S);
-        n.folderLabel = d.name + ' › ' + at.split('/').filter(Boolean).join(' › ');
+        n.folderLabel = d.name + ' › ' + at.split('/').filter(Boolean).join(' › '); notePlace(S, ref, n.folderLabel);
         if (n.purpose === 'storage') O55.draft.set(dd, { storage_mode: 'network_location', storage_transport: tr, storage_location: ref });
         else O55.draft.set(dd, { project_source_ref: ref, project_transport: tr, project_name: dd.project_name || O55.project.pretty(at.split('/').pop()) });
         S.save();
@@ -760,7 +780,7 @@
   /* ------------------------------------------------------------------ SMB / NFS / already connected follow-ups */
   function finishMounted(S, label, ref, transport) {
     const n = N(S), dd = md(S);
-    n.folderLabel = label;
+    n.folderLabel = label; notePlace(S, ref, label);
     if (n.purpose === 'storage') O55.draft.set(dd, { storage_mode: 'network_location', storage_transport: transport, storage_location: ref });
     else O55.draft.set(dd, { project_source_ref: ref, project_transport: 'mounted', project_name: dd.project_name || O55.project.pretty(label.split(/[›/]/).pop()) });
     S.save(); O55.ui.go('name');
@@ -884,7 +904,9 @@
          one disagreement binds nothing, and the person verifies again, Astra delta4) */
       const sshRefs = refs.filter((r) => /sshp:/.test(r)), keyRefs = (d0.source_access_authorization_refs || []).filter((r) => r.indexOf('ssh-key:' + pid + ':') === 0);
       const endpoint = (n.profile ? n.profile === pid : true) && !sshRefs.some((r) => r.indexOf(pid) < 0);
-      const keyAgrees = !n.installed || n.viaPm || (!!n.key && keyRefs.every((r) => r === 'ssh-key:' + pid + ':' + n.key));
+      /* (an install the plan's access never names binds nothing either: every() of no references passed it, Muse's boundary
+         note, sweep SW-39) */
+      const keyAgrees = !n.installed || n.viaPm || (!!n.key && keyRefs.length > 0 && keyRefs.every((r) => r === 'ssh-key:' + pid + ':' + n.key));
       if (endpoint && keyAgrees) { if (n.trusted && n.trustedFor === undefined) n.trustedFor = hostId(S); if (n.installed && !n.viaPm && n.installedFor === undefined && n.key) n.installedFor = keyFor(S); }
     }
     /* (a trust or an install that does not describe this device, port and account is not this device's: it is dropped,
@@ -896,19 +918,57 @@
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
+  /* each place a folder step committed keeps the words it was chosen with, by its reference: the plan's two places only */
+  function notePlace(S, ref, label) {
+    const d0 = md(S), keep = [d0.project_source_ref, d0.storage_location, ref];
+    const device = dev(S);
+    S.sess.nasPlaceDevices = Object.fromEntries(Object.entries(Object.assign({}, S.sess.nasPlaceDevices, device ? { [ref]: device.id } : {})).filter(([k]) => keep.includes(k)));
+    S.sess.nasPlaces = Object.fromEntries(Object.entries(Object.assign({}, S.sess.nasPlaces, { [ref]: label })).filter(([k]) => keep.includes(k)));
+  }
   /* a files place or source on a NAS as a person reads it: the folder as it was picked (the NAS's own name and the folders
      in it), or else the NAS's name and the path for SSH and pairing, the share and path for SMB and NFS, the volume for a
      mounted one; never a connection profile's locator (FO-45: Name and Review read 'sshp:server-this:<hash>/volume1/
      projects') */
   function placeLabel(S, ref) {
     const r = String(ref || ''), n = S.sess.nas || {}, d0 = md(S);
-    if (n.folderLabel && ((n.purpose === 'storage' && d0.storage_location === r) || ((n.purpose || 'source') === 'source' && d0.project_source_ref === r))) return n.folderLabel;
-    const m = /^(ssh|pm|mounted|smb|nfs):(.*)$/.exec(r); if (!m) return r;
+    /* no place yet (a saved record that stopped applying keeps its NAS and loses the folder: FO-47, Review read "Files on"
+       and a blank): the device still chosen for it and a folder still to choose */
+    if (!r) {
+      const p = n.purpose || 'source', own = p === 'storage' ? d0.storage_mode === 'network_location' : p === 'source' && d0.project_mode === 'existing_local' && d0.project_transport !== 'local';
+      const m = n.method || 'ssh', share = m === 'smb' || m === 'nfs', sh = share && (n.share === 'manual' ? n.manualShare : (S.env.shares || []).find((x) => x.id === n.share));
+      const who = !own || m === 'mounted' ? null : share ? sh && (S.env.devices || []).find((x) => x.id === sh.device) : dev(S);
+      return who && who.name ? T('nas.folder.notChosen', { name: who.name }) : T('nas.folder.notChosenAny');
+    }
+    /* (the NAS session names this place only while it is the session that chose it: one reused for a backup's NAS, or
+       replaced, would name the backup's device for the Project's files, sweep SW-33; a place's label is kept from its
+       commit, below, for when the session no longer holds it) */
+    const own = (n.purpose === 'storage' && d0.storage_location === r) || ((n.purpose || 'source') === 'source' && d0.project_source_ref === r);
+    if (n.folderLabel && own) return n.folderLabel;
+    const cached = S.sess.nasPlaces;
+    if (cached && Object.prototype.hasOwnProperty.call(cached, r) && typeof cached[r] === 'string' && cached[r].trim()) return cached[r];
+    /* (a reference this page cannot read is never shown as it is: it can hold a connection profile's locator, SW-39) */
+    const m = /^(ssh|pm|mounted|smb|nfs):(.*)$/.exec(r); if (!m) return T('nas.folder.unnamed');
     if (m[1] === 'mounted') return m[2];
     const rest = m[2].replace(/^(sshp|shp):[^:/]*:[0-9a-f]+:?/, '');
     if (m[1] === 'smb' || m[1] === 'nfs') return rest;
     const at = rest.indexOf('/'), path = at >= 0 ? rest.slice(at) : '', slug = m[1] === 'pm' ? rest.slice(0, at >= 0 ? at : rest.length) : '';
-    const dv = (S.env.devices || []).find((x) => x.id === n.device) || (slug ? (S.env.devices || []).find((x) => U.slug(x.name) === slug || U.slug(x.id) === slug) : null);
+    const devices = S.env.devices || [], server = (S.env.pmServers || []).find((x) => x.id === 'pm:' + slug);
+    const metadata = S.sess.nasPlaceDevices || {};
+    let dv = devices.find((x) => Object.prototype.hasOwnProperty.call(metadata, r) && x.id === metadata[r]);
+    if (!dv && m[1] === 'pm') dv = devices.find((x) => server ? x.id === server.device : U.slug(x.name) === slug || U.slug(x.id) === slug);
+    /* Older default SSH places did not store device metadata. Match their producer's profile hash against known
+       endpoints/accounts, never the currently selected backup device. Ambiguous or unknown profiles stay unnamed. */
+    if (!dv && m[1] === 'ssh') {
+      const profile = /^sshp:[^:/]+:([0-9a-f]{8})(?:\/|$)/.exec(m[2]);
+      if (profile) {
+        const matches = devices.filter((x) => {
+          const accounts = [x.user, (S.env.client || {}).user].filter(Boolean).map((user) => ({ user, port: x.port || 22 }));
+          accounts.push(...((S.env.here || {}).sshConfigHosts || []).filter((h) => h.host === x.address));
+          return accounts.some((a) => hash8(a.user + '@' + x.address + ':' + (a.port || 22)) === profile[1]);
+        });
+        if (matches.length === 1) dv = matches[0];
+      }
+    }
     return (dv ? dv.name + ' · ' : '') + path;
   }
   /* the check a NAS step runs, by the key the step itself reads for the inputs on show: Pip's lines for the step belong

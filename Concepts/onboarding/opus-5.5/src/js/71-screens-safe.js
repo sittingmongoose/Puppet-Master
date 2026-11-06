@@ -27,6 +27,8 @@
   /* (a service not chosen, as a retired one leaves a resumed plan, reads as one to choose again, never by its key:
      Safe showed "none" for it, BACK-STATE-GAPS-78C row 9) */
   const forgeName = (id, variant) => (!id || id === 'none' ? T('review.serviceToChoose') : id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
+  /* a finished sign-in counts only for the service, kind and address it was made for (Sol R5) */
+  const staleSignIn = (S, si) => si.kind === 'forge' && !!si.instance_key && si.instance_key !== instanceKey(md(S));
   const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
   const RULES = () => O55.forgeRules;
   /* a concept demo's ready choices under a step that needs a real service (pm7-onb's O55.flow.hint), each taking one
@@ -164,6 +166,7 @@
   }
   /* The introduction and body share the known-account decision (F32-1). */
   const knownSigninAccount = (S) => { const si = SI(S); return si.kind === 'forge' && si.state === 'idle' && !si.another ? accountFor(S, si.service) : null; };
+  O55.official.knownSigninAccount = knownSigninAccount;
   def('online-signin', {
     seed: (S) => seedOnline(S, false),
     /* (a sign-in still waiting when the person goes Back is given up: a later Sign in starts a new attempt the old wait can
@@ -191,6 +194,9 @@
       /* a server with no sign-in app for Puppet Master (another Forgejo or Gitea server) signs in with an access token */
       const state = si.state === 'idle' && methods[0] === 'token' ? 'token' : si.state;
       let out = '';
+      /* (a sign-in made for another address of the service is not this one's: it says so, and Continue says why it waits,
+         where it refused silently, sweep SW-39) */
+      if (si.state === 'done' && staleSignIn(S, si)) return `<div class="o55-banner o55-banner-warn" data-key="signin-stale">${C.small('spark', 18)}<span>${U.esc(T('online.signin.stale', { name: si.name }))}</span></div>`;
       if (si.state === 'done') return `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('online.signin.signedIn', { account: si.account }))}</span></div>`;
       const known = knownSigninAccount(S);
       if (known) {
@@ -255,6 +261,7 @@
     mounted(S) { const si = SI(S); if (si.state === 'code') F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); },
     foot(S) {
       const si = SI(S);
+      if (si.state === 'done' && staleSignIn(S, si)) return { primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: T('online.signin.stale', { name: si.name }) } };
       if (si.state === 'done' || (si.state === 'idle' && accountFor(S, si.service) && !si.another && si.kind === 'forge')) return { primary: { label: T('chrome.continue'), do: 'next' } };
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: T('missing.signin') } };
     },
@@ -294,7 +301,7 @@
         if (si.state !== 'done' && si.kind === 'forge') { const k = accountFor(S, si.service); if (!completeSignIn(S, k, 'already_connected', true)) return; }
         if (si.state !== 'done') return;
         /* (a sign-in counts only for the service, kind and address it was made for, Sol R5's pass-belongs-to-its-inputs) */
-        if (si.kind === 'forge' && si.instance_key && si.instance_key !== instanceKey(md(S))) return;
+        if (staleSignIn(S, si)) return false;
         O55.ui.go(si.then || 'safe');
       }
     },

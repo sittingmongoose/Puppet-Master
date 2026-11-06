@@ -9,8 +9,8 @@
 // screens they change: oldKey, oldKeyWorks and oldKeyLocked on the NAS key screens, guestLater on the Server pairing
 // screens. A few cases press a choice first, for the paths that go back (a straight open has no history, and back()
 // went nowhere): c-route by Tailscale (FO-17's own route), ai-none's sign-up choice, nas-install's Try again after a
-// refused password, c-pair after a pairing request expired (Use a code instead shows only after a denial, which no
-// situation makes, so its way back is covered by the seeded history, not walked). --set only=c-route,nas-key walks some screens; --set extras=0 leaves
+// refused password, c-pair after a pairing request expired, and c-pair denied through Use a code instead back to review.
+// --set only=c-route,nas-key walks some screens; --set extras=0 leaves
 // the situations and these cases out. About 45 minutes.
 
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
@@ -28,7 +28,8 @@ const EXTRAS = [['oldKey', ['nas-find', 'nas-identity', 'nas-key']], ['oldKeyWor
 	['oldKeyLocked', ['nas-find', 'nas-identity', 'nas-key']], ['guestLater', ['s-kind', 's-wait', 's-confirm']]];
 /* cases that press a choice first: [screen, situation twist or null, [[action, arg], ...]] */
 const PATHS = [['c-route', null, [['more', null], ['route', 'tailscale']]], ['ai-none', null, [['pick', 'sub']]],
-	['nas-install', 'wrongPassword', []], ['c-pair', 'pairExpires', []]];
+	['nas-install', 'wrongPassword', []], ['c-pair', 'pairExpires', []],
+	['c-pair', null, [['demoHint', 'c-pair:outcome|0'], ['useCode', null]]]];
 
 /* in-page: what the walk can see and press on the current screen */
 const LOOK_NOW = (L) => {
@@ -64,13 +65,16 @@ export default async function (t) {
 		for (const [tw, ids] of EXTRAS) for (const id of ids) if (!only || only.includes(id)) cases.push({ screen: id, twist: tw });
 		for (const [id, tw, pre] of PATHS) if (!only || only.includes(id)) cases.push({ screen: id, twist: tw, pre });
 	}
+	const selected = cases.filter(c => !t.args.codeOnly || c.pre?.some(([a]) => a === 'useCode'));
+	await t.check('requested Studio cases selected', selected.length > 0 && (!t.args.codeOnly || selected.length === 1), String(selected.length), {hard:true});
 	const stuck = [];
-	for (const c of cases) {
+	for (const c of selected) {
 		const name = c.screen + (c.twist ? ' (' + c.twist + ')' : '') + (c.pre && c.pre.length ? ' [' + c.pre.map((x) => x.filter(Boolean).join(' ')).join(', ') + ']' : '');
 		/* each case from a clean record: a walk that left a Project being created would otherwise send the next open to
 		   Creating (by design: a Project being made is never abandoned half-made) */
 		await f.evaluate(() => { try { localStorage.clear(); } catch (_) {} });
 		f = await t.app.open();
+		if (t.args.look) await t.app.look(t.args.look);
 		await f.evaluate(() => window.O55.studio.open('onboarding'));
 		await f.waitForSelector('#pmds-sheet [data-pmds-do="open-screen"]', { timeout: 15000 });
 		/* the situation, by its chips: Fresh computer, every twist off, then this case's twist */
@@ -92,8 +96,13 @@ export default async function (t) {
 			/* (a control that shows once the screen is waiting, such as c-pair's Use a code instead, is waited for) */
 			const shown = await f.waitForSelector(sel, { state: 'visible', timeout: 10000 }).then(() => true, () => false);
 			const el = f.locator(sel);
-			if (!shown) { await t.check(`${name}: ${act} ${arg || ''} is on the screen`, false, 'absent after 10 s'); break; }
+			if (!shown) { await t.check(`${name}: ${act} ${arg || ''} is on the screen`, false, 'absent after 10 s', { hard: true }); }
 			await el.first().scrollIntoViewIfNeeded(); await el.first().click();
+			if (act === 'useCode') {
+				await f.waitForFunction(() => O55.S.sess.screen === 'c-review', null, { timeout: 10000 });
+				const pairing = await f.evaluate(() => O55.S.sess.drafts.connect.connection_pairing);
+				await t.equal(`${name}: returns to review with code selected`, pairing, 'code');
+			}
 		}
 		const path = [c.screen];
 		let t0 = Date.now(), pressed = new Map(), trail = [];
@@ -131,5 +140,5 @@ export default async function (t) {
 		await t.check(`${name}: walks by clicks from its row through its next screens`, !!end, detail);
 		if (t.log) t.log(`${name}: ${detail}`);
 	}
-	await t.check('every screen in Open at one screen walks on by clicks', !stuck.length, stuck.join(', ') || `${cases.length} cases`);
+	await t.check('every screen in Open at one screen walks on by clicks', !stuck.length, stuck.join(', ') || `${selected.length} cases`);
 }

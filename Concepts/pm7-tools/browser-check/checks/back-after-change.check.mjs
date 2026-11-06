@@ -441,61 +441,136 @@ const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not
    person's click lands, and this row judges what the click does */
 const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter({ visible: true }).first(); await el.click({ timeout: 4000 }).catch(async () => { await el.dispatchEvent('click'); }); await A.sleep(300); };
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
-const pickOther = async (A, which = 'first') => {
+const pickOther = async (A, which = 'first', revealed = false) => {
+  /* Read choices after the screen's own entrance completes; an entering card can still have opacity zero. */
+  await A.frame().waitForFunction(() => !document.querySelector('.o55-pane > .o55-layer.o55-entering, .o55-pane > .o55-layer.o55-hold, .o55-pane > .o55-layer.o55-out'), null, { timeout: 8000 });
   const c = await A.frame().evaluate((which) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
     const NAV = ['loc:network', 'storage:network_location']; /* (a pick that is itself a step on: the files place on a NAS opens the NAS steps, on This computer's Name and on a Server's) */
     /* (truly on show: not in a closed sheet or an inert part, and with a size and visibility of its own) */
     const shown = (b) => { const r = b.getBoundingClientRect(), cs = getComputedStyle(b); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && Number(cs.opacity) > 0 && !b.closest('.o55-sheet:not([data-open="true"])') && !b.closest('[inert]') && !b.closest('[aria-hidden="true"]'); };
-    const all = [...new Set([sheet, l].filter(Boolean).flatMap((x) => [...x.querySelectorAll('[role="radio"]')]))].filter((b) => shown(b) && b.getAttribute('aria-checked') !== 'true' && b.getAttribute('aria-disabled') !== 'true' && !b.disabled && !NAV.includes(b.getAttribute('data-o55-do') + ':' + b.getAttribute('data-arg')));
+    const all = [...new Set([sheet, l].filter(Boolean).flatMap((x) => [...x.querySelectorAll('[role="radio"], [data-o55-do="cd"]')]))].filter((b) => shown(b) && b.getAttribute('aria-checked') !== 'true' && (b.getAttribute('data-o55-do') !== 'cd' || (O55.S.sess.screen === 'nas-folder' && b.getAttribute('data-arg') !== O55.S.sess.nas.at)) && b.getAttribute('aria-disabled') !== 'true' && !b.disabled && !NAV.includes(b.getAttribute('data-o55-do') + ':' + b.getAttribute('data-arg')));
     document.querySelectorAll('[data-kit-pick]').forEach((x) => x.removeAttribute('data-kit-pick'));
     /* (which: 'first' or 'last' of the alternatives; 'last' answers only when there is a second one: SW-41) */
     if (which === 'last' && all.length < 2) return null;
-    const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg') }; }
+    const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg'), sheet: !!sheet && sheet.contains(b) }; }
     if (which === 'last') return null;
-    const f = [...(l || document).querySelectorAll('input[type="text"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
+    const f = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
     return f ? { field: f.id, value: f.value } : null; }, which);
-  if (!c) return null;
+  if (!c) {
+    /* A found Server is the only card on s-wait. Its address link exposes a real editable alternative. */
+    if (!revealed && which === 'first' && (await A.snap()).screen === 's-wait' && await A.has('manualOn')) {
+      await A.click('manualOn'); return pickOther(A, which, true);
+    }
+    /* GitHub is the only card until Other services is expanded. Reveal it, then require an actual choice. */
+    if (!revealed && which === 'first' && (await A.snap()).screen === 'online-service' && await A.has('others')) {
+      await A.click('others'); return pickOther(A, which, true);
+    }
+    return null;
+  }
   if (c.field) { await A.fill(c.field, (c.value || '') + ' changed'); await A.sleep(400); return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
      sent instead: this row judges what a pick does, the click-reachability of every control is the audit's) */
-  const el = A.frame().locator('[data-kit-pick="1"]').first();
+  /* A refresh strips test-only attributes. Re-find this same action/argument inside its original surface, so a
+     successful pick followed by a redraw cannot strand the existing click fallback on a vanished marker. */
+  const selector = (c.sheet ? '.o55-sheet[data-open="true"]' : '.o55-pane > .o55-layer:not(.o55-out)')
+    + ' [data-o55-do=' + JSON.stringify(c.do) + ']' + (c.arg === null ? '' : '[data-arg=' + JSON.stringify(c.arg) + ']');
+  const el = A.frame().locator(selector).filter({ visible: true }).first();
   let how = '';
   await el.click({ timeout: 4000 }).catch(async () => {
-    how = ' (sent; at its centre: ' + await A.frame().evaluate(() => { const b = document.querySelector('[data-kit-pick="1"]'); if (!b) return 'gone'; const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y);
-      return h ? (h === b || b.contains(h) ? 'itself' : h.tagName.toLowerCase() + '.' + String(h.className || '').replace(/\s+/g, '.') + (h.closest('[data-key]') ? ' in ' + h.closest('[data-key]').getAttribute('data-key') : '')) + ' @' + Math.round(x) + ',' + Math.round(y) + ' in ' + innerWidth + 'x' + innerHeight : 'nothing @' + Math.round(x) + ',' + Math.round(y); }) + ')';
+    how = ' (sent; at its centre: ' + await A.frame().evaluate((selector) => { const b = document.querySelector(selector); if (!b) return 'gone'; const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y);
+      return h ? (h === b || b.contains(h) ? 'itself' : h.tagName.toLowerCase() + '.' + String(h.className || '').replace(/\s+/g, '.') + (h.closest('[data-key]') ? ' in ' + h.closest('[data-key]').getAttribute('data-key') : '')) + ' @' + Math.round(x) + ',' + Math.round(y) + ' in ' + innerWidth + 'x' + innerHeight : 'nothing @' + Math.round(x) + ',' + Math.round(y); }, selector) + ')';
     await el.dispatchEvent('click'); });
   await A.sleep(500); return 'picked ' + c.do + ':' + c.arg + how; };
 /* the answers as the session holds them: the plan (but its revision counter), and what each picker keeps of its choice */
 const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.map(canon) : v && typeof v === 'object' ? Object.keys(v).sort().reduce((o, k) => { o[k] = canon(v[k]); return o; }, {}) : v);
   const d = canon(S.sess.drafts.main); delete d.project_draft_revision; const n = S.sess.nas || {}, r = S.sess.restore || {}, ol = S.sess.online || {}, b = S.sess.backup || {}, u = S.sess.ui || {};
   const c = S.sess.connect || {}, cn = canon(S.sess.drafts.connect || {}); delete cn.project_draft_revision;
-  return { draft: d, connect: [c.manual || false, c.addr || '', JSON.stringify(cn)], nasTyped: [n.manual || false, n.addr || '', n.port == null ? null : String(n.port)], addresses: JSON.stringify(canon((S.sess.online || {}).addresses || {})),
+  return { draft: d, connect: [c.manual || false, c.addr || '', c.openProject || null, JSON.stringify(cn)], nasTyped: [n.manual || false, n.addr || '', n.port == null ? null : String(n.port)], addresses: JSON.stringify(canon((S.sess.online || {}).addresses || {})),
     facts: JSON.stringify(canon({ hosts: S.env.here.knownHosts || {}, auth: (S.env.devices || []).map((x) => [x.id, (x.authorized || []).slice().sort()]), nasFacts: S.sess.nasFacts || {} })),
     nas: [n.device || null, n.method || null, n.share || null, n.volume || null, n.at || null, n.profile || null, !!n.trusted, !!n.installed, n.choice ? n.choice.id : null],
     restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
     backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
     server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
     nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
-/* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
-const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+/* Exemptions audited against the renderers, not inferred from NO_TXN (which can still have inputs):
+   welcome: no answer; look: appearance applies live and is retained; review: confirmation, Edit leads to input owners.
+   nas-identity: trust/stop, settled host fact; nas-install: install/check/retry operations on this completed route.
+   nas-mounted: readability operation; its Other action navigates to nas-find, which owns the volume alternatives.
+   r-preview: apply/retry operation. s-ready: completed invite/approval route; waiting guest checkbox rollback is
+   separately asserted in row 21. c-pair: paired identity on this completed route; unfinished code entry is not exempt.
+   c-ready is deliberately absent: its project radios are pending inputs even after the connection completed. */
+const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview', 's-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+/* NO_PICK only after completion: these owner screens replace their form with a success banner.
+   Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm, token on online-signin. */
+const NO_PICK_DONE = (screen) => {
+  const done = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-key="done"]');
+  /* c-pair's completed renderer returns the identity plus done note before drawing its code field.
+     An unfinished pairing with a code field must remain eligible. */
+  if (screen === 'c-pair') return !document.querySelector('.o55-pane > .o55-layer:not(.o55-out) input')
+    && !!O55.S.sess.drafts.connect.server_trust_confirmed;
+  /* With zero or one project, the selected project has no alternative. Create New navigates; it is not a pick. */
+  if (screen === 'c-ready') {
+    const S = O55.S, ref = S.sess.drafts.connect.server_ref;
+    const server = S.env.pmServers.concat(S.env.vpnServers || []).find((s) => s.id === ref);
+    /* Missing controls (or an unresolved Server) cannot authorize skipping the picker. */
+    return !!server && Array.isArray(server.projects) && server.projects.length < 2;
+  }
+  return !!done && ((screen === 'c-review' && !!O55.S.sess.drafts.connect.server_trust_confirmed)
+    || (screen === 's-confirm' && !!O55.S.sess.server.claimed)
+    /* A finished sign-in similarly draws only its signed-in account banner, with no editable token. */
+    || (screen === 'online-signin' && O55.S.sess.signin.state === 'done'));
+};
+/* nas-mounted only checks readability of the volume already chosen on nas-find. Its only other action is Back;
+   the volume alternatives live on nas-find, so there is no independent pick or typed field here. */
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
    links: the restore source and place, the NAS device, method and folder, the service, the computer kind, the files
-   place, the backup place and access from away) */
-async function pickBackWalk(A, bad, label) {
-  const seq = [], picked = []; let s = await look(A);
+   place, the backup place and access from away). With judged ({ stale }), each screen is also judged exactly as walkBack
+   judges it, before its pick (generic, judge, toReviewOk): row 20's Back walk is this walk, so rows 20 and 21 share one
+   missing-pick guard (SW-41) */
+/* Retry only a verified dismissal, never arbitrary text/control churn. */
+const BACK_DISMISS = () => ({ sheet: !!document.querySelector('.o55-sheet[data-open="true"]'),
+  menu: !!O55.S.lookOpen });
+async function pickBackWalk(A, bad, label, judged = null) {
+  const seq = [], picked = [], run = []; let s = await look(A);
   for (let i = 0; i < 40; i++) {
+    if (judged) { generic(s, run, label + ' Back#' + i, bad); run.push(s.screen); judge(s, judged.stale || [], label + ' Back#' + i, bad); }
     seq.push(s.screen); if (!s.back) break;
     const before = await A.frame().evaluate(ANSWERS); let did = null;
-    if (!NO_PICK.includes(s.screen)) {
+    /* Renderer-fault negative: records still contain alternatives, but their controls are absent.
+       The original missing-pick assertion below must reject c-ready in both rich rows. */
+    if (s.screen === 'c-ready' && SELFTEST === 'missingprojects') await A.frame().evaluate(() => {
+      document.querySelectorAll('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pickProject"]').forEach((el) => el.remove());
+    });
+    if (!NO_PICK.includes(s.screen) && !await A.frame().evaluate(NO_PICK_DONE, s.screen)) {
       const sheetOpen = () => A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {});
       if (s.screen === 'name' && await A.has('change')) { await A.click('change'); await sheetOpen(); await A.sleep(400); }
       if (s.screen === 'safe' && await A.has('backup')) { await A.click('backup'); await sheetOpen(); await A.sleep(400); }
-      did = await pickOther(A);
+      /* SW-41 negative: suppress only the Back-walk selector, leaving Edit picks intact.
+         --set selftest=nopick (every screen), or nopick:<screen> (one hole after real picks). */
+      did = SELFTEST === 'nopick' || SELFTEST === 'nopick:' + s.screen ? null : await pickOther(A);
+      if (!did) bad.push(`${label} ${s.screen}: nothing to pick or type on this Back-walk screen, so nothing was checked`);
       const now = (await A.snap()).screen; if (now !== s.screen) { bad.push(`${label} ${s.screen}: ${did} went on to ${now} without Continue`); break; }
     }
-    await pressBack(A); let n = await look(A); if (n.screen === s.screen) { await pressBack(A); n = await look(A); } /* (the first Back closes an open sheet) */
+    /* A swallowed Back plus an unrelated title refresh must still fail at this screen. */
+    if (s.screen === 'where' && (SELFTEST === 'ignoreback' || SELFTEST === 'ignoreback-text')) {
+      await A.frame().evaluate((churn) => { document.addEventListener('click', function swallow(e) {
+        if (!e.target.closest('[data-o55-do="back"]')) return;
+        document.removeEventListener('click', swallow, true); e.preventDefault(); e.stopImmediatePropagation();
+        if (churn) document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-title').textContent += ' refreshed';
+      }, true); }, SELFTEST === 'ignoreback-text');
+    }
+    const pendingProject = s.screen === 'c-ready' ? await A.frame().evaluate(() => O55.S.sess.connect.openProject) : null;
+    const pre = await A.frame().evaluate(BACK_DISMISS);
+    await pressBack(A); let n = await look(A);
+    if (n.screen === s.screen) {
+      const post = await A.frame().evaluate(BACK_DISMISS);
+      if ((pre.sheet && !post.sheet) || (pre.menu && !post.menu)) { await pressBack(A); n = await look(A); }
+    }
     if (n.screen === s.screen) { bad.push(`${label} Back#${i}: Back on ${s.screen} went nowhere`); break; }
+    if (judged) toReviewOk(s, n, i, run, label, bad);
+    /* Negative: retain the concrete pending project instead of the expected Back rollback. */
+    if (s.screen === 'c-ready' && SELFTEST === 'keepproject') await A.frame().evaluate((v) => { O55.S.sess.connect.openProject = v; }, pendingProject);
     if (did) { picked.push(s.screen + ' ' + did); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
       if (ch.length) bad.push(`${label} ${s.screen}: ${did}, then Back, changed ${ch.map((k) => k === 'draft' ? 'draft(' + Object.keys(Object.assign({}, before.draft, after.draft)).filter((x) => JSON.stringify(before.draft[x]) !== JSON.stringify(after.draft[x])).slice(0, 6).join(', ') + ')' : k + ' ' + JSON.stringify(before[k]) + ' > ' + JSON.stringify(after[k])).join('; ')}`); }
     s = n;
@@ -523,20 +598,57 @@ const ABANDON_NOT = { 'Home NAS files over SSH': NAS_STEPS, 'Home NAS files moun
   'a completed new Server': [...SERVER_STEPS, 'away', 'away-setup'], 'a connected existing Server': ['c-route', 'c-review', 'c-pair', 'c-ready'],
   'restore from a Recovery Kit': ['r-source', 'r-unlock', 'r-pick', 'r-preview'], 'restore from a cloud drive': ['r-source', 'r-unlock', 'r-pick', 'r-preview'],
   'online import': ['ex-repos'], 'online new copy': ['online-service', 'online-signin', 'online-details'], 'away with Tailscale': [...SERVER_STEPS, 'away', 'away-setup'] };
-/* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 */
+/* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 and in the focused SW-41 test */
 const richOf = (t) => (t.args.rich ? RICH.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : RICH);
+/* (a filter that names no rich configuration fails, rather than running none of them and passing) */
+const richOrFail = async (t, label) => { const r = richOf(t);
+  if (t.args.rich && !r.length) await t.check(`${label}: --set rich`, false, `--set rich=${t.args.rich} matches no rich configuration; each comma-separated part must be part of one of: ${RICH.map(([k]) => k).join('; ')}`);
+  return r; };
 const KEEP = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas || {}, r = S.sess.restore || {}, c = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="commit"]');
   return { mode: d.project_mode, name: d.project_name, src: d.project_source_ref, transport: d.project_transport, loc: d.local_location, online: d.online_mode, forge: d.forge, repo: d.repository_ref,
     backup: d.backup_source_ref, btransport: d.backup_transport, storage: d.storage_mode, preflight: d.preflight_result_refs, auth: d.source_access_authorization_refs,
     folder: S.sess.folder ? S.sess.folder.path : null, nas: [n.device || null, n.method || null, n.at || null, n.share || null, n.volume || null, !!n.installed],
-    restore: [r.source || null, r.kit || null, r.pick || null], commit: !!c && !c.disabled && c.getAttribute('aria-disabled') !== 'true' }; };
+    restore: [r.source || null, r.kit || null, r.pick || null], commitState: JSON.stringify(S.sess.commit || null), confirmed: !!d.review_confirmed, commit: !!c && !c.disabled && c.getAttribute('aria-disabled') !== 'true' }; };
+// FO-61: Review's entrance is not its readiness. Its revision recheck runs asynchronously; compare only
+// once that operation and its rendered footer agree. Never wait a fixed duration or hide a disabled result.
+const settledKeep = async (A, legacy = false) => {
+  if (!legacy) await A.waitFor(() => {
+    const S = O55.S, d = S.sess.drafts.main, st = O55.flow.state(S, 'recheck:' + d.project_draft_revision);
+    const c = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="commit"]');
+    return S.sess.screen === 'review' && st && st.state === 'done' && c
+      && (!c.disabled && c.getAttribute('aria-disabled') !== 'true') === !O55.draft.missing(d).length;
+  });
+  return A.frame().evaluate(KEEP);
+};
+// Equality cannot detect two equally committed Later selections: assert the route's absolute contract too.
+const laterUncommitted = async (A, bad, label, when) => {
+  const state = await A.frame().evaluate(() => ({ commit: O55.S.sess.commit || null,
+    confirmed: !!O55.S.sess.drafts.main.review_confirmed }));
+  if (state.confirmed || (state.commit && (state.commit.state !== 'none' || Number(state.commit.attempt || 0) !== 0)))
+    bad.push(`${label} FO-61 row 13a Later ${when}: must never commit or confirm: ${JSON.stringify(state)}`);
+};
 async function keptUnchanged(t, label, establish, later = false) {
   await flow(t, label, async (A, bad) => {
-    await establish(A, bad); await A.screen('review'); const before = await A.frame().evaluate(KEEP);
+    // Fault injection invokes the real commit handler after real Later selections, retaining only Review navigation.
+    if (later && ['latercommit-every', 'latercommit-second'].includes(SELFTEST)) await A.frame().evaluate((every) => {
+      const original = O55.screens.defs.begin.do.later; let count = 0;
+      O55.screens.defs.begin.do.later = function (S, ...args) {
+        const out = original.call(this, S, ...args); count++;
+        if (every || count === 2) { const go = O55.ui.go; O55.ui.go = () => {};
+          try { O55.screens.defs.review.do.commit(S); } finally { O55.ui.go = go; } }
+        return out;
+      };
+    }, SELFTEST === 'latercommit-every');
+    await establish(A, bad); await A.screen('review');
+    if (later) await laterUncommitted(A, bad, label, 'before first snapshot');
+    const before = await settledKeep(A, t.args.selftest === 'earlyreview');
+    t.log('FO-61 Review snapshot ' + JSON.stringify({ snapshot:before, state:await A.frame().evaluate(() => { const s=O55.S.sess, d=s.drafts.main; return { recheck:s.ops['recheck:'+d.project_draft_revision], operation:s.commit || null }; }) }));
+    if (label.startsWith('FO-61')) await A.frame().evaluate(() => O55.motion.setTimeScale(1));
     if (await A.has('edit', 'begin')) await editBeginTo(A); else { for (let i = 0; i < 6 && (await A.snap()).screen !== 'begin'; i++) await pressBack(A); await A.screen('begin'); }
     if (later) await A.click('later'); else { await A.waitEnabled('next'); await A.click('next'); } await A.sleep(1000);
     await goOnToReview(A);
-    const after = await A.frame().evaluate(KEEP);
+    const after = await settledKeep(A, t.args.selftest === 'earlyreview');
+    if (later) await laterUncommitted(A, bad, label, 'after second snapshot');
     const lost = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k])).map((k) => k + ' ' + JSON.stringify(before[k]).slice(0, 60) + ' > ' + JSON.stringify(after[k]).slice(0, 60));
     if (lost.length) bad.push(`${label}: kept unchanged, yet ${lost.join('; ')}`);
   });
@@ -547,6 +659,31 @@ const keepAttempt = async (A) => { await A.click('reviewAgain', undefined, 'revi
   await A.waitFor(() => ['failed', 'recovery', 'unknown'].includes(O55.S.sess.commit.state), null, 25000); await A.sleep(600); };
 
 export const tests = {
+  async 'FO-61 · Later unchanged compares settled Review readiness, never a transient recheck'(t) {
+    await t.emulate({ reducedMotion: 'reduce' });
+    for (let i = 0; i < Number(t.args.repeat || 1); i++)
+      await keptUnchanged(t, `FO-61 Later kept ${i + 1}`, async (A) => {
+        // The public concept clock delays the first recheck; normal speed resumes after its snapshot.
+        await A.frame().evaluate(k => O55.motion.setTimeScale(Number(k)), t.args.clock || 0.35);
+        await A.click('pick', 'this'); await A.click('next', undefined, 'begin');
+        await A.click('later'); await onToReview(A);
+      }, true);
+    await t.emulate({ reducedMotion: 'no-preference' });
+  },
+
+  /* Focused SW-41 regression. Run with --grep 'SW-41' and --set selftest=nopick to require failure on
+     every eligible screen, or nopick:begin to require failure after other screens really were picked. */
+  /* (online new copy by default; --set rich filters as in rows 20 and 21, richOf, and a filter matching nothing fails) */
+  async 'SW-41 · every Back-walk picker must offer a change'(t) {
+    const kinds = t.args.rich ? await richOrFail(t, 'SW-41') : RICH.filter(([k]) => k === 'online new copy');
+    for (const [kind, est] of kinds)
+      await flow(t, `SW-41 ${kind} Back walk`, async (A, bad) => {
+        await est(A); await A.screen('review');
+        const w = await pickBackWalk(A, bad, `SW-41 ${kind}`);
+        if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`SW-41 ${kind}: Back stopped on ${w.seq[w.seq.length - 1]}`);
+        t.log(`SW-41 ${kind} Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
+      });
+  },
   async 'row A · Safe › GitHub › sign in › details › Safe › Change kept twice › Change › Not now, then Back to the start (Continue tried at each stop) and on'(t) {
     await row(t, 'A', { establish: async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); }, keep: keepCopy,
       invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await A.click('notNow', undefined, 'safe'); }, force: ['online-details', 'online-service'],
@@ -942,7 +1079,8 @@ export const tests = {
      rich configurations, and for each every Edit link its Review shows, Edit > Continue with nothing changed > Review: the
      draft deep-equals the draft before (but its revision counter), Review shows the same rows, the Back path is the same */
   async 'row 20 · generated: every Review Edit link of each rich configuration (Home NAS files over SSH and mounted, a Home NAS source over SSH and mounted, a completed new Server, a connected existing Server, restore from a Recovery Kit and a cloud drive, online import and new copy, backup on Home NAS and a cloud drive, away with Tailscale), Edit and Continue unchanged: draft, Review rows and Back path all unchanged'(t) {
-    for (const [kind, est] of richOf(t))
+    const rich = await richOrFail(t, '20');
+    for (const [kind, est] of rich)
       await flow(t, `20 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
         if (!links.length) bad.push(`20 ${kind}: Review shows no Edit link`);
@@ -969,13 +1107,16 @@ export const tests = {
            any family the page stores: RAW_RE, STORED_REFS) */
         const raw = await rawStale(A), rows = rawIn((await A.frame().evaluate(SNAP20)).rows.map((r) => ['Review row ' + r.split('=')[0], r.slice(r.indexOf('=') + 1)]), raw.filter((e) => e.x).map((e) => e.x));
         if (rows.length) bad.push(`20 ${kind}: Review shows a raw locator: ${rows.join(' | ')}`);
-        const seq = await walkBack(A, raw, bad, `20 ${kind}`), missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
+        /* (SW-41: the Back run judges every screen as walkBack does, and on each one not in NO_PICK picks or types another
+           value first, which Back must take back: the same guard as row 21, so --set selftest=nopick or nopick:<screen> fails) */
+        const w = await pickBackWalk(A, bad, `20 ${kind}`, { stale: raw }), seq = w.seq, missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
+        t.log(`20 ${kind} Back screens: ${seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
         if (missed.length) bad.push(`20 ${kind}: the Back run from Review leaves out still-current steps ${missed.join(', ')} (${seq.join(' > ')})`);
         const foreign = (BACK_NOT[kind] || []).filter((x) => seq.includes(x)); if (foreign.length) bad.push(`20 ${kind}: the Back run shows another way in's steps ${foreign.join(', ')} (${seq.join(' > ')})`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); });
     /* abandoning an answer clears what it gave the plan (Astra AST-D6: files moved to This computer kept the NAS place and
        its key): each configuration's own answer given up, then every reference in the plan still describes an answer */
-    for (const [kind, est] of richOf(t)) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
+    for (const [kind, est] of rich) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
       await flow(t, `20 ${kind} given up: ${to}`, async (A, bad) => { await est(A); await A.screen('review'); await move(A); await A.screen('review');
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind} > ${to}: the plan still holds ${inv.join('; ')}`);
         const seq = await walkBack(A, [], bad, `20 ${kind} > ${to}`);
@@ -1069,7 +1210,7 @@ export const tests = {
      configuration and every Edit link its Review shows, another value picked (or typed), then Back without Continue: the
      draft, Review's rows, the screen's own selection (opened again) and the Back path are all as they were */
   async 'row 21 · generated twin of row 20: every Review Edit link of each rich configuration, another value picked or typed, then Back without Continue: draft, Review rows, the screen\'s own selection and the Back path all unchanged (lead ruling 1103040758)'(t) {
-    for (const [kind, est] of richOf(t))
+    for (const [kind, est] of await richOrFail(t, '21'))
       await flow(t, `21 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
         /* (SW-41: each Edit target with its first alternative, then its last where it has a second; a screen with nothing to
@@ -1078,7 +1219,7 @@ export const tests = {
           const before = await A.frame().evaluate(SNAP20);
           await A.click('edit', tg); await A.sleep(700); const sel0 = await A.frame().evaluate(SEL);
           const did = await pickOther(A, which);
-          if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
+          if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen) || await A.frame().evaluate(NO_PICK_DONE, sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
             for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); } continue; }
           if ((await A.snap()).screen !== sel0.screen) { bad.push(`21 ${kind} Edit ${tg}: ${did} left ${sel0.screen} for ${(await A.snap()).screen} without Continue`); break; }
           for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); }
@@ -1095,7 +1236,9 @@ export const tests = {
         }
         const start = await A.frame().evaluate(SNAP20), w = await pickBackWalk(A, bad, `21 ${kind}`);
         if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`21 ${kind}: the Back run from Review stopped on ${w.seq[w.seq.length - 1]} (${w.seq.join(' > ')})`);
-        t.log(`21 ${kind} Back with a pick on every step: ${w.picked.join(' | ')}`);
+        t.log(`21 ${kind} Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
+        // Forward comparison requires Welcome; report the navigation assertion before trying an invalid route.
+        if (w.seq[w.seq.length - 1] !== 'welcome') return;
         const back = await keepOn(A); if (back[back.length - 1] !== 'review') { bad.push(`21 ${kind}: on again from Welcome never reached Review: ${back.join(' > ')}`); return; }
         const end = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, start.draft, end.draft)).filter((k) => JSON.stringify(start.draft[k]) !== JSON.stringify(end.draft[k]));
         if (dk.length) bad.push(`21 ${kind}: after the picks taken back, on to Review again, the draft changed: ${dk.map((k) => k + ' ' + JSON.stringify(start.draft[k]).slice(0, 60) + ' > ' + JSON.stringify(end.draft[k]).slice(0, 60)).join('; ')}`);

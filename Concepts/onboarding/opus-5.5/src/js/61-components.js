@@ -61,7 +61,8 @@
     if (!id) return null;
     const scr = screen || (O55.S && O55.S.sess && O55.S.sess.screen) || '';
     const maps = [tipMap(scr), tipMap('common'), tipMap('chrome')].filter(Boolean);
-    const p = String(id).split(':'), tries = [String(id)];
+    // Auto on the look screen uses the header's shared system-following copy in both wordings.
+    const p = String(id).split(':'), tries = [id === 'pickMode:auto' ? 'lookMode:auto' : String(id)];
     if (p[0] === 'field' && p.length > 2) tries.push('field:' + p[1]);
     if (p.length > 1 && p[0] !== 'field' && p[0] !== 'group') tries.push(p[0], 'group:' + p[0]);
     /* two versions (21-talk.js): `text` in Plain English, `expert` (and `expertTitle`) with the real names */
@@ -190,7 +191,7 @@
       const id = s.do + ':' + s.value, St = O55.S;
       if (St && St.tip && St.tip.seg === s.do && St.tip.screen === (St.sess && St.sess.screen) && St.tip.id !== id) St.tip.id = id;
       const seg = `<div class="o55-seg" role="radiogroup"${s.label ? ` aria-label="${esc(s.label)}"` : ''}${described(id)} data-key="seg-${esc(s.do)}">` + s.options.map((o) =>
-        `<button type="button" role="radio" aria-checked="${o.v === s.value}" class="${o.v === s.value ? 'o55-on' : ''}" data-o55-do="${esc(s.do)}" data-arg="${esc(o.v)}"${o.disabled ? ` aria-disabled="true" data-disabled-reason="${esc(o.reason || '')}"` : ''}${U.attrs(X)}>${o.glyph ? small(o.glyph, 14) : ''}<span>${esc(o.label)}</span></button>`).join('') + '</div>';
+        `<button type="button" role="radio" aria-checked="${o.v === s.value}" class="${o.v === s.value ? 'o55-on' : ''}" data-o55-do="${esc(s.do)}" data-arg="${esc(o.v)}"${o.disabled ? ` aria-disabled="true" data-disabled-reason="${esc(o.reason || '')}"` : ''}${U.attrs(X)}><span class="o55-segface">${o.glyph ? small(o.glyph, 14) : ''}<span>${esc(o.label)}</span></span></button>`).join('') + '</div>';
       const qh = q(id);
       return qh ? `<span class="o55-opt o55-opt-seg" data-key="opt-seg-${esc(s.do)}" data-o55-seg="${esc(s.do)}">${seg}${qh}</span>${explainer(id)}` : seg;
     },
@@ -217,7 +218,7 @@
       const id = o && o.tip === false ? null : o && o.tip ? (tipOf(o.tip) ? o.tip : null) : exact(action, arg);
       /* (a link of a group whose one ? is drawn elsewhere, review's Edits, a path's crumbs: described by its note too) */
       const by = id || (tipOpen('group:' + action) ? 'group:' + action : null);
-      const html = `<button type="button" class="o55-link" data-o55-do="${esc(action)}"${arg != null ? ` data-arg="${esc(arg)}"` : ''}${by ? described(by) : ''}${U.attrs(X)}>${esc(label)}</button>`;
+      const html = `<button type="button" class="o55-link" data-o55-do="${esc(action)}"${arg != null ? ` data-arg="${esc(arg)}"` : ''}${by ? described(by) : ''}${U.attrs(X)}><span>${esc(label)}</span></button>`;
       return id ? opt(id, html, 'o55-opt-inline', 'span') : html;
     },
     /* Interior sheet: replaces part of the window's interior (never a nested dialog). */

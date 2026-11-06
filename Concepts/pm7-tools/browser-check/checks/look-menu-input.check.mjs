@@ -2,7 +2,7 @@
 import openResizeNotes from './look-menu-open-resize.check.mjs';
 import {reachableMenuLines} from '../helpers/look-menu-lines.mjs';
 export default async function(t) {
-  await openResizeNotes(t);
+  if (!t.args.inputOnly) await openResizeNotes(t);
   await t.emulate({reducedMotion:'reduce'});
   const f = await t.app.open({onboarding:true,query:'o55=screen=look'});
   await f.locator('[data-o55-do="pickFamily"][data-arg="nier"]').last().click();
@@ -31,7 +31,10 @@ export default async function(t) {
     });
     reached += Number(result.inside); visible &&= result.visible;
   }
-  await t.check('FO-56 keyboard reaches every menu button inside the window', controls === 15 && reached === controls && visible);
+  // Each family owns a choice and question; modes share a question; NieR adds its adjust pair.
+  const expected = await f.evaluate(() => O55.LOOKS.length * 2 + new Set([...O55.MODES, 'auto']).size + 1 + (O55.theme().chosen === 'nier' ? 2 : 0));
+  t.log(JSON.stringify({expected, controls, reached, visible}));
+  await t.check('FO-56 keyboard reaches every menu button inside the window', controls === expected && reached === controls && visible);
   // The final tab reaches Adjust NieR's question; Enter opens its existing note.
   await t.page.keyboard.press('Enter');
   await t.check('FO-56 question retains expanded state, note description and screen-reader copy',await f.evaluate(() => {
@@ -39,6 +42,7 @@ export default async function(t) {
     const note=document.querySelector('.o55-lookslot [role="note"]');
     return q.getAttribute('aria-expanded') === 'true' && !!note && q.getAttribute('aria-controls') === note.id && !!q.getAttribute('aria-label') && note.querySelector('.o55-sr').textContent === note.querySelector('.o55-explainer-w').textContent;
   }));
+  if (t.args.keyboardOnly) return;
   const adjust = f.locator('.o55-lookslot .o55-tipq[data-arg="lookNierAdjust:nier-adjust"]');
   await adjust.click(); // close the note opened by the keyboard case
   for (const [width,height] of [[1280,500],[740,768],[860,900],[1024,900],[1280,900],[1390,900],[1920,1080]]) {

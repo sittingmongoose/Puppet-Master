@@ -210,7 +210,7 @@
     const root = S.root;
     if (!S.open || !root || root.hidden || root.getAttribute('data-open') !== 'true' || !document.documentElement.hasAttribute('data-o55-open')) return null;
     const d = S.sess && S.sess.drafts && S.sess.drafts.main;
-    if (!d || PAINT_FAMILIES.indexOf(d.theme_family) < 0 || (d.theme_mode !== 'light' && d.theme_mode !== 'dark')) return null;
+    if (!d || PAINT_FAMILIES.indexOf(d.theme_family) < 0 || !['light', 'dark', 'auto'].includes(d.theme_mode)) return null;
     return [d.theme_family, d.theme_mode];
   };
   /* the family asked for (PM_THEME's): during NieR's moment the painted look still shows the old one, and comparing the
@@ -225,7 +225,7 @@
        Project is selected (Creating selects the new one), which undid the preview until the look was saved at the
        end, so the look changed twice. Any change that is not the chosen look is put back in the same moment. */
     const want = S.sess && S.sess.drafts && S.sess.drafts.main;
-    if (fromObserver && S.open && want && want.theme_family && (askedFamily(th) !== want.theme_family || th.mode !== want.theme_mode)) {
+    if (fromObserver && S.open && want && want.theme_family && (askedFamily(th) !== want.theme_family || th.selectedMode !== want.theme_mode)) {
       try { window.PM_THEME.setFamily(want.theme_family, { persist: false }); window.PM_THEME.setMode(want.theme_mode, { persist: false }); th = O55.theme(); } catch (_) {}
     }
     /* NieR Mode repaints Basic in ink without changing the painted family, so it is part of the look */
@@ -270,6 +270,8 @@
     const apply = () => {
       try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', (typeof window.PM_THEME_PAINT_FAMILY === 'function' ? window.PM_THEME_PAINT_FAMILY(family) : family) + '-' + mode); }
+      // Auto and an explicit mode can paint the same colours; the controls still changed.
+      if (now.slug === O55.theme().slug) { refresh(); renderLook(); }
     };
     /* the look belongs to the whole onboarding, not to one journey's draft (it was lost at the end when it was picked
        while the Connect draft was active) */
@@ -277,7 +279,7 @@
     /* the look asked for already (PM_THEME's family: during NieR's moment the paint still shows the old look): nothing
        to reveal, and no Settings note, because nothing is saved here */
     const now = O55.theme(), asked = askedFamily(now);
-    if (asked === family && now.mode === mode) return;
+    if (asked === family && now.selectedMode === mode) return;
     /* repainting the page for a look is expected heavy work: it never counts toward low-resource mode */
     O55.motion.quiet(2500);
     /* into or out of NieR (the fifth theme, Q22), also while its moment still plays: NieR's own moment plays inside the
@@ -344,7 +346,7 @@
       const back = state === 'done' && live && backTo(ch) >= 0;
       return `<li class="o55-railitem" data-state="${state}" data-chapter="${ch}" data-key="rail-${ch}"${state === 'current' ? ' aria-current="step"' : ''}>`
         + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"${back ? ` data-o55-do="railJump" data-arg="${ch}"` : ''}>${state === 'done' ? tick : ''}</span>`
-        + (back ? `<button type="button" class="o55-raillabel o55-railjump" data-o55-do="railJump" data-arg="${ch}" aria-label="${U.esc(T('pip.stage.rail.back', { name }))}" data-pm-hover-exempt="true">${U.esc(name)}</button>`
+        + (back ? `<button type="button" class="o55-raillabel o55-railjump" data-o55-do="railJump" data-arg="${ch}" aria-label="${U.esc(T('pip.stage.rail.back', { name }))}" data-pm-hover-exempt="true"><span>${U.esc(name)}</span></button>`
           : `<span class="o55-raillabel">${U.esc(name)}</span>`) + '</li>';
     }).join('');
     const zip = O55.pipStage && O55.pipStage.h.kit() ? '<svg class="o55-railzip" aria-hidden="true" data-morph-skip></svg><span class="o55-railpip" aria-hidden="true" data-morph-skip></span>' : '';
@@ -1098,7 +1100,7 @@
     if (action === 'talk') { if (O55.talk.toggle('onboarding')) O55.sound.play('select'); return; }
     /* the look menu is a small sheet: it opens and closes with the sheet sounds, as in the tour's bar */
     if (action === 'lookMenu') { S.lookOpen = !S.lookOpen; O55.sound.play(S.lookOpen ? 'sheet' : 'unsheet'); renderLook(); return; }
-    if (action === 'lookFamily') { applyLook(arg, O55.theme().mode, t); return; }
+    if (action === 'lookFamily') { applyLook(arg, O55.theme().selectedMode, t); return; }
     if (action === 'lookMode') { applyLook(O55.theme().chosen, arg, t); return; }
     if (action === 'lookNier' || action === 'lookNierAdjust') { if (O55.lookMenu && O55.lookMenu.nier) O55.lookMenu.nier(action, t); return; }
     if (action === 'go') return go(arg);
@@ -1254,6 +1256,7 @@
     const html = document.documentElement;
     installHold = new MutationObserver(() => {
       if (S.open) { installHold.disconnect(); installHold = null; return; }
+      if (O55.theme().selectedMode === 'auto') return;
       if (html.getAttribute('data-theme') !== 'basic-dark') {
         try { window.PM_THEME.setFamily('basic', { persist: false }); window.PM_THEME.setMode('dark', { persist: false }); }
         catch (_) { html.setAttribute('data-theme', 'basic-dark'); }
@@ -1394,6 +1397,7 @@
      into an off preview at once (writes nothing; kit.d/18-nier.js already started a new install's page that way), and
      Basic Dark preselected on Pick a look, in both drafts and in the session's NieR choice */
   function installPaint() {
+    if (O55.theme().selectedMode === 'auto') return;
     const n = window.PM_NIER;
     if (n && n.preview && (n.wanted ? n.wanted() : n.on())) { try { n.preview({ on: false }, { within: null, instant: true, sound: false }); } catch (_) {} }
     const th = O55.theme();
@@ -1403,6 +1407,7 @@
     }
   }
   function installLook() {
+    if (O55.theme().selectedMode === 'auto') return;
     installPaint();
     const n = window.PM_NIER;
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: 'basic', theme_mode: 'dark' }));
@@ -1415,7 +1420,7 @@
     /* a run saved before NieR was a theme (Q22) kept NieR as a switch over another look: it comes back as the NieR theme */
     if (d && l && l.nier === true && d.theme_family !== 'nier') { Object.values(S.sess.drafts).forEach((x) => O55.draft.set(x, { theme_family: 'nier' })); S.save(); }
     else if (d && l && l.nier === false && d.theme_family === 'nier') { l.nier = true; S.save(); }
-    if (d && d.theme_family && (askedFamily(th) !== d.theme_family || th.mode !== d.theme_mode)) {
+    if (d && d.theme_family && (askedFamily(th) !== d.theme_family || th.selectedMode !== d.theme_mode)) {
       try { window.PM_THEME.setFamily(d.theme_family, { persist: false }); window.PM_THEME.setMode(d.theme_mode, { persist: false }); } catch (_) {}
     }
     if (O55.nierLook && O55.nierLook.reapply) O55.nierLook.reapply(S);

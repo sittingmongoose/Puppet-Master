@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L28837
+Source lines: L26794-L28891
 
-Source SHA256: `38bdad52756ff4efda74975d9b85d9fb1a4546010dc6a3a4e1913f303792c1ac`
+Source SHA256: `d76f4681607dcb094e826cc884fa55ded6496c249182926053e0aa48e0516fb9`
 
 ---
 
@@ -2051,4 +2051,58 @@ preserved_exact_tokens:
   - "expected_fail"
 owner_hints:
   - Plans/Planning_Ledger_System.md
+```
+
+### DL-349 - Onboarding Retains Auto Appearance
+
+Jared's answer to stream F question Q2 accepts option A: onboarding offers and retains Auto.
+
+```yaml
+plan_unit_id: DL-349
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-349 records Jared's answer "The rest I will defer to your recommendations." relayed by pm7-build
+  on 2026-11-05T17:02:41Z in T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 to stream F question Q2:
+  option A is accepted. The onboarding look screen and onboarding header offer five families plus one
+  Light/Dark/Auto control, consistent with SSYS-010 and DL-301. Auto follows the system appearance live,
+  including a system change while onboarding is open. Onboarding keeps a prior Auto choice from Settings
+  or the header unless the person picks Light or Dark. Draft and onboarding_look_choice carry theme_mode
+  auto; Back restores that selection. The five families retain their ten rendered Light/Dark looks.
+  F3-520 owns this presentation; the existing Settings owner retains persistence and admission boundaries.
+gui_related: true
+gui_classification_reason: Changes onboarding appearance controls and their retained selection.
+split_recommended: false
+depends_on: [F3-520, SSYS-010, DL-301]
+unblocks: []
+acceptance_criteria:
+  - Both onboarding appearance controls offer Light, Dark and Auto separately from the five families.
+  - A prior Auto survives onboarding; live system changes update its resolved appearance.
+  - The draft and look-choice schema accept auto and Back restores it.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Concepts/pm7-tools/browser-check/checks/theme-header.check.mjs
+risk_class: appearance_state_drift
+reasoning_tier: high
+context_scope: onboarding_appearance
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/product_onboarding_contracts.schema.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Jared via pm7-build, T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T17:02:41Z"
+  - "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/F/JARED-QUESTIONS.md#Q2, option A"
+preserved_exact_tokens:
+  - DL-349
+  - "The rest I will defer to your recommendations."
+  - Light/Dark/Auto
+  - onboarding_look_choice
+  - theme_mode
+  - auto
+owner_hints:
+  - Plans/FinalGUISpec.md
 ```

@@ -1,3 +1,5 @@
+raise SystemExit("Retired: use browser-check; see Concepts/pm7-tools/browser-check/README.md GPU tool retirements (SW-43).")
+
 """Performance walk of the onboarding and the Guided Tour, per theme: opening, every screen at rest and changing,
 typing a name, the tour's steps, Show Me and Skip, and the look picker.
 python3 perf.py <page.html> <out.json> [--themes basic-dark,...] [--size 1600x1000] [--quick] [--headful] [--tracefps]
