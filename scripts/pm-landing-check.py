@@ -413,6 +413,7 @@ def run_check(name: str, root: Path, run_dir: str, timeout_seconds: int) -> dict
                 "--report",
                 str(report_file),
             ]
+        argv = LANDING_CACHE.wrap_check(name, argv) if LANDING_CACHE is not None else argv
         proc = subprocess.run(argv, cwd=root, capture_output=True, text=True)
         payload = report_file.read_text(encoding="utf-8") if report_file and report_file.exists() else proc.stdout
         try:
@@ -1379,6 +1380,9 @@ def run_export(root: Path, argv: list[str], timeout_seconds: int) -> dict[str, A
     {"report": the report or None, "timed_out": bool, "error": why it could not be read or None,
     "elapsed_seconds": how long it ran}.
     """
+    cached = LANDING_CACHE.export(argv) if LANDING_CACHE is not None else None
+    if cached is not None:
+        return cached
     started = time.monotonic()
     with tempfile.TemporaryDirectory(prefix="pm-landing-check-export-") as scratch:
         report_file = Path(scratch) / "export.json"
@@ -1601,6 +1605,20 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
     return f"{head}  {fields}"
 
 
+# --cache (scripts/pm_landing_cache.py, reports/landing-checks/README.md "The result cache"): None unless this run
+# asked for it, so that any other run takes exactly the paths it always took and never loads that module.
+LANDING_CACHE = None
+
+
+def open_landing_cache(root: Path, args: argparse.Namespace) -> None:
+    global LANDING_CACHE
+    spec = importlib.util.spec_from_file_location("pm_landing_cache", Path(__file__).with_name("pm_landing_cache.py"))
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    LANDING_CACHE = module.LandingCache.open(root, args)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
@@ -1622,9 +1640,23 @@ def main() -> int:
     parser.add_argument("--keep-check-reports", default=None, metavar="DIR",
                         help="also keep each check's full report, every row it printed, as DIR/<check>.json, "
                              "so the run can be replayed exactly; DIR must be outside the repository")
+    parser.add_argument("--cache", action="store_true",
+                        help="reuse a validator's run when everything it read is unchanged, and say so in the report; "
+                             "refused with --record-baseline")
+    parser.add_argument("--no-cache", action="store_true", help="run everything, as without --cache; wins over --cache")
+    parser.add_argument("--cache-dir", metavar="DIR", help="cache folder (default: ~/.cache/pm-landing-cache)")
+    parser.add_argument("--cache-max-mb", type=int, default=2048, help="cap on the cache folder (default: 2048)")
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
+    global LANDING_CACHE
+    LANDING_CACHE = None
+    if args.cache and not args.no_cache:
+        try:
+            open_landing_cache(root, args)
+        except (RuntimeError, OSError) as exc:
+            print(f"pm-landing-check: {exc}", file=sys.stderr)
+            return 3
     if args.readiness_audit_root:
         source = Path(args.readiness_audit_root)
         source = (source if source.is_absolute() else root / source).resolve()
@@ -1761,6 +1793,8 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         args.subcheck_timeout_seconds, keep_dir, items)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
+    if LANDING_CACHE is not None:
+        LANDING_CACHE.finish()
 
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
@@ -1943,6 +1977,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
                 "kept_check_reports": str(keep_dir) if keep_dir else None,
                 "blocking": len(blocking),
+                **({"cache": LANDING_CACHE.summary()} if LANDING_CACHE is not None else {}),
             },
             indent=1,
             sort_keys=True,
@@ -1953,6 +1988,8 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 print(line)
         print(f"pm-landing-check: baseline {baseline_label} recorded at "
               f"{str(baseline.get('commit'))[:12]}; this checkout is at {commit[:12]}")
+        for line in LANDING_CACHE.header() if LANDING_CACHE is not None else ():
+            print(line)
         print(f"  readiness audit source: {audit_source}; {len(audit_inputs['files'])} inputs match the baseline")
         if rule_two:
             print(f"  the baseline is current, so rule 2 applies: {currency['reason']}")
