@@ -481,7 +481,15 @@ export default async function (t) {
     // control is reached again.
     let roomState = 'panel', folding = false;
     const reach = async (loc, at = null) => {
-      await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
+      // T70 (opus-recheck-kit8 finding C): a failed scroll is no longer swallowed silently. A control that cannot be
+      // scrolled to because its side panel (or the folded rail's overlay) closed, or because it is hidden, fails at once
+      // and by name; a control the panel's own layout covers still goes on to the wheel and the fold below.
+      const scrolled = await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).then(() => null, (e) => String(e && e.message || e).split('\n')[0]);
+      if (scrolled !== null) {
+        const st = await loc.evaluate(e => { const slot = document.getElementById('sidePanelSlot'), view = e.closest('.side-panel-view');
+          return { slot: !!slot && slot.checkVisibility(), view: !view || view.checkVisibility(), shown: e.isConnected && e.checkVisibility(), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
+        await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel when its scroll fails`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
+      }
       let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
         await stable(loc);
