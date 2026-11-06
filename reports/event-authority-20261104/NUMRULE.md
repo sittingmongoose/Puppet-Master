@@ -1320,3 +1320,234 @@ The intact known answer reproduces (`a2e019f1b0e9d842cb4577196da7ca6024ef6ce1158
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/review-rerun/cli-mutations.json` | `7a7209385651d3cc5f6b3f8ccf2af1b01a8fa46ccf15de3c44404c84178ed3f5` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/full-selftest-summary.json` | `fcff4f134191e7d933f541c3cd6a51b247f5f8c8e8375d872ccc79d78d15a805` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/dependency.json` | `c76fcbf1169363abc7a5a05ef1f02b7b5ee6be351b4a4fd5654fd5dcf78de84c` |
+
+## Opus pre-check (numbers fix 2): findings and responses
+
+Scope: CV-1100, SP-1100, SP-1101, the number corpus, its runner, the mutation set and the number-only section of the adoption guide. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-numbers-fix2-opus.md` (blind Opus pre-check, NOT_READY at `051c303a2aea17ef85a6e66d89c75cbb3b29e058`): two High blocking findings, two Low, one Info. Implementation commit `7b370be1401a6183147917b68d78b165814c0122`. **No production helper code changed:** `scripts/pm_event_numbers.py` and `scripts/pm_event_index_binding.py` are byte-identical to `051c303a2a`; every edit is to the corpus, its runner, the mutation set, the corpus content pin and the docs.
+
+| | |
+|---|---|
+| **Goal** | A wrong implementation of any adopted number API fails the number corpus, and the self-test proves it by construction, not by a sample the author chose. |
+| **Gap** | NUM-FIX2's set certified each (API, class) cell with one mutation, so other predicates in the same cell went untested. The review's blind mutations caught 6 of 15; its refusal-site sweep caught 51 of 61. |
+| **Gain** | `--mutations` now enumerates its mutation points from the helper's AST: every refusal site, every single predicate of a refusal guard, every relational boundary. A new or stale point fails the self-test, so completeness holds as the helper changes. Each documented non-refusal rule has its own witnessed mutation. |
+
+**Totals** (`python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations`, exit 0):
+
+| Measure | Count |
+|---|---|
+| Refusal sites, from the AST (`raise` and `_refuse(...)`) | 64 |
+| Refusal-guard predicates, from the AST | 34 |
+| Relational boundaries, from the AST | 12 |
+| Documented behaviour rules (rules table) | 71, all 71 caught |
+| Mutations | 283: 173 hand-written, 110 generated |
+| Caught | 279, each with its witness case among the failures |
+| Survivors | 4, all declared with a reason (below); 0 undeclared |
+| Not applied, build errors, runner exceptions | 0, 0, 0 |
+| The review's 15 blind mutations | 15 caught (committed set and the review's own script) |
+| The review's 61-site sweep | 61 of 61 caught |
+
+**Finding 1 (High, blocking): blind semantic mutations, 6 of 15 caught — fixed in `7b370be1401a6183147917b68d78b165814c0122`.**
+- **Where:** `run_mutations` in `scripts/pm_event_numbers_corpus.py` accepted one mutation per (API, class) cell; the number cases had no input that told the survivors apart.
+- **Why:** each surviving mutation broke a predicate that shared a cell with an already-mutated one: kind precedence, MessagePack key order, the bin8 width, payload-ID case, an empty application `project_id`, an empty recipe field, result/receipt byte types, raw control characters and integer map keys.
+- **Fix:**
+  - **Cases:** the review's eight cases, its 1g `history` scenario (as `string_result_bytes` and `string_receipt_bytes`) and its 1i decoder case, each a single-defect case. Case 1a is exactly `{"op":"jcs","raw":"1","typed":true,"kind":"float","error":"jcs_kind"}`.
+  - **Mutations:** the 15 blind mutations and the 4 supplementary ones, verbatim, with `source: review-fix2`. The no-op control is a declared survivor, so a false catch would fail the run.
+  - **Per predicate, not per cell:** the generated families and the rules table (below) replace one-per-cell as the completeness rule. The (API, class) matrix stays as an extra check.
+
+| Review mutation | At review (`051c303a2a`) | Now (committed set) | Witness case |
+|---|---|---|---|
+| `kind-precedence-inferred-over-declared` | **survived** (1a) | caught, 1 case | `jcs-declared-float-over-integer-carrier` |
+| `kind-check-on-python-repr` | caught | caught, 9 cases | `jcs-kind-loss-exact` |
+| `jsonnumber-negative-zero-missed` | caught | caught, 1 case | `jcs-integer-sign-loss` |
+| `parse-control-chars-accepted` | **survived** (1h) | caught, 1 case | `parse-raw-control-character` |
+| `current-default-kind-decimal` | caught | caught, 4 cases | `current-nested-exact-types` |
+| `physical-int16-boundary` | caught | caught, 1 case | `physical-int--32768` |
+| `physical-bin8-boundary` | **survived** (1c) | caught, 1 case | `app-binary-255` |
+| `physical-utf16-key-order` | **survived** (1b) | caught, 1 case | `physical-map-utf8-order` |
+| `decode-nonstring-map-keys` | **survived** (1i) | caught, 1 case | `decode-integer-map-key` |
+| `full-value-version-unchecked` | caught | caught, 1 case | `full-value-wrong-version` |
+| `payload-id-uppercase-hex` | **survived** (1d) | caught, 1 case | `payload-id-uppercase` |
+| `payload-size-oversized-accepted` | caught | caught, 1 case | `payload-size` |
+| `binding-application-empty-project` | **survived** (1e) | caught, 1 case | `binding-application-empty-project` |
+| `recipe-empty-field-accepted` | **survived** (1f) | caught, 1 case | `recipe-empty-owner-edition` |
+| `dispatcher-checks-record-bytes-only` | **survived** (1g) | caught, 2 cases | `history-string_result_bytes` |
+
+**Finding 2 (High, blocking): refusal-site sweep, 51 of 61; site 294 a silent admission — fixed in `7b370be1401a6183147917b68d78b165814c0122`.**
+- **Where:** `qualified_jcs.adapt`'s `_refuse("jcs_type")` (`scripts/pm_event_numbers.py:294`).
+- **Why:** no case reached it, so removing it let bytes and sets serialize as `null` on the producer route.
+- **Fix:**
+  - **The exact case:** `{"op":"jcs_value","value":{"a":{"@binary":"78"}},"error":"jcs_type"}` (`jcs-binary-value`).
+  - **The sweep, generated:** the `refusal_site` family disables each refusal site in turn and requires its witness case to fail. Unlike the review's regex sweep, it also covers the three `raise` statements.
+  - **The other nine misses:** one new single-defect case each, including site 370. That site needs a binary longer than 2^32 bytes. A fault-injection fixture makes the helper module's `len()` report 2^32 for a 1-byte input (true length elsewhere), so no 4 GiB allocation is needed. `fixture_boundary` labels it.
+
+| Reviewed line | Site (generated key) | New case (witness) | Intact | Without the site |
+|---|---|---|---|---|
+| 165 | `site:loads_exact:json_input_type#1` | `parse-input-type-number` | refused `json_input_type` | caught (1 case) |
+| 252 | `site:qualified_jcs.number:jcs_nonfinite#1` | `jcs-decimal-nan` | refused `jcs_nonfinite` | caught (2 cases) |
+| 261 | `site:qualified_jcs.number:jcs_binary64#1` | `jcs-integer-beyond-binary64` | refused `jcs_binary64` | caught (1 case) |
+| 292 | `site:qualified_jcs.adapt:jcs_key_type#1` | `jcs-non-string-key` | refused `jcs_key_type` | caught (1 case) |
+| 294 | `site:qualified_jcs.adapt:jcs_type#1` | `jcs-binary-value` | refused `jcs_type` | caught (1 case) |
+| 370 | `site:storage_value_bytes:physical_length#1` | `app-binary-reported-length-4294967296` | refused `physical_length` | caught (1 case) |
+| 377 | `site:storage_value_bytes:physical_key_type#1` | `physical-non-string-key` | refused `physical_key_type` | caught (1 case) |
+| 391 | `site:decode_storage_value:physical_input_type#1` | `decode-text-input` | refused `physical_input_type` | caught (1 case) |
+| 528 | `site:RetainedDispatcher.resolve:original_query#1` | `history-empty_ref` | refused `original_query` | caught (3 cases) |
+| 535 | `site:RetainedDispatcher.resolve:recipe_selection#1` | `history-untyped_recipe` | refused `recipe_selection` | caught (1 case) |
+
+**Finding 3 (Low): the declared survivor `append-policy-no-type-check` — closed with a case in `7b370be1401a6183147917b68d78b165814c0122`.**
+- **Where:** `scripts/pm_event_numbers_mutations.json` and the guide's Self-check line.
+- **Fix:** new case `append-policy-str-subclass` passes a `StrEnum` member equal to `append_once`. The intact helper refuses it `replay_policy`; the mutant accepts it. The mutation is no longer a survivor: its `survives` reason is gone and its witness is that case. The guide no longer calls it equivalent.
+
+**Finding 4 (Low): a runner exception counted as caught — fixed in `7b370be1401a6183147917b68d78b165814c0122`.**
+- **Fix:** each mutant is built (compile and module load) before the corpus runs. A build error or a corpus run that raises is reported as `build_error` or `runner_exception`, fails the self-test, and never counts as caught. A harness control shows both (below).
+
+**Finding 5 (Info): test inputs decoded through the module under test — fixed in `7b370be1401a6183147917b68d78b165814c0122`.**
+- **Fix:** `{"@int": ...}` inputs decode with the runner's own `_int_from_digits` (chunked, no `str()` limit). The corpus and the mutation set load with the runner's own duplicate-key hook, not `m._unique_object`.
+
+**Production refusals.** No mutation showed a production refusal that CV-1100, SP-1100 or SP-1101 requires and the helper lacks, so none was added. Noted for the owner, not changed: an EventRecord string over 2^32 bytes reaches `pm_event_index_binding._length_prefix`, which raises `ValueError` rather than a `Refusal`. That still fails closed, and no owner text names a reason for it.
+
+**Generated mutation points.** `mutation_points()` in the runner parses `scripts/pm_event_numbers.py` and builds each mutant by editing the AST, never by text search:
+- **`comparison_boundary`** (12): Every <, <=, > and >= in the helper. The mutant flips strictness (< and <=, > and >=), the off-by-one at that width, range or limit boundary.
+- **`refusal_predicate`** (34): Every predicate of the if-guards of a _refuse site (each enclosing if whose body holds it) where dropping that predicate alone weakens the guard: an or-operand at positive polarity becomes False, an and-operand under not becomes True, and an element of a literal tuple scanned by any() is dropped.
+- **`refusal_site`** (64): Every raise statement and every _refuse(...) call, the only ways the helper emits an error code (returns, lambdas and except handlers included). The mutant disables that one site: a call becomes None, a raise becomes pass.
+
+Keys name the enclosing function, the error code or predicate text and an ordinal, never a line number. Unrelated edits keep them stable, and any new or changed site shows up as a new or stale key. The committed entry for each point is a witness case or a declared survivor. Witnesses for the ten previously missed sites, and for the predicates and boundaries that needed new cases, are those cases. The rest were picked from a real run (a failing case refusing with the point's own error code first), and every run re-verifies them.
+
+**Declared survivors (4).**
+
+| Mutation | Reason |
+|---|---|
+| `control-noop-comment` | Harness control from the review: a behaviour-free edit. It must survive; reporting it caught would mean the harness counts false kills. |
+| `site:<module>:raise#1` | CLI entry point, not an API refusal: `raise SystemExit(main())` runs only under __main__, and the mutant module is loaded in memory, never as __main__. Without it the CLI would exit 0 on a failing corpus; the fresh-process CLI controls (a deliberately wrong expected output gives exit 1) cover the exit status instead. |
+| `boundary:qualified_jcs.number:math.copysign(1.0, f) < 0:0#1` | Equivalent: math.copysign(1.0, f) returns exactly 1.0 or -1.0 (NaN included), never 0, so < 0 and <= 0 agree for every input. |
+| `boundary:storage_value_bytes:v >= 0:0#1` | Equivalent: with v > 0, the integer 0 takes the negative branch, whose fixint test (0 >= -32) emits bytes([0 & 255]) = 0x00, the same byte binding_bytes(0) emits. |
+
+**Behaviour rules, one row per rule.** From `Plans/Contracts_V0.md#CV-1100`, `Plans/storage-plan.md#SP-1100`, `Plans/storage-plan.md#SP-1101` and the adoption guide's shared calls. Where a rule is an existing profile owner's (CV-317, CV-339, CV-366, SP-337), that owner is named too. Every listed mutation is caught with its witness case failing.
+
+| Rule | Owner | Rule text | Mutations (witness case) |
+|---|---|---|---|
+| `token.no-leading-zero` | CV-1100 | Current JSON integer inputs are exactly 0 or -?[1-9][0-9]*: no leading zero. | `token-grammar-allows-leading-zero` (`bad-token-'01'`) |
+| `token.no-negative-zero` | CV-1100 | No negative zero in a current integer token. | `token-grammar-allows-negative-zero` (`bad-token-'-0'`) |
+| `token.no-plus` | CV-1100 | No plus sign in a current integer token. | `token-grammar-allows-plus` (`bad-token-'+1'`) |
+| `token.no-fraction-or-exponent` | CV-1100 | No fraction or exponent in a current integer token. | `token-no-grammar` (`bad-token-'1e0'`) |
+| `token.ascii-digits` | CV-1100 | The token grammar's [0-9] is ASCII digits only. | `token-grammar-unicode-digits` (`bad-token-'1١'`) |
+| `token.whole-string` | CV-1100 | The whole token matches the grammar; no surrounding whitespace. | `token-grammar-strips-whitespace` (`bad-token-' 1'`) |
+| `typed-integer.no-bool` | CV-1100 | Current typed integer inputs require an exact integer primitive, excluding booleans. | `integer-isinstance` (`int-bool`) |
+| `typed-integer.no-float` | CV-1100 | ... and excluding runtime floats; no silent float coercion. | `integer-accepts-float` (`int-float`) |
+| `typed-integer.no-string` | CV-1100 | No silent string coercion into an integer. | `integer-accepts-digit-string` (`int-string`) |
+| `bounds.minimum-inclusive` | CV-1100 | Field-specific minima still apply, inclusively. | `integer-minimum-exclusive` (`current-slot-2^53+1-minimum-equal`); `boundary:current_integer:value < minimum:0#1` (`current-slot-2^53+1-minimum-equal`) |
+| `bounds.maximum-inclusive` | CV-1100 | Field-specific maxima still apply, inclusively. | `integer-maximum-exclusive` (`current-slot-2^53+1-maximum-equal`); `boundary:current_integer:value > maximum:0#1` (`current-slot-2^53+1-maximum-equal`) |
+| `bounds.forwarded` | CV-1100 | Slot bounds apply on the token and JsonNumber routes too. | `token-drops-bounds` (`slot-above-maximum`); `integer-json-number-drops-bounds` (`slot-above-maximum`) |
+| `no-binary64-narrowing` | CV-1100 | No decoder may narrow an integer through binary64. | `token-rounds-through-binary64` (`token-9007199254740993`); `parse-int-rounds-through-binary64` (`parse-2^53+1`); `review-current-parser-rounded-int` (`current-large-exact`); `review-current-parser-float` (`current-large-exact`) |
+| `no-global-cap` | CV-1100 | No global maximum-safe ceiling (4400-digit integers stay exact). | `token-int-parser` (`current-logical-integer-4400-digits`) |
+| `current-parser.fractions-stay-decimal` | CV-1100 / adoption guide | loads_current_json never converts fractional or exponent tokens, even integral ones, to ints or floats. | `current-integral-fraction-to-int` (`current-slot-fraction`) |
+| `current-parser.lexical-float-kind` | adoption guide | An undeclared fractional token keeps its lexical float kind. | `current-default-kind-decimal` (`current-nested-exact-types`) |
+| `current-parser.kinds-by-path` | adoption guide | Optional schema numeric_kinds select the kind by exact path, including array indices. | `current-drops-numeric-kinds` (`current-numeric-kinds-declared`); `current-array-path-off-by-one` (`current-numeric-kinds-declared`) |
+| `kind.declared-over-carrier` | CV-1100 / adoption guide | numeric_kinds applies independently of the parser carrier: a declared kind overrides the carrier's own. | `kind-precedence-inferred-over-declared` (`jcs-declared-float-over-integer-carrier`) |
+| `kind.bare-decimal-undeclared` | adoption guide | A bare Decimal has no implicit owner kind. | `kind-bare-decimal-inferred-float` (`jcs-decimal-undeclared`) |
+| `kind.json-number-lexical` | adoption guide | Raw JsonNumber preserves its integer/float token kind. | `kind-json-number-always-float` (`jcs-typed-exact-integer`) |
+| `kind.emitted-token` | CV-1100 | Kind preservation is judged on the emitted JCS token. | `kind-check-on-python-repr` (`jcs-kind-loss-exact`) |
+| `jcs.exact-decimal` | CV-1100 | The emitted decimal must equal the original exact value (2^60). | `jcs-no-decimal-refusal` (`jcs--1152921504606846976`) |
+| `jcs.binary64-equality` | CV-1100 | The original integer must survive binary64 exactly (2^53+1). | `jcs-binary64-tolerance-one` (`producer-2^53+1-bytes`) |
+| `sign.json-number` | CV-1100 | Typed signed zero is not erased: a raw -0 token. | `jsonnumber-negative-zero-missed` (`jcs-integer-sign-loss`) |
+| `sign.decimal` | CV-1100 | Typed signed zero is not erased: a Decimal carrier. | `jcs-decimal-sign-ignored` (`jcs-sign-loss-current`) |
+| `sign.float` | CV-1100 | Typed signed zero is not erased: a runtime float. | `jcs-float-sign-ignored` (`jcs-typed--0.0`) |
+| `sign.independent-of-kind` | adoption guide | sign_sensitive_paths checks zero sign without requiring a primitive kind. | `jcs-sign-path-enforces-kind` (`jcs-sign-only-integral-float`) |
+| `qualification.schema-paths` | adoption guide | Qualification paths are tuples of map keys and array indices from the original schema. | `jcs-array-path-off-by-one` (`producer-type-qualified-array-index-bytes`) |
+| `jcs.key-order` | CV-1100 | Actual RFC8785: keys in UTF-16 code-unit order. | `jcs-code-point-key-order` (`jcs-nonascii-order`) |
+| `jcs.array-order` | CV-1100 | Array order remains exactly owner-defined. | `jcs-reversed-arrays` (`jcs-boolean-null`) |
+| `jcs.scalar-strings` | CV-1100 | JCS strings and keys are Unicode scalar values. | `jcs-string-not-scalar-checked` (`jcs-lone-surrogate-string`); `jcs-key-not-scalar-checked` (`jcs-lone-surrogate-key`) |
+| `jcs.bool-not-number` | CV-1100 | No silent bool coercion: booleans stay JSON booleans. | `jcs-boolean-as-integer` (`jcs-boolean-null`) |
+| `producer.projection` | CV-317 / CV-1100 | Producer semantics use the unchanged full producer projection. | `producer-drops-last-field` (`producer-2^53-bytes`) |
+| `producer.qualification-forwarded` | CV-1100 | Producer routes qualify with the caller's type, sign and kind declarations. | `review-producer-drops-qualification` (`producer-sign-qualified-negative-zero-bytes`); `producer-drops-sign-qualification` (`producer-sign-qualified-negative-zero-bytes`) |
+| `producer.sha256-hex` | CV-317 | The producer digest is lowercase hex SHA-256 of the JCS bytes. | `review-producer-sha512` (`producer-2^53-digest`); `digest-truncated` (`producer-2^53-digest`) |
+| `physical.integer-range` | SP-1100 | EventRecord MessagePack integers span -2^63 through 2^64-1 inclusive. | `boundary:storage_value_bytes:-(1 << 63) <= v <= UINT64_MAX:0#1` (`physical-int--9223372036854775808`); `boundary:storage_value_bytes:-(1 << 63) <= v <= UINT64_MAX:1#1` (`decode-good-uint64`) |
+| `physical.minimal-integer-width` | SP-1100 | Minimal type-preserving integer widths at every boundary. | `physical-negative-fixint-boundary` (`physical-int--33`); `physical-int8-boundary` (`physical-int--129`); `physical-int16-boundary` (`physical-int--32768`); `physical-int32-boundary` (`physical-int--2147483648`); `boundary:storage_value_bytes:v >= low:0#1` (`physical-int--128`); `binding-uint-fixint-boundary` (`physical-int-127`); `binding-uint8-boundary` (`physical-int-255`); `binding-uint16-boundary` (`physical-int-65535`); `binding-uint32-boundary` (`physical-int-4294967295`) |
+| `physical.float-type-retained` | SP-1100 | General EventRecord floats retain float type even when integral. | `physical-integral-float-as-int` (`physical-float-1.0`) |
+| `physical.signed-zero` | SP-1100 | Floats retain signed zero in float32 and float64. | `physical-float32-drops-zero-sign` (`physical-float--0.0`); `physical-float64-drops-zero-sign` (`app-float--0.0`) |
+| `physical.float32-exact-eventrecord-only` | SP-1100 / CV-366 | float32 only with exact value preservation, and only for EventRecord; app physical is float64. | `physical-lossy-float32` (`physical-float-0.1`); `physical-float32-ignores-profile` (`decode-app-float32`) |
+| `physical.minimal-string-width` | SP-1100 | Minimal string headers (fixstr, str8, str16). | `binding-fixstr-boundary` (`physical-str-32`); `binding-str8-boundary` (`physical-str-255`); `binding-length16-boundary` (`physical-str-65535`) |
+| `physical.minimal-container-width` | SP-1100 | Minimal array and map headers (fixarray, fixmap). | `binding-fixarray-boundary` (`physical-array-15`); `binding-fixmap-boundary` (`physical-map-15`) |
+| `physical.map-key-order` | SP-1100 | Map keys in UTF-8 byte order (not the JCS UTF-16 order), on every profile. | `physical-utf16-key-order` (`physical-map-utf8-order`); `binding-utf16-key-order` (`physical-binding-map-utf8-order`) |
+| `physical.array-order` | CV-1100 / SP-1100 | Array order is preserved in physical bytes. | `physical-reversed-arrays` (`physical-array-nested`) |
+| `physical.scalar-strings` | SP-1100 | Physical strings are valid Unicode scalar values. | `physical-string-not-scalar-checked` (`physical-lone-surrogate-string`) |
+| `physical.app-binary-width` | CV-366 / SP-1100 | App binary takes the minimal bin8/bin16/bin32 header (255 vs 256, 65535 vs 65536, 2^32-1). | `physical-bin8-boundary` (`app-binary-255`); `boundary:storage_value_bytes:n <= 65535:0#1` (`app-binary-65535`); `boundary:storage_value_bytes:n <= 4294967295:0#1` (`app-binary-reported-length-4294967295`) |
+| `physical.binary-declared-only` | adoption guide | App binary is legal only in the app physical profile; EventRecord disallows binary. | `physical-binary-ignores-profile` (`physical-binary`) |
+| `decode.string-keys` | SP-1100 | Canonical decoding admits only string map keys. | `decode-nonstring-map-keys` (`decode-integer-map-key`) |
+| `decode.selected-profile` | SP-1100 | Decoding rejects alternates according to the selected profile. | `review-decoder-profile-loss` (`decode-app-float32`) |
+| `decode.canonical-bytes` | SP-1100 | Decoded bytes must re-encode to the identical canonical bytes. | `decode-msgpack-canonical-check` (`decode-binary`) |
+| `payload.exact-size` | SP-1100 / SP-337 | Payload byte sizes cover the exact original bytes. | `payload-size-oversized-accepted` (`payload-size`) |
+| `payload.lowercase-id` | SP-337 | Payload IDs are lowercase 64-hex BLAKE3 digests. | `payload-id-uppercase-hex` (`payload-id-uppercase`) |
+| `payload.inline-limit` | SP-337 | The inline limit admits exactly 16384 bytes. | `payload-inline-limit-inclusive` (`payload-inline-boundary`); `boundary:verify_payload_bytes:len(raw) > 16384:0#1` (`payload-inline-boundary`) |
+| `full-value.edition` | CV-339 | The full-value commitment covers only pm.event.v0 2.0.0 events. | `full-value-version-unchecked` (`full-value-wrong-version`); `predicate:site:full_value_commitment:full_value_edition#1:false event.get('schema_id') != 'pm.event.v0'#1` (`full-value-wrong-schema-id`) |
+| `full-value.preimage-order` | CV-339 | The unchanged CV-339 tuple order. | `full-value-preimage-position` (`full-value-frozen-positive`) |
+| `recipe.nonempty-fields` | SP-1101 | Every recipe tuple field is a non-empty string. | `recipe-empty-field-accepted` (`recipe-empty-owner-edition`) |
+| `recipe.lowercase-resource-hash` | SP-1101 | The resource manifest hash is lowercase 64-hex. | `recipe-hash-uppercase-accepted` (`recipe-hash-upper`) |
+| `binding.nonempty-fields` | SP-1101 | Every binding identity field is a non-empty string. | `predicate:site:OriginalBinding.__post_init__:original_binding#1:false not v#1` (`binding-empty-event-id`) |
+| `binding.application-null-project` | SP-1101 | Application scope requires project_id null, not empty. | `binding-application-empty-project` (`binding-application-empty-project`) |
+| `binding.project-nonempty-string` | SP-1101 | Project scope requires a non-empty project_id string. | `binding-project-empty-boundary` (`binding-project-empty-project`); `predicate:site:OriginalBinding.__post_init__:original_scope#1:true type(self.project_id) is str#1` (`binding-project-integer-project`) |
+| `dispatch.query-shape` | SP-1101 | One original selection: a non-empty string reference and an exact OriginalBinding. | `predicate:site:RetainedDispatcher.resolve:original_query#1:false type(original_ref) is not str#1` (`history-nonstring_ref`); `predicate:site:RetainedDispatcher.resolve:original_query#1:false not original_ref#1` (`history-empty_ref`); `predicate:site:RetainedDispatcher.resolve:original_query#1:false type(expected) is not OriginalBinding#1` (`history-dict_expected`) |
+| `dispatch.binding-join` | SP-1101 | The owner's binding is an exact OriginalBinding equal to the query. | `dispatcher-no-binding-join` (`history-foreign-event_id`); `predicate:site:RetainedDispatcher.resolve:original_binding#1:false type(original.binding) is not OriginalBinding#1` (`history-self_equal_binding`) |
+| `dispatch.original-bytes-exact` | SP-1101 | Original record, result and receipt stay exact bytes. | `dispatcher-checks-record-bytes-only` (`history-string_result_bytes`); `predicate:site:RetainedDispatcher.resolve:original_bytes_type#1:drop original.record_bytes#1` (`history-string_record_bytes`); `predicate:site:RetainedDispatcher.resolve:original_bytes_type#1:drop original.result_bytes#1` (`history-string_result_bytes`); `predicate:site:RetainedDispatcher.resolve:original_bytes_type#1:drop original.receipt_bytes#1` (`history-string_receipt_bytes`) |
+| `dispatch.original-recipe` | SP-1101 | The frozen verifier is selected by the original's own recipe tuple. | `dispatcher-ignores-original-recipe` (`history-unknown_recipe`) |
+| `dispatch.verifier-true` | SP-1101 | Only verifier result True authenticates; no truthy value. | `dispatcher-truthy-verifier` (`history-verifier-result-integer`) |
+| `dispatch.one-verifier-call` | SP-1101 | Exactly one frozen verifier runs; no probing. | `dispatcher-verifies-twice` (`history-current-original`) |
+| `dispatch.disclosure` | SP-1101 | Current disclosure is checked independently and must be exactly True. | `dispatcher-truthy-disclosure` (`history-truthy_disclosure`); `dispatcher-skips-disclosure` (`history-deleted`) |
+| `loads-exact.control-characters` | adoption guide / RFC 8259 | loads_exact refuses raw control characters in JSON strings. | `parse-control-chars-accepted` (`parse-raw-control-character`) |
+| `loads-exact.scalar-strings` | adoption guide | Every parsed string and key is a Unicode scalar value. | `parse-no-scalar-walk` (`parse-key-lone-surrogate`); `parse-keys-not-walked` (`parse-key-lone-surrogate`) |
+| `loads-exact.strict-utf8` | adoption guide | Byte input is strict UTF-8. | `parse-latin1-decoder` (`parse-invalid-utf8-bytes`) |
+| `append-policy.exact-string` | SP-1101 / adoption guide | current_append_policy admits exactly one of the three policy strings as an exact str. | `append-policy-no-type-check` (`append-policy-str-subclass`); `predicate:site:current_append_policy:replay_policy#1:false type(value) is not str#1` (`append-policy-str-subclass`) |
+
+The brief's examples map to rows: ordering is `physical.map-key-order` and `jcs.key-order`; width boundaries are `physical.app-binary-width` (255 vs 256) and the other `minimal-*-width` rows; case normalisation is `payload.lowercase-id` and `recipe.lowercase-resource-hash`; required non-empty fields are `binding.application-null-project` (`project_id ""`) and `recipe.nonempty-fields`; byte types are `dispatch.original-bytes-exact`; string content is `loads-exact.control-characters`.
+
+**The review's mutations and sweep, rerun from scratch copies.** The review's `own_mutations.py` and `refusal_sweep.py`, byte-identical (SHA-256 `8e6a4ea5...` and `475254ab...`), ran unmodified on an extraction of `7b370be1401a6183147917b68d78b165814c0122` holding only the number files:
+- **`own_mutations.py`** (fresh CLI process per mutation): 15 of 15 caught; supplementary: `control-noop-comment` survives, `jcs-key-type-refusal-removed` caught, `token-grammar-strips-whitespace` caught, `physical-unknown-profile-accepted` caught.
+- **`refusal_sweep.py`**: 61 of 61 sites caught, 0 errors.
+- **The gate's adapted `route_gap_repro.py` and `cli_mutations.py`** (regression): every mutation still fails (current_parser_rounded_int 482/490, current_parser_float 481/490, producer_sorted_json 471/490, producer_sha512 484/490, producer_drops_qualification 483/490); CLI exit 1 for all 6 runs. Known answer `a2e019f1b0e9d842cb4577196da7ca6024ef6ce1158df557858ff93914567416`.
+
+**Harness controls** (fresh CLI processes on throwaway copies; each gives exit 1 and names the expected problem):
+- **control-new-refusal-site:** `new mutation point without a committed entry: site:exact_boolean:control_new_site#1`.
+- **control-mutation-set:** `stale committed mutation point (not in the helper's AST): site:removed_function:gone#1`; `site:exact_boolean:boolean_type#1: witness case token-0 did not fail`; `integer-isinstance: witness case token-0 did not fail`; `boolean-no-refusal: declared survivor is now caught`; `control-noop-comment: mutation survived the number corpus`; `control-build-error: build_error`; `control-runner-exception: runner_exception`; `rule control.unknown: no mutation, or unknown mutation ['no-such-mutation']`.
+
+**Standalone (T8).** Every CLI run is a new `python3 -B` process started from an unrelated directory. It runs on an extraction holding only the four number scripts, the mutation set and the three data files, with msgpack 1.1.2 (wheel SHA-256 `180759d8...`). The date-time modules were absent. With them present and raising at import, `--scope numbers` gives the same result.
+
+**Corpus counts.**
+
+| Selection | Cases | Positives | Negatives | Checks | Result |
+|---|---|---|---|---|---|
+| `--scope numbers` | 490 | 252 | 238 | 60 | 490/490 pass |
+| `--scope all` | 13536 | 6915 | 6621 | 299 | 13536/13536 pass, exit 0 |
+
+50 cases added (33 single-defect negatives, 17 positives), inserted after the last number case. No existing case's input, outcome or label changed, and none was removed.
+
+**Independent vectors.** New MessagePack outputs come from the MessagePack spec, transcribed in `gen_cases.py`, and are rechecked with msgpack 1.1.2 `packb`. New JCS outputs come from Node v22.22.2 and are rechecked with rfc8785. Neither path imports the helper: 18 checked, 0 mismatches.
+
+**Fixture boundaries, labelled in the cases.**
+- **Reported length:** `app-binary-reported-length-4294967296` and `-4294967295`, the bin32 limit.
+- **Exact-type gates:** `append-policy-str-subclass` and `payload-media-str-subclass` (str subclass), `producer-mapping-proxy-bytes` (complete mapping, not a dict), `history-self_equal_binding` (an object claiming equality) and `history-untyped_recipe` (a plain tuple of the recipe values). Each isolates one exact-type predicate that JSON input alone cannot reach.
+
+The `--scope all` run and the gate regressions ran on `2f02517bb3`, the code commit before its witness amend. `7b370be1401a6183147917b68d78b165814c0122` differs from it only in the mutation set, which neither reads; the number-scope, `--mutations`, control and review reruns ran on `7b370be1401a6183147917b68d78b165814c0122` itself.
+
+**Date-time gate after the corpus change.** `--scope all` on the full `Plans/` tree: inventory `pass`, 233 nodes (133 Storage, 89 other-owner), 0 unclassified. The corpus content pin in `scripts/pm_event_datetime_exclusions.json` was recomputed from source (`sha256(json.dumps(json.loads(text)))`): `31829a41...` → `e0b9edbe5d895a146b76e9bd7d79a168b424aca123b243e99c0ba1659dc06a31`. Nothing else in that file changed.
+
+**Limits.**
+- Generation covers refusal sites, guard predicates and relational boundaries. Non-refusal behaviour (byte layout, ordering, kinds) is covered by the hand-written rule mutations: complete for the listed rules, not for every conceivable defect.
+- Four survivors are declared; a reviewer checks their reasons. The CLI exit status is checked by fresh-process runs, not by the in-memory corpus.
+- `--scope numbers` says nothing about date-time. Native custody, durability and family admission remain NOT_RUN; guard isolation stays SWEEP_PENDING.
+
+**Scope.** Changed: `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_numbers_mutations.json`, the number cases of the corpus, the corpus content pin, the adoption guide's number-only Self-check paragraph and this report set. Unchanged: `scripts/pm_event_numbers.py`, `scripts/pm_event_index_binding.py`, every helper function and recipe, all date-time code and data except that pin, owner prose, pinned schemas, generated shards and index, the registry, the Decision Log, Spec Lock, `.evidence` and `.gitignore`.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/cli-runs.json` | `b480d66192a96bcfda79b3eeced22e77d80a79395ba4f54903e105ea68d46a93` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/head-numbers-mutations.stdout.json` | `574a2c4397af67512cf1ce6b7eacd6d809038560ead9f2fc5c047f7a8d70061b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/head-numbers.stdout.json` | `7e963471223c2aa0f79ec630e676783dad0f5ca49b285720f9a468a518b73959` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/review-rerun/own-mutations.json` | `403e2f6924e4553568719255d759841f13b50cc62c5db842d7656b97178a442a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/review-rerun/refusal-sweep.json` | `55f1f812ba6bea4f9075438745e59511188d14f9be5f36dbc23cfec3b75aa727` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/review-rerun/gate-route/route-gaps.json` | `de9f389eae09352fc87a6a41f2c9e0eb379c9e7b32b9874e2b2688e9a92f16ee` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/review-rerun/gate-cli/cli-mutations.json` | `7aa69d27ac399278a20ebc3a7f3419e6241afa47aa9ea95c91fa4fd802e93c3a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/vector-crosscheck.json` | `8de803b5aa199bb2245e8ebd4c6232b88dfa216bf830c1dfd96d9260141221b6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/gen-cases.json` | `0a7847d2b318f4ce38508696b506f745eeb494cc3c622a8f5f966d067e220d1d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/full-selftest-summary.json` | `6a4a54b1f4854f424996e408920bdd2c8027d60c7571d16254b0e06d527473fe` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/extraction.sha256` | `fd2774e4f1ef0759aed5321e957934a46624f0bd952029c33843934a8fc51db7` |

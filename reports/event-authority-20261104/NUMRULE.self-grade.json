@@ -3439,5 +3439,113 @@
     "family_grading": "N/A",
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2",
     "scope": "Number scope only. No helper behaviour, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
+  },
+  "number_opus_precheck_fix2_validation": {
+    "round": "Opus pre-check (numbers fix 2)",
+    "review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-numbers-fix2-opus.md",
+    "source_base": "051c303a2aea17ef85a6e66d89c75cbb3b29e058",
+    "implementation_commit": "7b370be1401a6183147917b68d78b165814c0122",
+    "finding_1": "fixed; the review's 15 blind mutations are committed and caught, each with a single-defect witness case",
+    "finding_2": "fixed; jcs-binary-value kills site 294, and the refusal-site sweep is generated from the AST",
+    "finding_3": "fixed; append-policy-str-subclass kills append-policy-no-type-check, which is no longer a survivor",
+    "finding_4": "fixed; build errors and runner exceptions are problems, never catches",
+    "finding_5": "fixed; inputs decode with the runner's own integer and duplicate-key code",
+    "production_helper_changed": false,
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations",
+    "number_only": {
+      "status": "pass",
+      "corpus_cases": 490,
+      "case_passes": 490,
+      "positives": 252,
+      "negatives": 238,
+      "integration_checks": 60
+    },
+    "all_scope": {
+      "exit_code": 0,
+      "status": "pass",
+      "corpus_cases": 13536,
+      "case_passes": 13536,
+      "integration_checks": 299,
+      "datetime_inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "unclassified_nodes": 0
+      }
+    },
+    "mutations": {
+      "apis": 25,
+      "build_errors": 0,
+      "caught": 279,
+      "comparison_boundaries": 12,
+      "declared_survivors": 4,
+      "generated_mutations": 110,
+      "hand_written_mutations": 173,
+      "mutations": 283,
+      "not_applicable_cells": 83,
+      "not_applied": 0,
+      "refusal_predicates": 34,
+      "refusal_sites": 64,
+      "review_fix2_caught": 18,
+      "review_fix2_declared_controls": 1,
+      "review_fix2_mutations": 19,
+      "review_mutations": 6,
+      "review_mutations_caught": 6,
+      "rules": 71,
+      "rules_caught": 71,
+      "runner_exceptions": 0,
+      "survivors": 4,
+      "undeclared_survivors": 0,
+      "witnessed": 279
+    },
+    "declared_survivors": [
+      {
+        "mutation": "control-noop-comment",
+        "reason": "Harness control from the review: a behaviour-free edit. It must survive; reporting it caught would mean the harness counts false kills."
+      },
+      {
+        "mutation": "site:<module>:raise#1",
+        "reason": "CLI entry point, not an API refusal: `raise SystemExit(main())` runs only under __main__, and the mutant module is loaded in memory, never as __main__. Without it the CLI would exit 0 on a failing corpus; the fresh-process CLI controls (a deliberately wrong expected output gives exit 1) cover the exit status instead."
+      },
+      {
+        "mutation": "boundary:qualified_jcs.number:math.copysign(1.0, f) < 0:0#1",
+        "reason": "Equivalent: math.copysign(1.0, f) returns exactly 1.0 or -1.0 (NaN included), never 0, so < 0 and <= 0 agree for every input."
+      },
+      {
+        "mutation": "boundary:storage_value_bytes:v >= 0:0#1",
+        "reason": "Equivalent: with v > 0, the integer 0 takes the negative branch, whose fixint test (0 >= -32) emits bytes([0 & 255]) = 0x00, the same byte binding_bytes(0) emits."
+      }
+    ],
+    "review_rerun": {
+      "own_mutations": {
+        "primary": 15,
+        "primary_caught": 15,
+        "supplementary": {
+          "control-noop-comment": "survives",
+          "jcs-key-type-refusal-removed": "caught",
+          "token-grammar-strips-whitespace": "caught",
+          "physical-unknown-profile-accepted": "caught"
+        }
+      },
+      "refusal_sweep": {
+        "sites": 61,
+        "caught": 61
+      }
+    },
+    "harness_controls_exit_1": [
+      "control-new-refusal-site",
+      "control-mutation-set"
+    ],
+    "cases_added": 50,
+    "vector_crosscheck": {
+      "checked": 18,
+      "mismatches": 0
+    },
+    "corpus_content_pin": "e0b9edbe5d895a146b76e9bd7d79a168b424aca123b243e99c0ba1659dc06a31",
+    "msgpack": "1.1.2",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3",
+    "scope": "Number scope only. No production helper code, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence or .gitignore change."
   }
 }
