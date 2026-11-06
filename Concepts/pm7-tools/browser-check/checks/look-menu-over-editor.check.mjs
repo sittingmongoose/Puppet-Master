@@ -9,6 +9,7 @@
 // look changes, so it can be open in every look), widths 1920x1080, 1390, 1024, 860, 740x768 and 1280x500, both motion
 // preferences, both surfaces. Fails on main 0adb197992 (the editor paints over the menu).
 //   --set size=1920x1080,740x768   --set look=nier-light   --set motion=no-preference,reduce,attribute
+//   --set shots=glass-light,glass-dark   (a native crop of the window per listed look; by default NieR Light at 1920, normal)
 import { LOOKS } from '../browser-check.config.mjs';
 
 const SIZES = [[1920, 1080], [1390, 900], [1024, 900], [860, 900], [740, 768], [1280, 500]];
@@ -101,7 +102,7 @@ async function cell(t, surface, w, h) {
 			const [fam, mode] = look.split('-');
 			await t.check(`FO-81 fixture is the look with the editor open ${tag}`, scan.panel && scan.inert && scan.expanded === 'true' && scan.chosen === fam && scan.mode === mode && scan.nier === (fam === 'nier'), JSON.stringify({ ...scan, covers: undefined, examples: undefined }));
 			await t.check(`FO-81 every option and help pixel is the menu's own over the editor ${tag}`, scan.items >= (fam === 'nier' ? 8 : 7) && scan.helps >= (fam === 'nier' ? 7 : 6) && !scan.small.length && scan.outside === 0 && scan.other === 0, JSON.stringify({ items: scan.items, helps: scan.helps, pixels: scan.pixels, outside: scan.outside, other: scan.other, chrome: scan.chrome, covers: scan.covers, examples: scan.examples, small: scan.small }));
-			if (motion === 'no-preference' && look === 'nier-light' && w === 1920 && surface === 'normal') await t.crop('nier-light-menu-over-editor', f.locator('#pm-o55-onboarding .o55-win'), 'FO-81: the header Look menu lies over the Adjust NieR editor (main: the editor covers it).');
+			if (t.args.shots ? list(t.args.shots, []).includes(look) : motion === 'no-preference' && look === 'nier-light' && w === 1920 && surface === 'normal') await t.crop(`${look}-${motion}-${surface}-${w}x${h}-menu-over-editor`, f.locator('#pm-o55-onboarding .o55-win'), 'FO-81: the header Look menu lies over the Adjust NieR editor (main: the editor covers it).');
 			/* a real press at each option's and each help's centre reaches it (and nothing else hears it) */
 			await f.evaluate(() => {
 				window.__fo81 = []; window.__fo81Off?.();
