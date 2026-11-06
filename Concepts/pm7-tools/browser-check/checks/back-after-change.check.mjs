@@ -451,19 +451,28 @@ let LAST_PICK = null;
    nas-pmpair's nas.pairing, beside what it already held), so a password field (r-unlock's phrase, in neither SEL nor
    ANSWERS by value) is seen through its typed flag. A value the product keeps only outside the session (c-pair's
    code) cannot be shown taken and fails closed; the walk types into none. Any other pick took when the screen's own
-   selection or the session's answers differ from before it (pre: [ANSWERS, SEL] read just before the pick). */
+   selection or the session's answers differ from before it (pre: [ANSWERS, SEL] read just before the pick).
+   T66 (TOOLBATCH4, REVIEW-kit-tb3-opus finding 5): a typed pick took only when the session moved from the state the
+   screen was reached with, as well as from the state just before the typing (after any click that revealed the
+   field). On r-unlock the forward walk already leaves restore.typed set, so typing again left the answers exactly as
+   the screen was reached, the pick counted as taken, and a Back that took nothing back there passed. Where typing
+   leaves the session as it stood, the pick is the other way: the field is emptied and left empty (restore.typed goes
+   false), which Back must take back. */
 const pickTook = async (A, pre) => {
   if (LAST_PICK && LAST_PICK.field) {
     const holds = await A.frame().evaluate(([id, v]) => { const i = document.getElementById(id); return !!i && i.value === v; }, [LAST_PICK.field, LAST_PICK.typed]);
-    LAST_PICK.held = holds;
-    return holds && LAST_PICK.answersCleared !== JSON.stringify(await A.frame().evaluate(ANSWERS));
+    const now = JSON.stringify(await A.frame().evaluate(ANSWERS));
+    LAST_PICK.held = holds; LAST_PICK.moved = now !== LAST_PICK.reached; LAST_PICK.follows = now !== LAST_PICK.preTyping;
+    return holds && LAST_PICK.moved && LAST_PICK.follows;
   }
   return JSON.stringify(pre) !== JSON.stringify([await A.frame().evaluate(ANSWERS), await A.frame().evaluate(SEL)]);
 };
 /* why a pick did not take, for the walk's message */
-const tookWhy = () => (LAST_PICK && LAST_PICK.field ? (LAST_PICK.held === false ? 'the field does not hold the text typed' : 'the field holds the text typed but the session\'s answers did not change') : 'neither the screen\'s selection nor the session\'s answers changed');
-const pickOther = async (A, which = 'first', revealed = false) => {
+const tookWhy = () => (LAST_PICK && LAST_PICK.field ? (LAST_PICK.held === false ? `the field does not hold ${LAST_PICK.emptied ? 'the emptiness left' : 'the text typed'}` : !LAST_PICK.follows ? 'the field holds the text typed but the session\'s answers did not change' : 'the session\'s answers are those the screen was reached with') : 'neither the screen\'s selection nor the session\'s answers changed');
+const pickOther = async (A, which = 'first', revealed = false, reached = null) => {
   LAST_PICK = null;
+  /* (T66: the answers as the screen was reached, before any click that reveals a field) */
+  if (reached === null) reached = JSON.stringify(await A.frame().evaluate(ANSWERS));
   /* Read choices after the screen's own entrance completes; an entering card can still have opacity zero. */
   await A.frame().waitForFunction(() => !document.querySelector('.o55-pane > .o55-layer.o55-entering, .o55-pane > .o55-layer.o55-hold, .o55-pane > .o55-layer.o55-out'), null, { timeout: 8000 });
   const c = await A.frame().evaluate((which) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
@@ -476,7 +485,9 @@ const pickOther = async (A, which = 'first', revealed = false) => {
     if (which === 'last' && all.length < 2) return null;
     const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg'), sheet: !!sheet && sheet.contains(b) }; }
     if (which === 'last') return null;
-    const f = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
+    /* (T66: a field the screen marks invalid first, the one it asks to be fixed: s-confirm's code after a wrong code) */
+    const fs = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].filter((i) => shown(i) && !i.disabled && !i.readOnly);
+    const f = fs.find((i) => i.getAttribute('aria-invalid') === 'true') || fs[0];
     if (f) return { field: f.id, value: f.value };
     /* (T37: a checkbox is an input too: s-ready's waiting guest's words, ticked or not. It comes after cards and fields,
        so a screen that had either picks as before; ticking or unticking it is the pick, and Back must take it back) */
@@ -486,25 +497,26 @@ const pickOther = async (A, which = 'first', revealed = false) => {
   if (!c) {
     /* A found Server is the only card on s-wait. Its address link exposes a real editable alternative. */
     if (!revealed && which === 'first' && (await A.snap()).screen === 's-wait' && await A.has('manualOn')) {
-      await A.click('manualOn'); return pickOther(A, which, true);
+      await A.click('manualOn'); return pickOther(A, which, true, reached);
     }
     /* GitHub is the only card until Other services is expanded. Reveal it, then require an actual choice. */
     if (!revealed && which === 'first' && (await A.snap()).screen === 'online-service' && await A.has('others')) {
-      await A.click('others'); return pickOther(A, which, true);
+      await A.click('others'); return pickOther(A, which, true, reached);
     }
     return null;
   }
-  LAST_PICK = c;
-  /* (T51: the field is emptied first and the session's answers read then, so the took-check sees whether the session
-     follows the field: not a click made to reveal it, such as s-wait's address link, and not a flag already set on
-     the way forward, such as r-unlock's restore.typed. A protected field never shows what was typed (r-unlock's
-     phrase reads empty while restore.typed holds), and emptying an empty field sends the product nothing, so such a
-     field gets one character first: the product then sees the field emptied for real) */
-  if (c.field) { c.typed = (c.value || '') + ' changed';
-    if (await A.frame().evaluate((id) => { const i = document.getElementById(id); return !!i && i.value === ''; }, c.field)) { await A.fill(c.field, '.'); await A.sleep(200); }
-    await A.fill(c.field, ''); await A.sleep(250);
-    c.answersCleared = JSON.stringify(await A.frame().evaluate(ANSWERS));
-    await A.fill(c.field, c.typed); await A.sleep(400); return 'typed ' + c.field; }
+  LAST_PICK = c; c.reached = reached;
+  /* (T51, T66: the answers just before the typing, after any click that revealed the field, so the took-check sees the
+     session follow the field itself, not the reveal. The text is typed; if it leaves the session as it stood (r-unlock's
+     restore.typed, already set on the way forward), the field is taken the other way: emptied and left empty. A
+     protected field reads empty whatever was typed (r-unlock's phrase), and emptying an empty field sends the product
+     nothing, so it gets one character first: the product then sees it emptied for real) */
+  if (c.field) { c.preTyping = JSON.stringify(await A.frame().evaluate(ANSWERS)); c.typed = (c.value || '') + ' changed';
+    await A.fill(c.field, c.typed); await A.sleep(400);
+    if (JSON.stringify(await A.frame().evaluate(ANSWERS)) === c.preTyping) {
+      await A.fill(c.field, '.'); await A.sleep(200); await A.fill(c.field, ''); await A.sleep(400); c.typed = ''; c.emptied = true;
+      return 'emptied ' + c.field + ' (the text typed left the session as it stood)'; }
+    return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
      sent instead: this row judges what a pick does, the click-reachability of every control is the audit's) */
   /* A refresh strips test-only attributes. Re-find this same action/argument inside its original surface, so a
@@ -586,7 +598,7 @@ async function pickBackWalk(A, bad, label, judged = null) {
   for (let i = 0; i < 40; i++) {
     if (judged) { generic(s, run, label + ' Back#' + i, bad); run.push(s.screen); judge(s, judged.stale || [], label + ' Back#' + i, bad); }
     seq.push(s.screen); if (!s.back) break;
-    const before = await A.frame().evaluate(ANSWERS); let did = null;
+    const before = await A.frame().evaluate(ANSWERS); let did = null, moved = '';
     /* Renderer-fault negative: records still contain alternatives, but their controls are absent.
        The original missing-pick assertion below must reject c-ready in both rich rows. */
     if (s.screen === 'c-ready' && SELFTEST === 'missingprojects') await A.frame().evaluate(() => {
@@ -626,6 +638,8 @@ async function pickBackWalk(A, bad, label, judged = null) {
         if (s.screen === 's-ready' && LAST_PICK && LAST_PICK.do === 'match') { const c1 = await A.frame().evaluate((id) => !!((O55.S.sess.server.candidates || []).find((c) => c.id === id) || {}).confirmed, LAST_PICK.arg);
           if (c1 === !!LAST_PICK.checkbox) bad.push(`${label} s-ready: ${did}, but the guest's words are still ${c1 ? 'ticked' : 'unticked'}`); } }
       const now = (await A.snap()).screen; if (now !== s.screen) { bad.push(`${label} ${s.screen}: ${did} went on to ${now} without Continue`); break; }
+      /* (T66: which of the session's answers the pick changed, named in the walk's log) */
+      if (did) { const a1 = await A.frame().evaluate(ANSWERS); moved = Object.keys(a1).filter((k) => JSON.stringify(a1[k]) !== JSON.stringify(before[k])).map((k) => k === 'server' || k === 'nasPick' || k === 'restore' ? k + JSON.stringify(a1[k]) : k).join(', '); }
     }
     /* A swallowed Back plus an unrelated title refresh must still fail at this screen. */
     if (s.screen === 'where' && (SELFTEST === 'ignoreback' || SELFTEST === 'ignoreback-text')) {
@@ -637,7 +651,11 @@ async function pickBackWalk(A, bad, label, judged = null) {
     }
     const pendingProject = s.screen === 'c-ready' ? await A.frame().evaluate(() => O55.S.sess.connect.openProject) : null;
     const pre = await A.frame().evaluate(BACK_DISMISS);
+    /* T66 negative: --set selftest=backnoop:<screen> makes Back on that screen take nothing back (its transaction dropped
+       and its own discard made a no-op: the review's rv-backnoop), so the answers compare below must fail it */
+    if (SELFTEST === 'backnoop:' + s.screen) await A.frame().evaluate((id) => { O55.S.sess.txn = null; const d = O55.screens.defs[id]; if (d.discard) { window.__kitDiscard = d.discard; d.discard = function () {}; } }, s.screen);
     await pressBack(A); let n = await look(A);
+    if (SELFTEST === 'backnoop:' + s.screen) await A.frame().evaluate((id) => { if (window.__kitDiscard) { O55.screens.defs[id].discard = window.__kitDiscard; delete window.__kitDiscard; } }, s.screen);
     if (n.screen === s.screen) {
       const post = await A.frame().evaluate(BACK_DISMISS);
       if ((pre.sheet && !post.sheet) || (pre.menu && !post.menu)) { await pressBack(A); n = await look(A); }
@@ -649,13 +667,14 @@ async function pickBackWalk(A, bad, label, judged = null) {
     /* T37 negative: --set selftest=keepguest ticks the guest's words again after Back (s-ready's discard undone), so the
        answers compare below must fail it */
     if (s.screen === 's-ready' && SELFTEST === 'keepguest' && did && LAST_PICK && LAST_PICK.do === 'match') await A.frame().evaluate((id) => { const c = (O55.S.sess.server.candidates || []).find((x) => x.id === id); if (c) c.confirmed = true; }, LAST_PICK.arg);
-    if (did) { picked.push(s.screen + ' ' + did); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
+    if (did) { picked.push(s.screen + ' ' + did + (moved ? ' [' + moved + ']' : '')); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
       if (ch.length) bad.push(`${label} ${s.screen}: ${did}, then Back, changed ${ch.map((k) => k === 'draft' ? 'draft(' + Object.keys(Object.assign({}, before.draft, after.draft)).filter((x) => JSON.stringify(before.draft[x]) !== JSON.stringify(after.draft[x])).slice(0, 6).join(', ') + ')' : k + ' ' + JSON.stringify(before[k]) + ' > ' + JSON.stringify(after[k])).join('; ')}`); }
     s = n;
   }
   /* (T51: a nobind:<screen> self-test on a walk that never reaches that screen exercised nothing, and fails by name:
      the online-import walk, for one, never shows online-signin, so nobind:online-signin passed there) */
   if (SELFTEST.startsWith('nobind:') && !seq.includes(SELFTEST.slice(7))) bad.push(`selftest ${SELFTEST}: ${label}'s Back walk never reached ${SELFTEST.slice(7)} (${seq.join(' > ')}), so the self-test exercised nothing`);
+  if (SELFTEST.startsWith('backnoop:') && !picked.some((x) => x.startsWith(SELFTEST.slice(9) + ' '))) bad.push(`selftest ${SELFTEST}: ${label}'s Back walk picked nothing on ${SELFTEST.slice(9)} (${seq.join(' > ')}), so the self-test exercised nothing`);
   return { seq, picked };
 }
 const filesHere = async (A) => { await A.click('edit', 'name', 'name'); await A.click('change'); await A.click('loc', 'auto'); await A.click('sheet-close').catch(() => {}); await A.sleep(500); await onToReview(A); };
@@ -679,6 +698,21 @@ const ABANDON_NOT = { 'Home NAS files over SSH': NAS_STEPS, 'Home NAS files moun
   'a completed new Server': [...SERVER_STEPS, 'away', 'away-setup'], 'a connected existing Server': ['c-route', 'c-review', 'c-pair', 'c-ready'],
   'restore from a Recovery Kit': ['r-source', 'r-unlock', 'r-pick', 'r-preview'], 'restore from a cloud drive': ['r-source', 'r-unlock', 'r-pick', 'r-preview'],
   'online import': ['ex-repos'], 'online new copy': ['online-service', 'online-signin', 'online-details'], 'away with Tailscale': [...SERVER_STEPS, 'away', 'away-setup'] };
+/* T66 (TOOLBATCH4, REVIEW-kit-tb3-opus finding 6): Back walks that start on the two screens no rich configuration's Back
+   walk reaches, so their declared inputs (INPUTS) actually change under a pick and Back must take them back: nas-pmpair
+   on a Home NAS that runs Puppet Master (another pairing way picked: nas.pairing), and s-confirm on a new Server after
+   a wrong setup code (the code typed again: server.codeEdited, which changes only while the mismatch shows). The focused
+   SW-41 test runs them by --set rich (any part of their names); rows 20 and 21 keep RICH. */
+const PICK_WALKS = [
+  ['a Puppet Master NAS at its pairing step', async (A) => { await A.boot({ scenario: 'fresh+homeNasPm' });
+    await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+    await A.click('device', 'nas-home'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); return 'nas-pmpair'; }],
+  ['a new Server at its code step after a wrong code', async (A) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await pressOn(A); await A.sleep(600);
+    await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="pm:new"]'), null, 8000); await A.click('pick', 'pm:new'); await pressOn(A); await A.sleep(600);
+    if ((await A.snap()).screen !== 's-confirm') return 's-confirm';
+    await A.fill('o55f-code', '000 000'); await A.sleep(300); await pressOn(A);
+    await A.waitFor(() => (O55.S.sess.server || {}).orClaimErr === 'setup_code_mismatch', null, 8000).catch(() => {}); await A.sleep(500); return 's-confirm'; }]
+];
 /* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 and in the focused SW-41 test */
 const richOf = (t) => (t.args.rich ? RICH.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : RICH);
 /* (a filter that names no rich configuration fails, rather than running none of them and passing) */
@@ -756,7 +790,22 @@ export const tests = {
      every eligible screen, or nopick:begin to require failure after other screens really were picked. */
   /* (online new copy by default; --set rich filters as in rows 20 and 21, richOf, and a filter matching nothing fails) */
   async 'SW-41 · every Back-walk picker must offer a change'(t) {
-    const kinds = t.args.rich ? await richOrFail(t, 'SW-41') : RICH.filter(([k]) => k === 'online new copy');
+    const walks = t.args.rich ? PICK_WALKS.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : [];
+    const kinds = t.args.rich ? (walks.length && !richOf(t).length ? [] : await richOrFail(t, 'SW-41')) : RICH.filter(([k]) => k === 'online new copy');
+    /* T66: the Back walks from nas-pmpair and s-confirm, each screen's pick changing its declared input */
+    for (const [kind, reach] of walks)
+      await flow(t, `SW-41 ${kind} Back walk`, async (A, bad) => {
+        const want = await reach(A), at = (await A.snap()).screen;
+        if (at !== want) { bad.push(`SW-41 ${kind}: never reached ${want} (on ${at}), so nothing of this walk was checked`); return; }
+        const err = want === 's-confirm' ? await A.frame().evaluate(() => (O55.S.sess.server || {}).orClaimErr || null) : null;
+        if (want === 's-confirm' && err !== 'setup_code_mismatch') { bad.push(`SW-41 ${kind}: the wrong code did not show its mismatch (${err}), so codeEdited could not change`); return; }
+        const a0 = await A.frame().evaluate(ANSWERS);
+        const w = await pickBackWalk(A, bad, `SW-41 ${kind}`);
+        const mine = w.picked.find((x) => x.startsWith(want + ' '));
+        if (!mine) bad.push(`SW-41 ${kind}: nothing was picked on ${want}`);
+        if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`SW-41 ${kind}: Back stopped on ${w.seq[w.seq.length - 1]}`);
+        t.log(`SW-41 ${kind} Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}; answers at ${want}: ${JSON.stringify(want === 's-confirm' ? a0.server : a0.nasPick)}`);
+      });
     for (const [kind, est] of kinds)
       await flow(t, `SW-41 ${kind} Back walk`, async (A, bad) => {
         await est(A); await A.screen('review');
