@@ -78,9 +78,12 @@
    symbol box. The ring stands 2 px outside the tile, on the bar's own ground (F96-1): a lit tile is the accent's own
    family, so a ring inside it read at 1.2:1 in Retro and under 3:1 in Basic Light, Friendly Dark and Glass Light, where
    on the bar it reads as it does round an unlit tile. NieR's target brackets take a key focus instead of a ring
-   (19-nier-parts.js, as on the toggle), so the ring stands down while that part is on. */
+   (19-nier-parts.js, as on the toggle), so the ring stands down while that part is on. With the names shown, the
+   name sits 2 px under the tile, so a ring outside the tile would cross it: there the ring goes round the whole item,
+   tile and name, just inside its box, still on the bar's ground with a gap to both. */
 §B .icon:focus-visible { outline: none; }
-§R:not([data-o55-nier-parts~="brackets"]) #activityBar .icon:focus-visible .symbol { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+§R:not([data-o55-nier-parts~="brackets"]) #activityBar.collapsed .icon:focus-visible .symbol { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+§R:not([data-o55-nier-parts~="brackets"]) #activityBar:not(.collapsed) .icon:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 §R[data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro
