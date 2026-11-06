@@ -55472,12 +55472,12 @@
         {
           "node_type": "BoolOp",
           "line": 220,
-          "expression": "not isinstance(receipt, dict) or not isinstance(dl077, dict) or receipt.get('schema_id') != MULTI_FAMILY_RECEIPT_SCHEMA or (receipt.get('authority_ref') != MULTI_FAMILY_AUTHORITY) or (receipt.get('au\u2026"
+          "expression": "not isinstance(receipt, dict) or not isinstance(dl077, dict) or receipt.get('schema_id') != MULTI_FAMILY_RECEIPT_SCHEMA or (receipt.get('authority_ref') != MULTI_FAMILY_AUTHORITY) or (receipt.get('authority_section_sha256') != section_hash) or (receipt.get('validator_before_sha256') != dl077.get('validator_after_sha256')) or (receipt.get('validator_after_sha256') != third_change_validator_pin()) or (not isinstance(prior, dict)) or (prior.get('path') != POST_AUGUST_RECEIPT) or (prior.get('sha256') != sha256_file(REPO / POST_AUGUST_RECEIPT)) or (receipt.get('record_dir') != POST_AUGUST_RECORD_DIR) or (receipt.get('record_schema_id') != POST_AUGUST_RECORD_SCHEMA) or (receipt.get('author_task') != MULTI_FAMILY_AUTHOR) or (not isinstance(lander, str)) or (not lander.strip()) or (receipt.get('seal_applier_forbidden_tasks') != sorted({MULTI_FAMILY_AUTHOR, lander})) or (receipt.get('seal_authorized') is not False) or (receipt.get('admission_authorized') is not False) or (receipt.get('contract_depth_complete') is not False)"
         },
         {
           "node_type": "If",
           "line": 220,
-          "expression": "if not isinstance(receipt, dict) or not isinstance(dl077, dict) or receipt.get('schema_id') != MULTI_FAMILY_RECEIPT_SCHEMA or (receipt.get('authority_ref') != MULTI_FAMILY_AUTHORITY) or (receipt.get(\u2026"
+          "expression": "if not isinstance(receipt, dict) or not isinstance(dl077, dict) or receipt.get('schema_id') != MULTI_FAMILY_RECEIPT_SCHEMA or (receipt.get('authority_ref') != MULTI_FAMILY_AUTHORITY) or (receipt.get('authority_section_sha256') != section_hash) or (receipt.get('validator_before_sha256') != dl077.get('validator_after_sha256')) or (receipt.get('validator_after_sha256') != third_change_validator_pin()) or (not isinstance(prior, dict)) or (prior.get('path') != POST_AUGUST_RECEIPT) or (prior.get('sha256') != sha256_file(REPO / POST_AUGUST_RECEIPT)) or (receipt.get('record_dir') != POST_AUGUST_RECORD_DIR) or (receipt.get('record_schema_id') != POST_AUGUST_RECORD_SCHEMA) or (receipt.get('author_task') != MULTI_FAMILY_AUTHOR) or (not isinstance(lander, str)) or (not lander.strip()) or (receipt.get('seal_applier_forbidden_tasks') != sorted({MULTI_FAMILY_AUTHOR, lander})) or (receipt.get('seal_authorized') is not False) or (receipt.get('admission_authorized') is not False) or (receipt.get('contract_depth_complete') is not False):\n    raise ValueError('multi-family step amendment receipt identity, authority or hash mismatch')"
         }
       ],
       "evidence": [
@@ -55947,12 +55947,12 @@
         {
           "node_type": "Call",
           "line": 875,
-          "expression": "decision_section_bytes(ROOT / 'Decision_Log.md', 'DL-451', (b'i approve all of it', b'Approve a fourth recorded change', b'Keep every per-name decision', b'6db25be3dd290ab0083af482383e469a78dc109a037\u2026"
+          "expression": "decision_section_bytes(ROOT / 'Decision_Log.md', 'DL-451', (b'i approve all of it', b'Approve a fourth recorded change', b'Keep every per-name decision', b'6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30'))"
         },
         {
           "node_type": "Assign",
           "line": 875,
-          "expression": "authority = decision_section_bytes(ROOT / 'Decision_Log.md', 'DL-451', (b'i approve all of it', b'Approve a fourth recorded change', b'Keep every per-name decision', b'6db25be3dd290ab0083af482383e469\u2026"
+          "expression": "authority = decision_section_bytes(ROOT / 'Decision_Log.md', 'DL-451', (b'i approve all of it', b'Approve a fourth recorded change', b'Keep every per-name decision', b'6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30'))"
         }
       ],
       "evidence": [
@@ -55987,12 +55987,12 @@
         {
           "node_type": "Dict",
           "line": 880,
-          "expression": "{'schema_id': 'pm.assurance.event_authority.recount_change.v1', 'authority_ref': 'Plans/Decision_Log.md#DL-451', 'authority_section_sha256': hashlib.sha256(authority).hexdigest(), 'validator_path': V\u2026"
+          "expression": "{'schema_id': 'pm.assurance.event_authority.recount_change.v1', 'authority_ref': 'Plans/Decision_Log.md#DL-451', 'authority_section_sha256': hashlib.sha256(authority).hexdigest(), 'validator_path': VALIDATOR_RELATIVE, 'validator_id': 'pm.plans.audits.event_authority.independent_validator', 'validator_before_sha256': RECOUNT_BEFORE_SHA, 'validator_after_sha256': sha256_file(Path(__file__)), 'prior_receipt': {'path': MULTI_FAMILY_RECEIPT, 'sha256': sha256_file(REPO / MULTI_FAMILY_RECEIPT)}, 'recount_receipt': {'path': RECOUNT_RECEIPT, 'sha256': RECOUNT_RECEIPT_SHA}, 'recount_list': {'path': RECOUNT_LIST, 'sha256': RECOUNT_LIST_SHA}, 'certification_scope': 'august_and_recount_in_one_run', 'author_task': RECOUNT_AUTHOR}"
         },
         {
           "node_type": "Assign",
           "line": 880,
-          "expression": "expected = {'schema_id': 'pm.assurance.event_authority.recount_change.v1', 'authority_ref': 'Plans/Decision_Log.md#DL-451', 'authority_section_sha256': hashlib.sha256(authority).hexdigest(), 'validat\u2026"
+          "expression": "expected = {'schema_id': 'pm.assurance.event_authority.recount_change.v1', 'authority_ref': 'Plans/Decision_Log.md#DL-451', 'authority_section_sha256': hashlib.sha256(authority).hexdigest(), 'validator_path': VALIDATOR_RELATIVE, 'validator_id': 'pm.plans.audits.event_authority.independent_validator', 'validator_before_sha256': RECOUNT_BEFORE_SHA, 'validator_after_sha256': sha256_file(Path(__file__)), 'prior_receipt': {'path': MULTI_FAMILY_RECEIPT, 'sha256': sha256_file(REPO / MULTI_FAMILY_RECEIPT)}, 'recount_receipt': {'path': RECOUNT_RECEIPT, 'sha256': RECOUNT_RECEIPT_SHA}, 'recount_list': {'path': RECOUNT_LIST, 'sha256': RECOUNT_LIST_SHA}, 'certification_scope': 'august_and_recount_in_one_run', 'author_task': RECOUNT_AUTHOR}"
         }
       ],
       "evidence": [
@@ -56167,7 +56167,7 @@
         {
           "node_type": "If",
           "line": 967,
-          "expression": "if set(doc) != {'schema_id', 'locations'} or doc.get('schema_id') != 'pm.event_authority.recount_source_locations.v1' or type(doc.get('locations')) is not dict or set(doc['locations']) - set(inputs):"
+          "expression": "if set(doc) != {'schema_id', 'locations'} or doc.get('schema_id') != 'pm.event_authority.recount_source_locations.v1' or type(doc.get('locations')) is not dict or set(doc['locations']) - set(inputs):\n    raise ValueError('invalid explicit recount source locations')"
         }
       ],
       "evidence": [
@@ -56357,7 +56357,7 @@
         {
           "node_type": "If",
           "line": 1019,
-          "expression": "if hashlib.sha256(section).hexdigest() != row.get('decision_section_sha256') or not re.search(b'(?<![A-Za-z0-9_.])' + re.escape(name.encode()) + b'(?![A-Za-z0-9_.])', section):"
+          "expression": "if hashlib.sha256(section).hexdigest() != row.get('decision_section_sha256') or not re.search(b'(?<![A-Za-z0-9_.])' + re.escape(name.encode()) + b'(?![A-Za-z0-9_.])', section):\n    raise ValueError('recount exclusion decision fingerprint/name mismatch: ' + name)"
         }
       ],
       "evidence": [
@@ -56402,7 +56402,7 @@
         {
           "node_type": "If",
           "line": 1019,
-          "expression": "if hashlib.sha256(section).hexdigest() != row.get('decision_section_sha256') or not re.search(b'(?<![A-Za-z0-9_.])' + re.escape(name.encode()) + b'(?![A-Za-z0-9_.])', section):"
+          "expression": "if hashlib.sha256(section).hexdigest() != row.get('decision_section_sha256') or not re.search(b'(?<![A-Za-z0-9_.])' + re.escape(name.encode()) + b'(?![A-Za-z0-9_.])', section):\n    raise ValueError('recount exclusion decision fingerprint/name mismatch: ' + name)"
         }
       ],
       "evidence": [
@@ -56592,12 +56592,12 @@
         {
           "node_type": "BoolOp",
           "line": 1037,
-          "expression": "type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name)\u2026"
+          "expression": "type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name) + '(?![A-Za-z0-9_.])', '\\n'.join(lines[start - 1:end])))"
         },
         {
           "node_type": "If",
           "line": 1037,
-          "expression": "if type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(na\u2026"
+          "expression": "if type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name) + '(?![A-Za-z0-9_.])', '\\n'.join(lines[start - 1:end]))):\n    raise ValueError('recount exclusion evidence fingerprint/span mismatch: ' + name)"
         }
       ],
       "evidence": [
@@ -56637,12 +56637,12 @@
         {
           "node_type": "BoolOp",
           "line": 1037,
-          "expression": "type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name)\u2026"
+          "expression": "type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name) + '(?![A-Za-z0-9_.])', '\\n'.join(lines[start - 1:end])))"
         },
         {
           "node_type": "If",
           "line": 1037,
-          "expression": "if type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(na\u2026"
+          "expression": "if type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name) + '(?![A-Za-z0-9_.])', '\\n'.join(lines[start - 1:end]))):\n    raise ValueError('recount exclusion evidence fingerprint/span mismatch: ' + name)"
         }
       ],
       "evidence": [
@@ -56692,12 +56692,12 @@
         {
           "node_type": "BoolOp",
           "line": 1037,
-          "expression": "type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name)\u2026"
+          "expression": "type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name) + '(?![A-Za-z0-9_.])', '\\n'.join(lines[start - 1:end])))"
         },
         {
           "node_type": "If",
           "line": 1037,
-          "expression": "if type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(na\u2026"
+          "expression": "if type(start) is not int or type(end) is not int or (not 1 <= start <= end <= len(lines)) or (hashlib.sha256(raw).hexdigest() != cite['sha256']) or (not re.search('(?<![A-Za-z0-9_.])' + re.escape(name) + '(?![A-Za-z0-9_.])', '\\n'.join(lines[start - 1:end]))):\n    raise ValueError('recount exclusion evidence fingerprint/span mismatch: ' + name)"
         }
       ],
       "evidence": [
@@ -56942,17 +56942,17 @@
         {
           "node_type": "Dict",
           "line": 1082,
-          "expression": "{'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denom\u2026"
+          "expression": "{'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denominator_sha256': observed(DENOM)}"
         },
         {
           "node_type": "Dict",
           "line": 1081,
-          "expression": "{'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.jso\u2026"
+          "expression": "{'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denominator_sha256': observed(DENOM)}, 'recount': {'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}}"
         },
         {
           "node_type": "Return",
           "line": 1081,
-          "expression": "return {'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENT\u2026"
+          "expression": "return {'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denominator_sha256': observed(DENOM)}, 'recount': {'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}}"
         }
       ],
       "evidence": [
@@ -56982,17 +56982,17 @@
         {
           "node_type": "Dict",
           "line": 1086,
-          "expression": "{'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_s\u2026"
+          "expression": "{'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}"
         },
         {
           "node_type": "Dict",
           "line": 1081,
-          "expression": "{'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.jso\u2026"
+          "expression": "{'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denominator_sha256': observed(DENOM)}, 'recount': {'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}}"
         },
         {
           "node_type": "Return",
           "line": 1081,
-          "expression": "return {'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENT\u2026"
+          "expression": "return {'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denominator_sha256': observed(DENOM)}, 'recount': {'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}}"
         }
       ],
       "evidence": [
@@ -57022,17 +57022,17 @@
         {
           "node_type": "Dict",
           "line": 1086,
-          "expression": "{'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_s\u2026"
+          "expression": "{'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}"
         },
         {
           "node_type": "Dict",
           "line": 1081,
-          "expression": "{'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.jso\u2026"
+          "expression": "{'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denominator_sha256': observed(DENOM)}, 'recount': {'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}}"
         },
         {
           "node_type": "Return",
           "line": 1081,
-          "expression": "return {'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENT\u2026"
+          "expression": "return {'august': {'receipt_path': AUGUST_RECEIPT_PATH, 'receipt_revision': AUGUST_RECEIPT_REVISION, 'receipt_sha256': AUGUST_RECEIPT_SHA, 'inventory_sha256': observed(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'denominator_sha256': observed(DENOM)}, 'recount': {'receipt_path': RECOUNT_RECEIPT, 'receipt_revision': RECOUNT_RECEIPT_REVISION, 'receipt_sha256': RECOUNT_RECEIPT_SHA, 'observed_receipt_sha256': observed(REPO / RECOUNT_RECEIPT), 'expected_receipt_sha256': RECOUNT_RECEIPT_SHA, 'list_path': RECOUNT_LIST, 'list_sha256': observed(REPO / RECOUNT_LIST), 'expected_list_sha256': RECOUNT_LIST_SHA}}"
         }
       ],
       "evidence": [
@@ -57057,12 +57057,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57087,12 +57087,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57117,12 +57117,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57147,12 +57147,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57177,12 +57177,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57207,12 +57207,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57242,12 +57242,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57272,12 +57272,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57302,12 +57302,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57337,12 +57337,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57367,12 +57367,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57402,12 +57402,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57432,12 +57432,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57467,12 +57467,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57497,12 +57497,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57532,12 +57532,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57562,12 +57562,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -57597,12 +57597,12 @@
         {
           "node_type": "Dict",
           "line": 1101,
-          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudicat\u2026"
+          "expression": "{'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         },
         {
           "node_type": "Assign",
           "line": 1101,
-          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', \u2026"
+          "expression": "required_paths = {'known37_from_plans': K37, 'cohort_pins': COHORT, 'fresh_denominator': DENOM, 'disposition_ledger': IND / 'LEDGER.jsonl', 'census_adjudication_ledger': CENSUS_ADJ / 'LEDGER.jsonl', 'census_adjudication_partition': CENSUS_ADJ / 'PARTITION.json', 'registry': ROOT / 'event_family_registry.json', 'census_freeze': CENSUS / 'CURRENT_SOURCE_INVENTORY.json', 'august_checkpoint_drafts': HOME / 'august-checkpoint-drafts' / 'AUGUST_CHECKPOINT_DRAFTS.jsonl', 'owner_decision_sheet': HOME / 'OWNER_DECISION_SHEET.json', 'exclusion_revalidation_summary': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_SUMMARY.json', 'exclusion_revalidation_ledger': HOME / 'exclusion-revalidation' / 'EXCLUSION_REVALIDATION_LEDGER.jsonl', 'machine_contract_event_binding_scan': CENSUS / 'admission' / 'MACHINE_CONTRACT_EVENT_BINDING_SCAN.json', 'rejected_lexical_candidates': CENSUS / 'rejected-lexical' / 'REJECTED_LEXICAL_CANDIDATES.json', 'md_only_binding_adjudication': CENSUS / 'admission' / 'MD_ONLY_BINDING_ADJUDICATION.jsonl'}"
         }
       ],
       "evidence": [
@@ -58152,17 +58152,17 @@
         {
           "node_type": "Dict",
           "line": 1304,
-          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_cou\u2026"
+          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)}"
         },
         {
           "node_type": "Call",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         },
         {
           "node_type": "Expr",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         }
       ],
       "evidence": [
@@ -58197,17 +58197,17 @@
         {
           "node_type": "Dict",
           "line": 1304,
-          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_cou\u2026"
+          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)}"
         },
         {
           "node_type": "Call",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         },
         {
           "node_type": "Expr",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         }
       ],
       "evidence": [
@@ -58237,17 +58237,17 @@
         {
           "node_type": "Dict",
           "line": 1304,
-          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_cou\u2026"
+          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)}"
         },
         {
           "node_type": "Call",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         },
         {
           "node_type": "Expr",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         }
       ],
       "evidence": [
@@ -58277,17 +58277,17 @@
         {
           "node_type": "Dict",
           "line": 1304,
-          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_cou\u2026"
+          "expression": "{'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)}"
         },
         {
           "node_type": "Call",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         },
         {
           "node_type": "Expr",
           "line": 1304,
-          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_e\u2026"
+          "expression": "partition_mismatches.append({'category': cat, 'missing_from_ledger': sorted(expected_ets - actual_ets)[:20], 'extra_in_ledger': sorted(actual_ets - expected_ets)[:20], 'missing_count': len(expected_ets - actual_ets), 'extra_count': len(actual_ets - expected_ets)})"
         }
       ],
       "evidence": [
@@ -58322,17 +58322,17 @@
         {
           "node_type": "Dict",
           "line": 1352,
-          "expression": "{'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorte\u2026"
+          "expression": "{'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorted(set(md_adj_by_token) - md_only_tokens)[:20]}"
         },
         {
           "node_type": "Call",
           "line": 1352,
-          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token)\u2026"
+          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorted(set(md_adj_by_token) - md_only_tokens)[:20]})"
         },
         {
           "node_type": "Expr",
           "line": 1352,
-          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token)\u2026"
+          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorted(set(md_adj_by_token) - md_only_tokens)[:20]})"
         }
       ],
       "evidence": [
@@ -58367,17 +58367,17 @@
         {
           "node_type": "Dict",
           "line": 1352,
-          "expression": "{'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorte\u2026"
+          "expression": "{'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorted(set(md_adj_by_token) - md_only_tokens)[:20]}"
         },
         {
           "node_type": "Call",
           "line": 1352,
-          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token)\u2026"
+          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorted(set(md_adj_by_token) - md_only_tokens)[:20]})"
         },
         {
           "node_type": "Expr",
           "line": 1352,
-          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token)\u2026"
+          "expression": "md_only_issues.append({'error': 'md_only_adjudication_incomplete', 'expected_count': len(md_only_tokens), 'actual_count': len(md_adj_by_token), 'missing': sorted(md_only_tokens - set(md_adj_by_token))[:20], 'extra': sorted(set(md_adj_by_token) - md_only_tokens)[:20]})"
         }
       ],
       "evidence": [
@@ -58532,7 +58532,7 @@
         {
           "node_type": "If",
           "line": 1461,
-          "expression": "if sorted(need - ledger_set):"
+          "expression": "if sorted(need - ledger_set):\n    failures.append({'error': 'immutable_july40_missing_from_ledger', 'missing': sorted(need - ledger_set)[:30], 'missing_count': len(need - ledger_set)})"
         }
       ],
       "evidence": [
@@ -58682,7 +58682,7 @@
         {
           "node_type": "If",
           "line": 1467,
-          "expression": "if sorted(need - ledger_set):"
+          "expression": "if sorted(need - ledger_set):\n    failures.append({'error': 'immutable_august2_missing_from_ledger', 'missing': sorted(need - ledger_set), 'missing_count': len(need - ledger_set)})"
         }
       ],
       "evidence": [
@@ -58882,17 +58882,17 @@
         {
           "node_type": "Dict",
           "line": 1567,
-          "expression": "{'error': 'ledger_admitted_persisted_families_set_mismatch', 'missing_count': len(missing), 'extra_count': len(extra), 'duplicate_ledger_rows': len(admitted_ledger_types) - len(admitted_ledger_set), \u2026"
+          "expression": "{'error': 'ledger_admitted_persisted_families_set_mismatch', 'missing_count': len(missing), 'extra_count': len(extra), 'duplicate_ledger_rows': len(admitted_ledger_types) - len(admitted_ledger_set), 'missing_sample': missing[:30], 'extra_sample': extra[:30]}"
         },
         {
           "node_type": "Call",
           "line": 1567,
-          "expression": "failures.append({'error': 'ledger_admitted_persisted_families_set_mismatch', 'missing_count': len(missing), 'extra_count': len(extra), 'duplicate_ledger_rows': len(admitted_ledger_types) - len(admitt\u2026"
+          "expression": "failures.append({'error': 'ledger_admitted_persisted_families_set_mismatch', 'missing_count': len(missing), 'extra_count': len(extra), 'duplicate_ledger_rows': len(admitted_ledger_types) - len(admitted_ledger_set), 'missing_sample': missing[:30], 'extra_sample': extra[:30]})"
         },
         {
           "node_type": "Expr",
           "line": 1567,
-          "expression": "failures.append({'error': 'ledger_admitted_persisted_families_set_mismatch', 'missing_count': len(missing), 'extra_count': len(extra), 'duplicate_ledger_rows': len(admitted_ledger_types) - len(admitt\u2026"
+          "expression": "failures.append({'error': 'ledger_admitted_persisted_families_set_mismatch', 'missing_count': len(missing), 'extra_count': len(extra), 'duplicate_ledger_rows': len(admitted_ledger_types) - len(admitted_ledger_set), 'missing_sample': missing[:30], 'extra_sample': extra[:30]})"
         }
       ],
       "evidence": [
@@ -59192,7 +59192,7 @@
         {
           "node_type": "If",
           "line": 1742,
-          "expression": "if not owner_sheet_path.exists():"
+          "expression": "if not owner_sheet_path.exists():\n    named['owner_decision_sheet_present'] = False\n    named['owner_decision_sheet_all_applied'] = False\n    failures.append({'error': 'owner_decision_sheet_missing', 'path': str(owner_sheet_path)})\nelse:\n    named['owner_decision_sheet_present'] = True\n    owner_sheet = load_json(owner_sheet_path)\n    decisions = owner_sheet.get('decisions') or []\n    required_decision_ids = {'AUG-CP-WLC-001', 'AUG-CP-TWM-001', 'EXCL-OD-done_budget_exceeded', 'EXCL-OD-stop_identical_failure', 'EMIT-PERSIST-026', 'J248-VETO-BATCH-252', 'J40-VETO-BATCH', 'COMPACT-001'}\n    expected_option_tokens: dict[str, set[str]] = {'AUG-CP-WLC-001': {'AFFIRM_DRAFT_AS_PROPOSED', 'VETO_KEEP_REGISTERED_PROVISIONAL', 'RECLASSIFY_OUT_OF_REGISTRY'}, 'AUG-CP-TWM-001': {'AFFIRM_DRAFT_AS_PROPOSED', 'VETO_KEEP_REGISTERED_PROVISIONAL', 'RECLASSIFY_OUT_OF_REGISTRY'}, 'EXCL-OD-done_budget_exceeded': {'CONFIRM_EXACT_EXCLUDE', 'RECLASSIFY_TO_NON_EXACT', 'RECLASSIFY_TO_UNRESOLVED_OR_QUARANTINE'}, 'EXCL-OD-stop_identical_failure': {'CONFIRM_EXACT_EXCLUDE', 'RECLASSIFY_TO_NON_EXACT', 'RECLASSIFY_TO_UNRESOLVED_OR_QUARANTINE'}, 'EMIT-PERSIST-026': {'ACCEPT_EMIT_OBLIGATION_ONLY', 'DEMAND_PERSISTENCE_PROOF_BEFORE_ANY_ADMIT', 'PER_ROW_VETO_REQUIRED'}, 'COMPACT-001': {'KEEP_UNREGISTERED_NO_PERSIST', 'ESCALATE_AS_PERSISTED_FAMILY', 'RECLASSIFY_UNRESOLVED_PENDING_AUTHORITY'}, 'J248-VETO-BATCH-252': {'CONFIRM_ALL_QUARANTINE_NO_ADMIT', 'ESCALATE_SUBSET_FOR_REGISTRY_ADMIT', 'PER_ROW_REVIEW_REQUIRED'}, 'J40-VETO-BATCH': {'CONFIRM_UNRESOLVED_NO_ADMIT', 'ESCALATE_SUBSET', 'PER_ROW_REVIEW'}}\n    if len(decisions) != 8 or {d.get('decision_id') for d in decisions} != required_decision_ids:\n        failures.append({'error': 'owner_decision_sheet_exact_eight_required'})\n    id_counts = Counter((d.get('decision_id') for d in decisions if d.get('decision_id')))\n    dup_required = sorted([k for k, v in id_counts.items() if k in required_decision_ids and v > 1])\n    if dup_required:\n        failures.append({'error': 'owner_decision_sheet_duplicate_required_ids', 'duplicate_required_decision_ids': dup_required})\n    for rid in required_decision_ids:\n        req_rows = [d for d in decisions if d.get('decision_id') == rid]\n        if len(req_rows) != 1:\n            continue\n        opts = req_rows[0].get('options') or []\n        actual_tokens = set((option_token(o) for o in opts))\n        actual_tokens.discard(None)\n        expected_tokens = expected_option_tokens.get(rid) or set()\n        if actual_tokens != expected_tokens:\n            failures.append({'error': 'owner_decision_sheet_option_set_drift', 'decision_id': rid, 'expected_option_tokens': sorted(expected_tokens), 'actual_option_tokens': sorted(actual_tokens)})\n    present_ids = {d.get('decision_id') for d in decisions if d.get('decision_id')}\n    missing_ids = sorted(required_decision_ids - present_ids)\n    named['owner_decision_sheet_required_ids_present'] = not missing_ids and bool(decisions)\n    if not decisions:\n        named['owner_decision_sheet_all_applied'] = False\n        failures.append({'error': 'owner_decision_sheet_empty', 'path': str(owner_sheet_path), 'required_decision_ids': sorted(required_decision_ids), 'detail': 'Empty owner decision list must not fail open as all_applied'})\n    if missing_ids:\n        named['owner_decision_sheet_all_applied'] = False\n        failures.append({'error': 'owner_decision_sheet_missing_required_ids', 'missing_decision_ids': missing_ids, 'detail': 'Required owner-decision IDs must remain present; deleting rows must not fail open'})\n    pending_owner_decisions = [d.get('decision_id') for d in decisions if d.get('decision_id') in required_decision_ids and (not owner_decision_applied(d))]\n    pending_owner_decisions += [d.get('decision_id') for d in decisions if d.get('decision_id') not in required_decision_ids and (not owner_decision_applied(d))]\n    seen = set()\n    pending_owner_decisions = [x for x in pending_owner_decisions if not (x in seen or seen.add(x))]\n    named['owner_decision_sheet_all_applied'] = named.get('owner_decision_sheet_required_ids_present') and (not pending_owner_decisions)\n    named['owner_decision_sheet_pending_count'] = len(pending_owner_decisions)\n    if pending_owner_decisions:\n        failures.append({'error': 'owner_decision_sheet_unresolved', 'pending_count': len(pending_owner_decisions), 'pending_decision_ids': pending_owner_decisions, 'detail': 'Batched owner decisions (August, exclusion reclass, EMIT-PERSIST-026, J248, J40, COMPACT-001) must be applied before validator pass=true or denominator seal'})"
         }
       ],
       "evidence": [
@@ -59482,12 +59482,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59527,12 +59527,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59567,12 +59567,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59612,12 +59612,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59647,12 +59647,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59682,12 +59682,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59717,12 +59717,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59752,12 +59752,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
@@ -59787,12 +59787,12 @@
         {
           "node_type": "Dict",
           "line": 2278,
-          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') i\u2026"
+          "expression": "{'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         },
         {
           "node_type": "Assign",
           "line": 2278,
-          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log\u2026"
+          "expression": "pins = {'holding_bucket_change_receipt_sha256': sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None, 'holding_authority_source_sha256': sha256_file(ROOT / 'Decision_Log.md') if (ROOT / 'Decision_Log.md').exists() else None, 'post_august_admission_receipt_sha256': post_august_receipt_sha, 'multi_family_step_receipt_sha256': multi_family_receipt_sha, 'known37_sha256': sha256_file(K37), 'cohort_pins_sha256': sha256_file(COHORT), 'denominator_sha256': sha256_file(DENOM), 'ledger_sha256': sha256_file(IND / 'LEDGER.jsonl'), 'census_adjudication_sha256': sha256_file(CENSUS_ADJ / 'LEDGER.jsonl'), 'census_partition_sha256': sha256_file(CENSUS_ADJ / 'PARTITION.json'), 'registry_sha256': sha256_file(ROOT / 'event_family_registry.json'), 'freeze_sha256': sha256_file(CENSUS / 'CURRENT_SOURCE_INVENTORY.json'), 'august_checkpoint_drafts_sha256': sha256_file(august_draft_path) if august_draft_path.exists() else None}"
         }
       ],
       "evidence": [
