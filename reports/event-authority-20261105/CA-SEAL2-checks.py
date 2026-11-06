@@ -23,10 +23,42 @@ COUNT = 'c53e4199ae94ca853a197354f3f9e7f296cf1efc'
 PREVIOUS = '5764ca809c0dcc8a161d4fcd45770abf6355f746'
 SEAL_BASE = '17c842445a2623bb0334ba8d6932e7a6bf088967'
 COVERAGE = 'reports/event-authority-20261105/CA-SEAL2-coverage.json'
+# The frozen validator (round 12, CA2-C12-N01): the second line baseline. Its
+# bytes are read from this commit and must have this digest; the table pins
+# every one of its lines, and every line inserted, changed, deleted or
+# replaced relative to it needs a reviewed record.
+FROZEN_COMMIT = '60913cb906590662c97696146edcb10960c2ed09'
+FROZEN_SHA = '3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72'
 
 
 def sha(raw): return hashlib.sha256(raw).hexdigest()
 def encoded(doc): return (json.dumps(doc, indent=2) + '\n').encode()
+
+
+@lru_cache(maxsize=4)
+def frozen_source(repo=None):
+    """The frozen validator's text, from FROZEN_COMMIT, checked against FROZEN_SHA."""
+    command = ['git'] + (['-C', str(repo)] if repo is not None else []) + ['show', FROZEN_COMMIT + ':' + REL]
+    raw = subprocess.check_output(command)
+    assert sha(raw) == FROZEN_SHA, ('frozen validator bytes changed', sha(raw))
+    return raw.decode()
+
+
+def top_functions(tree):
+    """The one binding of each top-level function name (CA2-C12-B01).
+
+    Every name map in this checker comes from here, so the checker reads the
+    same definition the script runs. A name defined twice at top level is
+    refused, never resolved to its first or last definition.
+    """
+    functions, seen = {}, set()
+    for n in tree.body:
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            assert n.name not in seen, ('top-level name bound twice', n.name)
+            seen.add(n.name)
+            if isinstance(n, ast.FunctionDef):
+                functions[n.name] = n
+    return functions
 
 
 def source_lines(text):
@@ -52,10 +84,10 @@ def source_lines(text):
 TRUTH, DATA, STRUCTURAL, REFUSED = 'truth-carrying', 'data', 'structural', 'refused when present'
 CATEGORIES = (TRUTH, DATA, STRUCTURAL, REFUSED)
 AST_TABLE_PYTHON = '3.14.4'
-_ARITHMETIC = ('Arithmetic operator. On Booleans it returns an int, never a bool (True + False == 1), so it does not '
-               'produce a truth value, although a nonzero result is truthy. Deliberate, reviewed exclusion from the '
-               'truth census: on an inserted or changed line of an aligned unit the node needs a changed-line row; in '
-               'a function new since CA-SEAL it is a data operation seen by the corpus, not by this table.')
+_ARITHMETIC = ('Arithmetic operator. On Booleans it returns an int, but what reaches the receipt is truthiness, not '
+               'type: the receipt\'s pass is bool(overall_pass), and a nonzero int is truthy, so True + False carries '
+               'a truth value; on sets, - is membership truth exactly like & and |. No exclusion since round 12 '
+               '(CA2-C12-N03): census row BinOp(<op>) or AugAssign(<op>) wherever it occurs.')
 _ROW = 'Census row of its own'
 _AST_CLASS_GROUPS = [
     (STRUCTURAL, 'Abstract grammar category: the parser never produces a node of this exact class.',
@@ -87,17 +119,15 @@ _AST_CLASS_GROUPS = [
             'AugAssign(<op>) wherever it occurs.', ['BitAnd', 'BitOr', 'BitXor']),
     (TRUTH, 'Comparison operator; carried by the census row of its Compare.',
      ['Eq', 'NotEq', 'Lt', 'LtE', 'Gt', 'GtE', 'Is', 'IsNot', 'In', 'NotIn']),
-    (DATA, _ARITHMETIC, ['Add', 'Sub', 'Mult', 'MatMult', 'Div', 'Mod', 'Pow', 'LShift', 'RShift', 'FloorDiv']),
-    (DATA, 'Unary arithmetic. On a Boolean it returns an int, never a bool; the same deliberate exclusion as the '
-           'binary arithmetic operators.', ['Invert', 'UAdd', 'USub']),
+    (TRUTH, _ARITHMETIC, ['Add', 'Sub', 'Mult', 'MatMult', 'Div', 'Mod', 'Pow', 'LShift', 'RShift', 'FloorDiv']),
+    (TRUTH, 'Unary arithmetic. On a Boolean it returns an int, and ~True == -2 and -True == -1 are truthy, so it '
+            'carries a truth value through any truthiness sink; census row UnaryOp(<op>) wherever it occurs.',
+     ['Invert', 'UAdd', 'USub']),
     (DATA, 'Expression context of a name, attribute, subscript, starred item or display target.',
      ['Load', 'Store', 'Del']),
-    (DATA, 'Binary operation; its operator class decides: BitAnd, BitOr and BitXor make it a census row, arithmetic '
-           'is data.', ['BinOp']),
-    (DATA, 'Unary operation; its operator class decides: Not makes it a census row, Invert, UAdd and USub are data.',
-     ['UnaryOp']),
-    (DATA, 'In-place update; its operator class decides: BitAnd, BitOr and BitXor make it a census row, arithmetic '
-           'is data.', ['AugAssign']),
+    (TRUTH, 'Operator census: every operator class is truth-carrying, so every binary operation, unary operation '
+            'and in-place update is a census row <class>(<operator>) wherever it occurs.',
+     ['BinOp', 'UnaryOp', 'AugAssign']),
     (DATA, 'Value reference or literal; truth carriers inside it are inventoried in their own right.',
      ['Attribute', 'Subscript', 'Starred', 'Name', 'Constant', 'Slice']),
     (DATA, 'Display or string building; truth carriers inside it are inventoried in their own right.',
@@ -157,8 +187,8 @@ def predicate_sites(source, before):
     Keep wrappers and children distinct. Expand chains, receipt fields, nested
     identities and call-instantiated authority requirements independently.
     """
-    functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
-    previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
+    functions = top_functions(ast.parse(source))
+    previous = top_functions(ast.parse(before))
     added_lines = set()
     for tag, _, _, start, end in difflib.SequenceMatcher(
             None, source_lines(before), source_lines(source), autojunk=False).get_opcodes():
@@ -243,12 +273,17 @@ def predicate_supplement(source, before, walker):
     functions and inherited August statements. Classification is a separate,
     reviewed record; it can never suppress an identity in this enumeration.
     """
-    functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
-    previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
+    functions = top_functions(ast.parse(source))
+    previous = top_functions(ast.parse(before))
     touched = [name for name, fn in functions.items()
                if name not in previous or ast.dump(previous[name]) != ast.dump(fn)]
     rows = [supplement_identity(name, node, expression, node_type)
             for name in touched for node, expression, node_type in supplement_nodes(functions[name])]
+    # Round 12 (CA2-C12-N03): the module body has no function census, so every
+    # operator on one of its inserted or changed lines is a census row of its
+    # own; any other truth carrier there stays refused (changed_line_inventory).
+    rows += [supplement_identity(MODULE_UNIT, node, expression, node_type)
+             for node, expression, node_type in module_census_nodes(source, before)]
     return sorted(rows, key=lambda r: (r['line'], r['column'], r['kind'])), touched
 
 
@@ -337,6 +372,8 @@ def census_mechanism(name):
     """How the census inventories a truth-carrying class, or None if it has no mechanism."""
     if name in CENSUS_RULES:
         return 'own rule'
+    if name in OPERATOR_PARENTS:
+        return 'operator census row'
     cls = getattr(ast, name, None)
     if not isinstance(cls, type):
         return None
@@ -447,8 +484,8 @@ def occurrence_map(source, before):
     """
     tree, old_tree, units, removed = aligned_units(source, before)
     aligned = {u['name']: u for u in units}
-    current = {n.name: n for n in tree.body if isinstance(n, ast.FunctionDef)}
-    historical = {n.name: n for n in old_tree.body if isinstance(n, ast.FunctionDef)}
+    current = top_functions(tree)
+    historical = top_functions(old_tree)
     counterparts, functions, ineligible = {}, {}, Counter()
     for name, fn in current.items():
         old = historical.get(name)
@@ -523,27 +560,34 @@ def align_lines(old_numbers, old_lines, new_numbers, new_lines):
 
 @lru_cache(maxsize=4)
 def aligned_units(source, before):
-    """CA-SEAL units aligned line by line (do not mutate the result).
+    """CA-SEAL units, each aligned line by line (do not mutate the result).
 
-    A unit is either a touched top-level function that exists by name at
-    CA-SEAL (decorators and signature included), or the module body outside
-    all top-level function definitions, '<module>'. Functions new since CA-SEAL
-    are not units. Returns (tree, CA-SEAL tree, units, CA-SEAL functions whose
-    name no longer exists, with their line spans).
+    A unit is a touched top-level function that exists by name at CA-SEAL
+    (decorators and signature included), a top-level function new since
+    CA-SEAL, or the module body outside all top-level function definitions,
+    '<module>'. A new function has no CA-SEAL counterpart, so every line of it
+    is an inserted line (round 12, CA2-C12-B02). Returns (tree, CA-SEAL tree,
+    units, CA-SEAL functions whose name no longer exists, with their spans).
     """
     tree, old_tree = ast.parse(source), ast.parse(before)
     lines, old_lines = source_lines(source), source_lines(before)
-    current = {n.name: n for n in tree.body if isinstance(n, ast.FunctionDef)}
-    historical = {n.name: n for n in old_tree.body if isinstance(n, ast.FunctionDef)}
+    current = top_functions(tree)
+    historical = top_functions(old_tree)
     units = []
     for name, fn in current.items():
         old = historical.get(name)
-        if old is None or ast.dump(old) == ast.dump(fn):
+        if old is not None and ast.dump(old) == ast.dump(fn):
             continue
-        (start, end), (old_start, old_end) = function_span(fn), function_span(old)
+        start, end = function_span(fn)
+        if old is None:
+            marks = {'inserted': list(range(start, end + 1)), 'changed': [], 'deleted': [], 'replaced': []}
+            units.append({'name': name, 'fn': fn, 'old': None, 'roots': [fn], 'new': True,
+                          'blocks': [], 'line_map': {}, 'marks': marks})
+            continue
+        old_start, old_end = function_span(old)
         blocks, line_map, marks = align_lines(list(range(old_start, old_end + 1)), old_lines,
                                               list(range(start, end + 1)), lines)
-        units.append({'name': name, 'fn': fn, 'old': old, 'roots': [fn],
+        units.append({'name': name, 'fn': fn, 'old': old, 'roots': [fn], 'new': False,
                       'blocks': blocks, 'line_map': line_map, 'marks': marks})
 
     def outside(t, count):
@@ -555,7 +599,7 @@ def aligned_units(source, before):
         return [i for i in range(1, count + 1) if i not in inside]
     blocks, line_map, marks = align_lines(outside(old_tree, len(old_lines)), old_lines,
                                           outside(tree, len(lines)), lines)
-    units.append({'name': MODULE_UNIT, 'fn': None, 'old': None,
+    units.append({'name': MODULE_UNIT, 'fn': None, 'old': None, 'new': False,
                   'roots': [n for n in tree.body if not isinstance(n, TOP_LEVEL_DEFS)],
                   'blocks': blocks, 'line_map': line_map, 'marks': marks})
     removed = [(name, function_span(old)) for name, old in historical.items() if name not in current]
@@ -566,13 +610,75 @@ def node_span(node):
     return header_span(node) if isinstance(node, (ast.stmt, ast.excepthandler)) else (node.lineno, node.end_lineno)
 
 
+def _statement_list(value):
+    return isinstance(value, list) and all(isinstance(x, (ast.stmt, ast.excepthandler, ast.match_case)) for x in value)
+
+
 def node_text(node):
-    """Source form of a node; a statement with nested bodies is given by its header only."""
-    if STATEMENT_BODIES & set(node._fields):
+    """Source form of a node; a statement with nested bodies is given by its header only.
+
+    Only a field that holds a list of statements, handlers or cases is blanked
+    (CA2-C12-N04): Lambda.body and IfExp.body/orelse are expressions and stay.
+    """
+    fields = [f for f in STATEMENT_BODIES & set(node._fields) if _statement_list(getattr(node, f, None))]
+    if fields:
         node = copy.copy(node)
-        for field in STATEMENT_BODIES & set(node._fields):
+        for field in fields:
             setattr(node, field, [])
     return ast.unparse(node)
+
+
+def changed_lines(unit):
+    return set(unit['marks']['inserted']) | set(unit['marks']['changed'])
+
+
+def module_operator_nodes(unit):
+    """Census anchors of the module unit: every operator node on one of its inserted or changed lines."""
+    changed = changed_lines(unit)
+    for root in unit['roots']:
+        for n in ast.walk(root):
+            op = truth_operator(n)
+            if op is None:
+                continue
+            first, last = node_span(n)
+            if changed.intersection(range(first, last + 1)):
+                yield n, ast.unparse(n), type(n).__name__ + '(' + op + ')'
+
+
+def module_census_nodes(source, before):
+    unit = next(u for u in aligned_units(source, before)[2] if u['name'] == MODULE_UNIT)
+    return list(module_operator_nodes(unit))
+
+
+def unit_anchors(unit):
+    """ids of the nodes of a unit that anchor a census row."""
+    nodes = supplement_nodes(unit['fn']) if unit['fn'] is not None else module_operator_nodes(unit)
+    return {id(a) for a, _, _ in nodes}
+
+
+def carried_nodes(unit, anchors):
+    """ids of truth-carrying nodes whose truth a census row anchored elsewhere carries (If, While, patterns)."""
+    carried = set()
+    for root in unit['roots']:
+        for n in ast.walk(root):
+            anchored = [a for a, _, _ in CENSUS_RULES.get(type(n).__name__, lambda n: [])(n)]
+            if anchored and all(id(a) in anchors for a in anchored):
+                carried.add(id(n))
+            if isinstance(n, ast.match_case) and id(n.pattern) in anchors:
+                carried.update(id(p) for p in ast.walk(n.pattern))
+    return carried
+
+
+def required_outcome(n, carried, unchanged_truth=None):
+    """The outcome a node's own row must state, from its exact class."""
+    name = type(n).__name__
+    kind = category(name)
+    if kind == TRUTH:
+        return STRUCTURAL if id(n) in carried else (unchanged_truth or REFUSED)
+    if name == 'keyword' and n.arg in PARSER_CALLBACKS:
+        # A JSON parser callback has a census row of its own wherever a census applies.
+        return unchanged_truth or REFUSED
+    return kind if kind in (DATA, STRUCTURAL) else REFUSED
 
 
 CHANGED_IDENTITY = ('function', 'line', 'column', 'end_line', 'end_column', 'node_class', 'expression')
@@ -580,29 +686,24 @@ HISTORICAL_IDENTITY = ('function', 'baseline_line', 'text', 'mark')
 
 
 def changed_line_inventory(source, before):
-    """Every node on an inserted or changed line of an aligned unit (N02, option A).
+    """Every node on an inserted or changed line of a unit (N02, option A; round 12, new functions too).
 
-    A node is on such a line if its span (a statement's header span) meets one.
-    Nodes that anchor a census row already have their identity and outcome
-    there; every other node needs a changed-line row, data or structural as its
-    class is. A truth-carrying node whose truth no census row carries (possible
-    only in the module unit) is refused: required outcome REFUSED.
+    A node is on such a line if its span (a statement's header span) meets one;
+    every line of a function new since CA-SEAL is an inserted line. Nodes that
+    anchor a census row already have their identity and outcome there; every
+    other node needs a changed-line row, data or structural as its class is. A
+    truth-carrying node whose truth no census row carries (possible only in the
+    module unit, where only operators have census rows) is refused: required
+    outcome REFUSED.
     """
     tree, _, units, _ = aligned_units(source, before)
     rows = {}
     for unit in units:
-        changed = set(unit['marks']['inserted']) | set(unit['marks']['changed'])
+        changed = changed_lines(unit)
         if not changed:
             continue
-        anchors = {id(a) for a, _, _ in supplement_nodes(unit['fn'])} if unit['fn'] is not None else set()
-        carried = set()
-        for root in unit['roots']:
-            for n in ast.walk(root):
-                anchored = [a for a, _, _ in CENSUS_RULES.get(type(n).__name__, lambda n: [])(n)]
-                if anchored and all(id(a) in anchors for a in anchored):
-                    carried.add(id(n))
-                if isinstance(n, ast.match_case) and id(n.pattern) in anchors:
-                    carried.update(id(p) for p in ast.walk(n.pattern))
+        anchors = unit_anchors(unit)
+        carried = carried_nodes(unit, anchors)
         for root in unit['roots']:
             for n in ast.walk(root):
                 if getattr(n, 'lineno', None) is None or id(n) in anchors:
@@ -610,20 +711,12 @@ def changed_line_inventory(source, before):
                 first, last = node_span(n)
                 if not changed.intersection(range(first, last + 1)):
                     continue
-                name = type(n).__name__
-                kind = category(name)
-                if kind == TRUTH:
-                    required = STRUCTURAL if id(n) in carried else REFUSED
-                elif truth_operator(n) is not None or (name == 'keyword' and n.arg in PARSER_CALLBACKS):
-                    required = REFUSED
-                else:
-                    required = kind if kind in (DATA, STRUCTURAL) else REFUSED
                 identity = {'function': unit['name'], 'line': n.lineno, 'column': n.col_offset,
                             'end_line': n.end_lineno, 'end_column': n.end_col_offset,
-                            'node_class': name, 'expression': node_text(n)}
+                            'node_class': type(n).__name__, 'expression': node_text(n)}
                 site = 'changed:' + sha(json.dumps(identity, sort_keys=True).encode())
                 assert site not in rows, ('ambiguous changed-line node', site)
-                rows[site] = dict(identity, site_id=site, required_outcome=required)
+                rows[site] = dict(identity, site_id=site, required_outcome=required_outcome(n, carried))
     return rows
 
 
@@ -649,6 +742,160 @@ def historical_line_inventory(source, before):
         for line in range(first, last + 1):
             add(name, line, 'function removed')
     return rows
+
+
+NODE_IDENTITY = CHANGED_IDENTITY + ('baseline_line',)
+UNCHANGED_TRUTH = 'unchanged August truth carrier'
+NODE_OUTCOMES = (DATA, STRUCTURAL, UNCHANGED_TRUTH)
+# Node classes that never carry a source position, and where each one is
+# recorded: CPython shares one instance per operator and expression-context
+# class, held as a field of a positioned node whose class and text name it.
+POSITIONLESS = {
+    'Module': 'the parse root; every statement has its own row and every line its pin',
+    'comprehension': 'in the text of its ListComp, SetComp, DictComp or GeneratorExp row; each filter is a census row',
+    'arguments': 'in the header text of its FunctionDef or Lambda row; each parameter has its own arg row',
+    'withitem': 'in the header text of its With row',
+    'match_case': 'its pattern, guard and body statements have their own rows',
+}
+for _base in (ast.expr_context, ast.boolop, ast.operator, ast.unaryop, ast.cmpop):
+    for _cls in _base.__subclasses__():
+        POSITIONLESS[_cls.__name__] = 'shared ' + _base.__name__ + ' instance; named by the class and text of its holder'
+
+
+def node_identity(unit, n):
+    return {'function': unit, 'line': n.lineno, 'column': n.col_offset, 'end_line': n.end_lineno,
+            'end_column': n.end_col_offset, 'node_class': type(n).__name__, 'expression': node_text(n)}
+
+
+@lru_cache(maxsize=4)
+def node_model(source, before):
+    """Node rows and the partition of V's nodes (round 12, CA2-C12-B02: the table is total).
+
+    Every node of V with a source position has exactly one kind of row: a
+    census row anchored at it (touched functions, and operators on changed
+    module lines), a changed-line row (a node on an inserted or changed line
+    of a unit; every line of a new function is one), or a node row. A node row
+    is a node unchanged since CA-SEAL, either in a function that is
+    AST-identical to CA-SEAL or on an unchanged line of a unit, and records
+    its computed CA-SEAL line (baseline_line). Its required outcome is its
+    class's category: data, structural (a truth carrier whose truth a census
+    row carries), or 'unchanged August truth carrier' (a truth carrier in code
+    no census covers: an untouched function, which any edit makes touched, or
+    an unchanged module line). Nodes without a position are of the classes in
+    POSITIONLESS, each recorded in a positioned row as listed there.
+
+    Returns (rows by site id, partition totals and problems).
+    """
+    tree, old_tree, units, _ = aligned_units(source, before)
+    rows, kinds = {}, {}
+
+    def add(unit_name, n, required, baseline):
+        identity = dict(node_identity(unit_name, n), baseline_line=baseline)
+        site = 'node:' + sha(json.dumps(identity, sort_keys=True).encode())
+        assert site not in rows, ('ambiguous node', site)
+        rows[site] = dict(identity, site_id=site, required_outcome=required)
+
+    def mark(n, kind):
+        kinds.setdefault(id(n), []).append(kind)
+
+    for unit in units:
+        changed = changed_lines(unit)
+        anchors = unit_anchors(unit)
+        carried = carried_nodes(unit, anchors)
+        unchanged_truth = UNCHANGED_TRUTH if unit['fn'] is None else None
+        for root in unit['roots']:
+            for n in ast.walk(root):
+                if getattr(n, 'lineno', None) is None:
+                    continue
+                if id(n) in anchors:
+                    mark(n, 'census anchor')
+                    continue
+                first, last = node_span(n)
+                if changed.intersection(range(first, last + 1)):
+                    mark(n, 'changed-line row')
+                    continue
+                mark(n, 'node row')
+                add(unit['name'], n, required_outcome(n, carried, unchanged_truth), unit['line_map'][n.lineno][0])
+    touched = {u['name'] for u in units}
+    historical = top_functions(old_tree)
+    untouched = 0
+    for name, fn in top_functions(tree).items():
+        if name in touched:
+            continue
+        old = historical[name]
+        assert ast.dump(old) == ast.dump(fn), ('untouched function differs from CA-SEAL', name)
+        untouched += 1
+        # AST-identical, so both walks visit counterpart nodes in the same order.
+        for n, o in zip(ast.walk(fn), ast.walk(old)):
+            if getattr(n, 'lineno', None) is None:
+                continue
+            assert type(n) is type(o), (name, type(n).__name__, type(o).__name__)
+            mark(n, 'node row')
+            add(name, n, required_outcome(n, set(), UNCHANGED_TRUTH), o.lineno)
+    positioned = [n for n in ast.walk(tree) if getattr(n, 'lineno', None) is not None]
+    positionless = Counter(type(n).__name__ for n in ast.walk(tree) if getattr(n, 'lineno', None) is None)
+    partition = {
+        'positioned_nodes': len(positioned),
+        'by_row_kind': dict(sorted(Counter(k for n in positioned for k in kinds.get(id(n), [])).items())),
+        'untouched_functions': untouched,
+        'positionless_nodes': dict(sorted(positionless.items())),
+        'problems': {
+            'node_without_a_row': sorted('%s@%d:%d' % (type(n).__name__, n.lineno, n.col_offset)
+                                         for n in positioned if id(n) not in kinds),
+            'node_with_two_rows': sorted('%s@%d:%d' % (type(n).__name__, n.lineno, n.col_offset)
+                                         for n in positioned if len(kinds.get(id(n), [])) > 1),
+            'positionless_class_not_listed': sorted(set(positionless) - set(POSITIONLESS)),
+        },
+    }
+    return rows, partition
+
+
+def node_totals(rows):
+    return {'rows': len(rows), 'by_unit_kind': dict(sorted(Counter(
+                'module' if r['function'] == MODULE_UNIT else 'function' for r in rows).items())),
+            'by_class': dict(sorted(Counter(r['node_class'] for r in rows).items())),
+            'by_outcome': dict(sorted(Counter(r['outcome'] for r in rows).items()))}
+
+
+FROZEN_IDENTITY = ('mark', 'line', 'sha256', 'text')
+
+
+def line_pins(text):
+    """The SHA-256 of every line, numbered as the parser numbers lines."""
+    return [{'line': i, 'sha256': sha(line.encode())} for i, line in enumerate(source_lines(text), 1)]
+
+
+def frozen_line_inventory(source, frozen):
+    """Every line inserted or changed relative to the frozen validator, and every frozen line deleted or replaced.
+
+    The lines are aligned with difflib over the pinned lines; 'inserted' and
+    'changed' records carry the current line number, 'deleted' and 'replaced'
+    the frozen one. Each needs a reviewed record (round 12, CA2-C12-N01).
+    """
+    lines, pinned = source_lines(source), source_lines(frozen)
+    rows = {}
+    def add(mark, line, text):
+        identity = {'mark': mark, 'line': line, 'sha256': sha(text.encode()), 'text': text}
+        site = 'frozen:' + sha(json.dumps(identity, sort_keys=True).encode())
+        rows[site] = dict(identity, site_id=site)
+    for tag, a1, a2, b1, b2 in difflib.SequenceMatcher(None, pinned, lines, autojunk=False).get_opcodes():
+        if tag in ('insert', 'replace'):
+            for i in range(b1, b2):
+                add('inserted' if tag == 'insert' else 'changed', i + 1, lines[i])
+        if tag in ('delete', 'replace'):
+            for i in range(a1, a2):
+                add('deleted' if tag == 'delete' else 'replaced', i + 1, pinned[i])
+    return rows
+
+
+def frozen_line_totals(rows):
+    return {'rows': len(rows), 'by_mark': {m: sum(r['mark'] == m for r in rows)
+                                           for m in ('inserted', 'changed', 'deleted', 'replaced')}}
+
+
+def pin_totals(pins):
+    return {'lines': len(pins), 'pins_sha256': sha(json.dumps(pins, sort_keys=True).encode()),
+            'frozen_commit': FROZEN_COMMIT, 'frozen_sha256': FROZEN_SHA}
 
 
 def _target_names(target):
@@ -704,20 +951,19 @@ def fresh_name_problems(source, before):
 
     Every top-level function new since CA-SEAL, and every name bound or object
     mutated by a statement on an inserted or changed line of the module unit,
-    must use a name the CA-SEAL validator never binds or reads, that is not a
-    builtin, and that the current module binds once. Otherwise a new definition
-    or assignment could replace what unchanged August code reads, for example
-    `def isinstance(*args): return True`, with no census node and no changed
-    line in any aligned function.
+    must use a name the CA-SEAL validator never binds or reads and that is not
+    a builtin. Otherwise a new definition or assignment could replace what
+    unchanged August code reads, for example `def isinstance(*args): return
+    True`, with no census node and no changed line in any aligned function.
+    That every module name is bound exactly once is module_scope_problems().
     """
     import builtins
     tree, old_tree, units, _ = aligned_units(source, before)
-    old_functions = {n.name for n in old_tree.body if isinstance(n, ast.FunctionDef)}
+    old_functions = set(top_functions(old_tree))
     used = {x.id for x in ast.walk(old_tree) if isinstance(x, ast.Name)} | set(dir(builtins)) | {
         name for n in module_statements(old_tree.body) for name in own_bindings(n)[0]}
-    bound = Counter(name for n in module_statements(tree.body) for name in own_bindings(n)[0])
     module = next(u for u in units if u['name'] == MODULE_UNIT)
-    changed = set(module['marks']['inserted']) | set(module['marks']['changed'])
+    changed = changed_lines(module)
     new_bound, new_mutated = set(), set()
     for n in module_statements(module['roots']):
         first, last = node_span(n)
@@ -728,8 +974,293 @@ def fresh_name_problems(source, before):
     new_functions = {n.name for n in tree.body if isinstance(n, TOP_LEVEL_DEFS) and n.name not in old_functions}
     names = new_bound | new_functions
     return {'binds_a_ca_seal_or_builtin_name': sorted(n for n in names if n in used),
-            'bound_more_than_once': sorted(n for n in names if bound[n] != 1),
             'mutates_an_object_that_is_not_new': sorted(r for r in new_mutated if r in used or r not in names)}
+
+
+_COMPREHENSIONS = (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)
+_NO_NAMES = (ast.expr_context, ast.boolop, ast.operator, ast.unaryop, ast.cmpop)
+
+
+def scope_analysis(tree):
+    """Python's name binding, scope by scope.
+
+    Returns (bindings, parents, owner, imported): bindings[scope] counts every
+    binding of each name in that scope (assignment and deletion targets,
+    imports, def and class names, parameters, except and match captures; an
+    assignment expression binds in the nearest enclosing scope that is not a
+    comprehension); parents[scope] is the enclosing scope (the module's is
+    None); owner[id(node)] is the scope a node is evaluated in; imported[scope]
+    holds the names an import binds there.
+    """
+    bindings, parents, owner, imported = {tree: Counter()}, {tree: None}, {}, {tree: set()}
+
+    def bind(scope, name):
+        bindings[scope][name] += 1
+
+    def open_scope(node, scope):
+        parents[node], bindings[node], imported[node] = scope, Counter(), set()
+
+    def arguments(args, outer, inner):
+        owner[id(args)] = inner
+        for a in args.posonlyargs + args.args + args.kwonlyargs + [x for x in (args.vararg, args.kwarg) if x]:
+            owner[id(a)] = inner
+            bind(inner, a.arg)
+            if a.annotation is not None:
+                visit(a.annotation, outer)
+        for default in args.defaults + [d for d in args.kw_defaults if d is not None]:
+            visit(default, outer)
+
+    def visit(node, scope):
+        if isinstance(node, _NO_NAMES):
+            return
+        owner[id(node)] = scope
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            if not isinstance(node, ast.Lambda):
+                for x in node.decorator_list + ([node.returns] if node.returns is not None else []):
+                    visit(x, scope)
+                bind(scope, node.name)
+            open_scope(node, scope)
+            arguments(node.args, scope, node)
+            for x in (node.body if isinstance(node.body, list) else [node.body]):
+                visit(x, node)
+            return
+        if isinstance(node, ast.ClassDef):
+            for x in node.decorator_list + node.bases + node.keywords:
+                visit(x, scope)
+            bind(scope, node.name)
+            open_scope(node, scope)
+            for x in node.body:
+                visit(x, node)
+            return
+        if isinstance(node, _COMPREHENSIONS):
+            open_scope(node, scope)
+            for i, generator in enumerate(node.generators):
+                visit(generator.iter, scope if i == 0 else node)
+                owner[id(generator)] = node
+                visit(generator.target, node)
+                for test in generator.ifs:
+                    visit(test, node)
+            for field in ('elt', 'key', 'value'):
+                if getattr(node, field, None) is not None:
+                    visit(getattr(node, field), node)
+            return
+        if isinstance(node, ast.NamedExpr):
+            target = scope
+            while isinstance(target, _COMPREHENSIONS):
+                target = parents[target]
+            owner[id(node.target)] = target
+            bind(target, node.target.id)
+            visit(node.value, scope)
+            return
+        if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)):
+            bind(scope, node.id)
+        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+            for alias in node.names:
+                bind(scope, (alias.asname or alias.name).split('.')[0])
+                imported[scope].add((alias.asname or alias.name).split('.')[0])
+        elif isinstance(node, ast.ExceptHandler) and node.name:
+            bind(scope, node.name)
+        elif isinstance(node, (ast.MatchAs, ast.MatchStar)) and node.name:
+            bind(scope, node.name)
+        elif isinstance(node, ast.MatchMapping) and node.rest:
+            bind(scope, node.rest)
+        for child in ast.iter_child_nodes(node):
+            visit(child, scope)
+
+    for statement in tree.body:
+        visit(statement, tree)
+    return bindings, parents, owner, imported
+
+
+def resolves_to(name, scope, tree, bindings, parents):
+    """The scope a name used in scope resolves to (the module for globals and builtins)."""
+    if name in bindings[scope]:
+        return scope
+    outer = parents[scope]
+    while outer is not None and outer is not tree:
+        if not isinstance(outer, ast.ClassDef) and name in bindings[outer]:
+            return outer
+        outer = parents[outer]
+    return tree
+
+
+def chain_root(node):
+    """The Name a value chain (attribute, item, starred, call) starts from, else None."""
+    while isinstance(node, (ast.Attribute, ast.Subscript, ast.Starred, ast.Call)):
+        node = node.func if isinstance(node, ast.Call) else node.value
+    return node.id if isinstance(node, ast.Name) else None
+
+
+def _pure_root(node):
+    """The Name a pure reference chain (attribute, item, starred; no call) starts from, else None."""
+    while isinstance(node, (ast.Attribute, ast.Subscript, ast.Starred)):
+        node = node.value
+    return node.id if isinstance(node, ast.Name) else None
+
+
+NAMESPACE_BUILTINS = frozenset({'globals', 'vars', 'locals', 'setattr', 'delattr', 'exec', 'eval', 'compile',
+                                '__import__', 'breakpoint'})
+# Dunders CA-SEAL itself uses: __name__ and __file__ (module), super().__new__ (ExactNumber).
+ALLOWED_DUNDERS = frozenset({'__name__', '__file__', '__new__'})
+# Methods of the builtin list, dict and set types that never change the object.
+READ_ONLY_METHODS = frozenset({'copy', 'count', 'index', 'get', 'items', 'keys', 'values', 'fromkeys',
+                               'difference', 'intersection', 'isdisjoint', 'issubset', 'issuperset',
+                               'symmetric_difference', 'union'})
+MAIN_GUARD = ast.dump(ast.parse('if __name__ == "__main__":\n    raise SystemExit(main())\n').body[0])
+
+
+def module_scope_problems(tree):
+    """Module names are bound once, and module objects are written only by their one binding (round 12).
+
+    - bound_more_than_once: every module-level name, CA-SEAL names included, has
+      exactly one binding (a deletion counts), so the checker, the corpus and a
+      script run all read the same definition (CA2-C12-B01).
+    - shadows_a_builtin: no module name hides a builtin.
+    - not_a_declaration: the module body only declares: a leading docstring,
+      imports (never `import *`), assignments to plain names, function
+      definitions, and CA-SEAL's main guard as the last statement. A class
+      body, a module-level loop, an attribute or item write (directly or
+      through an alias) and a statement after the main guard are refused.
+    - writes_a_module_object: inside any function, lambda, class or
+      comprehension, an attribute or item write or deletion whose chain starts
+      at a module name, a builtin, an imported module, a call result, or a
+      local alias of any of these (CA2-C12-N02).
+    - mutates_a_module_container: an attribute of a module-level list, dict or
+      set (or of an alias or element of one) other than a read-only method.
+    - reflection: the namespace builtins (globals, vars, locals, setattr,
+      delattr, exec, eval, compile, __import__, breakpoint) and every dunder
+      name or attribute except those CA-SEAL uses (__name__, __file__,
+      __new__).
+    """
+    import builtins
+    bindings, parents, owner, imported = scope_analysis(tree)
+    module = bindings[tree]
+    problems = {'bound_more_than_once': sorted(n for n, c in module.items() if c != 1),
+                'shadows_a_builtin': sorted(n for n in module if n in dir(builtins))}
+    refused = []
+    for index, n in enumerate(tree.body):
+        ok = (isinstance(n, ast.Import) or isinstance(n, ast.FunctionDef)
+              or (isinstance(n, ast.ImportFrom) and all(a.name != '*' for a in n.names))
+              or (isinstance(n, ast.Assign) and all(isinstance(t, ast.Name) for t in n.targets))
+              or (index == 0 and isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant)
+                  and isinstance(n.value.value, str))
+              or (index == len(tree.body) - 1 and ast.dump(n) == MAIN_GUARD))
+        if not ok:
+            refused.append(type(n).__name__ + '@' + str(n.lineno))
+    problems['not_a_declaration'] = refused
+
+    containers = set()
+    def container(value):
+        if isinstance(value, (ast.List, ast.Set, ast.Dict, ast.ListComp, ast.SetComp, ast.DictComp)):
+            return True
+        if isinstance(value, ast.BinOp):
+            return container(value.left) or container(value.right)
+        if isinstance(value, ast.Name):
+            return value.id in containers
+        return (isinstance(value, ast.Call) and isinstance(value.func, ast.Name)
+                and value.func.id in ('list', 'dict', 'set', 'bytearray'))
+    for n in tree.body:
+        if isinstance(n, ast.Assign) and container(n.value):
+            containers.update(t.id for t in n.targets if isinstance(t, ast.Name))
+
+    # Local aliases: a name bound, in its own scope, to a reference chain (or an
+    # element of one, through for, comprehension, with and parameter defaults)
+    # that starts at a module object or another alias. alias[scope][name] is the
+    # module name it ultimately refers to (None for a call result or import).
+    alias = {scope: {} for scope in bindings}
+    def origin(value):
+        """Whether a value is a reference into a module object, and which module name it starts at.
+
+        A display, conditional or Boolean expression refers wherever one of its
+        parts does: `for e in [X]` and `y = X or []` alias X.
+        """
+        parts = (value.elts if isinstance(value, (ast.List, ast.Tuple, ast.Set))
+                 else value.values if isinstance(value, (ast.Dict, ast.BoolOp))
+                 else [value.body, value.orelse] if isinstance(value, ast.IfExp)
+                 else [value.value] if isinstance(value, ast.NamedExpr) else None)
+        if parts is not None:
+            found = [origin(part) for part in parts if part is not None]
+            return next((f for f in found if f[0]), (False, None))
+        root = _pure_root(value)
+        scope = owner.get(id(value))
+        if root is None or scope is None:
+            return False, None
+        home = resolves_to(root, scope, tree, bindings, parents)
+        if home is tree:
+            return True, root
+        if root in imported[home]:
+            return True, None
+        if root in alias[home]:
+            return True, alias[home][root]
+        return False, None
+    def stores(target):
+        return [(x.id, owner[id(x)]) for x in ast.walk(target)
+                if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Store) and id(x) in owner]
+    sources = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign):
+            sources += [(node.value, stores(t)) for t in node.targets]
+        elif isinstance(node, ast.AnnAssign) and node.value is not None:
+            sources.append((node.value, stores(node.target)))
+        elif isinstance(node, ast.NamedExpr) and id(node.target) in owner:
+            sources.append((node.value, [(node.target.id, owner[id(node.target)])]))
+        elif isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)):
+            sources.append((node.iter, stores(node.target)))
+        elif isinstance(node, (ast.With, ast.AsyncWith)):
+            sources += [(i.context_expr, stores(i.optional_vars)) for i in node.items if i.optional_vars]
+        elif isinstance(node, ast.arguments) and id(node) in owner:
+            positional = node.posonlyargs + node.args
+            pairs = list(zip(positional[len(positional) - len(node.defaults):], node.defaults)) + [
+                (a, d) for a, d in zip(node.kwonlyargs, node.kw_defaults) if d is not None]
+            sources += [(d, [(a.arg, owner[id(node)])]) for a, d in pairs]
+    grew = True
+    while grew:
+        grew = False
+        for value, targets in sources:
+            refers, name = origin(value)
+            if not refers:
+                continue
+            for local, scope in targets:
+                if scope is not tree and local not in alias[scope]:
+                    alias[scope][local] = name
+                    grew = True
+
+    writes, mutations, reflection = [], [], []
+    for node in ast.walk(tree):
+        scope = owner.get(id(node))
+        if scope is None:
+            continue
+        if isinstance(node, (ast.Attribute, ast.Subscript)) and isinstance(node.ctx, (ast.Store, ast.Del)):
+            root = chain_root(node.value)
+            home = resolves_to(root, scope, tree, bindings, parents) if root is not None else None
+            if root is None or home is tree or root in imported[home] or root in alias[home]:
+                writes.append(str(root) + '@' + str(node.lineno))
+        if isinstance(node, ast.Attribute) and node.attr not in READ_ONLY_METHODS:
+            root = _pure_root(node.value)
+            if root is not None:
+                home = resolves_to(root, scope, tree, bindings, parents)
+                target = root if home is tree else alias[home].get(root)
+                if target in containers:
+                    mutations.append(root + '.' + node.attr + '@' + str(node.lineno))
+        name = node.id if isinstance(node, ast.Name) else node.attr if isinstance(node, ast.Attribute) else None
+        if name is not None and ((name.startswith('__') and name.endswith('__') and name not in ALLOWED_DUNDERS)
+                                 or (isinstance(node, ast.Name) and name in NAMESPACE_BUILTINS
+                                     and resolves_to(name, scope, tree, bindings, parents) is tree)):
+            reflection.append(name + '@' + str(node.lineno))
+    problems.update(writes_a_module_object=sorted(set(writes)), mutates_a_module_container=sorted(set(mutations)),
+                    reflection=sorted(set(reflection)))
+    return problems
+
+
+def binding_problems(source, before):
+    """module_scope_problems(), then fresh_name_problems() once every top-level name has one binding."""
+    tree = ast.parse(source)
+    problems = module_scope_problems(tree)
+    if all(c == 1 for c in Counter(n.name for n in tree.body if isinstance(n, TOP_LEVEL_DEFS)).values()):
+        problems.update(fresh_name_problems(source, before))
+    else:
+        problems.update(binds_a_ca_seal_or_builtin_name=[], mutates_an_object_that_is_not_new=[])
+    return problems
 
 
 OPERATOR_BASES = (ast.boolop, ast.operator, ast.unaryop, ast.cmpop)
@@ -743,9 +1274,9 @@ def census_totals(source, before):
     requires zero). Whole-validator occurrences are given for context.
     """
     tree = ast.parse(source)
-    previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
-    touched = [n for n in tree.body if isinstance(n, ast.FunctionDef)
-               and (n.name not in previous or ast.dump(previous[n.name]) != ast.dump(n))]
+    previous = top_functions(ast.parse(before))
+    touched = [n for n in top_functions(tree).values()
+               if n.name not in previous or ast.dump(previous[n.name]) != ast.dump(n)]
     def operators(node):
         if isinstance(node, (ast.BinOp, ast.AugAssign, ast.UnaryOp, ast.BoolOp)):
             return [node.op]
@@ -778,7 +1309,7 @@ def census_totals(source, before):
 def check_coverage(repo, test_names):
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
     validate_coverage((repo / REL).read_bytes(), before,
-                      json.loads((repo / COVERAGE).read_bytes()), test_names)
+                      json.loads((repo / COVERAGE).read_bytes()), test_names, frozen=frozen_source(repo))
 
 
 @lru_cache(maxsize=16)
@@ -810,6 +1341,7 @@ def historical_line_totals(rows):
 def refresh_totals(table, raw, before):
     """Recompute every recorded count and digest the coverage test checks, from the table's own rows."""
     expected, touched, _, _, occurrence_totals, _, _, census = coverage_model(raw.decode(), before)
+    _, partition = node_model(raw.decode(), before)
     rows = table['sites'] + table['supplement']
     table['touched_functions'] = touched
     table['validator_sha256'] = sha(raw)
@@ -822,8 +1354,14 @@ def refresh_totals(table, raw, before):
         node_outcomes=dict(Counter(r['outcome'] for r in table['supplement'])),
         occurrence_map=dict(occurrence_totals, preserved_rows_matched=sum(r['outcome'] == PRESERVED for r in rows)),
         changed_line_nodes=changed_line_totals(table['changed_line_nodes']),
-        historical_lines=historical_line_totals(table['historical_lines']), census=census)
+        historical_lines=historical_line_totals(table['historical_lines']), census=census,
+        nodes=node_totals(table['nodes']), node_partition=partition_totals(partition),
+        frozen_lines=frozen_line_totals(table['frozen_lines']), line_pins=pin_totals(table['line_pins']))
     return table
+
+
+def partition_totals(partition):
+    return {k: v for k, v in partition.items() if k != 'problems'}
 
 
 def preservation_problems(rows, counterparts):
@@ -836,13 +1374,43 @@ def preservation_problems(rows, counterparts):
             'occurrence_claimed_twice': sorted(str(b) for b, n in claims.items() if n > 1)}
 
 
-def validate_coverage(raw, before, table, test_names, ast_classes=None):
-    source = raw.decode()
+def _group_check(rows, expected, label, identity_fields, outcome=True):
+    """Every expected identity has exactly one row and every row an expected identity, with its reviewed reason."""
+    recorded = {row['site_id']: row for row in rows}
+    assert len(recorded) == len(rows), 'duplicate ' + label
+    missing, stale = set(expected) - set(recorded), set(recorded) - set(expected)
+    assert not missing and not stale, (label + ' missing=' + repr(sorted(missing)) + ' stale=' + repr(sorted(stale)))
+    for site, identity in expected.items():
+        row = recorded[site]
+        assert all(row.get(k) == identity[k] for k in identity_fields), ('changed ' + label, site)
+        if outcome:
+            assert row.get('outcome') == identity['required_outcome'], (label + ' outcome', site, row.get('outcome'))
+        assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing ' + label + ' reason', site)
+
+
+def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=None):
+    try:
+        source = raw.decode()
+        tree = ast.parse(source)
+    except (UnicodeDecodeError, SyntaxError, ValueError) as exc:
+        raise AssertionError('validator does not parse: ' + type(exc).__name__ + ': ' + str(exc))
     # The class table closes the census: an unlisted class, a truth-carrying
     # class without a census mechanism, or a refused class in V fails first.
-    classes = ast_class_problems(ast.parse(source), ast_classes)
+    classes = ast_class_problems(tree, ast_classes)
     assert not any(classes.values()), 'ast class table ' + json.dumps(classes, sort_keys=True)
     assert table['ast_classes'] == ast_class_summary(ast_classes), 'changed ast class table summary'
+    # Round 12 (CA2-C12-B01, N02): every module name has one binding, the one
+    # the checker reads and the script runs, and module objects are written
+    # only by it. Nothing in the table can waive this.
+    bindings = binding_problems(source, before)
+    assert not any(bindings.values()), 'module-level binding refused ' + json.dumps(bindings, sort_keys=True)
+    # Round 12 (CA2-C12-N01): the table pins every line of the frozen
+    # validator, and every line inserted, changed, deleted or replaced relative
+    # to it needs a reviewed record. An edit with the table unchanged stops here.
+    frozen = frozen_source() if frozen is None else frozen
+    assert table['line_pins'] == line_pins(frozen), 'line pins are not the frozen validator'
+    _group_check(table['frozen_lines'], frozen_line_inventory(source, frozen), 'frozen lines', FROZEN_IDENTITY,
+                 outcome=False)
     (expected, touched, previous_nodes, counterparts, occurrence_totals,
      changed, historical, census) = coverage_model(source, before)
     assert table['touched_functions'] == touched, 'changed touched-function inventory'
@@ -877,8 +1445,9 @@ def validate_coverage(raw, before, table, test_names, ast_classes=None):
     assert table['totals']['occurrence_map'] == dict(
         occurrence_totals, preserved_rows_matched=sum(r['outcome'] == 'preserved August predicate' for r in rows)), \
         'changed occurrence-map totals'
-    # N02, option A: every node on an inserted or changed line of an aligned
-    # unit has a row, and every CA-SEAL line without a counterpart a reason.
+    # N02, option A: every node on an inserted or changed line of a unit has a
+    # row (round 12: every node of a function new since CA-SEAL), and every
+    # CA-SEAL line without a counterpart a reason.
     refused = sorted(s for s, r in changed.items() if r['required_outcome'] == REFUSED)
     assert not refused, 'truth-carrying node on a changed line without a census row ' + repr(refused)
     changed_rows = {row['site_id']: row for row in table['changed_line_nodes']}
@@ -900,13 +1469,23 @@ def validate_coverage(raw, before, table, test_names, ast_classes=None):
         row = historical_rows[site]
         assert all(row.get(k) == identity[k] for k in HISTORICAL_IDENTITY), ('changed historical record', site)
         assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing historical reason', site)
-    fresh = fresh_name_problems(source, before)
-    assert not any(fresh.values()), 'module-level binding is not fresh ' + json.dumps(fresh, sort_keys=True)
+    # Round 12 (CA2-C12-B02): the table is total. Census rows, changed-line
+    # rows and node rows partition every positioned node of V, and every other
+    # node is of a class recorded inside a positioned row.
+    nodes, partition = node_model(source, before)
+    assert not any(partition['problems'].values()), 'node partition ' + json.dumps(partition['problems'], sort_keys=True)
+    refused = sorted(s for s, r in nodes.items() if r['required_outcome'] == REFUSED)
+    assert not refused, 'truth-carrying node without a census row ' + repr(refused)
+    _group_check(table['nodes'], nodes, 'node rows', NODE_IDENTITY)
     unanchored = {op: c['unanchored'] for op, c in census.items() if c['unanchored']}
     assert not unanchored, ('truth-carrying operator without a census row', unanchored)
     assert table['totals']['census'] == census, 'changed operator census totals'
     assert table['totals']['changed_line_nodes'] == changed_line_totals(table['changed_line_nodes'])
     assert table['totals']['historical_lines'] == historical_line_totals(table['historical_lines'])
+    assert table['totals']['nodes'] == node_totals(table['nodes']), 'changed node totals'
+    assert table['totals']['node_partition'] == partition_totals(partition), 'changed node partition totals'
+    assert table['totals']['frozen_lines'] == frozen_line_totals(table['frozen_lines']), 'changed frozen-line totals'
+    assert table['totals']['line_pins'] == pin_totals(table['line_pins']), 'changed line-pin totals'
     assert len(table['prior_survivors']) == 84
     assert table['validator_sha256'] == sha(raw), 'validator is not frozen'
     assert table['totals']['walker_sites'] == len(table['sites'])
@@ -923,14 +1502,14 @@ def check_insertion_probe(repo, test_names, statement, return_function):
     raw = (repo / REL).read_bytes()
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
     return insertion_probe(raw, before, (repo / COVERAGE).read_bytes(),
-                           frozenset(test_names), statement, return_function)
+                           frozenset(test_names), statement, return_function, frozen_source(repo))
 
 
 @lru_cache(maxsize=16)
-def insertion_probe(raw, before, table_raw, test_names, statement, return_function):
+def insertion_probe(raw, before, table_raw, test_names, statement, return_function, frozen=None):
     source = raw.decode().replace('\r\n', '\n')
-    fn = next(n for n in ast.parse(source).body
-              if isinstance(n, ast.FunctionDef) and n.name == return_function)
+    # CA2-C12-N05: the one binding, the same definition the census reads.
+    fn = top_functions(ast.parse(source))[return_function]
     line = next(n.lineno for n in fn.body if isinstance(n, ast.Return))
     lines = source_lines(source)
     lines.insert(line - 1, '    ' + statement)
@@ -941,6 +1520,10 @@ def insertion_probe(raw, before, table_raw, test_names, statement, return_functi
     rebase_lines(table, lambda n: n + 1 if n >= line else n)
     altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
     table['validator_sha256'] = sha(altered_raw)
+    # Round 12: only the inserted line's frozen-line record is supplied, since
+    # that check runs first; the census stays the rule under test.
+    frozen = frozen_source() if frozen is None else frozen
+    forge_records(altered_raw, before, table, 'insertion', groups=('frozen_lines',), frozen=frozen)
     walker = predicate_sites(altered, before)
     supplement, _ = predicate_supplement(altered, before, walker)
     recorded = {r['site_id'] for r in table['sites'] + table['supplement']}
@@ -948,7 +1531,7 @@ def insertion_probe(raw, before, table_raw, test_names, statement, return_functi
     inserted = [r for r in supplement if r['line'] == line]
     assert inserted and all(r['site_id'] in missing for r in inserted), inserted
     try:
-        validate_coverage(altered_raw, before, table, test_names)
+        validate_coverage(altered_raw, before, table, test_names, frozen=frozen)
     except AssertionError as exc:
         assert 'coverage sites missing=' in str(exc) and str(sorted(missing)) in str(exc), str(exc)
     else:
@@ -983,6 +1566,28 @@ def rebase_lines(table, move):
         row['site_id'] = 'changed:' + sha(json.dumps({k: row[k] for k in CHANGED_IDENTITY}, sort_keys=True).encode())
         kept.append(row)
     table['changed_line_nodes'] = kept
+    # Round 12: node rows move like changed-line rows (their CA-SEAL line
+    # stays); frozen-line records of current lines move, those of frozen lines
+    # and the line pins themselves (frozen lines) never do.
+    kept = []
+    for row in table.get('nodes', []):
+        first, last = move(row['line']), move(row['end_line'])
+        if first is None or last is None:
+            continue
+        row['line'], row['end_line'] = first, last
+        row['site_id'] = 'node:' + sha(json.dumps({k: row[k] for k in NODE_IDENTITY}, sort_keys=True).encode())
+        kept.append(row)
+    table['nodes'] = kept
+    kept = []
+    for row in table.get('frozen_lines', []):
+        if row['mark'] in ('inserted', 'changed'):
+            line = move(row['line'])
+            if line is None:
+                continue
+            row['line'] = line
+            row['site_id'] = 'frozen:' + sha(json.dumps({k: row[k] for k in FROZEN_IDENTITY}, sort_keys=True).encode())
+        kept.append(row)
+    table['frozen_lines'] = kept
     return table
 
 
@@ -991,7 +1596,7 @@ PRESERVATION_PROBES = ('rebinding_inserted_call', 'inserted_sole_claim', 'duplic
                        'changed_occurrence', 'changed_enclosing_header')
 
 
-def forged_preservation(raw, before, table_raw, label):
+def forged_preservation(raw, before, table_raw, label, frozen=None):
     """Scratch edit of V plus a forged table that satisfies the round-9 preservation rule.
 
     Existing rows are rebased onto the edited source as the insertion probes do.
@@ -1007,7 +1612,7 @@ def forged_preservation(raw, before, table_raw, label):
     """
     source = raw.decode().replace('\r\n', '\n')
     lines = source_lines(source)
-    functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
+    functions = top_functions(ast.parse(source))
     table = json.loads(table_raw)
     def preserved(function, expression, node_type, column=None):
         return sorted((r for r in table['supplement'] if r['outcome'] == PRESERVED and r['function'] == function
@@ -1093,7 +1698,7 @@ def forged_preservation(raw, before, table_raw, label):
     altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
     # Round 11: the changed-line rows and historical-line records the edit
     # needs are forged too, so the occurrence check is still the only refusal.
-    forge_records(altered_raw, before, table, label)
+    forge_records(altered_raw, before, table, label, frozen=frozen)
     refresh_totals(table, altered_raw, before)
     return altered_raw, table, expect
 
@@ -1101,14 +1706,16 @@ def forged_preservation(raw, before, table_raw, label):
 def check_preservation_probe(repo, test_names, label):
     raw = (repo / REL).read_bytes()
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
-    return preservation_probe(raw, before, (repo / COVERAGE).read_bytes(), frozenset(test_names), label)
+    return preservation_probe(raw, before, (repo / COVERAGE).read_bytes(), frozenset(test_names), label,
+                              frozen_source(repo))
 
 
-def preservation_probe(raw, before, table_raw, test_names, label):
-    altered_raw, table, expect = forged_preservation(raw, before, table_raw, label)
+def preservation_probe(raw, before, table_raw, test_names, label, frozen=None):
+    frozen = frozen_source() if frozen is None else frozen
+    altered_raw, table, expect = forged_preservation(raw, before, table_raw, label, frozen)
     prefix = 'preserved occurrence mismatch '
     try:
-        validate_coverage(altered_raw, before, table, test_names)
+        validate_coverage(altered_raw, before, table, test_names, frozen=frozen)
     except AssertionError as exc:
         assert str(exc).startswith(prefix), str(exc)
         problems = json.loads(str(exc)[len(prefix):])
@@ -1122,24 +1729,33 @@ def preservation_probe(raw, before, table_raw, test_names, label):
 FORGED = 'Forged probe row.'
 
 
-def forge_records(raw, before, table, label, groups=('changed_line_nodes', 'historical_lines'), omit=()):
-    """Forge what an edit needs in the round-11 groups: a row for every missing identity, stale rows dropped.
+RECORD_GROUPS = ('changed_line_nodes', 'historical_lines', 'nodes', 'frozen_lines')
 
-    A forged changed-line row takes the outcome its class requires (data for a
-    refused node, which the coverage test refuses before it reads any row).
-    Identities in omit are left missing.
+
+def forge_records(raw, before, table, label, groups=RECORD_GROUPS, omit=(), frozen=None):
+    """Forge what an edit needs in the record groups: a row for every missing identity, stale rows dropped.
+
+    A forged changed-line or node row takes the outcome its class requires
+    (data for a refused node, which the coverage test refuses before it reads
+    any row). Identities in omit are left missing.
     """
-    _, _, _, _, _, changed, historical, _ = coverage_model(raw.decode(), before)
-    for group, expected in (('changed_line_nodes', changed), ('historical_lines', historical)):
+    source = raw.decode()
+    _, _, _, _, _, changed, historical, _ = coverage_model(source, before)
+    expected_by_group = {'changed_line_nodes': lambda: changed, 'historical_lines': lambda: historical,
+                         'nodes': lambda: node_model(source, before)[0],
+                         'frozen_lines': lambda: frozen_line_inventory(
+                             source, frozen_source() if frozen is None else frozen)}
+    for group in RECORD_GROUPS:
         if group not in groups:
             continue
+        expected = expected_by_group[group]()
         kept = [r for r in table[group] if r['site_id'] in expected]
         recorded = {r['site_id'] for r in kept}
         for site, identity in expected.items():
             if site in recorded or site in omit:
                 continue
             row = {k: v for k, v in identity.items() if k != 'required_outcome'}
-            if group == 'changed_line_nodes':
+            if 'required_outcome' in identity:
                 row['outcome'] = identity['required_outcome'] if identity['required_outcome'] != REFUSED else DATA
             kept.append(dict(row, reason=FORGED))
         table[group] = kept
@@ -1169,10 +1785,14 @@ def forge_census(raw, before, table, label, omit=()):
     return table
 
 
-# Round-11 edit probes. Each edits a scratch copy of V, rebases every row's
-# line metadata through a whole-file alignment, forges every group except the
-# one under test and regenerates every count, so only that group's rule can
-# refuse. (label: group left unforged, expected refusal prefix, description.)
+# Edit probes (rounds 11 and 12). Each edits a scratch copy of V, rebases
+# every row's line metadata through a whole-file alignment, forges every group
+# except the one under test and regenerates every count, so only that group's
+# rule can refuse. (label: group left unforged, expected refusal prefix,
+# description.) Group 'binding' is refused before any row is read, so its
+# probes forge every row; a source with a name defined twice cannot be modelled
+# at all, so nothing is forged for it.
+BINDING = 'module-level binding refused '
 EDIT_PROBES = {
     'census_augassign_bitor': ('census', 'coverage sites missing=',
                                "recount_validation: state['complete'] |= True before the return"),
@@ -1184,31 +1804,83 @@ EDIT_PROBES = {
                                     '{"review_extra": False, **named}["review_extra"] after the round-9 gate'),
     'census_hidden_builder_bitand': ('census', 'coverage sites missing=', 'build_receipt: the same with &='),
     'census_hidden_builder_bitxor': ('census', 'coverage sites missing=', 'build_receipt: the same with ^='),
+    'census_arithmetic_augassign_add': ('census', 'coverage sites missing=', 'build_receipt: overall_pass += '
+                                        '{"review_extra": 0, **named}["review_extra"] after the round-9 gate (N03)'),
+    'census_arithmetic_unary_usub': ('census', 'coverage sites missing=',
+                                     'build_receipt: overall_pass = -overall_pass after the round-9 gate (N03)'),
     'changed_truncated_input': ('changed_line_nodes', 'changed-line nodes missing=',
                                 'post_august_validator_pin: anchors = anchors[:1] before the preserved guard'),
     'changed_rebound_input': ('changed_line_nodes', 'changed-line nodes missing=',
                               'main: actual_ets = expected_ets before the preserved partition comparison'),
     'changed_inserted_continue': ('changed_line_nodes', 'changed-line nodes missing=',
                                   'main: continue at the top of the partition loop'),
-    'changed_module_rebinding': ('changed_line_nodes', 'changed-line nodes missing=',
-                                 'module: POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT after MULTI_FAMILY_AUTHOR'),
+    'changed_module_rebinding': ('binding', BINDING,
+                                 'module: POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT after MULTI_FAMILY_AUTHOR '
+                                 '(round 12: refused as a second binding before any row is read)'),
+    'changed_module_new_constant': ('changed_line_nodes', 'changed-line nodes missing=',
+                                    'module: PM_RECEIPT = MULTI_FAMILY_RECEIPT after MULTI_FAMILY_AUTHOR'),
     'changed_module_truth_carrier': ('changed_line_nodes', 'truth-carrying node on a changed line without a census row ',
                                      'module: PM_PROBE = isinstance(HOME, Path) after MULTI_FAMILY_AUTHOR'),
+    'changed_new_function_dict_spread': ('changed_line_nodes', 'changed-line nodes missing=',
+                                         'recount_outcomes: cards = {"cards": cards, **doc}["cards"] before '
+                                         'if cards: (CA2-C12-B02)'),
     'deleted_preserved_guard': ('historical_lines', 'historical lines missing=',
                                 'main: the preserved if actual_ets != expected_ets block deleted in place'),
+    'frozen_round9_gate_deleted': ('frozen_lines', 'frozen lines missing=',
+                                   'build_receipt: the round-9 gate deleted (CA2-C12-N01)'),
+    'frozen_comment_inserted': ('frozen_lines', 'frozen lines missing=',
+                                'sha256_file (untouched): a comment line inserted; no node changes'),
+    'nodes_untouched_function_respaced': ('nodes', 'node rows missing=',
+                                          'sha256_file (untouched): one space added inside the lambda line; '
+                                          'the AST stays identical, so no census or changed-line row exists'),
     'refused_class_present': ('none', 'ast class table ',
                               'recount_validation: global PM_PROBE as its first statement'),
-    'fresh_module_rebinding': ('fresh', 'module-level binding is not fresh ',
+    'fresh_module_rebinding': ('binding', BINDING,
                                'module: POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT, with every row forged'),
-    'fresh_module_mutation': ('fresh', 'module-level binding is not fresh ',
+    'fresh_module_mutation': ('binding', BINDING,
                               'module: HOLDING_DECISIONS["DL-039"] = None, with every row forged'),
-    'fresh_function_shadows_builtin': ('fresh', 'module-level binding is not fresh ',
+    'fresh_function_shadows_builtin': ('binding', BINDING,
                                        'module: def isinstance(*args): return True, with every row forged'),
+    'binding_duplicate_def_build_receipt': ('binding', BINDING,
+                                            'build_receipt: a weak def (gate replaced by overall_pass = True) in '
+                                            'place, the honest def moved after the main guard (CA2-C12-B01)'),
+    'binding_duplicate_def_admission_record_problems': ('binding', BINDING,
+                                                        'admission_record_problems: a weak def returning [] padded '
+                                                        'to the same lines, the honest def after the main guard'),
+    'binding_evidence_fields_truncation': ('binding', BINDING,
+                                           'third_change_validator_pin: EVIDENCE_FIELDS[{"pm_fields": 12, '
+                                           '**receipt}["pm_fields"]:] = [], with every row forged'),
+    'binding_module_alias_write': ('binding', BINDING,
+                                   'module: PM_ALIAS = HOLDING_DECISIONS, then PM_ALIAS["DL-039"] = None'),
+    'binding_module_class_body': ('binding', BINDING,
+                                  'module: class PmC: HOLDING_DECISIONS["DL-039"] = None'),
+    'binding_star_import': ('binding', BINDING, 'module: from os.path import *'),
+    'binding_globals_write_new_function': ('binding', BINDING,
+                                           'recount_outcomes: globals()["HOLDING_AUTHOR"] = "/root/other"'),
+    'binding_alias_method_new_function': ('binding', BINDING,
+                                          'recount_outcomes: fields = EVIDENCE_FIELDS, then fields.clear()'),
 }
-FRESH_EXPECTED = {'fresh_module_rebinding': {'binds_a_ca_seal_or_builtin_name': ['POST_AUGUST_RECEIPT'],
-                                             'bound_more_than_once': ['POST_AUGUST_RECEIPT']},
-                  'fresh_module_mutation': {'mutates_an_object_that_is_not_new': ['HOLDING_DECISIONS']},
-                  'fresh_function_shadows_builtin': {'binds_a_ca_seal_or_builtin_name': ['isinstance']}}
+# The non-empty problem lists each binding probe must produce, and nothing
+# else; None means any non-empty list (its entries carry line numbers).
+BINDING_EXPECTED = {
+    'changed_module_rebinding': {'binds_a_ca_seal_or_builtin_name': ['POST_AUGUST_RECEIPT'],
+                                 'bound_more_than_once': ['POST_AUGUST_RECEIPT']},
+    'fresh_module_rebinding': {'binds_a_ca_seal_or_builtin_name': ['POST_AUGUST_RECEIPT'],
+                               'bound_more_than_once': ['POST_AUGUST_RECEIPT']},
+    'fresh_module_mutation': {'mutates_an_object_that_is_not_new': ['HOLDING_DECISIONS'],
+                              'not_a_declaration': None, 'writes_a_module_object': None},
+    'fresh_function_shadows_builtin': {'binds_a_ca_seal_or_builtin_name': ['isinstance'],
+                                       'shadows_a_builtin': ['isinstance']},
+    'binding_duplicate_def_build_receipt': {'bound_more_than_once': ['build_receipt'], 'not_a_declaration': None},
+    'binding_duplicate_def_admission_record_problems': {'bound_more_than_once': ['admission_record_problems'],
+                                                        'not_a_declaration': None},
+    'binding_evidence_fields_truncation': {'writes_a_module_object': None},
+    'binding_module_alias_write': {'not_a_declaration': None, 'writes_a_module_object': None},
+    'binding_module_class_body': {'not_a_declaration': None, 'writes_a_module_object': None},
+    'binding_star_import': {'not_a_declaration': None},
+    'binding_globals_write_new_function': {'writes_a_module_object': None, 'reflection': None},
+    'binding_alias_method_new_function': {'mutates_a_module_container': None},
+}
 _AUG = {'bitor': '|=', 'bitand': '&=', 'bitxor': '^='}
 
 
@@ -1216,19 +1888,26 @@ def edit_probe_source(source, label):
     """Scratch source for one edit probe: (altered LF source, edited current lines, deleted current lines)."""
     lines = source_lines(source)
     tree = ast.parse(source)
-    functions = {n.name: n for n in tree.body if isinstance(n, ast.FunctionDef)}
+    functions = top_functions(tree)
     def find(function, text):
         fn = functions[function]
         return next(i for i in range(fn.lineno, fn.end_lineno + 1) if lines[i - 1].strip() == text)
-    def insert(line, text):
-        return '\n'.join(lines[:line - 1] + [text] + lines[line - 1:]), [line], []
+    def insert(line, *texts):
+        return '\n'.join(lines[:line - 1] + list(texts) + lines[line - 1:]), list(range(line, line + len(texts))), []
     kind = label.rsplit('_', 1)[-1]
     if label.startswith('census_augassign_'):
         ret = next(n.lineno for n in functions['recount_validation'].body if isinstance(n, ast.Return))
         return insert(ret, "    state['complete'] " + _AUG[kind] + ' True')
+    gate_end = find('build_receipt', 'and named["august_result_before_recount"].get("pass") is True)')
     if label.startswith('census_hidden_builder_'):
-        gate = find('build_receipt', 'and named["august_result_before_recount"].get("pass") is True)')
-        return insert(gate + 1, '    overall_pass ' + _AUG[kind] + ' {"review_extra": False, **named}["review_extra"]')
+        return insert(gate_end + 1, '    overall_pass ' + _AUG[kind] + ' {"review_extra": False, **named}["review_extra"]')
+    if label == 'census_arithmetic_augassign_add':
+        return insert(gate_end + 1, '    overall_pass += {"review_extra": 0, **named}["review_extra"]')
+    if label == 'census_arithmetic_unary_usub':
+        return insert(gate_end + 1, '    overall_pass = -overall_pass')
+    gate = next(n for n in functions['build_receipt'].body if isinstance(n, ast.Assign) and n.end_lineno == gate_end)
+    if label == 'frozen_round9_gate_deleted':
+        return '\n'.join(lines[:gate.lineno - 1] + lines[gate_end:]), [], list(range(gate.lineno, gate_end + 1))
     loop = find('main', 'for cat, expected_ets in independent_partition.items():')
     if label == 'changed_truncated_input':
         return insert(find('post_august_validator_pin', 'if (isinstance(receipt, dict) and isinstance(dl077, dict)'),
@@ -1238,15 +1917,59 @@ def edit_probe_source(source, label):
         return insert(loop + 2, '        actual_ets = expected_ets')
     if label == 'changed_inserted_continue':
         return insert(loop + 1, '        continue')
+    cards = find('recount_outcomes', 'if cards:')
+    if label == 'changed_new_function_dict_spread':
+        return insert(cards, '    cards = {"cards": cards, **doc}["cards"]')
+    if label == 'binding_globals_write_new_function':
+        return insert(cards, '    globals()["HOLDING_AUTHOR"] = "/root/other"')
+    if label == 'binding_alias_method_new_function':
+        return insert(cards, '    fields = EVIDENCE_FIELDS', '    fields.clear()')
+    if label == 'binding_evidence_fields_truncation':
+        third = find('third_change_validator_pin', 'third = recount_object(REPO / MULTI_FAMILY_RECEIPT)')
+        return insert(third + 1, '        EVIDENCE_FIELDS[{"pm_fields": 12, **receipt}["pm_fields"]:] = []')
+    sha_file = functions['sha256_file']
+    lambda_line = next(n.lineno for n in ast.walk(sha_file) if isinstance(n, ast.Lambda))
+    if label == 'frozen_comment_inserted':
+        indent = lines[lambda_line - 1][:len(lines[lambda_line - 1]) - len(lines[lambda_line - 1].lstrip())]
+        return insert(lambda_line, indent + '# probe comment')
+    if label == 'nodes_untouched_function_respaced':
+        text = lines[lambda_line - 1]
+        assert text.count(', b""') == 1, text
+        respaced = text.replace(', b""', ',  b""')
+        assert ast.dump(ast.parse(source)) == ast.dump(ast.parse('\n'.join(
+            lines[:lambda_line - 1] + [respaced] + lines[lambda_line:])))
+        return '\n'.join(lines[:lambda_line - 1] + [respaced] + lines[lambda_line:]), [lambda_line], []
+    if label.startswith('binding_duplicate_def_'):
+        name = label[len('binding_duplicate_def_'):]
+        fn = functions[name]
+        first, last = function_span(fn)
+        honest = lines[first - 1:last]
+        if name == 'build_receipt':
+            weak = lines[first - 1:gate.lineno - 1] + ['    overall_pass = True'] + lines[gate_end:last]
+        else:
+            weak = lines[first - 1:fn.body[0].lineno - 1] + ['    return []']
+            weak += [''] * (len(honest) - len(weak))
+        assert lines[-2:] == ['    raise SystemExit(main())', ''] or lines[-1] == '    raise SystemExit(main())', lines[-3:]
+        end = len(lines) - (1 if lines[-1] == '' else 0)
+        altered = lines[:first - 1] + weak + lines[last:end] + ['', ''] + honest + lines[end:]
+        return '\n'.join(altered), list(range(first, first + len(weak))), []
     at = next(i for i, text in enumerate(lines, 1) if text.startswith('MULTI_FAMILY_AUTHOR = '))
     if label in ('changed_module_rebinding', 'fresh_module_rebinding'):
         return insert(at + 1, 'POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT')
+    if label == 'changed_module_new_constant':
+        return insert(at + 1, 'PM_RECEIPT = MULTI_FAMILY_RECEIPT')
     if label == 'changed_module_truth_carrier':
         return insert(at + 1, 'PM_PROBE = isinstance(HOME, Path)')
     if label == 'fresh_module_mutation':
         return insert(at + 1, 'HOLDING_DECISIONS["DL-039"] = None')
+    if label == 'binding_module_alias_write':
+        return insert(at + 1, 'PM_ALIAS = HOLDING_DECISIONS', 'PM_ALIAS["DL-039"] = None')
+    if label == 'binding_module_class_body':
+        return insert(at + 1, 'class PmC:', '    HOLDING_DECISIONS["DL-039"] = None')
+    if label == 'binding_star_import':
+        return insert(at + 1, 'from os.path import *')
     if label == 'fresh_function_shadows_builtin':
-        return '\n'.join(lines[:at] + ['def isinstance(*args):', '    return True'] + lines[at:]), [at + 1, at + 2], []
+        return insert(at + 1, 'def isinstance(*args):', '    return True')
     if label == 'deleted_preserved_guard':
         start = loop + 2
         end = next(i for i in range(start + 1, start + 20) if lines[i - 1].strip() == '})')
@@ -1259,10 +1982,10 @@ def edit_probe_source(source, label):
 def check_edit_probe(repo, test_names, label):
     raw = (repo / REL).read_bytes()
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
-    return edit_probe(raw, before, (repo / COVERAGE).read_bytes(), frozenset(test_names), label)
+    return edit_probe(raw, before, (repo / COVERAGE).read_bytes(), frozenset(test_names), label, frozen_source(repo))
 
 
-def edit_probe(raw, before, table_raw, test_names, label):
+def edit_probe(raw, before, table_raw, test_names, label, frozen=None):
     """Run one edit probe; return the refusal and the identities it must name.
 
     Every group is forged except the probe's own identities in the group
@@ -1270,6 +1993,7 @@ def edit_probe(raw, before, table_raw, test_names, label):
     repository's table already lacks.
     """
     group, prefix, _ = EDIT_PROBES[label]
+    frozen = frozen_source() if frozen is None else frozen
     source = raw.decode()
     old_lines = source_lines(source)
     altered, edited, deleted = edit_probe_source(source, label)
@@ -1280,10 +2004,16 @@ def edit_probe(raw, before, table_raw, test_names, label):
             line_map[b.a + k + 1] = b.b + k + 1
     table = rebase_lines(json.loads(table_raw), line_map.get)
     table['validator_sha256'] = sha(altered_raw)
-    expected, _, _, _, _, changed, historical, _ = coverage_model(altered_raw.decode(), before)
+    modelled = all(c == 1 for c in Counter(n.name for n in ast.parse(altered).body
+                                           if isinstance(n, TOP_LEVEL_DEFS)).values())
+    named = []
+    if modelled:
+        expected, _, _, _, _, changed, historical, _ = coverage_model(altered_raw.decode(), before)
+        frozen_records = frozen_line_inventory(altered_raw.decode(), frozen)
+        nodes = node_model(altered_raw.decode(), before)[0]
     if group == 'census':
         named = sorted(s for s, r in expected.items() if r.get('line') in edited)
-        assert named and all(expected[s]['node_type'].startswith('AugAssign(') for s in named), named
+        assert named and all(expected[s]['node_type'].split('(')[0] in ('AugAssign', 'UnaryOp') for s in named), named
     elif group == 'changed_line_nodes':
         named = sorted(s for s, r in changed.items() if r['line'] in edited)
         if prefix.startswith('truth-carrying'):
@@ -1294,13 +2024,19 @@ def edit_probe(raw, before, table_raw, test_names, label):
         named = sorted(s for s, r in historical.items() if r['mark'] == 'deleted')
         assert len(named) == len(deleted) and sorted(historical[s]['text'] for s in named) == sorted(
             old_lines[n - 1] for n in deleted), (named, deleted)
-    else:
-        named = []
-    forge_census(altered_raw, before, table, label, omit=set(named) if group == 'census' else ())
-    forge_records(altered_raw, before, table, label, omit=set(named))
-    refresh_totals(table, altered_raw, before)
+    elif group == 'frozen_lines':
+        named = sorted(frozen_records)
+        assert sorted((r['mark'], r['line']) for r in frozen_records.values()) == sorted(
+            [('deleted', n) for n in deleted] + [('inserted', n) for n in edited]), frozen_records
+    elif group == 'nodes':
+        named = sorted(s for s, r in nodes.items() if r['line'] in edited)
+        assert named, label
+    if modelled:
+        forge_census(altered_raw, before, table, label, omit=set(named) if group == 'census' else ())
+        forge_records(altered_raw, before, table, label, omit=set(named), frozen=frozen)
+        refresh_totals(table, altered_raw, before)
     try:
-        validate_coverage(altered_raw, before, table, test_names)
+        validate_coverage(altered_raw, before, table, test_names, frozen=frozen)
     except AssertionError as exc:
         message = str(exc)
     else:
@@ -1308,18 +2044,17 @@ def edit_probe(raw, before, table_raw, test_names, label):
     assert message.startswith(prefix), (label, message[:400])
     if group == 'none':
         assert json.loads(message[len(prefix):])['refused_present'] == ['Global'], message
-    elif group == 'fresh':
-        problems = json.loads(message[len(prefix):])
-        assert {k: v for k, v in problems.items() if v} == FRESH_EXPECTED[label], problems
+    elif group == 'binding':
+        problems = {k: v for k, v in json.loads(message[len(prefix):]).items() if v}
+        want = BINDING_EXPECTED[label]
+        assert set(problems) == set(want) and all(v is None or problems[k] == v for k, v in want.items()), problems
     elif group == 'census':
         # The census identity alone refuses: every other inserted node is forged.
         assert message == 'coverage sites missing=' + repr(named) + ' stale=[]', message[:400]
     elif prefix.startswith('truth-carrying'):
         assert message == prefix + repr(named), message[:400]
-    elif group == 'changed_line_nodes':
-        assert message == 'changed-line nodes missing=' + repr(named) + ' stale=[]', message[:400]
     else:
-        assert message == 'historical lines missing=' + repr(named) + ' stale=[]', message[:400]
+        assert message == prefix + repr(named) + ' stale=[]', message[:400]
     return {'label': label, 'refusal': message[:240], 'named': named}
 
 
@@ -1427,7 +2162,11 @@ def kept(x):
     assert totals['removed_functions'] == ['gone'], totals
     changed = sorted((r['line'], r['node_class'], r['required_outcome'])
                      for r in changed_line_inventory(source, before).values())
-    assert changed == [(7, 'Assign', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA),
+    # Round 12 (CA2-C12-B02): every line of the new function `fresh` is an
+    # inserted line, so its nodes have changed-line rows too (its call is a census row).
+    assert changed == [(1, 'FunctionDef', STRUCTURAL), (1, 'arg', STRUCTURAL), (2, 'Name', DATA), (2, 'Name', DATA),
+                       (2, 'Name', DATA), (2, 'Return', STRUCTURAL),
+                       (7, 'Assign', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA),
                        (8, 'Assign', DATA), (8, 'Name', DATA), (8, 'Name', DATA), (8, 'Name', DATA), (8, 'Name', DATA),
                        (10, 'Pass', STRUCTURAL), (13, 'If', STRUCTURAL), (13, 'Name', DATA),
                        (19, 'Name', DATA), (19, 'Name', DATA), (19, 'Name', DATA), (19, 'Name', DATA),
@@ -1525,8 +2264,8 @@ def check_node_types():
                 'AugAssign(BitAnd)', 'AugAssign(BitOr)', 'AugAssign(BitXor)', 'While test', 'TryStar dispatch'}
     types = Counter(r['node_type'] for r in rows)
     assert required <= set(types), sorted(required - set(types))
-    # Arithmetic is the table's deliberate data exclusion, in either statement shape.
-    assert not {'AugAssign(Add)', 'BinOp(Sub)'} & set(types), types
+    # Round 12 (CA2-C12-N03): arithmetic is a census row too, in either statement shape.
+    assert {'AugAssign(Add)', 'BinOp(Sub)'} <= set(types), types
     assert all(types['AugAssign(' + op + ')'] == 1 for op in ('BitAnd', 'BitOr', 'BitXor')), types
     calls = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call)]
     assert sum(r['node_type'] == 'Call' for r in rows) == len(calls)
@@ -1534,6 +2273,203 @@ def check_node_types():
     census = census_totals(source, '')
     assert not any(c['unanchored'] for c in census.values()), census
     assert census['BitOr']['touched_functions'] == {'AugAssign': 1, 'BinOp': 1}, census['BitOr']
+
+
+def check_module_scope_rules(repo):
+    """The round-12 binding rules refuse nothing in V or in CA-SEAL."""
+    raw = (repo / REL).read_bytes()
+    before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
+    out = {}
+    for label, text in (('validator', raw.decode()), ('ca_seal', before)):
+        problems = module_scope_problems(ast.parse(text))
+        assert not any(problems.values()), (label, problems)
+        tree = ast.parse(text)
+        out[label] = {'module_names': len(scope_analysis(tree)[0][tree]), 'module_statements': len(tree.body)}
+    problems = binding_problems(raw.decode(), before)
+    assert not any(problems.values()), problems
+    return out
+
+
+def check_total_table_controls():
+    """Synthetic controls for the round-12 node table, frozen-line records and module-scope rules."""
+    def ids(rows, fields=('function', 'line', 'node_class')):
+        return sorted(tuple(r[k] for k in fields) + (r['required_outcome'],) for r in rows.values())
+    before = "X = 1\n\n\ndef same(a):\n    return a + 1\n\n\ndef kept(a):\n    b = a\n    return b\n"
+    source = ("X = 1\nY = X / 2\nZ = 1 if X else 2\n\n\ndef same(a):\n    return a + 1\n\n\n"
+              "def kept(a):\n    b = a\n    c = (lambda q: q or b)(a)\n    return b\n\n\ndef fresh(a):\n    return a\n")
+    nodes, partition = node_model(source, before)
+    assert not any(partition['problems'].values()), partition
+    # 40 positioned nodes: 3 census anchors (the module's changed-line Div, and
+    # kept's Call and BoolOp), 21 changed-line rows (module lines 2-3, kept's
+    # line 12 and every line of the new function), 16 node rows (unchanged).
+    assert partition['positioned_nodes'] == 40 and partition['untouched_functions'] == 1, partition
+    assert partition['by_row_kind'] == {'census anchor': 3, 'changed-line row': 21, 'node row': 16}, partition
+    assert ids(nodes, ('function', 'line', 'node_class', 'baseline_line')) == [
+        ('<module>', 1, 'Assign', 1, DATA), ('<module>', 1, 'Constant', 1, DATA), ('<module>', 1, 'Name', 1, DATA),
+        ('kept', 10, 'FunctionDef', 8, STRUCTURAL), ('kept', 10, 'arg', 8, STRUCTURAL),
+        ('kept', 11, 'Assign', 9, DATA), ('kept', 11, 'Name', 9, DATA), ('kept', 11, 'Name', 9, DATA),
+        ('kept', 13, 'Name', 10, DATA), ('kept', 13, 'Return', 10, STRUCTURAL),
+        ('same', 6, 'FunctionDef', 4, STRUCTURAL), ('same', 6, 'arg', 4, STRUCTURAL),
+        ('same', 7, 'BinOp', 5, UNCHANGED_TRUTH), ('same', 7, 'Constant', 5, DATA), ('same', 7, 'Name', 5, DATA),
+        ('same', 7, 'Return', 5, STRUCTURAL)], ids(nodes, ('function', 'line', 'node_class', 'baseline_line'))
+    changed = changed_line_inventory(source, before)
+    assert ids(changed) == [
+        ('<module>', 2, 'Assign', DATA), ('<module>', 2, 'Constant', DATA), ('<module>', 2, 'Name', DATA),
+        ('<module>', 2, 'Name', DATA), ('<module>', 3, 'Assign', DATA), ('<module>', 3, 'Constant', DATA),
+        ('<module>', 3, 'Constant', DATA), ('<module>', 3, 'IfExp', REFUSED), ('<module>', 3, 'Name', DATA),
+        ('<module>', 3, 'Name', DATA),
+        ('fresh', 16, 'FunctionDef', STRUCTURAL), ('fresh', 16, 'arg', STRUCTURAL), ('fresh', 17, 'Name', DATA),
+        ('fresh', 17, 'Return', STRUCTURAL),
+        ('kept', 12, 'Assign', DATA), ('kept', 12, 'Lambda', STRUCTURAL), ('kept', 12, 'Name', DATA),
+        ('kept', 12, 'Name', DATA), ('kept', 12, 'Name', DATA), ('kept', 12, 'Name', DATA),
+        ('kept', 12, 'arg', STRUCTURAL)], ids(changed)
+    # N04: a Lambda, and a module-level IfExp, on a changed line has a row whose text keeps its body.
+    texts = {(r['line'], r['node_class']): r['expression'] for r in changed.values()}
+    assert texts[(12, 'Lambda')] == 'lambda q: q or b' and texts[(3, 'IfExp')] == '1 if X else 2', texts
+    census, _ = predicate_supplement(source, before, [])
+    assert sorted((r['function'], r['line'], r['node_type']) for r in census) == [
+        ('<module>', 2, 'BinOp(Div)'), ('kept', 12, 'BoolOp'), ('kept', 12, 'Call')], census
+    # Frozen-line records: inserted, changed, deleted, replaced, and a node-free comment line.
+    frozen = "a = 1\nb = 2\nc = 3\n"
+    def marks(text):
+        return sorted((r['mark'], r['line'], r['text']) for r in frozen_line_inventory(text, frozen).values())
+    assert marks(frozen) == []
+    assert marks("a = 1\nx = 0\nb = 2\nc = 3\n") == [('inserted', 2, 'x = 0')]
+    assert marks("a = 1\nc = 3\n") == [('deleted', 2, 'b = 2')]
+    assert marks("a = 1\nb = 9\nc = 3\n") == [('changed', 2, 'b = 9'), ('replaced', 2, 'b = 2')]
+    assert marks("a = 1\nb = 2\nc = 3 \n") == [('changed', 3, 'c = 3 '), ('replaced', 3, 'c = 3')]
+    assert marks("a = 1\n# note\nb = 2\nc = 3\n") == [('inserted', 2, '# note')]
+    assert marks("a = 1\nc = 3\nb = 2\n") == [('deleted', 3, 'c = 3'), ('inserted', 2, 'c = 3')]
+    assert line_pins(frozen) == [{'line': i + 1, 'sha256': sha(t.encode())} for i, t in enumerate(['a = 1', 'b = 2', 'c = 3', ''])]
+    # Module-scope rules (CA2-C12-B01, N02): each refused form, and the forms CA-SEAL uses.
+    base = 'X = [1]\nD = {}\n'
+    def refused(code):
+        return sorted(k for k, v in module_scope_problems(ast.parse(base + code)).items() if v)
+    for code, keys in [
+            ('def f():\n    pass\ndef f():\n    pass\n', ['bound_more_than_once']),
+            ('X = 2\n', ['bound_more_than_once']), ('del D\n', ['bound_more_than_once', 'not_a_declaration']),
+            ('len = 1\n', ['shadows_a_builtin']), ('from os.path import *\n', ['not_a_declaration']),
+            ('Y = X\nY[0] = 2\n', ['not_a_declaration', 'writes_a_module_object']),
+            ('class C:\n    D["k"] = 1\n', ['not_a_declaration', 'writes_a_module_object']),
+            ('for i in X:\n    pass\n', ['bound_more_than_once', 'not_a_declaration'][1:]),
+            ('if __name__ == "__main__":\n    raise SystemExit(main())\nZ = 1\n', ['not_a_declaration']),
+            ('def f():\n    X[0:] = []\n', ['writes_a_module_object']),
+            ('def f():\n    y = X\n    y[0] = 1\n', ['writes_a_module_object']),
+            ('def f():\n    for e in [X]:\n        e[0] = 1\n', ['writes_a_module_object']),
+            ('def f(z=X):\n    z.append(1)\n', ['mutates_a_module_container']),
+            ('def f():\n    D.update(a=1)\n', ['mutates_a_module_container']),
+            ('def f():\n    y = X or []\n    y.clear()\n', ['mutates_a_module_container']),
+            ('def f():\n    import os\n    os.environ["A"] = "1"\n', ['writes_a_module_object']),
+            ('def f():\n    globals()["X"] = 1\n', ['reflection', 'writes_a_module_object']),
+            ('def f():\n    return vars()\n', ['reflection']), ('def f():\n    return X.__class__\n',
+                                                                 ['mutates_a_module_container', 'reflection']),
+            ('def f():\n    d = {}\n    d["a"] = 1\n    return D.get("a"), X.index(1), d\n', []),
+            ('def f():\n    X = []\n    X.append(1)\n    return X\n', []),
+            ('def f():\n    class E(float):\n        def __new__(cls, t):\n            v = super().__new__(cls, t)\n'
+             '            v.t = t\n            return v\n    return E\n', []),
+            ('if __name__ == "__main__":\n    raise SystemExit(main())\n', [])]:
+        assert refused(code) == keys, (code, refused(code), keys)
+    return {'nodes': len(nodes), 'changed': len(changed)}
+
+
+RANDOM_EDITS = 200
+RANDOM_SEED = 20261106
+_SWAPS = [('==', '!='), (' is not ', ' is '), (' not in ', ' in '), (' and ', ' or '), ('True', 'False'),
+          ('<=', '<'), ('>=', '>'), ('[0]', '[1]'), ('[-1]', '[0]'), ('(', '( '), (', ', ',')]
+
+
+def _mutated(text, rng):
+    """One random in-line change: an operator, literal, name or spacing change, or a trailing comment."""
+    choices = []
+    for a, b in _SWAPS:
+        for x, y in ((a, b), (b, a)):
+            if x in text:
+                choices.append(lambda t, x=x, y=y: t.replace(x, y, 1))
+    digits = [i for i, c in enumerate(text) if c.isdigit()]
+    if digits:
+        choices.append(lambda t, i=rng.choice(digits): t[:i] + str((int(t[i]) + 1) % 10) + t[i + 1:])
+    quotes = [i for i, c in enumerate(text) if c in '"\'']
+    if quotes:
+        choices.append(lambda t, i=rng.choice(quotes): t[:i + 1] + 'x' + t[i + 1:])
+    words = [w for w in __import__('re').findall(r'\b[a-z_][a-z0-9_]{2,}\b', text)]
+    if words:
+        choices.append(lambda t, w=rng.choice(words): t.replace(w, w + '_x', 1))
+    choices += [lambda t: t + ' ', lambda t: t + '  # probe', lambda t: (' ' if t.strip() else '') + t]
+    return rng.choice(choices)(text)
+
+
+def random_line_edits(source, count=RANDOM_EDITS, seed=RANDOM_SEED):
+    """count distinct single-line edits of source that still parse, cycling insert, delete, change and swap.
+
+    Returns [(kind, line, altered LF source)]. Seeded, so the corpus and the
+    replay draw the same edits.
+    """
+    import random
+    rng = random.Random(seed)
+    lines = source_lines(source)
+    candidates = [i for i, t in enumerate(lines, 1) if t.strip()]
+    kinds = ('insert', 'delete', 'change', 'swap')
+    edits, seen, attempts = [], set(), 0
+    while len(edits) < count:
+        attempts += 1
+        assert attempts < 200 * count, 'random edits: too few parseable edits'
+        kind, line = kinds[len(edits) % 4], rng.choice(candidates)
+        text, new = lines[line - 1], list(lines)
+        if kind == 'insert':
+            donor = lines[rng.choice(candidates) - 1].strip()
+            new.insert(line - 1, text[:len(text) - len(text.lstrip())] + donor)
+        elif kind == 'delete':
+            del new[line - 1]
+        elif kind == 'change':
+            new[line - 1] = _mutated(text, rng)
+        else:
+            if line >= len(lines) or not lines[line].strip() or lines[line] == text:
+                continue
+            new[line - 1], new[line] = lines[line], text
+        altered = '\n'.join(new)
+        if altered == source or altered in seen:
+            continue
+        try:
+            ast.parse(altered)
+        except (SyntaxError, ValueError):
+            continue
+        seen.add(altered)
+        edits.append((kind, line, altered))
+    return edits
+
+
+def refusal_rule(message):
+    """The coverage rule a refusal message names."""
+    for prefix in ('validator does not parse', 'ast class table', 'module-level binding refused',
+                   'line pins are not the frozen validator', 'frozen lines', 'coverage sites', 'preserved occurrence',
+                   'truth-carrying node on a changed line', 'changed-line nodes', 'historical lines', 'node partition',
+                   'truth-carrying node without a census row', 'node rows', 'validator is not frozen'):
+        if message.startswith(prefix) or message.startswith("('" + prefix):
+            return prefix
+    return 'other: ' + message[:60]
+
+
+def check_random_edits(repo, test_names, count=RANDOM_EDITS):
+    """The stopping bar's control: every random single-line edit of V fails coverage with the table byte-identical."""
+    raw = (repo / REL).read_bytes()
+    before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
+    table_raw = (repo / COVERAGE).read_bytes()
+    frozen = frozen_source(repo)
+    crlf = b'\r\n' in raw
+    rules, kinds = Counter(), Counter()
+    for kind, line, altered in random_line_edits(raw.decode().replace('\r\n', '\n'), count):
+        altered_raw = altered.replace('\n', '\r\n').encode() if crlf else altered.encode()
+        table = json.loads(table_raw)
+        try:
+            validate_coverage(altered_raw, before, table, test_names, frozen=frozen)
+        except AssertionError as exc:
+            rules[refusal_rule(str(exc))] += 1
+        else:
+            raise AssertionError('random edit passed coverage with the table unchanged: %s at V:%d' % (kind, line))
+        assert encoded(table) == table_raw, 'coverage check changed the table'
+        kinds[kind] += 1
+    assert sum(kinds.values()) == count and (repo / COVERAGE).read_bytes() == table_raw
+    return {'edits': count, 'by_kind': dict(sorted(kinds.items())), 'refused_by': dict(sorted(rules.items()))}
 
 
 def run(repo, output, source_map, apply_cut=None):
@@ -1580,6 +2516,17 @@ def run(repo, output, source_map, apply_cut=None):
         spec = importlib.util.spec_from_file_location('dl451_fixture', root / REL)
         v = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(v)
+        def imported_bindings_match():
+            # CA2-C12-B01: the corpus runs the one binding the checker reads.
+            tree = ast.parse((root / REL).read_bytes().decode())
+            problems = module_scope_problems(tree)
+            assert not any(problems.values()), problems
+            for name, fn in top_functions(tree).items():
+                assert getattr(v, name).__code__.co_firstlineno == function_span(fn)[0], name
+            module_names = set(scope_analysis(tree)[0][tree])
+            assert module_names <= set(vars(v)), sorted(module_names - set(vars(v)))
+            return len(module_names)
+        record('positive_imported_bindings_match_ast', imported_bindings_match)
         if apply_cut is not None:
             apply_cut(v)
         for path in [v.MULTI_FAMILY_RECEIPT, v.POST_AUGUST_RECEIPT, v.HOLDING_RECEIPT,
@@ -2280,11 +3227,21 @@ def run(repo, output, source_map, apply_cut=None):
             # a passing August result. Preserve the four production clauses and
             # their jumps; bypass only the earlier August computation and later
             # receipt I/O. No live approval run or executable file is changed.
+            # CA2-C12-N05: the seam lines come from the AST of the one binding of
+            # main (the recount_validation call and the next fail_errors
+            # assignment), not from fixed line numbers.
+            main_def = top_functions(ast.parse((root / REL).read_bytes().decode()))['main']
+            assert v.main.__code__.co_firstlineno == function_span(main_def)[0]
+            seam_start = next(n.lineno for n in main_def.body if isinstance(n, ast.Assign)
+                              and isinstance(n.value, ast.Call) and isinstance(n.value.func, ast.Name)
+                              and n.value.func.id == 'recount_validation')
+            seam_stop = next(n.lineno for n in main_def.body if isinstance(n, ast.Assign) and n.lineno > seam_start
+                             and any(isinstance(t, ast.Name) and t.id == 'fail_errors' for t in n.targets))
             def main_flags(complete, august_values=None):
                 code = v.main.__code__
                 instructions = list(dis.get_instructions(v.main))
-                start = next(i.offset for i in instructions if i.positions.lineno == 2241)
-                stop = next(i.offset for i in instructions if i.positions.lineno == 2250)
+                start = next(i.offset for i in instructions if i.positions.lineno == seam_start)
+                stop = next(i.offset for i in instructions if i.positions.lineno == seam_stop)
                 body = bytearray(code.co_code)
                 body[:start] = bytes([dis.opmap['NOP'], 0]) * (start // 2)
                 fields = ['complete_denominator_known', 'contract_depth_complete', 'overall_pass', 'named']
@@ -2315,10 +3272,10 @@ def run(repo, output, source_map, apply_cut=None):
                 finally:
                     v.recount_validation = old_recount
             for field in ['complete_denominator_known', 'contract_depth_complete', 'overall_pass', 'seal_prerequisites_met']:
-                def value(flags):
-                    return flags['named'][field] if field == 'seal_prerequisites_met' else flags[field]
-                assert value(main_flags(True)) is True
                 def refuses_incomplete(field=field):
+                    # The parent runs inside record() (CA2-C12-N05): a broken seam fails this test only.
+                    parent = main_flags(True)
+                    assert (parent['named'][field] if field == 'seal_prerequisites_met' else parent[field]) is True
                     flags = main_flags(False)
                     result = flags['named'][field] if field == 'seal_prerequisites_met' else flags[field]
                     if result is False:
@@ -2447,6 +3404,12 @@ def run(repo, output, source_map, apply_cut=None):
     for label in CLASS_TABLE_PROBES:
         record('negative_' + label, lambda label=label:
                check_class_table_probe(repo, {r['name'] for r in results}, label))
+    # Round 12: the binding rules hold on V and CA-SEAL, the total-table
+    # controls, and the stopping bar's control: random single-line edits of V
+    # with the committed table byte-identical each fail coverage.
+    record('positive_module_scope_rules_on_V_and_CA_SEAL', lambda: check_module_scope_rules(repo))
+    record('positive_total_table_controls', check_total_table_controls)
+    record('negative_random_single_line_edits', lambda: check_random_edits(repo, {r['name'] for r in results}))
     summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
                'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
                'real_frozen_source_custody': custody, 'results': results,
