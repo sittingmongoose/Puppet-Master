@@ -1551,3 +1551,193 @@ The `--scope all` run and the gate regressions ran on `2f02517bb3`, the code com
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/gen-cases.json` | `0a7847d2b318f4ce38508696b506f745eeb494cc3c622a8f5f966d067e220d1d` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/full-selftest-summary.json` | `6a4a54b1f4854f424996e408920bdd2c8027d60c7571d16254b0e06d527473fe` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3/extraction.sha256` | `fd2774e4f1ef0759aed5321e957934a46624f0bd952029c33843934a8fc51db7` |
+
+## Opus pre-check (numbers fix 3): findings and responses
+
+Scope: CV-1100, SP-1100, SP-1101, the number corpus, its runner, the mutation set and the number-only section of the adoption guide. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-numbers-fix3-opus.md` (blind Opus pre-check, NOT_READY at `9f873ad83469b4e53a6579fb115f5ef2270e1f12`): one High blocking finding, one Medium, three Low, one Info. Brief: `lanes/NUMRULE-NUM-FIX4.md`. Implementation commit `98490285ec`. **No production helper code changed:** `scripts/pm_event_numbers.py`, `scripts/pm_event_index_binding.py` and `scripts/pm_projects_refresh_contracts.py` are byte-identical to `9f873ad834`. Every edit is to the corpus, its runner, the mutation set, the corpus content pin, the guide's number-only section and these records.
+
+| | |
+|---|---|
+| **Goal** | A wrong implementation of any adopted number API fails the number corpus, and "an owner rule with no row" can be checked mechanically. |
+| **Gap** | The 71-row rules table was written by hand. It missed about 15 owner rules, 82 of 173 hand-written mutations named no rule, and the reviewer's 20 unseen mutations caught only 7. The survivors sat where one rule ranges over several fields, containers, tokens or defaults. |
+| **Gain** | The rules table is now derived from the owner text. The self-test re-extracts all 194 statements (every sentence of the three units' `canonical_text`, `acceptance_criteria` and `negative_constraints`, and of the guide's number sections) and fails on a statement with no row or a stale row. Every row names witnessed rules or says why no mutation applies. All 20 unseen mutations and S1–S8 are committed and caught. Three new generated families cover the review's field, container and delegated-refusal classes. |
+
+**Totals** (`python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations`, exit 0):
+
+| Measure | Count |
+|---|---|
+| Owner statements extracted | 194 (CV-1100 31, SP-1100 19, SP-1101 36, guide 108); 146 carry a normative marker |
+| Statement rows | 194: 114 name rules (all caught), 80 say why no mutation applies; 0 without a row, 0 stale |
+| Rules | 108 (71 kept, 37 new), all caught; one is a harness control that must survive |
+| Hand-written mutations | 206, each naming its rule (0 orphans) |
+| Generated mutation points | 160: 64 refusal sites, 34 guard predicates, 12 boundaries, 19 delegated refusal calls, 8 container branches, 23 field iterations |
+| Mutations | 366 |
+| Caught | 362, each with its witness among the failures |
+| Survivors | 4, all declared with a reason (below); 0 undeclared |
+| Not applied, build errors, runner exceptions | 0, 0, 0 |
+| The fix-3 review's 20 blind mutations | 20 caught in the committed set; 20 of 20 by the review's own script on a scratch copy |
+| The fix-2 review's 15 blind mutations | 15 caught (review's own script on a scratch copy) |
+| Number corpus | 544 cases (266 positive, 278 negative), 61 owner checks |
+
+**Reviewer reruns from scratch copies.** Each reviewer tool ran byte-identical (SHA-256 in `review-rerun/tool-sha256.txt`) and unmodified, on a copy of the extraction of `98490285ec` (`extraction.sha256`). Each mutant is a real source edit in a throwaway copy, judged by a fresh `--self-test --scope numbers` CLI process.
+
+| Reviewer set | Result | At its review |
+|---|---|---|
+| Fix-2 `own_mutations.py`: 15 blind mutations | **15 of 15 caught**; supplementary: `control-noop-comment` survives (correct), the other 3 caught | 6 of 15 |
+| Fix-3 `own_mutations3.py`: 20 blind mutations | **20 of 20 caught**, each differing on its probe; supplementary S1–S9: **9 of 9 caught** | 7 of 20; S3–S6, S8, S9 survived |
+| Fix-3 `delegated_sweep.py`: 20 delegated calls + 5 binding raises | 20 of 20 calls caught (the `_scalar_string(k)` key sort included); binding raises: `:75` now caught, `:18`, `:34`, `:53` survive | 19 of 20 calls; 1 of 5 raises |
+| Fix-3 `freshness.py`: F1–F5 scratch edits under `--mutations` | **F1–F5 all exit 1.** F5 (the alias `_deny = _refuse` with a `_deny(...)` site) fails with `refusal alias or indirect reference: _refuse at line 119`; F4 reports the new key `site:exact_boolean:boolean_type#2` | F1–F4 exit 1, **F5 exit 0** |
+
+The three surviving binding raises are the review's own equivalence and capacity list: `:34` is unreachable (every caller passes `str`, `array` or `map`), `:53` falls through to the closing `TypeError`, which `storage_value_bytes` maps to `binding_domain` all the same, and `:18` needs a string longer than 2^32 bytes. The binding module is not enumerated (finding 3).
+
+### Finding 1 (High, blocking): unseen mutations, 7 of 20 caught — fixed in `98490285ec`
+
+- **Where:** the number cases of `Plans/event_number_recipe_corpus.json` had no input that told the 13 survivors apart; the generator (`mutation_points`) produced only refusal-site, guard-predicate and boundary mutants.
+- **Why:** each survivor broke one member of a rule that ranges over several fields, containers, tokens or defaults, and the corpus tested another member.
+- **Fix:** one or more single-defect cases per survivor, each committed mutation's witness, plus the generator families below.
+
+| Review mutation | At review | Now | Witness case (new) |
+|---|---|---|---|
+| R06 `parse-arrays-not-walked` (blocking) | survived | caught | `parse-array-lone-surrogate` (`["\ud800"]`), also `parse-array-object-lone-surrogate`, `parse-nested-array-lone-surrogate` |
+| R09 `jcs-kind-exponent-as-integer` (blocking) | survived | caught | `jcs-typed-integer-10^21-exponent-token` (`jcs_value`, `@int` 10^21, `typed: true`, error `jcs_kind`); producer route `producer-type-qualified-10^21-bytes` |
+| R16 `full-value-app-profile` (blocking) | survived | caught | `full-value-float-known-answer` (independent known answer, below) |
+| R19 `recipe-skips-first-field` (blocking) | survived | caught | `recipe-empty-envelope-schema-id`; one empty case per field (13 new + `recipe-empty-owner-edition`), `recipe-integer-envelope-schema-id` |
+| R20 `binding-skips-last-field` (blocking) | survived | caught | `binding-empty-source-commitment`; one empty case per non-project field (7 new + `binding-empty-event-id`) |
+| R02 `jsonnumber-fraction-digits-optional` | survived | caught | `json-number-malformed-1.`; also `.5`, `1e`, `1e+` |
+| R03 `jsonnumber-exponent-no-plus` | survived | caught | `parse-exponent-1e+2` (positive with `returns`), `json-number-exponent-1e+2` |
+| R04 `float-marker-lowercase-e-only` | survived | caught | `parse-exponent-1E5`; also `1E+5`, `-2.5E-3` |
+| R05 `parse-bytes-utf8-sig` | survived | caught | `parse-utf8-bom-bytes` (`raw_hex: efbbbf31`, `json_syntax`) |
+| R07 `kind-accepts-unknown-label` | survived | caught | `jcs-numeric-kind-number` (`kind: "number"`, `jcs_numeric_kind`) |
+| R11 `dispatcher-override-truthiness` | survived | caught | `history-falsy-override-empty-list`, `history-falsy-override-false` (new `falsy_override` scenario) |
+| R15 `decode-default-profile-app` | survived | caught | `decode-default-profile-float32`, `decode-default-profile-noncanonical-float64` (S9) |
+| R18 `payload-media-casefold` | survived | caught | `payload-media-case-variant` (`Application/JSON`) |
+| R01, R08, R10, R12, R13, R14, R17 | caught | caught | unchanged witnesses (R08 `jcs-binary64-only-10^23`, R13 `app-binary-256`, R14 `app-binary-65536`, R17 `payload-inline-limit`) |
+
+Supplementary: S1, S2 and S7 stay caught. **S3** (`INDEX_BINDING` `surrogatepass`) is caught by `physical-binding-lone-surrogate`; **S4** (`APPEND_ONCE`) by `append-policy-uppercase`; **S5** (payload `minimum=1`) by `payload-empty`; **S6** (`storage_value_bytes` default `APP_PHYSICAL`) by `physical-default-profile-float32` and the R16 known answer; **S8** (`ParsedDecimal` default kind) by `parsed-decimal-default-kind`, through a new `parsed_decimal` operation on the public carrier. S9 is the same source edit as R15 and is not committed twice. All 28 are committed as `source: review-fix3`.
+
+**R16 known answer, built independently.** The case adds four fixture-only float members to the frozen base original event's payload: `1.5`, `1.0`, `-0.0` (float32-exact, `ca`) and `0.1` (float64, `cb`). The expected SHA-256 comes from an EventRecord MessagePack encoder written from SP-1100/SP-236 in the case generator. It never imports the helper, and it first reproduces the frozen CV-339 vector of the base event (`commitment_preimage_hex` and `commitment_sha256` of `Plans/event_append_receipt_full_value_fixtures.json`) byte for byte.
+
+**Generator families, new** (`GENERATED_FAMILIES` in the runner; keys carry no line numbers):
+- **`delegated_refusal`** (19): every call inside the helper to a module-level function or class that holds a refusal site, directly or through another such call. The mutant replaces the call with its first positional argument, the unchecked input. All 19 are caught, including the review's `_scalar_string(k)` key-sort survivor (new case `physical-lone-surrogate-key`).
+- **`container_branch`** (8): every `if`/`elif` branch tested by `type(x) is list` or `type(x) is dict` (the `loads_exact` walk, `loads_current_json.materialize`, `qualified_jcs.adapt`, `storage_value_bytes`). The mutant deletes the branch. All 8 are caught; R06's class is now generated.
+- **`field_iteration`** (23): every `fields(self)` loop, once per field of its dataclass. The mutant skips that field. 22 are caught by the per-field cases. Skipping `project_id` is a declared equivalence: the loop body already exempts it.
+
+The review's third family, wrong literals and defaults, is not generated. Its mutations are committed by hand instead (R02–R04, R07, R15, S4–S6, S8), each with its own case.
+
+### Finding 2 (Medium): the hand-written rules table missed owner rules — fixed in `98490285ec`
+
+- **Where:** `scripts/pm_event_numbers_mutations.json`, `rules`.
+- **Why:** the table was written from memory, one rule per predicate the author thought of, so a rule with no row could not be detected.
+- **Fix:** the rules table is derived from the owner text, in two levels:
+  - **Statements** (`statements`, 194 rows): `owner_statements()` in the runner splits every sentence of the selected owner text. The selection is data (`owner_text`): the three units' YAML fields, and the guide's `(preamble)`, Shared calls, Number-only adoption, Authority boundary and Validation and limits sections. Excluded by name with a reason: the five CV-1101 date-time bullets of Shared calls, the Timestamp grammar row, and the Per-lane replacements and Ancillary lanes sections. A guide section that is neither selected nor excluded, or a block exclusion that matches nothing, fails. Each row records its source path, line and exact text, and names its rules or gives a `no_mutation` reason; a `note` marks a clause outside the helper (for example the CV-366 typed tree, which `pm_projects_refresh_contracts` owns).
+  - **Rules** (`rules`, 108 rows): predicate-level, each listing its mutations. Every hand-written mutation names its rule through a `rule` field, and the rule must list it back.
+- **The self-test check** (`check_rules_table`, in `--mutations`): a statement without a row, a row whose line no longer holds its text (with the statement's new line in the message), a duplicate row, a row with both or neither of rules and reason, an unknown rule, a rule named by no row, and a mutation with no rule each fail.
+- **The review's 16 missing rules all have rows now:**
+
+| Owner text | Rule (new unless marked) | Mutations |
+|---|---|---|
+| CV-1100 profile dispatch | `full-value.event-value-profile`; `physical.default-event-value` | R16, `full-value-msgpack-packb`; R15, S6 |
+| SP-1100 para. 1, last sentence | `payload.exact-media` | R18, `payload-no-media-refusal` |
+| SP-1101 acceptance 3 | `dispatch.no-caller-override` | R11, `dispatcher-no-override-refusal` |
+| Guide, Shared calls 2 | `kind.closed-set` | R07, generated `jcs_numeric_kind` site |
+| Guide, Shared calls 2 / RFC 8259 | `json-number.grammar` | R02, R03, R04 and three earlier `json-number-*` mutations |
+| CV-1100 / SP-1100 / guide | `binding.domain` | S3, generated `binding_domain` site |
+| CV-1100 sentence 2 | `no-decimal-rounding` | `parsed-decimal-rounds`, `json-number-exact-float`, `jcs-output-rounds-15-digits` |
+| CV-1100 null presence | `null-presence` | S7 |
+| CV-339 | `full-value.sha256-hex` | `full-value-sha512`, `full-value-returns-bytes` |
+| SP-1100 uint64 fields | `storage.uint64-range` | the four `uint64-*` range mutations (the two rounding ones sit under `no-binary64-narrowing` and `integer.exact-value`) |
+| SP-1100 finite floats | `physical.finite-floats` | generated `physical_nonfinite` site |
+| SP-1100 decoding | `decode.duplicate-keys`, `decode.forbidden-tags`, `decode.invalid-unicode`, `decode.trailing-values` (with `decode.canonical-bytes`, kept) | new `decode-drops-duplicate-hook` and `decode-ignores-trailing`; `decode-no-ext-refusal`, `decode-raw-strings` |
+| SP-1101 para. 3 / CV-1100 para. 1 | `dispatch.no-current-guards` | new `dispatcher-current-parser-on-original` (witness `history-negative_zero`) and `dispatcher-current-append-gate-on-original` (witness `history-integral_float`) |
+| SP-1101 acceptance 3, replaced resources | row names `dispatch.original-recipe`, `dispatch.verifier-true`, `dispatch.one-verifier-call` (kept) | the frozen verifier refuses; the helper's part is exact tuple lookup and `is True` |
+| SP-1101 para. 6, replay-only | `append-policy.replay-only` | `append-policy-no-replay-only-refusal`, generated site |
+| SP-337 BLAKE3 | `payload.blake3-id` | `payload-sha256` |
+
+- **Rows without a mutation (80):** governance or ownership (CV-1100's last paragraph, SP-1101's successor-recipe rule), scope statements ("bounded static codec evidence only"), CV-1101 date-time sentences, the guide's descriptions of the harness itself (enforced by `--mutations` problems, not by a helper mutation), file lists and citation practice. Each row says which. 53 of them carry a normative marker; their reasons are in the table.
+
+### Finding 3 (Low): the enumeration saw only literal `_refuse` and `raise` — fixed in `98490285ec` (aliases refused outright)
+
+- **Fix:** `refusal_alias_problems()` fails `--mutations` on any use of `_refuse` or `Refusal` other than a direct `_refuse(...)` call, `raise Refusal(...)`, the call inside `_refuse` itself, or an `except` type. An alias (`_deny = _refuse`), a rebinding, an attribute or import of either name, and the string `"_refuse"` (a `getattr`/`globals()` lookup) all fail. Controls: the review's F5 edit and a `globals()["_refuse"]` edit each give exit 1.
+- **Delegated refusal calls:** generated (`delegated_refusal`, above), 19 of 19 caught.
+- **Not done:** `pm_event_index_binding.py` is not enumerated, and the ordinal diagnostic (F4) is unchanged; the brief asked for neither. The binding module's `:75` behaviour is now pinned by `physical-binding-integer-key` (`INDEX_BINDING` integer key → `binding_domain`).
+
+### Finding 4 (Low): the CLI entry point had no committed check — fixed in `98490285ec`
+
+- **Fix:** the owner check `cli_failing_corpus_exits_1` executes the helper's module code as `__main__`, in process, with `--self-test --scope numbers --corpus <one-case failing corpus>`, and requires `SystemExit(1)` with printed status `fail`. Under `--mutations` the mutant's own code object runs, so `site:<module>:raise#1` is now caught (witness `check:cli_failing_corpus_exits_1`) instead of declared, and a new hand-written mutation `cli-exit-mapping-always-zero` (`return 0`) is caught too. `--mutations` also runs the real CLI once in a fresh process on the same corpus and requires exit 1 (`cli_subprocess`). The guide now says CI should require both exit 0 and `"status": "pass"`, which covers an on-disk edit to `raise SystemExit(0)`.
+
+### Finding 5 (Low): the site-370 fixture depends on the module-global `len` — documented in `98490285ec`
+
+- **Fix:** documented, not removed: no exact-`bytes` object reports 2^32 bytes without allocating them. The `_reported_length` docstring and both cases' `fixture_boundary` now state the dependence: a behaviour-preserving refactor (`v.__len__()`) fails both cases, a false alarm in the safe direction, never a mask.
+
+### Finding 6 (Info): `--scope all` on the pre-amend commit — rerun
+
+`python3 scripts/pm_event_numbers.py --self-test` (`--scope all`) on `98490285ec` itself, with the full `Plans/` checkout: exit 0, status pass, 13,590 of 13,590 cases (6,929 positive, 6,661 negative), 300 owner checks, date-time inventory pass (233 nodes, 0 unclassified). The recomputed corpus pin is accepted by the inventory gate. 6:56 wall clock, 484 MB peak RSS.
+
+### Production refusals
+
+No mutation exposed a production behaviour that differs from CV-1100, SP-1100 or SP-1101, so no finding is raised and no refusal changed. Two notes for the owner, unchanged from fix 3: an EventRecord string over 2^32 bytes raises `ValueError` from `pm_event_index_binding._length_prefix`, not a `Refusal`; and the guide's statement that `INDEX_BINDING` refuses `binding_domain` holds for integer keys, which `physical-binding-integer-key` now pins.
+
+### Declared survivors (4)
+
+| Mutation | Reason |
+|---|---|
+| `control-noop-comment` | Harness control (rule `harness.control`): a behaviour-free edit that must survive; reporting it caught would mean false kills. |
+| `boundary:qualified_jcs.number:math.copysign(1.0, f) < 0:0#1` | Equivalent: `copysign` returns exactly ±1.0, so `<` and `<=` agree (the review checked 1010 floats). |
+| `boundary:storage_value_bytes:v >= 0:0#1` | Equivalent: 0 emits `0x00` on both branches (the review checked −40000..40000). |
+| `field:OriginalBinding.__post_init__:skip project_id#1` | Equivalent: the loop body already exempts `project_id`; the separate `original_scope` predicate checks it. |
+
+`site:<module>:raise#1` is no longer a survivor (finding 4).
+
+### Scope and corpus
+
+- **Corpus:** 54 new number cases inserted contiguously after the last number case (40 negative, 14 positive), none with `date_time_profile`. Two existing cases changed text only: the site-370 pair's `fixture_boundary` (finding 5). No case removed.
+- **Runner:** new operation `parsed_decimal`; `default_profile` on `physical` and `decode` calls the helper with no profile argument; history scenario `falsy_override`.
+- **Date-time:** the only date-time change is the number corpus content pin in `scripts/pm_event_datetime_exclusions.json`, recomputed as the inventory defines it (`sha256(json.dumps(value))`): `e0b9edbe…` → `bc6bcc3c69e4bd0d0828a38b1b67e9079dfa9d32e1b3f62e6207627c203e7cd1`.
+- **Guide:** the Number-only adoption Self-check paragraph now describes six families, the rules table and the CLI check; Needs lists the owner text `--mutations` reads.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/` (generators, controls, CLI runs, review reruns, `SHA256SUMS`).
+
+### Commands and exit codes
+
+All runs: Python 3.14.4, msgpack 1.1.2 first on `PYTHONPATH` (wheel SHA-256 `180759d8…`), rfc8785 and blake3 from the user site, Node v22. Heavy runs one at a time, with at least 15 GB available.
+
+| # | Command | Exit | Result |
+|---|---|---:|---|
+| 1 | `gen_cases4.py <tree> <ev>` | 0 | 54 cases; the encoder reproduces the frozen CV-339 vector |
+| 2 | `gen_mutations4.py <tree> owner_text.json` | 0 | 206 hand-written, 108 rules, 194 rows, 160 points; 0 uncaught while picking witnesses |
+| 3 | `table_controls.py` (12 controls on scratch copies) | 0 | every control gives its named problem; intact gives none |
+| 4 | `check_vectors4.py` (msgpack, Node, stdlib only) | 0 | 20 checked, 0 mismatches |
+| 5 | `--self-test` (`--scope all`, full `Plans/`) on `98490285ec` | 0 | 13,590/13,590, 300 checks, inventory pass |
+| 6 | `cli_runs.py`: `--scope numbers` | 0 | 544/544, 61 checks |
+| 7 | `cli_runs.py`: one-case failing corpus | 1 | status fail |
+| 8 | `cli_runs.py`: `--scope numbers --mutations` | 0 | 366 / 362 caught / 4 declared; `cli_subprocess` exit 1; 169 s |
+| 9 | `cli_runs.py`: owner sentence added to CV-1100 (scratch copy), `--mutations` | 1 | `owner statement without a row: CV-1100:canonical_text:1.7` |
+| 10 | fix-2 `own_mutations.py` | 0 | 15/15 |
+| 11 | fix-3 `own_mutations3.py` | 0 | 20/20, S1–S9 9/9 |
+| 12 | fix-3 `delegated_sweep.py` | 0 | 20/20 calls; 3 binding raises survive (above) |
+| 13 | fix-3 `freshness.py` | 0 | F1–F5 each exit 1 (F5: refusal alias) |
+
+### Limits
+
+- **Statements are sentences, not predicates.** A sentence with several predicates names several rules; whether those rules cover each predicate is a reviewer's judgement, row by row. The 80 rows without a mutation carry reasons a reviewer checks.
+- **Rows are pinned to absolute lines.** An unrelated edit above CV-1100, SP-1100 or SP-1101, or in the guide's selected sections, moves rows: `--mutations` then fails and names each statement's new line until the rows are refreshed. Plain `--self-test` is unaffected. `--mutations` needs the three owner-text files beside `scripts/` and `Plans/`.
+- **Generation covers six families.** Wrong literals and defaults are not generated; they are hand-written. `pm_event_index_binding.py` is not enumerated.
+- `--scope numbers` says nothing about date-time. Native custody, durability and family admission remain NOT_RUN; guard isolation stays SWEEP_PENDING.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/cli-runs.json` | `d2c984160a90c98766aca3faee4334fae6604678afa100085ee17785d215b78e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/head-numbers-mutations.stdout.json` | `860761b63f2fee07c2568c9710479af7694d03c1e5e617d46b29ed82a93c39f1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/head-numbers.stdout.json` | `f14dc3b19ad7a76c8c9f8cce74ba87dfd5fbed1370fe61aa990c4f5c3ce7ca59` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/control-owner-sentence-added.stdout.json` | `9e040661db7203509908cb42df67e52cf92dce5e256584d995df5ba320081f80` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/table-controls.json` | `97d07a1e61ce35b7e2daeede19a379aed8919843bd268d10dd60af74608ca96e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/review-rerun/fix2-own-mutations.json` | `f9f30d160d16e407a10466f263053ddced0d53f7e12719ae42ca588a448a4ac7` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/review-rerun/fix3-own-mutations.json` | `54a92fe1c6af3ed0ac70e459968782c50a7cae9d44080c5c55db81f087f4155a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/review-rerun/fix3-delegated-sweep.json` | `927bf9158bcab87b8899959d6e462e413667bb238dda529bc5310226c80bd099` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/review-rerun/fix3-freshness.json` | `105173f54e9e0631a4745a7522d0c2c6babfc8a37d5b7e6e1ec352170b48d770` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/vector-crosscheck4.json` | `d1b2e3e5826f6b9fb31439511cd31d740216bf09d3c353361845da5ca4c31f13` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/gen-cases4.json` | `2eeda1805ac1f4411b2c55bc48f8378f9e40b0edb69df753ebc5c7f691836202` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/full-selftest-summary.json` | `301d4cdb0b9c3a1df0bfebe973646796e629ce37d047450e592c666de6e2e3b8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/extraction.sha256` | `c7a73c4403a2061cd25ce704e4d78349b404f8d85bbf99613295e8c5ac0c9301` |

@@ -710,5 +710,231 @@
     "family_grading": "N/A",
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3",
     "scope": "Number scope only. No production helper code, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence or .gitignore change."
+  },
+  "number_opus_precheck_fix3": {
+    "round": "Opus pre-check (numbers fix 3)",
+    "review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-numbers-fix3-opus.md",
+    "brief": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/NUMRULE-NUM-FIX4.md",
+    "source_base": "9f873ad83469b4e53a6579fb115f5ef2270e1f12",
+    "implementation_commit": "98490285ec628c2d6eb02c7197e611a4aeb46aad",
+    "finding_1": "fixed; the review's 20 blind mutations and S1-S8 are committed (source review-fix3) and caught; the five blocking cases (R06, R09, R16, R19, R20) and one case per survivor are in the corpus",
+    "finding_2": "fixed; the rules table is derived from the owner text: one row per statement (source path, line, exact text), re-extracted and checked by the self-test; every hand-written mutation names its rule",
+    "finding_3": "fixed by refusing aliases outright (refusal_alias_problems); delegated refusal calls are a generated family; the binding module is not enumerated (not in the brief)",
+    "finding_4": "fixed; owner check cli_failing_corpus_exits_1 runs the CLI's own __main__ path, so site:<module>:raise#1 is caught; --mutations also runs the real CLI once",
+    "finding_5": "documented; the site-370 fixture's dependence on the module-global len is in the runner docstring and both cases' fixture_boundary",
+    "finding_6": "rerun; --scope all on the implementation commit",
+    "production_helper_changed": false,
+    "production_finding": "none; no mutation exposed a production behaviour that differs from the owner text",
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations",
+    "number_only": {
+      "status": "pass",
+      "corpus_cases": 544,
+      "case_passes": 544,
+      "positives": 266,
+      "negatives": 278,
+      "integration_checks": 61
+    },
+    "all_scope": {
+      "head": "98490285ec628c2d6eb02c7197e611a4aeb46aad",
+      "exit_code": 0,
+      "status": "pass",
+      "corpus_cases": 13590,
+      "case_passes": 13590,
+      "positives": 6929,
+      "negatives": 6661,
+      "integration_checks": 300,
+      "failed_checks": [],
+      "datetime_inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "unclassified_nodes": 0
+      },
+      "failures": []
+    },
+    "mutations": {
+      "apis": 26,
+      "build_errors": 0,
+      "caught": 362,
+      "comparison_boundaries": 12,
+      "container_branches": 8,
+      "declared_survivors": 4,
+      "delegated_refusals": 19,
+      "field_iterations": 23,
+      "generated_mutations": 160,
+      "hand_written_mutations": 206,
+      "hand_written_orphans": 0,
+      "hand_written_with_rule": 206,
+      "mutations": 366,
+      "normative_statements": 146,
+      "not_applicable_cells": 89,
+      "not_applied": 0,
+      "refusal_predicates": 34,
+      "refusal_sites": 64,
+      "review_fix2_caught": 18,
+      "review_fix2_declared_controls": 1,
+      "review_fix2_mutations": 19,
+      "review_fix3_caught": 28,
+      "review_fix3_mutations": 28,
+      "review_mutations": 6,
+      "review_mutations_caught": 6,
+      "rows_with_rules": 114,
+      "rows_without_mutation": 80,
+      "rules": 108,
+      "rules_caught": 108,
+      "runner_exceptions": 0,
+      "stale_rows": 0,
+      "statement_rows": 194,
+      "statement_rows_caught": 114,
+      "statement_rows_not_caught": 0,
+      "statements": 194,
+      "statements_without_row": 0,
+      "survivors": 4,
+      "undeclared_survivors": 0,
+      "witnessed": 362
+    },
+    "cli_subprocess": {
+      "exit": 1,
+      "status": "fail"
+    },
+    "declared_survivors": [
+      {
+        "mutation": "control-noop-comment",
+        "reason": "Harness control from the review: a behaviour-free edit. It must survive; reporting it caught would mean the harness counts false kills."
+      },
+      {
+        "mutation": "boundary:qualified_jcs.number:math.copysign(1.0, f) < 0:0#1",
+        "reason": "Equivalent: math.copysign(1.0, f) returns exactly 1.0 or -1.0 (NaN included), never 0, so < 0 and <= 0 agree for every input."
+      },
+      {
+        "mutation": "boundary:storage_value_bytes:v >= 0:0#1",
+        "reason": "Equivalent: with v > 0, the integer 0 takes the negative branch, whose fixint test (0 >= -32) emits bytes([0 & 255]) = 0x00, the same byte binding_bytes(0) emits."
+      },
+      {
+        "mutation": "field:OriginalBinding.__post_init__:skip project_id#1",
+        "reason": "Equivalent: the loop body already exempts project_id (f.name != \"project_id\"), so leaving project_id out of the iteration changes nothing for any input; project_id is checked by the separate original_scope predicate."
+      }
+    ],
+    "review_rerun": {
+      "fix2_own_mutations": {
+        "primary": 15,
+        "primary_caught": 15,
+        "primary_survivors": [],
+        "supplementary": {
+          "control-noop-comment": "survives",
+          "jcs-key-type-refusal-removed": "caught",
+          "token-grammar-strips-whitespace": "caught",
+          "physical-unknown-profile-accepted": "caught"
+        }
+      },
+      "fix3_own_mutations": {
+        "counted": 20,
+        "caught": 20,
+        "survivors": [],
+        "survivors_that_differ": [],
+        "supplementary": {
+          "S1-digest-uppercase-hex": "caught",
+          "S2-token-prefix-match": "caught",
+          "S3-binding-surrogatepass": "caught",
+          "S4-append-policy-casefold": "caught",
+          "S5-payload-size-minimum-one": "caught",
+          "S6-storage-default-profile-app": "caught",
+          "S7-physical-drops-null-entries": "caught",
+          "S8-parsed-decimal-default-kind": "caught",
+          "S9-R15-noncanonical-float64-admitted": "caught"
+        }
+      },
+      "fix3_freshness": {
+        "F1-new-refuse-site": {
+          "exit": 1,
+          "first_problem": "new mutation point without a committed entry: site:exact_boolean:reviewer_new_site#1"
+        },
+        "F2-new-guard-predicate": {
+          "exit": 1,
+          "first_problem": "boolean-isinstance-int: find text must occur exactly once and differ from replace"
+        },
+        "F3-new-direct-raise": {
+          "exit": 1,
+          "first_problem": "new mutation point without a committed entry: site:exact_boolean:raise#1"
+        },
+        "F4-new-same-reason-site": {
+          "exit": 1,
+          "first_problem": "new mutation point without a committed entry: site:exact_boolean:boolean_type#2"
+        },
+        "F5-aliased-refusal-call": {
+          "exit": 1,
+          "first_problem": "refusal alias or indirect reference: _refuse at line 119 (_deny = _refuse)"
+        }
+      },
+      "fix3_delegated_sweep": {
+        "points": 25,
+        "caught": 22,
+        "survivors": [
+          {
+            "module": "pm_event_index_binding",
+            "line": 18,
+            "call": "raise ValueError('MessagePack length exceeds uint32')"
+          },
+          {
+            "module": "pm_event_index_binding",
+            "line": 53,
+            "call": "raise ValueError('Binding integers must be uint64')"
+          },
+          {
+            "module": "pm_event_index_binding",
+            "line": 34,
+            "call": "raise ValueError('Unsupported MessagePack container kind')"
+          }
+        ]
+      }
+    },
+    "rules_table_controls": {
+      "intact": "as expected",
+      "C1-owner-sentence-added": "as expected",
+      "C2-owner-lines-shifted": "as expected",
+      "C3-owner-sentence-changed": "as expected",
+      "C4-row-deleted": "as expected",
+      "C5-mutation-without-rule": "as expected",
+      "C6-row-with-rules-and-reason": "as expected",
+      "C7-rule-listing-foreign-mutation": "as expected",
+      "C8-rule-named-by-no-row": "as expected",
+      "C9-new-guide-section": "as expected",
+      "C10-stale-guide-exclusion": "as expected",
+      "C11-refusal-alias": "as expected",
+      "C12-refusal-by-getattr": "as expected"
+    },
+    "end_to_end_controls": {
+      "head-numbers": {
+        "exit_code": 0,
+        "as_expected": true
+      },
+      "failing-corpus": {
+        "exit_code": 1,
+        "as_expected": true
+      },
+      "head-numbers-mutations": {
+        "exit_code": 0,
+        "as_expected": true
+      },
+      "control-owner-sentence-added": {
+        "exit_code": 1,
+        "as_expected": true
+      }
+    },
+    "cases_added": 54,
+    "cases_changed_text_only": [
+      "app-binary-reported-length-4294967296",
+      "app-binary-reported-length-4294967295"
+    ],
+    "vector_crosscheck": {
+      "checked": 20,
+      "mismatches": 0
+    },
+    "corpus_content_pin": "bc6bcc3c69e4bd0d0828a38b1b67e9079dfa9d32e1b3f62e6207627c203e7cd1",
+    "msgpack": "1.1.2",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4",
+    "scope": "Number scope only. No production helper code, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence or .gitignore change."
   }
 }
