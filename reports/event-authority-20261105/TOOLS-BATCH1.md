@@ -249,4 +249,15 @@ Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-2
 
 **Scope.** Witness, trap helper, README and this report. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, `main` push, pm-mail or subagent.
 
-Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH2/witness/`.
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH2/witness/` (the scan drivers and their runs).
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `ledgers-base.json` | `92c6a1ed52e7f899fc496f8abf9f8c5baf07b35f959045c6fbdd816c0f6ae3bb` |
+| `ledger_scan.py` | `fe8f4b10d840523309f04505dfcd21244cd6d3a16155796ffbabb0f17536dccf` |
+| `ledgers-new2.json` | `92c6a1ed52e7f899fc496f8abf9f8c5baf07b35f959045c6fbdd816c0f6ae3bb` |
+| `standalone-witness.err` | `0876f7431a3c8f94330d5186b2277cb3165907c88d87ee0338b1cb2d833fa497` |
+| `witness-corpus2.json` | `e50fa2909b66a84dddd1a38e031c89032c347f0e1fc94d6c2aa23b8260d17791` |
+| `witness_corpus.py` | `37c855086c9710785988ffa814cde872e55c40d1b242b243d4b6924c93192201` |
+| `witness-newcases-on-base.json` | `2a92469d3feb79d20ebd1f54871ad3a9be3f656a6b526971758954b73ee7984f` |
+| `witness-st-final.json` | `1d1f34369d881ea1999e31b38561f603d52acdf3cccacf33176606be5f57243e` |
