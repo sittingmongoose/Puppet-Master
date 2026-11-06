@@ -2160,3 +2160,142 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOO
 | `pins-fix.json` | `100156a9e05a731f621e16ead27495f2d71a02f16c4a4b57da3b664de72b7419` |
 | `num-selftest-t50.json` | `354789a1ead5baa02816c48fb5ecbabfd7eb638bc90fe15ccfc8b81156ebcf50` |
 | `num-mutations-t50.json.gz` | `c1e58b8de373cda37df761f8fae83824799c06ceccfa0dfca439f7298d12b7d7` |
+
+## Tool batch 3: findings and responses (date-time gate, T41; number scope data points)
+
+**REVIEW-datetime-fix16-opus is answered; nothing is disputed.**
+
+- **Base:** `c0f1b407a9` (`origin/plans/ea-numrule-20261105` at `61150203c6`, plus the T50 report).
+- **Production code is unchanged:** `pm_event_datetime*.py`, `pm_event_numbers.py` and `pm_event_index_binding.py`.
+- **Nothing is REAL:** no new case showed a production bug.
+- **Files touched:**
+  - date-time: `scripts/pm_event_datetime_mutations.py`, `.json` and `_selfcheck.py`;
+  - number: `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_numbers_mutations.json` and `Plans/event_number_recipe_corpus.json`;
+  - the corpus content pin in `scripts/pm_event_datetime_exclusions.json`.
+
+### The gap
+
+The review's blind sample caught 13 of 20 against a bar of 18. The gate bar's AST enumeration covered refusal sites, their guard predicates, credit predicates and comparison boundaries, but not the data those guards read. A mutant that changed a table entry, a keyword set, the day arithmetic, the loadable set, a Storage-quote flag or a walked collection was never generated, and 7 of the review's 20 survived (DT-01, 03, 09, 13, 16, 17, 19).
+
+### Data points, enumerated from the AST
+
+`pm_event_datetime_mutations.data_points` enumerates six new families from the three production modules. The self-test regenerates them on every run, as it does the sites. A data point with no committed row fails freshness (`new mutation point without a committed entry`), and so does a stale row. A new gate-bar check, `datetime_gate_bar_detects_new_data_point`, adds a leap-table entry and a constant table to a copy of the source and requires exactly their three new keys.
+
+| Family | What the mutant does | Points |
+|---|---|---|
+| `data_table_entry` | drops one entry of a module constant table (tuple, list, set, dict, or `frozenset(...)` of one): the leap-day table, `PROFILES`, `ANNOTATIONS`, `ASSERTIONS`, `DYNAMIC`, `REFERENCES`, `UNIONS`, `NON_TIMESTAMP_CONTROLS`, `SWEEP_ZONES` and the rest | 102 |
+| `data_value_arithmetic` | swaps `+`/`-` or `*`/`//`, or adds one to an integer, in a value a refusal guard reads: `_day_number`'s year arithmetic, the year sweep's formulas, quote and line counts | 73 |
+| `data_loop_member` | drops one member of a literal set a refusal loop walks or an `in` test reads: `_constraint_sources`' keywords, the probe's `$ref`/`$dynamicRef`/`$recursiveRef` walks and its sibling-dependency keywords | 28 |
+| `data_walk_domain` | walks only the first item of a computed collection whose loop holds a refusal: `verify_resources`' resources, the scan's exclusions, documents and stale exclusions, `check_inventory`'s three diffs, role errors, fields, `patternProperties` | 22 |
+| `data_flag_operand` | makes an `and`-operand True or an `or`-operand False in a flag a refusal guard reads: the Storage-quote flags, `owners`, `credited`, `on_value_path` | 20 |
+| `data_collection_build` | disables one build step of a collection a guard reads: the loadable set (`loadable.add`, `.update`, the markdown documents, the reference list) | 6 |
+| **total** | | **251** |
+
+By module: `pm_event_datetime` 64, `pm_event_datetime_inventory` 52, `pm_event_datetime_value_probe` 135.
+
+**Each of the 251 has a committed row:**
+- **152** were already caught by an existing check once enumerated;
+- **95** needed a new check;
+- **4** are declared equivalent survivors, each with its reason.
+
+The witness of each row was found by running its mutant against every self-check and every date-time corpus case, in order (the gate's own `run_mutant`), and taking the first that fails. Two earlier discovery passes were discarded because two checks failed on the intact tree while the work was in progress:
+- `datetime_gate_bar_detects_new_site` fails until every enumerated point has a row;
+- `datetime_validator_real_inventory_format_installed` failed while the number corpus pin was stale.
+
+Every point those two passes credited was rediscovered after the tree was intact again (the intact self-test passing). The first full replay found three rows still wrong: `wildcard_probe.visit` and `constraint_paths` dropping `$recursiveRef`, and the walk over sibling contexts. Their witness was `datetime_unit_scan_every_pattern_property` from a discovery run that loaded that check while its expected value was still wrong (it failed on the intact tree). They now name `datetime_unit_role_observation_cited_through_recursive_ref` and the new `datetime_unit_probe_every_sibling_context_checked`, each shown failing on its mutant, and the replay below was rerun in full at the committed head.
+
+**The new checks** (section M of `pm_event_datetime_selfcheck.py`; 445 self-checks before, 564 now):
+
+| Check | The data it witnesses |
+|---|---|
+| `datetime_unit_date_time_leap_table_independent_edition` | the leap table against IERS Bulletin C72, copied independently (DT-01) |
+| `datetime_unit_date_time_leap_second_june_with_offsets` | June leap seconds written with offsets (DT-03) |
+| `datetime_unit_date_time_leap_second_every_day_with_offsets` | every leap day in UTC and with ±offsets, and the day before and after (`_day_number`: `previous // 401` moved a year boundary to 2005/2006 and refused `2006-01-01T00:59:60+01:00`) |
+| `datetime_unit_scan_exclusion_referenced_under_path_free_id` | DT-09's file-path-relative join |
+| `datetime_unit_validate_owner_profile_quote_without_cv253`, `_without_profile` | DT-13's two Storage-quote flags |
+| `datetime_unit_map_dependency_<kw>_direct`, `_through_ref` (16 keywords × 2), `datetime_unit_map_one_of_requires_review` | DT-16 and DT-17: every sibling-dependency keyword at map scope, directly and through a map-scope `$ref`; requires review, never automatic non-timestamp credit |
+| `datetime_unit_selection_verify_every_resource` | DT-19: a classified target in a referenced resource, replaced after construction |
+| `datetime_unit_value_keyword_inert_<kw>` (36), `datetime_unit_value_keyword_tables_covered` | each `ANNOTATIONS` and `ASSERTIONS` keyword with an inert argument keeps automatic credit; dropped from its table, it is an unknown keyword and routes to review |
+| `datetime_unit_closure_dynamic_ref_off_path`, `_recursive_ref_off_path` | `DYNAMIC`'s `$dynamicRef` and `$recursiveRef`, off the value path (dropping either credited the map: a false credit) |
+| `datetime_unit_role_observation_cited_through_dynamic_ref`, `_recursive_ref` | the probe's reference walks (`visit`, `constraint_paths`) |
+| `datetime_unit_probe_every_sibling_context_checked` | the probe's walk over a role record's reviewed sibling contexts |
+| `datetime_unit_named_evidence_follows_every_keyword` | `_constraint_sources`' ten keywords |
+| `datetime_unit_year_sweep_independent_edition` | the year sweep against its documented formulas, written again |
+| `datetime_unit_deciding_excludes_control_00` to `_15`, `datetime_unit_controls_independent_edition` | each of the 16 fixed non-timestamp controls |
+| `datetime_unit_scan_exclusion_every_entry_checked`, `_stale_exclusions_every_one`, `_every_jsonl_line`, `_every_pattern_property` | the scan's walks, with a second item that decides |
+| `datetime_unit_scan_exclusion_referenced_by_nested_id_forbidden`, `_markdown_schema_forbidden`, `_referenced_through_id_base_forbidden` | the loadable set's three other build steps |
+| `datetime_unit_gate_every_unclassified_node`, `_every_missing_node`, `_every_changed_node` | `check_inventory`'s three diffs |
+| `datetime_unit_validate_owner_named_by_schema_identity`, `_owner_profile_quote_invalid_names_nothing`, `_every_role_error_reported`, `_conflicting_field_profile_every_field` | `validate_inventory`'s owner flag, quote flag and walks |
+| `datetime_gate_bar_detects_new_data_point`, `_detects_per_lane_sentence_edit`, `_detects_unselected_cv1101_field_edit`, `_owner_pins_quiet_without_edit` | the gate bar itself |
+
+**Declared survivors (4, each equivalent):**
+- **`scan`'s `part.strip().split('#', 1)` → `split('#', 2)`:** only element `[0]` is read, the text before the first `#`, whatever the limit.
+- **`_day_number`'s `- previous // 100` → `+`, `+ previous // 400` → `-`, and `previous // 100` → `previous // 101`:** `date_time` only compares a local time with a leap day less than a day away. Each mutant shifts day numbers by an amount that is constant inside a century (or a 400-year or 101-year span) and changes only at its boundary (2001 or 2021 in this range). No leap day of the table (1972 to 2016) lies within a day of such a boundary, and a date years away cannot be moved onto one. The fourth `_day_number` mutant, `previous // 401`, is not equivalent and is caught (above).
+
+### The 7 survivors of the review, now caught
+
+Each was rerun with the review's own harness (`run_blind.py`, stopping at the first failing witness) on this tree. On `fix16` each survived all 6,984 witnesses (the review's `results/DT-*.json`).
+
+| Mutant | Caught by (first failing witness) | Witnesses run |
+|---|---|---|
+| DT-01 (1997 insertion moved to December) | `datetime_unit_date_time_leap_table_independent_edition` | 432 |
+| DT-03 (`_day_number` counts the current month) | `datetime_unit_date_time_leap_second_june_with_offsets` | 433 |
+| DT-09 (loadable set drops the path-relative join) | `datetime_unit_scan_exclusion_referenced_under_path_free_id` | 434 |
+| DT-13 (Storage quote needs `storage_utc_z` only) | `datetime_unit_validate_owner_profile_quote_without_cv253` | 435 |
+| DT-16 (map-scope `oneOf` not a dependency) | `datetime_unit_map_dependency_oneOf_direct` | 459 |
+| DT-17 (`constraint_paths` follows refs at value scope only) | `datetime_unit_map_dependency_required_through_ref` | 438 |
+| DT-19 (`verify_resources` re-checks the root only) | `datetime_unit_selection_verify_every_resource` | 470 |
+
+### Pin hole (T33 finding 3, review finding 9)
+
+The 19 per-lane "Enforce CV-1101 …" sentences were in neither rules table, and text outside the selected fields was read nowhere. Two pins now cover them, and any change fails the self-test, naming the new hash, until a reviewer refreshes the pin:
+- **CV-1101's unit section, outside its selected YAML fields:** `owner_text.units[].section_unselected_sha256`, `e454e29b…`.
+- **The guide sections that hold the per-lane and ancillary-lane sentences:** `owner_text.guide.pinned_sections`; "Per-lane replacements" `3a73926a…` and "Ancillary lanes" `c9077f35…`.
+
+Run through `owner_statements` at the base `61150203c6`, the review's rewrite of the per-lane sentence ("Enforce CV-1101 with a local regex at this lane's envelope boundaries") and an edit to CV-1101's `validation_surfaces` each give **0 problems**. Now each gives the pin's problem, and the no-edit control gives none.
+
+### Number scope: the same gap, closed
+
+The number helper's enumeration had no data family either. `pm_event_numbers_corpus.mutation_points` now enumerates the same data families (with the number refusal sites) from `pm_event_numbers.py`, and the self-test checks them the same way: **36 points**.
+- 21 table entries: `PRODUCER_FIELDS`.
+- 7 arithmetic: `UINT64_MAX = (1 << 64) - 1`, the payload `minimum=0`, and the zero tests in `qualified_jcs`.
+- 6 flag operands: `_declared_numeric_kind`'s `numeric_kinds or {}`, and `qualified_jcs`'s `negative_zero`.
+- 2 walks: `_unique_object`'s pairs, and `OriginalBinding.__post_init__`'s fields.
+
+On the base corpus, three survived:
+- **`v == 0` made True** refused a negative nonzero number at a sign-sensitive path.
+- **The sign test made True** refused a positive zero there.
+- **`copysign(1.0, f) < 0` → `< 1`** is equivalent, since `copysign(1.0, f)` is exactly ±1.0. Declared.
+
+Six new corpus cases, `jcs-sign-kept-*`, now catch the first two: `-1.5` (exact and current parsers), `-1`, `0.0` (both parsers) and `0`, each at a sign-sensitive path, must pass unchanged. The corpus content pin is recomputed (`6a576962…` to `4752d3ae…`).
+
+### Rerun results
+
+| Check (at `6ae8072f7e`) | Base | Now |
+|---|---|---|
+| date-time `--self-test` | pass, 450 checks (445 self-checks + 5 freshness) | **pass, 569 checks** (564 + 5), 0 failures, 0 freshness problems; 448 points committed, 11 declared survivors |
+| date-time `--mutations` | 280 mutations, 273 caught, 7 declared survivors | **531 mutations** (448 generated, 83 hand-written), **520 caught**, each by its committed witness failing; **11 declared survivors** (the earlier 7 and the 4 above), each surviving all 564 self-checks and every date-time corpus case; 0 undeclared, 0 build errors, 0 runner exceptions; 72 of 72 rules and 96 statement rows caught; `problems` empty |
+| the earlier 280 rows | — | unchanged, row for row, against the review's `fix16` replay (`cmds/mutations-replay.json`): the same results and witnesses |
+| the review's 7 survivors | survived 6,984 witnesses each | caught (table above) |
+| the pin edits (per-lane rewrite; `validation_surfaces`) | 0 problems each | 1 problem each; no-edit control 0 |
+| number `--self-test --scope numbers` | pass, 563 cases | **pass, 569 cases** (297 negatives, 272 positives) |
+| number `--mutations` | 372 mutations, 368 caught, 4 declared survivors | **408 mutations, 403 caught, 5 declared survivors** (36 data points; the new survivor is the `copysign` equivalent), 0 undeclared, 0 problems; the 674 earlier rows (mutations, generated points, rules, statements) unchanged |
+| `--self-test --scope all` | pass | **pass, 13,615 of 13,615 cases**; date-time inventory pass (233 nodes: 133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified); 15 min 55 s |
+
+The date-time replay ran as five `--only` chunks in parallel at `6ae8072f7e` (a full run is longer than the 2-hour limit on one command): `:datetime:` (109), `site:datetime_inventory:` (86), the rest of the inventory (57), `:datetime_value_probe:` (196) and `hw-` (83). The chunks partition the 531 mutations exactly. `merge_replay.py` joins them the way `run_mutations` aggregates a full run: the rows, then the rule and statement verdicts over every row, then the totals. A first full replay, at the paused WIP head, was cut off by the T3 restart at 169 of 531.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH3/numbers/` (`t41/` for the date-time runs).
+
+| Evidence under `drafts/TOOLS-BATCH3/numbers/` | SHA-256 |
+|---|---|
+| `t41/replay/merged.json.gz` (all 531 rows; the five chunks beside it) | `95b3a5a46056e8d380d21b6813945d992f4393144b084eb914a9f2666e5eddb3` |
+| `t41/replay/merged.totals.json` | `e8e1a52b72ab7ded0cec04fbc4c6c834b1e58600bef1e263348f96db06342778` |
+| `t41/selftest-6ae8072f7e.json` | `a3d5f75d30ea5d3b2c97bb3a26eee9ba6e3291579a74cb6211e9fbdee1a30f63` |
+| `t41/pins/pins-base-61150203c6.txt` | `6488a9830273ba849cc483edfb9b6cfcf3761bc11308714c307d9db00353a2f4` |
+| `t41/pins/pins-fix.txt` | `f1ac5f88b767ef625de9716eebc33894bbcc66c57e5fd1951e2b91e8c466208c` |
+| `t41/blind/DT-01.json` (and DT-03 to DT-19 beside it) | `e7f5a2e1afe6fbf5394662632ce3d515d1900882066262451d8b2263f26799dd` |
+| `num-mutations-t41.json.gz` | `eda8726e27d6cf486eef5129d405eabb8a2649d20fbc7a2c748a39c7144d7320` |
+| `num-selftest-t41.json` | `1cc09c1b682a6f4bf64b8bb0d579d8d786060dbad9206a78251fb9385ec7abae` |
+| `num-scope-all-t41.json.gz` | `de7350c10e5ecadca15e5cd05ea6009f0b666f58f74b379481a8244f5499d5de` |
+
+The discovery runs (`t41/discovery/`), the discovery and merge scripts and the review's harness copies are in `t41/`.
