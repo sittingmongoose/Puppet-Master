@@ -1,0 +1,22 @@
+import {LOOKS} from '../browser-check.config.mjs';
+import {writeFile} from 'node:fs/promises';
+export default async function(t){
+ const f=await t.app.open({onboarding:true,query:'o55=fresh'});await f.waitForFunction(()=>window.O55?.S?.open);const rows=[];
+ await f.evaluate(()=>{window.__anchor={events:[],trial:'',node:null};for(const phase of ['pointerdown','pointerup','click'])window.addEventListener(phase,e=>{const a=e.target.closest?.('a.o55-btn');window.__anchor.events.push({trial:window.__anchor.trial,phase,own:a===window.__anchor.node,trusted:e.isTrusted,target:e.target.className?.baseVal??e.target.className});if(phase==='click'){e.stopImmediatePropagation();e.preventDefault();}},true);});
+ for(const motion of (t.args.anchorMotion?String(t.args.anchorMotion).split(','):['no-preference','reduce','attribute'])){
+  await t.emulate({reducedMotion:motion==='attribute'?'no-preference':motion});
+  for(const look of (t.args.anchorLooks?String(t.args.anchorLooks).split(','):LOOKS)){
+   await f.evaluate(v=>O55.ui.applyLook(...v),look.split('-'));await f.waitForTimeout(1600);
+   await f.evaluate(m=>{document.documentElement.dataset.motion=m==='attribute'?'reduced':'full';const S=O55.S;O55.away.seedServer(S,'reverse_proxy');Object.assign(S.draft(),{remote_mode:'reverse_proxy',proxy_hosting:'generate_only',proxy_kind:'caddy',proxy_hostname:'https://pm.example.net',review_confirmed:true});S.sess.awaySetup={id:'review-anchor',mode:'reverse_proxy',rev:S.draft().project_draft_revision,then:'ready',confirmed:true,step:1,done:['config'],state:'waiting',people:{},link:''};O55.ui.go('away-setup',{noHistory:true});},motion);await f.waitForTimeout(1800);
+   const c=f.locator('.o55-pane>.o55-layer:not(.o55-out) a.o55-btn[download]');await t.check(`Real download anchor fixture ${look} ${motion}`,await c.count()===1);if(!await c.count())continue;await c.scrollIntoViewIfNeeded();const fe=f===t.page.mainFrame()?null:await f.frameElement(),off=fe?await fe.boundingBox():{x:0,y:0};const trials=[];if(t.args.shots)await t.crop(`${look}-${motion}-anchor-rest`,c,'Native anchor rest face.');
+   for(const point of (t.args.anchorPoints?String(t.args.anchorPoints).split(','):['tl','tr','bl','br','t1','b1','l1','r1','t2','b2','l2','r2'])){
+    await t.page.mouse.move(2,2);await c.evaluate(async e=>{getComputedStyle(e).transform;await Promise.all(e.getAnimations().filter(a=>a.transitionProperty).map(a=>a.finished.catch(()=>{})));});const b=await c.evaluate(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);window.__anchor.node=e;return {x:r.x,y:r.y,w:r.width,h:r.height,rad:Math.min(r.width/2,r.height/2,parseFloat(s.borderTopLeftRadius)||0)};});const k=Math.ceil(b.rad*.293)+2,corner=point.length===2&&!/\d/.test(point),d=Number(point[1])||1;
+    const x=corner?(point[1]==='l'?b.x+k:b.x+b.w-k):point[0]==='l'?b.x+d:point[0]==='r'?b.x+b.w-d:b.x+b.w/2,y=corner?(point[0]==='t'?b.y+k:b.y+b.h-k):point[0]==='t'?b.y+d:point[0]==='b'?b.y+b.h-d:b.y+b.h/2;const tag=`${look} ${motion} ${point}`;
+    await f.evaluate(tag=>{window.__anchor.trial=tag;window.__anchor.events=[];},tag);await t.page.mouse.move(off.x+x,off.y+y);if(t.args.marks)await t.mark('down '+tag);await t.page.mouse.down();const h=await c.evaluate((e,b)=>new Promise(resolve=>{const start=performance.now();let worst=0;const tick=()=>{const r=e.getBoundingClientRect();worst=Math.max(worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.w),Math.abs(r.height-b.h));if(performance.now()-start<350)requestAnimationFrame(tick);else resolve({worst,transform:getComputedStyle(e).transform});};requestAnimationFrame(tick);}),b);if(t.args.shots)await t.crop(`${look}-${motion}-${point}-anchor-held`,c,'Native anchor held face.');if(t.args.marks)await t.mark('up '+tag);await t.page.mouse.up();const events=await f.evaluate(()=>window.__anchor.events);trials.push({point,b,x,y,held:h,events});
+   }
+   await t.check(`Download anchor native held edges activate ${look} ${motion}`,trials.every(x=>x.events.some(e=>e.phase==='click'&&e.own&&e.trusted)),JSON.stringify(trials.filter(x=>!x.events.some(e=>e.phase==='click'&&e.own)).slice(0,4)));
+   await t.check(`Download anchor press target remains stationary ${look} ${motion}`,trials.every(x=>x.held.worst<=.01),JSON.stringify(trials.filter(x=>x.held.worst>.01).slice(0,2)));rows.push({look,motion,trials});
+  }
+ }
+ if(t.args.anchorOut||t.args.dataOut)await writeFile(String(t.args.anchorOut||t.args.dataOut+'.anchors.json'),JSON.stringify(rows,null,2));
+}

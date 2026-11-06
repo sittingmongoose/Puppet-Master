@@ -464,8 +464,21 @@ function skeleton(name) {
 }
 
 /* ---------------- the screen ---------------- */
-var openRoot = null, prepared = null;
+var openRoot = null, prepared = null, construction = null, constructionJob = null;
+// One iterator serves background preparation and demand. A demand drains that
+// same iterator synchronously; it cannot leave a second sheet or stale callback.
 function open(opts) {
+  if (construction) {
+    if (constructionJob) constructionJob.cancel();
+    constructionJob = null;
+    while (!construction.next().done) { /* demand owns the remaining work */ }
+    construction = null;
+  }
+  var steps = construct(opts), result;
+  do { result = steps.next(); } while (!result.done);
+  return result.value;
+}
+function* construct(opts) {
   opts = opts || {};
   if (!EL()) return null;
   var inst = opts.view && opts.view.editor ? opts.view.editor() : (PMW.editorInView ? PMW.editorInView() : null);
@@ -479,10 +492,11 @@ function open(opts) {
   var overlay = PMW.overlay ? PMW.overlay() : document.body;
   var root = el('div', 'pmt-cz pmed-cz pmt-calm pmed-prepared');
   root.setAttribute('aria-hidden', 'true');
+  root.inert = true;
   root.setAttribute('data-pmw-overlay', 'editor-appearance');
   var label = (inst.root && inst.root.querySelector('.pmw-ed-seg.is-file') || {}).textContent || 'Editor';
   root.innerHTML = skeleton(label);
-  overlay.appendChild(root);
+  yield; // parse the static controls separately from the live preview
   var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
   /* the scope, as the terminal's screen keeps it: All editors when Settings opens it, for that visit only; otherwise
      the one last picked on this editor's screen (remembered while the tab lives), This editor at first */
@@ -503,6 +517,10 @@ function open(opts) {
       lookDeferred: function () { return closed; },
       caret: { r: PV_SEL.r, c: PV_SEL.b, ar: PV_SEL.r, ac: PV_SEL.a } });
   } catch (err) { try { console.error('[pm-home] the editor preview could not start', err); } catch (_) {} }
+
+  yield;
+  overlay.appendChild(root);
+  yield; // let the browser style the newly connected sheet before reading it
 
   function scopeView() { return scope === 'tab' ? v : { tabAppearance: {}, previewAppearance: v.previewAppearance }; }
   function eff() { return EL().resolve(scopeView()); }
@@ -1503,11 +1521,17 @@ function open(opts) {
   }
   root._pmedClose = close;
   root._pmedPreview = preview;
+  yield;
   place();
+  yield;
   if (preview && preview.demo) preview.demo.relayout();
+  yield;
   syncPreview();
+  yield;
   paint();
+  yield;
   filter('');
+  yield;
   focusStopsOn(false);
   var handle = { el: root, inst: inst, dispose: dispose, show: show, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
   function show(next) {
@@ -1570,17 +1594,27 @@ function prepareSoon() {
   var inst = PMW.editorInView && PMW.editorInView(true);
   if (!inst) { setTimeout(prepareSoon, 1500); return; }
   var build = function () {
-    if (!prepared && !openRoot) {
-      if (sheetBusy()) { setTimeout(prepareSoon, 1500); return; }
-      /* idle preparation must not land inside a resize drag: the build measures the sheet (~200ms of
-         forced style/layout on the P1000) and a drag begun in the app's first seconds paid it mid-gesture */
-      if (document.body && document.body.classList.contains('pm-resizing')) { setTimeout(prepareSoon, 1500); return; }
-      // Settings is the app-level entry. Prepare its actual width and scope,
-      // not the narrower editor cutout, which would reflow every tile on open.
-      open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
-    }
+    constructionJob = null;
+    if (prepared || openRoot) return;
+    if (sheetBusy()) { setTimeout(prepareSoon, 1500); return; }
+    // Settings is the app-level entry. Each admission advances exactly one
+    // construction phase; pointer input parks the remaining phases again.
+    if (!construction) construction = construct({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
+    if (construction.next().done) { construction = null; return; }
+    // Writes settle in the browser's layout before the next phase reads them.
+    // This is a work boundary, with fresh input admission on every continuation.
+    var pending = construction;
+    function resume() { if (construction === pending) admit(); }
+    if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(resume);
+    else requestAnimationFrame(resume);
   };
-  if (window.requestIdleCallback) requestIdleCallback(build); else setTimeout(build, 500);
+  function admit() {
+    if (!construction && (prepared || openRoot)) return;
+    if (window.PM_BUSY && window.PM_BUSY.idle) constructionJob = window.PM_BUSY.idle(build, 0, { quiet: 600 });
+    else if (window.requestIdleCallback) requestIdleCallback(build);
+    else setTimeout(build, 0);
+  }
+  if (!constructionJob) admit();
 }
 window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
 

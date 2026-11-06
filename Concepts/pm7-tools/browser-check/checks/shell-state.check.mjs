@@ -1,3 +1,4 @@
+import {paintedBody} from '../helpers/painted-text.mjs';
 // Stream F shell state regressions; run on both normal and opaque-origin surfaces.
 export const tests = {
  async 'SW31 every CLI installer exposes failure examples'(t) {
@@ -98,28 +99,42 @@ export const tests = {
   let f;
   for (const look of ['nier-light','friendly-dark']) {
    f=await t.app.open();
+   await t.equal(`${look} normal approval fixture remains 2.8s`,()=>f.evaluate(()=>O55.fixtures.timings.pairApprovalMs),2800);
+   // This case inspects a pending approval, rather than racing the normal auto-approval.
+   await f.evaluate(()=>O55.fixtures.timings.pairApprovalMs=60000);
    await t.app.look(look); await f.locator('#o55np-reboot').waitFor({state:'hidden'});
+   if(t.args.helpSelftest==='transparent') await f.addStyleTag({content:'#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .pst-bt-off, #pm7ob-explainer .o55-explainer-w {opacity:0!important}'});
    for (const id of ['ai','ai-none','c-review','c-pair','c-ready','s-kind','s-wait','s-confirm','s-ready','away-setup']) {
     await f.evaluate(() => O55.studio.open('onboarding'));
     const row=f.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${id}"]`);
     await row.scrollIntoViewIfNeeded(); await row.click();
     await t.until(`${look} ${id} opens`, () => window.O55.S.open && !!document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'));
     await f.waitForFunction(()=>{const e=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)');return e && !e.matches('.o55-hold,.o55-entering') && e.innerText.trim().length>0;},null,{timeout:15000});
-    await t.equal(`${look} ${id} owner screen`, () => f.evaluate(() => O55.S.sess.screen),id);
-    await t.equal(`${look} ${id} keeps look`,()=>f.evaluate(()=>PMLogo.look()),look);
-    await t.check(`${look} ${id} pane has content`,await f.locator('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').innerText().then(x=>x.trim().length>0));
-    const note=f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"]:visible').first();
-    // A deliberate negative fixture proves a missing control cannot silently pass.
+    if(id==='c-pair') await f.waitForFunction(()=>Object.values(O55.S.sess.ops||{}).some(op=>op.state==='running'&&(op.phases||[]).some(p=>p.key==='approve'&&p.status==='active')));
+    // Capture launch facts together, then open Help immediately: a pairing fixture
+    // can finish while separate diagnostic reads run and remove its Resend control.
     if(t.args.helpSelftest==='missing') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"]').evaluateAll(es=>es.forEach(e=>e.remove()));
-    await t.check(`${look} ${id} help control exists`,await note.count()>0);
-    if(!await note.count()) throw new Error(`${look} ${id}: required help control missing`);
-    await note.click();
+    const launch=await f.evaluate(()=>{const layer=document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)'),tips=[...layer.querySelectorAll('[data-o55-do="tip"]')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility==='visible');return{screen:O55.S.sess.screen,look:PMLogo.look(),content:layer.innerText.trim(),helpCount:tips.length,tip:tips[0]?.dataset.arg};});
+    await t.check(`${look} ${id} help control exists`,launch.helpCount>0);
+    if(!launch.helpCount) throw new Error(`${look} ${id}: required help control missing`);
+    await f.locator(`#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"][data-arg="${launch.tip}"]:visible`).first().click();
+    await t.equal(`${look} ${id} owner screen`,launch.screen,id);
+    await t.equal(`${look} ${id} keeps look`,launch.look,look);
+    await t.check(`${look} ${id} pane has content`,launch.content.length>0);
     // A full-box hit probe can select stage SVG decoration around this prose.
     // Require the note and its rendered body to be visible instead.
     await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');if(!e)return false;const r=e.getBoundingClientRect();if(!(r.width>0&&r.height>0&&r.right>0&&r.bottom>0&&r.x<innerWidth&&r.y<innerHeight))return false;for(let n=e;n;n=n.parentElement){const s=getComputedStyle(n);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}return true;});
     await t.check(`${look} ${id} help note visible`,await f.locator('#pm7ob-explainer').isVisible());
     const words=f.locator('#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .o55-explainer-w').first();
     await t.check(`${look} ${id} help note has rendered body text`,await words.isVisible()&&(await words.innerText()).trim().length>0);
+    // Paint comparisons must sample the same completed text, rather than different typing frames.
+    await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');return e&&!e.matches('.typing,.o55-writing')&&!e.querySelector('.typing,.o55-writing');});
+    const opacity=await words.evaluate(e=>{const walk=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let count=0,n;while((n=walk.nextNode())){if(!n.textContent.trim())continue;count++;for(let p=n.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}}return count>0;});
+    await t.check(`${look} ${id} body text subtree has visible opacity`,opacity);
+    const bodyPaint=await paintedBody(words,t.page);
+    t.log(JSON.stringify({look,id,bodyPaint}));
+    await t.check(`${look} ${id} body text paints ink`,bodyPaint.paintedCount>=3,JSON.stringify(bodyPaint));
+    if(id==='c-pair') await t.check(`${look} declared 60s pending approval remains active`,await f.evaluate(()=>O55.S.env.timings.pairApprovalMs===60000&&!O55.S.sess.connect.paired&&Object.values(O55.S.sess.ops||{}).some(op=>op.state==='running'&&(op.phases||[]).some(p=>p.key==='approve'&&p.status==='active'))));
     if(['c-pair','s-wait'].includes(id)) await t.crop(`${look}-${id}-help`,'#pm7ob-explainer','Rendered help body stays visible on the pairing and discovery screens');
 
     await f.evaluate(() => O55.ui.close());

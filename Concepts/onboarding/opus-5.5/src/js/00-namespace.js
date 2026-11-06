@@ -31,6 +31,6 @@
     /* nier: NieR Mode is painted (live, or the onboarding preview); art: the art, sound and skin voice to use, which is
        'nier' while NieR Mode is painted and the painted family otherwise. `family` stays 'basic' under NieR. */
     const nier = root.getAttribute('data-o55-nier') === 'on';
-    return { family: painted, chosen, mode: mode === 'light' ? 'light' : 'dark', slug: raw, nier, art: nier ? 'nier' : painted };
+    return { family: painted, chosen, selectedMode: window.PM_THEME?.getMode?.() || mode, mode: mode === 'light' ? 'light' : 'dark', slug: raw, nier, art: nier ? 'nier' : painted };
   };
 })();

@@ -840,7 +840,8 @@
         "theme_mode": {
           "enum": [
             "light",
-            "dark"
+            "dark",
+            "auto"
           ]
         },
         "project_mode": {
@@ -4106,7 +4107,8 @@
             {
               "enum": [
                 "light",
-                "dark"
+                "dark",
+                "auto"
               ]
             },
             {

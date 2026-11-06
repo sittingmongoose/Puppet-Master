@@ -1,14 +1,107 @@
+import {installActivityInputProbe} from '../helpers/activity-paint.mjs';
+import {beginActivityFrameClock} from '../helpers/activity-frame-clock.mjs';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+
 // Stream F SW regressions. Uses actual controls and the public fixture APIs.
 export const tests = {
  'SW01 first click in short window': async t => {
-  await t.viewport(1024,480);
-  for(let i=0;i<10;i++) {
-   const f=await t.app.open();
+  await t.viewport(1024,504);
+  await t.emulate({reducedMotion:'no-preference'});
+  const url=t.args.page?(/^https?:/.test(t.args.page)?t.args.page:pathToFileURL(t.args.page).href):new URL('../../../PMConcept7.html',import.meta.url).href;
+  const [f]=await t.openSideBySide([{url:url+'?o55=off',width:1024,height:480}],{height:480,settleMs:0});
+  if(Number(t.args.sandbox)===1)await (await f.frameElement()).evaluate(el=>el.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-downloads'));
+  // Match the retained films: bootstrap Home once, then measure the first input
+  // after each fresh reload. No idle/settling delay is introduced.
+  for(let i=0;i<Number(t.args.reps||10);i++) {
+   await t.page.mouse.move(0,0);
+   await f.goto(url+'?o55=off&first-paint-reload='+i,{timeout:30000});
+   await f.waitForFunction(()=>window.__PM56_BOOT_OK&&window.PM56_PORT?.ready);
+   await f.locator('#o55np-reboot').waitFor({state:'detached',timeout:15000});
+   await t.check('fresh Basic Dark Home after reload '+i,await f.evaluate(()=>innerWidth===1024&&innerHeight===480&&!PM_NIER.on()&&document.documentElement.dataset.theme==='basic-dark'&&!document.querySelector('#pmRoot .activity-panel.cover')));
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
-   await b.click();
-   await t.page.waitForTimeout(500);
-   await t.check('first click '+i,await f.evaluate(()=>PM56_APP.ctx().state.activity.open));
+   await f.evaluate(installActivityInputProbe);
+   await f.evaluate(()=>{
+    window.__activityClickRenders=0;window.__activityClickActive=false;
+    PM56_EXT.slot('afterRender',(_ctx,info)=>{if(window.__activityClickActive&&info.phase==='app')window.__activityClickRenders++;});
+    document.addEventListener('click',()=>{window.__activityClickActive=false;},{once:true});
+    document.addEventListener('click',e=>{
+     if(e.isTrusted&&e.target.closest('[data-action="open-activity"]'))window.__activityClickActive=true;
+    },{capture:true,once:true});
+   });
+   const stage=await f.locator('#pmRoot .chat-stage').boundingBox();
+   const box=await b.boundingBox();
+   const clock=await beginActivityFrameClock(t.window);
+   await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+   let input,paint;
+   try{
+    await t.mark('first click '+i);
+    await t.page.mouse.click(box.x+box.width/2,box.y+box.height/2);
+    await t.page.waitForTimeout(1200);
+    input=await f.evaluate(()=>window.__activityPaintInput);
+   }finally{await clock.stop();}
+   const dir=join(t.run.dir,'activity-first-paint-'+i);mkdirSync(dir,{recursive:true});
+   writeFileSync(join(dir,'before.png'),clock.beforePng);
+   for(let j=0;j<clock.frames.length;j++)writeFileSync(join(dir,String(j).padStart(3,'0')+'.png'),clock.frames[j].png);
+   writeFileSync(join(dir,'frames.json'),JSON.stringify({input,stage,frames:clock.frames.map(({png,...frame})=>frame)},null,2));
+   try{paint=clock.analyze(input,stage);}catch(error){paint={error:error.message};}
+   writeFileSync(join(dir,'paint.json'),JSON.stringify(paint,null,2));
+   const {samples,...summary}=paint;
+   t.log('input to first cover paint '+i+': '+JSON.stringify({...summary,frames:samples?.length}));
+   await t.check('first click painted within 500 ms '+i,
+    !paint.error&&paint.input.trusted&&paint.elapsed>=0&&paint.elapsed<=500);
+   await t.equal('cover click avoids full transcript render '+i,await f.evaluate(()=>window.__activityClickRenders),0);
+   await t.painted(f.locator('#pmRoot .activity-panel.cover'));
   }
+ },
+ 'SW01 press builds no Activity preview, keyboard focus does': async t => {
+  // The focus a press gives an Activity bar button used to open its preview at once; the click then dropped it. Count
+  // every preview the overlay root gets during one real press held 150 ms, with no hover dwell before it.
+  const watch=()=>{window.__abCards=0;new MutationObserver(rs=>{for(const r of rs)for(const n of r.addedNodes)if(n.nodeType===1&&n.matches?.('.ab-card[data-overlay="hover"]'))window.__abCards++;}).observe(document.getElementById('pmOverlayRoot'),{childList:true,subtree:true});};
+  let f=await t.app.open();
+  await f.evaluate(watch);
+  const b=f.locator('#pmRoot [data-action="open-activity"]').first();
+  const box=await b.boundingBox();
+  await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+  await t.page.mouse.down();
+  await t.page.waitForTimeout(150);
+  const held=await f.evaluate(()=>({cards:window.__abCards,shown:!!document.querySelector('#pmOverlayRoot .ab-card[data-overlay="hover"]'),focused:document.activeElement?.dataset?.action}));
+  await t.page.mouse.up();
+  await t.page.waitForTimeout(400);
+  const opened=await f.evaluate(()=>({cards:window.__abCards,cover:!!document.querySelector('#pmRoot .activity-panel.cover, #pmRoot .activity-panel')}));
+  t.log('press '+JSON.stringify({held,opened}));
+  await t.check('a held press shows no Activity preview',held.cards===0&&!held.shown,JSON.stringify(held));
+  await t.check('the press still opens Activity Detail, with no preview built on the way',opened.cover&&opened.cards===0,JSON.stringify(opened));
+  f=await t.app.open();
+  await f.evaluate(watch);
+  await t.page.keyboard.press('Shift');
+  await f.locator('#pmRoot [data-action="open-activity"]').first().focus();
+  await t.page.waitForTimeout(300);
+  const kb=await f.evaluate(()=>({visible:document.activeElement?.matches(':focus-visible'),cards:window.__abCards,shown:!!document.querySelector('#pmOverlayRoot .ab-card[data-overlay="hover"]')}));
+  t.log('keyboard focus '+JSON.stringify(kb));
+  await t.check('keyboard focus opens the Activity preview at once',kb.visible&&kb.shown,JSON.stringify(kb));
+ },
+ 'SW01 long idle jobs wait for a still pointer': async t => {
+  // A job that holds the main thread long in one task (the editor sheet's idle build, ~170 ms; the sound engine's
+  // AudioContext, 54-117 ms) is asked through PM_BUSY.idle with quiet: 600. While the pointer moves, a quiet job must
+  // not run; it runs once the pointer has been still 600 ms. Both are asked with a 1 s timeout, so the idle callback
+  // comes during the motion even when the page leaves no idle time: the plain job runs then, the quiet one asks again
+  // (before the quiet option it ran during the motion too). Real pointer moves over the page, no synthetic events.
+  const f=await t.app.open();
+  await f.evaluate(()=>{window.__moves=[];window.addEventListener('pointermove',e=>window.__moves.push(performance.now()),{capture:true,passive:true});
+   window.__quietRan=[];window.__plainRan=[];});
+  const box=await t.page.locator('body').boundingBox();
+  await t.page.mouse.move(box.x+300,box.y+200);
+  await f.evaluate(()=>{window.__asked=performance.now();PM_BUSY.idle(()=>window.__quietRan.push(performance.now()),1000,{quiet:600});PM_BUSY.idle(()=>window.__plainRan.push(performance.now()),1000);});
+  const t0=Date.now();let k=0;
+  while(Date.now()-t0<2500){k++;await t.page.mouse.move(box.x+300+(k%25)*12,box.y+200+(k%9)*10);await t.page.waitForTimeout(40);}
+  const stopped=await f.evaluate(()=>window.__moves.at(-1));
+  await f.waitForFunction(()=>window.__quietRan.length>0,null,{timeout:5000}).catch(()=>{});
+  const r=await f.evaluate(()=>({quiet:window.__quietRan,plain:window.__plainRan,asked:window.__asked,moves:window.__moves.length,first:window.__moves[0],last:window.__moves.at(-1)}));
+  await t.check('pointer moved through the window',r.moves>15&&r.last-r.asked>1500,JSON.stringify({moves:r.moves,asked:r.asked,last:r.last}));
+  await t.check('the plain idle job asked beside it ran during the motion',r.plain.length===1&&r.plain[0]<r.last,JSON.stringify(r));
+  await t.check('the quiet job ran once, 600 ms or more after the last pointer move',r.quiet.length===1&&r.quiet[0]-r.last>=600,JSON.stringify({quiet:r.quiet,last:r.last,stopped,gap:r.quiet[0]-r.last}));
  },
  'SW11 duplicate titles select identity': async t => {
   const f=await t.app.open();
@@ -28,6 +121,24 @@ export const tests = {
   await f.evaluate(()=>O55.sound.pip.chatMute.setMuted(false));
   await t.page.waitForTimeout(300);
   await t.check('Pip switch projects to chat',await f.evaluate(()=>!PM56_SOUND.muted));
+ },
+ 'SW36 opened Detail resize frames': async t => {
+  await t.viewport(1390,900);const f=await t.app.open();
+  await f.evaluate(()=>{PMW.chatCol.setWidth(760);PM56_DEMO.openActivity('subagents','agent-schema');});
+  await t.painted('#pmRoot .activity-panel');
+  await f.evaluate(()=>{
+   window.__dockFrames=[];window.__dockSampling=true;
+   const sample=()=>{if(!window.__dockSampling)return;
+    const panel=document.querySelector('#pmRoot .activity-panel'),stage=document.querySelector('#pmRoot .chat-stage');
+    window.__dockFrames.push({time:performance.now(),width:stage.getBoundingClientRect().width,cover:panel.classList.contains('cover')});
+    requestAnimationFrame(sample);
+   };requestAnimationFrame(sample);
+  });
+  await t.viewport(1177,900);await t.until('twenty resize frame samples',()=>window.__dockFrames.length>=20);
+  const frames=await f.evaluate(()=>{window.__dockSampling=false;return window.__dockFrames;});
+  t.log(JSON.stringify(frames));
+  await t.check('every resized frame has 360 messages or cover',frames.length>=20&&frames.every(x=>x.cover||x.width>=360));
+  await t.painted('#pmRoot .activity-panel.cover');
  },
  'SW36 dock keeps 360 pixels': async t => {
   await t.viewport(1177,900); const f=await t.app.open();
