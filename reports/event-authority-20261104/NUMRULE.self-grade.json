@@ -76,7 +76,7 @@
     "negatives": 6545,
     "labelled_negatives": 6545,
     "passed": 13391,
-    "owner_integration_checks": 299,
+    "owner_integration_checks": 319,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
@@ -1498,8 +1498,8 @@
     "Integration/governance work belongs to the lead, outside this drafting task",
     "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8."
   ],
-  "reviewed_head": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
-  "review_round": 14,
+  "reviewed_head": "85b0ca7ece2c4926874ee5337e7542521308ba06",
+  "review_round": 15,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -1514,9 +1514,10 @@
     "CV-1101.round9": "B1a/B1b/B2 finite controls PASS; B3 stopped under the no-owner-prose/missing-quote instruction. Overall NOT_READY; no family grades or new IDs.",
     "CV-1101.round10": "Round-9 B3 blocked -> source-bound field/value evidence and coherent mutation controls PASS in the stated finite scope; native/lane integration NOT_RUN.",
     "CV-1101.round11": "Cycle-10 B4 BLOCKED -> 4/4 equivalent-pattern negatives and 4/4 corrected positives PASS; source-bound pinned roles and 35 battery controls PASS. Native/lane integration remains NOT_RUN.",
-    "CV-1101.round14": "Cycle-13 pre-check LANDING_READY_WITH_NOTES -> N1 (non-deciding citation) and N2 ($dynamicRef rebinding) fixed in the stated finite scope; ten role rows moved to explicit owner-schema review. Native/lane integration remains NOT_RUN."
+    "CV-1101.round14": "Cycle-13 pre-check LANDING_READY_WITH_NOTES -> N1 (non-deciding citation) and N2 ($dynamicRef rebinding) fixed in the stated finite scope; ten role rows moved to explicit owner-schema review. Native/lane integration remains NOT_RUN.",
+    "CV-1101.round15": "Cycle-14 pre-check NOT_READY -> B1 (citation reached under two dialects) and B2 (dynamic references in a citation) fixed by the static-closure rule and an outright all_refused requirement; N3 year sweep added to the fixed controls; N5 fixed. No row moved. Native/lane integration remains NOT_RUN."
   },
-  "implementation_commit": "a5ae4fc90b6da25efd00350e120291975268a401",
+  "implementation_commit": "ff7caf8d7f62705c86f7dff95635cc867f198702",
   "round1_validation": {
     "index_status": "pass",
     "plan_units": 7426,
@@ -1566,7 +1567,11 @@
     "B2_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
     "B3_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
     "N1_round14": "a5ae4fc90b6da25efd00350e120291975268a401",
-    "N2_round14": "a5ae4fc90b6da25efd00350e120291975268a401"
+    "N2_round14": "a5ae4fc90b6da25efd00350e120291975268a401",
+    "B1_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "B2_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "N3_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "N5_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -3773,5 +3778,345 @@
     "family_grading": "N/A",
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4",
     "scope": "Number scope only. No production helper code, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence or .gitignore change."
+  },
+  "round15_validation": {
+    "round": 15,
+    "review": "cycle-14 Opus pre-check (reviews/NUMRULE-sol/REVIEW-cycle14-opus.md)",
+    "source_base": "051c303a2aea17ef85a6e66d89c75cbb3b29e058",
+    "implementation_commit": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "tested_commit": "92c49a488b05fd10527e26f997749a22e338720f",
+    "rebased_onto": "884d6bd29501b21a9ff637788d0cee7de6cb8724",
+    "rebased_head": {
+      "full_gate": {
+        "status": "pass",
+        "nodes": 233,
+        "unique_git_reads": 8879
+      },
+      "selftest": {
+        "cases": 13590,
+        "case_passes": 13590,
+        "checks": 319,
+        "failed_checks": []
+      },
+      "datetime_files_identical_to_tested_commit": [
+        "Plans/event_datetime_inventory.json",
+        "scripts/pm_event_datetime.py",
+        "scripts/pm_event_datetime_admission_checks.py",
+        "scripts/pm_event_datetime_inventory.py",
+        "scripts/pm_event_datetime_inventory.schema.json",
+        "scripts/pm_event_datetime_roles.json",
+        "scripts/pm_event_datetime_timestamp_battery.json",
+        "scripts/pm_event_datetime_value_probe.py"
+      ]
+    },
+    "B1": "fixed with the lead's simpler option: non-timestamp credit, automatic or role, needs a static closure (every reachable node 2020-12, no other dialect declared at or above it); a role also requires all_refused",
+    "B2": "fixed; a closure containing $dynamicRef, $dynamicAnchor, $recursiveRef or $recursiveAnchor earns no non-timestamp credit",
+    "N3": "fixed in the stated finite scope; a deterministic year sweep (1970-2100, 4,743 timestamps) is a fixed control: a deciding citation and automatic credit must refuse it; battery a125323b... and its pin unchanged",
+    "N5": "fixed; the timestamp-only and deciding checks share one validator per node, in the dialect the positive walk reached it under",
+    "N4_N6": "information only; no change",
+    "rows_moved": [],
+    "row_moves": {
+      "unchanged_blobs": {
+        "Plans/event_datetime_inventory.json": "76d49b9874f35597f6ecfbaf68f5a253da86d487",
+        "scripts/pm_event_datetime_roles.json": "8c18bf428e1f8ea6fadda6ea12c76c27eb20fd38",
+        "scripts/pm_event_datetime_timestamp_battery.json": "40843260b03700e7b41ba4e7472e7ee8f178eb48",
+        "scripts/pm_event_datetime_inventory.schema.json": "3d93ce314256a3d2a39fbeccba19e2050821aef0"
+      },
+      "inventory_pin": "5cd2d30c18560c8f5b846ffbaeabbe91fb000ff6c8065f91fe8b99f9bf6e1d7b",
+      "classification_totals": {
+        "other_owner_observation": 88,
+        "EventRecord": 98,
+        "event_record_index": 27,
+        "original_storage_fields": 6,
+        "Storage issued original fields": 2,
+        "source_lineage_schema_patch": 1,
+        "wildcard_non_timestamp": 3,
+        "wildcard_non_timestamp_role": 8
+      },
+      "automatic_rows": [
+        "/$defs/browser_program/properties/result_schema_dependencies",
+        "/$defs/BrowserProgramApplicationV1/properties/result_schema_dependencies",
+        "/$defs/source_by_setting_id"
+      ],
+      "kept_roles_all_refused_and_deciding": [
+        "/$defs/permission_snapshot_record/properties/resolved_permissions",
+        "/families/62/value_schema/properties/resolved_permissions",
+        "/families/84/value_schema/properties/tabs",
+        "/$defs/permission_snapshot_record/properties/resolved_permissions",
+        "/properties/resolved_permissions",
+        "/properties/tabs",
+        "/$defs/project_creation_recovery_context/properties/settled_effects",
+        "/properties/resolved_permissions"
+      ]
+    },
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 89,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 8,
+      "unclassified_nodes": 0
+    },
+    "selftest": {
+      "fix15_checks_present_and_passing": 19,
+      "cases": 13486,
+      "case_passes": 13486,
+      "checks": 318,
+      "failed_checks": []
+    },
+    "added_selftest_checks": [
+      "datetime_automatic_credit_withheld_dynamicAnchor",
+      "datetime_automatic_credit_withheld_mixed_dialect",
+      "datetime_automatic_credit_withheld_year_sweep",
+      "datetime_role_authority_accepts_closure_one_dialect",
+      "datetime_role_authority_accepts_closure_unreachable_draft7_resource",
+      "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+      "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+      "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+      "datetime_role_authority_refuses_closure_dialect_union_2020_first",
+      "datetime_role_authority_refuses_closure_dialect_union_draft7_first",
+      "datetime_role_authority_refuses_closure_dynamicAnchor_in_citation",
+      "datetime_role_authority_refuses_closure_dynamicRef_beside_deciding_conjunct",
+      "datetime_role_authority_refuses_closure_dynamicRef_cites_holder",
+      "datetime_role_authority_refuses_closure_dynamicRef_cites_value_node",
+      "datetime_role_authority_refuses_closure_recursiveAnchor_in_citation",
+      "datetime_role_authority_refuses_undecided_year_sweep",
+      "datetime_year_sweep_complete"
+    ],
+    "cycle14_replay": {
+      "attacks": 78,
+      "variants": 3,
+      "refused": 69,
+      "accepted_as_role": [
+        "control/direct_ref_deciding",
+        "control/allOf_ref_withheld_deciding",
+        "control/every_branch_union_withheld_deciding",
+        "format/ipv4_only",
+        "format/not_datetime_minlen31",
+        "format/datetime_maxlen19",
+        "format/datetime_10digit_fraction",
+        "pattern/unanchored_marker",
+        "maxlen/below_all_timestamps_controls_enum_excluded",
+        "dialect/control_both_2020"
+      ],
+      "passed_without_record": [
+        "replay-c13/control_no_record_ts_accepting",
+        "dialect/union_2020_first_no_record"
+      ],
+      "kept_roles": {
+        "records": 8,
+        "battery_sweep_controls_accepted_by_citations": 0,
+        "production_battery_and_sweep_accepted": 0,
+        "year_sweep": 4743
+      }
+    },
+    "cycle14_coherent_full_gates": {
+      "dialect": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "unique_git_reads": 0
+      },
+      "dynamicref": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "unique_git_reads": 0
+      },
+      "dynamicref-holder": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "unique_git_reads": 0
+      },
+      "year-2027": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "unique_git_reads": 0
+      },
+      "n1-witness": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "unique_git_reads": 0
+      }
+    },
+    "precheck_replay": {
+      "attacks": 51,
+      "refused": 47,
+      "accepted_as_role": [
+        "control_deciding/direct_ref",
+        "control_deciding/allOf_ref",
+        "control_deciding/every_branch_union"
+      ],
+      "passed_without_record": [
+        "control/no_record_ts_accepting"
+      ],
+      "coherent_full_gates": {
+        "vacuous_doc_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "ec317b0871aa73fcea6e95a6ba1c546f67e19b80b785c8e9ee9c7ce962115e9f"
+        },
+        "vacuous_member_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "d217e2431258a28aa4dddb511c44c5b2097799a5060f6a3c79111412e55984df"
+        },
+        "vacuous_dependentSchemas": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "5735570925de099fcefaf87d0c84c141e49360bb90e32fb2cfa868eae4da44c6"
+        },
+        "vacuous_whole_value": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "74ed381192811442e60cffd425775df6aae005ab141e3ed543505927405c537f"
+        },
+        "irrelevant_if": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "3fe01cf95d870a867ae8735df0044150985ab62abef68ffc59f961387890edfb"
+        },
+        "vacuous_not": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "7bde8b697d7540f0cdefc3a54e6befc7bb7b807b02fbab1da71858a52d3a5d73"
+        },
+        "n2_dynamicRef": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "585ba6125e46245b2b38641751f7bcb42e5dc2f8e81d205a7d55770f97bc77be"
+        }
+      },
+      "literal_cycle12_bypass": {
+        "exit": 1,
+        "failure_kinds": {
+          "inventory_schema": 84
+        }
+      }
+    },
+    "targeted_probes": 53,
+    "original_probes_same_outcome": 48,
+    "adjacent_refused": 14,
+    "cycle12_coherent_full_gates": [
+      {
+        "variant": "irrelevant_if",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      },
+      {
+        "variant": "vacuous_not",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      }
+    ],
+    "earlier_full_gates": [
+      {
+        "name": "sibling-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ]
+      },
+      {
+        "name": "foreign-key-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_evidence_changed",
+          "wildcard_role_review_required"
+        ]
+      }
+    ],
+    "original_literal_gates": [
+      {
+        "name": "original-sibling-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-foreign-key-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-coherent-bypass-full-gate",
+        "exit": 1
+      }
+    ],
+    "mutation_controls": {
+      "unmutated": [],
+      "dialect_rule_removed": [
+        "datetime_automatic_credit_withheld_mixed_dialect",
+        "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+        "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+        "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+        "datetime_role_authority_refuses_closure_dialect_union_2020_first"
+      ],
+      "dynamic_rule_removed": [
+        "datetime_automatic_credit_withheld_dynamicAnchor",
+        "datetime_role_authority_refuses_closure_dynamicAnchor_in_citation",
+        "datetime_role_authority_refuses_closure_dynamicRef_beside_deciding_conjunct",
+        "datetime_role_authority_refuses_closure_dynamicRef_cites_holder",
+        "datetime_role_authority_refuses_closure_dynamicRef_cites_value_node",
+        "datetime_role_authority_refuses_closure_recursiveAnchor_in_citation"
+      ],
+      "all_refused_requirement_removed": [],
+      "all_refused_and_dialect_rule_removed": [
+        "datetime_automatic_credit_withheld_mixed_dialect",
+        "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+        "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+        "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+        "datetime_role_authority_refuses_closure_dialect_union_2020_first"
+      ],
+      "sweep_removed_from_deciding": [
+        "datetime_role_authority_refuses_undecided_year_sweep"
+      ],
+      "sweep_removed_from_automatic": [
+        "datetime_automatic_credit_withheld_year_sweep"
+      ]
+    },
+    "not_rerun": "cycle-10 replay suite (not in the FIX15 rerun list); its last run is fix13/cycle10-replay",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15",
+    "scope": "Date-time helper fix only: probe, admission checks, the date-time role paragraph of the guide and this report set. No inventory, role record, battery, inventory schema, exclusion, owner prose, registry, Decision Log, Spec Lock, .evidence, .gitignore or number-scope change."
   }
 }

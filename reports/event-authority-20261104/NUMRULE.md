@@ -1741,3 +1741,166 @@ All runs: Python 3.14.4, msgpack 1.1.2 first on `PYTHONPATH` (wheel SHA-256 `180
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/gen-cases4.json` | `2eeda1805ac1f4411b2c55bc48f8378f9e40b0edb69df753ebc5c7f691836202` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/full-selftest-summary.json` | `301d4cdb0b9c3a1df0bfebe973646796e629ce37d047450e592c666de6e2e3b8` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4/extraction.sha256` | `c7a73c4403a2061cd25ce704e4d78349b404f8d85bbf99613295e8c5ac0c9301` |
+
+## Opus pre-check cycle 14: findings and responses
+
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-cycle14-opus.md`, a blind pre-check (not a gate) of `85b0ca7ece2c4926874ee5337e7542521308ba06` (fix `a5ae4fc90b`). Verdict NOT_READY: B1 (high) and B2 (medium) blocking, N3 (low), N4–N6 (information). B1, B2, N3 and N5 are fixed in `ff7caf8d7f62705c86f7dff95635cc867f198702`, rebased onto the number-scope head `884d6bd295`. The replay campaign ran at `92c49a488b`, the same fix on `051c303a2a`. The rebase changed no date-time file except the number-corpus pin line that the number scope moved in the exclusions (identical Git object IDs otherwise), and FIX15 touches no number-scope file. The full gate and the self-test were rerun at the pushed fix commit. A first rebase, `492395a74e` onto `9f873ad834`, was superseded by two more number-scope commits before it was pushed; its rerun also passed and is retained.
+
+**B1 — one citation reached under two dialects: fixed, with the lead's simpler option.**
+- **Where:** `wildcard_probe` and `reviewed_role` in `scripts/pm_event_datetime_value_probe.py`. `_PositivePaths._value` keeps the first context that reaches a node (`self.nodes.setdefault`), and the deciding loop tested each node once, in that context.
+- **Why it broke:** jsonschema evaluates a node in the dialect it was reached under: a node without its own `$schema` inherits the referrer's. The review's `C` (`$ref` to a generic string plus a `pattern` sibling) decides under 2020-12, but under draft-07 the sibling is ignored and `C` is the generic string. Reached first under 2020-12, `C` was credited. Through an embedded draft-07 resource that refers back to it, the value accepted all 653 battery timestamps, and the coherent full gate exited 0.
+- **Choice:** the lead offered two routes: evaluate the citation in every context that reaches it (each dialect, base URI and resource), or refuse credit whenever the value's closure is not single-dialect 2020-12. I chose the second, because it is smaller and clearer:
+  - **Smaller:** one closure fact, collected during the discovery walk the probe already makes, and one condition. Evaluating every context needs the positive walk keyed by dialect, base URI and resource, and an argument that the list of contexts is complete (dynamic scope makes it open-ended).
+  - **Clearer:** a reviewer checks one property. Inside a static 2020-12 closure a node's verdict does not depend on the path that reached it, so one test covers every context. That closes the class by construction.
+  - **Cost:** none for committed rows. Every committed Plans schema is 2020-12 (`git grep` finds no other dialect), so no row moves. A future mixed-dialect schema routes to explicit review; it is not refused outright.
+- **Fix:**
+  1. **Static closure:** the discovery walk records every `$schema` declared at or above each reachable node within its resource, plus the row resource's own dialect. Inheritance is lexical, so a fragment `$ref` into a draft-07 resource counts even when that resource's root is never visited. Non-timestamp credit, automatic or role, needs this set to be exactly {2020-12}. Otherwise `deciding_nodes` is empty and `automatic_credit` is false, so the row fails `wildcard_role_review_required`.
+  2. **`all_refused` required outright:** a `wildcard_non_timestamp_role` record now also needs the real validator over the whole map to refuse every battery timestamp. The 8 kept rows meet it, so none moved. Inside a static closure a deciding citation on a positive path already implies it, so this is defence in depth. The mutation table shows that removing it alone fails no check, and removing it together with the dialect rule reopens all five B1 witnesses.
+  3. **Regressions:** the review's witnesses in the self-test and as coherent full gates (below).
+
+**B2 — dynamic references inside a citation: fixed.**
+- **Where:** the same deciding loop. Its fresh resolver gives `$dynamicRef` an empty dynamic scope, and FIX14 consulted unproven keywords only when `all_refused` was false.
+- **Why:** an outer document can `$ref` the map and rebind the `$dynamicAnchor`. A row-level proof then does not hold for the field. The review's record citing the `$dynamicRef` node itself, or a `$defs` node holding it, earned `wildcard_non_timestamp_role`, and the coherent full gate exited 0.
+- **Fix:** the same closure fact. If any reachable node carries `$dynamicRef`, `$dynamicAnchor`, `$recursiveRef` or `$recursiveAnchor`, the closure is not static and earns no non-timestamp credit, whatever `all_refused` says.
+- **Scope:** the brief names the cited definition's closure. The rule uses the value's closure, which contains it: a citation must be a positive endpoint reached from the value. So every case the brief names is refused. Two more are refused too: a deciding conjunct beside a `$dynamicRef` (the review called that shape harmless and its refusal acceptable), and automatic credit for a value that only carries an anchor.
+- **Rows:** no committed Plans file uses any of the four keywords. No row moved.
+
+**N3 — year coverage: fixed in the stated finite scope.**
+- **Sweep:** `_year_sweep_values()` in the probe, fixed in code. It has 4,743 timestamps, one block per year from 1970 to 2100:
+  - the battery's 16 separator and zone spellings (`T` or `t`, and `Z`, `z`, `+00:00`, `-00:00`, `+05:30`, `-07:45`, `+23:59`, `-23:59`), each with a 0–9-digit fraction that moves with the year. So every year carries every separator, zone and fraction length, and every ten consecutive years carry all 160 battery forms;
+  - the first and the last second of the year in every zone, and the last nanosecond in `Z`;
+  - the leap day (28 February in a common year), at three times;
+  - every real leap second in the frozen table.
+- **Checks at use:** every value passes the CV-1101 `date_time` predicate, and every year from 1970 to 2100 is present. `datetime_year_sweep_complete` asserts the per-year composition and that the battery digest is still `a125323b…`.
+- **Use:** a deciding citation must refuse every sweep timestamp. Automatic credit now also needs the map to refuse all of them, because the review's main N3 witness (`pattern: "2027-"`) earned automatic credit, not a role.
+- **Battery:** unchanged. Blob `40843260b03700e7b41ba4e7472e7ee8f178eb48`, digest `a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3`, `battery_sha256` on all 21 wildcard rows.
+- **Rows moved:** none. The 8 kept citations and the 3 automatic maps refuse every sweep timestamp; production `datetime_validator` accepts 0 of 4,743 at both fields of each kept row.
+- **Size:** the full cross product, every battery form in every year (23,476 strings), took a full inventory projection from 6 s to 33 s. The rotation keeps every year in every form feature, and every decade in every form, at 11 s.
+
+**N5 — two dialect choices: fixed.** The timestamp-only check and the deciding check now share one validator per proven node, in the dialect the positive walk reached it under. Under the static-closure rule that is the row's single dialect. The timestamp-only list stays as evidence; a role needs `all_refused` anyway.
+
+**N4 and N6 — information: no change.** N4: `values_by_setting_id` stays `other_owner_observation`; its reason states accurately why. N6: the format checkers available depend on installed packages, and a missing checker makes the evidence mismatch, so the gate fails closed.
+
+**Rows moved: none.** At base and head, the inventory, the 18 role records, the battery and the inventory schema have the same Git object IDs, and the inventory exclusion pin `5cd2d30c…` is unchanged. The gate at the head recomputes every row's evidence from source and requires equality, so the new code projects exactly the committed inventory. Totals stay 133 Storage + 89 other-owner + 3 automatic + 8 roles, 0 unclassified. The 8 kept roles keep `all_refused: true` with their citations in `deciding_nodes`.
+
+**Cycle-14 replay (fresh copies of the pre-check's scripts; inputs unchanged).** 78 attack cases and 3 dialect variants, all as expected: 69 refuse, 10 are accepted as roles, and 2 timestamp-accepting values with no record pass as `other_owner_observation`. Every case the pre-check left open now has an explicit expectation:
+
+| Case | Pre-check outcome | Now | Why |
+|---|---|---|---|
+| `dialect/union_2020_branch_first`, `oneOf_2020_branch_first`, `embedded_d7_resource_with_id`, `embedded_d7_resource_in_defs` | accepted as role; value accepts 653 of 653 | refused, `wildcard_role_review_required` | B1: mixed-dialect closure, and `all_refused` false. |
+| `dialect/union_d7_branch_first` | refused (branch order) | refused | Both rules. |
+| `dynamicRef/cite_value_node_itself`, `cite_def_holding_dynamicRef` | accepted as role | refused | B2: dynamic keyword in the closure. `all_refused` is true, so the closure rule alone refuses them. |
+| `dynamicRef/conjunct_deciding_plus_dynamicRef` | accepted (harmless) | refused | B2, value closure (accepted cost). |
+| `pattern/unanchored_absent_year_2027` (role) and `_no_record` (automatic) | accepted; runtime accepts `2027-06-15T12:00:00Z` | refused | N3: the sweep holds 2027. |
+| `pattern/lookahead_excludes_exact_battery` | automatic credit | refused | N3: the lookahead excludes the 669 strings, not the sweep. |
+| `format/datetime_10digit_fraction` | accepted as role | accepted as role | Stated limit: a 10-digit fraction is not a battery form. |
+| `format/ipv4_only`, `not_datetime_minlen31`, `datetime_maxlen19`, `pattern/unanchored_marker`, `maxlen/below_all_timestamps_controls_enum_excluded`, `control/*_deciding`, `dialect/control_both_2020` | accepted as role | accepted as role | Each refuses every timestamp tried, including the sweep. |
+
+**Coherent full gates.** Each input is the pre-check's own (read-only from `reviews/`). Each attack record has a fingerprint recomputed from source. Each inventory is re-projected and its exclusion pin recomputed from source. Each runs through the unchanged full gate over every committed Plans blob.
+
+| Input | Before (pre-check) | Now | Errors | `all_refused` |
+|---|---|---|---|---|
+| B1: `anyOf` of a 2020-12 citation and an embedded draft-07 resource referring back | exit 0; production accepts 653 of 653 | exit 1 | `wildcard_role_review_required` | false |
+| B2: record citing the `$dynamicRef` node itself | exit 0; outer rebinding accepts timestamps | exit 1 | `wildcard_role_review_required` | true |
+| B2: record citing a `$defs` node holding the `$dynamicRef` | accepted as role (one-row) | exit 1 | `wildcard_role_review_required` | true |
+| N3: `format: date-time, pattern: "2027-"` citation | accepted as role (one-row) | exit 1 | `wildcard_role_review_required` | true |
+| Cycle-13 N1 witness | exit 1 | exit 1 | `wildcard_role_review_required` | false |
+
+In each, `deciding_nodes` is empty, the record fingerprint matches, the pin equals the inventory checksum, and the production `datetime_validator` refuses with `DatetimeAdmissionError: datetime_inventory_invalid`, including through the outer rebinding document. The gate stops at inventory validation, before it streams the Plans tree.
+
+**Kept roles, measured independently** (`measure14.py`, with sweep counts added): each of the 8 cited objects refuses all 653 battery samples, all 16 controls and all 4,743 sweep timestamps. Each kept row, through the production `datetime_validator`, accepts 0 battery and 0 sweep timestamps at both fields in every recorded context.
+
+**Cycle-13 replay (FIX14's drivers, fresh copies; expectations unchanged).** All 51 attack cases as expected: 47 refuse, the 3 deciding controls are accepted, and 1 timestamp-accepting value with no record passes. The six coherent full gates (four N1 witnesses, cycle-12 `irrelevant_if` and `vacuous_not`) and the N2 full gate exit 1, each with `wildcard_role_review_required` alone. The literal cycle-12 bypass input exits 1 (84 `inventory_schema` errors from its obsolete evidence format).
+
+**Cycle-11 and cycle-12 replays (FIX13's drivers, fresh copies).**
+- **Targeted probes:** 48 of the 48 original probes keep their exact gate outcome, and the 5 added in round 13 still fail on their stale pins (53 total).
+- **Adjacent checks:** 14 of 14 refuse with `wildcard_role_review_required`.
+- **Full gates:** both coherent B7 variants, the sibling and foreign-key gates, and all three literal earlier inputs exit 1.
+- **Pin audit:** the 18 role pins equal the source recomputation, and each citation is in its graph.
+
+**Self-test controls (19 added; none removed or moved).** Each refusal check also asserts that the citation is a positive endpoint for every field and is not in `deciding_nodes`, so the path rule alone would have accepted it. Each also asserts the expected `all_refused`.
+
+| Check | What it covers |
+|---|---|
+| `datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource`, `_with_id`, `_union_2020_first`, `_union_draft7_first`, `_oneOf_2020_first` | B1: the pre-check's witnesses, both branch orders, `anyOf` and `oneOf`, the embedded resource in `$defs` and inline with its own `$id`, and a nested `$schema` without `$id`. Each value accepts every battery timestamp. |
+| `…_closure_dialect_mixed_value_refuses`, `…_dialect_2019_09_only` | The value refuses every timestamp and the citation decides under both dialects, or the only dialect is 2019-09. The closure rule is the only reason for the refusal. |
+| `…_closure_dynamicRef_cites_value_node`, `…_dynamicRef_cites_holder`, `…_dynamicRef_beside_deciding_conjunct`, `…_dynamicAnchor_in_citation`, `…_recursiveAnchor_in_citation` | B2: the pre-check's two witnesses, a `$dynamicRef` beside a deciding conjunct, and a citation carrying only `$dynamicAnchor` or `$recursiveAnchor` (both are annotations on the positive walk). `all_refused` is true in each. |
+| `datetime_role_authority_accepts_closure_one_dialect`, `…_closure_unreachable_draft7_resource` | Controls: the same union in one dialect, and the draft-07 resource present in `$defs` but unreachable, keep their role. |
+| `datetime_role_authority_refuses_undecided_year_sweep` | N3: a citation refusing the battery and the controls but accepting `2027-…`. |
+| `datetime_automatic_credit_withheld_mixed_dialect`, `…_dynamicAnchor`, `…_year_sweep` | Automatic credit: each value refuses every battery timestamp with no unproven keyword, so only the closure rule or the sweep withholds it. |
+| `datetime_year_sweep_complete` | Every year from 1970 to 2100 carries both separators, all ten fraction lengths and all eight zones, the first and last second, the leap day exactly in leap years, and real leap seconds. The battery digest is still `a125323b…`. |
+
+**Mutation controls.** Each FIX15 guard was reverted in a scratch copy of the scripts. The unchanged authority checks were run, and the B1 and B2 witness inputs were replayed through a one-row projection:
+
+| Reverted guard | Checks that then fail | B1 witness | B2 witness |
+|---|---|---|---|
+| dialect rule removed (B1) | `automatic_withheld_mixed_dialect`, `closure_dialect_2019_09_only`, `closure_dialect_embedded_draft7_resource`, `closure_dialect_embedded_draft7_resource_with_id`, `closure_dialect_mixed_value_refuses`, `closure_dialect_oneOf_2020_first`, `closure_dialect_union_2020_first` | refused (citation decides; `all_refused` false) | refused |
+| dynamic-keyword rule removed (B2) | `automatic_withheld_dynamicAnchor`, `closure_dynamicAnchor_in_citation`, `closure_dynamicRef_beside_deciding_conjunct`, `closure_dynamicRef_cites_holder`, `closure_dynamicRef_cites_value_node`, `closure_recursiveAnchor_in_citation` | refused | **accepted as role** |
+| `all_refused` requirement removed (B1) | none | refused | refused |
+| `all_refused` and dialect rule both removed | `automatic_withheld_mixed_dialect`, `closure_dialect_2019_09_only`, `closure_dialect_embedded_draft7_resource`, `closure_dialect_embedded_draft7_resource_with_id`, `closure_dialect_mixed_value_refuses`, `closure_dialect_oneOf_2020_first`, `closure_dialect_union_2020_first` | **accepted as role** | refused |
+| sweep removed from the deciding check (N3) | `undecided_year_sweep` | refused | refused |
+| sweep removed from automatic credit (N3) | `automatic_withheld_year_sweep` | refused | refused |
+
+`closure_dialect_union_draft7_first` refuses even with the dialect rule removed: the positive walk reaches the citation first under draft-07, where it does not decide (the pre-check's branch-order observation).
+
+**Self-test.** `full_git_checks.py selftest` runs the unchanged `run_corpus` (`--scope all`) over all 8968 committed Plans blobs through the Path I/O adapter:
+- **At `92c49a488b`:** exit 0, 13486 of 13486 cases, 318 of 318 integration checks (19 added), date-time gate `pass` over 233 nodes, in 620 s.
+- **At the pushed `ff7caf8d7f`:** exit 0, 13590 of 13590 cases and 319 of 319 integration checks (the 104 new cases and the one new check are the number scope's), in 642 s. The full gate also passes on its own: 233 nodes and 8879 Git blobs read, in 252 s.
+
+FIX15 changes no corpus case. FIX14 took 420 s for the self-test. Most of the difference is the year sweep: a full inventory projection now takes 11 s instead of 6 s.
+
+**Guide.** In `NUMRULE-ADOPTION.md`, the date-time role paragraph now states:
+- the static-closure rule;
+- that a role needs `all_refused` outright;
+- the year sweep in the deciding check and in automatic credit;
+- that the 16 strings, the sweep and the battery are finite, refusal-only tests;
+- that `timestamp_only_nodes` is evidence.
+
+The old sentence about conditions and negations on a timestamp-accepting value's proven paths is gone: such a value now never earns a role at all. No number section changed.
+
+**Scope.** Changed: the probe, the admission checks, one paragraph of the guide, and this report set. Unchanged by Git object ID:
+- the inventory, the role records, the battery, the inventory schema and the exclusions;
+- every number-scope file (`scripts/pm_event_numbers.py`, `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_numbers_mutations.json`, the number corpus, `scripts/pm_event_index_binding.py`) and the number sections of the guide;
+- owner prose, registry, Decision Log, Spec Lock, `.evidence` and `.gitignore`.
+
+Native authority remains NOT_RUN. Guard isolation remains SWEEP_PENDING. No family is graded.
+
+**Limits.**
+- **The sweep is finite.** The battery, the 16 strings and the 4,743 sweep timestamps can only withhold credit. A citation that refuses all of them but accepts another timestamp form passes. Examples: the pre-check's 10-digit fraction (not a battery form, so outside the brief's sweep), or a lookahead that also excludes every sweep string. This is FIX11's stated boundary for automatic credit, now with every year from 1970 to 2100 covered.
+- **The closure rule is conservative.** It reads the reachable closure of the whole map, not only the field's value paths, and it refuses a dynamic keyword wherever it sits. A future mixed-dialect or dynamic schema needs an explicit review, even where it would be harmless.
+- **Kept roles stay human judgements.** The eight remaining roles are reviews of object-valued maps. The gate binds them to exact source and value paths, but does not prove the reviewer's judgement.
+- **Not rerun:** the cycle-10 replay suite, which this brief does not list. Its last run is `drafts/NUMRULE/fix13/cycle10-replay`.
+
+**Execution.** Checkers ran serially from fresh driver copies on a `git archive` extraction of the 102 cycle-12 inputs at `92c49a488b` (and, for `rebased-head/`, at `ff7caf8d7f`), each file checked against its Git blob. Every start had at least 6 GiB available. Adaptations are listed in the evidence README.
+
+One harness error occurred. The first mutation driver required `dialect_union_draft7_first` to fail with the dialect rule removed. It does not: the walk first reaches the citation under draft-07, where it does not decide. The failed run is retained in `harness-errors/`. The expectation was corrected, a per-mutant witness replay was added, and the campaign resumed at the mutation step after a scratch-integrity check.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/results.json` | `4167732743ea8d79bbb3b07253584ed7915ff4f116ed30d718825b9205c0287f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/row-moves.json` | `13c99f02d9a1c1b27c20d46fe1a8f310f795176c9e0addab19593c43f6d3c67c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/mutation.json` | `45504fdb3c7c34b80672138143913484832c1efaec94afc70032b578fa550d3d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/preservation-92c49a488b.json` | `1d2977b5cfe4a13a560683f8243029631db7b7c60f45323bacea9310ff60b64c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/preservation-ff7caf8d7f.json` | `2ff95b7ee67491a4c9ab5e6faee4b5c4b6160411dd0e150c80ae6c15029ac777` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/campaign.json` | `56943c62ac7160b0da1ccace42af6dc13003b48fa13e71edfc903da4153cfdb4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/cycle14-assertions.json` | `749744fcd666ad091371f3011c6b0bb4b1c945f1ea8a622fa60afe87b81aeb54` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/attacks14.json` | `a03f95feeb06992cd738f8f4a7197b66b35f178f931266a3c1d288449ad633b8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/variants14.json` | `af2cd5f490c9522558eb0f4cb94caf9a53f1955d921e9e72a8f2fe35a79500f4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/measure14.json` | `43258777ae39e43714762304c25c2586af8fe48875129e2c77482dba1d6ce4ee` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/dialect-setup.json` | `fa5e7ada6ccceab3b714433829a47ff3266472e5b32f74479f8a491b18b851b2` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/dynamicref-setup.json` | `3a87705467b4101547e389ee73328c2744b8fd5895aa6054a20b30629d1a38cf` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/dynamicref-holder-setup.json` | `ed2a6ddb39af535348338f419828ab17b0d96d0044ffdf3b5f9af95e459ed90e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/year-2027-setup.json` | `bb747f979524ce833e29473618350a296ee0f2634a3b896733811474737b6cac` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle14-replay/n1-witness-setup.json` | `125057fbe3530b0eb5eacea6bff28364ce7f311365f99fa2ccfef979f1f3df0f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/precheck-replay/precheck-assertions.json` | `e904830f3ca3d19fa3f6ef120ffebec3108c6b91b08edff41d96c061490fc000` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/precheck-replay/attacks.json` | `eea36566c329b7fd1665e4cd62e5a42aa99862cb877b15018fe6b349937b9cd6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle12-replay/result-assertions.json` | `813837af5602bdf481272e090c5cfb34001d483b4fa520684d4c7daba18b7589` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle12-replay/targeted-checks.json` | `390c38afeaf3a31b197c251c89abc378d94ed9a86e0c9ed437b4f518931c5652` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle12-replay/adjacent-checks.json` | `a082839f21388e0d57149ff0cd863b8247d7ae2706e7358e0d28e16b992caea5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle12-replay/full-selftest.json` | `d0de54716aa04913058407796cbce56198d7fb5d6e9f7ced7dbfacc2fafab5c8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/cycle12-replay/full-selftest-inventory.json` | `920e17992b18ca7bec8c55e2bbb9dbc29cd4a338b04302ef1a28957446e2cdba` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/rebased-head/full-gate.json` | `e8a722e7e20593a945f158ba23938930397c57943a4fc048592fc8621ce9d0ea` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/rebased-head/full-selftest.json` | `c513fe15611901febd1110e60c75229349f8dc108d14ab6426fa5d3b1cc3b296` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/harness-errors/run1-campaign.stdout` | `bf2a7eba5431cff473dca04c8ad87f23fd0bd1a0c3c648b2f6c702c069ccbd5d` |

@@ -1,104 +1,73 @@
 {
-  "round": 14,
-  "review": "cycle-13 Opus pre-check (reviews/NUMRULE-sol/REVIEW-cycle13-opus.md)",
-  "source_base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
-  "implementation_commit": "a5ae4fc90b6da25efd00350e120291975268a401",
-  "N1": "fixed; a non-timestamp role citation must, on its own, refuse every battery timestamp and all 16 fixed control strings",
-  "N2": "fixed; $dynamicRef is not a positive path, so it routes to explicit review and earns no automatic credit",
-  "rows_moved_to_explicit_timestamp_review": [
-    [
-      "Plans/section15_browser_program_contracts.schema.json",
-      "json",
-      "/$defs/browser_program_result_validation/properties/result_schema_resources"
-    ],
-    [
-      "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
-      "json",
-      "/$defs/common_node/properties/payload"
-    ],
-    [
-      "Plans/settings_system_contracts.schema.json",
-      "json",
-      "/$defs/setting_value/oneOf/5"
-    ],
-    [
-      "Plans/settings_system_contracts.schema.json",
-      "json",
-      "/$defs/values_by_setting_id"
-    ],
-    [
-      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
-      "json",
-      "/$defs/TargetRefs"
-    ],
-    [
-      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
-      "json",
-      "/$defs/SafeParameters"
-    ],
-    [
-      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-      "json",
-      "/$defs/TargetRefs"
-    ],
-    [
-      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-      "json",
-      "/$defs/SafeParameters"
-    ],
-    [
-      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-      "json",
-      "/$defs/TargetRefs"
-    ],
-    [
-      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
-      "json",
-      "/$defs/SafeParameters"
+  "round": 15,
+  "review": "cycle-14 Opus pre-check (reviews/NUMRULE-sol/REVIEW-cycle14-opus.md)",
+  "source_base": "051c303a2aea17ef85a6e66d89c75cbb3b29e058",
+  "implementation_commit": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+  "tested_commit": "92c49a488b05fd10527e26f997749a22e338720f",
+  "rebased_onto": "884d6bd29501b21a9ff637788d0cee7de6cb8724",
+  "rebased_head": {
+    "full_gate": {
+      "status": "pass",
+      "nodes": 233,
+      "unique_git_reads": 8879
+    },
+    "selftest": {
+      "cases": 13590,
+      "case_passes": 13590,
+      "checks": 319,
+      "failed_checks": []
+    },
+    "datetime_files_identical_to_tested_commit": [
+      "Plans/event_datetime_inventory.json",
+      "scripts/pm_event_datetime.py",
+      "scripts/pm_event_datetime_admission_checks.py",
+      "scripts/pm_event_datetime_inventory.py",
+      "scripts/pm_event_datetime_inventory.schema.json",
+      "scripts/pm_event_datetime_roles.json",
+      "scripts/pm_event_datetime_timestamp_battery.json",
+      "scripts/pm_event_datetime_value_probe.py"
     ]
-  ],
-  "rows_kept_as_non_timestamp_roles": [
-    [
-      "Plans/shared_runtime_contracts.schema.json",
-      "json",
-      "/$defs/permission_snapshot_record/properties/resolved_permissions"
+  },
+  "B1": "fixed with the lead's simpler option: non-timestamp credit, automatic or role, needs a static closure (every reachable node 2020-12, no other dialect declared at or above it); a role also requires all_refused",
+  "B2": "fixed; a closure containing $dynamicRef, $dynamicAnchor, $recursiveRef or $recursiveAnchor earns no non-timestamp credit",
+  "N3": "fixed in the stated finite scope; a deterministic year sweep (1970-2100, 4,743 timestamps) is a fixed control: a deciding citation and automatic credit must refuse it; battery a125323b... and its pin unchanged",
+  "N5": "fixed; the timestamp-only and deciding checks share one validator per node, in the dialect the positive walk reached it under",
+  "N4_N6": "information only; no change",
+  "rows_moved": [],
+  "row_moves": {
+    "unchanged_blobs": {
+      "Plans/event_datetime_inventory.json": "76d49b9874f35597f6ecfbaf68f5a253da86d487",
+      "scripts/pm_event_datetime_roles.json": "8c18bf428e1f8ea6fadda6ea12c76c27eb20fd38",
+      "scripts/pm_event_datetime_timestamp_battery.json": "40843260b03700e7b41ba4e7472e7ee8f178eb48",
+      "scripts/pm_event_datetime_inventory.schema.json": "3d93ce314256a3d2a39fbeccba19e2050821aef0"
+    },
+    "inventory_pin": "5cd2d30c18560c8f5b846ffbaeabbe91fb000ff6c8065f91fe8b99f9bf6e1d7b",
+    "classification_totals": {
+      "other_owner_observation": 88,
+      "EventRecord": 98,
+      "event_record_index": 27,
+      "original_storage_fields": 6,
+      "Storage issued original fields": 2,
+      "source_lineage_schema_patch": 1,
+      "wildcard_non_timestamp": 3,
+      "wildcard_non_timestamp_role": 8
+    },
+    "automatic_rows": [
+      "/$defs/browser_program/properties/result_schema_dependencies",
+      "/$defs/BrowserProgramApplicationV1/properties/result_schema_dependencies",
+      "/$defs/source_by_setting_id"
     ],
-    [
-      "Plans/storage_value_registry.json",
-      "json",
-      "/families/62/value_schema/properties/resolved_permissions"
-    ],
-    [
-      "Plans/storage_value_registry.json",
-      "json",
-      "/families/84/value_schema/properties/tabs"
-    ],
-    [
-      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
-      "json",
-      "/$defs/permission_snapshot_record/properties/resolved_permissions"
-    ],
-    [
-      "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
-      "json",
-      "/properties/resolved_permissions"
-    ],
-    [
-      "Plans/home_workspace_layout_v2.schema.json",
-      "json",
-      "/properties/tabs"
-    ],
-    [
-      "Plans/project_system_contracts.schema.json",
-      "json",
-      "/$defs/project_creation_recovery_context/properties/settled_effects"
-    ],
-    [
-      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
-      "json",
+    "kept_roles_all_refused_and_deciding": [
+      "/$defs/permission_snapshot_record/properties/resolved_permissions",
+      "/families/62/value_schema/properties/resolved_permissions",
+      "/families/84/value_schema/properties/tabs",
+      "/$defs/permission_snapshot_record/properties/resolved_permissions",
+      "/properties/resolved_permissions",
+      "/properties/tabs",
+      "/$defs/project_creation_recovery_context/properties/settled_effects",
       "/properties/resolved_permissions"
     ]
-  ],
+  },
   "inventory": {
     "status": "pass",
     "nodes": 233,
@@ -109,27 +78,102 @@
     "unclassified_nodes": 0
   },
   "selftest": {
-    "cases": 13391,
-    "case_passes": 13391,
-    "checks": 299,
+    "fix15_checks_present_and_passing": 19,
+    "cases": 13486,
+    "case_passes": 13486,
+    "checks": 318,
     "failed_checks": []
   },
-  "added_or_moved_selftest_checks": [
-    "datetime_automatic_credit_withheld_dynamicRef",
-    "datetime_role_authority_accepts_object_record",
-    "datetime_role_authority_refuses_dynamicRef",
-    "datetime_role_authority_refuses_undecided_accepts_one_control",
-    "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
-    "datetime_role_authority_refuses_undecided_doc_only_conjunct",
-    "datetime_role_authority_refuses_undecided_doc_only_conjunct_bare_stamp",
-    "datetime_role_authority_refuses_undecided_generic_ref",
-    "datetime_role_authority_refuses_undecided_generic_whole_union",
-    "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
-    "datetime_role_authority_refuses_undecided_implicit_true",
-    "datetime_role_authority_refuses_undecided_member_only_conjunct",
-    "datetime_role_authority_refuses_undecided_setting_value_shape",
-    "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+  "added_selftest_checks": [
+    "datetime_automatic_credit_withheld_dynamicAnchor",
+    "datetime_automatic_credit_withheld_mixed_dialect",
+    "datetime_automatic_credit_withheld_year_sweep",
+    "datetime_role_authority_accepts_closure_one_dialect",
+    "datetime_role_authority_accepts_closure_unreachable_draft7_resource",
+    "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+    "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+    "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+    "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+    "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+    "datetime_role_authority_refuses_closure_dialect_union_2020_first",
+    "datetime_role_authority_refuses_closure_dialect_union_draft7_first",
+    "datetime_role_authority_refuses_closure_dynamicAnchor_in_citation",
+    "datetime_role_authority_refuses_closure_dynamicRef_beside_deciding_conjunct",
+    "datetime_role_authority_refuses_closure_dynamicRef_cites_holder",
+    "datetime_role_authority_refuses_closure_dynamicRef_cites_value_node",
+    "datetime_role_authority_refuses_closure_recursiveAnchor_in_citation",
+    "datetime_role_authority_refuses_undecided_year_sweep",
+    "datetime_year_sweep_complete"
   ],
+  "cycle14_replay": {
+    "attacks": 78,
+    "variants": 3,
+    "refused": 69,
+    "accepted_as_role": [
+      "control/direct_ref_deciding",
+      "control/allOf_ref_withheld_deciding",
+      "control/every_branch_union_withheld_deciding",
+      "format/ipv4_only",
+      "format/not_datetime_minlen31",
+      "format/datetime_maxlen19",
+      "format/datetime_10digit_fraction",
+      "pattern/unanchored_marker",
+      "maxlen/below_all_timestamps_controls_enum_excluded",
+      "dialect/control_both_2020"
+    ],
+    "passed_without_record": [
+      "replay-c13/control_no_record_ts_accepting",
+      "dialect/union_2020_first_no_record"
+    ],
+    "kept_roles": {
+      "records": 8,
+      "battery_sweep_controls_accepted_by_citations": 0,
+      "production_battery_and_sweep_accepted": 0,
+      "year_sweep": 4743
+    }
+  },
+  "cycle14_coherent_full_gates": {
+    "dialect": {
+      "exit": 1,
+      "errors": [
+        "wildcard_role_review_required"
+      ],
+      "all_refused": false,
+      "unique_git_reads": 0
+    },
+    "dynamicref": {
+      "exit": 1,
+      "errors": [
+        "wildcard_role_review_required"
+      ],
+      "all_refused": true,
+      "unique_git_reads": 0
+    },
+    "dynamicref-holder": {
+      "exit": 1,
+      "errors": [
+        "wildcard_role_review_required"
+      ],
+      "all_refused": true,
+      "unique_git_reads": 0
+    },
+    "year-2027": {
+      "exit": 1,
+      "errors": [
+        "wildcard_role_review_required"
+      ],
+      "all_refused": true,
+      "unique_git_reads": 0
+    },
+    "n1-witness": {
+      "exit": 1,
+      "errors": [
+        "wildcard_role_review_required"
+      ],
+      "all_refused": false,
+      "unique_git_reads": 0
+    }
+  },
   "precheck_replay": {
     "attacks": 51,
     "refused": 47,
@@ -253,45 +297,56 @@
   ],
   "mutation_controls": {
     "unmutated": [],
-    "n1_deciding_check_removed": [
-      "datetime_role_authority_refuses_undecided_accepts_one_control",
-      "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
-      "datetime_role_authority_refuses_undecided_doc_only_conjunct",
-      "datetime_role_authority_refuses_undecided_generic_ref",
-      "datetime_role_authority_refuses_undecided_generic_whole_union",
-      "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
-      "datetime_role_authority_refuses_undecided_implicit_true",
-      "datetime_role_authority_refuses_undecided_member_only_conjunct",
-      "datetime_role_authority_refuses_undecided_setting_value_shape",
-      "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+    "dialect_rule_removed": [
+      "datetime_automatic_credit_withheld_mixed_dialect",
+      "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+      "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+      "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+      "datetime_role_authority_refuses_closure_dialect_union_2020_first"
     ],
-    "implicit_exclusion_removed": [
-      "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node"
+    "dynamic_rule_removed": [
+      "datetime_automatic_credit_withheld_dynamicAnchor",
+      "datetime_role_authority_refuses_closure_dynamicAnchor_in_citation",
+      "datetime_role_authority_refuses_closure_dynamicRef_beside_deciding_conjunct",
+      "datetime_role_authority_refuses_closure_dynamicRef_cites_holder",
+      "datetime_role_authority_refuses_closure_dynamicRef_cites_value_node",
+      "datetime_role_authority_refuses_closure_recursiveAnchor_in_citation"
     ],
-    "dynamicRef_back_in_allowlist": [
-      "datetime_automatic_credit_withheld_dynamicRef",
-      "datetime_role_authority_refuses_dynamicRef"
+    "all_refused_requirement_removed": [],
+    "all_refused_and_dialect_rule_removed": [
+      "datetime_automatic_credit_withheld_mixed_dialect",
+      "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+      "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+      "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+      "datetime_role_authority_refuses_closure_dialect_union_2020_first"
+    ],
+    "sweep_removed_from_deciding": [
+      "datetime_role_authority_refuses_undecided_year_sweep"
+    ],
+    "sweep_removed_from_automatic": [
+      "datetime_automatic_credit_withheld_year_sweep"
     ]
   },
   "preservation": {
     "changed": [
-      "Plans/event_datetime_inventory.json",
+      "reports/event-authority-20261105/NUMRULE-ADOPTION.md",
       "scripts/pm_event_datetime_admission_checks.py",
-      "scripts/pm_event_datetime_exclusions.json",
-      "scripts/pm_event_datetime_inventory.schema.json",
-      "scripts/pm_event_datetime_roles.json",
       "scripts/pm_event_datetime_value_probe.py"
     ],
     "number_scope_changed": [],
     "plans_changed_besides_inventory": [],
     "outside_allowed": []
   },
-  "not_rerun": "cycle-10 replay suite (not in the FIX14 rerun list); its last run is fix13/cycle10-replay",
+  "not_rerun": "cycle-10 replay suite (not in the FIX15 rerun list); its last run is fix13/cycle10-replay",
   "native_authority": "NOT_RUN",
   "guard_isolation": "SWEEP_PENDING",
   "family_grading": "N/A",
-  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix14",
-  "scope": "Date-time helper fix only: probe, admission checks, inventory schema (one evidence field), role records (classification and reason of ten), inventory evidence and its derived pin. No owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence, .gitignore or number-scope file change.",
+  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15",
+  "scope": "Date-time helper fix only: probe, admission checks, the date-time role paragraph of the guide and this report set. No inventory, role record, battery, inventory schema, exclusion, owner prose, registry, Decision Log, Spec Lock, .evidence, .gitignore or number-scope change.",
   "number_scope_round1": {
     "round": "number scope 1",
     "source_base": "55e4d716149f743ccc9e2aa3a3edc4d09f7d4248",
