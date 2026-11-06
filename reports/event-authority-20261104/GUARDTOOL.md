@@ -1040,3 +1040,111 @@ Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-2
 | `make-corpus.py` | `5eb32912f47394332144861ea881123f1bb7f68d4e12af53b39cc92fafcf3113` |
 | `edit-guard-docs.py` | `7eba01c6c1c65a037187bf9abc6d8992e6a61dea8bd1c0db75cbf8e155d8cf69` |
 | `prepare-guard-report.py` | `7690f3fc1f30962348260333507e91437acea316e95363c5d9375e0f8b0f7beb` |
+
+
+## Tool batch 2 (TOOL-ISSUES T32-T36): findings and responses
+
+**Every cycle-8 finding for this tool (C8-U1 to C8-U4, C8-G1 to C8-G3) is fixed; none is disputed.** Base: `7bcf23d4d527e6e31a55dd36d9e71d096584a6e9`. The batch-2 commits are on `plans/ea-guardtool-20261105`. C8-L1 (the debug lane's two-defect fixture negative 19) is the lane's, not this tool's: it is reported, not fixed. Capability remains **PARTIAL** pending the Sol max and Astra max gates and complete lane adoption.
+
+| Finding | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **C8-U1 — fixed** | `_data_snapshot` (`codes`), `GuardTable._bind`/`_test`/`_check_purity`, `observe.trace` (`PURITY_SAFE_OPCODES`), `_adapter_roots` (`_resolved_file`). The purity snapshot re-encoded every scalar with `json.dumps` and ran before every predicate instruction; each shared-state check resolved every loaded module's path. Now each run caches immutable scalar encodings once (keyed by identity, holding the scalar), and a checkpoint is taken at every call, return and exception event and after every instruction outside `PURITY_SAFE_OPCODES`, the instructions that only move references between stack, locals, constants and cells (none calls, stores into an object or drops a reference). An untraced callee's work stays pending for the caller's next instruction. Module file resolution is cached per process. | The detection is the same, at the same instruction: all earlier purity traps (`predicate-input-mutation`, `B4-dict-order`, `B4-alias-topology`, `B4-context-order`, `B4-temporary-restored-input`, `B4-mutating-helper`) and three new temporary-mutation traps (`TB2-U1-untraced-callee-temporary`, `-subscript-store-temporary`, `-inplace-temporary`) are caught; the three also catch on the base, by design. Debug-lane case of the cycle-8 trial (metadata-stripped, the input of the cycle-8 profile), M0 adapter, base control and the five negatives, 96 evaluations each: **3.457 s per evaluation at the base, 0.251 s now** (332 s to 24 s), the same 5/5 credit. The self-test runs in 33 s (102 s in cycle 8). |
+| **C8-U2 — fixed** | `_certified_external`, `_literal_enum`, `_postponed_annotations`, `_certified_snapshot`, `_state_objects`; `static_scan` (`immutable_data_import`, `literal_enum_statement`, the certified-binding discipline loop, `annotation:postponed`). Certified by identity, never walked: standard-library module objects on `STDLIB_IMMUTABLE_MODULES`, `typing` special forms, `__future__` features, `Enum`/`IntEnum`/`StrEnum`, literal repository Enums and their members, compiled `re.Pattern` objects. Annotated functions certify when compiled under `from __future__ import annotations` with the compiler's own `__annotate__`. A from-import of single literal immutable constants of a repository module does not scan that module. Every scanned module keeps the discipline: bound once at the top level (`external_binding_rebound`), never written through (`external_binding_write`), a module never aliased, passed or stored and a literal Enum read only as a member, a call or an `isinstance` target (`external_binding_escape`); all three are unwaivable. Frozen dataclasses stay refused, with the restructure pattern in the guide. | 30 `TB2-U2-*` traps: 7 controls that certify now and failed at the base (json and re, a module read, typing and the future import, a literal Enum and its member read, a literal-constant from-import), 14 shapes that must still fail (write-through, `setattr`, `__dict__` write, alias, passed on, rebound, `random`, lazy annotations, a forged `__annotate__`, a typing-form write, an Enum with `__new__`, `_missing_`, `_generate_next_value_`, a metaclass, a non-literal member, an Enum write-through and an Enum passed on, a frozen dataclass) and 4 from-import shapes that must still scan the module (mutable value, a function, a rebound constant, a computed constant). The cycle-8 allowlist probes: the five shapes this finding names (`str` Enum lookup, future and typing annotations, a module-level `json` import, `re.compile`) go from FAIL to PASS, credit `x`, `y`; the other 15 keep their result. `C6-uncertifiable-case-global-fails-closed` now imports `random` instead of `json`, keeping its intent. |
+| **C8-U3 — fixed** | `NonGuard.count`; `static_scan`. Identical sites (a forward read twice in one function) could not be declared. A `NonGuard` now names the exact number of identical sites it covers, default 1; any other count of matches fails `non_guard_not_exactly_one_site`, and a count below one is invalid. Chosen over certifying a `def`-body read when no top-level call precedes its binding, because it certifies nothing automatically: soundness rests on the reviewer's reason holding for each site, and the exact count keeps the declaration from growing silently. The automatic option would need an argument about every top-level statement that can run code before the binding, imports of repository modules that import this one back included. | `TB2-U3-count-control` (two forward reads, `count=2`, credited), `-count-too-high`, `-count-zero`. |
+| **C8-U4 — fixed** | `static_scan` (`stdlib_compile`, `literal_module_constant`). `re.compile` was dynamic code by its leaf name, and an error-named module constant was an error write. `X.compile(...)` is now ordinary plumbing only when every binding of `X` in the file is `import re` (or `import re as X`), every loaded instance binds it to `sys.modules['re']` and that module's `compile` is its own Python function. A single top-level `NAME = immutable literal`, bound nowhere else, is no error write. | `TB2-U4-re-compile-control` (credited), `-builtin-compile-dynamic`, `-compile-unknown-receiver`, `-re-rebound-compile`, `-error-named-literal-control` (credited with no declaration), `-error-named-list`, `-error-named-rebound`. |
+| **C8-G1 — fixed** | `static_scan`, `_TABLE_PRIVATE`, `_GUARD_TRACES`. Checker code could read and write the table's private state under a waiver. Any attribute of `table` but `require`, `validate` and `guards`, any distinctive GuardTable private member on any receiver (the generic names on any receiver but `self`), any `g._*` name and a string constant naming a distinctive private member are now `table_private_state`, unwaivable. The guard-call trace lives in engine-owned storage (`_GUARD_TRACES`, a weak map keyed by table). | `TB2-G1-T11-private-entries` and `TB2-G1-T11b-forged-trace` (cycle-8 T11 and T11b), `-table-dict`, `-engine-private`, `-private-by-string`, `-engine-trace-store`. Five of these are credited PASS on the base. The cycle-8 trace probes T11 and T11b go from PASS, credited, to FAIL with no credit. |
+| **C8-G2 — fixed** | `static_scan` (`sensitive`), guide. `gettrace` and `getprofile` join the dynamic names. The guide's "stable within a process but differs across processes" row names harness detection: `sys.gettrace()`, `sys.getprofile()`, `'pm_guard_isolation' in sys.modules` and other looks at `sys.modules`, `__debug__` and `-O`, interpreter and platform facts. | `TB2-G2-T10-gettrace` (cycle-8 T10, `sys` imported in the checker as there) and `TB2-G2-getprofile`; both are credited PASS on the base. The cycle-8 trace probe T10 goes from PASS to FAIL. |
+| **C8-G3 — done** | `Suite.baseline_repeats`, `run`. `k` extra uncut runs of every case before any cut, each required to repeat the baseline outcome and trace (`baseline_nondeterministic`); `observed_runs` reports uncut and cut run counts per case. | `TB2-G3-repeats-observed` (`baseline_repeats=3`, every case at least 4 uncut runs). |
+
+### Real-lane trial, redone without the preamble-free copy
+
+The adapter imports `FAILED_REASONS` and `TERMINAL` from the debug lane's own `scripts/pm_debug_investigation_transitions.py` (`origin/plans/ea-w2-debug-20261104` at `e66effc3aa`, unmodified). That module certifies as a literal-constant from-import: it is not scanned and needs no declaration; every variant lists the import with `immutable_data_import: true`. Same five guards, fixtures, oracle and inputs as cycle 8 (projected input, six controls), with only the factory's `return` declared.
+
+| Variant | Ground truth | Tool | Right? |
+|---|---|---|---|
+| M0 real import, single-defect negatives | all 5 | PASS, all 5 credited; 176 evaluations, 14.6 s | Yes |
+| M6 lane negatives unchanged | none (negative 19 is two-defect, C8-L1) | FAIL `matrix_off_diagonal_failure` | Yes |
+| M1 `no_op` not wired | none | FAIL `wrong_baseline_guard` | Yes |
+| M3 `stale_phase` weakened | none | FAIL `wrong_baseline_guard` | Yes |
+| M4 inline refusal before `terminal` | none | FAIL `untracked_rejecting_return`, `wrong_baseline_guard` | Yes |
+| M5 the lane's `or` as one row | 4 rows | PASS, `no_op`, `stale_state`, `state_reason`, `terminal` | Yes |
+| M7 `state_reason` first | all 5 | PASS, all 5 | Yes |
+| M8 `terminal` twice | all 5 | PASS, all 5 | Yes |
+| R1 lane module named in `checker_modules` | none: the module is then scanned, its 406 product-refusal sites are undeclared and `ROOT`, `Path` and the jsonschema class are not certifiable | FAIL `hidden_static_sites`, `state_shared_across_cases` | Yes |
+| R1 lane module imported as a module object | none: scanned and unnamed | FAIL `scanned_module_not_declared`, `hidden_static_sites`, `state_shared_across_cases` | Yes |
+| M0 on the full metadata-stripped case with every positive control (16) | all 5 | PASS, all 5; 336 evaluations, 107 s (cycle 8 estimated about 30 minutes) | Yes |
+
+**The full `lifecycle_refusal` guard set** (`full_set.py`): nine code rows (the five above plus `attention_reason`, `blocked_reason`, `verification`, `cleanup`) and the lane's schema boundary as an engine schema table over `$defs.lifecycle_source` (12 schema rows): **21 rows**. Three runs, each over the metadata-stripped case and its 16 controls:
+
+| Run | Rows | Result | Evaluations | Time |
+|---|---|---|---|---|
+| A. The lane's own fixtures (9 code negatives, 15 schema negatives) | 21 | FAIL `matrix_off_diagonal_failure`, **0 credit**: negative 19 is two-defect (C8-L1) | 880 | 266 s (0.30 s each) |
+| B. Negative 19 made single-defect (the lane's C8-L1 fix, applied in the probe) | 21 | FAIL `unproved_guards` only, **0 credit**: the matrix fault is gone; 9 schema rows have no negative | 2,560 | 2,643 s (1.03 s each, on a VM running 6 to 8 other browsers) |
+| C. The nine code rows alone, with that single-defect copy | 9 | **PASS, 9/9 credited** | 700 | 341 s (0.49 s each) |
+
+The lane has negatives for 3 of the 12 schema rows (the three boolean `type` rows, 15 fixtures). The other 9 (`type: object`, five `required` members, the `state` and `phase` enums, `additionalProperties: false`) have none, so they stay unproved and withhold credit for the whole set until the lane supplies one negative each; that is the lane's coverage, not a tool fault. The probe wrote its three result lines to `tb2-full-set.log` and then failed writing its JSON (it read the schema catalog from the nine-row adapter, which has none), so B's unproved list is recomputed from the same inputs without running the tool (`full_set_coverage.py`, `tb2-full-set-coverage.txt`); `tb2-full-set.json` holds run A from an earlier identical run (271 s).
+
+### Rerun results
+
+| Check | Result |
+|---|---|
+| **Self-test** | **316/316 caught**, 0 skipped, 33 s. The 266 earlier traps keep their results; one (`C6-uncertifiable-case-global-fails-closed`) changed its helper import from `json` to `random`, since `json` now certifies. 50 traps are new (`TB2-*`). |
+| **New corpus on the base tool** | 287/316. All 266 earlier traps are caught there. Of the 50 new: 21 are caught there too (the shapes C8-U2 must keep refused, and the C8-U1 equivalences); 7 are credited PASS there (T10, getprofile and five C8-G1 shapes); 10 controls fail there (what C8-U2 to C8-U4 now certify, and the G3 run count); 12 fail closed there without the error each names. |
+| **Cycle-7 drivers** | Unchanged from cycle 8, suite by suite: class namespace 4, `exec_eval` 14 (all dynamic errors), global handler 5, identity adjacent 137, identity follow-up 42, scope adjacent 99 (49 raising reads caught), witness adjacent 36. Scope fuzzer, 20,000 programs, seed 20261105: 6,142 caught, 0 false passes, as in cycle 8. |
+| **Cycle-8 lane driver** | `lane_trial.py` unchanged (the copied constants): M0, M6, M1, M3, M4, M7, M8 and R1-declared keep their cycle-8 results; M5 as in that driver (the orphan `stale_phase` def left in) still fails `hidden_static_sites`; R1-undeclared (the real module's constants imported) is now PASS with all 5 credited, the correct credit for that correct wiring, where cycle 8 recorded the adoption failure. |
+| **Cycle-8 probes** | Trace probes, 177 suites: T10, T11, T11b go from credited PASS to FAIL (C8-G1, C8-G2); two time-threshold suites (crossings at 0.8 s and 1.2 s) go from FAIL to PASS because the faster run now ends before the threshold crosses, the "crossing after the run" case the guide already names as process-stable; every other suite is unchanged. Allowlist probes, 20: the five C8-U2/U4 shapes go from FAIL to PASS, the rest unchanged. Helper probe: the named `json`-preamble helper goes from FAIL to PASS; the named typing helper without the future import still fails (a lazy annotation graph); the unnamed ones still fail `scanned_module_not_declared`. |
+| **Cycles 2 to 6** | Every review driver of cycles 2 to 6 (B-fix5's `run-checks.py`, the new tool only) against B-fix5's recorded results for the tool at the cycle-8 pin: every suite keeps its status and credit. The portability self-test differs only by the 50 new traps; one allocator-dependent `identity-probes` suite (`identity-shift7-mod5-limit3`) no longer reaches its `x` row, as that driver's suites change between any two runs, and gains no credit. Schema replay: byte-identical. |
+| **DG6B** | Normal and `-O`: PASS, 7/7 guards, 49 matrix cells, 176 evaluations, 56 trace comparisons, 0 divergences. |
+| **Standalone, mount denied** | Flat copy of the tool, trap runner and corpus under `python3 -I` with the share, the source clone and both worktree roots denied: exit 0, 316/316, 0 denied attempts. |
+
+**Soundness of each widening.** Each certifies by identity with a canonical object and is backed by an unwaivable static discipline, and each has traps on the false-pass shapes it could let in: C8-U2 (30 traps, 18 of them must-fail shapes), C8-U4 (5 must-fail shapes), C8-U1 (the purity traps and 3 temporary-mutation traps). C8-U3 certifies nothing. The guide's new "Real-lane adoption" table records each rule's totality reason.
+
+**Limits.** A finalizer of a user object in non-repository code that mutates the input and undoes it before the next checkpoint is outside the C8-U1 argument (predicates cannot create such objects under the static allowlist). The certified standard-library list is closed; adding a module needs an argument that its public functions keep no result-affecting state. Only CPython 3.14.4/Linux was exercised.
+
+**Scope.** Tool, trap runner, corpus, adoption guide, self-test record and this report. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, `main` push, pm-mail or subagent.
+
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH2/guard/` (`probes/` the drivers written for this batch, `repro/` the cycle-7 and cycle-8 review drivers rerun on this tool, `results/` the runs).
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `probes/full_set_coverage.py` | `f86cca727dcc33ace711812897d681a7c6b161c5bd2453a4ed561feeccb834d9` |
+| `probes/full_set.py` | `c45343691f664953abd3d68a9685fecbf6e0c3e29e8687a8c860f1c8be1b5dc0` |
+| `probes/lane_trial_tb2.py` | `e7f6d08e16f6a89739d4af24f0d55e6aed96ca9eb5d9d8c016e04659232d38c6` |
+| `probes/prof_new.py` | `476ee0e5591cac904364b47a31d9d7c7e902165c61c4f4e74cd915fd7d4bda91` |
+| `probes/standalone_strict.py` | `d4b1cfc04a5c98d76179d6b4685aa583be878a25630cfc097405310d69a5ec62` |
+| `probes/tb2_traps.py` | `302b7a955cee42f7e6e4f0a626249d6b1a39de7f291675f634d8dfdc3c3d23b4` |
+| `probes/time_eval.py` | `b2baa71d4d39dcd4b6c9251f1690ac9a35391cf7806df2cd532f2ed39a62e39e` |
+| `repro/c7-class_namespace.json` | `95af46640b1b9d41f0ad52017b8140f7bef77f9d14282abfbfbcd272a2f94d52` |
+| `repro/c7-exec_eval.json` | `32420ce20eefdbafd9a917603935020c8dcf7a187424ae1be38a5ef5760d6a9f` |
+| `repro/c7-global_handler.json` | `ba71016680a8dedd6a54277c4eb14bed0afa346460b240d218cbef50f0c5b5f6` |
+| `repro/c7-identity_adjacent.json` | `bdd49c53800c3299dc14ca505630514fc3816a731f551b1b824ba0748ec263ac` |
+| `repro/c7-identity_followup.json` | `884a7df33d2b1dec04bd531ea609e040ed5afb8192aa0f97c48ef516395c3a99` |
+| `repro/c7-scope_adjacent.json` | `82c8b2f60143a3f9cc6c22725b22abdc5cfb531bc62a73b7c305674b05dd301e` |
+| `repro/c7-scope_fuzz.json` | `291b366bf21925552e35f9a019a374362a8ca94b0bb0d3b695c03cefc3878125` |
+| `repro/c7-witness_adjacent.json` | `4582fb7cb32016caa95c805f0e3cfda2377ac04a356316423169d8aece861421` |
+| `repro/c8-allowlist-probes.json` | `9b49334bda54868df736f2eeacb55b721a6289536658f5b2a1b17fa00a0c0a71` |
+| `repro/c8-helper-module-guard.json` | `7b2384316cc73a55bab00c898bde9b8facf966aa7de9f1f84f064a1cdf4c488e` |
+| `repro/c8-lane-trial.json` | `13e3dbb0f012c4b83cc28f6f12b4a0e23e53bb14a200bebbe0b3ffadcb4890e8` |
+| `repro/c8-lane-trial-M0-report.json` | `b8506432f8369970c377eadaae23dfad1f58c38f8c89f4769734c495b092012e` |
+| `repro/c8-trace-probes.json` | `e7e1a4b7ef8c19d2c47b936d709df5b5121db80cd25983ac2b7b2e5a98c809c6` |
+| `repro/c8-witness-shapes.json` | `19105667433539e83ac481c0e8433dbfe21c7fac18e664ab4c163921deb45220` |
+| `repro/compare26.json` | `8aa28ae50335fb40ce0212e7414a31807c080a192807da212582e874efa4493d` |
+| `repro/compare26.py` | `4291e3ba77c052bd034b4c40ee2409e9c71a25f1a0c8e5d206a5e4cdfb7f693f` |
+| `repro/compare.json` | `eb08031294cd33e9cbdcd6d0e78b2ef2e6aa4404d73f395d0daf52125c714939` |
+| `repro/compare.py` | `f237590929c114ef794e07f33bedc86f929d196981bccd1c1fce614be3ac320a` |
+| `repro/cycle2-6-commands.json` | `8cbe9c3d39770ad4d994bc6e3b287e53c4e2c080d41e65c6e5de454faa3e5fa3` |
+| `repro/summary.txt` | `41308392f2bed4080e27f2dba09e2597cbb05534b9e5fe92e9447cd9df7c90e5` |
+| `results/dg6b.json` | `3faff674a19ad625986b04554cc39654205ad21ba2538f153e8bff4815bddd69` |
+| `results/dg6b-O.json` | `6e27fdae1849693d90f767381cedaf4b2995f24b1ca168e51781e391268816cf` |
+| `results/newcorpus-on-base.json.gz` | `2863766ec3371fa3a06b3e5554029f5004c581c30860ccbb1159cbddcd63f207` |
+| `results/selftest-final.json.gz` | `84df9e6e9d7e1fca22ba11480a13cc41919603cce21dbd31ada572f32d9aa1df` |
+| `results/selftest-final.md` | `13f2e5f2f5e4caf2293d3b1985bf55c016a0fb1944e5a8852e716a237d310c1f` |
+| `results/standalone-guard.err` | `dfd559265cc271df123404111ee0484bfa8901746c6333a2228b1219fe2bd06e` |
+| `results/standalone-guard.json.gz` | `248a2f823edf48f0fded9591756b484cb42c376a264fadf67eb3e3881ad9de7e` |
+| `results/tb2-full-set-coverage.txt` | `07ae3401610a70430ae690be9de137e8e34714196dd690dbf59bab9d666d5549` |
+| `results/tb2-full-set.json` | `d538a128317a5f7705956d276b01ccfd6ffbbe2081ab29d5278193ce311835d5` |
+| `results/tb2-full-set.log` | `a409c2f351236c83dbbe25de7063857b027a3675ff5cce150395467f3c62be12` |
+| `results/tb2-lane-trial.json` | `f999edc3356bc73077079c7ee07d85f9b2e72cf913e853ebc375cbd21f54b968` |
+| `results/tb2-lane-trial.log` | `0334a60bd90df68d7f460f76e151e1be74e76602782a121e00c940d7a0cbf1ba` |
+| `results/time-base.json` | `652dc3ae81e5be59f24a96b6fee11775a0c2840574506dff97ee7d1d839069bb` |
+| `results/time-new.json` | `af672d903f25a98754052b05bac6764592e94840f95e1db799f52beefab2d762` |
