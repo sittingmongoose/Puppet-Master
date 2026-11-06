@@ -1,10 +1,10 @@
 // FO-96: the Activity bar (the left rail, #activityBar) is worked by keys. Every Activity item and More is a button in
 // the tab order, as in the product's other bars (the chat's Activity strip, its Activity domains toolbar, the title bar,
-// the Debug transport): none of them roves with arrow keys. Each is named, shows a focus ring on a key focus in every
-// look (NieR: its target brackets), and Enter and Space work it; More also opens on ArrowDown, its menu takes the focus, and Escape gives it back to
+// the Debug transport): none of them roves with arrow keys. Each is named, shows a painted focus ring of 3:1 on a key
+// focus in every look, lit or not (NieR: its target brackets; Friendly Light held back for FO-99), and Enter and Space work it; More also opens on ArrowDown, its menu takes the focus, and Escape gives it back to
 // More. The chat strip's FO-76 sizer copies stay inert and out of the tab order. Both surfaces (`--set sandbox=0|1`).
 // `--set looks=basic-dark,nier-light` limits the focus-ring pass (all ten by default); `--set crops=1` crops the bar
-// with More focused in each look.
+// with More and with lit Chat focused in each look; `--set fo99=1` holds Friendly Light to 3:1 as well.
 import { LOOKS } from '../browser-check.config.mjs';
 
 const frames = (f, n = 3) => f.evaluate(async n => { for (let i = 0; i < n; i++) await new Promise(requestAnimationFrame); }, n);
@@ -37,26 +37,30 @@ function railControls() {
     .map(e => ({ key: e.getAttribute('data-ab-id') || e.id, target: e.getAttribute('data-target') }));
 }
 
-// The focus ring: an outline on the control or on its symbol tile, or a box shadow that the rest state does not have.
-function ringOf(key) {
+// The focus ring, judged from painted pixels as back-focus-ring does (F96-1: a computed outline passed an accent ring on
+// an accent tile that cannot be seen): the control's box and 9 px round it are captured with the focus off the bar and
+// again 450 ms after a real key puts the focus on it. At least 40 pixels must change by more than 40 luminance levels,
+// at a median contrast of 3:1 or more against what was painted there before (WCAG 1.4.11). NieR's mark is its own
+// target brackets (#o55np-reticle), which the same capture sees.
+const lum = (r, g, b) => { const c = [r, g, b].map(v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+function boxOf(key) {
   const el = key === 'activityBarToggle' ? document.getElementById(key) : document.querySelector(`#activityBar .icon[data-ab-id="${key}"]`);
   if (!el) return null;
-  const parts = [el, el.querySelector(':scope > .symbol')].filter(Boolean);
-  const alpha = c => { const m = /rgba?\(([^)]+)\)/.exec(c); if (!m) return c === 'transparent' ? 0 : 1; const v = m[1].split(/[ ,/]+/).filter(Boolean); return v.length > 3 ? parseFloat(v[3]) : 1; };
-  // NieR marks a key focus with its target brackets (19-nier-parts.js: four corners 3 px outside the box)
-  const ret = document.querySelector('#o55np-reticle[data-on]');
-  let reticle = false;
-  if (ret && ret.children.length === 4) {
-    const r = el.getBoundingClientRect(), c = [...ret.children].map(i => i.getBoundingClientRect());
-    const box = [Math.min(...c.map(b => b.left)), Math.min(...c.map(b => b.top)), Math.max(...c.map(b => b.right)), Math.max(...c.map(b => b.bottom))];
-    reticle = [r.left - 3, r.top - 3, r.right + 3, r.bottom + 3].every((v, i) => Math.abs(v - box[i]) <= 8);
-  }
-  // the opacity the ring is painted at: its own and every ancestor's up to the bar (a muted tile mutes its ring)
-  const shown = e => { let o = 1; for (let n = e; n && n !== document.documentElement; n = n.parentElement) o *= parseFloat(getComputedStyle(n).opacity); return o; };
-  return { focusVisible: el.matches(':focus-visible'), reticle, parts: parts.map(e => { const cs = getComputedStyle(e), op = shown(e);
-    return { outline: cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 1.5 && alpha(cs.outlineColor) * op > 0.85 ? `${cs.outlineWidth} ${cs.outlineStyle} ${cs.outlineColor}` : null, opacity: +op.toFixed(2), shadow: cs.boxShadow }; }) };
+  const r = el.getBoundingClientRect();
+  return { x: r.x, y: r.y, w: r.width, h: r.height, lit: el.classList.contains('active') };
 }
-const ringShown = (focus, rest) => !!focus && focus.focusVisible && (focus.reticle || focus.parts.some((p, i) => p.outline || (p.shadow !== 'none' && rest && p.shadow !== rest.parts[i]?.shadow)));
+function paintDiff(rest, focus) {
+  let changed = 0; const ratios = [];
+  for (let i = 0; i < rest.data.length; i += 4) {
+    const d = 0.2126 * (focus.data[i] - rest.data[i]) + 0.7152 * (focus.data[i + 1] - rest.data[i + 1]) + 0.0722 * (focus.data[i + 2] - rest.data[i + 2]);
+    if (Math.abs(d) <= 40) continue;
+    const a = lum(rest.data[i], rest.data[i + 1], rest.data[i + 2]), c = lum(focus.data[i], focus.data[i + 1], focus.data[i + 2]);
+    changed++; ratios.push((Math.max(a, c) + 0.05) / (Math.min(a, c) + 0.05));
+  }
+  ratios.sort((p, q) => p - q);
+  return { changed, median: ratios.length ? +ratios[Math.floor(ratios.length / 2)].toFixed(2) : 0 };
+}
+const ringPainted = r => !!r && r.focused && r.changed >= 40 && r.median >= 3;
 
 function panelState(key) {
   const ic = document.querySelector(`#activityBar .icon[data-ab-id="${key}"]`), slot = document.getElementById('sidePanelSlot');
@@ -85,13 +89,11 @@ export default async function (t) {
   const controls = await f.evaluate(railControls);
   t.log('rail controls ' + controls.map(c => c.key).join(' '));
   await sentinel('#activityBar');
-  const forward = [], rings = {};
+  const forward = [];
   for (let i = 0; i < controls.length; i++) {
     await kb.press('Tab');
-    await f.waitForTimeout(250);
     const k = await key();
     forward.push(k.key);
-    if (k.bar) rings[k.key] = await f.evaluate(ringOf, k.key);
   }
   await kb.press('Tab');
   const after = await key();
@@ -101,11 +103,29 @@ export default async function (t) {
   const back = [];
   for (let i = 0; i < controls.length; i++) { await kb.press('Shift+Tab'); back.push((await key()).key); }
   await t.check('Shift+Tab walks the bar back', JSON.stringify(back) === JSON.stringify(controls.map(c => c.key).reverse()), back.join(' '));
-  await f.locator('#fo96-sentinel').focus();
-  const restRings = {};
-  for (const c of controls) restRings[c.key] = await f.evaluate(ringOf, c.key);
-  const noRing = controls.filter(c => !ringShown(rings[c.key], restRings[c.key])).map(c => c.key);
-  await t.check('each control shows a focus ring on a key focus', noRing.length === 0, noRing.length ? 'no ring: ' + noRing.join(' ') + ' ' + JSON.stringify(noRing.map(k => rings[k] || null)) : 'all ' + controls.length);
+  // the painted ring on every control, each reached by Tab from the sentinel
+  const fe = surface === 'sandbox' ? await f.frameElement() : null, off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+  const painted = async (target, reach) => {
+    await sentinel('#activityBar');
+    await f.waitForTimeout(300);
+    const b = await f.evaluate(boxOf, target);
+    if (!b) return null;
+    const P = 9, x = Math.max(0, Math.floor(off.x + b.x) - P), y = Math.max(0, Math.floor(off.y + b.y) - P);
+    const region = { x, y, width: Math.ceil(off.x + b.x + b.w) + P + 1 - x, height: Math.ceil(off.y + b.y + b.h) + P + 1 - y };
+    const rest = await t.pixels(region);
+    await reach();
+    await f.waitForTimeout(450);
+    const now = await key();
+    const focus = await t.pixels(region);
+    return { key: target, lit: b.lit, focused: now.key === target, ...paintDiff(rest, focus) };
+  };
+  const byTab = target => async () => { for (let i = 0; i < controls.length; i++) { await kb.press('Tab'); if ((await key()).key === target) return; } };
+  await t.page.mouse.move(off.x + 1200, off.y + 600);
+  const paint1 = [];
+  for (const c of controls) paint1.push(await painted(c.key, byTab(c.key)));
+  t.log('painted rings ' + JSON.stringify(paint1));
+  const faint = paint1.filter(r => !ringPainted(r));
+  await t.check('each control shows a painted focus ring of 3:1 or more on a key focus', faint.length === 0, faint.length ? JSON.stringify(faint) : 'all ' + paint1.length);
 
   // 2. Each control is a named button (Playwright's own accessibility tree, as a screen reader gets it).
   const named = [];
@@ -229,8 +249,11 @@ export default async function (t) {
     JSON.stringify(sBack.map(k => k.key + (k.sizer ? '(sizer)' : ''))));
   await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove());
 
-  // 6. The focus ring in every look: the first item by Tab, More by Shift+Tab from the toggle.
+  // 6. The painted focus ring in every look, on the two items lit by default (Chat, while the chat column shows, and
+  // Files, the open panel; F96-1), an unlit item (Search) and More. Friendly Light's accent ring is under 3:1 everywhere,
+  // FO-99 (logged for batch 8): there the ring must paint, and its contrast is logged, unless --set fo99=1 holds it to 3:1.
   const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
+  const moreReach = async () => { await f.locator('#activityBarToggle').focus(); await kb.press('Shift+Tab'); };
   for (const look of looks) {
     await t.app.look(look);
     // a look change plays under a cover (NieR's switch-on reboots the screen), and NieR's brackets hold off until that
@@ -238,24 +261,19 @@ export default async function (t) {
     await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.() &&
       window.PM_NIER?.wanted?.() === window.PM_NIER?.on?.() && !document.getElementById('o55np-reboot'), null, { timeout: 20000 }).catch(() => {});
     await frames(f, 4);
-    await sentinel('#activityBar');
-    await kb.press('Tab');
-    await f.waitForTimeout(250);
-    const first = await key();
-    const firstRing = first.bar ? await f.evaluate(ringOf, first.key) : null;
-    await f.locator('#activityBarToggle').focus();
-    await kb.press('Shift+Tab');
-    await f.waitForTimeout(250);
-    const more = await key();
-    const moreRing = more.key === 'more' ? await f.evaluate(ringOf, 'more') : null;
-    await f.locator('#fo96-sentinel').focus();
-    const firstRest = first.bar ? await f.evaluate(ringOf, first.key) : null, moreRest = await f.evaluate(ringOf, 'more');
-    t.log(`${look} rings: ${first.key} ${JSON.stringify(firstRing)}; more ${JSON.stringify(moreRing)}`);
-    await t.check(`${look}: key focus ring on the first item and on More`, first.bar && ringShown(firstRing, firstRest) && more.key === 'more' && ringShown(moreRing, moreRest),
-      JSON.stringify({ first: first.key, firstRing, more: more.key, moreRing }));
-    if (more.key === 'more' && t.args.crops) {
-      await f.locator('#activityBarToggle').focus(); await kb.press('Shift+Tab');
+    await t.page.mouse.move(off.x + 1200, off.y + 600);
+    const rows = [await painted('chat', byTab('chat')), await painted('files', byTab('files')), await painted('search', byTab('search')), await painted('more', moreReach)];
+    t.log(`${look} painted rings ${JSON.stringify(rows)}`);
+    const known = look === 'friendly-light' && !t.args.fo99;
+    const ok = r => known ? !!r && r.focused && r.changed >= 40 : ringPainted(r);
+    await t.check(`${look}: Chat and Files are lit, Search and More are not`, rows[0]?.lit && rows[1]?.lit && rows[2] && !rows[2].lit && rows[3] && !rows[3].lit, JSON.stringify(rows.map(r => r && [r.key, r.lit])));
+    await t.check(`${look}: a painted key focus ring of ${known ? 'some contrast (3:1 held back for FO-99)' : '3:1 or more'} on lit Chat and Files, on Search and on More`, rows.every(ok), JSON.stringify(rows));
+    if (known) t.log(`${look}: FO-99 ring contrast (not enforced here) ${rows.map(r => r && `${r.key} ${r.median}:1`).join(', ')}`);
+    if (t.args.crops) {
+      await moreReach();
       await t.crop(`more-focus-${surface}-${look}`, f.locator('#activityBar'), `${look}: More with the key focus ring`);
+      await sentinel('#activityBar'); await kb.press('Tab'); await f.waitForTimeout(450);
+      await t.crop(`chat-focus-${surface}-${look}`, f.locator('#activityBar'), `${look}: lit Chat with the key focus ring`);
     }
   }
   await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove());
