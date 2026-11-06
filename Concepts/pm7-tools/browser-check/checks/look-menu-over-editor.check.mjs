@@ -96,9 +96,11 @@ async function cell(t, surface, w, h) {
 				const panel = document.querySelector('#pm-o55-onboarding .o55-nierpanel'), body = document.querySelector('#pm-o55-onboarding .o55-body');
 				return { ...out, panel: !!panel, inert: !!body && body.hasAttribute('inert'), expanded: document.querySelector('#pm-o55-onboarding .o55-lookbtn').getAttribute('aria-expanded'), chosen: O55.theme().chosen, mode: O55.S.root.dataset.mode, nier: !!(window.PM_NIER && PM_NIER.on()), layout: O55.S.root.getAttribute('data-o55-layout') || 'wide' };
 			}, ITEM);
+			/* floors, not counts: five looks, Light and Dark (main has no Auto yet), a ? per look and one for the modes, and
+			   Adjust NieR with its ? under NieR; the assertion is the ownership, so a missing control cannot make it vacuous */
 			const [fam, mode] = look.split('-');
 			await t.check(`FO-81 fixture is the look with the editor open ${tag}`, scan.panel && scan.inert && scan.expanded === 'true' && scan.chosen === fam && scan.mode === mode && scan.nier === (fam === 'nier'), JSON.stringify({ ...scan, covers: undefined, examples: undefined }));
-			await t.check(`FO-81 every option and help pixel is the menu's own over the editor ${tag}`, scan.items >= (fam === 'nier' ? 9 : 8) && scan.helps >= (fam === 'nier' ? 7 : 6) && !scan.small.length && scan.outside === 0 && scan.other === 0, JSON.stringify({ items: scan.items, helps: scan.helps, pixels: scan.pixels, outside: scan.outside, other: scan.other, chrome: scan.chrome, covers: scan.covers, examples: scan.examples, small: scan.small }));
+			await t.check(`FO-81 every option and help pixel is the menu's own over the editor ${tag}`, scan.items >= (fam === 'nier' ? 8 : 7) && scan.helps >= (fam === 'nier' ? 7 : 6) && !scan.small.length && scan.outside === 0 && scan.other === 0, JSON.stringify({ items: scan.items, helps: scan.helps, pixels: scan.pixels, outside: scan.outside, other: scan.other, chrome: scan.chrome, covers: scan.covers, examples: scan.examples, small: scan.small }));
 			if (motion === 'no-preference' && look === 'nier-light' && w === 1920 && surface === 'normal') await t.crop('nier-light-menu-over-editor', f.locator('#pm-o55-onboarding .o55-win'), 'FO-81: the header Look menu lies over the Adjust NieR editor (main: the editor covers it).');
 			/* a real press at each option's and each help's centre reaches it (and nothing else hears it) */
 			await f.evaluate(() => {
@@ -121,7 +123,7 @@ async function cell(t, surface, w, h) {
 				if (got.length !== 1 || got[0].id !== i || !got[0].trusted) misses.push({ i, got });
 			}
 			await f.evaluate(() => { window.__fo81Off?.(); window.__fo81Off = null; });
-			await t.check(`FO-81 a real press on each option and help reaches it over the editor ${tag}`, count >= (fam === 'nier' ? 16 : 14) && !misses.length, JSON.stringify({ count, misses: misses.slice(0, 6) }));
+			await t.check(`FO-81 a real press on each option and help reaches it over the editor ${tag}`, count >= (fam === 'nier' ? 15 : 13) && !misses.length, JSON.stringify({ count, misses: misses.slice(0, 6) }));
 			/* both stay open, the menu on top, as the product layers them: a press in the editor closes the menu as any press
 			   outside it does; Adjust NieR in the menu gives way to the editor already open; Escape closes the menu, then
 			   the editor, then (not tried here) the window */
