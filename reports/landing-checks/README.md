@@ -817,6 +817,25 @@ Anything else that rises closes: a subcheck that prints only a sample with no co
 staleness, a stale row that names another member's file or no file of the batch, and the readiness growth counter unless
 its added rows pass the same test. So does a rise when the check wrote no row report. Each stay is reported for Jared.
 
+**What a real Plans landing does.** Measured on 2026-11-06 at `main` `74748ebd92` with the report lines added: one sentence of
+prose added to `Plans/human-in-the-loop.md`, then to `Plans/agent-rules-context.md`, neither stale at the base, derived
+files regenerated and committed, and the real landing check after each (exit 1 both, about 25 minutes each at load 3 to 8).
+The second stays in the batch. Seven subchecks rose between the two reports (evidence and plan graph in both aggregates,
+27 rows each; readiness in both, 1 row each; `plan-migration-validate`, 15 rows), and every added row is staleness naming
+that member's own document or shards. The whole-snapshot rows named below do not count against it, because the first
+member already added them. A real Plans landing still closes the batch, and is rechecked alone, in these cases:
+
+- **The first Plans member after members that raised nothing.** The first canon edit since the baseline adds rows about the
+  snapshot as a whole, such as `current_snapshot_inventory_json_exact_mismatch` and `current_snapshot_current_run_pointer_invalid`,
+  that name no file. So land the Plans landing first: in that order, the later landings stay. No follow-up is owed for a batch
+  that touched no `Plans/` path, so closing costs that member's one landing check.
+- **A shard whose line-range name changed.** Its `missing_ref` row is not staleness until stream E's renamed-shard rule lands
+  (`fix/landing-check-renamed-shard-20261106`). Three of the last seven baselines on `main` that rose have such rows.
+- **Any other row that is not staleness,** such as `event_authority_currentness_live_registry_drift`, in one of those seven.
+- **A rise in `audit_closure`,** which prints 100 of 201 and has no complete export. It did not rise across the 39 pairs of
+  baselines read, nor in this measurement.
+- **An export that fails or times out** in either report, since the subcheck is then not seen.
+
 **Against an older `pm-landing-check.py`,** which prints none of those lines, the tool says once per landing that these
 shapes may not be seen, and they do not close the batch, though each would stop alone:
 
