@@ -10,6 +10,7 @@ from dataclasses import replace
 import importlib.util
 import json
 from pathlib import Path
+import random
 import sys
 import tempfile
 
@@ -51,7 +52,7 @@ def _code_suite(g, trap, root):
         for fixture in [*suite.controls, *suite.negatives]:
             fixture.value['right'] = fixture.value['left']
     # checker_modules accepts absolute paths; relative convenience is rooted here.
-    suite.checker_modules = (path,)
+    suite.checker_modules = (path, *[root / name for name in trap.get('extra_checker_modules', [])])
     suite.non_guards = [_allow(g, 'subject.py', trap.get('factory_function', 'factory'), 'return',
         'return g.Case(table, check, context)', 'Factory returns a newly constructed execution object; it does not decide acceptance.')]
     for declaration in trap.get('non_guards', []):
@@ -69,7 +70,12 @@ def _code_suite(g, trap, root):
 def _schema_suite(g, trap, root):
     # No synthetic acceptance callback: this source calls the actual complete
     # JSON Schema validator via the table's runtime tagging boundary.
+    # The runner replaces these placeholders after loading; the module binds each name once, so its reads
+    # are certified from the syntax and never from names injected into the live namespace.
     source = '''import pm_guard_isolation as g
+
+DOCUMENTS = None
+ROOTS = ()
 
 def selected(value, context):
     return value
@@ -238,16 +244,17 @@ def exercise(g, memory, *, scratch=None):
     corpus = json.loads((adjacent if adjacent.is_file() else Path(__file__).resolve().parents[1] / 'Plans/guard_isolation_traps.json').read_text())
     if corpus['version'] != 2:
         raise RuntimeError('expected Method B trap corpus')
-    report = {'version': 2, 'method': 'B: guard tables', 'status': 'FAIL', 'caught': 0, 'traps': []}
+    report = {'version': 2, 'method': 'B: guard tables', 'status': 'FAIL', 'caught': 0, 'skipped': 0, 'traps': []}
     scratch = _scratch_parent(scratch)
     for trap in corpus['traps']:
         memory.check()
         row = {'id': trap['id'], 'expected': trap['expected'], 'caught': False}
         if tuple(trap.get('min_python', ())) > sys.version_info[:2]:
-            # This Python cannot parse the trap's syntax, so it cannot accept the form either.
-            row.update(caught=True, skipped_below_python=trap['min_python'])
+            # This Python cannot parse the trap's syntax, so it cannot accept the form either. A skip is
+            # reported on its own and never counted as caught.
+            row.update(skipped=True, skipped_below_python=trap['min_python'])
             report['traps'].append(row)
-            report['caught'] += 1
+            report['skipped'] += 1
             continue
         old_modules = set(sys.modules)
         old_path = list(sys.path)
@@ -257,7 +264,16 @@ def exercise(g, memory, *, scratch=None):
                 if trap['kind'] in ('code', 'schema'):
                     try:
                         suite = _code_suite(g, trap, root) if trap['kind'] == 'code' else _schema_suite(g, trap, root)
-                        result = g.run(suite, memory=memory)
+                        if trap.get('random_seed') is not None:
+                            # The global generator is external state no snapshot watches; seed it for a fixed schedule.
+                            saved_random = random.getstate()
+                            random.seed(trap['random_seed'])
+                            try:
+                                result = g.run(suite, memory=memory)
+                            finally:
+                                random.setstate(saved_random)
+                        else:
+                            result = g.run(suite, memory=memory)
                         if trap.get('repeat'):
                             row['repeat_report'] = g.run(suite, memory=memory)
                         if trap.get('state_observation'):
@@ -279,6 +295,8 @@ def exercise(g, memory, *, scratch=None):
                     failures = {f['kind'] for f in result['failures']}
                     required = set(trap.get('failure_kinds', []))
                     row['caught'] = result['status'] == trap.get('status', 'FAIL') and required <= failures
+                    if trap.get('failure_reason'):
+                        row['caught'] = row['caught'] and any(trap['failure_reason'] in f.get('reasons', []) for f in result['failures'])
                     if trap.get('error_contains'):
                         row['caught'] = row['caught'] and any(trap['error_contains'] in f.get('error', '') for f in result['failures'])
                     if trap.get('static_kind'):
@@ -339,5 +357,6 @@ def exercise(g, memory, *, scratch=None):
                     sys.modules.pop(name, None)
         report['traps'].append(row)
         report['caught'] += bool(row['caught'])
-    report['status'] = 'PASS' if report['caught'] == len(report['traps']) else 'FAIL'
+    # Every trap this Python can run must be caught; skips are listed separately.
+    report['status'] = 'PASS' if report['caught'] + report['skipped'] == len(report['traps']) else 'FAIL'
     return report

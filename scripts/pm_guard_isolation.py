@@ -1018,7 +1018,10 @@ class GuardTable:
         self._entries = dict(self._original)
         self._issued = []
         self._errors = []
+        # The guard-call trace of one run: ('require', row) or ('validate', root),
+        # in order. _refused_at is the trace length at the issued refusal.
         self._calls = []
+        self._refused_at = None
         self._root = self._context = None
         self._bound = False
         self._in_predicate = False
@@ -1084,7 +1087,7 @@ class GuardTable:
         if name not in self._entries:
             self._errors.append('guard missing from table: ' + str(name))
             raise IsolationError(self._errors[-1])
-        self._calls.append(name)
+        self._calls.append(('require', name))
         row = self._entries[name]
         code = self._test(row, value, context)
         if code is not None:
@@ -1092,6 +1095,8 @@ class GuardTable:
 
     def _refuse(self, name, code):
         refusal = GuardRefusal(name, code)
+        if self._refused_at is None:
+            self._refused_at = len(self._calls)
         self._issued.append(refusal)
         raise refusal
 
@@ -1100,6 +1105,7 @@ class GuardTable:
         if not self._schema or not self._bound or value is not self._root or context is not self._context:
             self._errors.append('schema validation needs the bound complete input')
             raise IsolationError(self._errors[-1])
+        self._calls.append(('validate', entry))
         self._schema.validate(self, entry, value, context)
 
     def _restore(self):
@@ -1109,6 +1115,7 @@ class GuardTable:
         self._issued.clear()
         self._errors.clear()
         self._calls.clear()
+        self._refused_at = None
 
 
 @dataclass
@@ -1151,14 +1158,18 @@ TOTAL_FORMS = {
     'statement:control-transfer': 'pass, break and continue only move the program counter.',
     'statement:expression': 'An expression statement discards a value; the expression is classified on its own.',
     'statement:try': 'Entering try runs no code and each handler is classified on its own; except* is excluded.',
-    'statement:except-builtin': 'A bare except or unshadowed canonical builtin exception classes: matching is a subclass check with no user hook.',
+    'statement:except-builtin': 'A bare except or unshadowed canonical builtin exception classes: matching is a subclass check with no user hook. A named handler in a class body counts only in a plain class, where binding and deleting the target use a plain dict.',
     'statement:return-true': 'Returns the literal True, the engine success value.',
     'statement:executed-module-import': 'Module scope of a loaded module: the import already ran, its live binding is verified and no case runs it again.',
-    'definition:function': 'def and lambda only build a function object; defaults, annotations and decorators are classified on their own in the enclosing scope.',
-    'binding:name': 'Binding a plain name to a computed value runs no hook; unpacking, attribute and subscript targets and any __builtins__ binding are excluded.',
+    'definition:function': 'def and lambda only build a function object; defaults, annotations and decorators are classified on their own in the enclosing scope. A def in a class body counts only in a plain class, where binding its name stores into a plain dict.',
+    'binding:name': 'Binding a plain name in a function or module scope stores into fast locals, a cell or the module dict and runs no hook; class bodies, unpacking, attribute and subscript targets and any __builtins__ binding are excluded.',
+    'binding:plain-class-name': 'Binding a plain name in the body of a class with no bases, keywords, decorators or type parameters, while __build_class__ is the unshadowed builtin: the metaclass is type, so the namespace is the plain dict type.__prepare__ returns and a str-key store runs no hook. Any other class body runs in its metaclass mapping, so every name operation there is an obligation.',
     'control:literal-test': 'if or a conditional expression on a builtin literal: literal truthiness has no failure path.',
     'expression:literal': 'Loading a compile-time constant cannot raise.',
-    'expression:bound-name': 'The name resolves by the language scope rules (class namespaces do not enclose nested functions or comprehensions) and a binding of that scope dominates the read: parameter, earlier sibling statement, loop or comprehension target, its own handler target, or the certified module or builtin namespace. Deleted names, handler targets outside their own handler body, private names under a class and type-parameter scopes are excluded, and the compiler symbol table must agree where it has a table for the scope.',
+    'expression:bound-name': 'The name resolves by the language scope rules to a function, lambda, comprehension or plain class scope (class namespaces do not enclose nested functions or comprehensions) and a binding of that scope dominates the read: parameter, earlier sibling statement, loop or comprehension target, or its own handler target. Deleted names, handler targets outside their own handler body, private names under a class, type-parameter scopes and reads in a class body with bases, keywords, decorators or type parameters are excluded, and the compiler symbol table must agree where it has a table for the scope.',
+    'expression:module-name': 'The read resolves to the module namespace, and the syntax alone shows the module binds the name exactly once: one top-level unconditional assignment, annotated assignment with a value, def, class or plain import, with no del, global rebinding, handler target, loop or with target, walrus, augmented assignment or star import anywhere in the file. That statement precedes the top-level statement holding the read (or the read is inside the body of that undecorated def), so the binding exists before the read can run and nothing removes it. The live namespace at scan time certifies nothing.',
+    'expression:builtin-name': 'The read resolves past the module namespace, which the file never binds (no binding of the name and no star import), to a name of the canonical builtins module, and every loaded instance of the module uses the canonical builtins and lacks the name. The live module is consulted only to refuse.',
+    'expression:loader-name': '__name__, __doc__, __file__, __package__, __spec__ or __loader__, which the file never binds or deletes, read in a module whose every loaded instance came from a SourceFileLoader with a file location: the import system sets these attributes before the module body runs. The live module is consulted only to refuse.',
     'expression:identity-compare': 'is and is not compare identities with no user hook; every other comparison is an obligation.',
     'unary:not-literal': 'not on a builtin literal (None, bool, int, float, complex, str, bytes, Ellipsis): literal truthiness has no failure path.',
     'unary:sign-numeric-literal': 'Unary + or - on an exact int or float literal is defined for every value.',
@@ -1188,6 +1199,8 @@ TOTAL_FORMS = {
 _ENGINE_CONSTRUCTORS = {'Guard': Guard, 'GuardTable': GuardTable, 'Invariant': Invariant, 'Case': Case, 'Suite': Suite,
                         'Control': Control, 'Negative': Negative, 'NonGuard': NonGuard, 'Duplicate': Duplicate}
 _BUILTIN_LITERALS = (type(None), bool, int, float, complex, str, bytes, type(Ellipsis))
+# Module attributes the import system sets on a source module before its body runs.
+LOADER_NAMES = frozenset({'__name__', '__doc__', '__file__', '__package__', '__spec__', '__loader__'})
 
 
 def _names_bound_by(part):
@@ -1438,18 +1451,6 @@ def static_scan(suite, table):
                 if type(environment) is not dict or namespace.get(name, environment.get(name)) is not canonical:
                     return False
             return True
-        def module_name_bound(name):
-            # The module's own namespace, else the builtins its functions actually see.
-            modules = source_modules.get(path, [])
-            if not modules:
-                return False
-            for module in modules:
-                namespace = vars(module)
-                environment = namespace.get('__builtins__')
-                environment = vars(environment) if type(environment) is types.ModuleType else environment
-                if name not in namespace and (type(environment) is not dict or name not in environment):
-                    return False
-            return True
         def engine_alias():
             modules = source_modules.get(path, [])
             return bool(modules) and 'g' not in shadowed and all(vars(module).get('g') is sys.modules[__name__] for module in modules)
@@ -1617,10 +1618,14 @@ def static_scan(suite, table):
                                 errors.append({'kind': 'uncertified_import_binding', 'path': _relative(path, root), 'line': node.lineno,
                                                'module': alias.name, 'reason': 'live import alias differs from the resolved binding'})
             kind = None
+            sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path'}
+            # Any read of a sensitive name, or of __builtins__, can carry the function to a call the scan cannot see.
+            if (isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and (node.id in sensitive or node.id == '__builtins__') and
+                    not (isinstance(parents.get(node), ast.Call) and parents[node].func is node)):
+                errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': node.id})
             if isinstance(node, ast.Call):
                 name = ast.unparse(node.func)
                 bindings = origins(node.func)
-                sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path'}
                 if name.split('.')[-1] in sensitive or any(
                         origin.split('.')[0] in ('importlib', 'runpy') or any(token in sensitive for token in origin.split('.')) for origin in bindings):
                     errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
@@ -1862,23 +1867,114 @@ def static_scan(suite, table):
                 if isinstance(child, ast.ClassDef):
                     return True
             return False
-        def total_name(node):
+        # Module namespace bindings, from the syntax alone. The live namespace at scan time never certifies
+        # a read: a binding present now may be deleted by a dormant handler or del before a case runs.
+        module_sites = {}
+        for part in ast.walk(tree):
+            if isinstance(part, (ast.Global, ast.Nonlocal, ast.arg)) or type(part).__name__ in ('TypeVar', 'ParamSpec', 'TypeVarTuple'):
+                continue
+            names = _names_bound_by(part)
+            if not names:
+                continue
+            owner = execution_scope(part)
+            if isinstance(parents.get(part), ast.NamedExpr):
+                while isinstance(owner, comprehensions):
+                    owner = execution_scope(owner)
+            for name in names:
+                if owner is not None and binding_scope(owner, name) is tree:
+                    module_sites.setdefault(name, []).append(part)
+        star_imported = any(isinstance(part, ast.ImportFrom) and any(alias.name == '*' for alias in part.names) for part in ast.walk(tree))
+        def top_statement(node):
+            while node in parents and parents[node] is not tree:
+                node = parents[node]
+            return node if node in parents and node in tree.body else None
+        def unconditional_module_binding(part):
+            """The one top-level statement that binds the name unconditionally: an assignment, an annotated assignment
+            with a value, def, class or a plain import. Loops, with, handlers, match, walrus, del and augmented
+            assignment are excluded."""
+            if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom)):
+                return part if part in tree.body else None
+            if not isinstance(part, ast.Name) or not isinstance(part.ctx, ast.Store):
+                return None
+            child = part
+            while isinstance(parents.get(child), (ast.Tuple, ast.List, ast.Starred)):
+                child = parents[child]
+            statement = parents.get(child)
+            if isinstance(statement, ast.Assign) and child in statement.targets or isinstance(statement, ast.AnnAssign) and child is statement.target and statement.value is not None:
+                return statement if statement in tree.body else None
+            return None
+        def loaded_instances():
+            return source_modules.get(path, [])
+        def canonical_builtins(module):
+            environment = vars(module).get('__builtins__')
+            return environment is builtins or environment is vars(builtins)
+        def module_read_form(node):
+            """A read that resolves to the module namespace (language reference 4.2.2), or None."""
+            name = node.id
+            if star_imported or name == '__builtins__':
+                return None
+            sites = module_sites.get(name, [])
+            if not sites:
+                modules = loaded_instances()
+                # Live state only refuses here: it must agree with what the syntax says.
+                if not modules or any(name in vars(module) and name not in LOADER_NAMES for module in modules):
+                    return None
+                if name in LOADER_NAMES:
+                    loaded = all(isinstance(getattr(vars(module).get('__spec__'), 'loader', None), importlib.machinery.SourceFileLoader) and
+                                 vars(module)['__spec__'].has_location for module in modules)
+                    return 'expression:loader-name' if loaded else None
+                certified = name in vars(builtins) and all(canonical_builtins(module) for module in modules)
+                return 'expression:builtin-name' if certified else None
+            if len(sites) != 1:
+                return None
+            statement = unconditional_module_binding(sites[0])
+            container = top_statement(node)
+            if statement is None or container is None:
+                return None
+            if tree.body.index(statement) < tree.body.index(container):
+                return 'expression:module-name'
+            # A recursive read in the body of an undecorated def runs only after the def has bound the name.
+            if statement is container and isinstance(statement, (ast.FunctionDef, ast.AsyncFunctionDef)) and not statement.decorator_list:
+                child = node
+                while parents.get(child) is not statement:
+                    child = parents[child]
+                return 'expression:module-name' if child in statement.body else None
+            return None
+        def plain_class(scope):
+            """Only a class with no bases, keywords, decorators or type parameters runs its body in the dict that
+            type.__prepare__ returns; any other class body runs in whatever mapping its metaclass prepares."""
+            return (isinstance(scope, ast.ClassDef) and not scope.bases and not scope.keywords and not scope.decorator_list and
+                    not getattr(scope, 'type_params', ()) and '__build_class__' not in shadowed and builtin_is('__build_class__'))
+        def hooked_class_body(node):
+            scope = execution_scope(node)
+            return isinstance(scope, ast.ClassDef) and not plain_class(scope)
+        def name_read_form(node):
             name = node.id
             if name in deleted_names or class_private(node):
-                return False
+                return None
             # Evaluation may be deferred or absent, so only a binding that no scope can shadow certifies it.
             if annotation_read(node):
-                return name not in local_bindings and module_name_bound(name)
+                return module_read_form(node) if name not in local_bindings else None
             scope = execution_scope(node)
             binding = None if scope is None else binding_scope(scope, name)
             if binding is None or not table_agrees(scope, name, binding):
-                return False
+                return None
             if binding is tree:
-                return dominated(node, tree) or module_name_bound(name)
+                return module_read_form(node)
             if dominated(node, binding):
-                return True
+                return 'expression:bound-name'
             # A class-body read that misses the class namespace goes to globals and builtins, never an enclosing function.
-            return binding is scope and isinstance(scope, ast.ClassDef) and module_name_bound(name)
+            return module_read_form(node) if binding is scope and isinstance(scope, ast.ClassDef) else None
+        def name_form(node):
+            # In a class body with bases, keywords, decorators or type parameters, every name operation calls the
+            # prepared mapping's __getitem__, __setitem__ or __delitem__, so none is automatic.
+            if hooked_class_body(node):
+                return None
+            if isinstance(node.ctx, ast.Load):
+                return name_read_form(node)
+            if isinstance(node.ctx, ast.Store):
+                return 'binding:plain-class-name' if isinstance(execution_scope(node), ast.ClassDef) else 'binding:name'
+            return ''
         def unary_form(node):
             # Certified per operator against the exact literal type; all else is an obligation.
             if not isinstance(node.operand, ast.Constant):
@@ -1913,12 +2009,16 @@ def static_scan(suite, table):
             if isinstance(node, ast.Try):
                 return 'statement:try'
             if isinstance(node, ast.ExceptHandler):
+                if node.name and hooked_class_body(node):
+                    return None
                 caught = [] if node.type is None else node.type.elts if isinstance(node.type, ast.Tuple) else [node.type]
                 return 'statement:except-builtin' if all(isinstance(item, ast.Name) and item.id not in shadowed and builtin_is(item.id) and
                                                           isinstance(vars(builtins)[item.id], type) and issubclass(vars(builtins)[item.id], BaseException)
                                                           for item in caught) else None
             if isinstance(node, (ast.Import, ast.ImportFrom)):
                 return 'statement:executed-module-import' if not owners[node] and source_modules.get(path) else None
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and hooked_class_body(node):
+                return None
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
                 return 'definition:function'
             if isinstance(node, (ast.Assign, ast.AnnAssign, ast.NamedExpr)):
@@ -1928,9 +2028,7 @@ def static_scan(suite, table):
             if isinstance(node, ast.Constant):
                 return 'expression:literal'
             if isinstance(node, ast.Name):
-                if isinstance(node.ctx, ast.Load):
-                    return 'expression:bound-name' if total_name(node) else None
-                return 'binding:name' if isinstance(node.ctx, ast.Store) else ''
+                return name_form(node)
             if isinstance(node, ast.Attribute):
                 return attribute_form(node) if isinstance(node.ctx, ast.Load) else ''
             if isinstance(node, ast.Subscript):
@@ -2429,6 +2527,7 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
     shared_snapshot = None
     shared_certified = True
     case_snapshots, anchored_snapshots = {}, {}
+    last_trace = {}             # guard-call trace of the latest full checker run
     def certify_shared(*, reset=False):
         nonlocal shared_snapshot, shared_certified
         if reset and suite.reset:
@@ -2480,6 +2579,12 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             scanned_paths = {(root / f['path']).resolve() for f in report['static']['files']}
             if Path(checker_signature[0]) not in scanned_paths:
                 fail('checker_outside_scanned_closure', source=list(checker_signature))
+            # Every scanned module is watched: its state is anchored only when checker_modules names it.
+            declared = {(root / module).resolve() for module in suite.checker_modules}
+            undeclared = sorted(f['path'] for f in report['static']['files'] if (root / f['path']).resolve() not in declared)
+            if undeclared:
+                fail('scanned_module_not_declared', modules=undeclared,
+                     error='the static scan covers repository modules that checker_modules does not name, so their state is unwatched')
             exception_sites = {(str((root / s['path']).resolve()), s['exception_operation'], tuple(s['exception_span']))
                                for s in report['static']['sites'] if s['non_guard'] and s.get('exception_operation')}
             if report['static']['status'] != 'PASS':
@@ -2614,6 +2719,10 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             if table._schema and predicate is None:
                 report.setdefault('schema_consumption', []).append({'evaluation': report['evaluations'],
                     'cuts': sorted(cuts), 'roots': sorted(table._schema.consumed)})
+            if predicate is None:
+                last_trace.clear()
+                last_trace.update(calls=[[kind, name if type(name) is str else repr(name)] for kind, name in table._calls],
+                                  refused_at=table._refused_at)
             table._restore()
             certify_shared(reset=True)
             gate.check()
@@ -2627,6 +2736,12 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
         # The per-input signature also compares each cut/restoration to baseline.
         fresh(_fixture_copy(value))
         return observe(fresh(data), data, frozenset(cuts), predicate)
+
+    def traced(value, cuts=frozenset()):
+        """One full checker run and its guard-call trace."""
+        last_trace.clear()
+        got = evaluate(value, cuts)
+        return got, {'calls': list(last_trace.get('calls', [])), 'refused_at': last_trace.get('refused_at')}
 
     try:
         if type(suite) is not Suite:
@@ -2675,18 +2790,20 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
         def expected(negative, got, cuts=frozenset()):
             names = set(duplicates[negative.target].sites) if negative.target in duplicates else {negative.target}
             return got.get('accepted') is False and got.get('guard') in names - set(cuts) and got.get('code') == negative.code and 'error' not in got
-        baseline = {}
+        baseline, baseline_trace = {}, {}
         for control in controls.values():
-            got = evaluate(control.value)
+            got, baseline_trace[control.id] = traced(control.value)
             baseline[control.id] = got
-            report['controls'].append({'id': control.id, 'boundary': control.boundary, 'outcome': got, 'sha256': digest(control.value)})
+            report['controls'].append({'id': control.id, 'boundary': control.boundary, 'outcome': got,
+                                       'trace': baseline_trace[control.id], 'sha256': digest(control.value)})
             if got != {'accepted': True}:
                 fail('control_refused', case=control.id, actual=got)
         for negative in negatives.values():
-            got = evaluate(negative.value)
+            got, baseline_trace[negative.id] = traced(negative.value)
             baseline[negative.id] = got
             report['negatives'].append({**{k: v for k, v in asdict(negative).items() if k != 'value'},
-                'outcome': got, 'changed_paths': typed_changes(controls[negative.control].value, negative.value), 'sha256': digest(negative.value)})
+                'outcome': got, 'trace': baseline_trace[negative.id],
+                'changed_paths': typed_changes(controls[negative.control].value, negative.value), 'sha256': digest(negative.value)})
             if not expected(negative, got):
                 fail('wrong_baseline_guard', negative=negative.id, expected=negative.target, actual=got)
         if initial.table._schema:
@@ -2717,21 +2834,54 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             report['unproved_guards'].extend(guards)
             return report
 
+        def trace_check(label, case_id, cuts, own, cut_trace, again):
+            """Causal attribution by guard-call trace (fails closed).
+
+            The baseline and this row's restoration are two uncut runs of the case; their traces must be
+            identical. If the baseline was refused by a cut guard, the cut run must repeat the baseline
+            trace up to and including that refusing call: the same path reaches the cut guard and only its
+            swapped result differs. Otherwise the cut changes no guard result, so the whole trace must match.
+            """
+            uncut = baseline_trace[case_id]
+            outcome = baseline[case_id]
+            reasons = []
+            if again['calls'] != uncut['calls'] or again['refused_at'] != uncut['refused_at']:
+                reasons.append('uncut_trace_nondeterministic')
+            refused_by_cut = 'error' not in outcome and outcome.get('guard') in cuts and uncut['refused_at'] is not None
+            if refused_by_cut:
+                reach = uncut['refused_at']
+                prefix, observed = uncut['calls'][:reach], cut_trace['calls'][:reach]
+                if observed != prefix:
+                    first = next((i for i, (a, b) in enumerate(zip(prefix, observed)) if a != b), len(observed))
+                    reasons.append('cut_guard_not_reached' if first >= reach - 1 else 'diverged_before_cut_guard')
+            elif case_id in own:
+                reasons.append('baseline_not_refused_by_cut_guard')
+            elif cut_trace['calls'] != uncut['calls']:
+                reasons.append('unaffected_path_changed')
+            # The traces themselves are in the baseline, results and restoration entries.
+            check = {'case': case_id, 'own': case_id in own,
+                     'compared': 'prefix_through_cut_guard' if refused_by_cut else 'whole_trace', 'reasons': reasons}
+            if reasons:
+                fail('noncausal_flip' if case_id in own else 'guard_trace_changed', row=label, case=case_id, reasons=reasons,
+                     uncut=uncut, cut=cut_trace, uncut_again=again)
+            return check
+
         def vector(label, cuts, own, retained_duplicate=None):
             row = {'id': label, 'cuts': sorted(cuts), 'own': sorted(own), 'flips': [], 'stays': [],
-                   'masked': [], 'unrelated_changes': [], 'results': [], 'restoration': [], 'proved': False}
+                   'masked': [], 'unrelated_changes': [], 'results': [], 'restoration': [], 'trace_checks': [], 'proved': False}
             report['rows'].append(row)
             before = len(report['failures'])
             good = bool(own) or retained_duplicate is not None
+            cut_traces, restored_traces = {}, {}
             for control in controls.values():
-                got = evaluate(control.value, cuts)
-                row['results'].append({'case': control.id, 'outcome': got})
+                got, cut_traces[control.id] = traced(control.value, cuts)
+                row['results'].append({'case': control.id, 'outcome': got, 'trace': cut_traces[control.id]})
                 if got != baseline[control.id]:
                     good = False
                     fail('cut_breaks_control', row=label, control=control.id, actual=got)
             for negative in negatives.values():
-                got = evaluate(negative.value, cuts)
-                row['results'].append({'case': negative.id, 'outcome': got})
+                got, cut_traces[negative.id] = traced(negative.value, cuts)
+                row['results'].append({'case': negative.id, 'outcome': got, 'trace': cut_traces[negative.id]})
                 if got == {'accepted': True}:
                     row['flips'].append(negative.id)
                 else:
@@ -2752,11 +2902,15 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                         fail('unrelated_result_changed', row=label, negative=negative.id, actual=got)
                 good = good and okay
             for case in [*controls.values(), *negatives.values()]:
-                got = evaluate(case.value)
-                row['restoration'].append({'case': case.id, 'outcome': got})
+                got, restored_traces[case.id] = traced(case.value)
+                row['restoration'].append({'case': case.id, 'outcome': got, 'trace': restored_traces[case.id]})
                 if got != baseline[case.id]:
                     good = False
                     fail('restoration_failed', row=label, case=case.id, actual=got)
+            for case in [*controls.values(), *negatives.values()]:
+                check = trace_check(label, case.id, cuts, own, cut_traces[case.id], restored_traces[case.id])
+                row['trace_checks'].append(check)
+                good = good and not check['reasons']
             row['complete'] = True
             row['proved'] = good and len(report['failures']) == before
             if progress:
@@ -2815,6 +2969,9 @@ def markdown(report):
              '| Guard / duplicate set | Flips | Stays refused | Proof |', '|---|---|---|---|']
     for row in report['rows']:
         lines.append('| `' + row['id'].replace('|', '&#124;') + '` | ' + ', '.join(row['flips']) + ' | ' + ', '.join(row['stays']) + ' | ' + ('proved' if row['proved'] else 'unproved') + ' |')
+    checks = [c for row in report['rows'] for c in row.get('trace_checks', [])]
+    lines += ['', f"Guard-call traces: {len(checks)} case comparisons across rows; {sum(bool(c['reasons']) for c in checks)} diverged "
+              "(a credited flip must repeat its baseline trace through the cut guard)."]
     lines += ['', f"Guard-negative matrix: {len(report['guard_negative_matrix'])} individually executed cells.",
               'Full outcomes, exact guard tags, duplicate per-site proofs, static sites/reasons and source SHA-256 hashes are in JSON.']
     if report['failures']:
@@ -2828,10 +2985,12 @@ def self_test(memory=None, *, scratch=None):
 
 
 def self_test_markdown(report):
-    lines = ['# Method B self-test', '', f"**{report['status']}**: {report['caught']}/{len(report['traps'])} expected observations caught.", '',
+    skipped = report.get('skipped', 0)
+    lines = ['# Method B self-test', '', f"**{report['status']}**: {report['caught']}/{len(report['traps']) - skipped} expected observations caught"
+             + (f"; {skipped} skipped because this Python cannot parse them." if skipped else '.'), '',
              '| Trap | Expected reason | Caught |', '|---|---|---|']
     for trap in report['traps']:
-        lines.append(f"| {trap['id']} | {trap['expected']} | {trap['caught']} |")
+        lines.append(f"| {trap['id']} | {trap['expected']} | {'skipped' if trap.get('skipped') else trap['caught']} |")
     return '\n'.join(lines) + '\n'
 
 

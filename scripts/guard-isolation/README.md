@@ -82,10 +82,28 @@ Function metadata and immutable code include constants, argument/operand tables
 and cell aliases. Lazy function annotations are refused without evaluation;
 materialize reviewed builtin-only annotations before running the suite.
 
+Every repository module the static scan covers must be named in
+`checker_modules`, or the run fails `scanned_module_not_declared`: only named
+modules have their state watched.
+
+Each cut row is also checked by guard-call trace. The baseline and the row's
+restoration (two uncut runs) must call the same guards in the same order; a cut
+run must repeat the baseline trace up to and including the refusing cut guard,
+and otherwise match it whole. A divergence fails `noncausal_flip` (an own
+negative) or `guard_trace_changed` (any other case) with zero credit. Traces are
+in the JSON report.
+
 Outside predicates, every operation needs a written reason it cannot raise or an
 exact reviewed `NonGuard` declaration. Name reads resolve by Python's scope rules:
 a class namespace does not enclose nested functions or comprehensions, so a read
-needs a dominating function, global or builtin binding, or it is an obligation. `TOTAL_FORMS` in the tool lists the automatic
+needs a dominating function, global or builtin binding, or it is an obligation.
+A read of a module binding is automatic only when the file binds the name once,
+by a top-level unconditional assignment, `def`, `class` or import before the
+statement holding the read; the live namespace at scan time certifies nothing.
+Name operations in a class body are automatic only in a class with no bases,
+keywords, decorators or type parameters, because any other class body runs in
+its metaclass's mapping. Any read of `eval`, `exec`, `__builtins__` and the other
+dynamic-code names is an error a declaration cannot waive. `TOTAL_FORMS` in the tool lists the automatic
 forms with their reasons, and the adoption guide's allowlist audit records each
 entry and each form that became an obligation. A form with no entry, including new
 syntax, is an obligation by default. Each report's `static.automatic_totals` shows
