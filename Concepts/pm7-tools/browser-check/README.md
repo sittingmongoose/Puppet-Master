@@ -131,6 +131,66 @@ SW-41: the shared rows 20/21 Back walk retries only when an open sheet or look m
 
 FO-61: Later must remain uncommitted and unconfirmed before the first comparison snapshot and after the second; equality alone is insufficient. `--set selftest=latercommit-every` and `latercommit-second` invoke the real commit handler after every Later or only the second Later, and must fail naming row 13a on both surfaces. `back-after-change --grep FO-61` repeats the Later Edit route (`--set repeat=30`). It stretches the first revision recheck with the public concept clock, then restores normal speed; `--set clock=1` uses natural timing. The snapshots wait for that revision's completed recheck and matching footer, and compare the actual commit state too. `--set selftest=earlyreview` restores the old premature snapshot and must fail the default slow-first case.
 
+## Run only what a change affects
+
+```sh
+browser-check run $K/checks --changed origin/main...HEAD --set page=$OUT/build.html   # first: the checks this branch can affect
+browser-check run $K/checks --changed origin/main...HEAD --list                        # the selection, without running
+browser-check run $K/checks --set page=$OUT/build.html                                  # before landing: every check, as always
+node $K/tools/affects-check.mjs --select <file> [<file> ...]                            # the same selection, without browser-check
+```
+
+`--changed` is opt-in and reads `affects.mjs`, this kit's map of which checks a changed file can affect. A changed check runs itself, `boot`, `sandbox` and `reduced-motion` always run, and a file the map does not place runs everything. **The full run is still required before landing.** The map moves a missed failure to that run; it does not excuse it.
+
+How the map is made (`affects.mjs` says it in full):
+- `checkSurfaces` lists what each check exercises: the onboarding window, the Demo Studio, the tour, the chat, Home, Usage, the rail, Settings, notifications, sound, timing, looks, Glass, NieR, glyphs, the app page. The entries come from each check's code: its selectors, page globals, helpers and looks.
+- `sourceRows` lists which surfaces each product source controls, following how `build.py` assembles the page. A row selects every check with one of its surfaces.
+- `kitRows` covers the kit's helpers, checks that import other checks, and repository files that checks read.
+- Rows with no checks cover files nothing reads: docs, the map itself, tools the build does not read, and `Plans/**` apart from the two Plans files that have their own rows.
+- `affectsAll` runs everything. It covers the committed page, `build.py` and its whole-page passes, the base shell, the O55 core and boot, fonts, the hover engine, `11-motion-start.js` (page-wide idle, layout and motion start), the look settings, the glyph system and the kit config.
+
+Check the map with `node $K/tools/affects-check.mjs`. It is static and runs in under a second; add `--selftest` to confirm that broken copies of the map fail. It fails when:
+- a product source or kit file is not placed;
+- a glob matches nothing;
+- no row selects a check;
+- a check's code shows a surface its entry lacks (`--explain` lists them);
+- a file a check imports or reads does not select that check.
+
+After a change to what `build.py` reads, run it with `--trace`. That runs the build once (about a minute), records every file it opens, and fails on any file the map does not place with checks.
+
+When you add a check, give it a `checkSurfaces` entry and run the self-check. It names any surface the check's code shows that the entry lacks. If the check imports a helper or another check, or reads a repository file, add the check to that file's `kitRows` row (the self-check names it). When you add a source file, put it in a `sourceRows` row or in `affectsAll`.
+
+Measured with `node $K/tools/affects-check.mjs --measure 20` on `main` at 74748ebd92, with no browsers run. The table covers the last 20 non-merge commits that touched a PM7 product source, and counts check files selected out of the 103 in `checks/`:
+
+| Commit | Files | Selected of 103 | Why everything |
+|---|---|---|---|
+| `74a98bc07f` Fix known-account Pip speech and guard header help visible copy | 5 | 61 | |
+| `7a00093a3f` fix(onboarding): make editor label faces transformable | 2 | 61 | |
+| `992258da03` Keep continuous input admission scoped to PM_BUSY idle | 1 | 103 | `11-motion-start.js` |
+| `43c05d1249` Assert complete idle task bounds and support repeated causal films | 3 | 103 | `11-motion-start.js` |
+| `40f8f49c2a` Stage editor customization preparation across input-aware idle admissions | 5 | 103 | `11-motion-start.js` |
+| `d8ff945e11` fix(onboarding): restore anchor and checkbox press faces and clamp tile help | 4 | 76 | |
+| `6cd261a024` Include Auto in onboarding coverage and share its system-following help | 5 | 61 | |
+| `dec9952220` plans: OSI-428 protects independent review where its owner requires it | 3 | 103 | `Plans/settings_inventory.json` |
+| `062b429ef2` Keep Light Dark and Auto together in the onboarding header control | 2 | 61 | |
+| `1c5b57b244` fix(concepts): preserve quiet provider density and semantic NieR status checks | 4 | 61 | |
+| `6b1780c8aa` Offer NAS pairing only while the typed endpoint still names that NAS | 2 | 61 | |
+| `2035e6c390` Synchronize Auto selection controls and embedded onboarding storage schema | 642 | 61 | |
+| `958778b130` Respect the default SSH method when returning to NAS pairing | 1 | 61 | |
+| `aa81b99953` Keep the empty consent ring on an inner press face | 4 | 61 | |
+| `30ffa2430a` Offer and retain Auto in onboarding appearance controls | 10 | 103 | `00-namespace.js` |
+| `94a4c28031` Add Pair instead action for the selected pairable NAS on SSH | 4 | 61 | |
+| `74320e3c2b` Keep Look menu help hit targets clear of sibling options | 3 | 61 | |
+| `3ce3263747` Preserve Copy button inner face through acknowledgment and reset | 1 | 61 | |
+| `520a72a7d9` Defer Home projection layout to lead product decision | 4 | 46 | |
+| `d1a3e2c4a5` Preserve key cheer while clearing discarded draft and extend owner review | 7 | 62 | |
+
+What the numbers show:
+- **Overall:** the 20 commits select 1,431 of 2,060 check files (69%), and 5 of them select everything.
+- **Onboarding window:** a change limited to the window selects 61 checks, because most of the kit tests the window.
+- **Whole branches:** product-source branches select more. Of the four lane branches merged into group 5 on 2026-11-06, the three that changed product sources selected 100, 103 and 103; the kit-only branch (`kit2-land`, 24 files) selected 16. To reproduce, use `--measure 10 --merges` for the first three and `--select` with the branch's files for `kit2-land`. Read only merges of a branch: a merge of `main` into a branch measures `main`'s changes.
+- **Not measured:** time. Checks differ widely in length, so the share of check files selected is not the share of time saved.
+
 ## Helpers for lane checks
 
 ```js
