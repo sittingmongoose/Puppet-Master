@@ -58,7 +58,9 @@
  *   17 17a hover lights a control's tube to --text (attach, header search, history close; every theme); 17b the hover
  *      ink rule never recolours a toned glyph (every thread, the composer menus, six panels; four themes).
  *   18 NieR's Pod 042 is clear of the jump chip, the bar, the queue, the decision panel and the composer (3 sizes,
- *      every thread, transcript top and bottom), of transcript buttons at the bottom, and faded back over any it passes.
+ *      every thread, transcript top and bottom), of transcript buttons at the bottom, and faded back over any it passes;
+ *      each view is judged once the Pod has settled (T40, FO-80). --selftest pod-never-shy (the fade has no effect) and
+ *      --selftest pod-late-shy (the Pod fades 1.5 s late) are real overlaps a person would see, and must fail it.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
  *
@@ -125,6 +127,9 @@ const OUT = argVal('--json', null);
 const REDUCED = argv.includes('--reduced');
 // Explicit focused receipts retain the original section bodies and predicates.
 const SECTION = argVal('--section', null), sectionFilter = SECTION ? new RegExp(SECTION) : null;
+// T40 negatives for check 18: each makes the Pod overlap a control the way a person would see it.
+const SELFTEST = argVal('--selftest', null);
+if (SELFTEST && !['pod-never-shy', 'pod-late-shy'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
 let selectedSections = 0;
 
 if (!fs.existsSync(FILE)) { console.error('neon-verify: no such file ' + FILE); process.exit(2); }
@@ -1655,7 +1660,7 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    overflows its row. Scrolled up, transcript content passes under the Pod as under PMConcept7's; whenever a transcript
    control is under it, it has faded back (data-shy, opacity <= .2) so the control shows through. */
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
-  const bad = [], windows = []; let views = 0;
+  const bad = [], windows = [], unsettled = []; let views = 0;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, reducedMotion: REDUCED ? 'reduce' : 'no-preference' });
     await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
@@ -1673,6 +1678,17 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       await prepareWideHistory(p);
       await setTheme(p, 'nier-dark');
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
+      if (SELFTEST) await p.evaluate(kind => {
+        if (kind === 'pod-never-shy') {
+          const st = document.createElement('style'); st.textContent = '#o55np-pod, #o55np-pod[data-shy] { opacity: 1 !important; transition: none !important; }'; document.head.appendChild(st);
+        } else {
+          /* data-shy arrives 1.5 s after the page sets it: the Pod stays opaque over the control that long */
+          const hold = new WeakSet();
+          new MutationObserver(list => { for (const m of list) { const pod = m.target;
+            if (pod.hasAttribute('data-shy') && !hold.has(pod)) { hold.add(pod); pod.removeAttribute('data-shy'); setTimeout(() => { pod.setAttribute('data-shy', ''); setTimeout(() => hold.delete(pod), 2000); }, 1500); } } })
+            .observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['data-shy'] });
+        }
+      }, SELFTEST);
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
       for (const id of ids) {
         await p.evaluate(i => window.PM56_DEMO.selectThread(i), id);
@@ -1689,6 +1705,34 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             await p.evaluate(() => { const t = document.querySelector('.transcript'); t.scrollTop = t.scrollHeight; t.dispatchEvent(new Event('scroll')); });
             await p.waitForTimeout(1000);
           }
+          /* T40 (FO-80): judge a settled frame only. The Pod fades back by design (data-shy, 70-nier-pod-shy.js: checked 90 ms
+             after a scroll, resize or render, then a 180 ms two-step opacity transition), so content still arriving
+             under it, or a fade still running, is a transient: astra-review-kit2 sampled 0.58, the transition's held
+             middle step, on a slower host. Wait until the transcript, the Pod's box, what lies under it, data-shy and its
+             opacity have held for 300 ms with no animation running on the Pod (bounded at 3 s), then judge that frame. A
+             Pod that never fades back over a control is a settled state too, and still fails. */
+          const settled = await p.evaluate(() => new Promise(done => {
+            const t0 = performance.now(); let last = null, since = 0;
+            const sig = () => {
+              const pod = document.getElementById('o55np-pod'), tr = document.querySelector('.transcript');
+              if (!pod || !tr) return 'none';
+              const P = pod.getBoundingClientRect(), under = [];
+              for (const e of document.querySelectorAll('.transcript button, .transcript a[href], .transcript summary')) {
+                const q = e.getBoundingClientRect(), ix = Math.min(P.right, q.right) - Math.max(P.left, q.left), iy = Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top);
+                if (ix > 0 && iy > 0) under.push(Math.round(q.left) + ',' + Math.round(q.top));
+              }
+              const running = pod.getAnimations().some(a => a.playState === 'running' || a.pending);
+              return running ? null : [Math.round(tr.scrollTop), Math.round(P.left), Math.round(P.top), under.join(';'), pod.hasAttribute('data-shy'), getComputedStyle(pod).opacity].join('|');
+            };
+            const tick = () => {
+              const now = performance.now(), s = sig();
+              if (s === null || s !== last) { last = s; since = now; }
+              else if (now - since >= 300) return done({ settled: true, ms: Math.round(now - t0) });
+              if (now - t0 > 3000) return done({ settled: false, ms: Math.round(now - t0) });
+              requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }));
           const r = await p.evaluate(pos => {
             const pod = document.getElementById('o55np-pod');
             if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
@@ -1714,13 +1758,14 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             return { out };
           }, pos);
           views++;
+          if (!settled.settled) unsettled.push(`${w} ${id} ${pos}`);
           if (r.nopod) bad.push(`${w} ${id}: no Pod`);
-          else if (r.out.length) bad.push(`${w} ${id} ${pos}: ${r.out.join(', ')}`);
+          else if (r.out.length) bad.push(`${w} ${id} ${pos}: ${r.out.join(', ')}${settled.settled ? '' : ' (not settled after 3 s; judged as it stood)'}`);
         }
       }
     } finally { await shut(p); }
   }
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom; at the bottom no transcript button either; faded back over any it passes)`, { bad: bad.slice(0, 12), windows });
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes)`, { bad: bad.slice(0, 12), windows, unsettled });
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
