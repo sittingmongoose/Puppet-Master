@@ -495,6 +495,10 @@ change no exit code and no other line, the baseline does not record them, and `-
 - `Subcheck totals this run: <n>`, then every subcheck that ran, passing ones too: `  [total] <check>/<subcheck>  <total>`,
   or `timed out` for one with no result. `plan-migration-validate/-` is that check's one total. In `--json`:
   `subcheck_totals`, with `null` for one that timed out.
+- `Bucket counts this run: <n>`, then each bucket's count: `  [count] <check>|<subcheck>|<error>|<path>  <count>`, for the
+  subchecks compared row by row. One bucket raised as another falls in one subcheck moves no total and no gone id. A
+  subcheck that prints only a sample has its total alone, since which rows it prints can change on its own. In
+  `--json`: `bucket_counts`.
 
 ## Which paths count as the branch's
 

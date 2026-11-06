@@ -1960,6 +1960,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
                 "subcheck_totals": totals,
+                "bucket_counts": seen_buckets,
                 "infrastructure": infrastructure,
                 "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
                 "kept_check_reports": str(keep_dir) if keep_dir else None,
@@ -2087,6 +2088,9 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         print(f"Subcheck totals this run: {len(totals)}")
         for name, total in totals.items():
             print(f"  [total] {name}  {'timed out' if total is None else total}")
+        print(f"Bucket counts this run: {len(seen_buckets)}")
+        for name, count in sorted(seen_buckets.items()):
+            print(f"  [count] {name}  {count}")
         print()
         if not reported and not grown and not subcheck_growth:
             if infrastructure:

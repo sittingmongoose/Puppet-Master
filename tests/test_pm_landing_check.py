@@ -2540,6 +2540,39 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertEqual(doc["subcheck_totals"], {"plan-migration-validate/-": 0, "run-gates/lint_contractrefs": None,
                                                   "run-gates/lint_path_refs": 1})
 
+    def test_every_buckets_count_is_printed_each_run(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1", "Plans/B.md"), self.row("#2", "Plans/B.md"), self.row("#3")],
+                         "big": ([self.row(f"#{n}", "Plans/D.md") for n in range(60)], 120)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, out = self.compare()
+        self.assertIn("Bucket counts this run: 2\n"
+                      "  [count] run-gates|lint_path_refs|missing_ref|Plans/A.md  1\n"
+                      "  [count] run-gates|lint_path_refs|missing_ref|Plans/B.md  2\n\n", out)
+        self.assertNotIn("Plans/D.md  ", out[out.index("Bucket counts this run"):], "a subcheck that prints a sample has only its total")
+        doc = json.loads(self.compare("--json")[1])
+        self.assertEqual(doc["bucket_counts"], {"run-gates|lint_path_refs|missing_ref|Plans/A.md": 1,
+                                                "run-gates|lint_path_refs|missing_ref|Plans/B.md": 2})
+
+    def test_one_bucket_raised_as_another_falls_shows_in_their_counts_and_nowhere_else(self):
+        """Exit 0 and the same total: only the counts tell these two runs apart. Alone this stops, see scripts/pm-land.py."""
+        first, second = [self.row("#1", "Plans/B.md"), self.row("#1", "Plans/C.md"), self.row("#2", "Plans/C.md")], \
+            [self.row("#1", "Plans/B.md"), self.row("#2", "Plans/B.md"), self.row("#1", "Plans/C.md")]
+        self.stub(gates={"lint_path_refs": first + [self.row("#2", "Plans/B.md")]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": first})
+        code_one, one = self.compare()
+        self.stub(gates={"lint_path_refs": second})
+        code_two, two = self.compare()
+        self.assertEqual((code_one, code_two), (0, 0))
+        self.assertIn("  [count] run-gates|lint_path_refs|missing_ref|Plans/B.md  1\n", one)
+        self.assertIn("  [count] run-gates|lint_path_refs|missing_ref|Plans/B.md  2\n", two)
+        self.assertEqual(self.without_counts(one), self.without_counts(two))
+
+    def without_counts(self, text):
+        return re.sub(r"^  \[count\] .*\n", "", text, flags=re.M)
+
     def test_the_baseline_holds_none_of_it_and_recording_prints_none_of_it(self):
         self.stub(gates={"lint_path_refs": [self.row("#1")]})
         code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
