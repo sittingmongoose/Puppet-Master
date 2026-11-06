@@ -2121,4 +2121,13 @@ The report commit changes only this report set (`reports/event-authority-2026110
 
 **Scope.** `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_numbers_mutations.json`, `Plans/event_number_recipe_corpus.json`, the corpus content pin and this report. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, date-time code, `main` push, pm-mail or subagent.
 
-Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH2/numbers/`.
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH2/numbers/` (the self-test, mutation, scope and freshness runs).
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `base-plus-fix4.out.json.gz` | `6af0ff168692fadbd8d0a8d58ecfc5a15d21d5661128f5a78594e7911566af27` |
+| `fresh2-new.json` | `5aa63f0793f0f10f9cf8f64df1bdf31c6dbbb24d00625fd207c0ffc798216e57` |
+| `fresh-new.json` | `6fcaae9f5a9c2f477b13b06b50b2891f760abd9504f6805de20745906c6e41bb` |
+| `num-mut-1.json.gz` | `b538e786a4cc0ca88b94ca899f3e93732a34975403669303b49fa10bcde34812` |
+| `num-scope-all.json.gz` | `dfcd44d8600de81a9e5687d4fbca1342e689af2e9918387c7fd5993e0761e9e8` |
+| `num-st-1.json` | `33e90b56f7198f6b76961039ab3e6dff2121f9a15743fd339bff6001420c6818` |
