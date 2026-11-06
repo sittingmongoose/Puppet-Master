@@ -1181,6 +1181,47 @@ def subcheck_totals(
     return totals
 
 
+def write_row_report(
+    path: Path,
+    root: Path,
+    base: str,
+    items: list[dict[str, Any]],
+    counts: dict[str, dict[str, dict[str, int]]],
+    listed: dict[str, dict[str, int]],
+    timed_out: set[tuple[str, str]],
+) -> None:
+    """--row-report: every row each subcheck gave in this run, for telling what one run added since another.
+
+    A subcheck is `complete` when every row it counted is here: it printed them all, or is keyed from an export whose
+    total matches. Each staleness row carries `names`, the paths of `git diff --name-only --no-renames <base>..HEAD` it
+    names, the regenerated ones too, and a deleted or renamed path, since evidence rows name shards. Nothing here judges
+    any of it, and it is written only when asked for. scripts/pm-land.py reads it inside a batch.
+    """
+    proc = subprocess.run(["git", "diff", "--name-only", "--no-renames", f"{base}..HEAD"], cwd=root, capture_output=True, text=True)
+    direct, derived = split_touched(proc.stdout.splitlines() if proc.returncode == 0 else [])
+    tokens = path_tokens(direct) + [(name, "") for name in derived]
+    units = units_of_touched_docs(root, direct)
+    named: dict[tuple[str, str], list[str]] = {}
+    rows: dict[str, list[dict[str, Any]]] = {}
+    for item in items:
+        names: list[str] = []
+        if item["stale"]:
+            seen = (canonical(item["_raw"]), item["path"])
+            if seen not in named:
+                named[seen] = names_branch_path(item, tokens, root, units)
+            names = named[seen]
+        rows.setdefault(f"{item['check']}/{item['subcheck'] or '-'}", []).append(
+            {"key": item["key"], "stale": item["stale"], "names": names})
+    subchecks = {}
+    for name, total in subcheck_totals(counts, listed, timed_out).items():
+        mine = rows.get(name, [])
+        complete = total is not None and len(mine) == total
+        subchecks[name] = {"reported": total, "complete": complete, "rows": mine if complete else []}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"schema_id": "pm.landing_check.rows.v1", "base": base, "subchecks": subchecks}, sort_keys=True) + "\n",
+                    encoding="utf-8")
+
+
 def aggregate_subcheck_commands(
     root: Path,
     names: dict[str, set[str]],
@@ -1624,6 +1665,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
     parser.add_argument("--base", default="origin/main", help="revision this branch is measured against")
+    parser.add_argument("--row-report", metavar="FILE", help="also write every row of each subcheck to FILE, outside the "
+                                                             "repository, for comparing one run with another; judges nothing")
     parser.add_argument("--baseline", default=DEFAULT_BASELINE, help=f"baseline file (default: {DEFAULT_BASELINE})")
     parser.add_argument("--record-baseline", action="store_true", help="run the three checks and write the baseline")
     parser.add_argument("--run-dir", default=None, help="plan-migration run directory (default: the current run)")
@@ -1688,6 +1731,11 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         except OSError as exc:
             print(f"pm-landing-check: cannot create {keep_dir}: {exc}", file=sys.stderr)
             return 3
+
+    if args.row_report and (Path(args.row_report).resolve() == root or root in Path(args.row_report).resolve().parents):
+        print("pm-landing-check: --row-report must name a file outside the repository; nothing is written inside it.",
+              file=sys.stderr)
+        return 3
 
     try:
         run_dir = args.run_dir or current_run_dir(root)
@@ -1845,6 +1893,8 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     pairs = pair_validators(counts, listed, baseline.get("checks") or {}, timed_out, items, commands,
                             version_change(before, after), keyed_now | from_export)
     paired = {("run-gates", row["run_gates"]) for row in pairs if row["paired"]}
+    if args.row_report:
+        write_row_report(Path(args.row_report).resolve(), root, args.base, items, counts, listed, timed_out)
     items = [item for item in items if (item["check"], item["subcheck"]) not in paired]
     compared = {
         check: {name: counted for name, counted in compared[check].items() if (check, name) not in paired}

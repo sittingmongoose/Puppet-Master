@@ -2573,6 +2573,79 @@ class WhatEachRunAlsoReports(LandingRun):
     def without_counts(self, text):
         return re.sub(r"^  \[count\] .*\n", "", text, flags=re.M)
 
+    def row_report(self, *argv):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "rows.json"
+            code, out = self.compare("--row-report", str(path), *argv)
+            return code, out, json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+    def test_the_row_report_holds_every_row_of_a_complete_subcheck_and_what_each_stale_row_names(self):
+        stale = {"path": "Plans/A.md", "error": "stale_hash", "actual": "1", "expected": "2"}
+        shard = {"path": "Plans/.evidence/e.json", "error": "artifact_hash_stale", "artifact": "Plans/_shards/A/001.md"}
+        other = {"path": "Plans/Untouched.md", "error": "stale_hash"}
+        plain = self.row("#1", "Plans/A.md")
+        self.stub(gates={"verify_spec_lock": [stale, shard, other], "lint_path_refs": [plain], "lint_x": []})
+        self.record()
+        self.touch("Plans/A.md")
+        self.touch("Plans/_shards/A/001.md")
+        code, _out, doc = self.row_report()
+        self.assertEqual(doc["schema_id"], "pm.landing_check.rows.v1")
+        rows = doc["subchecks"]["run-gates/verify_spec_lock"]
+        self.assertEqual((rows["reported"], rows["complete"]), (3, True))
+        self.assertEqual([row["stale"] for row in rows["rows"]], [True, True, True])
+        self.assertEqual([row["names"] for row in rows["rows"]], [["Plans/A.md"], ["Plans/_shards/A/001.md"], []])
+        self.assertTrue(rows["rows"][0]["key"].startswith("run-gates|verify_spec_lock|stale_hash|Plans/A.md|"))
+        self.assertEqual(doc["subchecks"]["run-gates/lint_path_refs"]["rows"][0]["stale"], False)
+        self.assertEqual(doc["subchecks"]["run-gates/lint_path_refs"]["rows"][0]["names"], [], "only staleness rows are attributed")
+        self.assertEqual(doc["subchecks"]["run-gates/lint_x"], {"reported": 0, "complete": True, "rows": []})
+        self.assertEqual(doc["subchecks"]["plan-migration-validate/-"], {"reported": 0, "complete": True, "rows": []})
+        self.assertEqual(code, 1)
+
+    def test_the_row_report_names_a_path_git_would_read_as_renamed(self):
+        (self.repo / "Plans" / "Old.md").write_text("".join(f"line {n}\n" for n in range(30)), encoding="utf-8")
+        self.git("add", "Plans/Old.md")
+        self.git("commit", "-qm", "old")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        gone = {"path": "Plans/.evidence/e.json", "error": "artifact_hash_stale", "artifact": "Plans/Old.md"}
+        self.stub(gates={"validate_evidence": [gone]})
+        self.record()
+        self.git("mv", "Plans/Old.md", "Plans/New.md")
+        self.git("commit", "-qm", "renamed")
+        _code, _out, doc = self.row_report()
+        self.assertEqual(doc["subchecks"]["run-gates/validate_evidence"]["rows"][0]["names"], ["Plans/Old.md"])
+
+    def test_a_subcheck_that_prints_a_sample_is_not_complete_and_lists_no_rows(self):
+        rows = [self.row(f"#{n}", "Plans/D.md") for n in range(60)]
+        self.stub(gates={"big": (rows, 120)})
+        self.record()
+        self.touch("Plans/Touched.md")
+        _code, _out, doc = self.row_report()
+        self.assertEqual(doc["subchecks"]["run-gates/big"], {"reported": 120, "complete": False, "rows": []})
+
+    def test_a_subcheck_that_timed_out_is_not_complete(self):
+        self.stub(gates={"lint_contractrefs": [MISSING_REF]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_contractrefs": [timeout_row()]})
+        _code, _out, doc = self.row_report()
+        self.assertEqual(doc["subchecks"]["run-gates/lint_contractrefs"], {"reported": None, "complete": False, "rows": []})
+
+    def test_the_row_report_changes_nothing_else(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1")], "lint_x": [self.row("#2", "Plans/B.md")]})
+        self.record()
+        self.touch("Plans/A.md")
+        without = self.compare()
+        code, out, _doc = self.row_report()
+        self.assertEqual((code, out), without)
+
+    def test_the_row_report_must_be_outside_the_repository(self):
+        self.stub(gates={"lint_path_refs": [self.row("#1")]})
+        self.record()
+        code, _out = self.compare("--row-report", str(self.repo / "rows.json"))
+        self.assertEqual(code, 3)
+        self.assertIn("--row-report must name a file outside the repository", self.stderr)
+        self.assertFalse((self.repo / "rows.json").exists())
+
     def test_the_baseline_holds_none_of_it_and_recording_prints_none_of_it(self):
         self.stub(gates={"lint_path_refs": [self.row("#1")]})
         code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
