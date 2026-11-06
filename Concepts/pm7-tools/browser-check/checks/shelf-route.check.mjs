@@ -586,6 +586,17 @@ export default async function (t) {
           const key = await f.waitForFunction(b => __shelf.keys().find(k => !b.includes(k)), before, { timeout: 5000 }).then(h => h.jsonValue(), () => null);
           await t.check(`${tag} opens a menu by ${input}`, !!key, JSON.stringify({ blocked: await f.evaluate(() => window.__blockedPopup || 0) }), { hard: true });
           got[input] = key;
+          // FO-95: ArrowDown opens the menu with the focus on its first item, or on its current choice when it has one.
+          if (input === 'arrowdown') {
+            const fo = await f.waitForFunction(k => {
+              const m = __shelf.open().find(x => __shelf.key(x) === k), a = document.activeElement;
+              const its = m ? [...m.querySelectorAll('[role^="menuitem"]')].filter(it => it.closest('[role="menu"]') === m && it.checkVisibility()) : [];
+              const i = its.indexOf(a), cur = its.findIndex(it => it.classList.contains('active') || ['aria-checked', 'aria-selected'].some(x => it.getAttribute(x) === 'true'));
+              return i >= 0 && (i === 0 || i === cur) ? { at: i, cur } : null;
+            }, key, { timeout: 2000 }).then(h => h.jsonValue(), () => null);
+            const now = fo || await f.evaluate(() => { const a = document.activeElement; return { focus: a ? a.tagName + '.' + a.className : null }; });
+            await t.check(`${tag} FO-95 ArrowDown puts the focus on the menu's first item or its current choice`, !!fo, JSON.stringify(now), { hard: true });
+          }
           // Mouse and Enter carry the whole walk (branches, picks); Space and ArrowDown open the same menu, with items, the
           // first on top, and close on Escape with the panel kept.
           const whole = input === 'mouse' || input === 'enter';
