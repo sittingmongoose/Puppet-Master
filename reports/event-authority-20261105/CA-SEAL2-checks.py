@@ -124,44 +124,172 @@ def predicate_supplement(source, before, walker):
     previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
     touched = [name for name, fn in functions.items()
                if name not in previous or ast.dump(previous[name]) != ast.dump(fn)]
-    rows = []
-    def add(function, node, expression, node_type):
-        identity = {'function': function, 'line': node.lineno, 'column': node.col_offset,
-                    'expression': expression, 'kind': 'node ' + node_type}
-        rows.append(dict(identity, node_type=node_type,
-                         site_id='supplement:' + sha(json.dumps(identity, sort_keys=True).encode())))
-    for name in touched:
-        for n in ast.walk(functions[name]):
-            if isinstance(n, (ast.Compare, ast.BoolOp, ast.Call, ast.IfExp,
-                              ast.NamedExpr, ast.Assert)):
-                add(name, n, ast.unparse(n), type(n).__name__)
-            elif isinstance(n, ast.UnaryOp) and isinstance(n.op, ast.Not):
-                add(name, n, ast.unparse(n), 'UnaryOp(Not)')
-            elif isinstance(n, ast.BinOp) and isinstance(n.op, (ast.BitAnd, ast.BitOr, ast.BitXor)):
-                add(name, n, ast.unparse(n), 'BinOp(' + type(n.op).__name__ + ')')
-            elif isinstance(n, (ast.If, ast.While)):
-                add(name, n.test, ast.unparse(n.test), type(n).__name__ + ' test')
-            elif isinstance(n, ast.comprehension):
-                for test in n.ifs:
-                    add(name, test, ast.unparse(test), 'comprehension if')
-            elif isinstance(n, ast.match_case):
-                add(name, n.pattern, ast.unparse(n.pattern), 'match case')
-                if n.guard is not None:
-                    add(name, n.guard, ast.unparse(n.guard), 'match guard')
-            elif isinstance(n, (ast.Try, ast.TryStar)):
-                # Dispatch identity excludes handler bodies; those are walked
-                # independently. Each handler and each alternative also has a row.
-                add(name, n, repr([ast.unparse(h.type) if h.type else '*' for h in n.handlers]),
-                    type(n).__name__ + ' dispatch')
-            elif isinstance(n, ast.ExceptHandler):
-                add(name, n, ast.unparse(n.type) if n.type else '*', 'except dispatch')
-                alternatives = n.type.elts if isinstance(n.type, ast.Tuple) else [n.type]
-                for alternative in alternatives:
-                    add(name, alternative or n, ast.unparse(alternative) if alternative else '*',
-                        'except alternative')
-            elif isinstance(n, ast.keyword) and n.arg in {'object_pairs_hook', 'parse_constant', 'parse_float'}:
-                add(name, n, n.arg + '=' + ast.unparse(n.value), 'parser callback')
+    rows = [supplement_identity(name, node, expression, node_type)
+            for name in touched for node, expression, node_type in supplement_nodes(functions[name])]
     return sorted(rows, key=lambda r: (r['line'], r['column'], r['kind'])), touched
+
+
+def supplement_identity(function, node, expression, node_type):
+    identity = {'function': function, 'line': node.lineno, 'column': node.col_offset,
+                'expression': expression, 'kind': 'node ' + node_type}
+    return dict(identity, node_type=node_type,
+                site_id='supplement:' + sha(json.dumps(identity, sort_keys=True).encode()))
+
+
+def supplement_nodes(fn):
+    """Yield (anchor node, expression, node type) for every inventoried node of one function."""
+    for n in ast.walk(fn):
+        if isinstance(n, (ast.Compare, ast.BoolOp, ast.Call, ast.IfExp,
+                          ast.NamedExpr, ast.Assert)):
+            yield n, ast.unparse(n), type(n).__name__
+        elif isinstance(n, ast.UnaryOp) and isinstance(n.op, ast.Not):
+            yield n, ast.unparse(n), 'UnaryOp(Not)'
+        elif isinstance(n, ast.BinOp) and isinstance(n.op, (ast.BitAnd, ast.BitOr, ast.BitXor)):
+            yield n, ast.unparse(n), 'BinOp(' + type(n.op).__name__ + ')'
+        elif isinstance(n, (ast.If, ast.While)):
+            yield n.test, ast.unparse(n.test), type(n).__name__ + ' test'
+        elif isinstance(n, ast.comprehension):
+            for test in n.ifs:
+                yield test, ast.unparse(test), 'comprehension if'
+        elif isinstance(n, ast.match_case):
+            yield n.pattern, ast.unparse(n.pattern), 'match case'
+            if n.guard is not None:
+                yield n.guard, ast.unparse(n.guard), 'match guard'
+        elif isinstance(n, (ast.Try, ast.TryStar)):
+            # Dispatch identity excludes handler bodies; those are walked
+            # independently. Each handler and each alternative also has a row.
+            yield n, repr([ast.unparse(h.type) if h.type else '*' for h in n.handlers]), type(n).__name__ + ' dispatch'
+        elif isinstance(n, ast.ExceptHandler):
+            yield n, ast.unparse(n.type) if n.type else '*', 'except dispatch'
+            alternatives = n.type.elts if isinstance(n.type, ast.Tuple) else [n.type]
+            for alternative in alternatives:
+                yield alternative or n, ast.unparse(alternative) if alternative else '*', 'except alternative'
+        elif isinstance(n, ast.keyword) and n.arg in {'object_pairs_hook', 'parse_constant', 'parse_float'}:
+            yield n, n.arg + '=' + ast.unparse(n.value), 'parser callback'
+
+
+STATEMENT_BODIES = {'body', 'orelse', 'finalbody', 'handlers', 'cases'}
+
+
+def header_span(node):
+    """First and last line of a statement, handler or case, outside its nested statement bodies."""
+    spans = [(node.lineno, node.lineno)] if hasattr(node, 'lineno') else []
+    for field, value in ast.iter_fields(node):
+        if field in STATEMENT_BODIES:
+            continue
+        for child in value if isinstance(value, list) else [value]:
+            if isinstance(child, ast.AST):
+                spans.extend((n.lineno, n.end_lineno) for n in ast.walk(child)
+                             if getattr(n, 'end_lineno', None) is not None)
+    return min(s for s, _ in spans), max(e for _, e in spans)
+
+
+def parent_links(tree):
+    links = {}
+    for node in ast.walk(tree):
+        for field, value in ast.iter_fields(node):
+            for child in value if isinstance(value, list) else [value]:
+                if isinstance(child, ast.AST):
+                    links[id(child)] = (node, field)
+    return links
+
+
+def occurrence_counterpart(node, node_type, expression, fn, old, line_map, links, old_links, index):
+    """Return (historical node, None) for an unchanged occurrence, else (None, reason)."""
+    def one_block(start, end):
+        blocks = {line_map.get(line, (None, None))[1] for line in range(start, end + 1)}
+        return None not in blocks and len(blocks) == 1
+    statement = isinstance(node, (ast.stmt, ast.excepthandler))
+    if not one_block(*(header_span(node) if statement else (node.lineno, node.end_lineno))):
+        return None, 'inserted or changed line'
+    candidates = index.get((node_type, line_map[node.lineno][0], node.col_offset, expression), [])
+    if len(candidates) != 1:
+        return None, 'no single historical node at the mapped position'
+    match = candidates[0]
+    if not statement and (line_map[node.end_lineno][0], node.end_col_offset) != (match.end_lineno, match.end_col_offset):
+        return None, 'changed node extent'
+    if isinstance(node, (ast.Try, ast.TryStar)) and (
+            [line_map.get(h.lineno, (None,))[0] for h in node.handlers] != [h.lineno for h in match.handlers]):
+        return None, 'changed handler list'
+    # The whole enclosing chain, up to the top-level function, must be the same
+    # structure at unchanged positions: same parent type and field, and, where
+    # the node sits in a statement body, an unchanged enclosing header.
+    current, past = node, match
+    while current is not fn:
+        (parent, field), (old_parent, old_field) = links[id(current)], old_links.get(id(past), (None, None))
+        if type(parent) is not type(old_parent) or field != old_field:
+            return None, 'changed enclosing context'
+        if field in STATEMENT_BODIES and not one_block(*header_span(parent)):
+            return None, 'changed enclosing header'
+        if hasattr(parent, 'lineno') and (
+                (line_map.get(parent.lineno, (None,))[0], parent.col_offset) != (old_parent.lineno, old_parent.col_offset)):
+            return None, 'changed enclosing context'
+        current, past = parent, old_parent
+    if past is not old:
+        return None, 'changed enclosing context'
+    return match, None
+
+
+def occurrence_map(source, before):
+    """Map current node identities to their CA-SEAL occurrences, mechanically.
+
+    Each touched function that exists by name at CA-SEAL is aligned to its own
+    historical body by unchanged source lines (difflib matching blocks over the
+    function's lines, decorators and signature included). A current node has a
+    counterpart only if it lies inside one unchanged block, a historical node of
+    the same type and expression sits at the mapped position and extent, and its
+    enclosing context is unchanged. The map is injective. Nodes on inserted or
+    changed lines, in a changed context, or in a function new since CA-SEAL have
+    no counterpart.
+    """
+    current = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
+    historical = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
+    lines, old_lines = source.splitlines(), before.splitlines()
+    counterparts, functions, ineligible = {}, {}, Counter()
+    for name, fn in current.items():
+        old = historical.get(name)
+        if old is not None and ast.dump(old) == ast.dump(fn):
+            continue
+        nodes = list(supplement_nodes(fn))
+        if old is None:
+            functions[name] = {'history': False, 'aligned_blocks': 0, 'aligned_lines': 0,
+                               'nodes': len(nodes), 'eligible_nodes': 0}
+            ineligible['function new since CA-SEAL'] += len(nodes)
+            continue
+        start = min([fn.lineno] + [d.lineno for d in fn.decorator_list])
+        old_start = min([old.lineno] + [d.lineno for d in old.decorator_list])
+        blocks = [b for b in difflib.SequenceMatcher(
+            None, old_lines[old_start - 1:old.end_lineno], lines[start - 1:fn.end_lineno],
+            autojunk=False).get_matching_blocks() if b.size]
+        line_map = {start + b.b + k: (old_start + b.a + k, i) for i, b in enumerate(blocks) for k in range(b.size)}
+        links, old_links = parent_links(fn), parent_links(old)
+        index = {}
+        for node, expression, node_type in supplement_nodes(old):
+            index.setdefault((node_type, node.lineno, node.col_offset, expression), []).append(node)
+        eligible = 0
+        for node, expression, node_type in nodes:
+            match, reason = occurrence_counterpart(node, node_type, expression, fn, old,
+                                                   line_map, links, old_links, index)
+            if match is None:
+                ineligible[reason] += 1
+                continue
+            site = supplement_identity(name, node, expression, node_type)['site_id']
+            assert site not in counterparts, ('ambiguous current occurrence', site)
+            counterparts[site] = supplement_identity(name, match, expression, node_type)['site_id']
+            eligible += 1
+        functions[name] = {'history': True, 'aligned_blocks': len(blocks),
+                           'aligned_lines': sum(b.size for b in blocks), 'nodes': len(nodes),
+                           'eligible_nodes': eligible}
+    assert len(set(counterparts.values())) == len(counterparts), 'occurrence map is not one-to-one'
+    totals = {'baseline': SEAL_BASE,
+              'aligned_functions': sum(f['history'] for f in functions.values()),
+              'new_functions': sum(not f['history'] for f in functions.values()),
+              'aligned_blocks': sum(f['aligned_blocks'] for f in functions.values()),
+              'aligned_lines': sum(f['aligned_lines'] for f in functions.values()),
+              'eligible_nodes': len(counterparts),
+              'ineligible_nodes': dict(sorted(ineligible.items())),
+              'functions': functions}
+    return counterparts, totals
 
 
 def check_coverage(repo, test_names):
@@ -177,13 +305,26 @@ def coverage_model(source, before):
     actual = predicate_sites(source, before)
     supplement, touched = predicate_supplement(source, before, actual)
     previous, _ = predicate_supplement(before, '', [])
-    return ({r['site_id']: r for r in actual + supplement}, touched,
-            {r['site_id']: r for r in previous})
+    counterparts, occurrence_totals = occurrence_map(source, before)
+    previous_nodes = {r['site_id']: r for r in previous}
+    assert set(counterparts.values()) <= set(previous_nodes), 'occurrence map names no historical node'
+    return ({r['site_id']: r for r in actual + supplement}, touched, previous_nodes,
+            counterparts, occurrence_totals)
+
+
+def preservation_problems(rows, counterparts):
+    """Preservation is computed, not asserted: each claim must be its node's mapped occurrence."""
+    preserved = [row for row in rows if row['outcome'] == 'preserved August predicate']
+    claims = Counter(row.get('baseline_site_id') for row in preserved)
+    return {'not_an_unchanged_occurrence': sorted(r['site_id'] for r in preserved if r['site_id'] not in counterparts),
+            'claims_another_occurrence': sorted(r['site_id'] for r in preserved if r['site_id'] in counterparts
+                                                and r.get('baseline_site_id') != counterparts[r['site_id']]),
+            'occurrence_claimed_twice': sorted(str(b) for b, n in claims.items() if n > 1)}
 
 
 def validate_coverage(raw, before, table, test_names):
     source = raw.decode()
-    expected, touched, previous_nodes = coverage_model(source, before)
+    expected, touched, previous_nodes, counterparts, occurrence_totals = coverage_model(source, before)
     assert table['touched_functions'] == touched, 'changed touched-function inventory'
     rows = table['sites'] + table['supplement']
     recorded = {row['site_id']: row for row in rows}
@@ -209,6 +350,13 @@ def validate_coverage(raw, before, table, test_names):
                 baseline = previous_nodes[row['baseline_site_id']]
                 assert baseline['line'] == row['baseline_line']
                 assert all(baseline[k] == row[k] for k in ('function', 'column', 'expression', 'node_type')), site
+    # Expression equality above is necessary but not sufficient: the claimed
+    # baseline must be the computed counterpart of this very node, once.
+    problems = preservation_problems(rows, counterparts)
+    assert not any(problems.values()), 'preserved occurrence mismatch ' + json.dumps(problems, sort_keys=True)
+    assert table['totals']['occurrence_map'] == dict(
+        occurrence_totals, preserved_rows_matched=sum(r['outcome'] == 'preserved August predicate' for r in rows)), \
+        'changed occurrence-map totals'
     assert len(table['prior_survivors']) == 84
     assert table['validator_sha256'] == sha(raw), 'validator is not frozen'
     assert table['totals']['walker_sites'] == len(table['sites'])
@@ -263,6 +411,205 @@ def insertion_probe(raw, before, table_raw, test_names, statement, return_functi
     else:
         raise AssertionError('unlisted insertion passed coverage')
     return missing
+
+
+PRESERVED = 'preserved August predicate'
+PRESERVATION_PROBES = ('rebinding_inserted_call', 'inserted_sole_claim', 'duplicate_claim',
+                       'changed_occurrence', 'changed_enclosing_header')
+
+
+def forged_preservation(raw, before, table_raw, label):
+    """Scratch edit of V plus a forged table that satisfies the round-9 preservation rule.
+
+    Existing rows are rebased onto the edited source as the insertion probes do.
+    A new identity at the position of a vanished one takes over that row; a
+    preserved row there becomes 'implied', because round 9 already refused a
+    changed expression. Any other new node copies the preserved row whose
+    function, column, expression and node type it shares: the recheck's
+    rebinding. Other new nodes and new walker identities get a forged 'implied'
+    row, which round 9 also accepted. Every count is
+    regenerated, so only the occurrence check can refuse the result. Returns
+    (edited bytes, forged table, preservation problems the refusal must name).
+    """
+    source = raw.decode().replace('\r\n', '\n')
+    lines = source.splitlines(keepends=True)
+    functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
+    table = json.loads(table_raw)
+    def preserved(function, expression, node_type, column=None):
+        return sorted((r for r in table['supplement'] if r['outcome'] == PRESERVED and r['function'] == function
+                       and r['expression'] == expression and r['node_type'] == node_type
+                       and column in (None, r['column'])), key=lambda r: r['line'])
+    def line_of(function, text):
+        fn = functions[function]
+        return next(i for i in range(fn.lineno, fn.end_lineno + 1) if lines[i - 1].strip() == text)
+    shifted, claim, expect = None, None, {}
+    if label in ('rebinding_inserted_call', 'inserted_sole_claim'):
+        # The recheck's witness: an inserted call labelled with V:220's baseline.
+        fn = functions['multi_family_receipt_state']
+        shifted = next(n.lineno for n in fn.body if isinstance(n, ast.Return))
+        lines.insert(shifted - 1, '    probe = isinstance(receipt, dict)\n')
+        original, = preserved('multi_family_receipt_state', 'isinstance(receipt, dict)', 'Call', 12)
+        at = ast.Name(id='probe', lineno=shifted, col_offset=12)
+        inserted = supplement_identity('multi_family_receipt_state', at, 'isinstance(receipt, dict)', 'Call')
+        expect['not_an_unchanged_occurrence'] = [inserted['site_id']]
+        if label == 'rebinding_inserted_call':
+            expect['occurrence_claimed_twice'] = [original['baseline_site_id']]
+        else:
+            # The inserted node holds the only claim; the inherited row is relabelled.
+            def claim(table, site=original['site_id']):
+                row = next(r for r in table['supplement'] if r['site_id'] == site)
+                for key in [k for k in row if k.startswith('baseline_')]:
+                    del row[key]
+                row.update(outcome='implied', reason='Forged probe row.')
+            expect['occurrence_claimed_twice'] = []
+    elif label == 'duplicate_claim':
+        # No source edit: a second inherited occurrence claims the first one's baseline.
+        first, second = preserved('main', 'isinstance(pins, str)', 'Call')[:2]
+        def claim(table, first=first, second=second):
+            row = next(r for r in table['supplement'] if r['site_id'] == second['site_id'])
+            row.update(baseline_site_id=first['baseline_site_id'], baseline_line=first['baseline_line'],
+                       evidence=copy.deepcopy(first['evidence']))
+        expect['occurrence_claimed_twice'] = [first['baseline_site_id']]
+        expect['claims_another_occurrence'] = [second['site_id']]
+    elif label == 'changed_occurrence':
+        # V:218 edited in place: the preserved call keeps line, column and text.
+        line = line_of('multi_family_receipt_state', 'lander = receipt.get("lander_task") if isinstance(receipt, dict) else None')
+        lines[line - 1] = lines[line - 1].replace('else None', 'else "x!"')
+        kept, = [r for r in preserved('multi_family_receipt_state', 'isinstance(receipt, dict)', 'Call') if r['line'] == line]
+        expect['not_an_unchanged_occurrence'] = [kept['site_id']]
+    elif label == 'changed_enclosing_header':
+        # V:1122's guard inverted in place: its unchanged body now runs on the opposite branch.
+        line = line_of('main', 'if failures:')
+        lines[line - 1] = lines[line - 1].replace('if failures:', 'if not failures:')
+        body = next(n for n in ast.walk(functions['main']) if isinstance(n, ast.If) and n.lineno == line)
+        expect['not_an_unchanged_occurrence'] = sorted(
+            r['site_id'] for r in table['supplement'] if r['outcome'] == PRESERVED and r['function'] == 'main'
+            and line < r['line'] <= body.end_lineno)
+        assert expect['not_an_unchanged_occurrence']
+    else:
+        raise ValueError('unknown preservation probe ' + label)
+    altered = ''.join(lines)
+    for group in ('sites', 'supplement'):
+        for row in table[group]:
+            if 'line' not in row:
+                continue
+            if shifted is not None and row['line'] >= shifted:
+                row['line'] += 1
+            identity = {k: row[k] for k in ('function', 'line', 'column', 'expression', 'kind')}
+            row['site_id'] = row['site_id'].split(':')[0] + ':' + sha(json.dumps(identity, sort_keys=True).encode())
+    walker = predicate_sites(altered, before)
+    supplement, _ = predicate_supplement(altered, before, walker)
+    expected = {r['site_id'] for r in walker + supplement}
+    vanished = [r for r in table['supplement'] if r['site_id'] not in expected]
+    recorded = {r['site_id'] for r in table['sites'] + table['supplement']}
+    table['sites'] = [r for r in table['sites'] if r['site_id'] in expected] + [
+        dict(r, outcome='implied', reason='Forged probe row.', evidence=[{'probe': label}])
+        for r in walker if r['site_id'] not in recorded]
+    added = []
+    for identity in (r for r in supplement if r['site_id'] not in recorded):
+        donor = next((r for r in vanished if all(r[k] == identity[k] for k in ('function', 'line', 'column', 'node_type'))), None)
+        if donor is None:
+            donor = next(iter(preserved(identity['function'], identity['expression'], identity['node_type'],
+                                        identity['column'])), None)
+        if donor is None:
+            added.append(dict(identity, outcome='implied', reason='Forged probe row.', evidence=[{'probe': label}]))
+            continue
+        row = dict(copy.deepcopy(donor), **identity)
+        if donor in vanished and row['outcome'] == PRESERVED:
+            for key in [k for k in row if k.startswith('baseline_')]:
+                del row[key]
+            row.update(outcome='implied', reason='Forged probe row.')
+        added.append(row)
+    table['supplement'] = [r for r in table['supplement'] if r['site_id'] in expected] + added
+    if claim:
+        claim(table)
+    altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
+    rows = table['sites'] + table['supplement']
+    counterparts, occurrence_totals = occurrence_map(altered_raw.decode(), before)
+    table['validator_sha256'] = sha(altered_raw)
+    table['totals'].update(
+        walker_sites=len(table['sites']), supplement_rows=len(supplement), combined_sites=len(expected),
+        outcomes=dict(Counter(r['outcome'] for r in rows)),
+        node_types=dict(Counter(r['node_type'] for r in table['supplement'])),
+        node_outcomes=dict(Counter(r['outcome'] for r in table['supplement'])),
+        occurrence_map=dict(occurrence_totals, preserved_rows_matched=sum(r['outcome'] == PRESERVED for r in rows)))
+    return altered_raw, table, expect
+
+
+def check_preservation_probe(repo, test_names, label):
+    raw = (repo / REL).read_bytes()
+    before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
+    return preservation_probe(raw, before, (repo / COVERAGE).read_bytes(), frozenset(test_names), label)
+
+
+def preservation_probe(raw, before, table_raw, test_names, label):
+    altered_raw, table, expect = forged_preservation(raw, before, table_raw, label)
+    prefix = 'preserved occurrence mismatch '
+    try:
+        validate_coverage(altered_raw, before, table, test_names)
+    except AssertionError as exc:
+        assert str(exc).startswith(prefix), str(exc)
+        problems = json.loads(str(exc)[len(prefix):])
+    else:
+        raise AssertionError('forged preservation passed coverage: ' + label)
+    for key, sites in expect.items():
+        assert set(sites) <= set(problems[key]) and (sites or not problems[key]), (label, key, problems)
+    return problems
+
+
+def check_occurrence_map():
+    # Synthetic alignment control. `kept` moves within the file and stays
+    # aligned; a duplicated line maps once; inserted, changed-line,
+    # changed-context, changed-header, changed-handler and new-function nodes
+    # have no counterpart.
+    before = """def kept(x):
+    a = isinstance(x, dict)
+    if x:
+        b = isinstance(x, list)
+    if x:
+        c = isinstance(x, set)
+    try:
+        d = isinstance(x, int)
+    except ValueError:
+        pass
+    return a
+
+
+def gone(x):
+    return bool(x)
+"""
+    source = """def fresh(x):
+    return isinstance(x, dict)
+
+
+def kept(x):
+    a = isinstance(x, dict)
+    a = isinstance(x, dict)
+    probe = isinstance(x, dict)
+    if x:
+        pass
+    else:
+        b = isinstance(x, list)
+    if not x:
+        c = isinstance(x, set)
+    try:
+        d = isinstance(x, int)
+    except ValueError as exc:
+        pass
+    return a and isinstance(x, dict)
+"""
+    counterparts, totals = occurrence_map(source, before)
+    rows, _ = predicate_supplement(source, before, [])
+    old = {r['site_id']: r for r in predicate_supplement(before, '', [])[0]}
+    mapped = sorted((r['line'], r['expression'], r['node_type'], old[counterparts[r['site_id']]]['line'])
+                    for r in rows if r['site_id'] in counterparts)
+    assert mapped == [(6, 'isinstance(x, dict)', 'Call', 2), (9, 'x', 'If test', 3),
+                      (16, 'isinstance(x, int)', 'Call', 8)], mapped
+    assert totals['aligned_functions'] == 1 and totals['new_functions'] == 1, totals
+    assert totals['ineligible_nodes'] == {'changed enclosing context': 1, 'changed enclosing header': 1,
+                                          'changed handler list': 1, 'function new since CA-SEAL': 1,
+                                          'inserted or changed line': 8}, totals
+    assert len(rows) == 15 and len(set(counterparts.values())) == 3, (len(rows), counterparts)
 
 
 def check_node_types():
@@ -1191,6 +1538,10 @@ def run(repo, output, source_map, apply_cut=None):
                 else: os.environ[key] = value
     record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}))
     record('positive_exhaustive_node_type_inventory', check_node_types)
+    record('positive_occurrence_map_controls', check_occurrence_map)
+    for label in PRESERVATION_PROBES:
+        record('negative_preserved_' + label, lambda label=label:
+               check_preservation_probe(repo, {r['name'] for r in results}, label))
     for label, statement, function in [
         ('isinstance_assignment', "state['complete'] = isinstance(issues, list)", 'recount_validation'),
         ('boolean_bitand_assignment', "state['complete'] = state['complete'] & state['diagnostic_only']", 'recount_validation'),
