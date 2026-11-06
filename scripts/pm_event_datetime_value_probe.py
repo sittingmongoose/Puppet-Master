@@ -13,12 +13,22 @@ $dynamicRef: an outer document can rebind its anchor, so a row-level proof
 through it does not hold for every evaluation of the same field.
 
 Conjunction is not enough. The cited definition must also decide the string:
-on its own it must refuse every battery timestamp and every fixed non-timestamp
-control, so a description-only, member-only or otherwise unconstrained
-definition never authorizes a value.
+on its own it must refuse every battery timestamp, every fixed non-timestamp
+control and every year-sweep timestamp, so a description-only, member-only or
+otherwise unconstrained definition never authorizes a value. The real validator
+over the whole map must also refuse every battery timestamp.
+
+Non-timestamp credit, automatic or role, needs a static closure: every node the
+value can reach is 2020-12, the dialect of every committed Plans schema, and no
+node carries a dynamic-scope keyword. jsonschema evaluates a node in the
+dialect it was reached under, so one node reached under two dialects can decide
+under one and accept everything under the other; an outer document can rebind
+a dynamic anchor. In a static closure a node behaves the same in every context
+that reaches it, so testing it once is a test of every context.
 """
 from __future__ import annotations
 
+import calendar
 import json
 import re
 from urllib.parse import unquote, urlsplit
@@ -41,12 +51,12 @@ ASSERTIONS = frozenset(("type", "const", "enum", "format", "pattern", "minLength
 # depends on the dynamic scope of each evaluation, not on the row's source.
 REFERENCES = ("$ref",)
 UNIONS = ("anyOf", "oneOf")
-# These apply only to an object's or array's members or sibling structure. They
-# never decide whether a string value is accepted. They still earn no credit:
-# automatic credit is withheld, and a citation never routes through them.
-MEMBER_ONLY = frozenset(("properties", "patternProperties", "additionalProperties", "propertyNames",
-                         "unevaluatedProperties", "items", "prefixItems", "additionalItems", "contains",
-                         "unevaluatedItems", "dependentSchemas", "dependentRequired", "dependencies"))
+# A closure containing any of these, anywhere and in any role, earns no
+# non-timestamp credit: their meaning depends on the dynamic scope.
+DYNAMIC = frozenset(("$dynamicRef", "$dynamicAnchor", "$recursiveRef", "$recursiveAnchor"))
+# The one dialect that earns non-timestamp credit. Every committed Plans schema
+# declares it. A closure that declares any other dialect routes to review.
+CREDIT_DIALECT = "https://json-schema.org/draft/2020-12/schema"
 # Fixed non-timestamp strings. They never classify a value. They serve two
 # refusal-only checks: FIX11's timestamp-only guard (a proven node that accepts
 # a timestamp and refuses all 16 refuses the role), and the deciding rule (a
@@ -55,6 +65,55 @@ MEMBER_ONLY = frozenset(("properties", "patternProperties", "additionalPropertie
 NON_TIMESTAMP_CONTROLS = ("", "a", "1", "x.y.z", "resource-id", "abc123", "2026", "2026-01-01", "12:00:00",
                           "2026-01-01T00:00:00", "2026-01-01 00:00:00Z", "deadbeef", "Plans/x.schema.json",
                           "https://example.invalid/a", "a" * 30, "0" * 30)
+# The year sweep's zone spellings: exactly the battery's eight.
+SWEEP_ZONES = ("Z", "z", "+00:00", "-00:00", "+05:30", "-07:45", "+23:59", "-23:59")
+
+
+def _year_sweep_values():
+    """Fixed timestamp controls: every year 1970-2100 in the battery's forms.
+
+    The committed battery keeps its pin and stays the only trigger; the sweep
+    is refusal-only. A cited definition decides the string only if it refuses
+    all of these, and automatic credit needs the map to refuse all of them, so
+    a pattern keyed to a year the battery lacks cannot earn credit.
+
+    Per year: the battery's 16 separator and zone spellings (T or t, eight
+    zones), each with a fraction length (0-9 digits) that moves with the year,
+    so every year carries every separator, zone and fraction length and every
+    ten consecutive years carry all 160 battery forms; the first and last
+    second of the year in every zone and the last nanosecond in Z; the leap
+    day (28 February in a common year); and every real leap second in the
+    frozen table. Dates and times move with the form and the year.
+    """
+    from pm_event_datetime import _LEAP_DAYS
+    values = []
+    for year in range(1970, 2101):
+        for index, (separator, zone) in enumerate((s, z) for s in ("T", "t") for z in SWEEP_ZONES):
+            digits = (index + year) % 10
+            fraction = "." + "123456789"[:digits] if digits else ""
+            values.append("%04d-%02d-%02d%s%02d:%02d:%02d%s%s" % (
+                year, 1 + index % 12, 1 + (index * 7 + year) % 28, separator, (index * 5 + year) % 24,
+                (index * 7 + year) % 60, (index * 13 + year) % 60, fraction, zone))
+        for zone in SWEEP_ZONES:
+            values.append("%04d-01-01T00:00:00%s" % (year, zone))
+            values.append("%04d-12-31T23:59:59%s" % (year, zone))
+        values.append("%04d-12-31T23:59:59.999999999Z" % year)
+        leap_day = "%04d-02-%s" % (year, "29" if calendar.isleap(year) else "28")
+        values.extend((leap_day + "T00:00:00Z", leap_day + "T23:59:59Z", leap_day + "t12:00:00.5+05:30"))
+        values.extend(day + "T23:59:60Z" for day in _LEAP_DAYS if day.startswith("%04d-" % year))
+    return tuple(dict.fromkeys(values))
+
+
+def year_sweep(cache):
+    from pm_event_datetime import date_time
+    key = ("year_sweep",)
+    if key not in cache:
+        values = _year_sweep_values()
+        years = {int(v[:4]) for v in values}
+        if years != set(range(1970, 2101)) or any(date_time(v) != v for v in values):
+            raise ValueError("invalid year sweep")
+        cache[key] = values
+    return cache[key]
 
 
 def timestamp_battery(root, cache):
@@ -94,6 +153,19 @@ def wildcard_probe(row, document, root, cache):
     base = _dialect_validator(resource)
     spec = specification_with(base.META_SCHEMA["$id"])
     bank, locations, sources, references = {}, {}, {}, {}
+    # Every $schema declared at or above each node within its resource.
+    declared = {}
+
+    def declare(value, above):
+        if isinstance(value, dict):
+            if "$schema" in value:
+                above = above | {str(value["$schema"]).rstrip("#")}
+            declared[id(value)] = above
+            children = value.values()
+        else:
+            children = value if isinstance(value, list) else ()
+        for child in children:
+            declare(child, above)
 
     def register(path, pointer, value, aliases=()):
         res = Resource.from_contents(value, default_specification=spec)
@@ -104,6 +176,7 @@ def wildcard_probe(row, document, root, cache):
             bank[alias] = res
         for relative, node in inv.walk(value):
             locations[id(node)] = (path, pointer + relative)
+        declare(value, frozenset())
         return uri
 
     uri = register(row["path"], row["resource_pointer"], resource)
@@ -123,6 +196,9 @@ def wildcard_probe(row, document, root, cache):
     relative = row["pointer"][len(row["resource_pointer"]):]
     resolved = discovery.resolver(uri).lookup("#" + relative)
     visited = set()
+    # The closure: every dialect declared over a reachable node, and every
+    # dynamic-scope keyword a reachable node carries.
+    dialects, dynamic = {base.META_SCHEMA["$id"].rstrip("#")}, set()
 
     def visit(value, resolver):
         identity = (id(value), resolver._base_uri)
@@ -133,6 +209,8 @@ def wildcard_probe(row, document, root, cache):
             return
         path, pointer = locations[id(value)]
         sources[path, pointer] = {"path": path, "pointer": pointer, "value": value}
+        dialects.update(declared[id(value)])
+        dynamic.update(DYNAMIC.intersection(value))
         for keyword in ("$ref", "$dynamicRef", "$recursiveRef"):
             if keyword in value:
                 target = resolver.lookup(value[keyword])
@@ -144,6 +222,7 @@ def wildcard_probe(row, document, root, cache):
             visit(child.contents, resolver.in_subresource(child))
 
     visit(resolved.contents, resolved.resolver)
+    static = dialects == {CREDIT_DIALECT.rstrip("#")} and not dynamic
     selector = {"$schema": base.META_SCHEMA["$id"], "$ref": uri + "#" + relative}
     selected, registry = _closed_datetime_graph(selector, Registry().with_resources(bank.items()))
     validator = selected(selector, registry=registry, format_checker=format_checker())
@@ -257,30 +336,32 @@ def wildcard_probe(row, document, root, cache):
             results.append(result)
     citations = [sources[k] for k in sorted(sources)]
     all_refused = all(r["accepted"] == 0 for r in results)
-    timestamp_only = []
-    if not all_refused:
-        # Each proven conjunct or branch through the real validator, closed graph.
-        for (path, pointer), (node, resolver, _) in sorted(positive.nodes.items(), key=lambda i: i[0]):
-            check = selected(node, registry=registry, format_checker=format_checker(),
-                             _resolver=registry.resolver(resolver._base_uri))
-            if (any(check.is_valid(s["value"]) for s in battery["samples"]) and
-                    not any(check.is_valid(c) for c in NON_TIMESTAMP_CONTROLS)):
-                timestamp_only.append({"path": path, "pointer": pointer})
-    # The deciding rule. Every proven value node, on its own, through the real
-    # validator of its own dialect and the same closed graph: it decides the
-    # string only if it refuses every battery sample and every fixed control.
+    sweep = year_sweep(cache)
+    # Both node checks use one validator per proven node, in the dialect the
+    # positive walk reached it under, over the same closed graph. Only a static
+    # closure has deciding nodes: there a node's verdict does not depend on
+    # the dialect or dynamic scope of the path that reached it. The
+    # timestamp-only list is evidence; a role needs all_refused anyway.
     # An implicit endpoint (an absent additionalProperties) is the unconstrained
     # true schema, so it never decides, even where the same map node is also
     # reached as a value node for another field.
-    deciding = []
+    timestamp_only, deciding = [], []
     for (path, pointer), (node, resolver, dialect) in sorted(positive.nodes.items(), key=lambda i: i[0]):
-        if (path, pointer) in positive.implicit:
-            continue
         check = dialect(node, registry=registry, format_checker=format_checker(),
                         _resolver=registry.resolver(resolver._base_uri))
-        if not (any(check.is_valid(s["value"]) for s in battery["samples"]) or
-                any(check.is_valid(c) for c in NON_TIMESTAMP_CONTROLS)):
+        accepts_timestamp = any(check.is_valid(s["value"]) for s in battery["samples"])
+        accepts_control = any(check.is_valid(c) for c in NON_TIMESTAMP_CONTROLS)
+        if not all_refused and accepts_timestamp and not accepts_control:
+            timestamp_only.append({"path": path, "pointer": pointer})
+        if (static and (path, pointer) not in positive.implicit and
+                not accepts_timestamp and not accepts_control and
+                not any(check.is_valid(v) for v in sweep)):
             deciding.append({"path": path, "pointer": pointer})
+    fields = inv.declarations(inv.at(document, row["pointer"]))
+    automatic = (all_refused and static and not dependencies and
+                 not any(a["unproven"] for a in authority) and
+                 not any(validator.is_valid({**context, field: v})
+                         for field in fields for context in ({}, *contexts) for v in sweep))
     evidence = {"battery_sha256": fingerprint, "samples": len(battery["samples"]),
                 "value_schema_sha256": inv.digest({"schemas": citations, "references": [
                     {"base": k[0], "keyword": k[1], "ref": k[2], "value": references[k]}
@@ -289,9 +370,7 @@ def wildcard_probe(row, document, root, cache):
                 "singleton_probes_complete": not dependencies,
                 "sibling_dependencies": dependencies, "value_constraint_paths": paths,
                 "role_authority": authority, "timestamp_only_nodes": timestamp_only,
-                "deciding_nodes": deciding,
-                "automatic_credit": (all_refused and not dependencies and
-                                     not any(a["unproven"] for a in authority))}
+                "deciding_nodes": deciding, "automatic_credit": automatic}
     cache[key] = evidence, citations
     return cache[key]
 
@@ -402,6 +481,8 @@ class _PositivePaths:
         stack = stack | {identity}
         here = self.location(node)
         here = here["path"], here["pointer"]
+        # The first context that reaches a node is kept. Only a static closure,
+        # where every context gives the same verdict, can make it deciding.
         self.nodes.setdefault(here, (node, resolver, dialect))
         endpoints, unproven = {here}, set()
         for keyword, argument in _applied_keywords(node, dialect).items():
@@ -445,12 +526,13 @@ def reviewed_role(row, evidence, citations, root, cache):
     """Return (accepted record or None, tuple of gate errors) for this wildcard row.
 
     A timestamp review claims no exemption, so any actual value path may carry
-    its citation. A non-timestamp role needs a positive path for every field,
-    and the cited definition must decide the string on its own: it refuses every
-    battery timestamp and every fixed control. Through a positive path every
-    accepted value satisfies the citation, so a deciding citation implies the
-    value refuses every battery timestamp. The timestamp-accepting checks below
-    are kept as a second, independent refusal.
+    its citation. A non-timestamp role needs three things: a positive path to
+    the citation for every field; a cited definition that decides the string
+    on its own (it refuses every battery timestamp, fixed control and
+    year-sweep timestamp, in a static closure); and a map that refuses every
+    battery timestamp through the real validator (all_refused). The last is
+    implied by the first two only within a static closure, so it is required
+    outright rather than inferred.
     """
     from pm_event_datetime_inventory import node_key
     review = "wildcard_role_review_required"
@@ -477,10 +559,6 @@ def reviewed_role(row, evidence, citations, root, cache):
         return record, ()
     if not all(cited in a["endpoints"] for a in evidence["role_authority"]):
         return None, ((review,) if on_value_path else (changed, review))
-    if cited not in evidence["deciding_nodes"]:
-        return None, (review,)
-    if not evidence["all_refused"] and (evidence["timestamp_only_nodes"] or any(
-            u["scope"] == "map" or u["keyword"] not in MEMBER_ONLY
-            for a in evidence["role_authority"] for u in a["unproven"])):
+    if not evidence["all_refused"] or cited not in evidence["deciding_nodes"]:
         return None, (review,)
     return record, ()

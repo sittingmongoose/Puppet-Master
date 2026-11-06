@@ -1,9 +1,11 @@
 """Finite regression controls for the CV-1101 admission/discovery boundary."""
 from __future__ import annotations
 
+import calendar
 import copy
 import json
 from pathlib import Path
+import re
 import tempfile
 
 
@@ -565,6 +567,22 @@ def wildcard_authority_checks(root, inventory):
     basic = {"type": "object", "propertyNames": {"type": "string"}}
     safe_pointer, generic_pointer = "/$defs/SafeRef", "/$defs/Generic"
     draft7 = "http://json-schema.org/draft-07/schema#"
+    draft2019 = "https://json-schema.org/draft/2019-09/schema"
+    # FIX15 B1: Narrowed decides the string under 2020-12, where its pattern
+    # sibling applies. Under draft-07 the sibling is ignored, so the same node
+    # is Generic and accepts every battery timestamp. Legacy is an embedded
+    # draft-07 resource that refers back to it.
+    sid = inv._source_document(root, original, {})["$id"]
+    narrowed = {"$ref": "#/$defs/Generic", "pattern": "^ref:[a-z]+$", "description": "SafeRef narrowed from Generic."}
+    legacy = {"$id": "pm.scratch.legacy-d7.v1", "$schema": draft7, "allOf": [{"$ref": sid + "#/$defs/Narrowed"}]}
+    dialect_definitions = {"Narrowed": narrowed, "Legacy": legacy}
+    narrowed_ref, narrowed_pointer = {"$ref": "#/$defs/Narrowed"}, "/$defs/Narrowed"
+    # FIX15 B2: a citation that is, holds or sits beside a dynamic-scope keyword.
+    dynamic_definitions = {"DynamicHolder": {"$dynamicRef": "#generic_anchor", "description": "SafeRef."},
+                           "RecursiveAnchored": {"$recursiveAnchor": True, **safe}}
+    # FIX15 N3: a timestamp pattern keyed to a year the battery lacks.
+    year_2027 = {"type": "string", "format": "date-time", "pattern": "2027-"}
+    withhold = {"if": {"const": "never"}, "then": {}}
 
     with tempfile.TemporaryDirectory(prefix="pm-datetime-authority-") as temp:
         scratch = Path(temp)
@@ -576,11 +594,12 @@ def wildcard_authority_checks(root, inventory):
         source.parent.mkdir(parents=True, exist_ok=True)
         subset = {**inventory, "nodes": [copy.deepcopy(original)]}
 
-        def run(node, cited, classification=None):
+        def run(node, cited, classification=None, extra=None):
             document = inv._source_document(root, original, {})
             inv.at(document, node_pointer).clear()
             inv.at(document, node_pointer).update(copy.deepcopy(node))
             document["$defs"].update(copy.deepcopy(definitions))
+            document["$defs"].update(copy.deepcopy(extra or {}))
             source.write_text(json.dumps(document))
             (scratch / ROLES).write_text("[]")
             # Parse the written bytes: pointers need unshared objects, as in any source.
@@ -720,6 +739,70 @@ def wildcard_authority_checks(root, inventory):
             checks["datetime_role_authority_accepts_" + name] = (
                 not errors and row["classification"] == "wildcard_non_timestamp_role" and
                 {"path": original["path"], "pointer": cited} in row["value_evidence"]["deciding_nodes"])
+        # FIX15 B1 and B2: a citation earns credit only in a static closure,
+        # every node 2020-12 and none carrying a dynamic-scope keyword. Each
+        # citation is a positive endpoint for every field with a coherent
+        # fingerprint. all_refused is the expected verdict of the real
+        # validator over the whole map: where it is true, the closure rule is
+        # the only reason for the refusal.
+        closure = {
+            # The cycle-14 pre-check's B1 witnesses: the value accepts every
+            # battery timestamp through the draft-07 path.
+            "dialect_embedded_draft7_resource": ({**basic, "additionalProperties": {
+                "anyOf": [narrowed_ref, {"$ref": "#/$defs/Legacy"}]}}, narrowed_pointer, False),
+            "dialect_embedded_draft7_resource_with_id": ({**basic, "additionalProperties": {"anyOf": [
+                narrowed_ref, {"$id": "pm.scratch.embedded-d7.v1", "$schema": draft7,
+                               "allOf": [{"$ref": sid + "#/$defs/Narrowed"}]}]}}, narrowed_pointer, False),
+            "dialect_union_2020_first": ({**basic, "additionalProperties": {
+                "anyOf": [narrowed_ref, {"$schema": draft7, **narrowed_ref}]}}, narrowed_pointer, False),
+            "dialect_union_draft7_first": ({**basic, "additionalProperties": {
+                "anyOf": [{"$schema": draft7, **narrowed_ref}, narrowed_ref]}}, narrowed_pointer, False),
+            "dialect_oneOf_2020_first": ({**basic, "additionalProperties": {
+                "oneOf": [narrowed_ref, {"$schema": draft7, **narrowed_ref}]}}, narrowed_pointer, False),
+            # The value refuses every timestamp and the citation decides under
+            # both dialects: the mixed closure alone routes it to review.
+            "dialect_mixed_value_refuses": ({**basic, "additionalProperties": {
+                "anyOf": [ref, {"$schema": draft7, **ref}]}}, safe_pointer, True),
+            "dialect_2019_09_only": ({**basic, "additionalProperties": {"$schema": draft2019, **ref}},
+                                     safe_pointer, True),
+            # The cycle-14 pre-check's B2 witnesses, and a dynamic keyword
+            # beside a deciding conjunct or inside the citation.
+            "dynamicRef_cites_value_node": ({**basic, "additionalProperties": {"$dynamicRef": "#generic_anchor"}},
+                                            value_pointer, True),
+            "dynamicRef_cites_holder": ({**basic, "additionalProperties": {"$ref": "#/$defs/DynamicHolder"}},
+                                        "/$defs/DynamicHolder", True),
+            "dynamicRef_beside_deciding_conjunct": ({**basic, "additionalProperties": {
+                "allOf": [ref, {"$dynamicRef": "#generic_anchor"}]}}, safe_pointer, True),
+            "dynamicAnchor_in_citation": ({**basic, "additionalProperties": {"$ref": "#/$defs/Anchored"}},
+                                          "/$defs/Anchored", True),
+            "recursiveAnchor_in_citation": ({**basic, "additionalProperties": {"$ref": "#/$defs/RecursiveAnchored"}},
+                                            "/$defs/RecursiveAnchored", True),
+        }
+        for name, (node, cited, refuses) in closure.items():
+            row, errors = run(node, cited, extra={**dialect_definitions, **dynamic_definitions})
+            evidence, target = row["value_evidence"], {"path": original["path"], "pointer": cited}
+            checks["datetime_role_authority_refuses_closure_" + name] = (
+                refused_cleanly(row, errors) and evidence["all_refused"] is refuses and
+                all(target in a["endpoints"] for a in evidence["role_authority"]) and
+                target not in evidence["deciding_nodes"])
+        # The same shapes in one dialect, with the draft-07 resource present
+        # but unreachable, keep their role.
+        for name, node in (("closure_one_dialect", {**basic, "additionalProperties": {
+                               "anyOf": [narrowed_ref, {"allOf": [narrowed_ref]}]}}),
+                           ("closure_unreachable_draft7_resource", {**basic, "additionalProperties": narrowed_ref})):
+            row, errors = run(node, narrowed_pointer, extra={**dialect_definitions, **dynamic_definitions})
+            checks["datetime_role_authority_accepts_" + name] = (
+                not errors and row["classification"] == "wildcard_non_timestamp_role" and
+                {"path": original["path"], "pointer": narrowed_pointer} in row["value_evidence"]["deciding_nodes"])
+        # FIX15 N3: a citation that refuses the battery and the controls but
+        # accepts a year-sweep timestamp does not decide the string.
+        row, errors = run({**basic, "additionalProperties": {"allOf": [{"$ref": "#/$defs/Year2027"}, withhold]}},
+                          "/$defs/Year2027", extra={"Year2027": year_2027})
+        target = {"path": original["path"], "pointer": "/$defs/Year2027"}
+        checks["datetime_role_authority_refuses_undecided_year_sweep"] = (
+            refused_cleanly(row, errors) and row["value_evidence"]["all_refused"] and
+            all(target in a["endpoints"] for a in row["value_evidence"]["role_authority"]) and
+            target not in row["value_evidence"]["deciding_nodes"])
         # Member keywords inside a cited definition are not routes. They do not
         # stop a definition that refuses every string from deciding it.
         row, errors = run({**basic, "additionalProperties": {"oneOf": [
@@ -749,11 +832,39 @@ def wildcard_authority_checks(root, inventory):
                             ("unknown", {"type": "integer", "x-note": 1}),
                             ("recursiveRef", {"type": "integer", "$recursiveRef": "#/$defs/Generic"}),
                             # FIX14 N2: the pre-check's witness earned automatic credit.
-                            ("dynamicRef", {"$dynamicRef": "#lower_anchor"})):
+                            ("dynamicRef", {"$dynamicRef": "#lower_anchor"}),
+                            # FIX15: each refuses every battery timestamp with no
+                            # unproven keyword, so only the closure rule or the
+                            # year sweep withholds the credit.
+                            ("mixed_dialect", {"anyOf": [ref, {"$schema": draft7, **ref}]}),
+                            ("dynamicAnchor", {"$ref": "#/$defs/Anchored"}),
+                            ("year_sweep", year_2027)):
             row, errors = run({**basic, "additionalProperties": value}, None)
             checks["datetime_automatic_credit_withheld_" + name] = (
                 review in errors and row["classification"] == "wildcard_review_required" and
-                not row["value_evidence"]["automatic_credit"])
+                not row["value_evidence"]["automatic_credit"] and
+                (name not in ("mixed_dialect", "dynamicAnchor", "year_sweep") or
+                 (row["value_evidence"]["all_refused"] and
+                  not any(a["unproven"] for a in row["value_evidence"]["role_authority"]))))
+        # FIX15 N3: the sweep is fixed in code, the battery is unchanged.
+        from pm_event_datetime_value_probe import timestamp_battery, year_sweep
+        sweep = year_sweep({})
+        _, battery_digest = timestamp_battery(root, {})
+        per_year = {}
+        for value in sweep:
+            per_year.setdefault(int(value[:4]), set()).add(value)
+        form = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}([Tt])[0-9:]{8}(\.[0-9]+)?(.*)")
+        checks["datetime_year_sweep_complete"] = (
+            battery_digest == "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3" and
+            sorted(per_year) == list(range(1970, 2101)) and all(
+                {form.fullmatch(v).group(1) for v in values} == {"T", "t"} and
+                {len(form.fullmatch(v).group(2) or ".") - 1 for v in values} == set(range(10)) and
+                {form.fullmatch(v).group(3) for v in values} == {"Z", "z", "+00:00", "-00:00", "+05:30",
+                                                                "-07:45", "+23:59", "-23:59"} and
+                "%04d-12-31T23:59:59Z" % year in values and "%04d-01-01T00:00:00Z" % year in values and
+                ("%04d-02-29T00:00:00Z" % year in values) == calendar.isleap(year)
+                for year, values in per_year.items()) and
+            {"1972-06-30T23:59:60Z", "2016-12-31T23:59:60Z"} <= set(sweep))
         for name, value in (("clean_string", {"type": "string", "pattern": "^x$"}),
                             ("clean_enum", {"enum": ["a", "b"]}),
                             ("clean_ref_union", {"anyOf": [{"$ref": "#/$defs/SafeRef"}, {"type": "null"}]})):
