@@ -585,7 +585,8 @@ began from. Nothing in the script changes for that. It measures the branch by
 `git diff --name-only <base>..HEAD`, which from the batch start is every path any landing in the batch
 touched, and rule 2 holds while the baseline's commit is an ancestor of that base and no more than seven
 days older than it, which the baseline from before the batch is. So the second landing of a batch is
-judged exactly as one branch holding both changes would be judged at the batch start: a failure on
+judged as one branch holding both changes would be judged at the batch start (one exception: `pm-plan-index.py`
+compares with the live `origin/main`, so each landing's own delta is still what it judges there): a failure on
 a file the first landing touched counts as the branch's, and is judged by the same rules. Judging it
 against `origin/main` instead can stop it falsely: the first landing's staleness, not yet folded into
 a baseline, reads as new failures that name none of the second landing's files, and a rise it causes
@@ -602,7 +603,18 @@ batch closes with its follow-up, and that landing's check is rerun alone against
 commit that is not an ancestor of `batch-start`, so rule 2 would switch off and every pre-existing
 failure on a batch file would stop the next landing.
 
-Why: from 2026-11-03 to 2026-11-06 `main` took 18 follow-ups, about one per Plans landing. The two
+One combined branch is still not the same as each landing judged alone after its own follow-up, and in three
+narrow ways it is weaker (blind review, 2026-11-06). (A) Rule 2 masking: landing 1 fixes a failure in a bucket
+and landing 2 adds a different one to the same bucket on its own file; against the pre-batch baseline the count
+has not risen, so landing 2's failure reads as pre-existing, where alone it would block. (B) The readiness growth
+counter: its rise reads as staleness when a printed stale row names a batch file, which can be landing 1's while
+landing 2 caused the rise past the print cap. (C) Baseline age is measured from `batch-start`, up to two hours older
+than `origin/main`. The rule closes all three rather than accepting them: a landing whose report shows changed
+pre-existing rows in a bucket an earlier member also changed, or a readiness growth-counter rise judged as
+staleness, is treated like a stopped landing (the batch closes and that landing is rechecked alone), and no batch
+opens within two hours of the seven-day limit. `scripts/pm-land.py` enforces the same.
+
+Why: from 2026-11-03 to 2026-11-06 `main` took about 18 follow-ups, about one per Plans landing. The two
 timed from the stream logs held the lock about 26 and 27 minutes each (snapshot about 5 minutes, then
 the baseline recording and the follow-up's own landing). A batch of four Plans landings saves three of
 them, about 80 minutes of lock time, and the merges of `main` that each follow-up forced into the
