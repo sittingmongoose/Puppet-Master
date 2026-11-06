@@ -12,6 +12,7 @@ import ast
 import builtins
 import copy
 import dis
+import enum
 import inspect
 import importlib.machinery
 from dataclasses import asdict, dataclass, field, replace
@@ -25,10 +26,13 @@ import re
 import struct
 import symtable
 import sys
+import sysconfig
 import time
 import types
+import typing
 import weakref
 from typing import Any, Callable
+import __future__
 from urllib.parse import unquote, urldefrag, urljoin
 
 from jsonschema import FormatChecker, validators
@@ -38,6 +42,122 @@ from referencing.jsonschema import DRAFT202012
 
 class IsolationError(ValueError):
     """Invalid declaration, unresolved reference, or unsafe cut."""
+
+
+# C8-U1: instructions that only move references between the frame's stack, locals, constants and cells. None
+# calls anything, stores into an object or drops a reference (so no finalizer can run), so the input/context
+# graph after one is the graph before it, which the previous checkpoint already compared. Every other
+# instruction, including every store, delete, call, return and any instruction a later Python adds, is followed
+# by a purity checkpoint. Names a Python lacks are simply absent.
+PURITY_SAFE_OPCODES = frozenset({
+    'NOP', 'RESUME', 'CACHE', 'EXTENDED_ARG', 'NOT_TAKEN',
+    'LOAD_FAST', 'LOAD_FAST_BORROW', 'LOAD_FAST_CHECK', 'LOAD_FAST_LOAD_FAST', 'LOAD_FAST_BORROW_LOAD_FAST_BORROW',
+    'LOAD_FAST_AND_CLEAR', 'LOAD_CONST', 'LOAD_SMALL_INT', 'LOAD_COMMON_CONSTANT', 'LOAD_DEREF', 'LOAD_CLOSURE',
+    'COPY', 'SWAP', 'PUSH_NULL', 'MAKE_CELL', 'COPY_FREE_VARS',
+    'JUMP_FORWARD', 'JUMP_BACKWARD', 'JUMP_BACKWARD_NO_INTERRUPT', 'BUILD_TUPLE', 'BUILD_LIST'})
+
+
+# C8-U2: immutable external bindings the state snapshot certifies without walking them. Each is certified only
+# by identity with the canonical object, and static_scan holds every scanned module to the usage discipline
+# (bound once, never written through, a module never aliased or passed on), so certification can never be the
+# only thing standing between a case and changed shared state.
+#   Standard-library modules whose public functions keep no result-affecting module state (re's and struct's
+#   caches change speed, never a result). random, time, os, sys, io, datetime, decimal (a mutable context),
+#   copy (copyreg dispatch), collections (ABC registration) and every third-party module stay refused.
+STDLIB_IMMUTABLE_MODULES = frozenset({'json', 're', 'math', 'cmath', 'string', 'operator', 'itertools', 'functools',
+                                      'hashlib', 'base64', 'binascii', 'struct', 'unicodedata', 'keyword', 'textwrap'})
+#   typing special forms and aliases (immutable, slotted, never called by a check) and __future__ feature records.
+TYPING_FORMS = ('Any', 'Optional', 'Union', 'Callable', 'ClassVar', 'Final', 'Literal', 'Tuple', 'List', 'Dict', 'Set',
+                'FrozenSet', 'Iterable', 'Iterator', 'Sequence', 'Mapping', 'MutableMapping', 'MutableSequence', 'Type',
+                'NoReturn', 'Never', 'Self', 'Annotated', 'TypeAlias', 'Collection', 'Container', 'Hashable', 'Sized',
+                'AnyStr', 'Text', 'LiteralString', 'Required', 'NotRequired', 'ReadOnly', 'TypeGuard', 'TypeIs', 'TYPE_CHECKING')
+_TYPING_OBJECTS = {name: vars(typing)[name] for name in TYPING_FORMS if name in vars(typing) and type(vars(typing)[name]) is not bool}
+_FUTURE_OBJECTS = {name: getattr(__future__, name) for name in __future__.all_feature_names}
+#   Enum bases a literal Enum may use.
+_LITERAL_ENUM_BASES = ((enum.Enum,), (str, enum.Enum), (int, enum.Enum), (enum.IntEnum,), (enum.StrEnum,))
+_ENUM_INTERNAL_KEYS = frozenset({'__doc__', '__firstlineno__', '__module__', '__qualname__', '__new__', '__static_attributes__',
+                                 '_generate_next_value_', '_hashable_values_', '_member_map_', '_member_names_', '_member_type_',
+                                 '_new_member_', '_unhashable_values_', '_unhashable_values_map_', '_use_args_',
+                                 '_value2member_map_', '_value_repr_', '__dict__', '__format__', '__repr__', '__str__', '__weakref__'})
+_STDLIB_DIRS = tuple(Path(p).resolve() for p in {sysconfig.get_paths()['stdlib'], sysconfig.get_paths()['platstdlib']})
+_SITE_DIRS = tuple(Path(p).resolve() for p in {sysconfig.get_paths()['purelib'], sysconfig.get_paths()['platlib']})
+
+
+def _stdlib_immutable_module(obj):
+    """An allowlisted standard-library module object, the one sys.modules holds, loaded from the standard library."""
+    name = vars(obj).get('__name__') if type(obj) is types.ModuleType else None
+    if name not in STDLIB_IMMUTABLE_MODULES or sys.modules.get(name) is not obj:
+        return False
+    origin = getattr(vars(obj).get('__spec__'), 'origin', None)
+    if origin in ('built-in', 'frozen'):
+        return True
+    if not origin:
+        return False
+    location = Path(origin).resolve()
+    return any(location.is_relative_to(d) for d in _STDLIB_DIRS) and not any(location.is_relative_to(d) for d in _SITE_DIRS)
+
+
+def _immutable_literal(value):
+    return type(value) in (type(None), bool, int, float, complex, str, bytes) or type(value) is tuple and all(_immutable_literal(v) for v in value)
+
+
+def _literal_enum(cls, root):
+    """A repository Enum whose members are immutable literals, with enum's own machinery only: the metaclass is
+    EnumType itself, the bases are one of _LITERAL_ENUM_BASES, its namespace holds members and enum's internal
+    names only, every function there is enum's or a builtin (no __new__, _missing_, _generate_next_value_, __init__
+    or other method of the class's own), and each member carries only enum's own fields."""
+    if type(cls) is not enum.EnumType or cls.__bases__ not in _LITERAL_ENUM_BASES:
+        return False
+    module = sys.modules.get(cls.__module__)
+    source = vars(module).get('__file__') if type(module) is types.ModuleType else None
+    if not source or not Path(source).resolve().is_relative_to(root):
+        return False
+    members = dict(cls.__members__)
+    for key, value in vars(cls).items():
+        if key in members:
+            if value is not members[key] and not (type(value) is enum.property or key in _ENUM_INTERNAL_KEYS):
+                return False
+            continue
+        if key not in _ENUM_INTERNAL_KEYS:
+            return False
+        function = getattr(value, '__func__', value)
+        code = getattr(function, '__code__', None)
+        if code is not None and Path(code.co_filename).resolve().is_relative_to(root):
+            return False
+    for member in members.values():
+        if type(member) is not cls or set(vars(member)) != {'_value_', '_name_', '__objclass__', '_sort_order_'} or not _immutable_literal(member._value_):
+            return False
+    return True
+
+
+def _postponed_annotations(fn):
+    """C8-U2: a function compiled under `from __future__ import annotations` whose __annotate__ is the compiler's
+    own: no names, no free variables and only string, integer and None constants, so it can only build the dict of
+    annotation strings and evaluates nothing (PEP 563). Reading __annotations__ then runs no user code."""
+    annotate = getattr(fn, '__annotate__', None)
+    code = getattr(annotate, '__code__', None)
+    return (bool(fn.__code__.co_flags & __future__.annotations.compiler_flag) and type(annotate) is types.FunctionType and
+            code.co_name == '__annotate__' and code.co_filename == fn.__code__.co_filename and not code.co_names and
+            not code.co_freevars and annotate.__closure__ is None and all(type(c) in (str, int, type(None)) for c in code.co_consts))
+
+
+def _certified_external(obj, root):
+    """('kind', label) for an immutable external binding certified by identity, else None."""
+    if type(obj) is types.ModuleType and _stdlib_immutable_module(obj):
+        return ('stdlib-module', obj.__name__)
+    for name, form in _TYPING_OBJECTS.items():
+        if obj is form:
+            return ('typing-form', name)
+    for name, feature in _FUTURE_OBJECTS.items():
+        if obj is feature:
+            return ('future-feature', name)
+    for base in (enum.Enum, enum.IntEnum, enum.StrEnum):
+        if obj is base:
+            return ('enum-base', base.__name__)
+    if type(obj) is re.Pattern:
+        # C8-U4: a compiled pattern exposes no mutable state; its pattern and flags are all it is.
+        return ('re-pattern', obj.pattern if type(obj.pattern) is str else obj.pattern.hex(), type(obj.pattern).__name__, obj.flags)
+    return None
 
 
 def encoded(value: Any) -> str:
@@ -91,19 +211,31 @@ class _DataSnapshot:
         return self.signature == other.signature
 
 
-def _data_snapshot(*roots):
+def _data_snapshot(*roots, codes=None):
     """Purity witness for the supported, original data graph (never a serializer).
 
     Retain order, aliases, cycles, physical scalar bits AND object identities.
     No hooks, descriptors, equality overloads or user iterators are invoked.
     Context sets are observed in their original order; they are never copied.
+
+    codes (C8-U1): a run's cache of immutable scalar encodings, keyed by identity
+    and holding the scalar itself, so an id cannot be recycled while its entry
+    lives. An immutable scalar's encoding cannot change, so a cached code is the
+    code this walk would compute: the signature is identical with or without it.
     """
     seen, nodes, keepalive = {}, [], []
     def visit(value):
-        keepalive.append(value)  # no recycled IDs after a detached node dies
         kind = type(value)
         if kind in (type(None), bool, int, float, str, bytes):
-            return ('scalar', id(value), encoded(evidence_value(value)))
+            if codes is None:
+                keepalive.append(value)  # no recycled IDs after a detached node dies
+                return ('scalar', id(value), encoded(evidence_value(value)))
+            # the run's cache holds the scalar itself, so its identity cannot be recycled while either lives
+            entry = codes.get(id(value))
+            if entry is None or entry[0] is not value:
+                entry = codes[id(value)] = (value, encoded(evidence_value(value)))
+            return ('scalar', id(value), entry[1])
+        keepalive.append(value)  # no recycled IDs after a detached node dies
         if kind not in (dict, list, tuple, bytearray, set, frozenset):
             raise IsolationError('predicate purity cannot certify data type: ' + kind.__name__)
         if id(value) in seen:
@@ -1005,6 +1137,18 @@ class GuardRefusal(Exception):
         super().__init__(code)
 
 
+# C8-G1: the guard-call trace of each table lives here, in engine-owned storage, not on the table: checker code
+# cannot reach it without g._GUARD_TRACES, which static_scan refuses like every other g._* name.
+_GUARD_TRACES = weakref.WeakKeyDictionary()
+# GuardTable's private members. The distinctive ones are refused on any receiver and as string constants; the
+# generic ones (names lane classes also use for their own state) on any receiver but `self`.
+_TABLE_PRIVATE_DISTINCT = frozenset({'_original', '_entries', '_issued', '_in_predicate', '_purity_before', '_purity_codes',
+                                     '_matrix_frame', '_calls', '_refused_at', '_GUARD_TRACES'})
+_TABLE_PRIVATE = _TABLE_PRIVATE_DISTINCT | frozenset({'_errors', '_root', '_context', '_bound', '_schema', '_bind', '_test',
+                                                      '_check_purity', '_refuse', '_restore', '_trace'})
+_TABLE_PUBLIC = frozenset({'require', 'validate', 'guards'})
+
+
 def _always_pass(value, context):
     return None
 
@@ -1018,14 +1162,14 @@ class GuardTable:
         self._entries = dict(self._original)
         self._issued = []
         self._errors = []
-        # The guard-call trace of one run: ('require', row) or ('validate', root),
-        # in order. _refused_at is the trace length at the issued refusal.
-        self._calls = []
-        self._refused_at = None
+        # The guard-call trace of one run, in engine-owned storage (C8-G1): calls holds ('require', row) or
+        # ('validate', root) in order; refused_at is the trace length at the issued refusal.
+        _GUARD_TRACES[self] = {'calls': [], 'refused_at': None}
         self._root = self._context = None
         self._bound = False
         self._in_predicate = False
         self._purity_before = None
+        self._purity_codes = None
         self._matrix_frame = None
         self._schema = None
 
@@ -1037,6 +1181,7 @@ class GuardTable:
         if self._bound or not set(cuts) <= self._original.keys():
             raise IsolationError('table reused or unknown guard cut')
         self._root, self._context, self._bound = value, context, True
+        self._purity_codes = {}  # C8-U1: immutable scalar encodings, once per run
         # The sole Python cut operation. All function/code/state objects remain original.
         self._entries = {name: replace(row, predicate=_always_pass) if name in cuts else row
                          for name, row in self._original.items()}
@@ -1056,7 +1201,7 @@ class GuardTable:
             raise IsolationError('guard predicates cannot invoke guards')
         self._in_predicate = True
         try:
-            self._purity_before = _data_snapshot(value, context)
+            self._purity_before = _data_snapshot(value, context, codes=self._purity_codes)
             result = row.predicate(value, context)
             if result is not None and (type(result) is not str or result != row.refusal_code):
                 raise IsolationError('predicate must return None or its exact refusal code: ' + row.name)
@@ -1075,7 +1220,7 @@ class GuardTable:
                 self._in_predicate = False
 
     def _check_purity(self, value, context):
-        if _data_snapshot(value, context) != self._purity_before:
+        if _data_snapshot(value, context, codes=self._purity_codes) != self._purity_before:
             error = 'guard predicate mutated input/context'
             self._errors.append(error)
             raise IsolationError(error)
@@ -1087,7 +1232,7 @@ class GuardTable:
         if name not in self._entries:
             self._errors.append('guard missing from table: ' + str(name))
             raise IsolationError(self._errors[-1])
-        self._calls.append(('require', name))
+        _GUARD_TRACES[self]['calls'].append(('require', name))
         row = self._entries[name]
         code = self._test(row, value, context)
         if code is not None:
@@ -1095,8 +1240,9 @@ class GuardTable:
 
     def _refuse(self, name, code):
         refusal = GuardRefusal(name, code)
-        if self._refused_at is None:
-            self._refused_at = len(self._calls)
+        trace = _GUARD_TRACES[self]
+        if trace['refused_at'] is None:
+            trace['refused_at'] = len(trace['calls'])
         self._issued.append(refusal)
         raise refusal
 
@@ -1105,17 +1251,17 @@ class GuardTable:
         if not self._schema or not self._bound or value is not self._root or context is not self._context:
             self._errors.append('schema validation needs the bound complete input')
             raise IsolationError(self._errors[-1])
-        self._calls.append(('validate', entry))
+        _GUARD_TRACES[self]['calls'].append(('validate', entry))
         self._schema.validate(self, entry, value, context)
 
     def _restore(self):
         self._entries = dict(self._original)
+        self._purity_codes = None
         self._bound = False
         self._root = self._context = None
         self._issued.clear()
         self._errors.clear()
-        self._calls.clear()
-        self._refused_at = None
+        _GUARD_TRACES[self] = {'calls': [], 'refused_at': None}
 
 
 @dataclass
@@ -1127,12 +1273,18 @@ class Case:
 
 @dataclass(frozen=True)
 class NonGuard:
-    """One exact static site, with a reviewer-checkable plumbing reason."""
+    """Exact static sites, with a reviewer-checkable plumbing reason.
+
+    count (C8-U3) is the exact number of identical sites (same file, function, kind and source text) the
+    declaration covers, default 1. Any other number of matching sites fails, so a site added or removed later
+    is never covered silently. The reason must hold for every one of them; nothing is certified automatically.
+    """
     path: str
     function: str
     kind: str
     source: str
     reason: str
+    count: int = 1
 
 
 @dataclass
@@ -1147,6 +1299,8 @@ class Suite:
     non_guards: list[NonGuard] = field(default_factory=list)
     reset: Callable[[], None] | None = None
     reset_seams: list[NonGuard] = field(default_factory=list)
+    # C8-G3: extra uncut baseline runs per case, each compared with the baseline outcome and trace.
+    baseline_repeats: int = 0
 
 
 # Every form the outside-predicate scan accepts without a declaration, with its
@@ -1163,6 +1317,9 @@ TOTAL_FORMS = {
     'statement:executed-module-import': 'Module scope of a loaded module: the import already ran, its live binding is verified and no case runs it again.',
     'definition:function': 'def and lambda only build a function object; defaults, annotations and decorators are classified on their own in the enclosing scope. A def in a class body counts only in a plain class, where binding its name stores into a plain dict.',
     'binding:name': 'Binding a plain name in a function or module scope stores into fast locals, a cell or the module dict and runs no hook; class bodies, unpacking, attribute and subscript targets and any __builtins__ binding are excluded.',
+    'annotation:postponed': 'An expression inside an annotation in a file whose leading statements include from __future__ import annotations: PEP 563 makes the compiler store the annotation as its source string and never evaluate it, so it cannot raise; only an explicit evaluation (typing.get_type_hints, a call obligation of its own, or eval, which is refused) would run it.',
+    'definition:literal-enum': 'A top-level class statement whose bases are names bound to Enum (or str or int with Enum, IntEnum or StrEnum), with no keywords, decorators or type parameters, and whose body is an optional docstring and distinct public NAME = immutable literal bindings only: it ran once when the module loaded (so enum accepted every name), no case runs a top-level statement again, and the class it bound is certified as a literal Enum by the shared snapshot before and after every run.',
+    'binding:literal-enum-member': 'A member binding in the body of such a literal Enum statement: covered by the same argument, since that body ran once at import and never runs again.',
     'binding:plain-class-name': 'Binding a plain name in the body of a class with no bases, keywords, decorators or type parameters, while __build_class__ is the unshadowed builtin: the metaclass is type, so the namespace is the plain dict type.__prepare__ returns and a str-key store runs no hook. Any other class body runs in its metaclass mapping, so every name operation there is an obligation.',
     'control:literal-test': 'if or a conditional expression on a builtin literal: literal truthiness has no failure path.',
     'expression:literal': 'Loading a compile-time constant cannot raise.',
@@ -1257,7 +1414,7 @@ def static_scan(suite, table):
     for declaration in [*suite.non_guards, *suite.reset_seams]:
         path = (root / declaration.path).resolve()
         key = (str(path), declaration.function, declaration.kind, declaration.source)
-        if key in allowed or not declaration.reason.strip() or not path.is_relative_to(root):
+        if key in allowed or not declaration.reason.strip() or not path.is_relative_to(root) or type(declaration.count) is not int or declaration.count < 1:
             raise IsolationError('invalid or duplicate non-guard declaration')
         allowed[key] = [declaration, 0]
         if declaration in suite.reset_seams:
@@ -1439,6 +1596,91 @@ def static_scan(suite, table):
             if isinstance(part, ast.Call):
                 return isinstance(part.func, ast.Name) and part.func.id in calls - shadowed and not origins(part.func) and all(data_expression(a, names, calls) for a in part.args)
             return False
+        def immutable_data_import(node):
+            """C8-U2: `from m import A, B` at module scope, where m is one repository module (not a package) and each
+            name is, in m's own source, bound exactly once by a top-level `NAME = literal` of immutable literals (no
+            global, del, handler or other binding), and every loaded instance of this file holds exactly m's object
+            for it. Then this file reaches no function, class or module object of m: only immutable values, made
+            once when m loaded. m's code cannot run in a case through this import, so m is not added to the scanned
+            closure (another import of m, or naming it in checker_modules, still scans it). A repository frame of
+            an unscanned file that runs anyway fails the run as unscanned_repository_code."""
+            if node not in tree.body or node.level or not node.module or any(alias.name == '*' for alias in node.names):
+                return False
+            files = resolve_module(node.module, path, 0, True)
+            if len(files) != 1:
+                return False
+            source_file = next(iter(files))
+            if source_file.name == '__init__.py' or source_file == path:
+                return False
+            module = sys.modules.get(node.module)
+            loaded = source_modules.get(path, [])
+            if type(module) is not types.ModuleType or Path(vars(module).get('__file__') or '').resolve() != source_file or not loaded:
+                return False
+            try:
+                other = ast.parse(source_file.read_text(), filename=str(source_file))
+            except (SyntaxError, ValueError, OSError):
+                return False
+            for alias in node.names:
+                bound = [part for part in ast.walk(other) if alias.name in _names_bound_by(part)]
+                if len(bound) != 1 or not isinstance(bound[0], ast.Name):
+                    return False
+                statement = next((st for st in other.body if isinstance(st, (ast.Assign, ast.AnnAssign)) and
+                                  any(t is bound[0] for t in (st.targets if isinstance(st, ast.Assign) else [st.target]))), None)
+                if statement is None or statement.value is None or (isinstance(statement, ast.Assign) and statement.targets != [bound[0]]):
+                    return False
+                if any(isinstance(part, (ast.Global, ast.Nonlocal)) and alias.name in part.names for part in ast.walk(other)):
+                    return False
+                try:
+                    literal = ast.literal_eval(statement.value)
+                except (ValueError, TypeError, SyntaxError, MemoryError, RecursionError):
+                    return False
+                value = vars(module).get(alias.name)
+                if not _immutable_literal(literal) or not _immutable_literal(value) or encoded(evidence_value(literal)) != encoded(evidence_value(value)):
+                    return False
+                if not all(vars(instance).get(alias.asname or alias.name) is value for instance in loaded):
+                    return False
+            return True
+        def literal_module_constant(node):
+            """C8-U4: a single literal binding at module scope is not an error write, whatever its name says. It is a
+            top-level unconditional `NAME = literal` (or annotated with a value) whose value is an immutable literal
+            (str, bytes, numbers, bool, None, or tuples of them), and the file binds, deletes, declares global or
+            handles that name nowhere else. It ran once at import, before any case, and nothing can append to it."""
+            if not (node in tree.body and isinstance(node, (ast.Assign, ast.AnnAssign)) and node.value is not None):
+                return False
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            if len(targets) != 1 or not isinstance(targets[0], ast.Name):
+                return False
+            name = targets[0].id
+            try:
+                value = ast.literal_eval(node.value)
+            except (ValueError, TypeError, SyntaxError, MemoryError, RecursionError):
+                return False
+            def immutable(v):
+                return type(v) in _BUILTIN_LITERALS or type(v) is tuple and all(immutable(x) for x in v)
+            if not immutable(value) or name in deleted_names or name in handler_names:
+                return False
+            if any(isinstance(part, (ast.Global, ast.Nonlocal)) and name in part.names for part in ast.walk(tree)):
+                return False
+            return [part for part in ast.walk(tree) if name in _names_bound_by(part)] == [targets[0]]
+        def stdlib_compile(node):
+            """C8-U4: `re.compile(...)` is not the builtin compile. Only this exact form is resolved by its binding
+            origin: the receiver is a plain name whose every binding in the file is `import re` (no alias, rebinding,
+            handler, loop or other binding), every loaded instance binds it to sys.modules['re'], and that module's
+            compile is its own Python function, not builtins.compile. Any other compile stays dynamic."""
+            if not (isinstance(node.func, ast.Attribute) and node.func.attr == 'compile' and isinstance(node.func.value, ast.Name)):
+                return False
+            receiver = node.func.value.id
+            if origins(node.func.value) != {'re'} or receiver in local_bindings or receiver in deleted_names or receiver in handler_names:
+                return False
+            binders_ = [part for part in ast.walk(tree) if receiver in _names_bound_by(part)]
+            if not binders_ or any(not (isinstance(part, ast.Import) and part in tree.body and
+                                        all((alias.asname or alias.name) != receiver or alias.name == 're' for alias in part.names)) for part in binders_):
+                return False
+            module = sys.modules.get('re')
+            function = vars(module).get('compile') if isinstance(module, types.ModuleType) else None
+            loaded = source_modules.get(path, [])
+            return (bool(loaded) and all(vars(m).get(receiver) is module for m in loaded) and type(function) is types.FunctionType and
+                    function is not builtins.compile and function.__module__ == 're')
         def builtin_is(name):
             modules = source_modules.get(path, [])
             if not modules or name not in vars(builtins):
@@ -1596,11 +1838,14 @@ def static_scan(suite, table):
                     if any(a.name == '*' for a in node.names):
                         errors.append({'kind': 'star_import', 'path': _relative(path, root), 'line': node.lineno})
                     names += [(((node.module + '.') if node.module else '') + a.name, node.level, True) for a in node.names if a.name != '*']
+                data_only = isinstance(node, ast.ImportFrom) and immutable_data_import(node)
                 for name, level, optional in names:
                     resolved = resolve_module(name, path, level, optional)
-                    pending.extend(resolved)
+                    if not data_only:
+                        pending.extend(resolved)
                     imports.append({'from': _relative(path, root), 'module': name, 'repository_files': sorted(_relative(p, root) for p in resolved),
-                                    'external': not bool(resolved), 'optional_attribute': optional})
+                                    'external': not bool(resolved), 'optional_attribute': optional,
+                                    **({'immutable_data_import': True} if data_only else {})})
                 if not owners[node]:
                     missing = object()
                     for module in source_modules.get(path, []):
@@ -1618,7 +1863,22 @@ def static_scan(suite, table):
                                 errors.append({'kind': 'uncertified_import_binding', 'path': _relative(path, root), 'line': node.lineno,
                                                'module': alias.name, 'reason': 'live import alias differs from the resolved binding'})
             kind = None
-            sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path'}
+            # C8-G1: the table's private state and the engine's private names are out of reach of checker code. Any
+            # attribute of `table` but require, validate and guards, any GuardTable private member on any receiver,
+            # any g._* name, and a string naming a private member (object.__getattribute__(t, '_calls')) are
+            # unwaivable errors, like dynamic code.
+            if isinstance(node, ast.Attribute) and (
+                    isinstance(node.value, ast.Name) and node.value.id == 'table' and node.attr not in _TABLE_PUBLIC or
+                    node.attr in _TABLE_PRIVATE_DISTINCT or
+                    node.attr in _TABLE_PRIVATE and not (isinstance(node.value, ast.Name) and node.value.id == 'self') or
+                    isinstance(node.value, ast.Name) and node.value.id == 'g' and node.attr.startswith('_')):
+                errors.append({'kind': 'table_private_state', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
+            if isinstance(node, ast.Constant) and type(node.value) is str and node.value in _TABLE_PRIVATE_DISTINCT:
+                errors.append({'kind': 'table_private_state', 'path': _relative(path, root), 'line': node.lineno, 'source': repr(node.value)})
+            # C8-G2: harness detection names join the dynamic set: gettrace and getprofile tell the tool's own run
+            # (a trace hook is always set) from production (none is), so a gate on them is non-causal by construction.
+            sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path',
+                         'gettrace', 'getprofile'}
             # Any read of a sensitive name, or of __builtins__, can carry the function to a call the scan cannot see.
             if (isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and (node.id in sensitive or node.id == '__builtins__') and
                     not (isinstance(parents.get(node), ast.Call) and parents[node].func is node)):
@@ -1626,8 +1886,8 @@ def static_scan(suite, table):
             if isinstance(node, ast.Call):
                 name = ast.unparse(node.func)
                 bindings = origins(node.func)
-                if name.split('.')[-1] in sensitive or any(
-                        origin.split('.')[0] in ('importlib', 'runpy') or any(token in sensitive for token in origin.split('.')) for origin in bindings):
+                if not stdlib_compile(node) and (name.split('.')[-1] in sensitive or any(
+                        origin.split('.')[0] in ('importlib', 'runpy') or any(token in sensitive for token in origin.split('.')) for origin in bindings)):
                     errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
                 if node in exempt:
                     data_names, certified_calls = predicate_data[node]
@@ -1662,7 +1922,7 @@ def static_scan(suite, table):
                 targets = node.targets if isinstance(node, (ast.Assign, ast.Delete)) else [node.target]
                 if isinstance(node, (ast.AugAssign, ast.Delete)) or any(isinstance(x, (ast.Attribute, ast.Subscript)) for target in targets for x in ast.walk(target)):
                     kind = 'mutation_or_error_write'
-                elif any(isinstance(x, ast.Name) and re.search(r'error|refus|reject|fail', x.id, re.I) for target in targets for x in ast.walk(target)):
+                elif any(isinstance(x, ast.Name) and re.search(r'error|refus|reject|fail', x.id, re.I) for target in targets for x in ast.walk(target)) and not literal_module_constant(node):
                     kind = 'mutation_or_error_write'
             if kind:
                 text = ast.unparse(node)
@@ -1679,6 +1939,51 @@ def static_scan(suite, table):
                               'exception_operation': 'RAISE_VARARGS' if kind in ('raise', 'assert') else 'CALL' if kind == 'refusal_helper' else '',
                               'kind': kind, 'source': text, 'non_guard': bool(declaration),
                               'reason': declaration[0].reason if declaration else ''})
+        # C8-U2: names bound to certified immutable external bindings keep the discipline their certification needs.
+        certified = {}
+        loaded_here = source_modules.get(path, [])
+        if loaded_here:
+            for name in {n for part in tree.body for n in _names_bound_by(part)}:
+                values = [vars(m).get(name, certified) for m in loaded_here]
+                value = values[0]
+                if value is certified or any(v is not value for v in values):
+                    continue
+                external = _certified_external(value, root)
+                if external is not None:
+                    certified[name] = external[0]
+                elif type(value) is enum.EnumType and _literal_enum(value, root):
+                    certified[name] = 'literal-enum'
+        for name, label in certified.items():
+            bound = [part for part in ast.walk(tree) if name in _names_bound_by(part)]
+            allowed_binder = (ast.Import, ast.ImportFrom) if label in ('stdlib-module', 'typing-form', 'future-feature') else (ast.ClassDef, ast.ImportFrom)
+            if len(bound) != 1 or not isinstance(bound[0], allowed_binder) or bound[0] not in tree.body:
+                errors.append({'kind': 'external_binding_rebound', 'path': _relative(path, root), 'name': name, 'certified_as': label,
+                               'reason': 'a certified immutable binding must be bound exactly once, at the top level, by its import (or its class statement)'})
+        def certified_root(target):
+            while isinstance(target, (ast.Attribute, ast.Subscript, ast.Starred)):
+                target = target.value
+            return target.id if isinstance(target, ast.Name) and target.id in certified else None
+        for node in ast.walk(tree):
+            written = None
+            if isinstance(node, (ast.Attribute, ast.Subscript)) and isinstance(node.ctx, (ast.Store, ast.Del)):
+                written = certified_root(node)
+            elif isinstance(node, ast.Call) and isinstance(node.func, (ast.Name, ast.Attribute)) and node.args and (
+                    (isinstance(node.func, ast.Name) and node.func.id in ('setattr', 'delattr')) or
+                    (isinstance(node.func, ast.Attribute) and node.func.attr in ('__setattr__', '__delattr__', '__setitem__', '__delitem__', 'update', 'pop', 'clear', 'setdefault'))):
+                written = certified_root(node.args[0]) or (certified_root(node.func.value) if isinstance(node.func, ast.Attribute) else None)
+            if written:
+                errors.append({'kind': 'external_binding_write', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node),
+                               'certified_as': certified[written], 'reason': 'a certified immutable binding is never written through'})
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and certified.get(node.id) in ('stdlib-module', 'literal-enum'):
+                parent = parents.get(node)
+                read = isinstance(parent, ast.Attribute) and parent.value is node and isinstance(parent.ctx, ast.Load) and not parent.attr.startswith('__')
+                if certified[node.id] == 'literal-enum':
+                    read = read or isinstance(parent, ast.Call) and parent.func is node or (
+                        isinstance(parent, ast.Call) and isinstance(parent.func, ast.Name) and parent.func.id in ('isinstance', 'issubclass') and
+                        len(parent.args) == 2 and parent.args[1] is node)
+                if not read:
+                    errors.append({'kind': 'external_binding_escape', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(parent) if parent is not None else node.id,
+                                   'certified_as': certified[node.id], 'reason': 'a certified module is only read as module.attribute (a literal Enum also as a call or isinstance target); aliased or passed on, it could be written through'})
         # A function's implicit None return is also a possible rejecting return.
         for node in ast.walk(tree):
             if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -1945,9 +2250,47 @@ def static_scan(suite, table):
             type.__prepare__ returns; any other class body runs in whatever mapping its metaclass prepares."""
             return (isinstance(scope, ast.ClassDef) and not scope.bases and not scope.keywords and not scope.decorator_list and
                     not getattr(scope, 'type_params', ()) and '__build_class__' not in shadowed and builtin_is('__build_class__'))
+        # PEP 563 is in force only when the future import is among the file's leading statements.
+        leading = tree.body[1:] if tree.body and isinstance(tree.body[0], ast.Expr) and isinstance(tree.body[0].value, ast.Constant) and type(tree.body[0].value.value) is str else tree.body
+        postponed = False
+        for statement in leading:
+            if not (isinstance(statement, ast.ImportFrom) and statement.module == '__future__'):
+                break
+            postponed = postponed or any(alias.name == 'annotations' for alias in statement.names)
+        def literal_enum_statement(scope):
+            """C8-U2: a top-level class statement that made a literal Enum: bases are names whose live bindings are
+            one of _LITERAL_ENUM_BASES, no keywords, decorators or type parameters, a body of an optional docstring
+            and distinct public `NAME = immutable literal` bindings only, and the class it bound passes _literal_enum."""
+            if not (isinstance(scope, ast.ClassDef) and scope in tree.body and not scope.keywords and not scope.decorator_list and
+                    not getattr(scope, 'type_params', ()) and scope.bases and all(isinstance(b, ast.Name) for b in scope.bases)):
+                return False
+            loaded = source_modules.get(path, [])
+            if not loaded:
+                return False
+            body = scope.body[1:] if scope.body and isinstance(scope.body[0], ast.Expr) and isinstance(scope.body[0].value, ast.Constant) and type(scope.body[0].value.value) is str else scope.body
+            names = []
+            for statement in body:
+                if not (isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name)):
+                    return False
+                name = statement.targets[0].id
+                try:
+                    literal = ast.literal_eval(statement.value)
+                except (ValueError, TypeError, SyntaxError, MemoryError, RecursionError):
+                    return False
+                if name.startswith('_') or not _immutable_literal(literal):
+                    return False
+                names.append(name)
+            if not names or len(set(names)) != len(names):
+                return False
+            for module in loaded:
+                cls = vars(module).get(scope.name)
+                bases = tuple(vars(module).get(b.id, vars(builtins).get(b.id)) for b in scope.bases)
+                if not (type(cls) is enum.EnumType and bases == cls.__bases__ and bases in _LITERAL_ENUM_BASES and _literal_enum(cls, root)):
+                    return False
+            return True
         def hooked_class_body(node):
             scope = execution_scope(node)
-            return isinstance(scope, ast.ClassDef) and not plain_class(scope)
+            return isinstance(scope, ast.ClassDef) and not plain_class(scope) and not literal_enum_statement(scope)
         def name_read_form(node):
             name = node.id
             if name in deleted_names or class_private(node):
@@ -1973,6 +2316,8 @@ def static_scan(suite, table):
             if isinstance(node.ctx, ast.Load):
                 return name_read_form(node)
             if isinstance(node.ctx, ast.Store):
+                if literal_enum_statement(execution_scope(node)):
+                    return 'binding:literal-enum-member'
                 return 'binding:plain-class-name' if isinstance(execution_scope(node), ast.ClassDef) else 'binding:name'
             return ''
         def unary_form(node):
@@ -1995,6 +2340,8 @@ def static_scan(suite, table):
             """
             if '__builtins__' in _names_bound_by(node):
                 return None
+            if postponed and isinstance(node, ast.expr) and annotation_read(node):
+                return 'annotation:postponed'
             if isinstance(node, (ast.mod, ast.arguments, ast.arg, ast.keyword, ast.alias, ast.withitem, ast.match_case, ast.pattern,
                                  ast.expr_context, ast.boolop, ast.operator, ast.unaryop, ast.cmpop)):
                 return ''
@@ -2021,6 +2368,8 @@ def static_scan(suite, table):
                 return None
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
                 return 'definition:function'
+            if isinstance(node, ast.ClassDef) and literal_enum_statement(node):
+                return 'definition:literal-enum'
             if isinstance(node, (ast.Assign, ast.AnnAssign, ast.NamedExpr)):
                 return ''  # the target node carries the binding or the obligation
             if isinstance(node, (ast.If, ast.IfExp)):
@@ -2105,7 +2454,7 @@ def static_scan(suite, table):
             elif form:
                 automatic[form] = automatic.get(form, 0) + 1
     for key, (declaration, matches) in allowed.items():
-        if matches != 1:
+        if matches != declaration.count:
             errors.append({'kind': 'non_guard_not_exactly_one_site', 'declaration': asdict(declaration), 'matches': matches})
     for path, line, function in predicate_keys:
         if Path(path) not in files:
@@ -2126,6 +2475,12 @@ def _state_objects(case, root):
         if id(obj) in seen:
             return
         seen.add(id(obj))
+        if _certified_external(obj, root) is not None:
+            return
+        if type(obj) is enum.EnumType and _literal_enum(obj, root) or isinstance(obj, enum.Enum) and _literal_enum(type(obj), root):
+            # A literal Enum is certified by value: the shared snapshot compares it before and after every run, and
+            # anything beyond its literal members (an attribute written onto it) makes it uncertifiable there.
+            return
         if isinstance(obj, types.ModuleType):
             source = vars(obj).get('__file__')
             if source and Path(source).resolve().is_relative_to(root) and Path(source).resolve() != Path(__file__).resolve():
@@ -2272,6 +2627,9 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
             return ('immutable-builtin', obj.__module__, obj.__name__)
         if obj is sys.modules[__name__]:
             return ('engine-module',)
+        external = _certified_external(obj, root)
+        if external is not None:
+            return external
         if id(obj) in seen:
             return ('ref', seen[id(obj)])
         index = len(nodes)
@@ -2288,7 +2646,7 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
             else:
                 if not source.is_relative_to(root):
                     unsupported(obj, 'external function graph')
-                if getattr(obj, '__annotate__', None) is not None:
+                if getattr(obj, '__annotate__', None) is not None and not _postponed_annotations(obj):
                     unsupported(obj, 'lazy function annotation graph')
                 content = (_function_key(obj), visit(obj.__code__), visit(obj.__defaults__),
                            visit(obj.__kwdefaults__), visit(obj.__dict__), tuple(visit(cell) for cell in obj.__closure__ or ()),
@@ -2335,6 +2693,12 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
             content = visit(obj.__func__)
         elif kind is property:
             content = tuple(visit(fn) for fn in (obj.fget, obj.fset, obj.fdel))
+        elif kind is enum.EnumType and _literal_enum(obj, root):
+            # C8-U2: a literal Enum is its name, bases and members; any other attribute makes it non-literal.
+            content = ('literal-enum', obj.__module__, obj.__qualname__, tuple(base.__qualname__ for base in obj.__bases__),
+                       tuple((name, visit(member)) for name, member in obj.__members__.items()))
+        elif isinstance(obj, enum.Enum) and _literal_enum(kind, root):
+            content = ('enum-member', visit(kind), obj._name_, visit(obj._value_))
         elif kind in metadata_types:
             content = tuple((name, visit(value)) for name, value in vars(obj).items())
         elif kind is GuardTable and not identities:
@@ -2369,6 +2733,19 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
     return snapshot
 
 
+# C8-U1: a module file's resolved path, once per process (resolving every loaded module's __file__ on each
+# shared-state check was a quarter of an evaluation). The filesystem is assumed not to re-point a loaded module's
+# file during a run, as everywhere else in the tool.
+_RESOLVED_FILES = {}
+
+
+def _resolved_file(filename):
+    resolved = _RESOLVED_FILES.get(filename)
+    if resolved is None:
+        resolved = _RESOLVED_FILES[filename] = Path(filename).resolve()
+    return resolved
+
+
 def _adapter_roots(suite):
     root = Path(suite.repository_root).resolve()
     # Starting at the factory also includes factory-only closures and globals.
@@ -2379,7 +2756,7 @@ def _adapter_roots(suite):
     for module in list(sys.modules.values()):
         if type(module) is types.ModuleType:
             filename = vars(module).get('__file__')
-            if filename and Path(filename).resolve() in paths:
+            if filename and type(filename) is str and _resolved_file(filename) in paths:
                 roots.append(module)
     return roots
 
@@ -2624,11 +3001,14 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
         table = case.table
         table._bind(value, case.context, cuts)
         events, exceptions = [], {}
-        instructions = {}
+        instructions, opnames = {}, {}
         predicates = [fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)]
         predicate_codes = {fn.__code__ for fn in predicates}
         path_cache = {}
         engine_name = str(engine)
+        # C8-U1: a purity checkpoint is due after any instruction outside PURITY_SAFE_OPCODES, and at every
+        # call, return and exception event. pending[0] carries "an instruction that may have changed the graph ran".
+        pending = [True]
         def trace(frame, event, arg):
             if event == 'call' and frame.f_code in predicate_codes:
                 parent = frame.f_back
@@ -2646,7 +3026,19 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                     table._errors.append(error)
                     raise IsolationError(error)
             if table._in_predicate and table._purity_before is not None:
-                table._check_purity(value, case.context)
+                if event in ('opcode', 'line'):
+                    if pending[0]:
+                        table._check_purity(value, case.context)
+                        pending[0] = False
+                    if event == 'opcode':
+                        names = opnames.get(frame.f_code)
+                        if names is None:
+                            names = opnames[frame.f_code] = {i.offset: i.opname for i in dis.get_instructions(frame.f_code)}
+                        # The event comes before the instruction runs: the check after it is the next event's.
+                        pending[0] = names.get(frame.f_lasti) not in PURITY_SAFE_OPCODES
+                else:
+                    # call, return and exception: always, and an untraced callee's work stays pending for its caller.
+                    table._check_purity(value, case.context)
                 frame.f_trace_opcodes = True
             filename = frame.f_code.co_filename
             if filename == engine_name:
@@ -2721,8 +3113,9 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                     'cuts': sorted(cuts), 'roots': sorted(table._schema.consumed)})
             if predicate is None:
                 last_trace.clear()
-                last_trace.update(calls=[[kind, name if type(name) is str else repr(name)] for kind, name in table._calls],
-                                  refused_at=table._refused_at)
+                trace_store = _GUARD_TRACES[table]
+                last_trace.update(calls=[[kind, name if type(name) is str else repr(name)] for kind, name in trace_store['calls']],
+                                  refused_at=trace_store['refused_at'])
             table._restore()
             certify_shared(reset=True)
             gate.check()
@@ -2806,6 +3199,19 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                 'changed_paths': typed_changes(controls[negative.control].value, negative.value), 'sha256': digest(negative.value)})
             if not expected(negative, got):
                 fail('wrong_baseline_guard', negative=negative.id, expected=negative.target, actual=got)
+        # C8-G3: k extra uncut runs of every case. A gate that skips a guard with probability p survives the
+        # observed runs with probability (1 - p) to the power of their count; the count is reported per case.
+        repeats = suite.baseline_repeats
+        if type(repeats) is not int or repeats < 0:
+            raise IsolationError('baseline_repeats must be a non-negative int')
+        observed = report['observed_runs'] = {case.id: {'uncut': 1, 'cut': 0} for case in [*controls.values(), *negatives.values()]}
+        for _ in range(repeats):
+            for case in [*controls.values(), *negatives.values()]:
+                got, again = traced(case.value)
+                observed[case.id]['uncut'] += 1
+                if got != baseline[case.id] or again != baseline_trace[case.id]:
+                    fail('baseline_nondeterministic', case=case.id, baseline=baseline[case.id], actual=got,
+                         uncut=baseline_trace[case.id], uncut_again=again)
         if initial.table._schema:
             consumed = {entry for row in report.get('schema_consumption', []) for entry in row['roots']}
             missing = set(initial.table._schema.catalog.roots) - consumed
@@ -2902,6 +3308,8 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                         fail('unrelated_result_changed', row=label, negative=negative.id, actual=got)
                 good = good and okay
             for case in [*controls.values(), *negatives.values()]:
+                report['observed_runs'][case.id]['cut'] += 1
+                report['observed_runs'][case.id]['uncut'] += 1
                 got, restored_traces[case.id] = traced(case.value)
                 row['restoration'].append({'case': case.id, 'outcome': got, 'trace': restored_traces[case.id]})
                 if got != baseline[case.id]:

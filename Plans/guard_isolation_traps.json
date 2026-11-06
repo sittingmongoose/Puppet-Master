@@ -10903,7 +10903,7 @@
     {
       "id": "C6-uncertifiable-case-global-fails-closed",
       "kind": "code",
-      "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit.",
+      "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit. (Tool batch 2: random, since json is now a certified immutable binding under C8-U2.)",
       "status": "FAIL",
       "failure_kinds": [
         "state_shared_across_cases"
@@ -10931,7 +10931,7 @@
       ],
       "error_contains": "external module graph",
       "imports": {
-        "helper_mod.py": "import json\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n"
+        "helper_mod.py": "import random\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n"
       },
       "non_guards": [
         {
@@ -14122,6 +14122,2735 @@
           "reason": "Regression fixture: this exact diagnostic operation is reviewed; its child operations keep their own obligations."
         }
       ]
+    },
+    {
+      "id": "TB2-U2-stdlib-module-control",
+      "kind": "code",
+      "expected": "C8-U2: json and re bound once at module level and never written through certify; the row is credited.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import json\nimport re\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1
+    },
+    {
+      "id": "TB2-U2-stdlib-module-read-control",
+      "kind": "code",
+      "expected": "C8-U2: module.attribute reads of a certified module in the checker are plumbing a reviewer declares; the module itself certifies.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            text = json.dumps(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "json.dumps(value)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    text = json.dumps(value)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "json.dumps",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-stdlib-write-through",
+      "kind": "code",
+      "expected": "C8-U2: json.dumps = ... on a dormant path is an unwaivable write through a certified module.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            json.dumps = None\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_write",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "json.dumps = None",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    json.dumps = None",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-stdlib-setattr",
+      "kind": "code",
+      "expected": "C8-U2: setattr(re, ...) on a dormant path is an unwaivable write through a certified module.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import re\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            setattr(re, 'compile', None)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_write",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "setattr(re, 'compile', None)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    setattr(re, 'compile', None)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-stdlib-dict-write",
+      "kind": "code",
+      "expected": "C8-U2: json.__dict__[...] = ... on a dormant path writes the module's namespace: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            json.__dict__['dumps'] = None\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_write",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "json.__dict__['dumps'] = None",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    json.__dict__['dumps'] = None",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "json.__dict__",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-stdlib-alias",
+      "kind": "code",
+      "expected": "C8-U2: aliasing a certified module to a writable name lets it be written through elsewhere: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            codec = json\n            codec.dumps = None\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_escape",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "codec.dumps = None",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    codec = json\n    codec.dumps = None",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-stdlib-passed-on",
+      "kind": "code",
+      "expected": "C8-U2: passing a certified module to another function lets the callee write through it: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef patch(m):\n    m.dumps = None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            patch(json)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_escape",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "patch",
+          "kind": "mutation_or_error_write",
+          "source": "m.dumps = None",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "patch(json)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "patch",
+          "kind": "implicit_return",
+          "source": "<implicit None return>",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    patch(json)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-stdlib-rebound",
+      "kind": "code",
+      "expected": "C8-U2: a certified module name rebound by a dormant global assignment is not bound once: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef swap():\n    global json\n    json = None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_rebound",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "swap",
+          "kind": "implicit_return",
+          "source": "<implicit None return>",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-stdlib-not-allowlisted",
+      "kind": "code",
+      "expected": "C8-U2: random keeps result-affecting module state, so it is not on the list and still fails certification.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "import random\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-typing-future-control",
+      "kind": "code",
+      "expected": "C8-U2: typing special forms and the annotations future feature certify; postponed annotations are never evaluated.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "from __future__ import annotations\nfrom typing import Any, Optional\nimport pm_guard_isolation as g\n\ndef px(value: Any, context: Optional[Any]) -> Optional[str]:\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1
+    },
+    {
+      "id": "TB2-U2-typing-lazy-annotations",
+      "kind": "code",
+      "expected": "C8-U2: without the future import a 3.14 annotation is a lazy __annotate__ graph that runs code when read: still refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from typing import Any, Optional\nimport pm_guard_isolation as g\n\ndef px(value: Any, context: Optional[Any]) -> Optional[str]:\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "px",
+          "kind": "data_operation",
+          "source": "Optional[str]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "px",
+          "kind": "data_operation",
+          "source": "Optional[Any]",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-typing-forged-annotate",
+      "kind": "code",
+      "expected": "C8-U2: a postponed-annotation function whose __annotate__ was replaced by code that reads names is not the compiler's own: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from __future__ import annotations\nfrom typing import Any\nimport pm_guard_isolation as g\n\ndef px(value: Any, context) -> None:\n    return 'bad_x' if value['x'] < 0 else None\n\ndef forged(format):\n    return {'value': Any}\n\npx.__annotate__ = forged\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "",
+          "kind": "mutation_or_error_write",
+          "source": "px.__annotate__ = forged",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "forged",
+          "kind": "return",
+          "source": "return {'value': Any}",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-typing-form-write",
+      "kind": "code",
+      "expected": "C8-U2: writing an attribute of a certified typing form on a dormant path is refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "from typing import Optional\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            Optional.__doc__ = 'x'\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_write",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "Optional.__doc__ = 'x'",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    Optional.__doc__ = 'x'",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-literal-control",
+      "kind": "code",
+      "expected": "C8-U2: a top-level str Enum with literal members only certifies, statically and in the snapshot.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(str, Enum):\n    \"\"\"A literal enum.\"\"\"\n    RED = 'red'\n    BLUE = 'blue'\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "automatic_forms": [
+        "definition:literal-enum",
+        "binding:literal-enum-member"
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-member-read-control",
+      "kind": "code",
+      "expected": "C8-U2: reading a literal Enum member in the checker (declared plumbing) certifies; the member is fixed.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(str, Enum):\n    \"\"\"A literal enum.\"\"\"\n    RED = 'red'\n    BLUE = 'blue'\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            shade = Color.RED\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    shade = Color.RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "Color.RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-custom-new",
+      "kind": "code",
+      "expected": "C8-U2: an Enum with its own __new__ is not literal: it fails certification.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(Enum):\n    RED = 'red'\n    def __new__(cls, v):\n        obj = object.__new__(cls)\n        obj._value_ = v\n        return obj\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "Color.__new__",
+          "kind": "mutation_or_error_write",
+          "source": "obj._value_ = v",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color.__new__",
+          "kind": "return",
+          "source": "return obj",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color.__new__",
+          "kind": "call_review",
+          "source": "object.__new__(cls)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "class Color(Enum):\n    RED = 'red'\n\n    def __new__(cls, v):\n        obj = object.__new__(cls)\n        obj._value_ = v\n        return obj",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color.__new__",
+          "kind": "data_operation",
+          "source": "def __new__(cls, v):\n    obj = object.__new__(cls)\n    obj._value_ = v\n    return obj",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color.__new__",
+          "kind": "data_operation",
+          "source": "object.__new__",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-missing",
+      "kind": "code",
+      "expected": "C8-U2: an Enum with _missing_ maps unknown values by code: it fails certification.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(Enum):\n    RED = 'red'\n    @classmethod\n    def _missing_(cls, value):\n        return cls.RED\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "Color._missing_",
+          "kind": "return",
+          "source": "return cls.RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "class Color(Enum):\n    RED = 'red'\n\n    @classmethod\n    def _missing_(cls, value):\n        return cls.RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color._missing_",
+          "kind": "implicit_call",
+          "source": "classmethod",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color._missing_",
+          "kind": "data_operation",
+          "source": "@classmethod\ndef _missing_(cls, value):\n    return cls.RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color._missing_",
+          "kind": "data_operation",
+          "source": "classmethod",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color._missing_",
+          "kind": "data_operation",
+          "source": "cls.RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-generate-next-value",
+      "kind": "code",
+      "expected": "C8-U2: an Enum with its own _generate_next_value_ is not literal: it fails certification.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(Enum):\n    def _generate_next_value_(name, start, count, last_values):\n        return name\n    RED = 'red'\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "Color._generate_next_value_",
+          "kind": "return",
+          "source": "return name",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "class Color(Enum):\n\n    def _generate_next_value_(name, start, count, last_values):\n        return name\n    RED = 'red'",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color._generate_next_value_",
+          "kind": "data_operation",
+          "source": "def _generate_next_value_(name, start, count, last_values):\n    return name",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-metaclass",
+      "kind": "code",
+      "expected": "C8-U2: an Enum built by another metaclass runs that metaclass: it fails certification.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from enum import Enum, EnumType\nimport pm_guard_isolation as g\n\n\nclass Meta(EnumType):\n    pass\n\nclass Color(Enum, metaclass=Meta):\n    RED = 'red'\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "Meta",
+          "kind": "data_operation",
+          "source": "class Meta(EnumType):\n    pass",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "class Color(Enum, metaclass=Meta):\n    RED = 'red'",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-nonliteral-member",
+      "kind": "code",
+      "expected": "C8-U2: an Enum member holding a list is not an immutable literal: it fails certification.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(Enum):\n    RED = ('red', [1])\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "class Color(Enum):\n    RED = ('red', [1])",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Color",
+          "kind": "data_operation",
+          "source": "RED",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-write-through",
+      "kind": "code",
+      "expected": "C8-U2: writing an attribute onto a literal Enum on a dormant path is an unwaivable write.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(str, Enum):\n    \"\"\"A literal enum.\"\"\"\n    RED = 'red'\n    BLUE = 'blue'\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            Color.extra = 1\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_write",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "Color.extra = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    Color.extra = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-enum-passed-on",
+      "kind": "code",
+      "expected": "C8-U2: passing a literal Enum class to another function lets it be written through: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "from enum import Enum\nimport pm_guard_isolation as g\n\n\nclass Color(str, Enum):\n    \"\"\"A literal enum.\"\"\"\n    RED = 'red'\n    BLUE = 'blue'\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef patch(c):\n    c.extra = 1\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            patch(Color)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "external_binding_escape",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "patch",
+          "kind": "mutation_or_error_write",
+          "source": "c.extra = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "patch(Color)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "patch",
+          "kind": "implicit_return",
+          "source": "<implicit None return>",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    patch(Color)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-frozen-dataclass-refused",
+      "kind": "code",
+      "expected": "C8-U2: a frozen dataclass is not certified (its class graph is external machinery); the guide gives the restructure pattern.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "source": "from dataclasses import dataclass\nimport pm_guard_isolation as g\n\n\n@dataclass(frozen=True)\nclass Point:\n    a: int = 1\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "Point",
+          "kind": "call_review",
+          "source": "dataclass(frozen=True)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Point",
+          "kind": "data_operation",
+          "source": "@dataclass(frozen=True)\nclass Point:\n    a: int = 1",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Point",
+          "kind": "data_operation",
+          "source": "a",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "Point",
+          "kind": "data_operation",
+          "source": "int",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U2-data-import-control",
+      "kind": "code",
+      "expected": "C8-U2: from consts import TERMINAL (a single literal tuple) reaches no code of consts, so consts is not scanned and the row is credited.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "from consts import TERMINAL\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 or value.get('s') in TERMINAL else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "imports": {
+        "consts.py": "TERMINAL = ('failed', 'resolved')\nimport json\n\ndef helper():\n    return json.dumps(TERMINAL)\n"
+      },
+      "proved_rows": 1
+    },
+    {
+      "id": "TB2-U2-data-import-mutable",
+      "kind": "code",
+      "expected": "C8-U2: a from-imported list is mutable state of consts: consts is scanned and, unnamed, fails.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "scanned_module_not_declared"
+      ],
+      "source": "from consts import TERMINAL\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "imports": {
+        "consts.py": "TERMINAL = ['failed']\n"
+      }
+    },
+    {
+      "id": "TB2-U2-data-import-function",
+      "kind": "code",
+      "expected": "C8-U2: a from-imported function is code of consts: consts is scanned and, unnamed, fails.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "scanned_module_not_declared"
+      ],
+      "source": "from consts import helper\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "imports": {
+        "consts.py": "TERMINAL = ('failed', 'resolved')\nimport json\n\ndef helper():\n    return json.dumps(TERMINAL)\n"
+      }
+    },
+    {
+      "id": "TB2-U2-data-import-rebound",
+      "kind": "code",
+      "expected": "C8-U2: a constant consts rebinds on a dormant path is not a single literal binding: consts is scanned.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "scanned_module_not_declared"
+      ],
+      "source": "from consts import TERMINAL\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "imports": {
+        "consts.py": "TERMINAL = ('failed',)\n\ndef reset():\n    global TERMINAL\n    TERMINAL = ()\n"
+      }
+    },
+    {
+      "id": "TB2-U2-data-import-computed",
+      "kind": "code",
+      "expected": "C8-U2: a constant computed by a call is not a literal: consts is scanned.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "scanned_module_not_declared"
+      ],
+      "source": "from consts import TERMINAL\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "imports": {
+        "consts.py": "TERMINAL = tuple(['failed'])\n"
+      }
+    },
+    {
+      "id": "TB2-U4-re-compile-control",
+      "kind": "code",
+      "expected": "C8-U4: re.compile is resolved by its binding origin, not by its leaf name; a compiled pattern is immutable.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import re\nimport pm_guard_isolation as g\n\nPATTERN = re.compile('x+')\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "",
+          "kind": "call_review",
+          "source": "re.compile('x+')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "",
+          "kind": "data_operation",
+          "source": "re.compile",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U4-builtin-compile-dynamic",
+      "kind": "code",
+      "expected": "C8-U4: the builtin compile stays dynamic code on a dormant path.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            code = compile('1', 's', 'eval')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "compile('1', 's', 'eval')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    code = compile('1', 's', 'eval')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U4-compile-unknown-receiver",
+      "kind": "code",
+      "expected": "C8-U4: compile on a receiver that is not the re module stays dynamic.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            code = value.compile('1')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "value.compile('1')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    code = value.compile('1')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value.compile",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U4-re-rebound-compile",
+      "kind": "code",
+      "expected": "C8-U4: a name re that something other than import re also binds is not the re module: its compile stays dynamic.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import re\nimport builtins as re\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            code = re.compile('1', 's', 'eval')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "re.compile('1', 's', 'eval')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    code = re.compile('1', 's', 'eval')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "re.compile",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "re",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U4-error-named-literal-control",
+      "kind": "code",
+      "expected": "C8-U4: FAILED_REASONS = (literals) at module scope, bound once, is not an error write.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import pm_guard_isolation as g\n\nFAILED_REASONS = ('a', 'b')\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 or value.get('s') in FAILED_REASONS else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1
+    },
+    {
+      "id": "TB2-U4-error-named-list",
+      "kind": "code",
+      "expected": "C8-U4: a module-level error-named list is mutable: still an error-write obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\nFAILED = []\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_kind": "mutation_or_error_write"
+    },
+    {
+      "id": "TB2-U4-error-named-rebound",
+      "kind": "code",
+      "expected": "C8-U4: an error-named constant rebound on a dormant path is not bound once: still an obligation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\nFAILED = ('a',)\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef again():\n    global FAILED\n    FAILED = ('b',)\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "static_kind": "mutation_or_error_write"
+    },
+    {
+      "id": "TB2-U3-count-control",
+      "kind": "code",
+      "expected": "C8-U3: one NonGuard with count=2 declares both identical forward reads; the row is credited.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            first, second = KINDS, KINDS\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n\nKINDS = ('a', 'b')\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "KINDS",
+          "reason": "Read the module tuple of kinds, bound once below the checker.",
+          "count": 2
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    first, second = (KINDS, KINDS)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "(first, second)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-U3-count-too-high",
+      "kind": "code",
+      "expected": "C8-U3: a count that does not match the identical sites exactly fails.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            first, second = KINDS, KINDS\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n\nKINDS = ('a', 'b')\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "KINDS",
+          "reason": "Read the module tuple of kinds, bound once below the checker.",
+          "count": 3
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    first, second = (KINDS, KINDS)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "(first, second)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ],
+      "static_error_kind": "non_guard_not_exactly_one_site"
+    },
+    {
+      "id": "TB2-U3-count-zero",
+      "kind": "code",
+      "expected": "C8-U3: a count below one is an invalid declaration.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "infrastructure_or_declaration"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['route']:\n            first, second = KINDS, KINDS\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n\nKINDS = ('a', 'b')\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "KINDS",
+          "reason": "Read the module tuple of kinds, bound once below the checker.",
+          "count": 0
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['route']:\n    first, second = (KINDS, KINDS)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['route']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "(first, second)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ],
+      "error_contains": "invalid or duplicate non-guard declaration"
+    },
+    {
+      "id": "TB2-G1-T11-private-entries",
+      "kind": "code",
+      "expected": "C8-G1 (cycle-8 T11): cut detection through table._entries hides an inline refusal; the private read is unwaivable.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        if table._entries['x'] is table.guards['x']:\n            assert value['x'] >= 0\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "table_private_state",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "assert",
+          "source": "assert value['x'] >= 0",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if table._entries['x'] is table.guards['x']:\n    assert value['x'] >= 0",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "table._entries['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "table.guards['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x'] >= 0",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "table._entries",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "table.guards",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G1-T11b-forged-trace",
+      "kind": "code",
+      "expected": "C8-G1 (cycle-8 T11b): a forged trace entry through table._calls is unwaivable, and the trace no longer lives on the table.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if value['x'] == 4:\n            table._calls.append(('require', 'x'))\n        else:\n            table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "table_private_state",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "table._calls.append(('require', 'x'))",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['x'] == 4:\n    table._calls.append(('require', 'x'))\nelse:\n    table.require('x', value, context)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x'] == 4",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "table._calls.append",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "table._calls",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G1-table-dict",
+      "kind": "code",
+      "expected": "C8-G1: table.__dict__ on a dormant path reaches every private member: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if value['x'] == 7:\n            state = table.__dict__\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "table_private_state",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['x'] == 7:\n    state = table.__dict__",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x'] == 7",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "table.__dict__",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G1-engine-private",
+      "kind": "code",
+      "expected": "C8-G1: g._always_pass (any g._* name) on a dormant path is refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if value['x'] == 7:\n            passing = g._always_pass\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "table_private_state",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['x'] == 7:\n    passing = g._always_pass",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x'] == 7",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "g._always_pass",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G1-private-by-string",
+      "kind": "code",
+      "expected": "C8-G1: object.__getattribute__(table, '_calls') names a private member by string: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if value['x'] == 7:\n            calls = object.__getattribute__(table, '_calls')\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "table_private_state",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "object.__getattribute__(table, '_calls')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['x'] == 7:\n    calls = object.__getattribute__(table, '_calls')",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x'] == 7",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "object.__getattribute__",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G1-engine-trace-store",
+      "kind": "code",
+      "expected": "C8-G1: g._GUARD_TRACES, the engine-owned trace store, is out of reach.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if value['x'] == 7:\n            traces = g._GUARD_TRACES\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "table_private_state",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['x'] == 7:\n    traces = g._GUARD_TRACES",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x'] == 7",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['x']",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "g._GUARD_TRACES",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G2-T10-gettrace",
+      "kind": "code",
+      "expected": "C8-G2 (cycle-8 T10): sys.gettrace() tells the tool's run from production; it is now a dynamic, unwaivable name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import sys\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if sys.gettrace() is not None:\n            table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "sys.gettrace()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if sys.gettrace() is not None:\n    table.require('x', value, context)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "sys.gettrace",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G2-getprofile",
+      "kind": "code",
+      "expected": "C8-G2: sys.getprofile() is a harness detector of the same kind.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "source": "import sys\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if sys.getprofile() is None:\n            table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "sys.getprofile()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if sys.getprofile() is None:\n    table.require('x', value, context)",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "sys.getprofile",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        }
+      ]
+    },
+    {
+      "id": "TB2-G3-repeats-observed",
+      "kind": "code",
+      "expected": "C8-G3: with baseline_repeats=3 every case is run four times uncut before any cut, and the JSON reports each case's observed runs.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Only x becomes negative."
+        },
+        {
+          "id": "bad-y",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y",
+          "control": "valid",
+          "defect": "Only y becomes negative."
+        }
+      ],
+      "baseline_repeats": 3,
+      "observed_uncut_at_least": 4,
+      "proved_rows": 2
+    },
+    {
+      "id": "TB2-U1-untraced-callee-temporary",
+      "kind": "code",
+      "expected": "C8-U1: a C-level append restored before the predicate returns is seen at the checkpoint after the call, exactly as the per-instruction check saw it.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    value['l'].append(1)\n    value['l'].pop()\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "l": [],
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "l": [],
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "protocol_contains": "mutated input/context"
+    },
+    {
+      "id": "TB2-U1-subscript-store-temporary",
+      "kind": "code",
+      "expected": "C8-U1: a subscript store undone by a delete before return is seen at the checkpoint after the store.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    value['t'] = 1\n    del value['t']\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "protocol_contains": "mutated input/context"
+    },
+    {
+      "id": "TB2-U1-inplace-temporary",
+      "kind": "code",
+      "expected": "C8-U1: an in-place += on an input list, undone before return, is seen at the checkpoint after the binary operation.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    items = value['l']\n    items += [1]\n    items.pop()\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "l": [],
+            "route": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1,
+            "l": [],
+            "route": false
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "protocol_contains": "mutated input/context"
     }
   ]
 }

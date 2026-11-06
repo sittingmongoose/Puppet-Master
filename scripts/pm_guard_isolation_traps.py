@@ -64,6 +64,7 @@ def _code_suite(g, trap, root):
         suite.duplicates.append(g.Duplicate(duplicate['id'], tuple(duplicate['sites']), g.Invariant(*duplicate['invariant']), duplicate['evidence']))
     if trap.get('omit_factory_allowance'):
         suite.non_guards = [d for d in suite.non_guards if d.function != 'factory']
+    suite.baseline_repeats = trap.get('baseline_repeats', 0)
     return suite
 
 
@@ -342,6 +343,9 @@ def exercise(g, memory, *, scratch=None):
                         row['caught'] = row['caught'] and not any(r.get('proved') for r in result['rows'])
                     if trap.get('proved_rows') is not None:
                         row['caught'] = row['caught'] and sum(bool(r.get('proved')) for r in result['rows']) == trap['proved_rows']
+                    if trap.get('observed_uncut_at_least'):
+                        observed = result.get('observed_runs', {})
+                        row['caught'] = row['caught'] and bool(observed) and all(v['uncut'] >= trap['observed_uncut_at_least'] for v in observed.values())
                     if trap.get('duplicate_proved'):
                         row['caught'] = row['caught'] and all(d['proved'] for d in result['duplicates']) and bool(result['duplicates'])
                 else:
