@@ -142,6 +142,8 @@ shims.fileContextMenu = function () {
   menuEl.setAttribute('data-pm-home-body-portal', 'true');
   var target = null;
   doc.addEventListener('contextmenu', function (e) {
+    /* a contextmenu inside the menu itself (the Menu key's own, at the item holding the focus) keeps its row (FO-93) */
+    if (menuEl.contains(e.target)) return;
     var row = e.target.closest && e.target.closest('.fm-row[data-path], .fm-openrow[data-path]');
     target = row ? row.getAttribute('data-path') : null;
     ctxRow = row ? { path: target, folder: row.getAttribute('data-kind') === 'folder' } : null;
@@ -153,8 +155,9 @@ shims.fileContextMenu = function () {
       var b = h('div', { class: 'fm-ctx-item pmw-ctx-item', role: 'menuitem', tabindex: '-1', 'data-pmw-open': r[0], text: r[1] });
       b.addEventListener('click', function (e) {
         e.stopPropagation();
-        menuEl.classList.remove('open', 'show', 'visible');
-        menuEl.style.display = 'none';
+        // close through the menu's owner, so its register of open menus stays true (FO-84c)
+        if (window.PMCozeMenu) window.PMCozeMenu.close(menuEl);
+        else { menuEl.classList.remove('open', 'show', 'visible'); menuEl.style.display = 'none'; }
         if (!target) return;
         PM_HOME.open({ kind: 'editor', path: target, mode: 'keep', where: r[0] === 'open' ? 'auto' : r[0] === 'panel' ? 'panel' : 'right' });
       });

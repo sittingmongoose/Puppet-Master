@@ -293,6 +293,15 @@ PMR.menu = {
   open: openMenu, toggle, trigger, closeAll,
   close(el) { const e = MENU_STACK.find(x => x.el === el) || MENU_STACK[MENU_STACK.length - 1]; if (e) closeEntry(e); },
   isOpen: anchor => (anchor ? isOpenFor(anchor) : MENU_STACK.length > 0),
+  /* what an open menu holding node hangs from: the trigger of its top menu (a submenu answers for its whole chain),
+     or what lay under the point of a context menu. null when node is in no open menu. A layer under the menus (the
+     folded rail's overlay, home 44-narrow.js) asks it, so a press in a menu of its own is not a press outside (FO-84b). */
+  anchorOf(node) {
+    let e = MENU_STACK.find(x => x.el.contains(node));
+    if (!e) return null;
+    while (e.opts.parent) e = e.opts.parent;
+    return e.anchor.id === 'pmr-menu-pin' && e.opts.origin ? e.opts.origin : e.anchor;
+  },
   /* a context menu at a point (right click / Shift+F10): anchored to a 1px box at the pointer */
   at(def, x, y, opts) {
     let pin = document.getElementById('pmr-menu-pin');

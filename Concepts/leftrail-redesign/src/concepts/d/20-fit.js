@@ -433,7 +433,8 @@ function wirePublish(panel) {
     PMR.state.set('d.publish.folded', folded);
     set(folded, true);
   };
-  btn.addEventListener('click', toggle);
+  /* the chevron sits inside the head, so the head's listener takes its presses and its Enter / Space (a button's key
+     press is a click that bubbles); a listener on the chevron too toggled twice, so it never folded (FO-84d) */
   head.addEventListener('click', toggle);
   remember(() => { head.removeEventListener('click', toggle); card.classList.remove('d-folded'); delete card._dPub; });
 }

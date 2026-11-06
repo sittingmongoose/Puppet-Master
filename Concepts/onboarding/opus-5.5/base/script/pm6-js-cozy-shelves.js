@@ -239,6 +239,10 @@
       if (!menu.classList.contains('is-open') && !menu.classList.contains('is-closing')) return;
       var trig = menu._pmTrigger;
       if (trig) trig.setAttribute('aria-expanded', 'false');
+      /* a menu that holds the focus gives it back to what opened it (openAt's returnTo), not to the page (FO-93) */
+      var back = menu._pmReturn;
+      menu._pmReturn = null;
+      if (back && back.isConnected && menu.contains(document.activeElement)) back.focus({ preventScroll: true });
       markMenuOpen(menu, false);
       window.PM6_SPROUT.close(menu, function () { restoreHome(menu); }, { instant: !!instant });
       var i = openMenus.indexOf(menu);
@@ -307,7 +311,40 @@
         else if (ev.key === 'End') { ev.preventDefault(); items[items.length - 1].focus(); }
       });
     }
-    function openAt(menu, x, y) {
+    /* the items the keys walk in a menu or one of its branches: its own menuitems, as a wrapper's menu walks them
+       (only [disabled] is skipped; an aria-disabled item still takes focus and says why) */
+    function keyItems(m) {
+      return Array.prototype.filter.call(m.querySelectorAll('[role="menuitem"]'), function (it) {
+        return it.closest('[role="menu"]') === m && !it.hasAttribute('disabled') && it.getClientRects().length;
+      });
+    }
+    function firstEnabled(m) {
+      return keyItems(m).filter(function (it) { return it.getAttribute('aria-disabled') !== 'true'; })[0] || null;
+    }
+    /* ArrowDown / ArrowUp / Home / End in a pointer-placed menu, as in a wrapper's menu, in whichever menu or branch
+       holds the focus (FO-93) */
+    function wireKeys(menu) {
+      if (menu._pmKeys) return;
+      menu._pmKeys = true;
+      menu.addEventListener('keydown', function (ev) {
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End'].indexOf(ev.key) < 0) return;
+        var m = ev.target.closest && ev.target.closest('[role="menu"]');
+        if (!m || !menu.contains(m)) return;
+        var items = keyItems(m);
+        if (!items.length) return;
+        var idx = items.indexOf(document.activeElement);
+        ev.preventDefault();
+        if (ev.key === 'ArrowDown') (items[idx + 1] || items[0]).focus();
+        else if (ev.key === 'ArrowUp') (items[idx - 1] || items[items.length - 1]).focus();
+        else if (ev.key === 'Home') items[0].focus();
+        else items[items.length - 1].focus();
+      });
+    }
+    /* openAt(menu, x, y, opts): a menu placed at a point (a context menu). opts.returnTo: what gets the focus back when
+       the menu closes while holding it; opts.focus: opened by a key, so the focus moves to the first enabled item
+       (a pointer-opened menu leaves the focus where it was, as a wrapper's menu does) (FO-93) */
+    function openAt(menu, x, y, opts) {
+      opts = opts || {};
       closeAll();
       menu.style.position = 'fixed';
       menu.style.left = '0px'; menu.style.top = '0px';
@@ -323,11 +360,22 @@
       menu.style.setProperty('--pm6-sprout-oy', (fy === y ? '0%' : '100%'));
       menu.style.setProperty('--pm6-sprout-ty', (fy === y ? '-10px' : '10px'));
       openMenus.push(menu);
+      wireKeys(menu);
+      menu._pmReturn = opts.returnTo || null;
+      if (opts.focus) { var first = firstEnabled(menu); if (first) first.focus({ preventScroll: true }); }
     }
     document.addEventListener('click', function (ev) {
       if (!ev.target.closest('.pm6-tb-menu, .pm6-chat-more-menu, .pm6-tb-menu-trigger, .pm-ctx-menu')) closeAll();
     });
-    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') closeAll(); });
+    /* An Escape that closes a menu is spent on it: marked handled (preventDefault, only when a menu was open) so a
+       layer under the menu, such as the folded rail's overlay (home 44-narrow.js), stays for the next Escape (FO-84).
+       No stopPropagation: every other document listener still hears the key. */
+    document.addEventListener('keydown', function (ev) {
+      /* an Escape a layer inside the menu already spent (a branch closing back to its item) closes only that (FO-93) */
+      if (ev.key !== 'Escape' || ev.defaultPrevented || !openMenus.length) return;
+      closeAll();
+      ev.preventDefault();
+    });
     window.addEventListener('resize', function () { closeAll(true); });
     window.addEventListener('scroll', function () {
       openMenus.forEach(function (m) { if (m._pmRailHome) positionRail(m); else if (m._pmBottomHome) positionBottom(m); });
@@ -337,7 +385,17 @@
         if (wrap.closest('#sidePanelSlot') || wrap.closest('#bottomDebugHost')) upgradeWrap(wrap);
       });
     }
-    return { init: init, open: open, close: close, closeAll: closeAll, openAt: openAt, upgradeWrap: upgradeWrap };
+    /* what an open menu holding node belongs to: its trigger, else the home it was portalled from; null when node is in
+       no open menu. The folded rail's overlay (home 44-narrow.js) asks it, so a press in one of the panel's menus is
+       not a press outside the panel (FO-84b). */
+    function ownerOf(node) {
+      var m = null;
+      openMenus.forEach(function (x) { if (!m && x.contains(node)) m = x; });
+      if (!m) return null;
+      var home = m._pmRailHome || m._pmBottomHome;
+      return m._pmTrigger || (home && home.parent) || null;
+    }
+    return { init: init, open: open, close: close, closeAll: closeAll, openAt: openAt, upgradeWrap: upgradeWrap, ownerOf: ownerOf };
   })();
   window.PMCozeMenu = PMMenu;
 
@@ -962,15 +1020,20 @@
     if (!tree || !ctx) return;
     var ctxTarget = null;
     function rowOf(el) { return el && el.closest ? el.closest('.fm-row, .fm-changerow, .fm-openrow') : null; }
+    /* File actions for a row, by the pointer (focus stays on the row) or by a key (focus moves to the first enabled item);
+       either way it gives the focus back to the row when it closes holding it (FO-93) */
+    function openFor(r, x, y, byKey) {
+      ctxTarget = r;
+      var paste = byId('fmCtxPaste');
+      if (paste) paste.setAttribute('aria-disabled', r.getAttribute('data-kind') === 'folder' ? 'false' : 'true');
+      ctx.dispatchEvent(new CustomEvent('pm-ctx-open'));
+      PMMenu.openAt(ctx, x, y, { returnTo: r, focus: byKey });
+    }
     panel.addEventListener('contextmenu', function (ev) {
       var r = rowOf(ev.target);
       if (!r) return;
       ev.preventDefault();
-      ctxTarget = r;
-      var paste = byId('fmCtxPaste');
-      if (paste) paste.setAttribute('aria-disabled', r.getAttribute('data-kind') === 'folder' ? 'false' : 'true');
-      PMMenu.openAt(ctx, ev.clientX, ev.clientY);
-      ctx.dispatchEvent(new CustomEvent('pm-ctx-open'));
+      openFor(r, ev.clientX, ev.clientY, false);
     });
     panel.addEventListener('keydown', function (ev) {
       if (ev.key !== 'F10' && ev.key !== 'ContextMenu') return;
@@ -978,10 +1041,12 @@
       if (!r) return;
       if (ev.key === 'F10' && !ev.shiftKey) return;
       ev.preventDefault();
-      ctxTarget = r;
       var rc = r.getBoundingClientRect();
-      PMMenu.openAt(ctx, rc.left + 16, rc.bottom);
+      openFor(r, rc.left + 16, rc.bottom, true);
     });
+    /* a key's own contextmenu (Windows sends one on the Menu key's keyup, at the item now holding the focus) and a
+       right press inside the menu raise no browser menu over it */
+    ctx.addEventListener('contextmenu', function (ev) { ev.preventDefault(); });
     var rows = Array.prototype.slice.call(tree.querySelectorAll('.fm-row[data-path]'));
     var selected = new Set();
     var lastIdx = -1;
@@ -1379,10 +1444,33 @@
         if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); if (wrap.classList.contains('open')) closeSub(wrap); else openSub(wrap); });
       });
       ctx.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { openSub(w); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
-        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
+        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { if (!w.classList.contains('open')) { closeAllSub(); openSub(w); } var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
+        /* ArrowLeft or Escape inside a branch closes that branch, back on its item; from the menu's own items Escape
+           closes the menu (a branch the pointer opened goes with it) (FO-93) */
+        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ev.target.closest && ev.target.closest('.fm-ctx-sub') ? ev.target.closest('.fm-ctx-wrap[data-sub]') : null; if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
       });
       ctx.addEventListener('pm-ctx-open', closeAllSub);
+      /* a pick closes File actions through PMMenu, as a wrapper's menu closes on its pick (FO-84c): an enabled item
+         that is not a branch. No stopPropagation, so the demo router still runs the item. Enter or Space on a focused
+         item picks it like a click, and a pick by key gives focus back to the row the menu was opened for. */
+      ctx.addEventListener('click', function (ev) {
+        var item = ev.target.closest('[role="menuitem"]');
+        if (!item || item.hasAttribute('aria-haspopup') || item.hasAttribute('disabled') || item.getAttribute('aria-disabled') === 'true') return;
+        closeAllSub();
+        PMMenu.close(ctx);
+      });
+      ctx.addEventListener('keydown', function (ev) {
+        if (ev.key !== 'Enter' && ev.key !== ' ') return;
+        var item = ev.target.closest && ev.target.closest('[role="menuitem"]');
+        if (!item || !ctx.contains(item)) return;
+        ev.preventDefault();
+        /* on a branch's item the key opens the branch with the focus on its first item, as ArrowRight does (FO-93) */
+        var bw = item.getAttribute('aria-haspopup') && item.closest('.fm-ctx-wrap[data-sub]');
+        if (bw) { closeAllSub(); openSub(bw); var bf = bw.querySelector('.fm-ctx-sub .fm-ctx-item'); if (bf) bf.focus(); return; }
+        var back = ctxTarget;
+        item.click();
+        if (!ctx.classList.contains('is-open') && back && back.isConnected) back.focus();
+      });
     })();
     var filter = byId('fmFilter');
     var fcount = byId('fmFilterCount');
