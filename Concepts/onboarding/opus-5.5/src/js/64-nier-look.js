@@ -315,8 +315,17 @@
       const t = e.target, root = S.root;
       if (e.key === 'Enter' && t && t.classList && t.classList.contains('o55-nierpanel-h')) { e.preventDefault(); e.stopPropagation(); return; }
       if (e.key !== 'Escape') return;
-      const inside = host.contains(t) || t === document.body || t === document.documentElement || (root && root.contains(t) && !S.lookOpen);
+      const inside = host.contains(t) || t === document.body || t === document.documentElement || (root && root.contains(t));
       if (!inside) return;
+      /* the look menu open over the editor is the topmost layer and closes first, wherever focus is (FO-81 recheck: with
+         focus fallen to the page's body, a press on the menu's padding or a note's words, this closed the editor under the
+         open menu): from inside the window the window's own Escape closes it (60-ui-core.js onKey), from the body this */
+      if (S.lookOpen) {
+        if (root && root.contains(t)) return;
+        e.preventDefault(); e.stopPropagation();
+        if (O55.ui.act('lookMenu')) { const b = root && root.querySelector('.o55-lookbtn'); if (b) b.focus({ preventScroll: true }); }
+        return;
+      }
       e.preventDefault(); e.stopPropagation(); closePanel();
     };
     const onClickHost = (e) => { if (e.target.closest && e.target.closest('[data-o55-nierpanel="done"]')) { e.preventDefault(); closePanel(); } };
@@ -329,6 +338,8 @@
     host.addEventListener('click', keepFocus);
     document.addEventListener('keydown', onKey, true);
     panel = { host, from: from || null, m, body, off: () => document.removeEventListener('keydown', onKey, true) };
+    /* a ? note open on Pip's stage moves to the form now that the editor covers the stage (O55.pipStage.holdsTip) */
+    if (S.tip) O55.ui.refresh();
     O55.sound.play('sheet');
     /* it opens the way a NieR surface opens when NieR Mode is painted (a stepped slice), otherwise it rises */
     const fx = O55.nierFx;
@@ -345,6 +356,8 @@
     try { if (p.m && p.m.unmount) p.m.unmount(); } catch (_) {}
     p.host.remove();
     if (p.body) { p.body.removeAttribute('inert'); p.body.removeAttribute('aria-hidden'); }
+    /* an open ? note goes back to Pip's stage where the stage holds it, now that the editor no longer covers it */
+    if (O55.S && O55.S.tip && inWindow()) O55.ui.refresh();
     if (!o.silent) O55.sound.play('unsheet');
     if (o.keepFocus || !inWindow()) return;
     /* focus goes back to what opened it; a look-menu option was redrawn, so its button stands in */

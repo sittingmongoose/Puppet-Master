@@ -618,7 +618,9 @@
      never one of them. */
   const MOVED_ON = new Set(['another', 'elsewhere', 'useTailscale', 'useCode', 'useSsh', 'useSmb', 'useAlt', 'tokenOn', 'tokenOff',
     'manualOn', 'manualOff', 'otherAccount', 'cancelAdd', 'cancelSignin', 'skip', 'skipOnline', 'later']);
-  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
+  /* (not while Adjust NieR's editor covers the stage: a ? then opens its note in the form, the look menu's own, as the
+     narrow layout does; on the stage it lay under the editor, unseen, FO-81 recheck) */
+  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit() && !(O55.nierLook && O55.nierLook.panelOpen && O55.nierLook.panelOpen())); }
   O55.pipStage.holdsTip = holdsTip;
 
   /* Hover intent: a choice previews only once the pointer has rested on it for DWELL ms, so moving across the list to

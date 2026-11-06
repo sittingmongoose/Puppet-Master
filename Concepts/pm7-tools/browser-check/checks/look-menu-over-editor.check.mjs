@@ -5,7 +5,9 @@
 // 10% of a target): no element of the editor or of any other window layer, interactive or not (the editor's NIER
 // eyebrow was what a press reached on main), and no other control of the menu. Then a real press at each one's centre
 // must reach it, and the two layers keep the product's order: a press in the editor closes the menu, Adjust NieR in the
-// menu gives way to the open editor, Escape closes the menu, then the editor. Ten looks (the editor stays open when the
+// menu gives way to the open editor, a ? in the menu shows its note over the editor (the FO-81 recheck: at the wide sizes
+// the note went to Pip's stage under the editor), and Escape closes the menu, then the editor, wherever focus is (a menu
+// option, the editor, or the page's body after a press on the menu's padding). Ten looks (the editor stays open when the
 // look changes, so it can be open in every look), widths 1920x1080, 1390, 1024, 860, 740x768 and 1280x500, both motion
 // preferences, both surfaces. Fails on main 0adb197992 (the editor paints over the menu).
 //   --set size=1920x1080,740x768   --set look=nier-light   --set motion=no-preference,reduce,attribute
@@ -126,8 +128,8 @@ async function cell(t, surface, w, h) {
 			await f.evaluate(() => { window.__fo81Off?.(); window.__fo81Off = null; });
 			await t.check(`FO-81 a real press on each option and help reaches it over the editor ${tag}`, count >= (fam === 'nier' ? 15 : 13) && !misses.length, JSON.stringify({ count, misses: misses.slice(0, 6) }));
 			/* both stay open, the menu on top, as the product layers them: a press in the editor closes the menu as any press
-			   outside it does; Adjust NieR in the menu gives way to the editor already open; Escape closes the menu, then
-			   the editor, then (not tried here) the window */
+			   outside it does; Adjust NieR in the menu gives way to the editor already open; a ? in the menu shows its note;
+			   Escape closes the menu, then the editor (then, not tried here, the window), wherever focus is */
 			const st = () => f.evaluate(() => ({ menu: !!O55.S.lookOpen && !!document.querySelector('#pm-o55-onboarding .o55-lookmenu'), panel: O55.nierLook.panelOpen(), win: !!O55.S.open, focus: document.activeElement?.matches('.o55-lookbtn') ? 'look' : document.activeElement?.matches('.o55-nierpanel-h') ? 'heading' : document.activeElement?.className || document.activeElement?.tagName }));
 			const click = async (pt) => {
 				const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
@@ -156,10 +158,49 @@ async function cell(t, surface, w, h) {
 					await t.check(`FO-81 Adjust NieR in the menu gives way to the open editor ${tag}`, !s2.menu && s2.panel && s2.focus === 'heading', JSON.stringify(s2));
 					if (!(await st()).menu) { await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click(); await f.waitForTimeout(250); }
 				}
+				const reopen = async () => { if (!(await st()).menu) { await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click(); await f.waitForTimeout(250); } };
+				/* a ? in the menu over the editor: its note shows, wherever it opens (the menu; Pip's stage lies under the
+				   editor): the top box at its centre and four inset points is the note, it is painted, and its words are
+				   written out in full (FO-81 recheck: at the wide sizes the note went to the covered stage) */
+				const q = '#pm-o55-onboarding .o55-lookmenu button.o55-tipq';
+				await click(await centre(q));
+				const note = await f.waitForFunction(() => {
+					const n = document.getElementById('pm7ob-explainer'); if (!n) return null;
+					const w = n.querySelector('.o55-explainer-w, .pst-tip-t'), sr = n.querySelector('.o55-sr');
+					return w && sr && w.textContent.trim() === sr.textContent.trim() ? true : null;
+				}, null, { timeout: 8000 }).then(() => true, () => false);
+				const seen = await f.evaluate(() => {
+					const n = document.getElementById('pm7ob-explainer'); if (!n) return { note: false };
+					n.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+					const r = n.getBoundingClientRect(), pts = [[0.5, 0.5], [0.1, 0.2], [0.9, 0.2], [0.1, 0.8], [0.9, 0.8]].map(([a, b]) => [r.left + a * r.width, r.top + b * r.height]);
+					const miss = pts.filter(([x, y]) => { const e = document.elementFromPoint(x, y); return !(e && n.contains(e)); }).map(([x, y]) => { const e = document.elementFromPoint(x, y); return { x: Math.round(x), y: Math.round(y), top: e && (e.className?.baseVal ?? e.className) }; });
+					return { note: true, inMenu: !!n.closest('.o55-lookmenu'), rect: [r.left, r.top, r.width, r.height].map(Math.round), miss };
+				});
+				await t.check(`FO-81 a menu note shows over the editor: written out and on top at its centre and corners ${tag}`, note && seen.note && seen.rect[2] > 40 && seen.rect[3] > 20 && !seen.miss.length, JSON.stringify({ written: note, ...seen }));
+				if (seen.note) await t.painted(f.locator('#pm7ob-explainer'), `FO-81 the menu note is painted over the editor ${tag}`);
+				await click(await centre(q)); /* the same ? closes it */
+				await reopen();
+				/* Escape closes the topmost layer first, wherever focus is: in the menu, in the editor, on the page's body */
+				await f.evaluate(() => document.querySelector('#pm-o55-onboarding .o55-lookmenu .o55-lookopt')?.focus());
+				const m0 = await st();
+				await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
+				const m1 = await st();
+				await t.check(`FO-81 Escape from a menu option closes the menu and keeps the editor ${tag}`, m0.menu && !m1.menu && m1.panel && m1.win && m1.focus === 'look', JSON.stringify({ before: m0, after: m1 }));
+				await reopen();
+				await f.evaluate(() => document.querySelector('#pm-o55-onboarding .o55-nierpanel-h')?.focus());
+				const e0 = await st();
+				await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
+				const e1 = await st();
+				await t.check(`FO-81 Escape from the editor with the menu open closes the menu and keeps the editor ${tag}`, e0.menu && e0.focus === 'heading' && !e1.menu && e1.panel && e1.win, JSON.stringify({ before: e0, after: e1 }));
+				await reopen();
+				/* a real press on the menu's own padding: focus falls to the page's body */
+				const pad = await f.evaluate(() => { const m = document.querySelector('#pm-o55-onboarding .o55-lookmenu'), r = m.getBoundingClientRect(); return { x: r.left + 4, y: r.top + r.height / 2 }; });
+				await click(pad);
 				const s3a = await st();
+				const bodyFocus = await f.evaluate(() => document.activeElement === document.body);
 				await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
 				const s3 = await st();
-				await t.check(`FO-81 Escape closes the menu first and keeps the editor ${tag}`, s3a.menu && !s3.menu && s3.panel && s3.win && s3.focus === 'look', JSON.stringify({ before: s3a, after: s3 }));
+				await t.check(`FO-81 Escape from the page body closes the menu first and keeps the editor ${tag}`, bodyFocus && s3a.menu && !s3.menu && s3.panel && s3.win && s3.focus === 'look', JSON.stringify({ bodyFocus, before: s3a, after: s3 }));
 				await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
 				const s4 = await st();
 				await t.check(`FO-81 a second Escape closes the editor and keeps the window ${tag}`, !s4.menu && !s4.panel && s4.win, JSON.stringify(s4));
