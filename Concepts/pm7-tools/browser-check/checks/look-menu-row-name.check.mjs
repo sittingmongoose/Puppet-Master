@@ -1,9 +1,10 @@
 // FO-90: a Look-menu row keeps its name readable while the pointer is on the row's ? (hovered, and held down). Under
 // NieR's cursor part a hovered row turns into an ink bar; the option inside took the bar's paper ink only when the
-// option itself was hovered, so with the pointer on the ? the name stayed ink on ink, unseen (611e505ecf). For every row
+// option itself was hovered, so with the pointer on the ? the name stayed ink on ink, unseen (611e505ecf); and the ? under
+// the pointer took the window's accent ? hover, NieR's ink, on the ink bar, unseen as well. For every row
 // but the chosen one (and Adjust NieR's under NieR), a real pointer on its ?, then held down: the row's name, read from
 // painted pixels, must show strokes that stand off its ground (at least 3% of its box more than 60 luminance levels from
-// the box's most common level), and t.painted must find it drawn. The held press's click is held back from the page, so
+// the box's most common level), and t.painted must find it drawn; the ? itself, read the same way, must show its glyph. The held press's click is held back from the page, so
 // no note opens between rows. Ten looks, 1920x1080 and 740x768, both motion preferences, both surfaces; the editor closed,
 // and under NieR once more over Adjust NieR's editor.
 //   --set size=1920x1080   --set look=nier-light   --set motion=no-preference
@@ -43,22 +44,25 @@ async function cell(t, surface, w, h) {
 				await f.evaluate(async () => { const m = document.querySelector('#pm-o55-onboarding .o55-lookmenu'); await Promise.all(m.getAnimations({ subtree: true }).filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)).map((a) => a.finished.catch(() => {}))); });
 				const rows = await f.evaluate(() => [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu:not(.o55-opt-on):not(.o55-lookmoderow)')].map((r, i) => { r.__fo90 = i; return { i, arg: r.querySelector('.o55-lookopt')?.getAttribute('data-arg') || '', hasQ: !!r.querySelector(':scope > .o55-tipq') }; }));
 				const bad = [], seen = [];
-				for (const row of rows.filter((r) => r.hasQ)) {
+				const withQ = rows.filter((r) => r.hasQ);
+				for (const row of withQ) {
+					const qLoc = f.locator('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu:not(.o55-opt-on):not(.o55-lookmoderow) > .o55-tipq').nth(withQ.indexOf(row));
 					const q = await f.evaluate((i) => { const r = [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu')].find((n) => n.__fo90 === i), b = r.querySelector(':scope > .o55-tipq'); b.scrollIntoView({ block: 'nearest' }); const q = b.getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2 }; }, row.i);
 					const name = f.locator('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu:not(.o55-opt-on):not(.o55-lookmoderow) .o55-lookname').nth(rows.indexOf(row));
 					await t.page.mouse.move(off.x + q.x, off.y + q.y); await f.waitForTimeout(300);
+					const qHover = strokes(await t.pixels(qLoc));
 					const hover = { ...strokes(await t.pixels(name)), rowHovered: await f.evaluate((i) => [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu')].find((n) => n.__fo90 === i).matches(':hover'), row.i) };
 					await f.evaluate(() => { window.__fo90 = true; });
 					await t.page.mouse.down(); await f.waitForTimeout(250);
-					const press = strokes(await t.pixels(name));
+					const press = strokes(await t.pixels(name)), qPress = strokes(await t.pixels(qLoc));
 					const painted = await t.painted(name, `FO-90 a row's name is drawn while its ? is held ${row.arg} ${tag}`);
 					await t.page.mouse.up(); await f.waitForTimeout(120);
 					await f.evaluate(() => { window.__fo90 = false; });
-					seen.push({ row: row.arg, hover, press });
-					if (!hover.rowHovered || hover.share < 0.03 || press.share < 0.03 || !painted) bad.push({ row: row.arg, hover, press, painted });
+					seen.push({ row: row.arg, hover, press, qHover, qPress });
+					if (!hover.rowHovered || hover.share < 0.03 || press.share < 0.03 || !painted || qHover.share < 0.03 || qPress.share < 0.03) bad.push({ row: row.arg, hover, press, painted, qHover, qPress });
 					await t.page.mouse.move(2, 2); await f.waitForTimeout(150);
 				}
-				await t.check(`FO-90 every row's name stays visible with the pointer on its ? (hovered and held) ${tag}`, rows.filter((r) => r.hasQ).length >= 4 && !bad.length, JSON.stringify({ bad, seen }));
+				await t.check(`FO-90 every row's name, and the ? under the pointer, stay visible (hovered and held) ${tag}`, withQ.length >= 4 && !bad.length, JSON.stringify({ bad, seen }));
 				if (t.args.shots && list(t.args.shots, []).includes(look) && seen.length) {
 					const q = await f.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu:not(.o55-opt-on):not(.o55-lookmoderow) > .o55-tipq'), r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; });
 					await t.page.mouse.move(off.x + q.x, off.y + q.y); await f.waitForTimeout(300);
