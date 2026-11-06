@@ -901,13 +901,18 @@ def checkpoint_errors(case, root, formats):
             ('survivor_prefix_sha256', 'manifest_survivor_prefix_sha256'))):
         errors.append('index_birth_anchor_join')
     coverage = frontier['coverage']
-    if (coverage['through_sequence_id'] != event['sequence_id']
-            or coverage['first_retained_sequence_id'] != event['sequence_id']
-            or coverage['retained_event_count'] != 1 or not coverage['complete_to_captured_boundary']
-            or coverage['last_frame']['last_event_id'] != event['event_id']
-            or coverage['last_frame']['last_sequence_id'] != event['sequence_id']):
+    # DO-P1F05: a null last frame names no frame, so none of the frame and segment copies below can be read.
+    # The schema admits it only in the empty-retained-source form, which a frontier covering this event
+    # contradicts. Refused here with its own code, where it used to raise TypeError.
+    if coverage['last_frame'] is None:
+        return errors + ['index_coverage_last_frame_null']
+    # DO-P1F05: the sequence facts that used to share this code are now sequence_copy_errors predicates.
+    if coverage['complete_to_captured_boundary'] is not True:
         errors.append('index_complete_source_coverage')
+    if typed_tree(coverage['last_frame']['last_event_id']) != typed_tree(event['event_id']):
+        errors.append('index_coverage_frame_last_event_id')
     errors += coverage_copy_errors(event, coverage)
+    errors += sequence_copy_errors(event, node['anchor'], coverage)
     return errors
 
 
@@ -948,6 +953,61 @@ def coverage_copy_errors(event, coverage):
         errors.append('index_coverage_source_durable_end_offset')
     if typed_tree(segment['source_durable_bytes_sha256']) != digest:
         errors.append('index_coverage_source_durable_bytes_sha256')
+    return errors
+
+
+SEQUENCE_COPY_CODES = (
+    'index_coverage_first_retained_sequence_id', 'index_coverage_through_sequence_id',
+    'index_coverage_retained_event_count', 'index_coverage_frame_last_sequence_id',
+    'index_coverage_segment_first_sequence_id', 'index_coverage_segment_last_sequence_id',
+    'index_coverage_segment_retained_event_count', 'index_coverage_segment_name_first_sequence',
+    'index_coverage_segment_name_last_sequence', 'index_anchor_first_retained_sequence_id',
+    'index_anchor_through_sequence_id', 'index_anchor_retained_event_count')
+# storage-plan.md:460-461: seg-{generation:06}-{start_seq:020}.active and seg-{generation:06}-{start_seq:020}-{end_seq:020}.seglog,
+# the grammar of the checkpoint schema's segment_name pattern.
+SEGMENT_NAME = re.compile(r'seg-([0-9]{6,})-([0-9]{20})(?:-([0-9]{20})\.seglog|\.active)')
+
+
+def sequence_copy_errors(event, anchor, coverage):
+    """DO-P1F05: every copy of the covered event's sequence number in the frontier and the anchor is that number.
+
+    In this lane's one-event model the generation's birth anchor and its current frontier each retain exactly the
+    covered event, in the one segment the last frame names. So each first, through and last sequence is the
+    event's Storage-assigned `sequence_id`, each retained count is one, and the segment name's first-sequence field
+    (and a closed name's last-sequence field) is that number in 20 zero-padded digits. Every copy is recomputed from
+    the event and compared by exact type (`typed_tree`), so 7.0, "7", true or null is not 7 and true is not 1.
+    The name is read from the last frame; DO-P1F04's `index_coverage_segment_name` joins the segment's name to it.
+    Requires a non-null last frame: checkpoint_errors refuses a null one first.
+    """
+    sequence, one = typed_tree(event['sequence_id']), typed_tree(1)
+    digits = f"{event['sequence_id']:020}" if type(event['sequence_id']) is int else None
+    frame, segment = coverage['last_frame'], coverage['segments'][0]
+    name = SEGMENT_NAME.fullmatch(frame['segment_name']) if type(frame['segment_name']) is str else None
+    errors = []
+    if typed_tree(coverage['first_retained_sequence_id']) != sequence:
+        errors.append('index_coverage_first_retained_sequence_id')
+    if typed_tree(coverage['through_sequence_id']) != sequence:
+        errors.append('index_coverage_through_sequence_id')
+    if typed_tree(coverage['retained_event_count']) != one:
+        errors.append('index_coverage_retained_event_count')
+    if typed_tree(frame['last_sequence_id']) != sequence:
+        errors.append('index_coverage_frame_last_sequence_id')
+    if typed_tree(segment['first_sequence_id']) != sequence:
+        errors.append('index_coverage_segment_first_sequence_id')
+    if typed_tree(segment['last_sequence_id']) != sequence:
+        errors.append('index_coverage_segment_last_sequence_id')
+    if typed_tree(segment['retained_event_count']) != one:
+        errors.append('index_coverage_segment_retained_event_count')
+    if name is None or name.group(2) != digits:
+        errors.append('index_coverage_segment_name_first_sequence')
+    if name is not None and name.group(3) is not None and name.group(3) != digits:
+        errors.append('index_coverage_segment_name_last_sequence')
+    if typed_tree(anchor['first_retained_sequence_id']) != sequence:
+        errors.append('index_anchor_first_retained_sequence_id')
+    if typed_tree(anchor['through_sequence_id']) != sequence:
+        errors.append('index_anchor_through_sequence_id')
+    if typed_tree(anchor['retained_event_count']) != one:
+        errors.append('index_anchor_retained_event_count')
     return errors
 
 
@@ -1051,6 +1111,182 @@ def coverage_copy_checks(fixtures, schema, owner_module):
                     raise AssertionError(('float_copy_digested', case['case_id'], field))
                 assert checkpoint_errors(bad, root, formats) == ['checkpoint_schema'], (case['case_id'], field, form)
                 checks += 1
+    return checks
+
+
+def checkpoint_node(case):
+    read = case['read']
+    return read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]
+
+
+def redigest(case):
+    """Keep the read token's two digest copies, of the birth anchor and of the frontier, in step."""
+    node, token = checkpoint_node(case), case['read']['read_token']
+    token['generation_anchor_sha256'] = binding_digest(node['anchor'])
+    token['frontier_sha256'] = binding_digest(node['frontier'])
+    return case
+
+
+def set_segment_name(case, first, last=None, state=None):
+    """Both copies of the one segment's name (the segment's and the last frame's), in the grammar's form."""
+    coverage = frontier_coverage(case)
+    segment = coverage['segments'][0]
+    generation = SEGMENT_NAME.fullmatch(segment['segment_name']).group(1)
+    name = f'seg-{generation}-{first:020}' + ('.active' if last is None else f'-{last:020}.seglog')
+    segment['segment_name'] = coverage['last_frame']['segment_name'] = name
+    if state is not None:
+        segment['state'] = state
+    return case
+
+
+def closed_segment_case(case):
+    """The valid case with its one segment closed: a closed name in both copies whose two sequence fields are the
+    event's, and state closed. The bytes, offsets and receipts are unchanged (storage-plan.md:24306)."""
+    closed = copy.deepcopy(case)
+    sequence = closed['event']['sequence_id']
+    assert SEGMENT_NAME.fullmatch(frontier_coverage(closed)['segments'][0]['segment_name']).group(3) is None
+    return redigest(set_segment_name(closed, sequence, sequence, 'closed'))
+
+
+def sequence_copy_negatives(case):
+    """One single-defect negative per sequence_copy_errors predicate, built from a valid case.
+
+    Each changes one copy of the event's sequence number (or one count) and keeps the read token's anchor and
+    frontier digests in step, so the predicate is the only defect. First-sequence copies move down by one and
+    through/last copies up by one, so first <= through still holds. The name changes in both of its copies, which
+    DO-P1F04's `index_coverage_segment_name` keeps equal. The closed name's last field is changed on the closed
+    control. Yields (name, case, expected code).
+    """
+    sequence = case['event']['sequence_id']
+    assert type(sequence) is int and sequence > 0
+    anchor = lambda c: checkpoint_node(c)['anchor']
+    segment = lambda c: frontier_coverage(c)['segments'][0]
+    changes = (
+        ('index_coverage_first_retained_sequence_id', case,
+         lambda c: frontier_coverage(c).update(first_retained_sequence_id=sequence - 1)),
+        ('index_coverage_through_sequence_id', case, lambda c: frontier_coverage(c).update(through_sequence_id=sequence + 1)),
+        ('index_coverage_retained_event_count', case, lambda c: frontier_coverage(c).update(retained_event_count=2)),
+        ('index_coverage_frame_last_sequence_id', case,
+         lambda c: frontier_coverage(c)['last_frame'].update(last_sequence_id=sequence + 1)),
+        ('index_coverage_segment_first_sequence_id', case, lambda c: segment(c).update(first_sequence_id=sequence - 1)),
+        ('index_coverage_segment_last_sequence_id', case, lambda c: segment(c).update(last_sequence_id=sequence + 1)),
+        ('index_coverage_segment_retained_event_count', case, lambda c: segment(c).update(retained_event_count=2)),
+        ('index_coverage_segment_name_first_sequence', case, lambda c: set_segment_name(c, sequence + 1)),
+        ('index_coverage_segment_name_last_sequence', closed_segment_case(case),
+         lambda c: set_segment_name(c, sequence, sequence + 1)),
+        ('index_anchor_first_retained_sequence_id', case, lambda c: anchor(c).update(first_retained_sequence_id=sequence - 1)),
+        ('index_anchor_through_sequence_id', case, lambda c: anchor(c).update(through_sequence_id=sequence + 1)),
+        ('index_anchor_retained_event_count', case, lambda c: anchor(c).update(retained_event_count=2)),
+    )
+    assert tuple(code for code, _, _ in changes) == SEQUENCE_COPY_CODES
+    for code, base, change in changes:
+        bad = copy.deepcopy(base)
+        change(bad)
+        yield code.removeprefix('index_'), redigest(bad), code
+
+
+def frame_negatives(case):
+    """DO-P1F05: the last frame's null and identity forms, and the coverage-complete flag. Yields (name, case, code).
+
+    - empty_source_null_frame: the one schema-valid null last frame, the schema's empty-retained-source form (its
+      allOf ties a null frame to empty_retained_source true, null first and through and a zero count). It claims
+      no retained event where the frontier covers this one. It used to raise TypeError; now its own code.
+    - bare_null_frame: last_frame null alone; the schema's allOf refuses it first.
+    - last_event_id: another event's id in the last frame.
+    - incomplete_coverage: complete_to_captured_boundary false; the schema's const refuses it first, and the
+      runtime `index_complete_source_coverage` clause duplicates that const.
+    """
+    data = packed(case['event'])
+    changes = (
+        ('empty_source_null_frame', 'index_coverage_last_frame_null', lambda c: c.update(
+            empty_retained_source=True, first_retained_sequence_id=None, through_sequence_id=None,
+            retained_event_count=0, last_frame=None)),
+        ('bare_null_frame', 'checkpoint_schema', lambda c: c.update(last_frame=None)),
+        ('last_event_id', 'index_coverage_frame_last_event_id', lambda c: c['last_frame'].update(
+            last_event_id='evt_do_' + hashlib.sha256(b'foreign:' + data).hexdigest())),
+        ('incomplete_coverage', 'checkpoint_schema', lambda c: c.update(complete_to_captured_boundary=False)),
+    )
+    for name, code, change in changes:
+        bad = copy.deepcopy(case)
+        change(frontier_coverage(bad))
+        yield name, redigest(bad), code
+
+
+# Wrong representations of each sequence copy: (code, container, field, forms, forms the strict schema admits).
+# A form the schema admits reaches the guard through checkpoint_errors; the others are `checkpoint_schema` there.
+SEQUENCE_TYPE_FORMS = (
+    ('index_coverage_first_retained_sequence_id', 'coverage', 'first_retained_sequence_id', ('float', 'string', 'bool', 'null'), ()),
+    ('index_coverage_through_sequence_id', 'coverage', 'through_sequence_id', ('float', 'string', 'bool', 'null'), ()),
+    ('index_coverage_retained_event_count', 'coverage', 'retained_event_count', ('float', 'string', 'bool', 'null'), ()),
+    ('index_coverage_frame_last_sequence_id', 'frame', 'last_sequence_id', ('float', 'string', 'bool', 'null'), ()),
+    ('index_coverage_segment_first_sequence_id', 'segment', 'first_sequence_id', ('float', 'string', 'bool', 'null'), ('null',)),
+    ('index_coverage_segment_last_sequence_id', 'segment', 'last_sequence_id', ('float', 'string', 'bool', 'null'), ('null',)),
+    ('index_coverage_segment_retained_event_count', 'segment', 'retained_event_count', ('float', 'string', 'bool', 'null'), ()),
+    ('index_coverage_segment_name_first_sequence', 'frame', 'segment_name', ('null', 'trailing_lf', 'unpadded'), ()),
+    ('index_anchor_first_retained_sequence_id', 'anchor', 'first_retained_sequence_id', ('float', 'string', 'bool', 'null'), ('null',)),
+    ('index_anchor_through_sequence_id', 'anchor', 'through_sequence_id', ('float', 'string', 'bool', 'null'), ('null',)),
+    ('index_anchor_retained_event_count', 'anchor', 'retained_event_count', ('float', 'string', 'bool', 'null'), ()),
+)
+
+
+def sequence_wrong_form(value, form):
+    if form == 'unpadded':
+        # The name's first-sequence field without its zero padding: the same number written another way.
+        return re.sub(r'^(seg-[0-9]{6,}-)([0-9]{20})', lambda match: match.group(1) + str(int(match.group(2))), value)
+    return wrong_form(value, form)
+
+
+def sequence_target(case, container):
+    coverage = frontier_coverage(case)
+    return {'coverage': coverage, 'frame': coverage['last_frame'], 'segment': coverage['segments'][0],
+            'anchor': checkpoint_node(case)['anchor']}[container]
+
+
+def sequence_copy_checks(fixtures, schema, owner_module):
+    """DO-P1F05: every positive's sequence copies agree with its own event; each predicate has its negative."""
+    root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
+    unverified = {'status': 'historical_original_unverified', 'appended': False, 'receipt': None}
+    checks = 0
+    for key in ('event_cases', 'retained_event_cases', 'compatibility_event_cases'):
+        for case in fixtures[key]:
+            assert not sequence_copy_errors(case['event'], checkpoint_node(case)['anchor'], frontier_coverage(case)), (key, case['case_id'])
+            closed = closed_segment_case(case)
+            assert checkpoint_errors(closed, root, formats) == [], (key, case['case_id'], 'closed_segment')
+            assert historical_read_errors(closed, schema, owner_module) == [], (key, case['case_id'], 'closed_segment')
+            checks += 3
+            for name, bad, code in [*sequence_copy_negatives(case), *frame_negatives(case)]:
+                assert checkpoint_errors(bad, root, formats) == [code], (key, case['case_id'], name)
+                assert historical_read_errors(bad, schema, owner_module) == [code], (key, case['case_id'], name)
+                checks += 2
+                if key == 'event_cases':
+                    assert recover_original(bad, schema, owner_module) == unverified, (case['case_id'], name)
+                    checks += 1
+    # Exact type: the guard itself refuses every other representation of a copy. Through checkpoint_errors the
+    # strict schema refuses the forms it does not admit; an integral float raises in SP-278's binding codec
+    # (DO-P1F4-S1, part 2).
+    for case in fixtures['event_cases']:
+        for code, container, field, forms, admitted in SEQUENCE_TYPE_FORMS:
+            for form in forms:
+                bad = copy.deepcopy(case)
+                target = sequence_target(bad, container)
+                target[field] = sequence_wrong_form(target[field], form)
+                assert sequence_copy_errors(bad['event'], checkpoint_node(bad)['anchor'], frontier_coverage(bad)) == [code], (
+                    case['case_id'], field, form)
+                checks += 1
+                try:
+                    redigest(bad)
+                except TypeError:
+                    assert form == 'float', (case['case_id'], field, form)
+                    try:
+                        checkpoint_errors(bad, root, formats)
+                    except TypeError:
+                        checks += 1
+                        continue
+                    raise AssertionError(('float_copy_digested', case['case_id'], field))
+                expected = [code] if form in admitted else ['checkpoint_schema']
+                assert checkpoint_errors(bad, root, formats) == expected, (case['case_id'], field, form)
+                assert historical_read_errors(bad, schema, owner_module) == expected, (case['case_id'], field, form)
+                checks += 2
     return checks
 
 
@@ -1525,4 +1761,5 @@ def check_oracles(fixtures, schema, owner_module):
         assert (not actual) == test['valid'], (test['name'], actual)
         checks += 1
     checks += coverage_copy_checks(fixtures, schema, owner_module)
+    checks += sequence_copy_checks(fixtures, schema, owner_module)
     return checks
