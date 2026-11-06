@@ -288,3 +288,36 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOO
 | `newcases-on-base.json` | `e9af86ec1aa6e42b7c3ffde1dfda0f2de36bf4fc248ce070c7929dc05c69c15b` |
 | `ledgers-fix.json`, `ledgers-base.json` | `6721d5ebb48e3a61c489bccf6b7b2ed36f25ea77c6a39e1e6621a65380fbced6` |
 | `docs-fix-full.json`, `docs-base-full.json` | `227846cbf3a7183fdb96d317c4c17293be916acdac68598c456a99d71d8986b4` |
+
+## Tool batch 4: findings and responses
+
+**REVIEW-etools-tb3-opus findings 3 to 6 (TOOLBATCH4 T62) are fixed; nothing is disputed.** Base: `253cc695fe`. Fix: `87524d99f7` on `plans/tools-batch1-20261105`. Every finding is HYPOTHETICAL: none of the shapes occurs in a real Plans document, before or after.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **3: three phantom unit headings, one new on the base — fixed** | `list_item_column`, `blocks_in`. (a) A line indented less than an item's content column after a blank line ends the item, as CommonMark says; the walk back now tracks the least indentation seen after a blank line and returns no item when it falls short (`f-list-ended-by-underindent-then-fence`, the one `616c08e5b8` made new). (b) The `paragraph` state is set only by paragraph text: a thematic break, an indented-code line outside a paragraph, a fence closer and an HTML block leave no paragraph open, so a lone tag line after them starts a kind-7 HTML block (`h7-after-thematic-break`, `h7-after-indented-code`). | Traps `tb4-underindented-line-after-blank-ends-the-item`, `tb4-html-tag-after-thematic-break-is-raw-html`, `tb4-html-tag-after-indented-code-is-raw-html`. |
+| **4: three CommonMark unit headings neither read nor refused — fixed** | `_indent`, `QUOTE_MARK`, `list_item_column`. Tabs now count to 4-column stops before any indentation arithmetic, and `>` followed by a tab is read as CommonMark reads it, so `>\t## …` and a tab-indented heading in a list item are seen; both are then refused (`heading_in_blockquote`, `heading_in_list_item`), as every heading in a container is. A lazy continuation line at column 0 no longer stops the walk back, so an item fence after it stays an item fence and the real heading it hides is read (`f-list-lazy-then-fence`). | Traps `tb4-heading-after-quote-and-tab-is-refused`, `tb4-tab-indented-heading-in-list-item-is-refused`, `tb4-lazy-line-keeps-the-item-fence`. |
+| **5: an HTML end condition on the start line was searched only after the start marker — fixed** | `blocks_in`, the `HTML_ENDED` loop. The end condition is searched on the whole start line, as markdown-it-py does, so `<!-->`, `<!--->` and `<?>` end on their own line. | Traps `tb4-empty-comment-ends-on-its-start-line`, `tb4-processing-instruction-ends-on-its-start-line`. |
+| **6: text inside an HTML block counted as unit prose — fixed** | `prose()`. HTML-block lines that `blocks_in` finds are dropped from the text tokens are matched against, so a token only inside `<!-- … -->` no longer passes witness 2 or 3. | Trap `tb4-token-only-in-html-comment-is-not-prose`; control `tb4-token-in-prose-beside-a-comment-control` (a token in prose next to a comment still credits). |
+
+On `253cc695fe` the 9 refusal traps fail (8 pass with no finding, `tb4-underindented-line-after-blank-ends-the-item` gives the wrong status) and the control passes (`newcases-on-base.json`). **Soundness:** nothing widens. The lazy-continuation rule makes the walk pass column-0 lines that CommonMark continues the item with; it can only turn a top-level fence the base read into the item fence CommonMark reads, and the trap above shows the heading that fence hid is now read, not credited away.
+
+### Rerun results
+
+| Check | `253cc695fe` | Now |
+|---|---|---|
+| Self-test | 150/150 (151/160 with the new traps) | **160/160** |
+| The review's shapes (`shapes-tb3.json`, 57) against markdown-it-py 3.0.0's commonmark preset | 16 mismatches | **0 read differently**; 2 headings CommonMark renders are refused (`q-tab-heading`: `heading_in_blockquote`, `l-heading-tab-continuation`: `heading_in_list_item`), as every container heading is |
+| Real ledgers (`ledger_scan.py`, all 39) | 39 rows (`ledgers-base.json`) | **identical**, row by row (`ledgers-fix.json` = `ledgers-base.json`) |
+| The 110 Plans docs (`cm_docs110.py`) | not rerun (the review's replay: 7,652, 0 phantom, 0 missed) | witness and CommonMark agree on **7,652** unit headings: 0 phantom, 0 missed, 0 setext; 69 HTML blocks each, all comments; 0 tab-led container headings |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH4/witness/`.
+
+| File | SHA-256 |
+|---|---|
+| `shapes-tb3.json` | `9316f33fb7944f924baa9435277d593c1edc2b42e99939ba34cfc1fb3aa4a6de` |
+| `shapes-base.txt` | `e502e11121faa5ea2345dc7273160a09db8cb49cb3144929c03e5e11aa43e182` |
+| `shapes-fix.txt` | `2ca5a3773d0c441a21d15df8c64b38571e53db6965a9e90f30c6498802873d87` |
+| `newcases-on-base.json` | `41c341f2e6b7414922ba12a5871e5ae89ec7040ba443ccbe660b3f7d08813996` |
+| `ledgers-fix.json`, `ledgers-base.json` | `6721d5ebb48e3a61c489bccf6b7b2ed36f25ea77c6a39e1e6621a65380fbced6` |
+| `docs110-fix.txt` | `fde193d50d1840de53bd03e6d0c2778e54ccc1862134de8c6be87565833f628d` |
