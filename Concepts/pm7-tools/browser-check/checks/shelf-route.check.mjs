@@ -11,21 +11,21 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const INPUTS = ['mouse', 'shift-f10', 'menu-key'];
 const KEY = { 'shift-f10': 'Shift+F10', 'menu-key': 'ContextMenu' };
 
-// The side panel as the page under test authors it: the same file the kit opens.
+// The side panel as the page under test authors it: the same file (or served page) the kit opens.
 async function authoredSlot(t) {
   const page = t.args.page ? String(t.args.page) : fileURLToPath(new URL('../../../PMConcept7.html', import.meta.url));
-  const file = /^file:/i.test(page) ? fileURLToPath(page) : /^[a-z][a-z0-9+.-]+:/i.test(page) ? null : path.resolve(page);
-  if (!file) return { file: page, html: null };
-  const html = await readFile(file, 'utf8');
+  const served = /^https?:/i.test(page), file = /^file:/i.test(page) ? fileURLToPath(page) : served ? null : path.resolve(page);
+  const url = served ? page.split('?')[0] : pathToFileURL(file).href;
+  const html = served ? await (await fetch(page)).text() : await readFile(file, 'utf8');
   const at = html.indexOf('id="sidePanelSlot"');
-  if (at < 0) return { file, html: null };
+  if (at < 0) return { url, html: null };
   const start = html.lastIndexOf('<aside', at), re = /<(\/?)aside\b/gi;
   re.lastIndex = start;
   for (let m, depth = 0; (m = re.exec(html));) {
     depth += m[1] ? -1 : 1;
-    if (!depth) return { file, html: html.slice(start, html.indexOf('>', m.index) + 1) };
+    if (!depth) return { url, html: html.slice(start, html.indexOf('>', m.index) + 1) };
   }
-  return { file, html: null };
+  return { url, html: null };
 }
 
 export default async function (t) {
@@ -55,14 +55,15 @@ export default async function (t) {
       if (kind && hit(e, kind)) stop(e);
     }, true);
   }, String(t.args.blockContext));
-  // Sabotage: --set blockPopup=<css selector> stops clicks and Enter/Space/ArrowDown on matching side-panel triggers.
-  if (t.args.blockPopup) await t.page.addInitScript(sel => {
+  // Sabotage: --set blockPopup=<css selector> stops clicks and Enter/Space/ArrowDown on matching side-panel triggers;
+  // --set blockPopupInput=mouse|enter narrows it to one input, --set blockPopupText=<text> to triggers whose text has it.
+  if (t.args.blockPopup) await t.page.addInitScript(([sel, input, text]) => {
     window.__blockedPopup = 0;
-    const hit = e => !!e.target.closest?.(sel)?.closest('#sidePanelSlot');
+    const hit = e => { const trig = e.target.closest?.(sel); return !!trig?.closest('#sidePanelSlot') && (!text || trig.textContent.includes(text)); };
     const stop = e => { window.__blockedPopup++; e.preventDefault(); e.stopImmediatePropagation(); };
-    window.addEventListener('click', e => { if (hit(e)) stop(e); }, true);
-    window.addEventListener('keydown', e => { if (['Enter', ' ', 'ArrowDown'].includes(e.key) && hit(e)) stop(e); }, true);
-  }, String(t.args.blockPopup));
+    if (input !== 'enter') window.addEventListener('click', e => { if (e.detail > 0 && hit(e)) stop(e); }, true);
+    if (input !== 'mouse') window.addEventListener('keydown', e => { if (['Enter', ' ', 'ArrowDown'].includes(e.key) && hit(e)) stop(e); }, true);
+  }, [String(t.args.blockPopup), String(t.args.blockPopupInput || '*'), String(t.args.blockPopupText || '')]);
   // Sabotage: --set blockBranch=<item text|*>:<hover|key|*> stops a nested branch opening by pointer or ArrowRight.
   if (t.args.blockBranch) await t.page.addInitScript(spec => {
     const cut = spec.lastIndexOf(':'), name = spec.slice(0, cut), input = spec.slice(cut + 1);
@@ -107,8 +108,8 @@ export default async function (t) {
   await t.check('PMMenu upgrade selectors available',!!selectors.wrap && !!selectors.trigger,JSON.stringify(selectors),{hard:true});
   // Every menu the page authors in the side panel, nested branches included, parsed without running scripts.
   const slot = await authoredSlot(t);
-  await t.check('authored side panel read from the page under test', !!slot.html && f.url().split('?')[0] === pathToFileURL(slot.file).href,
-    JSON.stringify({ file: slot.file, frame: f.url().split('?')[0] }), { hard: true });
+  await t.check('authored side panel read from the page under test', !!slot.html && f.url().split('?')[0] === slot.url,
+    JSON.stringify({ page: slot.url, frame: f.url().split('?')[0] }), { hard: true });
   const authored = await f.evaluate(html => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
     const key = m => { const up = m.parentElement && m.parentElement.closest('[role="menu"]'); return m.id || ((up ? key(up) + ' › ' : '') + (m.getAttribute('aria-label') || 'menu')); };
@@ -194,7 +195,10 @@ export default async function (t) {
       branchRows.push({ menu: key, label, sub });
     }
   };
+  // --set only=<panel ids> walks just those panels (focused sabotage and debugging); the floors then fail by design.
+  const only = t.args.only ? String(t.args.only).split(',') : null;
   for (const target of targets) {
+    if (only && !only.includes(target)) continue;
     const icon=f.locator(`#activityBar .icon[data-target="${target}"]`);await icon.click();await f.waitForTimeout(500);
     // Clicking the already selected Files icon folds its panel; a second click opens it.
     if(!await f.locator('#sidePanelSlot').isVisible())await icon.click();
