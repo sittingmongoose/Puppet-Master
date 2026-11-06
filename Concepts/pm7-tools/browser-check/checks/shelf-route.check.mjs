@@ -140,7 +140,7 @@ export default async function (t) {
   let current = null;
   // Assert one open menu: items, a reachable first item, its nested branches, then Escape closes it.
   // reopen: opens the same menu again by the same route, for the pick (FO-84b).
-  const assertMenu = async (key, tag, withBranches = true, reopen = null) => {
+  const assertMenu = async (key, tag, withBranches = true, reopen = null, origin = null) => {
     const info = await f.evaluate(async k => {
       const m = __shelf.open().find(x => __shelf.key(x) === k);
       if (!m) return null;
@@ -162,32 +162,57 @@ export default async function (t) {
     // included); once per panel a second Escape must then close that overlay, and its icon reopens it.
     if (panelBefore) await t.check(`${tag} Escape closes the menu and leaves the side panel open`, await slot.isVisible(), '', { hard: true });
     await secondEscape(tag);
-    if (withBranches && reopen) await pickMenu(key, tag, reopen);
+    // --set picks=0 skips the picks (to isolate the Escape assertion on a build without FO-84b)
+    if (withBranches && reopen && t.args.picks !== '0') await pickMenu(key, tag, reopen, origin);
   };
-  // FO-84b: a pick closes the menu and leaves the side panel open (the folded rail's overlay included). The pick is
+  // FO-84b/c: a pick closes the menu and leaves the side panel open (the folded rail's overlay included). The pick is
   // the menu's selected or checked item when it has one (no state change), else its first enabled command item
-  // (data-demo-action / data-command-id): never an item that opens something in the centre.
-  const pickMenu = async (key, tag, reopen) => {
-    await reopen();
-    const back = await f.waitForFunction(k => __shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
-    await t.check(`${tag} reopens by the same route for a pick`, back, '', { hard: true });
-    const label = await f.evaluate(k => {
-      document.querySelectorAll('[data-shelf-pick]').forEach(e => e.removeAttribute('data-shelf-pick'));
+  // (data-demo-action / data-command-id): never an item that opens something in the centre. Before it, a disabled
+  // item and a branch parent must not close the menu. Then the menu opens again by its route and Enter on the same
+  // item must pick it the same way and give focus back to the route's origin (its trigger or row).
+  const pickMenu = async (key, tag, reopen, origin) => {
+    const open = () => f.evaluate(k => __shelf.keys().includes(k), key);
+    const reopened = async (why) => {
+      await reopen();
+      const back = await f.waitForFunction(k => __shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
+      await t.check(`${tag} reopens by the same route ${why}`, back, '', { hard: true });
+    };
+    const mark = () => f.evaluate(k => {
+      document.querySelectorAll('[data-shelf-pick],[data-shelf-inert]').forEach(e => { e.removeAttribute('data-shelf-pick'); e.removeAttribute('data-shelf-inert'); });
       const m = __shelf.open().find(x => __shelf.key(x) === k);
-      const own = m ? [...m.querySelectorAll('[role^="menuitem"]')].filter(it => it.closest('[role="menu"]') === m && it.checkVisibility()
-        && !it.hasAttribute('aria-haspopup') && it.getAttribute('aria-disabled') !== 'true' && !it.disabled) : [];
+      const all = m ? [...m.querySelectorAll('[role^="menuitem"]')].filter(it => it.closest('[role="menu"]') === m && it.checkVisibility()) : [];
+      const off = it => it.getAttribute('aria-disabled') === 'true' || it.disabled;
+      const own = all.filter(it => !it.hasAttribute('aria-haspopup') && !off(it));
       const chosen = own.find(it => it.getAttribute('aria-checked') === 'true' || it.getAttribute('aria-selected') === 'true' || it.classList.contains('active') || it.classList.contains('is-selected'))
         || own.find(it => it.hasAttribute('data-demo-action') || it.hasAttribute('data-command-id'));
-      if (!chosen) return null;
-      chosen.setAttribute('data-shelf-pick', '');
-      return chosen.textContent.trim().replace(/\s+/g, ' ');
+      chosen?.setAttribute('data-shelf-pick', '');
+      const inert = [all.find(off), all.find(it => it.hasAttribute('aria-haspopup') && !off(it))].filter(Boolean);
+      inert.forEach((it, i) => it.setAttribute('data-shelf-inert', String(i)));
+      return { pick: chosen ? chosen.textContent.trim().replace(/\s+/g, ' ') : null, inert: inert.map(it => (it.hasAttribute('aria-haspopup') ? 'branch ' : 'disabled ') + it.textContent.trim().replace(/\s+/g, ' ')) };
     }, key);
-    await t.check(`${tag} has an item to pick`, !!label, '', { hard: true });
+    const settled = () => f.waitForFunction(k => !__shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
+    await reopened('for a pick');
+    const m1 = await mark();
+    await t.check(`${tag} has an item to pick`, !!m1.pick, JSON.stringify(m1), { hard: true });
+    for (const [i, what] of m1.inert.entries()) {
+      await f.locator(`[data-shelf-inert="${i}"]`).click();
+      await t.check(`${tag} a ${what.split(' ')[0]} item (${what.slice(what.indexOf(' ') + 1)}) does not close the menu`, await open(), '', { hard: true });
+    }
     await f.locator('[data-shelf-pick]').click();
-    const closed = await f.waitForFunction(k => !__shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
-    await t.check(`${tag} a pick (${label}) closes the menu and leaves the side panel open`, closed && await f.locator('#sidePanelSlot').isVisible(),
+    const closed = await settled();
+    await t.check(`${tag} a pick (${m1.pick}) closes the menu and leaves the side panel open`, closed && await f.locator('#sidePanelSlot').isVisible(),
       JSON.stringify({ closed, panel: await f.locator('#sidePanelSlot').isVisible() }), { hard: true });
-    await f.evaluate(() => document.querySelectorAll('[data-shelf-pick]').forEach(e => e.removeAttribute('data-shelf-pick')));
+    if (!origin) return;
+    await reopened('for a pick by Enter');
+    const m2 = await mark();
+    await origin.evaluate(e => e.setAttribute('data-shelf-origin', ''));
+    await f.locator('[data-shelf-pick]').focus();
+    await t.page.keyboard.press('Enter');
+    const closedByKey = await settled();
+    const after = await f.evaluate(() => ({ focusOnOrigin: !!document.activeElement?.hasAttribute('data-shelf-origin'), focus: document.activeElement?.tagName + '.' + document.activeElement?.className }));
+    await t.check(`${tag} Enter on (${m2.pick}) picks it, closes the menu and leaves the side panel open`, closedByKey && await f.locator('#sidePanelSlot').isVisible(), '', { hard: true });
+    await t.check(`${tag} a pick by Enter gives focus back to the route's origin`, after.focusOnOrigin, JSON.stringify(after), { hard: true });
+    await f.evaluate(() => document.querySelectorAll('[data-shelf-pick],[data-shelf-inert],[data-shelf-origin]').forEach(e => { e.removeAttribute('data-shelf-pick'); e.removeAttribute('data-shelf-inert'); e.removeAttribute('data-shelf-origin'); }));
   };
   const secondDone = new Set();
   const secondEscape = async (tag) => {
@@ -324,7 +349,7 @@ export default async function (t) {
           const key = await f.waitForFunction(b => __shelf.keys().find(k => !b.includes(k)), before, { timeout: 5000 }).then(h => h.jsonValue(), () => null);
           await t.check(`${tag} opens a menu by ${input}`, !!key, JSON.stringify({ blocked: await f.evaluate(() => window.__blockedPopup || 0) }), { hard: true });
           got[input] = key;
-          await assertMenu(key, `${tag} by ${input}`, true, async () => { if (input === 'mouse') await trig.click(); else { await trig.focus(); await t.page.keyboard.press('Enter'); } });
+          await assertMenu(key, `${tag} by ${input}`, true, async () => { if (input === 'mouse') await trig.click(); else { await trig.focus(); await t.page.keyboard.press('Enter'); } }, trig);
           if (await trig.getAttribute('aria-expanded') !== null)
             await t.check(`${tag} by ${input} trigger collapsed after Escape`, await trig.getAttribute('aria-expanded') === 'false', '', { hard: true });
         }
@@ -378,7 +403,7 @@ export default async function (t) {
           await assertMenu(key, tag, !branchDone.has(once), async () => {
             if (input === 'mouse') await t.page.mouse.click(off.x + p.at.x, off.y + p.at.y, { button: 'right' });
             else { await row.focus(); await t.page.keyboard.press(KEY[input]); }
-          });
+          }, row);
           branchDone.add(once);
         }
         const menus = INPUTS.map(input => got[input] || null);

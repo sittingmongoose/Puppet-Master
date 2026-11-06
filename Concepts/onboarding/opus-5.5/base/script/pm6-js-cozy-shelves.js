@@ -1400,6 +1400,24 @@
         else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
       });
       ctx.addEventListener('pm-ctx-open', closeAllSub);
+      /* a pick closes File actions through PMMenu, as a wrapper's menu closes on its pick (FO-84c): an enabled item
+         that is not a branch. No stopPropagation, so the demo router still runs the item. Enter or Space on a focused
+         item picks it like a click, and a pick by key gives focus back to the row the menu was opened for. */
+      ctx.addEventListener('click', function (ev) {
+        var item = ev.target.closest('[role="menuitem"]');
+        if (!item || item.hasAttribute('aria-haspopup') || item.hasAttribute('disabled') || item.getAttribute('aria-disabled') === 'true') return;
+        closeAllSub();
+        PMMenu.close(ctx);
+      });
+      ctx.addEventListener('keydown', function (ev) {
+        if (ev.key !== 'Enter' && ev.key !== ' ') return;
+        var item = ev.target.closest && ev.target.closest('[role="menuitem"]');
+        if (!item || !ctx.contains(item)) return;
+        ev.preventDefault();
+        var back = ctxTarget;
+        item.click();
+        if (!ctx.classList.contains('is-open') && back && back.isConnected) back.focus();
+      });
     })();
     var filter = byId('fmFilter');
     var fcount = byId('fmFilterCount');

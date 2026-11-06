@@ -153,8 +153,9 @@ shims.fileContextMenu = function () {
       var b = h('div', { class: 'fm-ctx-item pmw-ctx-item', role: 'menuitem', tabindex: '-1', 'data-pmw-open': r[0], text: r[1] });
       b.addEventListener('click', function (e) {
         e.stopPropagation();
-        menuEl.classList.remove('open', 'show', 'visible');
-        menuEl.style.display = 'none';
+        // close through the menu's owner, so its register of open menus stays true (FO-84c)
+        if (window.PMCozeMenu) window.PMCozeMenu.close(menuEl);
+        else { menuEl.classList.remove('open', 'show', 'visible'); menuEl.style.display = 'none'; }
         if (!target) return;
         PM_HOME.open({ kind: 'editor', path: target, mode: 'keep', where: r[0] === 'open' ? 'auto' : r[0] === 'panel' ? 'panel' : 'right' });
       });
