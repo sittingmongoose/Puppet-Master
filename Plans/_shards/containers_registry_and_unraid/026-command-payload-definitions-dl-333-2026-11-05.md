@@ -1,0 +1,2621 @@
+# Shard 026: Command payload definitions (DL-333, 2026-11-05)
+
+Source: `Plans/Containers_Registry_and_Unraid.md`
+
+Source lines: L6978-L9588
+
+Source SHA256: `1ca859a8a0a8d88ee55f0d59e0d581293fc30c3e77e3529edff6cf95074c44ed`
+
+---
+
+## Command payload definitions (DL-333, 2026-11-05)
+
+### CRAU-115 - Docker Registry Kubernetes Command Payload Definitions
+
+```yaml
+plan_unit_id: CRAU-115
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Typed payload definitions (DL-333) for the forty-five Docker Manager, registry and Kubernetes
+  commands that UI_Command_Catalog UCC-049 through UCC-053 register and UCC-230 routes to this
+  unit, including cmd.orchestrator.push_image, whose Docker publication contract is CRAU's: the
+  build flow (select_target, run, the image/compose/bake build modes, bake preview and run),
+  container lifecycle and access commands, image actions, compose subset and scenario commands,
+  repository creation, promotion, tag push, image push, drift comparison, cleanup, the
+  shell/view-state wrappers, and the project-focused Kubernetes family. The definitions block
+  below gives each command its args, owner request and owner result in
+  pm.command_payload_definitions.v1, with error and disabled-reason codes narrowed from the
+  overlay's closed sets. The catalog keeps ids, labels, availability and aliases.
+gui_related: true
+gui_classification_reason: Defines the arguments of user-visible Docker Manager, registry and Kubernetes commands.
+depends_on: [UCC-230, UCC-049, UCC-050, UCC-051, UCC-052, UCC-053, UCC-105, CRAU-011, CRAU-013, CRAU-014, CRAU-031, CRAU-044, CV-304, CV-333, DL-333]
+unblocks: []
+acceptance_criteria:
+  - Every command that UCC-230 routes to CRAU-115 has exactly one definition in the block below.
+  - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
+  - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_payload_shape_drift
+reasoning_tier: high
+context_scope: ucc_049_105_typed_definitions
+implementation_surfaces: [Plans/Containers_Registry_and_Unraid.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
+preserved_exact_tokens: [cmd.docker.build.image, cmd.docker.build.compose, cmd.docker.build.bake, cmd.docker.build.run, cmd.docker.build.select_target, cmd.docker.bake.preview, cmd.docker.bake.run, cmd.docker.container.stop, cmd.docker.container.restart, cmd.docker.container.delete, cmd.docker.container.inspect, cmd.docker.container.view_logs, cmd.docker.container.attach_shell, cmd.docker.context.select, cmd.docker.image.tag, cmd.docker.image.inspect, cmd.docker.image.delete, cmd.docker.image.push, cmd.docker.open_dockerfile, cmd.docker.compose.up_subset, cmd.docker.compose.down_subset, cmd.docker.compose.scenario.save, cmd.docker.compose.scenario.run, cmd.docker.compose.scenario.edit, cmd.docker.compose.scenario.delete, cmd.docker.show, cmd.docker.switch_subview, cmd.docker.create_repository, cmd.docker.create_repository.confirm, cmd.docker.create_repository.cancel, cmd.docker.registry.promote, cmd.docker.registry.tag_push, cmd.docker.drift.compare, cmd.docker.cleanup.scan, cmd.docker.cleanup.prune, cmd.orchestrator.push_image, cmd.docker.k8s.apply, cmd.docker.k8s.diff, cmd.docker.k8s.logs, cmd.docker.k8s.exec, cmd.docker.k8s.port_forward, cmd.docker.k8s.select_context, cmd.docker.k8s.select_namespace, cmd.docker.k8s.helm_preview, cmd.docker.k8s.helm_install]
+negative_constraints:
+  - Do not add payload fields to UI_Command_Catalog command rows.
+  - Do not define a payload for an alias, retired, non-alias or source-lineage token.
+  - Do not widen the log-mode, subview, build-mode or privacy vocabularies beyond the values fixed here without an owner decision.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Contracts_V0.md]
+```
+
+```yaml
+command_payload_definitions:
+  format: pm.command_payload_definitions.v1
+  owner_unit: CRAU-115
+  overlay: Plans/UI_Command_Catalog.md#UCC-230
+  definitions:
+    - command_id: cmd.docker.build.select_target
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it persists the selected
+      # build target as per-project state and gates later builds, like cmd.docker.context.select (DESIGN 4.6).
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 row-specific identity: capability_snapshot_ref for mutating or capability-gated actions; UCC-230 row_groups required when domain_action"
+        dockerfile_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            The row says select_target "Selects Dockerfile, context, target stage, platform, and build mode"
+            (UI_Command_Catalog.md section 2.5A) and CRAU-011 prose names the same inputs, but no canon field
+            name exists. JUDGMENT: optional ref naming the selected Dockerfile record; absent means the inferred
+            target stands. Polyglot or monorepo ambiguity must prompt instead of guessing (CRAU-011 negative constraint).
+        build_context_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            Same prose as dockerfile_ref ("context"); no canon field name. JUDGMENT: optional ref to the selected
+            build context record.
+        target_stage:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: >-
+            "target stage" is named in prose only; no field name, bound or default. JUDGMENT: optional string,
+            generic text bound.
+        platforms:
+          type: list
+          required: false
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: gap
+          gap_note: >-
+            "platform" is named in prose only; item format (os[/arch[/variant]]) is stated nowhere. JUDGMENT:
+            unique optional string list, bounds from DockerTagPushV3Request.platforms items.
+        build_mode:
+          type: enum
+          required: false
+          default: none
+          values: [image, compose, bake]
+          provenance: gap
+          gap_note: >-
+            The three build modes are canon (2.5A amended rows "Build mode `image`/`compose`/`bake`", DL-333
+            resolution 3), but no field name carries the mode. JUDGMENT: build_mode with the canon mode tokens;
+            absent leaves the preferred build mode as persisted panel state (CRAU-011).
+      owner_request: none                          # no wiring request_schema_ref (Wiring_Matrix.production.json catalog.docker_build_select_target)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBuildTargetSelectionResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: shared Docker taxonomy (UCC-053) plus freshness; no row states a subset
+      aliases: []
+    - command_id: cmd.docker.build.run
+      ucc_units: [UCC-049]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_build_run)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBuildRunResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: docker_available gate plus freshness
+      # JUDGMENT: build.run carries no subject arg: CRAU-011 requires it to resolve to the persisted selected
+      # compose/bake target "rather than rebuilding from a guessed default", so the selection is read from
+      # per-project state, not passed per dispatch.
+      aliases: []
+    - command_id: cmd.docker.build.image
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it builds an image (side effect).
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        dockerfile_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            The mode row builds "the selected Dockerfile target (context, target stage, platforms)" resolving to
+            the persisted selected target; no field name exists for a per-dispatch override. JUDGMENT: optional
+            override ref; absent resolves to the persisted selection.
+        platforms:
+          type: list
+          required: false
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: gap
+          gap_note: "see cmd.docker.build.select_target.platforms; same prose-only basis and judgment"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_build_image)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBuildRunResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: build_target_selected gate plus shared taxonomy
+      aliases:
+        - {command_id: cmd.docker.build, kind: compatibility_alias,
+           source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A and Cozy Shelves reconciliation: alias-of cmd.docker.build.image (selected path)"}
+    - command_id: cmd.docker.build.compose
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it builds compose services.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        compose_project_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 optional identity compose_project_ref?; kept optional because the mode row resolves to the persisted selected target"
+        services:
+          type: list
+          required: false
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {min_items: 1, unique_items: true}
+          provenance: gap
+          gap_note: >-
+            "builds the services of the selected compose file target" names services in prose only. JUDGMENT:
+            optional service-name list restricting the build; absent builds the target's full service set.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_build_compose)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBuildRunResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: build_target_selected gate plus shared taxonomy
+      aliases: []
+    - command_id: cmd.docker.build.bake
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a Bake build.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        bake_target:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: >-
+            "builds the selected Bake target and platforms" resolving to the persisted target; bake inputs
+            (bake file, bake target, platforms) are prose words only (CRAU-011). JUDGMENT: optional per-dispatch
+            override of the persisted bake target; absent resolves to the selection.
+        platforms:
+          type: list
+          required: false
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: gap
+          gap_note: "see cmd.docker.build.select_target.platforms; same prose-only basis and judgment"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_build_bake)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBuildRunResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: bake_target_selected gate plus shared taxonomy
+      aliases: []
+    - command_id: cmd.docker.bake.preview
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it resolves the Bake graph and
+      # returns a typed preview payload (owner result), not a route.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        bake_file_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            The precondition bake_file_resolved makes the Bake file the subject, but no canon field names it.
+            JUDGMENT: required ref to the resolved bake file record (HCL, YAML, JSON, Compose or generated
+            metadata per CRAU-011).
+        bake_target:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: "same prose-only basis as cmd.docker.build.bake.bake_target; optional filter of the previewed target"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_bake_preview)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBakePreviewResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: bake_file_resolved gate plus shared taxonomy
+      aliases: []
+    - command_id: cmd.docker.bake.run
+      ucc_units: [UCC-049]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        bake_target:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: >-
+            "Runs the selected cmd.docker.bake.* target" with precondition bake_target_selected; no field name.
+            JUDGMENT: optional override; absent resolves to the persisted selected bake target.
+        platforms:
+          type: list
+          required: false
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: gap
+          gap_note: "see cmd.docker.build.select_target.platforms; same prose-only basis and judgment"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_bake_run)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBuildRunResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: bake_target_selected gate plus shared taxonomy
+      aliases: []
+    - command_id: cmd.docker.container.stop
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        container_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity container_ref?; row availability live_subject (container_running) makes the container the subject (lifecycle rows, UI_Command_Catalog.md)"
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_container_stop)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerContainerLifecycleResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [unreachable, stale_projection]   # canon: Docker Manager lifecycle rows
+      aliases:
+        - {command_id: cmd.docker.stop, kind: compatibility_alias,
+           source: "UI_Command_Catalog.md lifecycle-rows adjudication and Cozy Shelves reconciliation; UCC-136: dispatch only as a recorded alias normalizing to cmd.docker.container.stop"}
+    - command_id: cmd.docker.container.restart
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        container_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity container_ref?; row availability selection (container_selected) makes the container the subject (lifecycle rows)"
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_container_restart)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerContainerLifecycleResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [unreachable, stale_projection]   # canon: Docker Manager lifecycle rows
+      aliases:
+        - {command_id: cmd.docker.restart, kind: compatibility_alias,
+           source: "UI_Command_Catalog.md lifecycle-rows adjudication and Cozy Shelves reconciliation; UCC-136"}
+    - command_id: cmd.docker.container.delete
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        container_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity container_ref?; row availability selection (container_selected && !container_running) makes the stopped container the subject (lifecycle rows)"
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        confirmation_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "lifecycle rows mark Confirmation strong; CS-062 lists cmd.docker.container.delete among destructive commands that dispatch only through the shared confirm surface; UCC-230 envelope common optional confirmation_ref restated required"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_container_delete)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerContainerLifecycleResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection, permission_required]   # canon: Docker Manager lifecycle rows
+      aliases: []
+    - command_id: cmd.docker.container.inspect
+      ucc_units: [UCC-049]
+      command_kind: navigation_wrapper            # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation              # the owner returns the structured inspect output, not a route
+      args:
+        container_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity container_ref?; row availability selection (container_selected) makes the container the subject (lifecycle rows)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_container_inspect)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerContainerInspectResultV1
+      error_codes: [invalid_args, permission_denied, invalid_route, handler_unavailable, internal_error]
+      disabled_reason_codes: [unreachable]   # canon: Docker Manager lifecycle rows
+      aliases:
+        - {command_id: cmd.docker.inspect, kind: compatibility_alias,
+           source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A: compatibility alias for cmd.docker.container.inspect"}
+    - command_id: cmd.docker.container.view_logs
+      ucc_units: [UCC-049, UCC-105]
+      command_kind: navigation_wrapper            # JUDGMENT: canon states no kind; it opens a log view like
+      # container.inspect, and the stream session it starts is a read surface, not a mutation.
+      response_kind: owner_operation              # the owner returns the stream session record
+      args:
+        container_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity container_ref?; 2.5A row precondition container_selected makes the container the subject"
+        log_mode:
+          type: enum
+          required: false
+          default: none
+          values: [follow, paused_snapshot, historical_view]
+          provenance: canon
+          source: "section 2A stream continuity: each stream surface MUST distinguish follow, paused_snapshot, and historical_view (Containers_Registry_and_Unraid.md Runtime stream, port-forward, crash-gap, and network trust continuity)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_container_view_logs)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerLogStreamResultV1
+      error_codes: [invalid_args, permission_denied, invalid_route, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [unreachable, degraded, stale_projection]   # JUDGMENT: no row states a subset; engine reachability plus stream freshness
+      # JUDGMENT on the default: canon fixes no dispatch default for log_mode; default none means the surface
+      # opens in its persisted stream intent, and follow is restored only after source revalidation creates a
+      # new stream session (section 2A stream continuity).
+      aliases:
+        - {command_id: cmd.docker.logs, kind: compatibility_alias,
+           source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A: compatibility alias for cmd.docker.container.view_logs"}
+    - command_id: cmd.docker.container.attach_shell
+      ucc_units: [UCC-049, UCC-105]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        container_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity container_ref?; row availability live_subject (container_running && capability_snapshot_current) makes the container the subject (lifecycle rows)"
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        shell:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: >-
+            Canon says shell actions honor the saved shell command preference instead of guessing an entry
+            command (section 2A container access intelligence) and names no per-dispatch field. JUDGMENT:
+            optional explicit override of the saved preference; absent uses the preference, never a guess.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_container_attach_shell)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerShellSessionResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [unsupported, unauthorized, unreachable]   # canon: Docker Manager lifecycle rows
+      aliases:
+        - {command_id: cmd.docker.exec, kind: compatibility_alias,
+           source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A: compatibility alias for cmd.docker.container.attach_shell"}
+    - command_id: cmd.docker.context.select
+      ucc_units: [UCC-049]
+      command_kind: domain_action
+      # JUDGMENT: canon states no command_kind. Selecting the engine context changes the Docker target and
+      # revalidates capability, like cmd.docker.k8s.select_context (UI_Command_Catalog.md section 2.5B). Choose
+      # shell_view instead if it only changes what the panel shows.
+      response_kind: owner_operation
+      args:
+        docker_context:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            No field named the Docker-engine context (closure row 607); the overlay lists only
+            kubernetes_context?. JUDGMENT: (a) id = the context name as Docker reports it;
+            (b) type ref = a PM context record from the Docker capability projection (the Contexts subview,
+            CRAU-007 stable subviews). Whether the selection persists per project is not stated.
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 (capability-gated action)"
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerContextSelectResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      # JUDGMENT: canon names no subset for this row; these are drawn from the shared Docker/Kubernetes
+      # taxonomy (UCC-053) plus the 2.0B freshness clause.
+      aliases:
+        - {command_id: cmd.docker.set_context, kind: compatibility_alias,
+           source: "UI_Command_Catalog.md Docker compose and context adjudication rows; the prototype cmd.docker.set_context is recorded as its alias"}
+    - command_id: cmd.docker.image.tag
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        image_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity image_ref?; row availability selection (image_selected), Docker Manager lifecycle rows"
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053: capability_snapshot_ref for mutating or capability-gated actions"
+        new_tag:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: >-
+            No field carried the new tag (closure row 607). Bounds reuse DockerTagPushV3Request.tags items
+            (Plans/projects_refresh_fix_contracts.schema.json). JUDGMENT: also add Docker's tag grammar
+            pattern ^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$, or keep the reused bounds only.
+        target_repository:
+          type: object
+          required: false
+          default: none                              # absent = the source image's repository
+          fields:
+            namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                        provenance: canon, source: "DockerTagPushV3Request.namespace"}
+            repository_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                              provenance: canon, source: "DockerTagPushV3Request.repository_name"}
+          provenance: gap
+          gap_note: >-
+            JUDGMENT: Docker can tag into another repository (repo:tag). Choices: (a) drop this field, so a tag
+            always stays in the source repository; (b) keep it optional as written.
+      owner_request: none                          # no typed owner request exists
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerImageTagResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [stale_projection]     # canon: Docker Manager lifecycle rows
+      aliases: []
+    - command_id: cmd.docker.image.inspect
+      ucc_units: [UCC-049]
+      command_kind: navigation_wrapper            # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation              # the owner returns the structured image inspect output
+      args:
+        image_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity image_ref?; row availability selection (image_selected), Docker Manager lifecycle rows"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_image_inspect)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerImageInspectResultV1
+      error_codes: [invalid_args, permission_denied, invalid_route, handler_unavailable, internal_error]
+      disabled_reason_codes: [unreachable]   # canon: Docker Manager lifecycle rows
+      aliases: []
+    - command_id: cmd.docker.image.delete
+      ucc_units: [UCC-049]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        image_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity image_ref?; row availability selection (image_selected && !image_in_use), Docker Manager lifecycle rows"
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        confirmation_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "lifecycle rows mark Confirmation strong; CS-062 lists cmd.docker.image.delete among destructive commands; UCC-230 envelope common optional confirmation_ref restated required"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_image_delete)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerImageMutationResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection, permission_required]   # canon: Docker Manager lifecycle rows
+      aliases: []
+    - command_id: cmd.docker.image.push
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # 2.5A amended row: it pushes an approved image; DL-333 resolution 2 makes it primary
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        registry_id:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerImagePushV3Request.registry_id (Plans/projects_refresh_fix_contracts.schema.json; wiring catalog.docker_image_push)"
+        account_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerImagePushV3Request.account_ref (string 1..256; typed ref here)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerImagePushV3Request.namespace"
+        repository_name:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerImagePushV3Request.repository_name"
+        image_digest:
+          type: string
+          required: true
+          default: none
+          constraints: {pattern: '^sha256:[0-9a-f]{64}$'}
+          provenance: canon
+          source: "DockerImagePushV3Request.image_digest"
+        tags:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {min_items: 1, unique_items: true}
+          provenance: canon
+          source: "DockerImagePushV3Request.tags"
+        platforms:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: canon
+          source: "DockerImagePushV3Request.platforms"
+        local_artifact_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerImagePushV3Request.local_artifact_ref (string 1..256; typed ref here)"
+      owner_request: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: registry account/target gates; no row states a subset
+      aliases: []
+    - command_id: cmd.docker.open_dockerfile
+      ucc_units: [UCC-049]
+      command_kind: navigation_wrapper            # JUDGMENT: inferred from the row; it hands the Dockerfile to
+      # the editor through the route/open contract, like cmd.docker.compose.open_file.
+      response_kind: local_projection             # route/open with no owner result
+      args:
+        route_target:
+          type: contract
+          ref: Primitive:RouteTarget
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            No catalog row beyond the Cozy disposition (canonical existing token; build-pane wiring row required)
+            types this command. JUDGMENT: route_target with the OpenFile route to the Dockerfile, following the
+            route/open contract pattern; the alternative is a build_target_ref the owner resolves through the
+            persisted selected target (same choice as the build flow, CRAU-011). UCC-230 canonical type kept.
+        build_target_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            JUDGMENT: optional ref to the persisted build target whose Dockerfile opens; absent opens the inferred
+            or explicitly selected Dockerfile of the active project (section 2A build surfaces).
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_open_dockerfile)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, invalid_route, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: no row states a subset; resolved-target freshness plus engine gates
+      aliases: []
+    - command_id: cmd.docker.compose.up_subset
+      ucc_units: [UCC-050]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it starts compose services.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        compose_project_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity compose_project_ref?; 2.5A row precondition compose_subset_valid makes the compose project the subject"
+        services:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {min_items: 1, unique_items: true}
+          provenance: gap
+          gap_note: >-
+            The row says up_subset starts "selected services/profiles/env files/ports from a compose scenario"
+            but names no field. JUDGMENT: required unique service-name list; the selected subset is the subject
+            of the command.
+        profiles:
+          type: list
+          required: false
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: gap
+          gap_note: "same prose-only basis as services; JUDGMENT: optional profile activation list"
+        env_file_refs:
+          type: list
+          required: false
+          default: none
+          item: {type: ref}
+          constraints: {unique_items: true}
+          provenance: gap
+          gap_note: "env files are named in prose only; JUDGMENT: optional refs to the selected env-file records"
+        scenario_id:
+          type: id
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            The row starts the subset "from a compose scenario" without naming the link. JUDGMENT: optional
+            scenario id recording which saved scenario the subset came from; scenario.run is the command that
+            canonically records the scenario id on a run.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_compose_up_subset)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerComposeSubsetResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_subset_valid gate plus shared taxonomy
+      aliases: []
+    - command_id: cmd.docker.compose.down_subset
+      ucc_units: [UCC-050]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it stops compose services.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        compose_project_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity compose_project_ref?; 2.5A row precondition compose_subset_running makes the running compose project the subject"
+        services:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {min_items: 1, unique_items: true}
+          provenance: gap
+          gap_note: >-
+            The row says down_subset "Stops selected services from a compose scenario" with no field name or
+            type. JUDGMENT: required unique service-name list, mirroring up_subset.services.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_compose_down_subset)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerComposeSubsetResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_subset_running gate plus shared taxonomy
+      aliases: []
+    - command_id: cmd.docker.compose.scenario.save
+      ucc_units: [UCC-050]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it persists a scenario record.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        compose_project_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity compose_project_ref?; 2.5A row precondition compose_file_selected makes the compose project the subject"
+        scenario:
+          type: object
+          required: true
+          default: none
+          fields:
+            name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                   provenance: gap, gap_note: 'scenarios are named service subsets (section 2A compose scenario runner); no field name or bound is stated. JUDGMENT: required name'}
+            services: {type: list, required: true, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                       constraints: {min_items: 1, unique_items: true}, provenance: gap, gap_note: 'selected services are prose-only; JUDGMENT: required unique list'}
+            profiles: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                       constraints: {unique_items: true}, provenance: gap, gap_note: 'profiles are prose-only; JUDGMENT: optional list'}
+            env_file_refs: {type: list, required: false, default: none, item: {type: ref}, constraints: {unique_items: true},
+                            provenance: gap, gap_note: 'env file combinations are prose-only; JUDGMENT: optional refs'}
+            port_mappings: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                            constraints: {unique_items: true}, provenance: gap, gap_note: 'port mappings are prose-only and their item shape is stated nowhere. JUDGMENT: optional string specs pending an owner-typed mapping record'}
+            detached: {type: boolean, required: false, default: none, provenance: gap, gap_note: 'detached mode default is persisted scenario state (section 2A); JUDGMENT: optional per-save override, no dispatch default'}
+            log_follow: {type: boolean, required: false, default: none, provenance: gap, gap_note: 'log-follow default is persisted scenario state (section 2A); JUDGMENT: optional per-save override, no dispatch default'}
+          provenance: gap
+          gap_note: >-
+            The scenario definition shape is described in prose only (2.5A scenario.save row; section 2A compose
+            scenario runner; CRAU-011 acceptance criteria). JUDGMENT: one nested object with the prose-named
+            parts; every field name here is a judgment, and the compile review may re-token them.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_compose_scenario_save)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerComposeScenarioResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_file_selected gate plus shared taxonomy
+      aliases:
+        - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
+           source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+    - command_id: cmd.docker.compose.scenario.run
+      ucc_units: [UCC-050]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a saved scenario.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        scenario_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "2.5A scenario.run row: runs a saved scenario and records the scenario id on the preview or development run (UI_Command_Catalog.md section 2.5A)"
+        compose_project_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity compose_project_ref?; scenario lists live in project state (section 2A), so the project is implied and the ref stays optional"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_compose_scenario_run)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerComposeScenarioResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_scenario_valid gate; a stale scenario opens degraded with repair actions (section 2A)
+      aliases:
+        - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
+           source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+    - command_id: cmd.docker.compose.scenario.edit
+      ucc_units: [UCC-050]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it rewrites a scenario record.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        scenario_id:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            The 2.5A edit row has no arg text beyond "Edits a saved scenario or repairs degraded scenario
+            validation" and its precondition compose_scenario_selected. JUDGMENT: required id of the selected
+            scenario, mirroring scenario.run.
+        scenario:
+          type: object
+          required: true
+          default: none
+          fields:
+            name: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256},
+                   provenance: gap, gap_note: 'same undefined scenario shape as scenario.save; JUDGMENT: optional rename on edit'}
+            services: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                       constraints: {min_items: 1, unique_items: true}, provenance: gap, gap_note: 'same undefined scenario shape as scenario.save; JUDGMENT: optional replacement subset'}
+            profiles: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                       constraints: {unique_items: true}, provenance: gap, gap_note: 'same undefined scenario shape as scenario.save'}
+            env_file_refs: {type: list, required: false, default: none, item: {type: ref}, constraints: {unique_items: true},
+                            provenance: gap, gap_note: 'same undefined scenario shape as scenario.save'}
+            port_mappings: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                            constraints: {unique_items: true}, provenance: gap, gap_note: 'same undefined scenario shape as scenario.save'}
+            detached: {type: boolean, required: false, default: none, provenance: gap, gap_note: 'same undefined scenario shape as scenario.save'}
+            log_follow: {type: boolean, required: false, default: none, provenance: gap, gap_note: 'same undefined scenario shape as scenario.save'}
+          provenance: gap
+          gap_note: >-
+            The edited scenario definition uses the same undefined scenario shape as scenario.save (CRAU-011
+            prose only). JUDGMENT: partial-update object; every field optional so absent fields keep the saved
+            value, the exact patch semantics are unstated.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_compose_scenario_edit)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerComposeScenarioResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_scenario_selected gate; repair flow opens degraded (section 2A)
+      aliases:
+        - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
+           source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+    - command_id: cmd.docker.compose.scenario.delete
+      ucc_units: [UCC-050]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it deletes a scenario record.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        scenario_id:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            The 2.5A delete row names no field. JUDGMENT: required id of the selected scenario (precondition
+            compose_scenario_selected), mirroring scenario.run.
+        confirmation_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "CS-062 lists cmd.docker.compose.scenario.delete among destructive commands that dispatch only through the shared confirm surface; UCC-230 envelope common optional confirmation_ref restated required"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_compose_scenario_delete)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerComposeScenarioResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_scenario_selected gate; destructive confirmation handled through the shared confirm surface
+      aliases:
+        - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
+           source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+    - command_id: cmd.docker.create_repository
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # canon: typed request DockerRepositoryCreateV3Request (wiring row)
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        registry_id:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerRepositoryCreateV3Request.registry_id (Plans/projects_refresh_fix_contracts.schema.json; wiring catalog.docker_create_repository)"
+        account_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerRepositoryCreateV3Request.account_ref (string 1..256; typed ref here)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerRepositoryCreateV3Request.namespace; the row proposes the namespace/repository/privacy tuple (2.5A)"
+        repository_name:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerRepositoryCreateV3Request.repository_name"
+        privacy:
+          type: enum
+          required: true
+          default: none
+          values: [private, public]
+          provenance: canon
+          source: "DockerRepositoryCreateV3Request.privacy; CRAU-031: default privacy for newly created repositories is private, and the dialog makes that default explicit while allowing user change"
+      owner_request: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]   # JUDGMENT: registry_target_missing && permission_allowed gates (2.5A row); no row states codes
+      # The typed request's operation envelope (context, authority, expected_target_generation, filesafe/trust/
+      # capability evidence) travels in the owner request, not in UICommand.args.
+      aliases: []
+    - command_id: cmd.docker.create_repository.confirm
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # canon: typed request DockerRepositoryConfirmV3Request (wiring row)
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        creation_request_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerRepositoryConfirmV3Request.creation_request_id; CRAU-031: confirm dispatches cmd.docker.create_repository.confirm for the pending request"
+        preview_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerRepositoryConfirmV3Request.preview_ref (string 1..256; typed ref here); the confirmation shows namespace, repository name, privacy and the private-by-default notice (CRAU-031)"
+        preview_sha256:
+          type: sha256
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerRepositoryConfirmV3Request.preview_sha256 (pattern ^[0-9a-f]{64}$)"
+        person_decision_evidence:
+          type: contract
+          ref: Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerRepositoryConfirmV3Request.person_decision_evidence; authority_kind is pinned to human (CRAU-031: no automated route fabricates a human confirmation)"
+      owner_request: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]   # JUDGMENT: repository_creation_confirmation_visible gate (2.5A row)
+      aliases: []
+    - command_id: cmd.docker.create_repository.cancel
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # canon: typed request DockerRepositoryCancelV3Request (wiring row)
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        creation_request_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerRepositoryCancelV3Request.creation_request_id; CRAU-031: cancel dispatches cmd.docker.create_repository.cancel"
+        expected_request_revision:
+          type: integer
+          required: true
+          default: none
+          constraints: {minimum: 0}
+          provenance: canon
+          source: "DockerRepositoryCancelV3Request.expected_request_revision (integer, minimum 0)"
+      owner_request: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]   # JUDGMENT: repository_creation_confirmation_visible gate (2.5A row)
+      aliases: []
+    - command_id: cmd.docker.registry.promote
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # JUDGMENT: inferred from the row; it copies or retags an
+      # artifact in a registry, a registry-side remote side effect (CRAU-012).
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        operation:
+          type: enum
+          required: true
+          default: none
+          values: [promote, copy, retag]
+          provenance: gap
+          gap_note: >-
+            The row says promote "Promotes, copies, or retags a digest-first artifact" (2.5A) with no typed
+            request (only the wiring row catalog.docker_registry_promote). JUDGMENT: required enum of the three
+            prose verbs in snake_case; no default, because the verbs differ in remote effect.
+        image_digest:
+          type: string
+          required: true
+          default: none
+          constraints: {pattern: '^sha256:[0-9a-f]{64}$'}
+          provenance: gap
+          gap_note: >-
+            Digest-first artifact identity is canon (CRAU-012), but no promote field list exists. JUDGMENT:
+            bounds and pattern reused from DockerTagPushV3Request.image_digest.
+        source:
+          type: object
+          required: true
+          default: none
+          fields:
+            namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                        provenance: gap, gap_note: 'source namespace/repository is canon prose (CRAU-012 receipt capture); type reused from DockerTagPushV3Request.namespace'}
+            repository_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                              provenance: gap, gap_note: 'source namespace/repository is canon prose (CRAU-012); type reused from DockerTagPushV3Request.repository_name'}
+          provenance: gap
+          gap_note: "JUDGMENT: nested source object; canon names the source namespace/repository pair only in prose"
+        target:
+          type: object
+          required: true
+          default: none
+          fields:
+            registry_id: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                          provenance: gap, gap_note: 'the selected target registry (2.5A row); type reused from DockerTagPushV3Request.registry_id'}
+            namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                        provenance: gap, gap_note: 'destination namespace/repo is canon prose (CRAU-012); type reused from DockerTagPushV3Request.namespace'}
+            repository_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                              provenance: gap, gap_note: 'destination namespace/repo is canon prose (CRAU-012); type reused from DockerTagPushV3Request.repository_name'}
+            tags: {type: list, required: true, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                   constraints: {min_items: 1, unique_items: true}, provenance: gap, gap_note: 'the target tag or tags (2.5A row); item bounds reused from DockerTagPushV3Request.tags'}
+          provenance: gap
+          gap_note: "JUDGMENT: nested target object; canon names the target registry/repo/tag only in prose"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_registry_promote)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerRegistryPromoteResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: registry_source_resolved && registry_target_allowed gates; promotion blocked with a precise remote blocker (CRAU-012)
+      aliases: []
+    - command_id: cmd.docker.registry.tag_push
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # canon: typed request DockerTagPushV3Request (wiring row)
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        registry_id:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerTagPushV3Request.registry_id (Plans/projects_refresh_fix_contracts.schema.json; wiring catalog.docker_registry_tag_push)"
+        account_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerTagPushV3Request.account_ref (string 1..256; typed ref here)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerTagPushV3Request.namespace"
+        repository_name:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "DockerTagPushV3Request.repository_name"
+        image_digest:
+          type: string
+          required: true
+          default: none
+          constraints: {pattern: '^sha256:[0-9a-f]{64}$'}
+          provenance: canon
+          source: "DockerTagPushV3Request.image_digest; the row applies the approved /tag/push action to a digest-first artifact (2.5A)"
+        tags:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {min_items: 1, unique_items: true}
+          provenance: canon
+          source: "DockerTagPushV3Request.tags"
+        platforms:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: canon
+          source: "DockerTagPushV3Request.platforms"
+        local_artifact_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "DockerTagPushV3Request.local_artifact_ref (string 1..256; typed ref here)"
+      owner_request: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: registry_target_allowed && permission_allowed gates (2.5A row)
+      aliases: []
+    - command_id: cmd.orchestrator.push_image
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # canon: typed request OrchestratorImagePushV3Request (wiring row)
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        run_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.run_id; UCC-230 envelope common optional run_id restated required (the after-build push belongs to a run)"
+        build_result_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.build_result_ref (string 1..256; typed ref here); the push resumes from the preserved local build result (CRAU-044)"
+        build_result_sha256:
+          type: sha256
+          required: true
+          default: none
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.build_result_sha256 (pattern ^[0-9a-f]{64}$)"
+        registry_id:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.registry_id (Plans/projects_refresh_fix_contracts.schema.json; wiring catalog.orchestrator_push_image)"
+        account_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.account_ref (string 1..256; typed ref here)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.namespace"
+        repository_name:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.repository_name"
+        image_digest:
+          type: string
+          required: true
+          default: none
+          constraints: {pattern: '^sha256:[0-9a-f]{64}$'}
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.image_digest"
+        tags:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {min_items: 1, unique_items: true}
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.tags"
+        platforms:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {unique_items: true}
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.platforms"
+        local_artifact_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "OrchestratorImagePushV3Request.local_artifact_ref (string 1..256; typed ref here)"
+      owner_request: Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: publish authority gates; missing repository creation stays a separate admitted effect (CRAU-031/044)
+      aliases: []
+    - command_id: cmd.docker.drift.compare
+      ucc_units: [UCC-051]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a comparison with
+      # a typed operation result (active operation contract), not a route.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        compare_target:
+          type: enum
+          required: false
+          default: none
+          values: [last_build, last_publish, last_deploy]
+          provenance: gap
+          gap_note: >-
+            The baseline (last build | last publish | last deploy) and the compared subjects (Dockerfile,
+            compose/bake, manifests) are prose only (2.5A drift.compare row; section 2A drift detection names
+            a persisted compare target). JUDGMENT: optional enum of the three baselines in snake_case; absent
+            compares against the persisted compare target; no subjects field is minted because the owner
+            compares every detected local intent.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_drift_compare)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerDriftCompareResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: docker_project_detected gate; drift/trust blockers refresh effective capability before mutation (UCC-053)
+      aliases: []
+    - command_id: cmd.docker.cleanup.scan
+      ucc_units: [UCC-051, UCC-105]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref; row availability capability (docker_available), Docker Manager lifecycle rows"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_cleanup_scan)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerCleanupScanResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [unreachable, degraded]   # canon: Docker Manager lifecycle rows
+      aliases: []
+    - command_id: cmd.docker.cleanup.prune
+      ucc_units: [UCC-051, UCC-105]
+      command_kind: domain_action                 # canon: Docker Manager lifecycle rows
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref; UCC-230 row_groups required when domain_action"
+        confirmation_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "lifecycle rows mark Confirmation strong; CS-062 lists cmd.docker.cleanup.prune among destructive commands; UCC-230 envelope common optional confirmation_ref restated required"
+        scan_result_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            The row executes approved cleanup targets after dry-run review with availability record_only
+            (scan_results_present), but names neither the scan result nor the selected target set. JUDGMENT:
+            required ref to the reviewed dry-run scan record.
+        targets:
+          type: list
+          required: true
+          default: none
+          item: {type: string, constraints: {min_length: 1, max_length: 256}}
+          constraints: {min_items: 1, unique_items: true}
+          provenance: gap
+          gap_note: >-
+            The approved cleanup target set has no field name or item shape. JUDGMENT: unique string target
+            descriptors drawn from the scan record; conservative defaults never delete assets tied to active
+            previews or recent receipts (CRAU-013).
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_cleanup_prune)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerCleanupPruneResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [stale_projection, permission_required]   # canon: Docker Manager lifecycle rows
+      aliases: []
+    - command_id: cmd.docker.show
+      ucc_units: [UCC-050]
+      command_kind: shell_view                    # canon: 2.5A shell/view-state wrapper
+      response_kind: local_projection             # route/open with no owner result
+      args: {}                                     # canon: no command-specific args (2.5A shell/view-state wrapper)
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_show)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded]   # JUDGMENT: Docker Manager still renders cached last-known state when the runtime is unreachable (section 2A), so availability copy is capability detail
+      aliases: []
+    - command_id: cmd.docker.switch_subview
+      ucc_units: [UCC-050]
+      command_kind: shell_view                    # canon: 2.5A shell/view-state wrapper
+      response_kind: local_projection             # view-state change with no owner result
+      args:
+        subview:
+          type: enum
+          required: true
+          default: none
+          values: [containers, images, compose, registries, registries_docker_hub, build_bake, publish_unraid, networks, volumes, contexts, kubernetes]
+          provenance: gap
+          gap_note: >-
+            Canon conflicts: the 2026-07-27 user decision keeps six subview tabs (lifecycle-rows paragraph),
+            while CRAU-007 lists the stable subviews Containers, Images, Compose, Registries, Registries /
+            Docker Hub, Build / Bake, Publish / Unraid (plus the retired Publishing / Unraid alias), advanced
+            Networks, Volumes, Contexts, and project-focused Kubernetes. JUDGMENT: the eleven snake_case
+            tokens of the CRAU-007 list, dropping only the legacy alias; the six-tab decision is left for the
+            compile review to reconcile and is not settled here.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_switch_subview)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
+      disabled_reason_codes: [unsupported, not_configured, unreachable, degraded]   # JUDGMENT: unsupported runtime-specific subviews stay visible with a disabled reason (section 2A)
+      aliases: []
+    - command_id: cmd.docker.k8s.apply
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: inferred from the row; it mutates the cluster.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        kubernetes_context:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; Kubernetes mutations bind approval to the selected context, namespace, workload/resource, and operation (2.5B)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; mutation approval binds the namespace (2.5B)"
+        manifest_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            The selected manifest (or Helm-rendered manifest) has no field name (2.5B apply row). JUDGMENT:
+            required ref to the selected manifest record inside the selected project scope.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_apply)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerK8sApplyResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared Docker/Kubernetes taxonomy (UCC-053) plus approval/preflight blocking and freshness
+      aliases:
+        - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
+           source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+    - command_id: cmd.docker.k8s.diff
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a cluster
+      # comparison with a typed result, capability-gated by k8s_connected.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        manifest_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "manifest and optional workload target have no field names (2.5B diff row). JUDGMENT: required ref to the selected manifest record"
+        kubernetes_context:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row diffs against the selected context, namespace, or workload where supported (2.5B)"
+        namespace:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; diff target part (2.5B)"
+        workload_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "the optional workload diff target has no field name. JUDGMENT: ref, reusing the CV-303 preserved token workload_ref for the PM workload identity"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_diff)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerK8sDiffResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness
+      aliases:
+        - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
+           source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+    - command_id: cmd.docker.k8s.logs
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it opens a capability-gated
+      # workload log stream with a typed session result.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        workload_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            Workload/pod/container target fields are prose only (2.5B logs row; section 2A Kubernetes
+            operational sessions: kubectl logs can target pods, resources, and all containers). JUDGMENT:
+            required ref to the selected workload, reusing the CV-303 preserved token workload_ref.
+        container:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: "container targeting is prose only; JUDGMENT: optional container name, absent streams all containers"
+        log_mode:
+          type: enum
+          required: false
+          default: none
+          values: [follow, paused_snapshot, historical_view]
+          provenance: canon
+          source: "2.5B logs row names follow, paused snapshot, and historical modes; section 2A stream continuity fixes the tokens follow, paused_snapshot, historical_view"
+        kubernetes_context:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the log stream runs in the selected context"
+        namespace:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; namespace/workload focus is persisted K8s focus state (CRAU-014)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_logs)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerK8sLogStreamResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus stream freshness
+      # JUDGMENT on the default: same as cmd.docker.container.view_logs; canon fixes no dispatch default.
+      aliases:
+        - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
+           source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+    - command_id: cmd.docker.k8s.exec
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: inferred from the row; it starts a privileged
+      # audited session in the cluster, permission-gated (permission_allowed).
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        workload_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "pod/container target fields are not defined (2.5B exec row). JUDGMENT: required ref to the selected workload (workload_running), reusing the CV-303 token workload_ref"
+        container:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: "the selected pod/container pair has no field names. JUDGMENT: optional container name within the workload"
+        kubernetes_context:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the session binds to the selected context (2.5B mutation scoping)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; the session binds to the namespace (2.5B mutation scoping)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_exec)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerK8sExecSessionResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus permission/preflight blocking
+      # JUDGMENT: the exec entry command and stream inputs are unstated in canon; the audited session record
+      # carries them, and this definition does not invent fields for them.
+      aliases:
+        - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
+           source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+    - command_id: cmd.docker.k8s.port_forward
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: inferred from the row; it starts an audited
+      # port-forward session, permission-gated (permission_allowed).
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        workload_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "the workload target is prose only. JUDGMENT: required ref (workload_selected), reusing the CV-303 token workload_ref"
+        kubernetes_context:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the session binds to the selected context (2.5B mutation scoping)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; the session binds to the namespace (2.5B mutation scoping)"
+        remote_port:
+          type: integer
+          required: true
+          default: none
+          constraints: {minimum: 1, maximum: 65535}
+          provenance: gap
+          gap_note: "the forwarded port is named in prose only. JUDGMENT: required integer in the TCP port range"
+        local_bind_address:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: "local bind address/port recorded is prose only (2.5B row; port-forward rebinding records local port reuse versus new allocation, section 2A). JUDGMENT: optional bind address, absent lets the owner assign"
+        local_port:
+          type: integer
+          required: false
+          default: none
+          constraints: {minimum: 1, maximum: 65535}
+          provenance: gap
+          gap_note: "JUDGMENT: optional explicit local port; absent allocates one, and rebinding records reuse versus new allocation (section 2A)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_port_forward)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerK8sPortForwardResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus permission/preflight blocking
+      aliases:
+        - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
+           source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+    - command_id: cmd.docker.k8s.select_context
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it revalidates capability
+      # like cmd.docker.context.select and cmd.docker.k8s.select_namespace refreshes workload focus.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (capability-gated action)"
+        kubernetes_context:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row selects the project-focused Kubernetes context and revalidates capability (2.5B)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_select_context)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerK8sContextSelectResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness; k8s_available gate
+      aliases:
+        - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
+           source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases until migrated"}
+    - command_id: cmd.docker.k8s.select_namespace
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it refreshes workload
+      # focus inside the selected context.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (capability-gated action)"
+        kubernetes_context:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row selects the namespace within the selected context (2.5B)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; the row selects the namespace and refreshes workload focus (2.5B)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_select_namespace)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerK8sNamespaceSelectResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness; k8s_connected gate
+      aliases:
+        - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
+           source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases until migrated"}
+    - command_id: cmd.docker.k8s.helm_preview
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it renders Helm output
+      # with a typed result, gated by helm_source_selected.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        helm_source_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            The selected release/chart has no field names (2.5B helm_preview row). JUDGMENT: one required ref
+            to the selected Helm source record; splitting release from chart stays open for the compile review.
+        kubernetes_context:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; rendering needs no connected cluster (precondition k8s_project_detected)"
+        namespace:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; optional render target namespace"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_helm_preview)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerHelmPreviewResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness; Helm availability is a doctor check (section 2A)
+      aliases:
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+        # The grouped token cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace
+        # targets only its own seven commands (UCC-230 non_definition_tokens), so the Helm rows claim just
+        # the cmd.k8s.* compatibility family.
+    - command_id: cmd.docker.k8s.helm_install
+      ucc_units: [UCC-052]
+      command_kind: domain_action                 # JUDGMENT: inferred from the row; it installs or upgrades
+      # a release after permission and diff review.
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
+        helm_source_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "same prose-only basis as cmd.docker.k8s.helm_preview.helm_source_ref (2.5B helm_install row)"
+        values_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "the values source is named in prose only. JUDGMENT: optional ref to the selected values record; absent renders chart defaults"
+        kubernetes_context:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the install binds to the selected context (2.5B mutation scoping)"
+        namespace:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: canon
+          source: "overlay UCC-049..UCC-053 identity namespace?; the install binds to the namespace (2.5B mutation scoping)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_helm_install)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerHelmInstallResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus permission/preflight blocking after diff review
+      # JUDGMENT: the diff-review reference the row requires before install is unstated; no field is minted
+      # for it here and the compile review may add one (for example a reviewed diff ref).
+      aliases:
+        - {command_id: cmd.k8s.*, kind: compatibility_alias,
+           source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+        # The grouped token targets only its own seven commands (UCC-230 non_definition_tokens); see helm_preview.
+  results:
+    DockerBuildTargetSelectionResultV1:
+      fields:
+        validation_snapshot_ref: {type: ref, required: true, default: none, provenance: canon, source: 'build.run row records "last successful build target plus validation snapshot" (UI_Command_Catalog.md section 2.5A); CRAU-011 persists the validation snapshot with the selection'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; the wiring row requires a receipt or event effect (catalog.docker_build_select_target), the record shape is typed nowhere"}
+    DockerBuildRunResultV1:
+      fields:
+        build_result_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "structured build results including artifacts, logs, and image identity are canon (Build flow, section 2A); the result record's field names are typed nowhere. JUDGMENT: one ref to the build result"}
+        validation_snapshot_ref: {type: ref, required: true, default: none, provenance: canon, source: 'the run "records last successful build target plus validation snapshot" (UI_Command_Catalog.md section 2.5A build.run row)'}
+        image_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "image identity is canon for build results (section 2A Build flow); present for image-mode results, absent for compose/bake modes"}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_build_run), shape typed nowhere"}
+    DockerBakePreviewResultV1:
+      fields:
+        bake_targets: {type: list, required: true, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, provenance: gap, gap_note: '"Previews resolved Bake targets and platforms" names the content in prose only; JUDGMENT: resolved target names'}
+        platforms: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, provenance: gap, gap_note: "resolved platforms per target; the pairing of target to platform is unstated, so a flat unique list is a judgment"}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_bake_preview), shape typed nowhere"}
+    DockerContainerLifecycleResultV1:
+      fields:
+        container_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the container acted on; name canon (row-group identity), result shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; the wiring rows require a receipt or event effect (catalog.docker_container_stop/restart/delete), shape typed nowhere'}
+    DockerContainerInspectResultV1:
+      fields:
+        container_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the inspected container; name canon (row-group identity), result shape typed nowhere'}
+        inspect_output_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'structured inspect output with secret and redaction policy applied (lifecycle rows); the record shape is typed nowhere'}
+    DockerLogStreamResultV1:
+      fields:
+        container_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the container whose logs are streamed; name canon (row-group identity), result shape typed nowhere'}
+        stream_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'follow intent is restored only after source revalidation and creation of a new stream session (section 2A stream continuity); the session record shape is typed nowhere'}
+        log_mode: {type: enum, required: false, default: none, values: [follow, paused_snapshot, historical_view], provenance: gap, gap_note: 'the mode the stream opened in when the request left the mode to the surface default; enum values canon, echo shape typed nowhere'}
+    DockerShellSessionResultV1:
+      fields:
+        container_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the container the audited exec/attach session opened in; name canon (row-group identity), result shape typed nowhere'}
+        shell_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the audited docker exec/attach shell session (2.5A row); session record shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_container_attach_shell), shape typed nowhere'}
+    DockerContextSelectResultV1:
+      fields:
+        docker_context: {type: id, required: true, default: none, provenance: gap, gap_note: 'the context now selected'}
+        capability_snapshot_ref: {type: ref, required: true, default: none, provenance: gap,
+                                  gap_note: 'capability after revalidation'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'present when the owner records a receipt'}
+    DockerImageTagResultV1:
+      fields:
+        image_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the tagged image'}
+        applied_tag: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the tag as applied'}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; the wiring row requires a receipt effect (catalog.docker_image_tag)'}
+    DockerImageInspectResultV1:
+      fields:
+        image_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the inspected image; name canon (row-group identity), result shape typed nowhere'}
+        inspect_output_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'structured image inspect output with secret and redaction policy applied (lifecycle rows); record shape typed nowhere'}
+    DockerImageMutationResultV1:
+      fields:
+        image_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the image mutated; name canon (row-group identity), result shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; the wiring row requires a receipt or event effect (catalog.docker_image_delete), shape typed nowhere'}
+    DockerComposeSubsetResultV1:
+      fields:
+        compose_project_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the compose project acted on; name canon (row-group identity), result shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring rows require a receipt or event effect (catalog.docker_compose_up_subset/down_subset), shape typed nowhere'}
+    DockerComposeScenarioResultV1:
+      fields:
+        scenario_id: {type: id, required: true, default: none, provenance: gap, gap_note: 'the scenario saved, run, edited or deleted; name canon for run (2.5A row), result shape typed nowhere'}
+        preview_run_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'the preview or development run the scenario id is recorded on (2.5A scenario.run row); record shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring rows require a receipt or event effect, shape typed nowhere'}
+    DockerRegistryPromoteResultV1:
+      fields:
+        image_digest: {type: string, required: true, default: none, constraints: {pattern: '^sha256:[0-9a-f]{64}$'}, provenance: gap, gap_note: 'the moved digest; CRAU-012 requires digest-first capture, the record shape is typed nowhere'}
+        tag: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the moved tag; CRAU-012 receipt capture, shape typed nowhere'}
+        source: {type: object, required: true, default: none, fields: {namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'source namespace of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}, repository_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'source repository of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}}, provenance: gap, gap_note: 'source namespace/repository of the promotion (CRAU-012); shape typed nowhere'}
+        destination: {type: object, required: true, default: none, fields: {namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'destination namespace of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}, repository_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'destination repository of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}}, provenance: gap, gap_note: 'destination namespace/repository of the promotion (CRAU-012); shape typed nowhere'}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'registry-side promotion receipt with actor, approval source and result id captured before downstream references update (CRAU-012); shape typed nowhere'}
+    DockerDriftCompareResultV1:
+      fields:
+        drift_class: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the resulting drift class; missing prior metadata is unknown rather than clean (CRAU-013), but no class vocabulary is fixed. JUDGMENT: open string pending owner tokens'}
+        source_metadata_refs: {type: list, required: true, default: none, item: {type: ref}, constraints: {unique_items: true}, provenance: gap, gap_note: 'receipts record what was compared and the source metadata refs (section 2A drift detection); shape typed nowhere'}
+        partial: {type: boolean, required: true, default: none, provenance: gap, gap_note: 'whether the result is partial (section 2A drift detection); typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_drift_compare), shape typed nowhere'}
+    DockerCleanupScanResultV1:
+      fields:
+        scan_result_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the dry-run prune/remove recommendations with protected asset and receipt checks (2.5A row; section 2A cleanup advisor); record shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_cleanup_scan), shape typed nowhere'}
+    DockerCleanupPruneResultV1:
+      fields:
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the cleanup execution receipt; wiring row requires a receipt or event effect (catalog.docker_cleanup_prune), shape typed nowhere'}
+    DockerK8sApplyResultV1:
+      fields:
+        manifest_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the manifest applied; echo of the request subject, shape typed nowhere'}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'cross-surface receipt retaining kubernetes_refs lineage (UCC-053); shape typed nowhere'}
+    DockerK8sDiffResultV1:
+      fields:
+        diff_output_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the manifest diff against the selected target; record shape typed nowhere'}
+    DockerK8sLogStreamResultV1:
+      fields:
+        workload_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the workload streamed; echo of the request subject, shape typed nowhere'}
+        stream_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'ephemeral owner-surface log session (CRAU-014); session shape typed nowhere'}
+        log_mode: {type: enum, required: false, default: none, values: [follow, paused_snapshot, historical_view], provenance: gap, gap_note: 'the mode the stream opened in when the request left the mode to the surface default; enum values canon, echo shape typed nowhere'}
+    DockerK8sExecSessionResultV1:
+      fields:
+        workload_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the workload the audited privileged exec session opened in; shape typed nowhere'}
+        exec_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the audited privileged exec session (2.5B row); session shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt retaining kubernetes_refs lineage; wiring row requires a receipt or event effect (catalog.docker_k8s_exec), shape typed nowhere'}
+    DockerK8sPortForwardResultV1:
+      fields:
+        port_forward_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the audited port-forward session (2.5B row); rebinding records local port reuse versus new allocation (section 2A); session shape typed nowhere'}
+        local_bind_address: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the recorded local bind address (local bind address/port recorded, 2.5B row); typed nowhere'}
+        local_port: {type: integer, required: true, default: none, constraints: {minimum: 1, maximum: 65535}, provenance: gap, gap_note: 'the recorded local port (2.5B row); typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt retaining kubernetes_refs lineage; wiring row requires a receipt or event effect (catalog.docker_k8s_port_forward), shape typed nowhere'}
+    DockerK8sContextSelectResultV1:
+      fields:
+        kubernetes_context: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the context now selected; name canon (row-group identity), echo shape typed nowhere'}
+        capability_snapshot_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'capability after revalidation (2.5B row)'}
+    DockerK8sNamespaceSelectResultV1:
+      fields:
+        kubernetes_context: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the context the namespace was selected in; echo shape typed nowhere'}
+        namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the namespace now selected; name canon (row-group identity), echo shape typed nowhere'}
+        capability_snapshot_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'capability after the workload-focus refresh (2.5B row)'}
+    DockerHelmPreviewResultV1:
+      fields:
+        render_output_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the rendered Helm output without applying it (2.5B row); record shape typed nowhere'}
+    DockerHelmInstallResultV1:
+      fields:
+        helm_release_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the installed or upgraded release (2.5B row); record shape typed nowhere'}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'cross-surface receipt retaining kubernetes_refs lineage (UCC-053); wiring row requires a receipt or event effect (catalog.docker_k8s_helm_install), shape typed nowhere'}
+```
+
+### CRAU-116 - Docker Hosts Run And Container Open Command Payload Definitions
+
+```yaml
+plan_unit_id: CRAU-116
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Typed payload definitions (DL-333) for the thirteen Docker/Hosts and container-run commands that
+  UI_Command_Catalog UCC-105 registers and UCC-230 routes to this unit: cmd.docker.run and
+  cmd.docker.container.open (existing ids UCC-105 keeps where exact semantics match) and the eleven
+  registered Docker/Hosts ids hosts.open, host.refresh, host.preflight, host.profile.save,
+  host.session.launch, host.instance.start, host.instance.stop, host.instance.restart,
+  host.access.open_app, host.instance.retain and host.receipt.open. CV-304's HostCapabilityCommand
+  is the dispatch envelope these commands ride on; it has no typed schema, so every envelope field
+  this block names from UCC-105 or CV-304 prose carries provenance gap, and the overlay identity
+  fields host_capability_ref and host_profile_id keep their UCC-230 types. The definitions block
+  below gives each command its args, owner request and owner result in
+  pm.command_payload_definitions.v1, with error and disabled-reason codes narrowed from the
+  overlay's closed sets.
+gui_related: true
+gui_classification_reason: Defines the arguments of user-visible Docker/Hosts page and container run commands.
+depends_on: [UCC-230, UCC-105, CRAU-092, CV-304, CV-333, DL-333]
+unblocks: []
+acceptance_criteria:
+  - Every command that UCC-230 routes to CRAU-116 has exactly one definition in the block below.
+  - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
+  - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
+  - Access actions consume structured port_access_record data and never guess low-confidence localhost URLs (CRAU-092).
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_payload_shape_drift
+reasoning_tier: high
+context_scope: ucc_049_105_typed_definitions
+implementation_surfaces: [Plans/Containers_Registry_and_Unraid.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
+preserved_exact_tokens: [cmd.docker.run, cmd.docker.container.open, cmd.docker.hosts.open, cmd.docker.host.refresh, cmd.docker.host.preflight, cmd.docker.host.profile.save, cmd.docker.host.session.launch, cmd.docker.host.instance.start, cmd.docker.host.instance.stop, cmd.docker.host.instance.restart, cmd.docker.host.access.open_app, cmd.docker.host.instance.retain, cmd.docker.host.receipt.open]
+negative_constraints:
+  - Do not add payload fields to UI_Command_Catalog command rows.
+  - Do not define a payload for an alias, retired, non-alias or source-lineage token.
+  - Do not copy the Coasts HTTP API, terminal or file controls into these payloads (UCC-105, CV-304).
+  - Do not type the HostCapabilityCommand envelope beyond what UCC-105 and CV-304 name; envelope fields stay provenance gap until CV-304 gains a typed schema.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md]
+```
+
+```yaml
+command_payload_definitions:
+  format: pm.command_payload_definitions.v1
+  owner_unit: CRAU-116
+  overlay: Plans/UI_Command_Catalog.md#UCC-230
+  definitions:
+    - command_id: cmd.docker.run
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: inferred from the row; it starts a container
+      # from the selected image (precondition image_selected, 2.5A). Cozy keeps it live as create-from-image.
+      response_kind: owner_operation
+      args:
+        image_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity image_ref?; 2.5A row precondition image_selected makes the image the subject"
+        host_capability_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_capability_ref?; UCC-105 keeps cmd.docker.run on the HostCapabilityCommand envelope where exact semantics match"
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; UCC-105 envelope field"
+        run_options:
+          type: object
+          required: false
+          default: none
+          fields:
+            container_name: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256},
+                             provenance: gap, gap_note: 'run options (name, ports, env, volumes, network) are not defined anywhere; only image_ref is implied (2.5A row). JUDGMENT: optional container name'}
+            ports: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                    constraints: {unique_items: true}, provenance: gap, gap_note: 'JUDGMENT: optional published-port specs; item shape unstated, a structured mapping stays open for the compile review'}
+            env: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                  constraints: {unique_items: true}, provenance: gap, gap_note: 'JUDGMENT: optional environment entries; secrets must travel as refs, not values (CV-304 no-raw-secrets rule)'}
+            volumes: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}},
+                      constraints: {unique_items: true}, provenance: gap, gap_note: 'JUDGMENT: optional volume mounts; item shape unstated'}
+            network: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256},
+                      provenance: gap, gap_note: 'JUDGMENT: optional network name'}
+          provenance: gap
+          gap_note: >-
+            The row says only "Starts a container from selected image" (2.5A); run options are not defined.
+            JUDGMENT: one optional nested object whose field names are judgments listed for the compile
+            review; absent starts the container with the image's defaults and no overrides.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_run)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerContainerRunResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: docker_available && image_selected gates; no row states a subset
+      aliases: []
+    - command_id: cmd.docker.container.open
+      ucc_units: [UCC-105]
+      command_kind: navigation_wrapper            # JUDGMENT: inferred from the row; it opens a resolved URL
+      # or access target, a route/open without an owner result.
+      response_kind: local_projection
+      args:
+        container_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "2.5A row subject (running container) and CRAU-013 preserved token cmd.docker.container.open; overlay family-specific arg"
+        access_target_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            The access target field and the confidence input are not defined (2.5A row: opens a resolved URL
+            or access target when confidence is sufficient). JUDGMENT: optional ref to the resolved access
+            record; absent lets the owner resolve from URL/URLs discovery with the confidence threshold, and
+            an uncertain heuristic shows candidate actions or logs/inspect first (section 2A access
+            intelligence). The confidence input has no field and none is minted here.
+        host_capability_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_capability_ref?; UCC-105 keeps cmd.docker.container.open on the HostCapabilityCommand envelope where exact semantics match"
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; UCC-105 envelope field"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_container_open)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, invalid_route, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]   # JUDGMENT: container_running && access_target_resolved gates; low-confidence access is denied, not guessed (CRAU-013)
+      aliases: []
+    - command_id: cmd.docker.hosts.open
+      ucc_units: [UCC-105]
+      command_kind: navigation_wrapper            # JUDGMENT: routed destination open (CRAU-092), a route/open
+      # without an owner result.
+      response_kind: local_projection
+      args:
+        route_target:
+          type: contract
+          ref: Primitive:RouteTarget
+          required: true
+          default: none
+          provenance: canon
+          source: "CRAU-092 Docker/Hosts route payload {route_target: docker_hosts, ...}; UCC-230 canonical type kept, narrowed to required"
+        project_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "CRAU-092 route payload lists project_id unqualified; UCC-230 envelope common optional project_id restated required"
+        repo_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "CRAU-092 route payload repo_id?; UCC-230 envelope common optional repo_id"
+        workspace_root_id:
+          type: id
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "CRAU-092 route payload names workspace_root_id?; not a UCC-230 common optional field, so it is a family arg. JUDGMENT: type id by the _id suffix convention"
+        subview:
+          type: enum
+          required: false
+          default: none
+          values: [overview, profiles, instances, runtime_matrix, host_lab_sessions, access_ports, receipts_artifacts, settings]
+          provenance: gap
+          gap_note: >-
+            CRAU-092 preserves the Docker/Hosts subview names Overview, Profiles, Instances, Runtime Matrix,
+            Host Lab Sessions, Access &amp; Ports, Receipts &amp; Artifacts and Settings but fixes no tokens.
+            JUDGMENT: snake_case of those eight names; distinct from the Docker Manager subview enum of
+            cmd.docker.switch_subview.
+        focus_kind:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: "CRAU-092 route payload names focus_kind? without a vocabulary. JUDGMENT: open string pending owner tokens"
+        host_capability_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_capability_ref?; CRAU-092 route payload host_capability_ref?"
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; CRAU-092 route payload host_profile_id?"
+        host_instance_id:
+          type: id
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "UCC-105 canonical text and CV-304 preserved tokens name host_instance_id as an optional backend-fact id; typed nowhere. JUDGMENT: type id by the _id suffix convention"
+        host_assignment_id:
+          type: id
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "CV-303 preserved token host_assignment_id and CRAU-092 route payload host_assignment_id?; typed nowhere. JUDGMENT: type id by the _id suffix convention"
+        runtime_family:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: "CRAU-092 route payload names runtime_family? and says runtime families are PM identities, but fixes no family vocabulary. JUDGMENT: open string pending owner tokens"
+        runtime_context_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "CRAU-092 route payload names runtime_context_ref?; typed nowhere. JUDGMENT: type ref by the _ref suffix convention"
+        port_access_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "CV-303 preserved token port_access_ref and CRAU-092 route payload port_access_ref?; the structured port access record is typed nowhere. JUDGMENT: type ref by the _ref suffix convention"
+        receipt_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "CRAU-092 route payload receipt_ref?; UCC-230 envelope common optional receipt_ref"
+        blocked_sequence:
+          type: integer
+          required: false
+          default: none
+          constraints: {minimum: 0}
+          provenance: gap
+          gap_note: "CRAU-092 route payload lists blocked_sequence? without a type. JUDGMENT: non-negative integer, matching the runtime recovery blocked-sequence identity it names"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_hosts_open)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, invalid_route, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded]   # JUDGMENT: the page renders cached last-known state when unreachable (section 2A posture), so availability copy is capability detail
+      aliases: []
+    - command_id: cmd.docker.host.refresh
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it refreshes the host
+      # projection (event docker.host.refresh_requested).
+      response_kind: owner_operation
+      args:
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; which host(s) to refresh is otherwise undefined"
+        host_instance_id:
+          type: id
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            UCC-105 canonical text names host_instance_id as an optional backend-fact id; whether a refresh
+            targets one instance or all discovered hosts is unstated. JUDGMENT: optional id; absent refreshes
+            the profile or all discovered hosts.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_refresh)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostRefreshResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: refresh replaces a stale projection with a fresh one
+      aliases: []
+    - command_id: cmd.docker.host.preflight
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs the preflight
+      # before approval (event docker.host.preflight_requested; section 2A preflight ordering).
+      response_kind: owner_operation
+      args:
+        host_profile_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; the preflight subject is the profile whose action is proposed"
+        requested_action:
+          type: string
+          required: true
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: >-
+            UCC-105 canonical text names requested_action as a HostCapabilityCommand envelope field but types
+            nothing (CV-304 has no typed schema). JUDGMENT: open string naming the action being preflighted;
+            an enum of host actions stays open for the compile review.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_preflight)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostPreflightResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability]   # JUDGMENT: preflight resolves reachability, trust/proxy policy and capability (section 2A)
+      # Preflight emits blocked_preflight as an outcome, not a dispatch error; unresolved facts block the
+      # mutation rather than failing the command (section 2A preflight and approval ordering contract).
+      aliases: []
+    - command_id: cmd.docker.host.profile.save
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it writes a host profile
+      # record (event docker.host.profile_saved).
+      response_kind: owner_operation
+      args:
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; absent creates a new profile, present saves the identified one"
+        profile:
+          type: object
+          required: true
+          default: none
+          fields:
+            display_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
+                           provenance: gap, gap_note: 'the host profile definition shape is not defined anywhere (no catalog row). JUDGMENT: required human-readable name'}
+            runtime_family: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256},
+                             provenance: gap, gap_note: 'runtime families are PM identities (CRAU-092) with no fixed vocabulary. JUDGMENT: optional family name'}
+            network_access_policy: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256},
+                                    provenance: gap, gap_note: 'UCC-105 and CV-304 name network_access_policy in prose only; no typed schema exists. JUDGMENT: open string pending CV-304 typing'}
+            secret_access_policy: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256},
+                                   provenance: gap, gap_note: 'UCC-105 and CV-304 name secret_access_policy in prose only. JUDGMENT: open string; raw secrets never enter profiles (CV-304)'}
+            destructive_command_policy: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256},
+                                         provenance: gap, gap_note: 'UCC-105 and CV-304 name destructive_command_policy in prose only. JUDGMENT: open string pending CV-304 typing'}
+            preflight_required: {type: boolean, required: false, default: none, provenance: gap, gap_note: 'UCC-105 names preflight_required in prose only. JUDGMENT: optional boolean, no dispatch default'}
+          provenance: gap
+          gap_note: >-
+            The host profile definition shape is not defined anywhere (no catalog row; CV-304 gives only the
+            envelope field names and the no-raw-secrets rule). JUDGMENT: a minimal nested object; every field
+            name except the UCC-105/CV-304 envelope names is a judgment for the compile review.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_profile_save)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostProfileSaveResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, permission_required]   # JUDGMENT: profile writes are local config; permission gate only
+      aliases: []
+    - command_id: cmd.docker.host.session.launch
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it launches a Host Lab
+      # session (event docker.host.session_launch_requested).
+      response_kind: owner_operation
+      args:
+        host_profile_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; the launch inputs name the profile (UCC-105 acceptance ties ATS host launches to registered ids)"
+        execution_unit_context_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "UCC-105 canonical text names execution_unit_context (CV-304 token) and the route payload runtime_context_ref; typed nowhere. JUDGMENT: optional ref to the execution unit context record"
+        host_capability_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_capability_ref?"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_session_launch)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostSessionLaunchResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: session launch carries authority, FileSafe and preflight expectations (UCC-105)
+      # JUDGMENT: the ATS/session target input is named in prose only (UCC-105); no field is minted for it
+      # here and the compile review may add one.
+      aliases: []
+    - command_id: cmd.docker.host.instance.start
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; instance lifecycle
+      # mutation (event docker.host.instance_lifecycle_requested).
+      response_kind: owner_operation
+      args:
+        host_instance_id:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "host_instance_id is named as a backend fact only (UCC-105 canonical text, CV-304 tokens); no catalog row. JUDGMENT: required id; the lifecycle command's subject is the instance"
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; the profile owning the instance"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_instance_start)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostInstanceLifecycleResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: lifecycle actions carry authority, preflight and receipt expectations (UCC-105)
+      aliases: []
+    - command_id: cmd.docker.host.instance.stop
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; instance lifecycle
+      # mutation (event docker.host.instance_lifecycle_requested).
+      response_kind: owner_operation
+      args:
+        host_instance_id:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "host_instance_id is named as a backend fact only (UCC-105 canonical text, CV-304 tokens); no catalog row. JUDGMENT: required id; the lifecycle command's subject is the instance"
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; the profile owning the instance"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_instance_stop)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostInstanceLifecycleResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: stopping a host instance is destructive-leaning; authority, preflight and receipt expectations (UCC-105)
+      aliases: []
+    - command_id: cmd.docker.host.instance.restart
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; instance lifecycle
+      # mutation (event docker.host.instance_lifecycle_requested).
+      response_kind: owner_operation
+      args:
+        host_instance_id:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "host_instance_id is named as a backend fact only (UCC-105 canonical text, CV-304 tokens); no catalog row. JUDGMENT: required id; the lifecycle command's subject is the instance"
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?; the profile owning the instance"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_instance_restart)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostInstanceLifecycleResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: restarting a host instance is destructive-leaning; authority, preflight and receipt expectations (UCC-105)
+      aliases: []
+    - command_id: cmd.docker.host.access.open_app
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; access actions consume
+      # structured port_access_record data under authority gates (CRAU-092). Choose navigation_wrapper
+      # instead if it only routes to a resolved URL.
+      response_kind: owner_operation
+      args:
+        port_access_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            The access target (app URL/port ref) is not defined (no catalog row). JUDGMENT: required ref to
+            the structured port_access_record (CV-303 preserved token port_access_ref, CRAU-092 route payload
+            and acceptance criterion), never a guessed localhost URL.
+        host_capability_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_capability_ref?"
+        host_profile_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_profile_id?"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_access_open_app)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostAccessOpenResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, blocked_state_required]   # JUDGMENT: low-confidence port access is denied with evidence, not guessed (CRAU-092, UCC-105 fixture list)
+      aliases: []
+    - command_id: cmd.docker.host.instance.retain
+      ucc_units: [UCC-105]
+      command_kind: domain_action                 # JUDGMENT: canon states no kind; it records a cleanup
+      # retention (event docker.host.instance_retention_recorded).
+      response_kind: owner_operation
+      args:
+        host_instance_id:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "host_instance_id is named as a backend fact only (UCC-105 canonical text, CV-304 tokens); no catalog row. JUDGMENT: required id; the retention command's subject is the instance"
+        retention_policy:
+          type: string
+          required: false
+          default: none
+          constraints: {min_length: 1, max_length: 256}
+          provenance: gap
+          gap_note: >-
+            Retention intent and period are not defined anywhere; CV-304 names only a cleanup policy in prose
+            and CV-303 the cleanup_retention_receipt. JUDGMENT: optional open string naming the retention
+            intent; a structured period field stays open for the compile review.
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_instance_retain)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:HostInstanceRetainResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required, blocked_state_required]   # JUDGMENT: cleanup/retain actions carry receipt requirements (UCC-105 fixture list)
+      aliases: []
+    - command_id: cmd.docker.host.receipt.open
+      ucc_units: [UCC-105]
+      command_kind: navigation_wrapper            # JUDGMENT: canon states no kind; it opens a receipt view
+      # (event docker.host.receipt_opened), a route/open without an owner result.
+      response_kind: local_projection
+      args:
+        receipt_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "receipt_ref is the UCC-230 common optional field made required by the command subject (one receipt); the Docker/Hosts Receipts &amp; Artifacts subview opens receipts directly (CRAU-092)"
+      owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_receipt_open)
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, invalid_route, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, stale_projection]   # JUDGMENT: receipts open from local records; freshness of the projection matters
+      aliases: []
+  results:
+    DockerContainerRunResultV1:
+      fields:
+        container_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the container started from the image; name canon for the family, result shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_run), shape typed nowhere'}
+    HostRefreshResultV1:
+      fields:
+        host_profile_id: {type: id, required: false, default: none, provenance: gap, gap_note: 'the refreshed profile when one was targeted; result shape typed nowhere'}
+        capability_snapshot_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'the refreshed capability snapshot; result shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_host_refresh), shape typed nowhere'}
+    HostPreflightResultV1:
+      fields:
+        host_preflight_receipt: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the CV-303 preserved token host_preflight_receipt; the record shape is typed nowhere'}
+    HostProfileSaveResultV1:
+      fields:
+        host_profile_id: {type: id, required: true, default: none, provenance: gap, gap_note: 'the profile saved or created; name canon (row-group identity), result shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_host_profile_save), shape typed nowhere'}
+    HostSessionLaunchResultV1:
+      fields:
+        host_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the launched Host Lab session (CRAU-092 subview); session record shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_host_session_launch), shape typed nowhere'}
+    HostInstanceLifecycleResultV1:
+      fields:
+        host_instance_id: {type: id, required: true, default: none, provenance: gap, gap_note: 'the instance acted on; name from UCC-105 prose, result shape typed nowhere'}
+        host_execution_receipt: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the CV-303 preserved token host_execution_receipt; UCC-105 requires receipt expectations before mutation; shape typed nowhere'}
+    HostAccessOpenResultV1:
+      fields:
+        port_access_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the access record opened; echo of the request subject, shape typed nowhere'}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_host_access_open_app), shape typed nowhere'}
+    HostInstanceRetainResultV1:
+      fields:
+        host_instance_id: {type: id, required: true, default: none, provenance: gap, gap_note: 'the instance retained; name from UCC-105 prose, result shape typed nowhere'}
+        cleanup_retention_receipt: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the CV-303 preserved token cleanup_retention_receipt; UCC-105 requires cleanup/retain receipt expectations; shape typed nowhere'}
+```
