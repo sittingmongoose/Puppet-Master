@@ -54,7 +54,7 @@ const PROBE_CLASSES = Object.freeze({
   eventsource: 'route_abort', service_worker: 'service_worker_blocked', download: 'download_contained'
 });
 const BROWSER_LAUNCH_ARGUMENTS = Object.freeze([
-  '--enable-automation', '--disable-gpu', '--disable-dev-shm-usage',
+  '--enable-automation', '--disable-dev-shm-usage',
   '--disable-background-networking', '--disable-component-update',
   '--disable-domain-reliability', '--disable-sync', '--metrics-recording-only',
   '--no-first-run', '--no-default-browser-check'
@@ -668,6 +668,7 @@ export async function prepareProvenanceRun(options) {
       return { chromium: state.playwrightApi.chromium };
     }
     async function launchChromium() {
+      throw new Error('Retired SW-43 provenance launcher: use browser-check; this contract has no GPU admission.');
       if (!state.playwrightApi?.chromium) throw fail('loadPlaywright must run before launch', null, 'browser_launch'); if (state.browser) throw fail('browser already launched', null, 'browser_launch');
       browserExecutable.revalidate(); browserTree.revalidate(); const executablePath = `/proc/self/fd/${browserExecutable.fd}`, environment = sanitizedBrowserEnvironment();
       const cliProbe = spawnSync(executablePath, ['--version'], { encoding: 'utf8', timeout: 15000, env: environment });

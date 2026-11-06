@@ -4,7 +4,7 @@
  *   node tests/pmx-verify.mjs <surface-list> [--file index.html] [--json out.json]
  *        [--themes all|test|a,b] [--checks a,b] [--skip a,b]
  *        [--shots dir] [--crops dir] [--crop-cap n] [--no-crops] [--surfaces-dir dir]
- *        [--quick] [--verbose] [--list] [--once-first] [--once-all]
+ *        [--quick] [--verbose] [--list] [--once-first] [--once-all] [--cdp endpoint]
  *
  * <surface-list> is surface ids, globs (`gallery:*`) or tags (`@gallery`). With no
  * list, or with --list, it prints the registry and exits 2 (or 0 for --list).
@@ -179,6 +179,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { openApp, longMarkdown } from './pmx-surfaces/_lib.mjs';
+import { launchGpuBrowser } from './gpu-browser.mjs';
 
 const TESTS = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(TESTS, '..');
@@ -187,7 +188,7 @@ const ROOT = path.resolve(TESTS, '..');
 /* run only as a program; importing this file (a probe, a package's own tool) just gets the exports */
 const isMain = (() => { try { return fs.realpathSync(process.argv[1] || '') === fs.realpathSync(fileURLToPath(import.meta.url)); } catch (e) { return false; } })();
 const argv = isMain ? process.argv.slice(2) : [];
-const FLAGS_WITH_VALUE = new Set(['--file', '--json', '--themes', '--checks', '--skip', '--shots', '--crops', '--crop-cap', '--surfaces-dir']);
+const FLAGS_WITH_VALUE = new Set(['--file', '--json', '--themes', '--checks', '--skip', '--shots', '--crops', '--crop-cap', '--surfaces-dir', '--cdp']);
 const opts = { surfacesDirs: [], patterns: [] };
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
@@ -201,7 +202,7 @@ for (let i = 0; i < argv.length; i++) {
 }
 function usage(msg) {
   if (msg) console.error('pmx-verify: ' + msg);
-  console.error('usage: node tests/pmx-verify.mjs <surface ids | globs | @tags> [--file index.html] [--json out.json] [--themes all|test|a,b] [--checks a,b] [--skip a,b] [--shots dir] [--crops dir] [--crop-cap n] [--no-crops] [--surfaces-dir dir] [--quick] [--verbose] [--list] [--once-first] [--once-all]');
+  console.error('usage: node tests/pmx-verify.mjs <surface ids | globs | @tags> [--file index.html] [--json out.json] [--themes all|test|a,b] [--checks a,b] [--skip a,b] [--shots dir] [--crops dir] [--crop-cap n] [--no-crops] [--surfaces-dir dir] [--quick] [--verbose] [--list] [--once-first] [--once-all] [--cdp endpoint]');
   process.exit(2);
 }
 if (isMain && (opts.help || opts.h)) usage();
@@ -795,7 +796,7 @@ export function inPageLint(o) {
       seen.push(rec);
       if (names.length > limit) bad.push(rec);
     }
-    res('loop-census', bad.length === 0, bad.length ? bad : seen);
+    res('loop-census', bad.length === 0 && !!window.PMLogo, { bad, seen, pipCoverage: window.PMLogo ? 'kit present; lifecycle requires pip_loops.mjs' : 'not covered: PMLogo absent; use pip_loops.mjs on PMConcept7' });
   }
 
   /* -- no-bleed (7.14): the Chat WOW family styling never reaches a pmx surface */
@@ -1987,14 +1988,19 @@ async function main() {
   if (cropDir) fs.mkdirSync(cropDir, { recursive: true });
   if (!fs.existsSync(FILE)) usage('no such file ' + FILE);
   const md = longMarkdown();
-  const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--allow-file-access-from-files'] });
+  const browser = await launchGpuBrowser(chromium, argv);
   const t0 = Date.now();
+  let warnedMissingPip = false;
   for (const s of surfaces) {
     const st0 = Date.now();
     let page = null, errors = [], h = null, cdp = null;
     const where0 = {};
     try {
       ({ page, errors, h } = await openApp(browser, FILE));
+      if (on('loop-census') && !warnedMissingPip && !await page.evaluate(() => !!window.PMLogo)) {
+        record(s, 'loop-census', null, {}, 'Pip lifecycle not covered: PMLogo is absent; run Concepts/onboarding/opus-5.5/tools/pip_loops.mjs on PMConcept7');
+        warnedMissingPip = true;
+      }
       cdp = await page.context().newCDPSession(page);
       if (s.setup) await s.setup(h);
       const themes = s.themes || THEMES;

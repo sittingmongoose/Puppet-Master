@@ -176,14 +176,19 @@ async function newPage(opts = {}) {
    while the mounted column is hidden. Standalone retains its original boot. */
 async function prepareWideHistory(p) {
   if (!await p.evaluate(() => PM56_TEST.kind === 'pm7')) return;
+  // Leave room for the pinned drawer at the tested window width. The hosted adapter otherwise sizes the
+  // chat to 760px even for a window-size request, and the narrow ladder immediately drops the pin.
+  await p.evaluate(() => PMW.chatCol.setWidth(560));
   if (await p.evaluate(() => PM56_DEMO.getState().historyMode === 'closed')) {
     await p.locator('.chat-header [data-action="toggle-history"]').click(); await p.waitForTimeout(500);
   }
   if (await p.evaluate(() => document.body.getAttribute('data-ph-drawer') !== 'pinned')) {
     await p.locator('.history-flyout [data-action="ph-toggle-pin"]').click(); await p.waitForTimeout(500);
   }
-  const width = await p.locator('.history-flyout').evaluate(el => el.getBoundingClientRect().width);
-  if (width <= 204) {
+  const flyout = p.locator('.history-flyout');
+  if (!await flyout.count()) throw new Error('Wide History drawer missing: ' + JSON.stringify(await p.evaluate(() => ({ mode: PM56_DEMO.getState().historyMode, drawer: document.body.getAttribute('data-ph-drawer'), panels: document.querySelectorAll('.history-panel').length }))));
+  const width = await flyout.evaluate(el => el.getBoundingClientRect().width);
+  if (Math.abs(width - 320) > 1) {
     const handle = await p.locator('.history-flyout [data-ph-resize]').boundingBox();
     if (!handle) throw new Error('Wide hosted History separator is not visible');
     const x = handle.x + handle.width / 2, y = handle.y + Math.min(60, handle.height / 2);
@@ -192,7 +197,7 @@ async function prepareWideHistory(p) {
     await p.waitForTimeout(500);
   }
   await p.waitForFunction(() => { const f = document.querySelector('.history-flyout');
-    return f && f.getBoundingClientRect().width > 204 && !f.classList.contains('is-history-narrow'); }, null, { timeout: 6000 });
+    return f && Math.abs(f.getBoundingClientRect().width - 320) <= 1 && !f.classList.contains('is-history-narrow'); }, null, { timeout: 6000 });
 }
 /* The wide thread list needs a stored width before boot + a tall viewport. */
 async function newWidePage(dpr = 1) {

@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+// SW-43: preserve historical body; refuse before any legacy launch or output.
+console.error("Retired: use browser-check; see Concepts/pm7-tools/browser-check/README.md GPU tool retirements (SW-43).");
+process.exit(2);
+
 import fs from 'node:fs';import path from 'node:path';import http from 'node:http';import {fileURLToPath} from 'node:url';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');const OUT=path.join(ROOT,'evidence','final-certification','video');fs.mkdirSync(OUT,{recursive:true});
 async function pw(){for(const x of ['playwright','playwright-core','/usr/lib/node_modules/playwright/index.js','/usr/local/lib/node_modules/playwright/index.js'])try{return await import(x)}catch{}throw Error('Playwright unavailable')}
