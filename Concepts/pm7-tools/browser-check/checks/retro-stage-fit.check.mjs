@@ -23,7 +23,11 @@ const FRESH = [[1920, 1080], [860, 768], [740, 768], [1280, 500]];
 const NAME = 'First cancellation';
 
 // the page, or T3's sandbox at t.openInSandbox's default flags (an opaque origin, no storage, no modals), as the kit opens it
-const frameFor = (t, mode) => t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
+const frameFor = async (t, mode) => {
+	// T60: --set selftest=late-ready holds the window's first open (95-boot's ?o55=screen= open) back past the ready bound
+	if (t.args.selftest === 'late-ready' && !t.__lateReady) { t.__lateReady = true; await t.page.addInitScript(LATE_READY, LATE_READY_HOLD_MS); }
+	return t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
+};
 // a case runs on its own surface unless --set sandbox picks the other one
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
@@ -177,16 +181,39 @@ const OWNER_READY = () => {
 	const O = window.O55, S = O && O.S;
 	return !!(S && S.open && S.sess && S.sess.status === 'active' && S.root && S.root.getAttribute('data-open') === 'true' && O.ui && typeof O.ui.applyLook === 'function' && O.pipStage && O.pipStage.of(S.root.querySelector('.o55-stage')));
 };
+// T60 (TOOLBATCH4; REVIEW-kit-tb3-opus finding 4): the wait is bounded by the product's own ready time, not a flat 15 s,
+// which let a window that opened up to about 16 s late pass with only a log line. The product opens the window from its
+// boot, 140 ms after DOMContentLoaded (95-boot.js, start), and its opening settles within 2800 ms (60-ui-core.js, open:
+// O55.motion.settled's fallback). Those are pinned here with a stated margin of 2000 ms for a loaded host: on a freshly
+// loaded page the window must be ready by DOMContentLoaded + 140 + 2800 + 2000 ms; once the page has been ready before
+// (a window reopened), within 2800 + 2000 ms of the wait starting. Later than that fails by name, with how long it waited.
+const READY_BOOT_MS = 140, READY_OPEN_MS = 2800, READY_MARGIN_MS = 2000;
+const LATE_READY_HOLD_MS = READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS + 1500;
+// --set selftest=late-ready: the first ui.open of the page waits LATE_READY_HOLD_MS (past the bound, well inside 15 s)
+const LATE_READY = (ms) => document.addEventListener('DOMContentLoaded', () => {
+	const ui = window.O55 && window.O55.ui; if (!ui || typeof ui.open !== 'function' || ui.__lateReady) return;
+	const orig = ui.open; let first = true; ui.__lateReady = true;
+	ui.open = function (...a) { if (first) { first = false; setTimeout(() => orig.apply(this, a), ms); return undefined; } return orig.apply(this, a); };
+});
 const ownerReady = async (t, f, look) => {
-	if (await f.evaluate(OWNER_READY).catch(() => false)) return true;
-	const t0 = Date.now(), ok = await f.waitForFunction(OWNER_READY, null, { timeout: 15000 }).then(() => true, () => false);
-	t.log(`the onboarding window was not ready when ${look} was to be applied: waited ${Date.now() - t0} ms (${ok ? 'ready' : 'never ready'})`);
-	return ok;
+	const at = await f.evaluate((ready) => { const nav = performance.getEntriesByType('navigation')[0], ok = (0, eval)(`(${ready})`)();
+		const r = { now: performance.now(), dcl: nav ? nav.domContentLoadedEventStart : null, seen: !!window.__rsfReadySeen, ok };
+		if (ok) window.__rsfReadySeen = true; return r; }, OWNER_READY.toString()).catch(() => null);
+	if (at && at.ok) return { ok: true };
+	const fresh = !!at && !at.seen && at.dcl > 0;
+	const bound = !at ? READY_OPEN_MS + READY_MARGIN_MS : fresh ? at.dcl + READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS - at.now : READY_OPEN_MS + READY_MARGIN_MS;
+	const t0 = Date.now(), ok = await f.waitForFunction(OWNER_READY, null, { timeout: Math.max(1, Math.round(bound)) }).then(() => true, () => false);
+	const waited = Date.now() - t0;
+	if (ok) await f.evaluate(() => { window.__rsfReadySeen = true; }).catch(() => {});
+	const since = fresh ? ` (${Math.round(at.now - at.dcl + waited)} ms after DOMContentLoaded; the bound: ${READY_BOOT_MS} + ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms)` : ` (the bound: ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms from the wait's start)`;
+	t.log(`the onboarding window was not ready when ${look} was to be applied: waited ${waited} ms, ${ok ? 'ready' : 'not ready within the product\'s ready time'}${since}`);
+	return { ok, waited, since };
 };
 
 // the look, as the window's look menu picks it (the page's own theme switch does not reach an open setup window)
 async function stageLook(t, f, look) {
-	if (!(await ownerReady(t, f, look))) return t.check(`the onboarding window is open with its session and stage before ${look} is applied`, false, await f.evaluate(() => JSON.stringify({ open: !!(window.O55 && O55.S && O55.S.open), sess: !!(window.O55 && O55.S && O55.S.sess) })).catch((e) => e.message), { hard: true });
+	const ready = await ownerReady(t, f, look);
+	if (!ready.ok) return t.check(`the onboarding window is open with its session and stage within the product's ready time before ${look} is applied`, false, `waited ${ready.waited} ms${ready.since}; ` + await f.evaluate(() => JSON.stringify({ open: !!(window.O55 && O55.S && O55.S.open), sess: !!(window.O55 && O55.S && O55.S.sess) })).catch((e) => e.message), { hard: true });
 	await f.evaluate(([fam, m]) => window.O55.ui.applyLook(fam, m), look.split('-'));
 	await f.waitForFunction((lk) => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && st.theme === lk; }, look, { timeout: 15000 }).catch(() => {});
 	const th = await f.evaluate(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return st ? st.theme : 'no stage'; });
