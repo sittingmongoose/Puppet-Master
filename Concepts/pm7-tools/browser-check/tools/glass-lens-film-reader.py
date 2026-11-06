@@ -6,7 +6,9 @@ Reference: the frame at "pre" (the lens on its strip, no editor). For each frame
 "close" - 0.1 s to "after": d_lens = mean abs difference of the lens box against the reference, d_ring = the same for a
 16 px ring round it (inside the panel). The editor turning up changes the ring; a lens drawn under the editor changes
 with it, a lens drawn on top keeps its reference pixels. A frame is WRONG when the ring has changed (d_ring > RING_T: the
-editor is there) and the lens box has not followed (d_lens < RATIO * d_ring). Usage:
+editor is there) and the lens box has not followed (d_lens < RATIO * d_ring). That plain rule does NOT see Glass's lens:
+the lens is translucent, so when the editor replaces its strip's label beneath it its pixels change on top as well (on
+main 0adb197992 it read 0 wrong frames while the lens sat on the editor). Use marker films and --marker. Usage:
   tools/glass-lens-film-reader.py <video.mp4> <run folder> <out.json> [--marker]
 With --marker (films recorded with --set marker=1: lenses paint solid magenta) a frame is WRONG when the editor has
 arrived round the lens (d_ring > RING_T) and at least half the lens box is still pure magenta: a lens under the editor
