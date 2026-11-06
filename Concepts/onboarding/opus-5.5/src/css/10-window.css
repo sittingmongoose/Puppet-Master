@@ -166,6 +166,13 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
    wrap, at their own size */
 .o55-foot > .o55-btn, .o55-foot > .o55-opt-foot, .o55-foot > .o55-opt-foot > .o55-btn { min-width: 0; }
 .o55-foot > .o55-primary, .o55-foot > .o55-opt-foot > .o55-btn { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
+/* ...and a footer with two of them, tight in the wide window, shows Back as its chevron alone, as at phone width (its name
+   stays for screen readers), so the two labels wrap to two lines, not three ('Enter / Puppet / Master' at 860) */
+#pm-o55-onboarding .o55-foot { container: o55foot / inline-size; }
+@container o55foot (max-width: 520px) {
+  #pm-o55-onboarding .o55-foot:has(> .o55-opt-foot ~ .o55-opt-foot) > .o55-back { padding-inline: 10px; }
+  #pm-o55-onboarding .o55-foot:has(> .o55-opt-foot ~ .o55-opt-foot) > .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
 #pm-o55-onboarding[data-family="glass"] .o55-foot { background: color-mix(in srgb, #fff 4%, transparent); }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
