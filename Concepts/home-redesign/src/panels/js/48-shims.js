@@ -142,6 +142,8 @@ shims.fileContextMenu = function () {
   menuEl.setAttribute('data-pm-home-body-portal', 'true');
   var target = null;
   doc.addEventListener('contextmenu', function (e) {
+    /* a contextmenu inside the menu itself (the Menu key's own, at the item holding the focus) keeps its row (FO-93) */
+    if (menuEl.contains(e.target)) return;
     var row = e.target.closest && e.target.closest('.fm-row[data-path], .fm-openrow[data-path]');
     target = row ? row.getAttribute('data-path') : null;
     ctxRow = row ? { path: target, folder: row.getAttribute('data-kind') === 'folder' } : null;

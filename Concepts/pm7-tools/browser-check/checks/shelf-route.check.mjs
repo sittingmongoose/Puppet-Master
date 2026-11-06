@@ -78,6 +78,8 @@ export default async function (t) {
       window.addEventListener(type, e => { if (hit(e, 'hover')) { window.__blockedBranch++; e.stopImmediatePropagation(); } }, true);
     window.addEventListener('keydown', e => { if (e.key === 'ArrowRight' && hit(e, 'key')) { window.__blockedBranch++; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   }, String(t.args.blockBranch));
+  // --set inputs=<shift-f10,menu-key,...> probes only those context inputs (to isolate FO-93 on a base; the floors then fail by design)
+  const CTX_INPUTS = t.args.inputs ? String(t.args.inputs).split(',') : INPUTS;
   await t.viewport(Number(t.args.width || 1920),Number(t.args.height || 1080)); const f = await t.app.open();
   if(t.args.look) await t.app.look(t.args.look);
   const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
@@ -229,6 +231,88 @@ export default async function (t) {
     await t.check(`${tag} a pick by Enter gives focus back to the route's origin`, after.focusOnOrigin, JSON.stringify(after), { hard: true });
     await f.evaluate(() => document.querySelectorAll('[data-shelf-pick],[data-shelf-inert],[data-shelf-origin]').forEach(e => { e.removeAttribute('data-shelf-pick'); e.removeAttribute('data-shelf-inert'); e.removeAttribute('data-shelf-origin'); }));
   };
+  // FO-93: a context menu opened by a key (PMMenu.openAt) takes the focus and is worked by keys alone: the first enabled
+  // item has the focus; ArrowDown reaches every item and wraps, ArrowUp wraps back, Home and End go to the ends; each
+  // branch opens by ArrowRight and by Enter with the focus on its first item, its items are walked the same way, and
+  // Escape closes only the branch, back on its item; Enter activates an item (the same item a pick would choose) and
+  // closes the menu; Escape closes the menu; both give the focus back to the row that opened it.
+  const kbMark = (k) => f.evaluate(k => {
+    document.querySelectorAll('[data-shelf-kb]').forEach(e => e.removeAttribute('data-shelf-kb'));
+    const m = __shelf.open().find(x => __shelf.key(x) === k);
+    if (!m) return null;
+    const items = [...m.querySelectorAll('[role="menuitem"]')].filter(it => it.closest('[role="menu"]') === m && !it.hasAttribute('disabled') && it.getClientRects().length);
+    items.forEach((it, i) => it.setAttribute('data-shelf-kb', String(i)));
+    const off = it => it.getAttribute('aria-disabled') === 'true';
+    const enabled = items.map((it, i) => off(it) ? -1 : i).filter(i => i >= 0);
+    const plain = items.map((it, i) => !off(it) && !it.hasAttribute('aria-haspopup') ? i : -1).filter(i => i >= 0);
+    const pick = plain.find(i => ['aria-checked', 'aria-selected'].some(a => items[i].getAttribute(a) === 'true') || items[i].classList.contains('active') || items[i].classList.contains('is-selected'))
+      ?? plain.find(i => items[i].hasAttribute('data-demo-action') || items[i].hasAttribute('data-command-id')) ?? plain[0] ?? null;
+    const label = it => it.textContent.trim().replace(/\s+/g, ' ');
+    return { n: items.length, first: enabled[0] ?? null, pick, pickLabel: pick === null ? null : label(items[pick]),
+      branches: items.map((it, i) => it.hasAttribute('aria-haspopup') && !off(it) ? { i, label: label(it) } : null).filter(Boolean) };
+  }, k);
+  const kbAt = (k) => f.evaluate(k => {
+    const m = __shelf.open().find(x => __shelf.key(x) === k), a = document.activeElement, am = a && a.closest && a.closest('[role="menu"]');
+    return { open: !!m, inMenu: !!m && !!a && m.contains(a), kb: a && a.getAttribute ? a.getAttribute('data-shelf-kb') : null,
+      kbs: a && a.getAttribute ? a.getAttribute('data-shelf-kbs') : null, branch: am && m && am !== m ? __shelf.key(am) : null,
+      origin: !!(a && a.hasAttribute && a.hasAttribute('data-shelf-origin')), openBranches: m ? [...m.querySelectorAll('[role="menu"]')].filter(x => x.classList.contains('is-open') && x.checkVisibility()).length : 0 };
+  }, k);
+  const press = async (keyName) => { await t.page.keyboard.press(keyName); return kbAt(lastKbKey); };
+  let lastKbKey = null;
+  const keyboardMenu = async (key, tag, origin, reopen) => {
+    lastKbKey = key;
+    const T = `${tag} FO-93`;
+    let mk = await kbMark(key), at = await kbAt(key);
+    await t.check(`${T} keyboard open puts the focus on the first enabled item`, at.inMenu && at.kb === String(mk.first), JSON.stringify({ at, first: mk.first }), { hard: true });
+    const seen = new Set([at.kb]);
+    for (let s = 0; s < mk.n; s++) seen.add((await press('ArrowDown')).kb);
+    at = await kbAt(key);
+    await t.check(`${T} ArrowDown reaches every item (${mk.n}) and wraps`, seen.size === mk.n && [...Array(mk.n).keys()].every(i => seen.has(String(i))) && at.kb === String(mk.first),
+      JSON.stringify({ seen: [...seen], n: mk.n, back: at.kb }), { hard: true });
+    at = await press('Home'); await t.check(`${T} Home goes to the first item`, at.kb === '0', JSON.stringify(at), { hard: true });
+    at = await press('ArrowUp'); await t.check(`${T} ArrowUp from the first item wraps to the last`, at.kb === String(mk.n - 1), JSON.stringify(at), { hard: true });
+    at = await press('Home'); at = await press('End'); await t.check(`${T} End goes to the last item`, at.kb === String(mk.n - 1), JSON.stringify(at), { hard: true });
+    for (const br of mk.branches) {
+      const toBranch = async () => { await press('Home'); for (let s = 0; s < br.i; s++) await press('ArrowDown'); return kbAt(key); };
+      at = await toBranch();
+      await t.check(`${T} keys reach the branch item ${br.label}`, at.kb === String(br.i), JSON.stringify(at), { hard: true });
+      for (const how of ['ArrowRight', 'Enter']) {
+        at = await press(how);
+        await t.check(`${T} ${how} on ${br.label} opens the branch with the focus inside`, at.inMenu && !!at.branch, JSON.stringify(at), { hard: true });
+        const sub = await f.evaluate(() => { const am = document.activeElement.closest('[role="menu"]');
+          const its = [...am.querySelectorAll('[role="menuitem"]')].filter(it => it.closest('[role="menu"]') === am && !it.hasAttribute('disabled') && it.getClientRects().length);
+          document.querySelectorAll('[data-shelf-kbs]').forEach(e => e.removeAttribute('data-shelf-kbs')); its.forEach((it, i) => it.setAttribute('data-shelf-kbs', String(i)));
+          return { n: its.length, at: its.indexOf(document.activeElement) }; });
+        const subSeen = new Set([String(sub.at)]);
+        for (let s = 0; s < sub.n; s++) subSeen.add((await press('ArrowDown')).kbs);
+        await t.check(`${T} ${br.label}: ArrowDown reaches every branch item (${sub.n}) and wraps`, sub.at === 0 && subSeen.size === sub.n, JSON.stringify({ sub, seen: [...subSeen] }), { hard: true });
+        at = await press('Escape');
+        await t.check(`${T} Escape in ${br.label} closes only the branch, back on its item`, at.open && at.kb === String(br.i) && !at.branch && at.openBranches === 0, JSON.stringify(at), { hard: true });
+      }
+    }
+    await origin.evaluate(e => e.setAttribute('data-shelf-origin', ''));
+    at = await press('Escape');
+    const closed = await f.waitForFunction(k => !__shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
+    at = await kbAt(key);
+    await t.check(`${T} Escape closes the menu and gives the focus back to the row`, closed && at.origin, JSON.stringify(at), { hard: true });
+    if (mk.pick === null) return;
+    await reopen();
+    await f.waitForFunction(k => __shelf.keys().includes(k), key, { timeout: 5000 }).catch(() => {});
+    mk = await kbMark(key);
+    await press('Home');
+    for (let s = 0; s < mk.pick; s++) await press('ArrowDown');
+    at = await kbAt(key);
+    await t.check(`${T} keys reach ${mk.pickLabel}`, at.kb === String(mk.pick), JSON.stringify(at), { hard: true });
+    await f.evaluate(() => { window.__shelfKbClick = null; window.addEventListener('click', e => { const it = e.target.closest && e.target.closest('[data-shelf-kb]'); window.__shelfKbClick = it ? it.getAttribute('data-shelf-kb') : 'elsewhere'; }, { capture: true, once: true }); });
+    await t.page.keyboard.press('Enter');
+    const shut = await f.waitForFunction(k => !__shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
+    const act = await f.evaluate(() => window.__shelfKbClick);
+    at = await kbAt(key);
+    await t.check(`${T} Enter on ${mk.pickLabel} activates it, closes the menu and gives the focus back to the row`, act === String(mk.pick) && shut && at.origin && await f.locator('#sidePanelSlot').isVisible(),
+      JSON.stringify({ activated: act, closed: shut, at }), { hard: true });
+    await f.evaluate(() => document.querySelectorAll('[data-shelf-kb],[data-shelf-kbs],[data-shelf-origin]').forEach(e => { e.removeAttribute('data-shelf-kb'); e.removeAttribute('data-shelf-kbs'); e.removeAttribute('data-shelf-origin'); }));
+  };
+  const kbDone = new Set();
   const secondDone = new Set();
   const secondEscape = async (tag) => {
     if (secondDone.has(current) || !await f.evaluate(() => !!document.querySelector('[data-pmw-rail-peek]'))) return;
@@ -476,7 +560,7 @@ export default async function (t) {
         // One reach per row kind; the press point comes from reach (on top, or unreachable for the mouse).
         const q = await reach(row), p = { at: q.onTop ? { x: q.x, y: q.y } : null, open: await f.evaluate(() => __shelf.keys()) };
         await t.check(`${target} ${state} no menu open before probing ${sig}`, !p.open.length, JSON.stringify(p.open), { hard: true });
-        for (const input of INPUTS) {
+        for (const input of CTX_INPUTS) {
           if (input === 'mouse') {
             if (!p.at) { unreachable.push(input); continue; }
             await t.page.mouse.click(off.x + p.at.x, off.y + p.at.y, { button: 'right' });
@@ -488,13 +572,24 @@ export default async function (t) {
           contextRoutes.push({ panel: target, engine, tab, sig, input, menu: key });
           // Branches once per pane, input and menu; every route still asserts open, items and Escape.
           const once = `${state}|${input}|${key}`;
+          if (input === 'mouse') {
+            const at = await kbAt(key);
+            await t.check(`${tag} FO-93 a pointer-opened menu leaves the focus where it was`, at.open && !at.inMenu, JSON.stringify(at), { hard: true });
+          } else if (!kbDone.has(once)) {
+            kbDone.add(once);
+            const reopenKb = async () => { await row.focus(); await t.page.keyboard.press(KEY[input]); };
+            await keyboardMenu(key, tag, row, reopenKb);
+            await reopenKb();
+            const again = await f.waitForFunction(k => __shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
+            await t.check(`${tag} reopens by the same key for the rest of the census`, again, '', { hard: true });
+          }
           await assertMenu(key, tag, !branchDone.has(once), async () => {
             if (input === 'mouse') { const q2 = await reach(row); await t.page.mouse.click(off.x + q2.x, off.y + q2.y, { button: 'right' }); }
             else { await row.focus(); await t.page.keyboard.press(KEY[input]); }
           }, row);
           branchDone.add(once);
         }
-        const menus = INPUTS.map(input => got[input] || null);
+        const menus = CTX_INPUTS.map(input => got[input] || null);
         if (menus.some(Boolean)) await t.check(`${target} ${state} context menu on ${sig} opens by every input`, menus.every(m => m === menus.find(Boolean)),
           JSON.stringify({ got, unreachable, blocked: await f.evaluate(() => window.__blockedContext || 0) }), { hard: true });
       }
@@ -637,5 +732,5 @@ export default async function (t) {
   await t.check('at least 6 popup menus beyond the PMMenu wrappers exercised', new Set(popupRows.filter(r => !r.controls).map(r => r.identity)).size >= 6, JSON.stringify(popupRows));
   for (const [arg, hits] of [['blockContext', '__blockedContext'], ['blockPopup', '__blockedPopup'], ['blockBranch', '__blockedBranch']])
     if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, await f.evaluate(h => window[h] || 0, hits) > 0, String(t.args[arg]));
-  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch],[data-shelf-pick],[data-shelf-fold],[data-shelf-disc]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc'])e.removeAttribute(a);}));
+  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch],[data-shelf-pick],[data-shelf-fold],[data-shelf-disc],[data-shelf-kb],[data-shelf-kbs]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc','data-shelf-kb','data-shelf-kbs'])e.removeAttribute(a);}));
 }
