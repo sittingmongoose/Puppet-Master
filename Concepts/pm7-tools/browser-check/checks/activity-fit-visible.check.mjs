@@ -231,10 +231,12 @@ export default async function(t) {
       const ref = after ? after.nextSibling : bar.firstChild;
       if (btn.parentNode !== bar || (after && btn.previousSibling !== after)) bar.insertBefore(btn, ref);
     };
+    // As rw-thread.js's sync(): every root change repaints the item (same values) and re-places it.
+    const paint = () => { btn.setAttribute('data-tone', 'working'); btn.setAttribute('aria-label', btn.getAttribute('aria-label')); };
     let sched = false;
-    const mo = new MutationObserver(() => { if (!sched) { sched = true; Promise.resolve().then(() => { sched = false; place(); }); } });
+    const mo = new MutationObserver(() => { if (!sched) { sched = true; Promise.resolve().then(() => { sched = false; paint(); place(); }); } });
     mo.observe(root, { childList: true, subtree: true });
-    const timer = setInterval(() => { btn.setAttribute('data-tone', 'working'); btn.setAttribute('aria-label', btn.getAttribute('aria-label')); place(); }, 700);
+    const timer = setInterval(() => { paint(); place(); }, 700);
     window.__fo76Foreign = { btn, mo, timer, place };
     place();
   });
@@ -261,23 +263,29 @@ export default async function(t) {
   await t.check('injected strip item: its own content change reaches the fit within 3 frames',
     grow0.tier === 0 && valid(grow0) && grow1.tier >= 1 && valid(grow1) && grow2.tier === 0 && valid(grow2),
     JSON.stringify([grow0, grow1, grow2].map(r => JSON.parse(strip(r)))));
-  // Idle for 3 s with the item's timer rewriting it: each chat render drops the copies with the item and the mirror
-  // puts them back (2 per render), but the two observers must not answer each other: copies inserted stay within
-  // twice the renders seen, plus one, and each fit row ends with exactly one copy.
-  const idle = await f.evaluate(async () => {
+  // No observer ping-pong. Inside one task (microtasks only, so no chat render can interleave): one real change to
+  // the injected item must give exactly one new copy per fit row, even though the injector answers that write from
+  // its own root observer; then fifty same-value rewrites, as its timer does, must give none.
+  const pingpong = await f.evaluate(async () => {
     const sizer = document.querySelector('#pmRoot .activity-wrap > .activity-sizer');
-    const bar = document.querySelector('#pmRoot .activity-wrap > :is(.activity-bar, .pm56-activity-bar)');
-    let inserted = 0, renders = 0;
+    const { btn } = __fo76Foreign;
+    let inserted = 0;
     const mo = new MutationObserver(rs => { for (const r of rs) for (const n of r.addedNodes) if (n.nodeType === 1 && n.hasAttribute('data-ab-foreign')) inserted++; });
     mo.observe(sizer, { childList: true, subtree: true });
-    const live = new MutationObserver(rs => { for (const r of rs) for (const n of r.removedNodes) if (n === __fo76Foreign.btn) renders++; });
-    live.observe(bar, { childList: true });
-    await new Promise(r => setTimeout(r, 3000)); mo.disconnect(); live.disconnect();
-    return { inserted, renders, copies: [...sizer.querySelectorAll(':scope > .activity-fit > *')].map(row => row.querySelectorAll(':scope > .fo76-foreign').length) };
+    const drain = async () => { for (let i = 0; i < 40; i++) await Promise.resolve(); };
+    btn.querySelector('.count').textContent = '4';
+    await drain(); mo.takeRecords().forEach(r => r.addedNodes.forEach(n => { if (n.nodeType === 1 && n.hasAttribute('data-ab-foreign')) inserted++; }));
+    const afterChange = inserted;
+    for (let i = 0; i < 50; i++) { btn.setAttribute('data-tone', 'working'); btn.setAttribute('aria-label', btn.getAttribute('aria-label')); await drain(); }
+    mo.takeRecords().forEach(r => r.addedNodes.forEach(n => { if (n.nodeType === 1 && n.hasAttribute('data-ab-foreign')) inserted++; }));
+    mo.disconnect();
+    const copies = [...sizer.querySelectorAll(':scope > .activity-fit > *')].map(row => [...row.querySelectorAll(':scope > .fo76-foreign .count')].map(c => c.textContent).join(','));
+    btn.querySelector('.count').textContent = '3';
+    return { afterChange, afterRewrites: inserted - afterChange, copies };
   });
-  t.log(JSON.stringify({ foreignIdle: idle }));
-  await t.check('injected strip item: one copy per fit row, re-copied only after a render removes it (no observer ping-pong)',
-    idle.inserted <= 2 * idle.renders + 2 && idle.copies.length === 2 && idle.copies.every(n => n === 1), JSON.stringify(idle));
+  t.log(JSON.stringify({ foreignPingPong: pingpong }));
+  await t.check('injected strip item: one copy per fit row per real change, none for same-value rewrites (no observer ping-pong)',
+    pingpong.afterChange === 2 && pingpong.afterRewrites === 0 && pingpong.copies.length === 2 && pingpong.copies.every(c => c === '4'), JSON.stringify(pingpong));
   // The reported route with the item in the strip.
   await t.viewport(1512, 982); await setWidth(560);
   const foreignReveals = [];
