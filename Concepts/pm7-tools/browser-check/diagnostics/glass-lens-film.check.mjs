@@ -5,11 +5,15 @@
 // per cycle (film coordinates: the page is the 1920x1080 window at DPR 1), so a frame reader can judge, in each frame,
 // whether the lens is drawn on top of the editor (the lens area keeps the "pre" pixels while the area round it turns
 // into the editor) or under it (it changes with its surroundings). Record on the VM or Windows:
-//   browser-check run diagnostics/glass-lens-film.check.mjs --record /abs/film.mp4 --set page=<build> [--set cycles=4]
+//   browser-check run diagnostics/glass-lens-film.check.mjs --record /abs/film.mp4 --set page=<build> [--set cycles=4] [--set marker=1]
 export default async function (t) {
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh' });
 	await f.waitForFunction(() => window.O55?.S?.open && !!document.querySelector('#pm-o55-onboarding .o55-lookbtn'), null, { timeout: 30000 });
 	await t.emulate({ reducedMotion: 'no-preference' });
+	/* --set marker=1: every Glass lens paints solid magenta (its glint, label copy and shadow hidden), a test-only paint
+	   marker that leaves the stacking alone, so a frame reader can tell a lens on top (pure magenta) from one under a
+	   rising panel (magenta mixed with the panel) */
+	if (t.args.marker) await f.evaluate(() => { const s = document.createElement('style'); s.id = 'fo83-marker'; s.textContent = '.lg-lens { background: #f0f !important; box-shadow: none !important; } .lg-lens::after { display: none !important; } .lg-lens > * { visibility: hidden !important; }'; document.head.appendChild(s); });
 	const cycles = Number(t.args.cycles) || 4, rows = [];
 	for (const look of (t.args.look ? String(t.args.look).split(',') : ['glass-light', 'glass-dark'])) {
 		await t.page.mouse.move(2, 2);
