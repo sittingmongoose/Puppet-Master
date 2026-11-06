@@ -11310,6 +11310,88 @@
       "single_defect": "jcs_sign"
     },
     {
+      "id": "jcs-sign-kept-negative-nonzero-exact",
+      "op": "jcs",
+      "raw": "-1.5",
+      "parser": "exact",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "-1.5",
+      "target_predicate": "jcs_sign.zero_only",
+      "note": "T41 (tool batch 3): a sign-sensitive path refuses only a negative zero; a negative nonzero value and a positive zero pass unchanged."
+    },
+    {
+      "id": "jcs-sign-kept-negative-nonzero-current",
+      "op": "jcs",
+      "raw": "-1.5",
+      "parser": "current",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "-1.5",
+      "target_predicate": "jcs_sign.zero_only",
+      "note": "T41 (tool batch 3): a sign-sensitive path refuses only a negative zero; a negative nonzero value and a positive zero pass unchanged."
+    },
+    {
+      "id": "jcs-sign-kept-negative-integer",
+      "op": "jcs",
+      "raw": "-1",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "-1",
+      "target_predicate": "jcs_sign.zero_only",
+      "note": "T41 (tool batch 3): a sign-sensitive path refuses only a negative zero; a negative nonzero value and a positive zero pass unchanged."
+    },
+    {
+      "id": "jcs-sign-kept-positive-zero-exact",
+      "op": "jcs",
+      "raw": "0.0",
+      "parser": "exact",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "0",
+      "target_predicate": "jcs_sign.zero_only",
+      "note": "T41 (tool batch 3): a sign-sensitive path refuses only a negative zero; a negative nonzero value and a positive zero pass unchanged."
+    },
+    {
+      "id": "jcs-sign-kept-positive-zero-current",
+      "op": "jcs",
+      "raw": "0.0",
+      "parser": "current",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "0",
+      "target_predicate": "jcs_sign.zero_only",
+      "note": "T41 (tool batch 3): a sign-sensitive path refuses only a negative zero; a negative nonzero value and a positive zero pass unchanged."
+    },
+    {
+      "id": "jcs-sign-kept-positive-integer-zero",
+      "op": "jcs",
+      "raw": "0",
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "0",
+      "target_predicate": "jcs_sign.zero_only",
+      "note": "T41 (tool batch 3): a sign-sensitive path refuses only a negative zero; a negative nonzero value and a positive zero pass unchanged."
+    },
+    {
       "id": "append-unknown-policy",
       "op": "append_policy",
       "value": "unknown_policy",

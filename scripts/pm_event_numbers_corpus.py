@@ -995,7 +995,23 @@ GENERATED_FAMILIES = {
                         "so the container falls through to the following branches.",
     "field_iteration": "Every fields(self) iteration inside a dataclass method, once per field of that class. "
                        "The mutant iterates every field except that one.",
+    # T41 (tool batch 3): the data the guards read, as for the date-time gate. REVIEW-datetime-fix16-opus finding 3
+    # named the gap for both scopes; the number scope had it too (no family reached a constant table or a literal set).
+    "data_table_entry": "Every entry of a module-level constant table (a tuple, list, set or dict display, or a "
+                        "frozenset, set, tuple or list of one: the producer fields). The mutant drops that one entry.",
+    "data_loop_member": "Every element of a literal tuple, list or set that a for loop or a comprehension iterates, "
+                        "or that an in or not in test reads, when the loop or the test is in a refusal guard's data "
+                        "path (a refusal site in the loop, or a call of a refusing helper). The mutant drops it.",
+    "data_flag_operand": "Every operand of a Boolean expression assigned to a local name that a refusal guard of the "
+                         "same function reads. The mutant makes an and-operand True or an or-operand False.",
+    "data_value_arithmetic": "Every arithmetic operator (+, -, *, //) and integer constant in a value assigned to a "
+                             "local name that a refusal guard reads, and in a module-level numeric constant (the "
+                             "uint64 limit): + and - are swapped, * and // are swapped, an integer gains one.",
+    "data_walk_domain": "Every for loop over a computed collection whose body holds a refusal site: the mutant "
+                        "walks only the first item.",
 }
+_TABLE_CALLS = ("frozenset", "set", "tuple", "list")
+_SWAPPED = {ast.Add: ast.Sub, ast.Sub: ast.Add, ast.Mult: ast.FloorDiv, ast.FloorDiv: ast.Mult}
 # Names through which the helper emits an error code. mutation_points refuses
 # any other use of them (an alias such as _deny = _refuse, a getattr string, a
 # Refusal built outside a raise or _refuse), so every refusal stays a direct,
@@ -1202,7 +1218,106 @@ def mutation_points(source):
             if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
                 add("field_iteration", "field:%s:skip %s" % (name, stmt.target.id), call, function=name,
                     action="skip_field", detail=stmt.target.id, text=ast.unparse(call))
+    for family, node, action, detail, text, function in _data_points(tree, parents, sites, refusing):
+        add(family, "data:%s:%s:%s %s" % (family.removeprefix("data_"), function, action, text), node,
+            function=function, action=action, detail=detail, text=text[:160])
     return points
+
+
+def _table_display(value):
+    if isinstance(value, (ast.Tuple, ast.List, ast.Set, ast.Dict)):
+        return value
+    if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.func.id in _TABLE_CALLS
+            and len(value.args) == 1 and not value.keywords and isinstance(value.args[0], (ast.Tuple, ast.List, ast.Set))):
+        return value.args[0]
+    return None
+
+
+def _entries(display):
+    if isinstance(display, ast.Dict):
+        return [(i, ast.unparse(k) if k is not None else "**" + ast.unparse(v)) for i, (k, v) in enumerate(zip(display.keys, display.values))]
+    return [(i, ast.unparse(e)) for i, e in enumerate(display.elts)]
+
+
+def _data_points(tree, parents, sites, refusing):
+    """[(family, node, action, detail, text, function)] for every data point of the helper (T41), in source order:
+    the constant tables, literal sets and clauses the refusal guards read, the arithmetic of the values they test,
+    and the domains refusal loops walk (the guards' own predicates are refusal_predicate points)."""
+    site_ids = {id(n) for n in sites}
+    def function_of(node):
+        while node in parents:
+            node = parents[node]
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+                return node
+        return None
+    def holds(node):
+        return any(id(x) in site_ids or (isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id in refusing)
+                   for x in ast.walk(node))
+    out = []
+    for statement in tree.body:
+        if isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name):
+            display = _table_display(statement.value)
+            if display is not None:
+                for position, text in _entries(display):
+                    out.append(("data_table_entry", display, "drop_entry", position, statement.targets[0].id + " " + text, "<module>"))
+            elif isinstance(statement.value, ast.BinOp) and all(
+                    isinstance(x, (ast.BinOp, ast.operator)) or isinstance(x, ast.Constant) and type(x.value) is int
+                    for x in ast.walk(statement.value)):
+                for x in ast.walk(statement.value):
+                    if isinstance(x, ast.BinOp) and type(x.op) in _SWAPPED:
+                        out.append(("data_value_arithmetic", x, "swap_op", None, statement.targets[0].id + ": " + ast.unparse(x), "<module>"))
+                    elif isinstance(x, ast.Constant):
+                        out.append(("data_value_arithmetic", x, "plus_one", None, statement.targets[0].id + ": " + ast.unparse(x)
+                                    + " in " + ast.unparse(parents.get(x, x)), "<module>"))
+    guard_names = {}
+    for site in sites:
+        function = function_of(site)
+        for guard in (_guards(site, parents) if isinstance(site, ast.Call) else ()):
+            for x in ast.walk(guard.test):
+                if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Load):
+                    guard_names.setdefault(id(function), set()).add(x.id)
+    for node in ast.walk(tree):
+        display = None
+        if isinstance(node, (ast.For, ast.AsyncFor)) and isinstance(node.iter, (ast.Tuple, ast.List, ast.Set)) and holds(node):
+            display = node.iter
+        elif isinstance(node, ast.comprehension) and isinstance(node.iter, (ast.Tuple, ast.List, ast.Set)) and holds(parents[node]):
+            display = node.iter
+        elif (isinstance(node, ast.Compare) and len(node.ops) == 1 and isinstance(node.ops[0], (ast.In, ast.NotIn))
+              and isinstance(node.comparators[0], (ast.Tuple, ast.List, ast.Set)) and len(node.comparators[0].elts) > 1):
+            # (a literal set tested with in/not in that is not itself a refusal guard's predicate, which
+            # refusal_predicate already drops element by element)
+            statement = node
+            while statement in parents and not isinstance(statement, ast.stmt):
+                statement = parents[statement]
+            in_guard = any(isinstance(g, ast.If) and any(x is node for x in ast.walk(g.test))
+                           for site in sites for g in (_guards(site, parents) if isinstance(site, ast.Call) else ()))
+            if not in_guard and holds(statement):
+                display = node.comparators[0]
+        if display is not None and len(display.elts) > 1:
+            for position, text in _entries(display):
+                out.append(("data_loop_member", display, "drop_entry", position, text, _qualname(display, parents)))
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Assign, ast.AugAssign, ast.NamedExpr)):
+            target = node.targets[0] if isinstance(node, ast.Assign) and len(node.targets) == 1 else getattr(node, "target", None)
+            function = function_of(node)
+            if not isinstance(target, ast.Name) or function is None or target.id not in guard_names.get(id(function), ()):
+                continue
+            name = _qualname(node, parents)
+            for x in ast.walk(node.value):
+                if isinstance(x, ast.BoolOp):
+                    for operand in x.values:
+                        out.append(("data_flag_operand", operand, "true" if isinstance(x.op, ast.And) else "false",
+                                    isinstance(x.op, ast.And), target.id + " " + ast.unparse(operand), name))
+                elif isinstance(x, ast.BinOp) and type(x.op) in _SWAPPED:
+                    out.append(("data_value_arithmetic", x, "swap_op", None, target.id + ": " + ast.unparse(x), name))
+                elif isinstance(x, ast.Constant) and type(x.value) is int and not isinstance(parents.get(x), ast.Subscript):
+                    out.append(("data_value_arithmetic", x, "plus_one", None, target.id + ": " + ast.unparse(x)
+                                + " in " + ast.unparse(parents.get(x, x))[:80], name))
+    for node in ast.walk(tree):
+        if (isinstance(node, (ast.For, ast.AsyncFor)) and not isinstance(node.iter, (ast.Tuple, ast.List, ast.Set))
+                and any(id(x) in site_ids for x in ast.walk(node))):
+            out.append(("data_walk_domain", node, "walk_first", None, ast.unparse(node.iter), _qualname(node, parents)))
+    return sorted(out, key=lambda p: (p[1].lineno, p[1].col_offset, p[0], p[3] if type(p[3]) is int else -1, p[4]))
 
 
 def _point_code(source, file, point):
@@ -1214,6 +1329,27 @@ def _point_code(source, file, point):
         raise ValueError("mutation point moved: " + point["key"])
     if point["family"] == "comparison_boundary":
         node.ops[point["detail"]] = _FLIPPED[type(node.ops[point["detail"]])]()
+    elif point["action"] == "drop_entry":
+        if isinstance(node, ast.Dict):
+            del node.keys[point["detail"]], node.values[point["detail"]]
+        else:
+            del node.elts[point["detail"]]
+    elif point["action"] == "swap_op":
+        node.op = _SWAPPED[type(node.op)]()
+    elif point["action"] in ("plus_one", "walk_first"):
+        new = (ast.BinOp(left=node, op=ast.Add(), right=ast.Constant(1)) if point["action"] == "plus_one" else None)
+        if point["action"] == "walk_first":
+            node.iter = ast.Subscript(value=ast.Call(func=ast.Name("list", ast.Load()), args=[node.iter], keywords=[]),
+                                      slice=ast.Slice(upper=ast.Constant(1)), ctx=ast.Load())
+        else:
+            parent = _parent_map(tree)[node]
+            for field, current in ast.iter_fields(parent):
+                if current is node:
+                    setattr(parent, field, ast.copy_location(new, node))
+                elif type(current) is list:
+                    for position, item in enumerate(current):
+                        if item is node:
+                            current[position] = ast.copy_location(new, node)
     elif point["action"] == "drop":
         del node.elts[point["detail"]]
     elif point["family"] == "container_branch":
@@ -1857,6 +1993,8 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
         "delegated_refusals": family_counts["delegated_refusal"],
         "container_branches": family_counts["container_branch"],
         "field_iterations": family_counts["field_iteration"],
+        "data_points": sum(n for family, n in family_counts.items() if family.startswith("data_")),
+        "data_points_by_family": {family: n for family, n in family_counts.items() if family.startswith("data_")},
         "hand_written_mutations": len(results),
         "generated_mutations": len(generated),
         "mutations": len(every),

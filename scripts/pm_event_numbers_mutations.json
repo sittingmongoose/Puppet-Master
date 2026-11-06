@@ -3570,7 +3570,12 @@
       "comparison_boundary": "Every <, <=, > and >= in the helper. The mutant flips strictness (< and <=, > and >=), the off-by-one at that width, range or limit boundary.",
       "delegated_refusal": "Every call, inside the helper, to a module-level function or class of the helper that holds a refusal site directly or through another such call. The mutant replaces the call with its first positional argument (the unchecked input), or None without one.",
       "container_branch": "Every if or elif branch whose test is type(x) is list or type(x) is dict: one per container kind of each recursive walk or type dispatch. The mutant deletes that branch, so the container falls through to the following branches.",
-      "field_iteration": "Every fields(self) iteration inside a dataclass method, once per field of that class. The mutant iterates every field except that one."
+      "field_iteration": "Every fields(self) iteration inside a dataclass method, once per field of that class. The mutant iterates every field except that one.",
+      "data_table_entry": "Every entry of a module-level constant table (a tuple, list, set or dict display, or a frozenset, set, tuple or list of one: the producer fields). The mutant drops that one entry.",
+      "data_loop_member": "Every element of a literal tuple, list or set that a for loop or a comprehension iterates, or that an in or not in test reads, when the loop or the test is in a refusal guard's data path (a refusal site in the loop, or a call of a refusing helper). The mutant drops it.",
+      "data_flag_operand": "Every operand of a Boolean expression assigned to a local name that a refusal guard of the same function reads. The mutant makes an and-operand True or an or-operand False.",
+      "data_value_arithmetic": "Every arithmetic operator (+, -, *, //) and integer constant in a value assigned to a local name that a refusal guard reads, and in a module-level numeric constant (the uint64 limit): + and - are swapped, * and // are swapped, an integer gains one.",
+      "data_walk_domain": "Every for loop over a computed collection whose body holds a refusal site: the mutant walks only the first item."
     },
     "points": {
       "site:_refuse:raise#1": {
@@ -4052,6 +4057,114 @@
       },
       "field:OriginalBinding.__post_init__:skip source_commitment#1": {
         "witness": "binding-empty-source-commitment"
+      },
+      "data:value_arithmetic:<module>:swap_op UINT64_MAX: (1 << 64) - 1#1": {
+        "witness": "uint64-overflow-18446744073709551616"
+      },
+      "data:value_arithmetic:<module>:plus_one UINT64_MAX: 1 in 1 << 64#1": {
+        "witness": "uint64-overflow-18446744073709551616"
+      },
+      "data:value_arithmetic:<module>:plus_one UINT64_MAX: 64 in 1 << 64#1": {
+        "witness": "uint64-overflow-18446744073709551616"
+      },
+      "data:value_arithmetic:<module>:plus_one UINT64_MAX: 1 in (1 << 64) - 1#1": {
+        "witness": "physical-int-18446744073709551615"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'event_type'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'scope_kind'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'project_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'thread_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'run_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'node_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'attempt_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'actor_ref'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'requested_account_ref'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'effective_account_ref'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'occurred_at_utc'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'producer_sequence_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'correlation_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'causation_event_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'parent_event_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'idempotency_key'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'payload_schema_id'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'payload'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'payload_ref'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'redaction_profile'#1": {
+        "witness": "producer-known-answer-bytes"
+      },
+      "data:table_entry:<module>:drop_entry PRODUCER_FIELDS 'migration'#1": {
+        "witness": "producer-missing-migration-bytes"
+      },
+      "data:walk_domain:_unique_object:walk_first pairs#1": {
+        "witness": "duplicate-json"
+      },
+      "data:flag_operand:_declared_numeric_kind:false kind numeric_kinds#1": {
+        "witness": "jcs-declared-decimal-kind-loss"
+      },
+      "data:flag_operand:_declared_numeric_kind:false kind {}#1": {
+        "witness": "jcs-1"
+      },
+      "data:flag_operand:qualified_jcs.number:false negative_zero source_negative_zero#1": {
+        "witness": "jcs-integer-sign-loss"
+      },
+      "data:flag_operand:qualified_jcs.number:true negative_zero v == 0#1": {
+        "witness": "jcs-sign-kept-negative-nonzero-exact"
+      },
+      "data:flag_operand:qualified_jcs.number:false negative_zero v == 0 and (v.is_signed() if type(v) in (Decimal, ParsedDecimal) else math.copysign(1.0, f) < 0)#1": {
+        "witness": "jcs-sign-loss-current"
+      },
+      "data:value_arithmetic:qualified_jcs.number:plus_one negative_zero: 0 in v == 0#1": {
+        "witness": "jcs-sign-loss-current"
+      },
+      "data:flag_operand:qualified_jcs.number:true negative_zero v.is_signed() if type(v) in (Decimal, ParsedDecimal) else math.copysign(1.0, f) < 0#1": {
+        "witness": "jcs-sign-kept-positive-zero-exact"
+      },
+      "data:value_arithmetic:qualified_jcs.number:plus_one negative_zero: 0 in math.copysign(1.0, f) < 0#1": {
+        "survives": "equivalent mutant: math.copysign(1.0, f) is exactly 1.0 or -1.0, so '< 0' and '< 1' agree on every input (T41, tool batch 3)"
+      },
+      "data:value_arithmetic:verify_payload_bytes:plus_one size: 0 in minimum=0#1": {
+        "witness": "payload-empty"
+      },
+      "data:walk_domain:OriginalBinding.__post_init__:walk_first fields(self)#1": {
+        "witness": "binding-empty-event-type"
       }
     }
   },
