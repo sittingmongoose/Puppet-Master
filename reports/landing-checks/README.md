@@ -774,7 +774,7 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
   to `origin/main`, whichever is later, and a member stops with `batch_baseline_past_limit` once it is past it. A
   baseline rule 2 ignores anyway opens one: a batch and a lone landing are then judged alike.
 
-What stays unseen is what no report prints. These pass in the batch and would stop alone:
+What stays unseen is what no report prints. These do not close the batch, and would stop alone:
 
 - A bucket lowered with no row naming a batch file, and raised again by a fresh row on a later member's own file. That
   row reads `(names ...)`, like any pre-existing row on a touched file, so it stops for the comparison above and does
