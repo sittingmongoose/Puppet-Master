@@ -26,7 +26,14 @@ const READ = () => {
 		w: innerWidth, lay: root.getAttribute('data-o55-layout'),
 		ctl: ctl.map((b) => {
 			const r = b.getBoundingClientRect();
-			return { name: (b.textContent || b.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 24) || '?', past: Math.max(0, v[0] - r.left, r.right - v[2], v[1] - r.top, r.bottom - v[3]), spill: Math.max(0, b.scrollWidth - b.clientWidth), font: parseFloat(getComputedStyle(b).fontSize), lines: Math.round(r.height) };
+			/* (its label's text as laid out, against the button's box: the ? beside a button is a glyph, no label) */
+			/* (a label kept for screen readers only, Back's in the narrow window, is not drawn: 1 px, clipped) */
+			const lab0 = b.querySelector(':scope > span'), lcs = lab0 && getComputedStyle(lab0);
+			const lab = lab0 && !(lab0.getBoundingClientRect().width <= 1 || (lcs.clipPath && lcs.clipPath !== 'none')) ? lab0 : null, rg = lab && document.createRange();
+			if (rg) rg.selectNodeContents(lab);
+			const lr = rg ? [...rg.getClientRects()] : [];
+			const spill = lr.length ? Math.max(0, ...lr.map((q) => Math.max(r.left - q.left, q.right - r.right))) : 0;
+			return { name: (b.textContent || b.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 24) || '?', past: Math.max(0, v[0] - r.left, r.right - v[2], v[1] - r.top, r.bottom - v[3]), spill: Math.round(spill * 10) / 10, font: parseFloat(getComputedStyle(b).fontSize), lines: Math.round(r.height) };
 		})
 	};
 };
