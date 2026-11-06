@@ -116,6 +116,8 @@ base = Path("Plans/.plan_migration")
 (base / run_id).mkdir()
 (base / run_id / "partial.json").write_text("{}\n")
 act(row)
+if row.get("pointer_then_fail"):
+    (base / "current_run.json").write_text(json.dumps({"run_id": run_id}) + "\n")
 if row.get("exit"):
     print(json.dumps({"status": "fail"}))
     sys.exit(row["exit"])
@@ -580,6 +582,12 @@ class StopTests(Base):
         self.assertFalse(self.h.held())
         self.assertEqual(self.h.g(self.h.origin, "rev-parse", "refs/heads/main^"), tip)
 
+    def test_a_snapshot_exit_counts_even_if_the_pointer_moved(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        self.h.set_plan("snapshot", [{"exit": 1, "pointer_then_fail": True}])
+        self.stopped(self.land("fix/a"), "snapshot_failed")
+        self.assertEqual(self.h.calls("baseline"), [])
+
     def test_a_baseline_refused_for_a_timeout_retries_once_with_the_larger_bound(self):
         self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
         self.h.set_plan("baseline", [{"exit": 3, "text": "pm-landing-check: not recording a baseline: these subchecks"}])
@@ -681,6 +689,11 @@ class StopTests(Base):
         self.h.set_plan("shard", [{}, {"exit": 1, "failures": [{"path": "Plans/_shards/doc-a/gone.md", "error": "missing_shard"}]}])
         self.stopped(self.land("fix/a"), "shard_check_head_inconsistent")
         self.assertEqual(self.h.shared_head(), base)
+
+    def test_shared_shard_failure_on_a_file_head_lacks_stops_outside_the_shards_too(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        self.h.set_plan("shard", [{}, {"exit": 1, "failures": [{"path": "Plans/not-in-head.md", "error": "missing_source"}]}])
+        self.stopped(self.land("fix/a"), "shard_check_head_inconsistent")
 
     def test_shared_shard_failure_whose_manifest_does_not_reference_it_stops(self):
         self.h.commit_to_main("Plans/_shards/doc-a/orphan.md", "x\n")
@@ -928,6 +941,18 @@ class ResumeTests(Base):
         self.assertEqual(len(self.h.calls("landing")), 2, "a moved base means the check runs again")
         self.assertNotEqual(self.h.origin_main(), tip, "the commit must be rebased, not pushed as it was")
         self.assertEqual(self.h.calls("landing")[1]["head"], self.h.origin_main())
+
+    def test_died_before_the_push_and_the_branch_moved_lands_the_new_tip_never_the_old(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        old = self.h.g(wt, "rev-parse", "HEAD")
+        self.land("fix/a", env={"PM_LAND_TEST_CRASH_BEFORE": "push:land"})
+        self.assertEqual(self.h.shared_head(), old)
+        fix = self.h.commit(wt, {"src/x.txt": "fixed\n"}, "fix")
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.h.calls("landing")), 2, "the new tip gets its own check")
+        self.assertEqual(self.h.calls("landing")[1]["head"], fix)
+        self.assertEqual(self.h.origin_main(), fix)
 
     def test_a_push_that_reached_origin_is_proven_by_origin_itself(self):
         wt = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
@@ -1455,6 +1480,16 @@ class LocalCheckTests(Base):
         self.assertEqual(self.h.state()["stop"]["code"], "input_missing")
         self.assertEqual(self.h.calls("landing"), [])
 
+    def test_inputs_that_differ_from_the_shared_checkouts_stop_before_the_checks(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        other = self.h.tmp / "another-capture-folder"
+        other.mkdir()
+        result = self.land("fix/a", "--checks-local", env={"PM_LAND_SYMLINK_TARGET": str(other)})
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "inputs_differ")
+        self.assertIn("tests/agent_packet_restrictions", result.stdout)
+        self.assertEqual(self.h.calls("landing"), [])
+
     def test_an_input_changing_during_the_checks_blocks_the_push(self):
         self.h.branch("fix/a", {"src/x.txt": "new\n"})
         base = self.h.origin_main()
@@ -1509,6 +1544,21 @@ class LocalCheckTests(Base):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertNotEqual(self.h.calls("landing")[0]["sparse"], "true")
 
+    def test_a_batch_in_local_copies_keeps_the_batch_rules(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        start = self.h.origin_main()
+        self.assertEqual(self.land("fix/a", "--batch-open", "--checks-local").returncode, 0)
+        self.assertEqual(self.h.calls("snapshot"), [])
+        result = self.land("fix/b", "--batch-start", start, "--batch-close", "--checks-local")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        landing = self.h.calls("landing")
+        self.assertEqual([row["args"][1] for row in landing], [start, start, "origin/main"])
+        self.assertEqual(len(self.h.calls("snapshot")), 1)
+        self.assertFalse(self.h.held())
+        self.assertEqual(list(self.h.wts.glob("land-*")), [])
+        self.assertEqual(list(self.h.wts.glob("snapshot-*")), [])
+
     def test_low_disk_stops_before_the_copy(self):
         self.h.branch("fix/a", {"src/x.txt": "new\n"})
         result = self.land("fix/a", "--checks-local", env={"PM_LAND_MIN_FREE_GB": "999999"})
@@ -1528,6 +1578,78 @@ class LocalCheckTests(Base):
         result = self.h.tool("resume")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.h.origin_main(), tip)
+
+
+class GuardTests(Base):
+    """Guards whose window is too short to hit from outside: the state is set up, the step is called."""
+
+    def lander(self, wt=None):
+        args = type("A", (), {"name": "x"})()
+        saved = dict(os.environ)
+        os.environ.update(self.h.env)
+        self.addCleanup(lambda: (os.environ.clear(), os.environ.update(saved)))
+        cfg = M.config_from(args)
+        st = M.new_state(cfg, args, "fix/a", str(wt) if wt else None)
+        lander = M.Lander(cfg, st)
+        st["lock"]["token"] = "mine"
+        (self.h.lock / "held").mkdir(parents=True)
+        (self.h.lock / "held/holder.txt").write_text("token: mine\n")
+        return lander, st
+
+    def checked_state(self, st, sha):
+        origin = self.h.origin_main()
+        tree = self.h.g(self.h.shared, "rev-parse", f"{sha}^{{tree}}")
+        st["land"].update(sha=sha, origin_main=origin, base_arg="origin/main", touched=["src/x.txt"],
+                          check={"sha": sha, "tree": tree, "origin_main": origin, "base": "origin/main", "exit": 0, "timeouts": 0})
+        return M.new_step("push", "land")
+
+    def assert_stops(self, code, call, step):
+        with self.assertRaises(M.Stop) as caught:
+            call(step)
+        self.assertEqual(caught.exception.code, code)
+
+    def test_push_requires_the_shared_head_to_be_the_checked_commit(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"}, repo=self.h.shared)
+        lander, st = self.lander(wt)
+        sha = self.h.g(wt, "rev-parse", "HEAD")
+        base = self.h.origin_main()
+        step = self.checked_state(st, sha)
+        self.assert_stops("checked_commit_mismatch", lander.h_push, step)
+        self.assertEqual(self.h.origin_main(), base, "nothing pushed")
+
+    def test_push_requires_the_shared_tree_to_be_the_checked_tree(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"}, repo=self.h.shared)
+        lander, st = self.lander(wt)
+        sha = self.h.g(wt, "rev-parse", "HEAD")
+        base = self.h.origin_main()
+        self.h.g(self.h.shared, "merge", "-q", "--ff-only", sha)
+        step = self.checked_state(st, sha)
+        st["land"]["check"]["tree"] = "0" * 40
+        self.assert_stops("checked_commit_mismatch", lander.h_push, step)
+        self.assertEqual(self.h.origin_main(), base, "nothing pushed")
+
+    def test_push_requires_a_passing_check_for_that_commit_and_base(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"}, repo=self.h.shared)
+        sha = self.h.g(wt, "rev-parse", "HEAD")
+        base = self.h.origin_main()
+        self.h.g(self.h.shared, "merge", "-q", "--ff-only", sha)
+        lander, st = self.lander(wt)
+        for change in ({"exit": 2}, {"exit": 3}, {"sha": "1" * 40}, {"base": "other"}, {"origin_main": "2" * 40}, {"timeouts": 1}):
+            step = self.checked_state(st, sha)
+            st["land"]["check"].update(change)
+            self.assert_stops("no_passing_check", lander.h_push, step)
+        st["land"]["check"] = None
+        self.assert_stops("no_passing_check", lander.h_push, step)
+        self.assertEqual(self.h.origin_main(), base, "nothing pushed")
+
+    def test_the_local_shard_check_refuses_a_copy_at_another_commit(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"}, repo=self.h.shared)
+        lander, st = self.lander(wt)
+        st["checks_local"] = True
+        st["local_wt"] = str(self.h.shared)
+        st["land"]["sha"] = self.h.g(wt, "rev-parse", "HEAD")
+        self.assert_stops("local_copy_moved", lander.h_shard_local, M.new_step("shard-local", "land"))
+        self.assertEqual(self.h.calls(), [], "no check ran on the wrong commit")
 
 
 class LockTests(Base):
@@ -1572,6 +1694,14 @@ class LockTests(Base):
 
     def test_a_fresh_heartbeat_is_alive_even_with_the_pid_gone(self):
         self.h.hand_lock(self.tool_holder())
+        self.assertFalse(self.judge()["dead"])
+
+    def test_a_heartbeat_dated_in_the_future_does_not_hold_the_lock_past_90_minutes(self):
+        self.h.hand_lock(self.tool_holder(heartbeat=utc(-6000), time=utc(91 * 60)), age=91 * 60)
+        self.assertTrue(self.judge()["dead"])
+
+    def test_a_heartbeat_up_to_10_minutes_old_is_alive_even_with_the_pid_gone(self):
+        self.h.hand_lock(self.tool_holder(heartbeat=utc(9 * 60), time=utc(9 * 60)), age=9 * 60)
         self.assertFalse(self.judge()["dead"])
 
     def test_a_stale_heartbeat_and_a_gone_pid_are_dead(self):
@@ -1689,23 +1819,23 @@ class LockTests(Base):
 
     def test_priority_then_arrival_decide_the_order(self):
         self.h.hand_lock()
-        low1 = self.h.start("lock", "take", "--name", "c-first", "--poll-seconds", "0.05")
+        low1 = self.h.start("lock", "take", "--name", "z-first", "--poll-seconds", "0.05")
         self.wait_tickets(1)
-        low2 = self.h.start("lock", "take", "--name", "c-second", "--poll-seconds", "0.05")
+        low2 = self.h.start("lock", "take", "--name", "a-second", "--poll-seconds", "0.05")
         self.wait_tickets(2)
         high = self.h.start("lock", "take", "--name", "pm-fo-lead", "--poll-seconds", "0.05")
         self.wait_tickets(3)
         lines = self.h.tool("lock", "queue").stdout
-        self.assertLess(lines.index("pm-fo-lead"), lines.index("c-first"))
-        self.assertLess(lines.index("c-first"), lines.index("c-second"))
+        self.assertLess(lines.index("pm-fo-lead"), lines.index("z-first"))
+        self.assertLess(lines.index("z-first"), lines.index("a-second"))
         shutil.rmtree(self.h.lock / "held")
         self.assertEqual(high.wait(timeout=30), 0)
         self.assertIn("agent: pm-fo-lead", self.h.holder())
         self.assertIsNone(low1.poll())
         self.assertEqual(self.h.tool("lock", "release", "--name", "pm-fo-lead").returncode, 0)
         self.assertEqual(low1.wait(timeout=30), 0)
-        self.assertIn("agent: c-first", self.h.holder())
-        self.assertEqual(self.h.tool("lock", "release", "--name", "c-first").returncode, 0)
+        self.assertIn("agent: z-first", self.h.holder())
+        self.assertEqual(self.h.tool("lock", "release", "--name", "z-first").returncode, 0)
         self.assertEqual(low2.wait(timeout=30), 0)
 
     def wait_tickets(self, count: int) -> None:

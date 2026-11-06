@@ -356,7 +356,7 @@ def judge_holder(cfg: Config) -> Dict[str, Any]:
         verdict["reason"] = rule_90 if expired else f"written by hand or stopped; {int(age // 60)} min of 90 used"
         return verdict
     verdict["kind"] = "tool"
-    if heartbeat_age <= DEAD_HEARTBEAT_SECONDS:
+    if heartbeat_age <= DEAD_HEARTBEAT_SECONDS and not expired:  # expired too: a clock far ahead proves nothing
         verdict["reason"] = f"tool holder; heartbeat {int(heartbeat_age)} s old"
         return verdict
     host, pid, start = fields.get("host", ""), fields.get("pid", ""), fields.get("pid-start", "")
