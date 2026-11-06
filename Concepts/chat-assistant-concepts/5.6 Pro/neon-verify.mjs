@@ -69,7 +69,9 @@
  *      starts 5 s late), pod-delay-2s (2 s late), pod-twitch (2 s late, and the Pod jumps off the control for 40 ms
  *      every 400 ms), pod-rolebutton (2 s late, over transcript buttons rebuilt as div[role=button]) and pod-twitch-alone
  *      (no late fade: for 2.4 s after a scroll the Pod jumps off-screen for two frames every 200 ms, its data-shy cleared
- *      and set again 90 ms after it returns) are real overlaps a person would see, and must fail it; so must pod-shyhost-typo (the page's SHY_HOST reads 'buton') and
+ *      and set again 90 ms after it returns) and pod-late-attr (data-shy itself set just past the shy step's allowance, the
+ *      check plus its slack and the longest frame gap, by one frame and 40 ms) are real overlaps a person would see, and
+ *      must fail it; so must pod-shyhost-typo (the page's SHY_HOST reads 'buton') and
  *      pod-declared-slow (the page declares a 2000 ms fade), which run on an edited copy of the page.
  *      --cpu <rate> throttles the page's CPU (CDP) for check 18.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
@@ -140,7 +142,7 @@ const REDUCED = argv.includes('--reduced');
 const SECTION = argVal('--section', null), sectionFilter = SECTION ? new RegExp(SECTION) : null;
 // T40 and T47 negatives for check 18: each makes the Pod overlap a control the way a person would see it.
 const SELFTEST = argVal('--selftest', null);
-if (SELFTEST && !['pod-never-shy', 'pod-late-shy', 'pod-delay-2s', 'pod-twitch', 'pod-rolebutton', 'pod-shyhost-typo', 'pod-declared-slow', 'pod-twitch-alone'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
+if (SELFTEST && !['pod-never-shy', 'pod-late-shy', 'pod-delay-2s', 'pod-twitch', 'pod-rolebutton', 'pod-shyhost-typo', 'pod-declared-slow', 'pod-twitch-alone', 'pod-late-attr'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
 // T47 round 2: a CPU throttle for check 18 (CDP Emulation.setCPUThrottlingRate), so clean runs are shown on a slow host
 const CPU = argVal('--cpu', null);
 if (CPU !== null && !(Number(CPU) >= 1)) { console.error('neon-verify: --cpu takes a rate of 1 or more'); process.exit(2); }
@@ -1794,6 +1796,28 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         /* T58 (the round-2 review's twitch-alone2): no late fade; for 2.4 s after any scroll, every 200 ms the Pod jumps
            off-screen (3000 px right, where no control is under it) for two frames and its data-shy is cleared, and
            data-shy is set again 90 ms after the Pod returns. The 180 ms fade restarts every 200 ms and never ends */
+        /* T59 (the batch-3 worker's stated limit): data-shy itself late, set on the first frame after the shy step's own
+           allowance has run out by 40 ms (the product's check plus the slack and the longest frame gap since the control
+           came under the Pod, read from the check's own monitor), so the trap sits just past the slack, not far beyond
+           it. Removing data-shy cancels a set still held. Nothing else changes: the fade, its timing and the target are
+           the product's own */
+        else if (kind === 'pod-late-attr') {
+          const sa = Element.prototype.setAttribute, ra = Element.prototype.removeAttribute; let held = 0;
+          const isShy = (el, n) => n === 'data-shy' && el && el.id === 'o55np-pod';
+          Element.prototype.setAttribute = function (n, v) {
+            if (!isShy(this, n)) return sa.call(this, n, v);
+            if (held) return undefined;
+            const el = this;
+            const wait = () => { const M = window.__nvPodOpaque, e = M && M.ep;
+              if (!e || !e.under) { held = 0; sa.call(el, n, v); return; }
+              const now = performance.now(), gap = M.gaps.reduce((g, [t, d]) => (t >= e.spanFrom ? Math.max(g, d) : g), 0);
+              if (now - e.spanFrom > M.shyBy(gap) + 40) { held = requestAnimationFrame(() => { held = 0; sa.call(el, n, v); }); return; }
+              held = requestAnimationFrame(wait); };
+            held = requestAnimationFrame(wait);
+            return undefined;
+          };
+          Element.prototype.removeAttribute = function (n) { if (isShy(this, n) && held) { cancelAnimationFrame(held); held = 0; } return ra.call(this, n); };
+        }
         else if (kind === 'pod-twitch-alone') {
           let until = 0, running = false, quiet = false;
           const podEl = () => document.getElementById('o55np-pod');
@@ -1815,6 +1839,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           props.forEach((pr, i) => { if (pr !== 'opacity' && pr !== 'all') return; const d = ms(durs[i % durs.length]), dl = ms(dels[i % dels.length]); if (d + dl >= worst) { worst = d + dl; txt = `${pr} ${Math.round(dl)} ms delay + ${Math.round(d)} ms`; } });
           return { total: worst, txt }; };
         const gapSince = t0 => M.gaps.reduce((g, [t, d]) => (t >= t0 ? Math.max(g, d) : g), 0);
+        M.shyBy = gap => P.checkMs + P.shySlack + gap;   /* (the shy step's allowance; T59's trap reads it) */
         const flag = (kind, msg) => { const e = M.ep; if (!e || e.flagged[kind]) return; e.flagged[kind] = true; M.over.push({ phase: e.phase, kind, msg }); };
         const underNow = () => {
           const pod = document.getElementById('o55np-pod'), tr = document.querySelector('.transcript');
@@ -1847,7 +1872,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             if (!M.ep) M.ep = { phase: M.phase, from: now, what, lastUnder: now, spanFrom: now, under: true, opaqueFor: 0, late: 0, flagged: {} };
             const e = M.ep; if (!e.under) e.spanFrom = now; e.under = true; e.lastUnder = now; e.what = what;
             /* (a) data-shy within the product's check interval of this control lying under the Pod */
-            const shyBy = P.checkMs + P.shySlack + gapSince(e.spanFrom);
+            const shyBy = M.shyBy(gapSince(e.spanFrom));
             if (!shy && now - e.spanFrom > shyBy) flag('shy', `data-shy not set ${Math.round(now - e.spanFrom)} ms after transcript ${what} came under the Pod (the product's check: ${P.checkMs} ms; allowed ${Math.round(shyBy)} ms with slack and the longest frame gap)`);
             /* (c) once the fade has had its time, the Pod's opacity is the product's shy target */
             if (shy && M.shyAt !== null) { const by = Math.min(M.shyFade, P.fadeMs) + P.fadeSlack + gapSince(M.shyAt);
