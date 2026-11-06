@@ -159,6 +159,8 @@ Line counts follow the parser (N04): universal newlines, then LF only. A form fe
 
 The aligned units are the four aligned functions and the module body outside all top-level functions (`<module>`). Every node with a source position on an inserted or changed line of an aligned unit (a statement by its header span) either anchors a census row or has a **changed-line row**: data or structural as its class is, with a reviewed reason. A truth-carrying node there that no census row carries (possible only in `<module>`, which has no census) is refused. Every CA-SEAL line of an aligned unit without a current counterpart (deleted, replaced, or in a CA-SEAL function that no longer exists) is a **historical-line record** with a reviewed reason. Missing, stale or changed rows and records fail coverage.
 
+**Fresh names.** A top-level `def` is outside every aligned unit, so a new one could rebind a name that unchanged August code reads (`def isinstance(*args): return True`) with no census node and no changed line. The coverage test therefore requires every name a change binds or mutates at module scope (each top-level function new since CA-SEAL, and every statement on an inserted or changed module line) to be new: never bound or read anywhere in CA-SEAL, not a builtin, and bound once in the current module. The frozen validator's 11 new functions, 3 imports and 14 constants all pass.
+
 | Changed-line rows | Rows |
 |---|---:|
 | `<module>` | 52 |
@@ -183,7 +185,7 @@ All historical and census outcomes together: killed by: 433, non-predicate data 
 
 ## Controls
 
-The committed corpus keeps the three round-9 insertion controls (assigned `isinstance`, assigned Boolean `&`, the builder `| isinstance(...)`), the five round-10 preservation probes and the synthetic grammar and alignment controls. Round 11 adds `positive_ast_class_table` and sixteen negatives. Each edit probe edits a scratch copy of V, rebases line metadata, forges every group except the one under test and regenerates every count, so only that rule can refuse:
+The committed corpus keeps the three round-9 insertion controls (assigned `isinstance`, assigned Boolean `&`, the builder `| isinstance(...)`), the five round-10 preservation probes and the synthetic grammar and alignment controls. Round 11 adds `positive_ast_class_table` and nineteen negatives. Each edit probe edits a scratch copy of V, rebases line metadata, forges every row except its own identities in the group under test and regenerates every count, so only that rule can refuse:
 
 - `negative_census_augassign_bitor`: recount_validation: state['complete'] |= True before the return; refused by `coverage sites missing=`.
 - `negative_census_augassign_bitand`: recount_validation: state['complete'] &= True before the return; refused by `coverage sites missing=`.
@@ -198,6 +200,9 @@ The committed corpus keeps the three round-9 insertion controls (assigned `isins
 - `negative_changed_module_truth_carrier`: module: PM_PROBE = isinstance(HOME, Path) after MULTI_FAMILY_AUTHOR; refused by `truth-carrying node on a changed line without a census row`.
 - `negative_deleted_preserved_guard`: main: the preserved if actual_ets != expected_ets block deleted in place; refused by `historical lines missing=`.
 - `negative_refused_class_present`: recount_validation: global PM_PROBE as its first statement; refused by `ast class table`.
+- `negative_fresh_module_rebinding`: module: POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT, with every row forged; refused by `module-level binding is not fresh`.
+- `negative_fresh_module_mutation`: module: HOLDING_DECISIONS["DL-039"] = None, with every row forged; refused by `module-level binding is not fresh`.
+- `negative_fresh_function_shadows_builtin`: module: def isinstance(*args): return True, with every row forged; refused by `module-level binding is not fresh`.
 - `negative_ast_class_removed`: a synthetic edit of the class table, with V and this table unchanged.
 - `negative_ast_truth_class_without_rule`: a synthetic edit of the class table, with V and this table unchanged.
 - `negative_ast_rule_for_data_class`: a synthetic edit of the class table, with V and this table unchanged.

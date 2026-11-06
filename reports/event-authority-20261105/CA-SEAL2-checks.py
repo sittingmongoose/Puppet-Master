@@ -651,6 +651,87 @@ def historical_line_inventory(source, before):
     return rows
 
 
+def _target_names(target):
+    """(names bound, roots mutated) by an assignment or deletion target."""
+    if isinstance(target, ast.Name):
+        return {target.id}, set()
+    if isinstance(target, (ast.Tuple, ast.List)):
+        pairs = [_target_names(t) for t in target.elts]
+        return set().union(*(p[0] for p in pairs)), set().union(*(p[1] for p in pairs))
+    if isinstance(target, ast.Starred):
+        return _target_names(target.value)
+    root = target
+    while isinstance(root, (ast.Attribute, ast.Subscript, ast.Starred)):
+        root = root.value
+    return set(), ({root.id} if isinstance(root, ast.Name) else set())
+
+
+def module_statements(statements):
+    """Every statement at module scope: compound bodies are entered, function and class bodies are not."""
+    for n in statements:
+        yield n
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            continue
+        for field in STATEMENT_BODIES:
+            for child in getattr(n, field, []):
+                if isinstance(child, (ast.excepthandler, ast.match_case)):
+                    yield from module_statements(child.body)
+                elif isinstance(child, ast.stmt):
+                    yield from module_statements([child])
+
+
+def own_bindings(n):
+    """(names bound, roots mutated) by one statement itself, its nested bodies excluded."""
+    if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+        return {n.name}, set()
+    if isinstance(n, (ast.Import, ast.ImportFrom)):
+        return {(alias.asname or alias.name).split('.')[0] for alias in n.names}, set()
+    targets = {ast.Assign: lambda: n.targets, ast.Delete: lambda: n.targets,
+               ast.AugAssign: lambda: [n.target], ast.AnnAssign: lambda: [n.target],
+               ast.For: lambda: [n.target], ast.AsyncFor: lambda: [n.target],
+               ast.With: lambda: [i.optional_vars for i in n.items if i.optional_vars is not None],
+               ast.AsyncWith: lambda: [i.optional_vars for i in n.items if i.optional_vars is not None]}
+    bound, mutated = set(), set()
+    for target in targets.get(type(n), lambda: [])():
+        names, roots = _target_names(target)
+        bound |= names
+        mutated |= roots
+    return bound, mutated
+
+
+def fresh_name_problems(source, before):
+    """A change may bind or mutate at module scope only names that are new (closing N02 at module scope).
+
+    Every top-level function new since CA-SEAL, and every name bound or object
+    mutated by a statement on an inserted or changed line of the module unit,
+    must use a name the CA-SEAL validator never binds or reads, that is not a
+    builtin, and that the current module binds once. Otherwise a new definition
+    or assignment could replace what unchanged August code reads, for example
+    `def isinstance(*args): return True`, with no census node and no changed
+    line in any aligned function.
+    """
+    import builtins
+    tree, old_tree, units, _ = aligned_units(source, before)
+    old_functions = {n.name for n in old_tree.body if isinstance(n, ast.FunctionDef)}
+    used = {x.id for x in ast.walk(old_tree) if isinstance(x, ast.Name)} | set(dir(builtins)) | {
+        name for n in module_statements(old_tree.body) for name in own_bindings(n)[0]}
+    bound = Counter(name for n in module_statements(tree.body) for name in own_bindings(n)[0])
+    module = next(u for u in units if u['name'] == MODULE_UNIT)
+    changed = set(module['marks']['inserted']) | set(module['marks']['changed'])
+    new_bound, new_mutated = set(), set()
+    for n in module_statements(module['roots']):
+        first, last = node_span(n)
+        if changed.intersection(range(first, last + 1)):
+            names, roots = own_bindings(n)
+            new_bound |= names
+            new_mutated |= roots
+    new_functions = {n.name for n in tree.body if isinstance(n, TOP_LEVEL_DEFS) and n.name not in old_functions}
+    names = new_bound | new_functions
+    return {'binds_a_ca_seal_or_builtin_name': sorted(n for n in names if n in used),
+            'bound_more_than_once': sorted(n for n in names if bound[n] != 1),
+            'mutates_an_object_that_is_not_new': sorted(r for r in new_mutated if r in used or r not in names)}
+
+
 OPERATOR_BASES = (ast.boolop, ast.operator, ast.unaryop, ast.cmpop)
 
 
@@ -819,6 +900,8 @@ def validate_coverage(raw, before, table, test_names, ast_classes=None):
         row = historical_rows[site]
         assert all(row.get(k) == identity[k] for k in HISTORICAL_IDENTITY), ('changed historical record', site)
         assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing historical reason', site)
+    fresh = fresh_name_problems(source, before)
+    assert not any(fresh.values()), 'module-level binding is not fresh ' + json.dumps(fresh, sort_keys=True)
     unanchored = {op: c['unanchored'] for op, c in census.items() if c['unanchored']}
     assert not unanchored, ('truth-carrying operator without a census row', unanchored)
     assert table['totals']['census'] == census, 'changed operator census totals'
@@ -1039,11 +1122,12 @@ def preservation_probe(raw, before, table_raw, test_names, label):
 FORGED = 'Forged probe row.'
 
 
-def forge_records(raw, before, table, label, groups=('changed_line_nodes', 'historical_lines')):
+def forge_records(raw, before, table, label, groups=('changed_line_nodes', 'historical_lines'), omit=()):
     """Forge what an edit needs in the round-11 groups: a row for every missing identity, stale rows dropped.
 
     A forged changed-line row takes the outcome its class requires (data for a
     refused node, which the coverage test refuses before it reads any row).
+    Identities in omit are left missing.
     """
     _, _, _, _, _, changed, historical, _ = coverage_model(raw.decode(), before)
     for group, expected in (('changed_line_nodes', changed), ('historical_lines', historical)):
@@ -1052,7 +1136,7 @@ def forge_records(raw, before, table, label, groups=('changed_line_nodes', 'hist
         kept = [r for r in table[group] if r['site_id'] in expected]
         recorded = {r['site_id'] for r in kept}
         for site, identity in expected.items():
-            if site in recorded:
+            if site in recorded or site in omit:
                 continue
             row = {k: v for k, v in identity.items() if k != 'required_outcome'}
             if group == 'changed_line_nodes':
@@ -1062,14 +1146,16 @@ def forge_records(raw, before, table, label, groups=('changed_line_nodes', 'hist
     return table
 
 
-def forge_census(raw, before, table, label):
-    """Forge the walker and census rows an edit needs, and repair every preservation claim the map now refuses."""
+def forge_census(raw, before, table, label, omit=()):
+    """Forge the walker and census rows an edit needs (identities in omit left missing), and repair every
+    preservation claim the map now refuses."""
     expected, _, previous_nodes, counterparts, _, _, _, _ = coverage_model(raw.decode(), before)
     recorded = {r['site_id'] for r in table['sites'] + table['supplement']}
     for group, prefixes in (('sites', ('syntax:', 'semantic:')), ('supplement', ('supplement:',))):
         table[group] = [r for r in table[group] if r['site_id'] in expected] + [
             dict(identity, outcome='implied', reason=FORGED, evidence=[{'probe': label}])
-            for site, identity in expected.items() if site.startswith(prefixes) and site not in recorded]
+            for site, identity in expected.items() if site.startswith(prefixes) and site not in recorded
+            and site not in omit]
     for row in table['supplement']:
         if row['outcome'] != PRESERVED or counterparts.get(row['site_id']) == row.get('baseline_site_id'):
             continue
@@ -1112,7 +1198,17 @@ EDIT_PROBES = {
                                 'main: the preserved if actual_ets != expected_ets block deleted in place'),
     'refused_class_present': ('none', 'ast class table ',
                               'recount_validation: global PM_PROBE as its first statement'),
+    'fresh_module_rebinding': ('fresh', 'module-level binding is not fresh ',
+                               'module: POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT, with every row forged'),
+    'fresh_module_mutation': ('fresh', 'module-level binding is not fresh ',
+                              'module: HOLDING_DECISIONS["DL-039"] = None, with every row forged'),
+    'fresh_function_shadows_builtin': ('fresh', 'module-level binding is not fresh ',
+                                       'module: def isinstance(*args): return True, with every row forged'),
 }
+FRESH_EXPECTED = {'fresh_module_rebinding': {'binds_a_ca_seal_or_builtin_name': ['POST_AUGUST_RECEIPT'],
+                                             'bound_more_than_once': ['POST_AUGUST_RECEIPT']},
+                  'fresh_module_mutation': {'mutates_an_object_that_is_not_new': ['HOLDING_DECISIONS']},
+                  'fresh_function_shadows_builtin': {'binds_a_ca_seal_or_builtin_name': ['isinstance']}}
 _AUG = {'bitor': '|=', 'bitand': '&=', 'bitxor': '^='}
 
 
@@ -1142,10 +1238,15 @@ def edit_probe_source(source, label):
         return insert(loop + 2, '        actual_ets = expected_ets')
     if label == 'changed_inserted_continue':
         return insert(loop + 1, '        continue')
-    if label in ('changed_module_rebinding', 'changed_module_truth_carrier'):
-        at = next(i for i, text in enumerate(lines, 1) if text.startswith('MULTI_FAMILY_AUTHOR = '))
-        text = 'POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT' if label.endswith('rebinding') else 'PM_PROBE = isinstance(HOME, Path)'
-        return insert(at + 1, text)
+    at = next(i for i, text in enumerate(lines, 1) if text.startswith('MULTI_FAMILY_AUTHOR = '))
+    if label in ('changed_module_rebinding', 'fresh_module_rebinding'):
+        return insert(at + 1, 'POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT')
+    if label == 'changed_module_truth_carrier':
+        return insert(at + 1, 'PM_PROBE = isinstance(HOME, Path)')
+    if label == 'fresh_module_mutation':
+        return insert(at + 1, 'HOLDING_DECISIONS["DL-039"] = None')
+    if label == 'fresh_function_shadows_builtin':
+        return '\n'.join(lines[:at] + ['def isinstance(*args):', '    return True'] + lines[at:]), [at + 1, at + 2], []
     if label == 'deleted_preserved_guard':
         start = loop + 2
         end = next(i for i in range(start + 1, start + 20) if lines[i - 1].strip() == '})')
@@ -1162,7 +1263,12 @@ def check_edit_probe(repo, test_names, label):
 
 
 def edit_probe(raw, before, table_raw, test_names, label):
-    """Run one edit probe; return the refusal and the identities it must name."""
+    """Run one edit probe; return the refusal and the identities it must name.
+
+    Every group is forged except the probe's own identities in the group
+    under test, so the refusal names exactly those identities whatever else the
+    repository's table already lacks.
+    """
     group, prefix, _ = EDIT_PROBES[label]
     source = raw.decode()
     old_lines = source_lines(source)
@@ -1174,11 +1280,6 @@ def edit_probe(raw, before, table_raw, test_names, label):
             line_map[b.a + k + 1] = b.b + k + 1
     table = rebase_lines(json.loads(table_raw), line_map.get)
     table['validator_sha256'] = sha(altered_raw)
-    if group != 'census':
-        forge_census(altered_raw, before, table, label)
-    forge_records(altered_raw, before, table, label,
-                  [g for g in ('changed_line_nodes', 'historical_lines') if g != group])
-    refresh_totals(table, altered_raw, before)
     expected, _, _, _, _, changed, historical, _ = coverage_model(altered_raw.decode(), before)
     if group == 'census':
         named = sorted(s for s, r in expected.items() if r.get('line') in edited)
@@ -1195,6 +1296,9 @@ def edit_probe(raw, before, table_raw, test_names, label):
             old_lines[n - 1] for n in deleted), (named, deleted)
     else:
         named = []
+    forge_census(altered_raw, before, table, label, omit=set(named) if group == 'census' else ())
+    forge_records(altered_raw, before, table, label, omit=set(named))
+    refresh_totals(table, altered_raw, before)
     try:
         validate_coverage(altered_raw, before, table, test_names)
     except AssertionError as exc:
@@ -1204,15 +1308,18 @@ def edit_probe(raw, before, table_raw, test_names, label):
     assert message.startswith(prefix), (label, message[:400])
     if group == 'none':
         assert json.loads(message[len(prefix):])['refused_present'] == ['Global'], message
+    elif group == 'fresh':
+        problems = json.loads(message[len(prefix):])
+        assert {k: v for k, v in problems.items() if v} == FRESH_EXPECTED[label], problems
+    elif group == 'census':
+        # The census identity alone refuses: every other inserted node is forged.
+        assert message == 'coverage sites missing=' + repr(named) + ' stale=[]', message[:400]
+    elif prefix.startswith('truth-carrying'):
+        assert message == prefix + repr(named), message[:400]
+    elif group == 'changed_line_nodes':
+        assert message == 'changed-line nodes missing=' + repr(named) + ' stale=[]', message[:400]
     else:
-        assert all(s in message for s in named), (label, named, message[:400])
-        if group == 'census':
-            # The census identity alone refuses: every other inserted node is forged.
-            assert message == 'coverage sites missing=' + repr(named) + ' stale=[]', message[:400]
-        if group == 'changed_line_nodes' and not prefix.startswith('truth-carrying'):
-            assert message == 'changed-line nodes missing=' + repr(named) + ' stale=[]', message[:400]
-        if group == 'historical_lines':
-            assert message == 'historical lines missing=' + repr(named) + ' stale=[]', message[:400]
+        assert message == 'historical lines missing=' + repr(named) + ' stale=[]', message[:400]
     return {'label': label, 'refusal': message[:240], 'named': named}
 
 
