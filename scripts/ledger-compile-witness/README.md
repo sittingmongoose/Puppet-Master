@@ -119,6 +119,14 @@ C8-W1 and C8-W2):
   list item (on its marker line or a continuation line) is refused as
   `heading_in_blockquote` or `heading_in_list_item`. Write unit headings at the top
   level.
+- CommonMark's finer points (tool batch 4, T62). Indentation counts tabs to 4-column
+  stops. A line that follows a blank line and sits left of a list item's content
+  column has ended the item; a column-0 line right after paragraph text that opens no
+  block of its own is a lazy continuation and keeps it open. Only paragraph text keeps
+  a paragraph open for HTML kind 7 (a thematic break or indented code leaves it
+  closed). An HTML end condition is searched on the whole start line (`<!-->`, `<!--->`
+  and `<?>` end where they start). Lines inside an HTML block or comment are not unit
+  prose: a token written only in a comment does not count.
 
 ## Targets and exact-token scope
 

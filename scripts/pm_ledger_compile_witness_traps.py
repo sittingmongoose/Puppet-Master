@@ -534,5 +534,34 @@ def exercise(g, *, scratch=None):
          status="findings", exit_code=2, verify=unsupported("list_fence_closer_outdented", 4))
     case("tb3-list-fence-closed-inside-its-item-control", lambda f: f.update(owner="- item\n\n  ```\n  ## AA-001 — Example\n  ```\n\n" + clean), verify=no_ambiguity)
     case("tb3-html-comment-on-one-line-control", lambda f: f.update(owner="<!-- note -->\n" + clean), verify=no_ambiguity)
+    # Tool batch 4, T62 (REVIEW-etools-tb3-opus findings 3 to 6). Each fails on the batch-3 witness (253cc695fe): a phantom
+    # unit, a missed unit, an HTML end condition read past its start line, or comment text read as prose; each is read as
+    # CommonMark reads it now.
+    missing_target = lambda r: any(x["kind"] == "missing_target_unit" for x in r["configuration_findings"])
+    # (3) ' b' after a blank line under '- a' ends the item, so the fence after it is top-level and AA-001 inside it is code
+    case("tb4-underindented-line-after-blank-ends-the-item", lambda f: f.update(owner="- a\n\n b\n\n  ~~~\n## AA-001 — Owner\n\nRequired live token.\n  ~~~\n"),
+         status="vacuous_with_findings", exit_code=2, verify=missing_target)
+    # (3) a thematic break, or an indented code line, is no paragraph: a lone tag line after it starts a kind-7 HTML block
+    case("tb4-html-tag-after-thematic-break-is-raw-html", lambda f: f.update(owner="***\n<custom-tag>\n" + clean),
+         status="findings", exit_code=2, verify=has_forms(("heading_in_html_block", 3)))
+    case("tb4-html-tag-after-indented-code-is-raw-html", lambda f: f.update(owner="    code\n<custom-tag>\n" + clean),
+         status="findings", exit_code=2, verify=has_forms(("heading_in_html_block", 3)))
+    # (4) '>' then a tab, and a tab-indented continuation of a list item, hold a heading: refused, not missed
+    case("tb4-heading-after-quote-and-tab-is-refused", lambda f: f.update(owner=clean + "\n>\t## AA-001 — Quoted\n"),
+         status="findings", exit_code=2, verify=unsupported("heading_in_blockquote", 10))
+    case("tb4-tab-indented-heading-in-list-item-is-refused", lambda f: f.update(owner=clean + "\n- item\n\t## AA-001 — Listed\n"),
+         status="findings", exit_code=2, verify=has_forms(("heading_in_list_item", 11)))
+    # (4) a lazy continuation line at column 0 keeps the item open: the fence after it is the item's, and ends at AA-001
+    case("tb4-lazy-line-keeps-the-item-fence", lambda f: f.update(owner=owner("AA-001", "Owner text.", ["live token"]) + "\n- a\nlazy\n\n  ```\n## BB-001 — Real\n\nRequired live token.\n  ```\n"),
+         status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
+    # (5) '<!-->' ends on its own line: the heading after it is a unit, and its text is not AA-001's
+    case("tb4-empty-comment-ends-on-its-start-line", lambda f: f.update(owner=owner("AA-001", "Owner text.", ["live token"]) + "\n<!-->\n## BB-001 — Other\n\nRequired live token.\n"),
+         status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
+    case("tb4-processing-instruction-ends-on-its-start-line", lambda f: f.update(owner=owner("AA-001", "Owner text.", ["live token"]) + "\n<?>\n## BB-001 — Other\n\nRequired live token.\n"),
+         status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
+    # (6) a token only inside an HTML comment is not prose
+    case("tb4-token-only-in-html-comment-is-not-prose", lambda f: f.update(owner=owner("AA-001", "Owner text.\n\n<!-- live token -->", ["live token"])),
+         status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
+    case("tb4-token-in-prose-beside-a-comment-control", lambda f: f.update(owner=owner("AA-001", "Required live token.\n\n<!-- a note -->", ["live token"])), verify=no_ambiguity)
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}
