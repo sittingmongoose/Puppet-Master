@@ -196,6 +196,10 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-frost-heavy { syntax: '*'; inherits: false; }
 @property --lg-frost-light { syntax: '*'; inherits: false; }
 @property --lg-wall-hold { syntax: '*'; inherits: false; }
+/* the frost's size, the window's (glass.js viewportVars): set on the same painter rules, so a resize restyles the
+   painters, not the whole app from html's inline style (SW-36) */
+@property --lg-vw { syntax: '*'; inherits: false; }
+@property --lg-vh { syntax: '*'; inherits: false; }
 /* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
    light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
    at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is

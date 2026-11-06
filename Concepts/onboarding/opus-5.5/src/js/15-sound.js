@@ -1460,7 +1460,10 @@
     if (S.ctx || S.muted || document.visibilityState !== 'visible') return;
     makeContext();
   }
-  const aheadSoon = () => (window.requestIdleCallback ? window.requestIdleCallback(makeAhead, { timeout: 4000 }) : window.setTimeout(makeAhead, 1500));
+  /* new AudioContext() is one native call that holds the main thread (54-117 ms on the VM): a press that lands in it
+     waits for all of it (SW-01), so it goes once the pointer and keys have been still for 600 ms with no input pending */
+  const aheadSoon = () => (window.PM_BUSY && window.PM_BUSY.idle ? window.PM_BUSY.idle(makeAhead, 4000, { quiet: 600 })
+    : window.requestIdleCallback ? window.requestIdleCallback(makeAhead, { timeout: 4000 }) : window.setTimeout(makeAhead, 1500));
   if (document.readyState === 'complete') aheadSoon(); else window.addEventListener('load', aheadSoon, { once: true });
   window.addEventListener('o55:sound', (e) => { if (e && e.detail && e.detail.muted === false) aheadSoon(); });
   document.addEventListener('visibilitychange', () => { if (!S.ctx && document.visibilityState === 'visible') aheadSoon(); });

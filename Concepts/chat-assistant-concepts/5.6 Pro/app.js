@@ -2723,6 +2723,53 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     runAfterRender('app',{flips});
   }
 
+  /* A cover changes only Activity Detail. Keep the transcript, its geometry,
+     scroll custody and work FLIPs out of this opening path. */
+  function renderActivityCover(){
+    if(HOSTED&&HOST.reserveActivity) HOST.reserveActivity(state.activityWidth||280);
+    const stage=document.querySelector('#pmRoot .chat-stage');
+    if(!stage||activityDocked()||activityDockLayout){ renderApp(); return; }
+    const old=stage.querySelector('.activity-panel');
+    const panel=document.createElement('template');panel.innerHTML=renderActivityPanel('cover');
+    if(old) pmPatchNode(old,panel.content.firstElementChild);
+    else stage.appendChild(panel.content.firstElementChild);
+    const live=old||stage.querySelector('.activity-panel');
+    const bar=stage.querySelector('.activity-wrap');
+    if(bar){const tpl=document.createElement('template');tpl.innerHTML=renderActivityBar();pmPatchNode(bar,tpl.content.firstElementChild);}
+    fitActivityTabs();
+    // Only the Activity hover card changed; overlay-wide hooks measure and
+    // refit unrelated sheets and editor surfaces.
+    syncHoverCard();
+    runAfterRender('scope',{scope:live,flips:[]});
+  }
+
+  /* SW-36: a resize that only moves open Activity Detail between docked beside the messages and covering them moves
+     that one panel and the grid's class, as renderApp would draw them, before the frame at the new size. renderApp
+     there rebuilt the transcript and restyled the whole chat first, and in an opaque iframe the parent kept showing the
+     old frame clipped meanwhile. false when anything else changed too, or standalone, where the editor's width follows
+     the dock: the caller renders the app. */
+  function moveActivityPanel(docked){
+    const grid=HOSTED&&document.querySelector('#pmRoot .assistant-grid'), stage=grid&&grid.querySelector(':scope > .chat-stage');
+    const old=stage&&(docked?stage.querySelector(':scope > .activity-panel.cover'):grid.querySelector(':scope > .activity-panel:not(.cover)'));
+    if(!old||!state.activity.open||grid.classList.contains('history-closed')===(state.historyMode==='pinned'&&!isNarrow())) return false;
+    const tpl=document.createElement('template');tpl.innerHTML=renderActivityPanel(docked?'dock':'cover');
+    const panel=tpl.content.firstElementChild; if(!panel) return false;
+    const scroll=old.querySelector('[data-scroll-key="activity"]'), top=scroll?scroll.scrollTop:0;
+    old.remove();
+    grid.classList.toggle('activity-pinned',docked);
+    if(docked) grid.insertBefore(panel,stage); else stage.appendChild(panel);
+    /* it was open already: it moves, it does not enter again. New nodes replay their entrances (styles.css panel-pin on
+       the panel, the selected record's card), so the first frame at the new size showed the messages through a faded
+       panel. Finite ones only: a running mark keeps its loop. */
+    for(const a of panel.getAnimations({subtree:true})) if(a.effect&&a.effect.getComputedTiming().endTime!==Infinity) a.finish();
+    activityDockLayout=docked;
+    if(top) restoreScroll({activity:top},{});
+    fitActivityTabs();
+    if(state.menu||state.hover){ renderOverlays(); retainHoverAfterRender(); }
+    runAfterRender('scope',{scope:panel,flips:[]});
+    return true;
+  }
+
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
      before/after steps renderApp runs around a full patch -- height FLIPs,
      move FLIPs, rolling digits, scroll custody, hover retention -- so a caller
@@ -4951,7 +4998,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       const fromPreview=!!btn.closest('.ab-card');
       /* its own icon in the Activity bar again closes it (G1) */
       if(!fromPreview&&btn.closest('.activity-bar')&&activityShown===btn.dataset.domain){state.activity.open=false;state.hover=null;renderApp();focusActivityBarDomain(btn.dataset.domain);return;}
-      state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderApp();
+      state.activity.open=true;state.activity.domain=btn.dataset.domain;state.activity.scope='focus';if(!state.activity.expanded.includes(btn.dataset.domain))state.activity.expanded.push(btn.dataset.domain);state.hover=null;renderActivityCover();
       /* covering the messages, or opened from a hover card, focus goes into the panel; Escape brings it back to the icon */
       if(fromPreview||!activityDocked())focusActivityControl('.activity-panel [data-action="close-activity"]');
       return;
@@ -5215,8 +5262,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(actBtn&&!actBtn.closest('.ab-card')){
       clearTimeout(hoverTimer);
       if(window.PM56_AB&&window.PM56_AB.dismissActivityHover)window.PM56_AB.dismissActivityHover();
-      state.hover=null;
-      renderOverlays();
+      /* with nothing open there is nothing to take down (SW-01: every first Activity press re-rendered the overlays) */
+      if(state.hover){ state.hover=null; renderOverlays(); }
     }
     const resizeHandle=e.target.closest('[data-dialog-resize]');
     if(resizeHandle&&state.dialog?.type==='demo'){
@@ -5284,6 +5331,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
   });
 
   window.addEventListener('resize',()=>{
+    // Settle the host ladder before deciding against its inner column width.
+    if(HOSTED&&window.PMW?.narrow?.update) PMW.narrow.update();
     const nextPhone=isPhone();
     const phoneChanged=nextPhone!==phoneLayout;
     phoneLayout=nextPhone;
@@ -5294,8 +5343,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
       state.dialog.geom=clampDemoGeom(state.dialog.geom);lastDemoGeom={...state.dialog.geom};
       applyDemoGeomStyles(document.querySelector('.demo-dialog'),state.dialog.geom);
     }
-    if(state.menu||state.hover)renderOverlays();if(phoneChanged||activityPinChanged||(isNarrow()&&state.historyMode==='pinned'))renderApp();
-    else { syncJumpBottom(); fitActivityTabs(); }
+    if(state.menu||state.hover)renderOverlays();
+    const full=phoneChanged||(isNarrow()&&state.historyMode==='pinned');
+    if(full||(activityPinChanged&&!moveActivityPanel(nextActivityPin)))renderApp();
+    else { syncJumpBottom(); if(!activityPinChanged) fitActivityTabs(); }
   });
 
   // Public deterministic concept API used by the Demo Studio and automated inspection.
@@ -5591,11 +5642,13 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
   /* the column resizes without a window resize (its divider, the narrow ladder, a pop out): the same re-render rules */
   if(HOSTED&&typeof ResizeObserver==='function'&&HOST.frame()){
-    let lastNarrow=isNarrow(), queued=false, frameTrailT=null;
-    new ResizeObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false;
+    let lastNarrow=isNarrow(), frameTrailT=null;
+    new ResizeObserver(()=>{
+      // ResizeObserver runs after layout, before paint. Resolve dock/cover here;
+      // another rAF would let the narrowed, still-docked panel paint first.
       const n=isNarrow(), p=activityDocked();
       /* renderApp keeps activityDockLayout, so a column it already widened for Activity Detail is not drawn twice */
-      if(n!==lastNarrow||p!==activityDockLayout){ lastNarrow=n; renderApp(); }
+      if(n!==lastNarrow||p!==activityDockLayout){ const moved=n===lastNarrow&&moveActivityPanel(p); lastNarrow=n; if(moved) syncJumpBottom(); else renderApp(); }
       else if(document.body && document.body.classList.contains('pm-resizing')){
         // Mid-drag the frame resizes every frame; fitActivityTabs toggles a class and reads rects each
         // time (forced layouts). Tab fit and the jump pill may lag one cadence; a trailing pass lands
@@ -5607,7 +5660,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       }
       else { syncJumpBottom(); fitActivityTabs(); }
       if(state.menu||state.hover) renderOverlays();
-    }); }).observe(HOST.frame());
+    }).observe(HOST.frame());
   }
   function hostedCompose(text){
     text=String(text==null?'':text);
