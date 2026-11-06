@@ -99,6 +99,20 @@ export default async function (t) {
   await t.viewport(Number(t.args.width || 1920),Number(t.args.height || 1080)); const f = await t.app.open();
   if(t.args.look) await t.app.look(t.args.look);
   const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+  // Where the pointer rests between steps: off the side panel and its menus, on a point with no hover affordance (at the
+  // window's corner a tooltip came up over Files' branch trigger at 740x768), read from the page each time; (2, 2) if none.
+  const restPointer = async () => {
+    const p = await f.evaluate(() => {
+      const slot = document.getElementById('sidePanelSlot');
+      const busy = h => !h || (slot && slot.contains(h)) || !!h.closest('[role="menu"], [role="dialog"], [role="tooltip"], button, a, input, textarea, select, summary, [contenteditable], [title], [role="button"], [role="tab"], [data-pm-hover-label], [data-pm-hover-kind], [aria-describedby]');
+      for (const fx of [0.98, 0.9, 0.75, 0.6]) for (let y = innerHeight * 0.45; y < innerHeight - 30; y += 16) {
+        const x = Math.round(innerWidth * fx), h = document.elementFromPoint(x, y);
+        if (!busy(h)) return { x, y: Math.round(y) };
+      }
+      return { x: 2, y: 2 };
+    });
+    await t.page.mouse.move(off.x + p.x, off.y + p.y);
+  };
   // Test-only readers: which menus are open, and a stable key for each (id, PMR id, or parent › label).
   await f.evaluate(() => {
     const key = m => { const up = m.parentElement && m.parentElement.closest('[role="menu"]'); return m.id || m.dataset.pmrMenu || ((up ? key(up) + ' › ' : '') + (m.getAttribute('aria-label') || 'menu')); };
@@ -372,7 +386,7 @@ export default async function (t) {
       // The pointer goes off the menu first. A menu opened by a key can appear under the pointer a previous step left
       // there, and a branch opens under it on its own; pointing at a plain item must close that branch, as a person's
       // next move would, before the hover below can show its branch opening.
-      await t.page.mouse.move(2, 2);
+      await restPointer();
       const stray = await strays();
       if (stray.length) {
         await markRest();
@@ -380,7 +394,7 @@ export default async function (t) {
         const gone = await f.waitForFunction(s => !__shelf.keys().some(k => s.includes(k)), stray, { timeout: 3000 }).then(() => true, () => false);
         await t.check(`${tag} a branch the resting pointer opened (${stray.join(', ')}) closes when the pointer moves on`, gone, '', { hard: true });
         await f.evaluate(() => document.querySelectorAll('[data-shelf-branch-rest]').forEach(e => e.removeAttribute('data-shelf-branch-rest')));
-        await t.page.mouse.move(2, 2);
+        await restPointer();
       }
       const before = await f.evaluate(() => __shelf.keys());
       await item.hover();
@@ -464,7 +478,7 @@ export default async function (t) {
     // control is reached again.
     let roomState = 'panel', folding = false;
     const reach = async (loc, at = null) => {
-      await loc.scrollIntoViewIfNeeded();
+      await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
       let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
         await stable(loc);
@@ -474,22 +488,26 @@ export default async function (t) {
           // t.visible's five points (centre and four inset corners, clipped to the viewport): at least three on top.
           const x0 = Math.max(0, r.left), y0 = Math.max(0, r.top), x1 = Math.min(innerWidth, r.right), y1 = Math.min(innerHeight, r.bottom);
           const ix = Math.min(6, (x1 - x0) / 4), iy = Math.min(6, (y1 - y0) / 4), cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+          let cover = h0 && !(h0 === e || e.contains(h0)) ? h0 : null;
           const hits = x1 - x0 < 1 || y1 - y0 < 1 ? 0 : [[cx, cy], [x0 + ix, y0 + iy], [x1 - ix, y0 + iy], [x0 + ix, y1 - iy], [x1 - ix, y1 - iy]]
-            .filter(([x, y]) => { const h = document.elementFromPoint(x, y); return h && (h === e || e.contains(h)); }).length;
+            .filter(([x, y]) => { const h = document.elementFromPoint(x, y), own = !!h && (h === e || e.contains(h)); if (!own && h && !cover) cover = h; return own; }).length;
+          // Only the panel's own layout (its strips and cards) asks for room; a tooltip or a menu over the control does not.
+          const view = e.closest('.side-panel-view'), coverIn = !!cover && !!view && view.contains(cover);
+          const coverOf = cover ? cover.tagName + '.' + String(cover.className?.baseVal ?? cover.className).trim().split(/\s+/).slice(0, 2).join('.') : null;
           const what = (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
-          if (h0 && (h0 === e || e.contains(h0))) return { x: px, y: py, onTop: true, hits, what };
+          if (h0 && (h0 === e || e.contains(h0))) return { x: px, y: py, onTop: true, hits, what, coverIn, coverOf };
           let sc = null;
           for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight && /auto|scroll/.test(getComputedStyle(a).overflowY)) { sc = a; break; }
-          if (!sc) return { x: px, y: py, onTop: false, hits, what, hit: h0?.className?.baseVal ?? h0?.className };
+          if (!sc) return { x: px, y: py, onTop: false, hits, what, coverIn, coverOf, hit: h0?.className?.baseVal ?? h0?.className };
           const s = sc.getBoundingClientRect(), x = Math.min(Math.max(px, s.left + 2), s.right - 2);
           let best = null, run = null;
           for (let y = s.top + 1; y < s.bottom - 1; y += 2) {
             const h = document.elementFromPoint(x, y);
             if (h && sc.contains(h)) { run = run || { a: y, b: y }; run.b = y; if (!best || run.b - run.a > best.b - best.a) best = { a: run.a, b: run.b }; } else run = null;
           }
-          if (!best) return { x: px, y: py, onTop: false, hits, what, hit: h0?.className?.baseVal ?? h0?.className };
+          if (!best) return { x: px, y: py, onTop: false, hits, what, coverIn, coverOf, hit: h0?.className?.baseVal ?? h0?.className };
           const ty = (best.a + best.b) / 2;
-          return { x: px, y: py, onTop: false, hits, what, hit: h0?.className?.baseVal ?? h0?.className, wheel: { x, y: ty, delta: py - ty } };
+          return { x: px, y: py, onTop: false, hits, what, coverIn, coverOf, hit: h0?.className?.baseVal ?? h0?.className, wheel: { x, y: ty, delta: py - ty } };
         }, at);
         if (p.onTop || !p.wheel || Math.abs(p.wheel.delta) < 1) break;
         wheeled = true;
@@ -497,7 +515,7 @@ export default async function (t) {
         await t.page.mouse.wheel(0, p.wheel.delta);
         await f.waitForTimeout(150);
       }
-      if ((!p.onTop || p.hits < 3) && !folding && await makeRoom(roomState, p)) return reach(loc, at);
+      if ((!p.onTop || p.hits < 3) && p.coverIn && !folding && await makeRoom(roomState, p)) return reach(loc, at);
       return { ...p, wheeled };
     };
     // Press where reach found the control: Playwright's own click (it re-checks the target and retries while the
@@ -544,8 +562,9 @@ export default async function (t) {
       try {
         const folds = await panel.evaluate(p => {
           document.querySelectorAll('[data-shelf-fold]').forEach(e => e.removeAttribute('data-shelf-fold'));
-          const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
-          return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && e.getAttribute('role') !== 'tab' && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
+          // The panel's regions outside every scroller (the panel itself counts when it scrolls); never a row of a tree or list.
+          const scs = [p, ...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
+          return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
             .map((e, i) => { e.setAttribute('data-shelf-fold', String(i)); return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60) }; });
         });
         for (const fo of folds) {
@@ -553,7 +572,7 @@ export default async function (t) {
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
-            JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, hit: why.hit } }), { hard: true });
+            JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
         }
         if (folds.length) await f.waitForTimeout(500);
         return folds.length;
@@ -637,13 +656,13 @@ export default async function (t) {
         probed.add(`${state}|${sig}`);
         const row = panel.locator(`[data-shelf-probe="${i}"]`), got = {}, unreachable = [];
         if (!await row.count()) continue;
-        await t.page.mouse.move(2, 2);
+        await restPointer();
         // One reach per row kind; the press point comes from reach (on top, or unreachable for the mouse).
         const q = await reach(row), p = { at: q.onTop ? { x: q.x, y: q.y } : null, open: await f.evaluate(() => __shelf.keys()) };
         await t.check(`${target} ${state} no menu open before probing ${sig}`, !p.open.length, JSON.stringify(p.open), { hard: true });
         // A key opens the menu with the pointer off the panel: a menu opened by a key must not appear under the point the
         // right-click before it left (a branch would open under it on its own).
-        const keyOpen = async (input) => { await t.page.mouse.move(2, 2); await row.focus(); await t.page.keyboard.press(KEY[input]); };
+        const keyOpen = async (input) => { await restPointer(); await row.focus(); await t.page.keyboard.press(KEY[input]); };
         for (const input of CTX_INPUTS) {
           if (input === 'mouse') {
             if (!p.at) { unreachable.push(input); continue; }
@@ -727,7 +746,7 @@ export default async function (t) {
           await t.check(`${target} ${st} later walk: a ${k.sig} row is still there`, n > 0, '', { hard: true });
           const row = panel.locator('[data-shelf-later]');
           for (const input of CTX_INPUTS) {
-            await t.page.mouse.move(2, 2);
+            await restPointer();
             if (input === 'mouse') { const q = await reach(row); await t.page.mouse.click(off.x + q.x, off.y + q.y, { button: 'right' }); }
             else { await row.focus(); await t.page.keyboard.press(KEY[input]); }
             const got = await f.waitForFunction(m => __shelf.keys().includes(m), menu, { timeout: 3000 }).then(() => menu, () => f.evaluate(() => __shelf.keys()[0] || null));
