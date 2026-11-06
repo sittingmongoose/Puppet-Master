@@ -33,6 +33,9 @@ async function authoredSlot(t) {
   return { url, html: null };
 }
 
+// T55: the rail's reveal of an opened expander (30-motion.js revealInView, 15-jj.js's expander): its delay after the
+// click's frame, and the longest its smooth scroll may take to end once begun (a stated bound, failing by name)
+const REVEAL_MS = 120, REVEAL_END_MS = 2000;
 export default async function (t) {
   if (t.args.blockMenu) await t.page.addInitScript(id => {
     window.__blockedShelfMenu = 0;
@@ -792,18 +795,40 @@ export default async function (t) {
           // footer (Source Control's Publish card at 1280x500) covers it.
           const hp = await reach(head, {x:8,y:8});
           await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
+          // T55: listen to the head's own scrollers before the press, so the rail's reveal scroll is seen from its start
+          await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), scs: [] };
+            for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) {
+              const s = { el: a, scrolled: 0, ended: 0 }; W.scs.push(s);
+              a.addEventListener('scroll', () => { s.scrolled = performance.now(); }, { passive: true });
+              a.addEventListener('scrollend', () => { s.ended = performance.now(); }, { passive: true });
+            } });
           await pressAt(head, hp, { at: {x:8,y:8} });
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
           // The rail skin scrolls an expander opened near the bottom into view 120 ms after the click, smoothly
-          // (15-jj.js, 30-motion.js revealInView): let its scrollers come to rest before the next press, or the
-          // next head moves under its press point (a slow machine pressed mid-scroll, on the card above).
-          await head.evaluate(e => new Promise(res => {
-            const scs = []; for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) scs.push(a);
-            const t0 = performance.now(); let last = '', same = 0;
-            const tick = () => { const k = scs.map(x => x.scrollTop).join(); same = k === last ? same + 1 : 0; last = k;
-              if ((same >= 12 && performance.now() - t0 > 250) || performance.now() - t0 > 3000) res(); else requestAnimationFrame(tick); };
-            requestAnimationFrame(tick);
-          }));
+          // (15-jj.js, 30-motion.js revealInView): let that reveal finish before the next press, or the next head moves
+          // under its press point (a slow machine pressed mid-scroll, on the card above). T55 (opus-recheck-kit7 K4): the
+          // wait is the reveal's own completion, not a guess from the scroll position (a 250 ms floor and a silent 3 s
+          // cap): the rail decides at its own delay (REVEAL_MS, pinned: 120 ms, 0 under reduced motion) after the click's
+          // frame, and a scroll it starts ends with that scroller's scrollend. So: wait out the delay and two frames, then
+          // every head scroller that scrolled since the press must reach its scrollend; one that does not within
+          // REVEAL_END_MS fails by name.
+          const reveal = await head.evaluate((e, [ms, endMs]) => new Promise(res => {
+            const W = window.__shelfReveal, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
+            const decide = W.at + (reduced ? 0 : ms);
+            const raf2 = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            (async () => {
+              while (performance.now() < decide) await new Promise(r => requestAnimationFrame(r));
+              await raf2();
+              const t1 = performance.now();
+              for (;;) {
+                const open = W.scs.filter(s => s.scrolled && s.ended < s.scrolled);
+                if (!open.length) return res({ ok: true, ms: Math.round(performance.now() - W.at), scrolled: W.scs.filter(s => s.scrolled).length });
+                if (performance.now() - t1 > endMs) return res({ ok: false, ms: Math.round(performance.now() - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) });
+                await new Promise(r => requestAnimationFrame(r));
+              }
+            })();
+          }), [REVEAL_MS, REVEAL_END_MS]);
+          await t.check(`${target} accordion reveal finished (the rail's own scroll ended) before the next press`, reveal.ok, JSON.stringify(reveal), { hard: true });
           opened=true;
         }
         if(!opened)break;
