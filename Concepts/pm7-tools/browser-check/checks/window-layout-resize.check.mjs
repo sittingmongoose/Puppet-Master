@@ -30,7 +30,8 @@ function install() {
 		const root = document.getElementById('pm-o55-onboarding'), win = root && root.querySelector('.o55-win');
 		const layer = root && root.querySelector('.o55-layer:not(.o55-out)');
 		const foot = layer ? [...layer.querySelectorAll('.o55-foot button')].filter((b) => b.offsetParent && b.getBoundingClientRect().width > 0) : [];
-		S.frames.push({ t: performance.now(), w: innerWidth, h: innerHeight, lay: root && root.getAttribute('data-o55-layout'), win: R(win), stage: R(root && root.querySelector('.o55-stage')), foot: foot.map((b) => ({ name: (b.textContent || '').trim().slice(0, 28), r: R(b) })) });
+		const st = root && window.O55 && O55.pipStage && O55.pipStage.of(root.querySelector('.o55-stage'));
+		S.frames.push({ t: performance.now(), w: innerWidth, h: innerHeight, lay: root && root.getAttribute('data-o55-layout'), drawn: st ? st.layoutName : null, win: R(win), stage: R(root && root.querySelector('.o55-stage')), foot: foot.map((b) => ({ name: (b.textContent || '').trim().slice(0, 28), r: R(b) })) });
 	}).observe(dot);
 	const flip = () => { if (!S.on) { dot.remove(); return; } dot.style.width = dot.style.width === '1px' ? '2px' : '1px'; requestAnimationFrame(flip); };
 	requestAnimationFrame(flip);
@@ -78,13 +79,17 @@ async function run(t, mode) {
 			const before = fr.filter((x) => x.w === 1920), at = fr.filter((x) => x.w === 740), i740 = fr.findIndex((x) => x.w === 740);
 			const back = fr.slice(i740 + 1).filter((x) => x.w === 1920);
 			const wrong = at.filter((x) => x.lay !== 'narrow');
+			/* (and Pip's stage drawn for it in the same frame: the stage's own layout, banner over a narrow window; a redraw a
+			   frame late showed the tall stage's scene in the banner, FO88-N1) */
+			const stale = at.filter((x) => x.drawn !== 'banner');
 			const cut = at.map((x) => ({ x, s: past(x, x.stage), b: Math.max(0, ...x.foot.map((q) => past(x, q.r))), who: x.foot.filter((q) => past(x, q.r) > 1).map((q) => q.name) })).filter((c) => c.s > 1 || c.b > 1);
-			const why = JSON.stringify({ frames: fr.length, at740: at.length, first740: at[0] && { lay: at[0].lay, win: at[0].win && at[0].win.map(Math.round), stage: at[0].stage && at[0].stage.map(Math.round) }, wrongLayout: wrong.length, cut: cut.length, worstCut: cut[0] && { stage: Math.round(cut[0].s), button: Math.round(cut[0].b), who: cut[0].who, lay: cut[0].x.lay }, backFirst: back[0] && back[0].lay, footButtons: at[0] ? at[0].foot.map((q) => q.name) : [] });
+			const why = JSON.stringify({ frames: fr.length, at740: at.length, first740: at[0] && { lay: at[0].lay, win: at[0].win && at[0].win.map(Math.round), stage: at[0].stage && at[0].stage.map(Math.round) }, wrongLayout: wrong.length, staleStage: stale.length, firstDrawn: at[0] && at[0].drawn, cut: cut.length, worstCut: cut[0] && { stage: Math.round(cut[0].s), button: Math.round(cut[0].b), who: cut[0].who, lay: cut[0].x.lay }, backFirst: back[0] && back[0].lay, footButtons: at[0] ? at[0].foot.map((q) => q.name) : [] });
 			// (preconditions: wide before, frames read at 740, the footer's buttons there)
 			await t.check(`${tag}: wide at 1920x1080 before the resize`, before.length > 0 && before[before.length - 1].lay === 'wide', why);
 			await t.check(`${tag}: frames read at 740x768`, at.length > 1 && at[0].foot.length > 0 && !!at[0].stage, why); /* (a loaded film machine paints few: 2-17 frames in 1.5 s on the VM while it recorded) */
 			await t.check(`${tag}: the first frame at 740x768 is laid out narrow`, !!at[0] && at[0].lay === 'narrow', why);
 			await t.check(`${tag}: every frame at 740x768 is laid out narrow`, wrong.length === 0, why);
+			await t.check(`${tag}: Pip's stage drawn for the narrow window (banner) in every frame at 740x768`, stale.length === 0, why);
 			await t.check(`${tag}: the stage and the footer buttons inside the window in every frame at 740x768`, cut.length === 0, why);
 			await t.check(`${tag}: the first frame back at 1920x1080 is laid out wide`, !!back[0] && back[0].lay === 'wide', why);
 			t.log(`${tag}: ${why}`);
