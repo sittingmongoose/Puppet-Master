@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 266,
+  "caught": 316,
   "skipped": 0,
   "traps": [
     {
@@ -1127,7 +1127,7 @@
     },
     {
       "id": "C6-uncertifiable-case-global-fails-closed",
-      "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit.",
+      "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit. (Tool batch 2: random, since json is now a certified immutable binding under C8-U2.)",
       "caught": true
     },
     {
@@ -1333,6 +1333,256 @@
     {
       "id": "C7-eval-read-default",
       "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-module-control",
+      "expected": "C8-U2: json and re bound once at module level and never written through certify; the row is credited.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-module-read-control",
+      "expected": "C8-U2: module.attribute reads of a certified module in the checker are plumbing a reviewer declares; the module itself certifies.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-write-through",
+      "expected": "C8-U2: json.dumps = ... on a dormant path is an unwaivable write through a certified module.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-setattr",
+      "expected": "C8-U2: setattr(re, ...) on a dormant path is an unwaivable write through a certified module.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-dict-write",
+      "expected": "C8-U2: json.__dict__[...] = ... on a dormant path writes the module's namespace: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-alias",
+      "expected": "C8-U2: aliasing a certified module to a writable name lets it be written through elsewhere: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-passed-on",
+      "expected": "C8-U2: passing a certified module to another function lets the callee write through it: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-rebound",
+      "expected": "C8-U2: a certified module name rebound by a dormant global assignment is not bound once: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-not-allowlisted",
+      "expected": "C8-U2: random keeps result-affecting module state, so it is not on the list and still fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-future-control",
+      "expected": "C8-U2: typing special forms and the annotations future feature certify; postponed annotations are never evaluated.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-lazy-annotations",
+      "expected": "C8-U2: without the future import a 3.14 annotation is a lazy __annotate__ graph that runs code when read: still refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-forged-annotate",
+      "expected": "C8-U2: a postponed-annotation function whose __annotate__ was replaced by code that reads names is not the compiler's own: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-form-write",
+      "expected": "C8-U2: writing an attribute of a certified typing form on a dormant path is refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-literal-control",
+      "expected": "C8-U2: a top-level str Enum with literal members only certifies, statically and in the snapshot.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-member-read-control",
+      "expected": "C8-U2: reading a literal Enum member in the checker (declared plumbing) certifies; the member is fixed.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-custom-new",
+      "expected": "C8-U2: an Enum with its own __new__ is not literal: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-missing",
+      "expected": "C8-U2: an Enum with _missing_ maps unknown values by code: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-generate-next-value",
+      "expected": "C8-U2: an Enum with its own _generate_next_value_ is not literal: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-metaclass",
+      "expected": "C8-U2: an Enum built by another metaclass runs that metaclass: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-nonliteral-member",
+      "expected": "C8-U2: an Enum member holding a list is not an immutable literal: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-write-through",
+      "expected": "C8-U2: writing an attribute onto a literal Enum on a dormant path is an unwaivable write.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-passed-on",
+      "expected": "C8-U2: passing a literal Enum class to another function lets it be written through: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-frozen-dataclass-refused",
+      "expected": "C8-U2: a frozen dataclass is not certified (its class graph is external machinery); the guide gives the restructure pattern.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-control",
+      "expected": "C8-U2: from consts import TERMINAL (a single literal tuple) reaches no code of consts, so consts is not scanned and the row is credited.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-mutable",
+      "expected": "C8-U2: a from-imported list is mutable state of consts: consts is scanned and, unnamed, fails.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-function",
+      "expected": "C8-U2: a from-imported function is code of consts: consts is scanned and, unnamed, fails.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-rebound",
+      "expected": "C8-U2: a constant consts rebinds on a dormant path is not a single literal binding: consts is scanned.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-computed",
+      "expected": "C8-U2: a constant computed by a call is not a literal: consts is scanned.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-re-compile-control",
+      "expected": "C8-U4: re.compile is resolved by its binding origin, not by its leaf name; a compiled pattern is immutable.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-builtin-compile-dynamic",
+      "expected": "C8-U4: the builtin compile stays dynamic code on a dormant path.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-compile-unknown-receiver",
+      "expected": "C8-U4: compile on a receiver that is not the re module stays dynamic.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-re-rebound-compile",
+      "expected": "C8-U4: a name re that something other than import re also binds is not the re module: its compile stays dynamic.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-error-named-literal-control",
+      "expected": "C8-U4: FAILED_REASONS = (literals) at module scope, bound once, is not an error write.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-error-named-list",
+      "expected": "C8-U4: a module-level error-named list is mutable: still an error-write obligation.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-error-named-rebound",
+      "expected": "C8-U4: an error-named constant rebound on a dormant path is not bound once: still an obligation.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U3-count-control",
+      "expected": "C8-U3: one NonGuard with count=2 declares both identical forward reads; the row is credited.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U3-count-too-high",
+      "expected": "C8-U3: a count that does not match the identical sites exactly fails.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U3-count-zero",
+      "expected": "C8-U3: a count below one is an invalid declaration.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-T11-private-entries",
+      "expected": "C8-G1 (cycle-8 T11): cut detection through table._entries hides an inline refusal; the private read is unwaivable.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-T11b-forged-trace",
+      "expected": "C8-G1 (cycle-8 T11b): a forged trace entry through table._calls is unwaivable, and the trace no longer lives on the table.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-table-dict",
+      "expected": "C8-G1: table.__dict__ on a dormant path reaches every private member: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-engine-private",
+      "expected": "C8-G1: g._always_pass (any g._* name) on a dormant path is refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-private-by-string",
+      "expected": "C8-G1: object.__getattribute__(table, '_calls') names a private member by string: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-engine-trace-store",
+      "expected": "C8-G1: g._GUARD_TRACES, the engine-owned trace store, is out of reach.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G2-T10-gettrace",
+      "expected": "C8-G2 (cycle-8 T10, as written there: sys imported in the checker): sys.gettrace() tells the tool's run from production; it is now a dynamic, unwaivable name.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G2-getprofile",
+      "expected": "C8-G2: sys.getprofile() is a harness detector of the same kind.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G3-repeats-observed",
+      "expected": "C8-G3: with baseline_repeats=3 every case is run four times uncut before any cut, and the JSON reports each case's observed runs.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U1-untraced-callee-temporary",
+      "expected": "C8-U1: a C-level append restored before the predicate returns is seen at the checkpoint after the call, exactly as the per-instruction check saw it.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U1-subscript-store-temporary",
+      "expected": "C8-U1: a subscript store undone by a delete before return is seen at the checkpoint after the store.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U1-inplace-temporary",
+      "expected": "C8-U1: an in-place += on an input list, undone before return, is seen at the checkpoint after the binary operation.",
       "caught": true
     }
   ]

@@ -16574,12 +16574,12 @@
     {
       "id": "TB2-G2-T10-gettrace",
       "kind": "code",
-      "expected": "C8-G2 (cycle-8 T10): sys.gettrace() tells the tool's run from production; it is now a dynamic, unwaivable name.",
+      "expected": "C8-G2 (cycle-8 T10, as written there: sys imported in the checker): sys.gettrace() tells the tool's run from production; it is now a dynamic, unwaivable name.",
       "status": "FAIL",
       "failure_kinds": [
         "hidden_static_sites"
       ],
-      "source": "import sys\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if sys.gettrace() is not None:\n            table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        import sys\n        if sys.gettrace() is not None:\n            table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
       "controls": [
         {
           "id": "valid",
@@ -16626,6 +16626,13 @@
           "path": "subject.py",
           "function": "factory.check",
           "kind": "data_operation",
+          "source": "import sys",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
           "source": "if sys.gettrace() is not None:\n    table.require('x', value, context)",
           "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
         },
@@ -16646,7 +16653,7 @@
       "failure_kinds": [
         "hidden_static_sites"
       ],
-      "source": "import sys\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        if sys.getprofile() is None:\n            table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px),\n                          g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        import sys\n        if sys.getprofile() is None:\n            table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
       "controls": [
         {
           "id": "valid",
@@ -16687,6 +16694,13 @@
           "function": "factory.check",
           "kind": "call_review",
           "source": "sys.getprofile()",
+          "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "import sys",
           "reason": "Regression fixture: this exact diagnostic operation is reviewed; it decides nothing about acceptance."
         },
         {
