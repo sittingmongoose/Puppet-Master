@@ -137,15 +137,19 @@ export default async function (t) {
           await t.check(`${target} ${c.key} closes on Escape`,await trigger.getAttribute('aria-expanded')==='false','',{hard:true});
           await menu.waitFor({state:'hidden',timeout:5000});
           exercised.add(c.key);
+          if(c.key==='rdCfgMenu' && !await panel.locator('#rdAddForm').isVisible()) {
+            // Enter this branch while the launch selector is still in view;
+            // later shelf scrolling must not race the menu's scroll-close owner.
+            await trigger.click();
+            await t.check('launch selector reopens for Add Configuration',await trigger.getAttribute('aria-expanded')==='true','',{hard:true});
+            await menu.waitFor({state:'visible',timeout:5000});
+            await menu.getByRole('menuitem',{name:/Add Configuration/}).click();
+            await t.check('Run Add Configuration reveals debugger selector',await panel.locator('#rdAddForm').isVisible(),'',{hard:true});
+          }
         }
       };
       await exercise();
-      if(target==='panel-run' && !await panel.locator('#rdAddForm').isVisible()) {
-        await panel.locator('[aria-controls="rdCfgMenu"]').click();
-        await f.locator('.pmr-menu.is-open').getByRole('menuitem',{name:/Add Configuration/}).click();
-        await t.check('Run Add Configuration reveals debugger selector',await panel.locator('#rdAddForm').isVisible(),'',{hard:true});
-        await exercise();
-      }
+
     }
     const row={target,tabs,inventory:[...inventory],exercised:[...exercised]};routedRows.push(row);
     await t.check(target+' routed shelf census',expectedRouted[target].every(k=>inventory.has(k)),JSON.stringify(row),{hard:true});
