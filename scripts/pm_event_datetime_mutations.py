@@ -69,6 +69,29 @@ FAMILIES = {
                         "probe, and the used.add exemption of the scan.",
     "comparison_boundary": "Every <, <=, > and >= in the date-time code. The mutant flips strictness (< and "
                            "<=, > and >=), the off-by-one at that range or limit boundary.",
+    # T41 (tool batch 3): the data the guards read, not only the guards (REVIEW-datetime-fix16-opus finding 3).
+    "data_table_entry": "Every entry of a module-level constant table: a tuple, list or set display, or a frozenset, "
+                        "set, tuple or list of one, or a dict display (the leap-second table, the profiles, the "
+                        "timestamp fields, the keyword sets, the 16 non-timestamp controls and the sweep zones). The "
+                        "mutant drops that one entry.",
+    "data_loop_member": "Every element of a literal tuple, list or set that a for loop or a comprehension iterates, "
+                        "when the loop holds a refusal, withholding or credit site or calls a function that does "
+                        "(the sibling-dependency keywords, the reference keywords, the applicator keywords). The "
+                        "mutant drops that one element.",
+    "data_flag_operand": "Every operand of a Boolean expression assigned (=, |=, &=, :=) to a local name that a refusal "
+                         "or credit guard of the same function reads (the Storage quote's flag). The mutant makes "
+                         "an and-operand True or an or-operand False: that clause of the flag is dropped.",
+    "data_value_arithmetic": "Every arithmetic operator (+, -, *, //) and integer constant in a value assigned to a "
+                             "local name that a refusal or credit guard of the same function reads, in a module-level "
+                             "derived table, and in a module-level helper without refusal sites that one of them "
+                             "calls (the day arithmetic): + and - are swapped, * and // are swapped, an integer "
+                             "constant and each range() bound gain one.",
+    "data_collection_build": "Every add, update, append or extend call on a local collection in a module-level "
+                             "function without refusal sites that returns a local collection a refusal reads (the "
+                             "loadable-resource set): the mutant disables that one call.",
+    "data_walk_domain": "Every for loop over a computed collection whose body holds a refusal site (every resource "
+                        "verify_resources walks, every inventory row, every citation): the mutant walks only the "
+                        "first item.",
 }
 # Names through which the date-time code emits a refusal. refusal_alias_problems
 # refuses any other use of them, so every site stays a direct, enumerable call,
@@ -375,7 +398,130 @@ def mutation_points(source, module):
                 add("comparison_boundary", "boundary:%s:%s:%s:%d" % (short, name, text, position), compare,
                     function=name, action=type(op).__name__ + "->" + _FLIPPED[type(op)].__name__,
                     detail=position, text=text[:160])
+    for family, node, action, detail, text, function in data_points(tree, module, parents):
+        add(family, "data:%s:%s:%s:%s %s" % (family.removeprefix("data_"), short, function, action, text), node,
+            function=function, action=action, detail=detail, text=text[:160])
     return points
+
+
+_TABLE_CALLS = ("frozenset", "set", "tuple", "list")
+_SWAPPED = {ast.Add: ast.Sub, ast.Sub: ast.Add, ast.Mult: ast.FloorDiv, ast.FloorDiv: ast.Mult}
+
+
+def _table_display(value):
+    """The literal display of a module-level constant table, or None."""
+    if isinstance(value, (ast.Tuple, ast.List, ast.Set, ast.Dict)):
+        return value
+    if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.func.id in _TABLE_CALLS
+            and len(value.args) == 1 and not value.keywords and isinstance(value.args[0], (ast.Tuple, ast.List, ast.Set))):
+        return value.args[0]
+    return None
+
+
+def _entries(display):
+    """(position, text) of each entry of a display."""
+    if isinstance(display, ast.Dict):
+        return [(i, ast.unparse(k) if k is not None else "**" + ast.unparse(v)) for i, (k, v) in enumerate(zip(display.keys, display.values))]
+    return [(i, ast.unparse(e)) for i, e in enumerate(display.elts)]
+
+
+def data_points(tree, module, parents):
+    """[(family, node, action, detail, text, function)] for every data point of one module (T41), in source order.
+
+    The guards' own predicates are refusal_predicate and credit_predicate points; these are the values they read:
+    constant tables, the literal keyword sets loops walk, the clauses of flags, the arithmetic of values a guard
+    tests and of the helpers that compute them, the collections helpers build, and the domains refusal loops walk.
+    """
+    sites = [n for n, _, _ in refusal_sites(tree, module, parents)]
+    credits = [n for n, _, _ in credit_sites(tree, module, parents)]
+    site_ids, refusal_ids = {id(n) for n in sites + credits}, {id(n) for n in sites}
+    with_sites = {f.name for f in (_function(n, parents) for n in sites + credits) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    top = {n.name: n for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    def holds(node):
+        return any(id(x) in site_ids or (isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id in with_sites)
+                   for x in ast.walk(node))
+    out = []
+    # constant tables
+    for statement in tree.body:
+        if isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name):
+            display = _table_display(statement.value)
+            if display is not None and len(_entries(display)) > 0:
+                for position, text in _entries(display):
+                    out.append(("data_table_entry", display, "drop_entry", position, statement.targets[0].id + " " + text, "<module>"))
+    # literal sets loops walk
+    for node in ast.walk(tree):
+        loop = None
+        if isinstance(node, (ast.For, ast.AsyncFor)) and isinstance(node.iter, (ast.Tuple, ast.List, ast.Set)):
+            loop, display = node, node.iter
+        elif isinstance(node, ast.comprehension) and isinstance(node.iter, (ast.Tuple, ast.List, ast.Set)):
+            loop, display = parents[node], node.iter
+        if loop is not None and holds(loop) and len(display.elts) > 1:
+            for position, text in _entries(display):
+                out.append(("data_loop_member", display, "drop_entry", position, text, _qualname(display, parents)))
+    # flags and values a guard reads
+    guard_names = {}
+    for site in sites + credits:
+        function = _function(site, parents)
+        for test, _ in _guards(site, parents):
+            for x in ast.walk(test):
+                if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Load):
+                    guard_names.setdefault(id(function), set()).add(x.id)
+    def arithmetic(value, function, label):
+        for x in ast.walk(value):
+            if isinstance(x, ast.BinOp) and type(x.op) in _SWAPPED:
+                out.append(("data_value_arithmetic", x, "swap_op", None, label + ": " + ast.unparse(x), function))
+            elif isinstance(x, ast.Constant) and type(x.value) is int and not isinstance(parents.get(x), ast.Subscript):
+                out.append(("data_value_arithmetic", x, "plus_one", None, label + ": " + ast.unparse(x) + " in " + ast.unparse(parents.get(x, x))[:80], function))
+            elif (isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id == "range"):
+                for position, bound in enumerate(x.args):
+                    out.append(("data_value_arithmetic", bound, "plus_one", position, label + ": range bound " + ast.unparse(bound), function))
+    helpers = set()
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Assign, ast.AugAssign, ast.NamedExpr)):
+            target = node.targets[0] if isinstance(node, ast.Assign) and len(node.targets) == 1 else getattr(node, "target", None)
+            function = _function(node, parents)
+            if not isinstance(target, ast.Name) or function is None or target.id not in guard_names.get(id(function), ()):
+                continue
+            name = _qualname(node, parents)
+            for x in ast.walk(node.value):
+                if isinstance(x, ast.BoolOp):
+                    for operand in x.values:
+                        out.append(("data_flag_operand", operand, "true" if isinstance(x.op, ast.And) else "false", None,
+                                    target.id + " " + ast.unparse(operand), name))
+            arithmetic(node.value, name, target.id)
+            helpers.update(x.func.id for x in ast.walk(node.value) if isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id in top)
+    for statement in tree.body:
+        if (isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name)
+                and _table_display(statement.value) is None and not isinstance(statement.value, ast.Constant)):
+            calls = [x.func.id for x in ast.walk(statement.value) if isinstance(x, ast.Call) and isinstance(x.func, ast.Name)]
+            if any(c in top for c in calls):
+                arithmetic(statement.value, "<module>", statement.targets[0].id)
+                helpers.update(c for c in calls if c in top)
+    for name in sorted(helpers):
+        if name not in with_sites:
+            for statement in top[name].body:
+                arithmetic(statement, name, name)
+    # collections a helper builds and returns, read by a refusal
+    for name, function in top.items():
+        if name in with_sites:
+            continue
+        returned = {r.value.id for r in ast.walk(function) if isinstance(r, ast.Return) and isinstance(r.value, ast.Name)}
+        if not returned:
+            continue
+        built = set(returned)
+        for x in ast.walk(function):   # (and the local lists whose items flow into it)
+            if isinstance(x, ast.For) and isinstance(x.iter, ast.Name):
+                built.add(x.iter.id)
+        for x in ast.walk(function):
+            if (isinstance(x, ast.Call) and isinstance(x.func, ast.Attribute) and isinstance(x.func.value, ast.Name)
+                    and x.func.value.id in built and x.func.attr in ("add", "update", "append", "extend")):
+                out.append(("data_collection_build", x, "disable_build", None, ast.unparse(x), _qualname(x, parents)))
+    # domains refusal loops walk
+    for node in ast.walk(tree):
+        if (isinstance(node, (ast.For, ast.AsyncFor)) and not isinstance(node.iter, (ast.Tuple, ast.List, ast.Set))
+                and any(id(x) in refusal_ids for x in ast.walk(node))):
+            out.append(("data_walk_domain", node, "walk_first", None, ast.unparse(node.iter), _qualname(node, parents)))
+    return sorted(out, key=lambda p: (p[1].lineno, p[1].col_offset, p[0], p[3] if p[3] is not None else -1, p[4]))
 
 
 def credit_vocabulary_problems(sources):
@@ -505,6 +651,20 @@ def point_code(source, file, point):
         _replace(tree, container, new)
     elif action == "disable_status_fail":
         _replace(tree, node, ast.Constant("pass"))
+    elif action == "drop_entry":
+        if isinstance(node, ast.Dict):
+            del node.keys[point["detail"]], node.values[point["detail"]]
+        else:
+            del node.elts[point["detail"]]
+    elif action == "swap_op":
+        node.op = _SWAPPED[type(node.op)]()
+    elif action == "plus_one":
+        _replace(tree, node, ast.BinOp(left=node, op=ast.Add(), right=ast.Constant(1)))
+    elif action == "disable_build":
+        _replace(tree, node, ast.Constant(None))
+    elif action == "walk_first":
+        node.iter = ast.Subscript(value=ast.Call(func=ast.Name("list", ast.Load()), args=[node.iter], keywords=[]),
+                                  slice=ast.Slice(upper=ast.Constant(1)), ctx=ast.Load())
     elif action == "disable_error_tuple":
         _replace(tree, node, ast.Tuple(elts=[], ctx=ast.Load()))
     else:
@@ -673,15 +833,23 @@ NORMATIVE_MARKERS = re.compile(
 
 def owner_statements(root, owner_text):
     """Every statement of the selected owner text: (statements, problems)."""
-    from pm_event_numbers_corpus import _guide_blocks, _sentences, _unit_blocks
+    from pm_event_numbers_corpus import (_guide_blocks, _guide_section_texts, _pin, _sentences, _unit_blocks,
+                                         _unit_section_unselected_text)
     statements, problems = [], []
     for unit in owner_text["units"]:
         try:
             lines = (Path(root) / unit["path"]).read_text(encoding="utf-8").split("\n")
             blocks = _unit_blocks(lines, unit["unit"], unit["fields"])
+            # T41 (REVIEW-datetime-fix16-opus finding 9): the unit's whole section less its selected fields (its
+            # heading, its unselected YAML fields such as validation_surfaces, and its ContractRef: line) is pinned
+            section = _pin(_unit_section_unselected_text(lines, unit["unit"], unit["fields"]))
         except (OSError, ValueError, StopIteration) as error:
             problems.append("owner text %s %s unreadable: %s" % (unit["path"], unit["unit"], error))
             continue
+        if unit.get("section_unselected_sha256") != section:
+            problems.append("owner text %s %s: the unit section outside its selected fields changed (sha256 %s, pinned "
+                            "%s); review it for date-time rules and refresh section_unselected_sha256"
+                            % (unit["path"], unit["unit"], section, unit.get("section_unselected_sha256")))
         ordinals = {}
         for field, block in blocks:
             ordinals[field] = ordinals.get(field, 0) + 1
@@ -695,6 +863,15 @@ def owner_statements(root, owner_text):
         problems.append("owner text %s unreadable: %s" % (guide["path"], error))
         lines = None
     if lines is not None:
+        # T41 (finding 9): guide sections the date-time table depends on outside its selected blocks, pinned whole:
+        # "Per-lane replacements" holds the per-lane "Enforce CV-1101 ..." sentence, 19 times
+        texts = _guide_section_texts(lines)
+        for section, pinned in sorted(guide.get("pinned_sections", {}).items()):
+            if section not in texts:
+                problems.append("stale pinned guide section in the date-time selection: %r" % section)
+            elif _pin(texts[section]) != pinned:
+                problems.append("guide section %r changed (sha256 %s, pinned %s); review it for date-time rules and "
+                                "refresh pinned_sections" % (section, _pin(texts[section]), pinned))
         selected = guide["blocks"]
         sections = {b["section"] for b in selected}
         blocks, seen = _guide_blocks(lines, sections)

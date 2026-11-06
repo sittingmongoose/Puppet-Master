@@ -1711,6 +1711,13 @@ def _sibling_context(value):
 
 check("datetime_unit_probe_sibling_context_names_field")(_sibling_context({"observed_at_utc": "x"}))
 check("datetime_unit_probe_sibling_context_not_object")(_sibling_context("kind"))
+# T41 data point (the probe's walk over a record's reviewed sibling contexts): every context is checked, not only
+# the first; a field name in the second is refused too.
+@check("datetime_unit_probe_every_sibling_context_checked")
+def _every_sibling_context(context):
+    message = _probe_error(context, _wildcard(SAFE), roles={("Plans/a.json", "json", "/$defs/m"): {
+        "sibling_contexts": [{"kind": "x"}, {"observed_at_utc": "x"}]}})
+    return message == "reviewed sibling context must contain only sibling properties"
 
 
 @check("datetime_unit_probe_duplicate_role_record")
@@ -2354,6 +2361,436 @@ def _kept_roles_sweep(context):
 
 
 # ---------------------------------------------------------------------------
+# M. Tool batch 3 (T41): the data the guards read. REVIEW-datetime-fix16-opus
+#    survivors DT-01, DT-03, DT-09, DT-13, DT-16, DT-17 and DT-19, each with the
+#    input that tells the mutant from the original, and one witness per member
+#    of the sibling-dependency keyword set, directly and through a map-scope $ref.
+# ---------------------------------------------------------------------------
+
+# IERS Bulletin C72 (Leap_Second.dat, July 2026), copied independently of the
+# production table: the 27 insertion days. DT-01 moved the 1997 insertion from
+# June 30 to December 31 and every other check still passed.
+IERS_C72_INSERTIONS = (
+    "1972-06-30", "1972-12-31", "1973-12-31", "1974-12-31", "1975-12-31", "1976-12-31", "1977-12-31",
+    "1978-12-31", "1979-12-31", "1981-06-30", "1982-06-30", "1983-06-30", "1985-06-30", "1987-12-31",
+    "1989-12-31", "1990-12-31", "1992-06-30", "1993-06-30", "1994-06-30", "1995-12-31", "1997-06-30",
+    "1998-12-31", "2005-12-31", "2008-12-31", "2012-06-30", "2015-06-30", "2016-12-31")
+
+
+@check("datetime_unit_date_time_leap_table_independent_edition")
+def _leap_independent(context):
+    dt, _, _, _ = _mods()
+    insertions = set(IERS_C72_INSERTIONS)
+    candidates = ["%04d-%s" % (year, md) for year in range(1972, 2017) for md in ("06-30", "12-31")]
+    return (tuple(dt._LEAP_DAYS) == IERS_C72_INSERTIONS and
+            all(outcome(dt.date_time, day + "T23:59:60Z") == (("accept", day + "T23:59:60Z") if day in insertions
+                                                              else ("refuse", "date_time_leap_second"))
+                for day in candidates))
+
+
+@check("datetime_unit_date_time_leap_second_june_with_offsets")
+def _leap_june_offsets(context):
+    """DT-03: June leap seconds written with an offset; a day count off by the month length cancels out only
+    across December into January."""
+    dt, _, _, _ = _mods()
+    accept = ("1972-07-01T00:59:60+01:00", "2015-07-01T05:29:60+05:30", "2015-06-30T18:59:60-05:00",
+              "1981-07-01T00:00:60+00:01")
+    refuse = ("2015-07-01T00:59:60+02:00", "1972-07-01T00:59:60+00:30", "2015-06-30T23:59:60+01:00")
+    return (all(outcome(dt.date_time, v) == ("accept", v) for v in accept) and
+            all(outcome(dt.date_time, v) == ("refuse", "date_time_leap_second") for v in refuse))
+
+
+@check("datetime_unit_scan_exclusion_referenced_under_path_free_id")
+def _ex_referenced_path_free_id(context):
+    """DT-09: the referencing file's $id is not its path, so only the file-path-relative join names b.json."""
+    body = json.dumps({"examples": ["observed_at_utc"]})
+    a = {"$schema": D202012, "$id": "/other/a.json", "type": "object", "properties": {"x": {"$ref": "b.json"}}}
+    rows, errors = _exclusion_errors(context, [_exclusion("Plans/sub/b.json", body)],
+                                     [("Plans/sub/b.json", body), ("Plans/sub/a.json", a)])
+    return not rows and bool(_errors(errors, "scan_exclusions_invalid", "loadable_schema_exclusion_forbidden: Plans/sub/b.json"))
+
+
+# DT-13: the Storage quote needs both storage_utc_z and CV-253; each alone is refused.
+check("datetime_unit_validate_owner_profile_quote_without_cv253")(_validate_case(
+    [STORAGE], _citation(2, quote="persisted_at_utc to the storage_utc_z profile"), ("owner_profile_quote_missing",),
+    exact=True))
+check("datetime_unit_validate_owner_profile_quote_without_profile")(_validate_case(
+    [STORAGE], _citation(2, quote="CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc"),
+    ("owner_profile_quote_missing",), exact=True))
+
+
+# DT-16, DT-17: a map-scope keyword that makes the map's acceptance depend on a sibling is a dependency, directly
+# and through a map-scope $ref; the map then requires review and never earns automatic non-timestamp credit.
+# One witness per member of the dependency keyword set of the value probe (applicators included).
+_SIBLING_KIND = {"properties": {"kind": {"const": "x"}}, "additionalProperties": REF}
+MAP_DEPENDENCIES = {
+    "required": ["kind"], "dependentRequired": {"kind": ["other"]}, "dependentSchemas": {"kind": {"required": ["other"]}},
+    "dependencies": {"kind": ["other"]}, "minProperties": 2, "maxProperties": 3,
+    "unevaluatedProperties": REF, "const": {"kind": "x"}, "enum": [{"kind": "x"}],
+    "allOf": [_SIBLING_KIND], "anyOf": [{"additionalProperties": REF}, _SIBLING_KIND],
+    "oneOf": [{"additionalProperties": REF}, _SIBLING_KIND], "not": {"required": ["kind"]},
+    "if": {"required": ["kind"]}, "then": {"required": ["other"]}, "else": {"required": ["other"]}}
+
+
+def _map_dependency(keyword, through_ref):
+    def run(context):
+        value = {keyword: copy.deepcopy(MAP_DEPENDENCIES[keyword])}
+        if through_ref:
+            node = {**BASIC, "additionalProperties": REF, "$ref": "#/$defs/T41MapScope"}
+            definitions = {"T41MapScope": {"type": "object", **value}}
+        else:
+            node, definitions = {**BASIC, "additionalProperties": REF, **value}, None
+        evidence, _, errors, result = probe_map(context, node, definitions)
+        return (keyword in [d["keyword"] for d in evidence["sibling_dependencies"]] and
+                not evidence["singleton_probes_complete"] and not evidence["automatic_credit"] and
+                result == "wildcard_review_required")
+    return run
+
+
+for _keyword in MAP_DEPENDENCIES:
+    check("datetime_unit_map_dependency_%s_direct" % _keyword)(_map_dependency(_keyword, False))
+    check("datetime_unit_map_dependency_%s_through_ref" % _keyword)(_map_dependency(_keyword, True))
+
+
+@check("datetime_unit_map_one_of_requires_review")
+def _map_one_of(context):
+    """DT-16 and DT-17 as the review built them: a oneOf of two branches at map scope, directly and through a
+    map-scope $ref, one branch fixing a sibling. The real validator accepts a timestamp beside kind y."""
+    branches = [{"additionalProperties": {"type": "string"}},
+                {"properties": {"kind": {"const": "x"}}, "additionalProperties": {"type": "string"}}]
+    direct = {"type": "object", "propertyNames": {"pattern": "^[a-z_]+$"}, "oneOf": branches}
+    through = {"type": "object", "propertyNames": {"pattern": "^[a-z_]+$"}, "$ref": "#/$defs/T41OneOf"}
+    results = [probe_map(context, direct), probe_map(context, through, {"T41OneOf": {"type": "object", "oneOf": branches}})]
+    return all("oneOf" in [d["keyword"] for d in ev["sibling_dependencies"]] and not ev["automatic_credit"] and
+               result == "wildcard_review_required" for ev, _, _, result in results)
+
+
+@check("datetime_unit_selection_verify_every_resource")
+def _verify_every_resource(context):
+    """DT-19: a classified target in a referenced resource, replaced after construction, is refused; verifying
+    only the root resource let a +00:00 Storage timestamp through."""
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    _, inv, _, _ = _mods()
+    schema = {"$schema": D202012, "$id": "urn:pm:scratch:t41-resource",
+              "$defs": {"Row": {"type": "object", "properties": {"persisted_at_utc": {"type": "string", "format": "date-time"}}}}}
+    row = {"path": "Plans/scratch.json", "origin": "json", "pointer": "/$defs/Row", "resource_pointer": "",
+           "fields": ["persisted_at_utc"], "profile": "storage_utc_z",
+           "node_sha256": inv.digest(schema["$defs"]["Row"]), "resource_sha256": inv.digest(schema)}
+    registry = Registry().with_resource(schema["$id"], Resource.from_contents(schema, default_specification=DRAFT202012))
+    validator = _bound({"$schema": D202012, "$ref": schema["$id"] + "#/$defs/Row"}, registry,
+                       _selection([(schema, {"/$defs/Row": row})]))
+    bad = {"persisted_at_utc": "2026-01-01T00:00:00+00:00"}
+    before = not validator.is_valid(bad)
+    schema["$defs"]["Row"] = {}
+    return before and _admission_reason(validator.is_valid, bad) == "datetime_schema_changed_after_admission"
+
+
+@check("datetime_unit_date_time_leap_second_every_day_with_offsets")
+def _leap_every_day_offsets(context):
+    """T41 data points (_day_number's year arithmetic): every leap day of the independent edition, written in UTC and
+    with offsets that carry it into the next day (and, for December, the next year) or keep it on the same day, is
+    accepted; the day before and the day after at the same local times are refused. previous // 401 in place of
+    previous // 400 moved a year boundary to 2005/2006 and refused 2006-01-01T00:59:60+01:00, which nothing else read."""
+    import datetime as _datetime
+    dt, _, _, _ = _mods()
+    for leap in IERS_C72_INSERTIONS:
+        day = _datetime.date.fromisoformat(leap)
+        after, before = day + _datetime.timedelta(days=1), day - _datetime.timedelta(days=1)
+        for value, accepted in ((f"{after}T00:59:60+01:00", True), (f"{after}T05:29:60+05:30", True),
+                                (f"{leap}T22:59:60-01:00", True), (f"{leap}T23:59:60Z", True),
+                                (f"{day}T00:59:60+01:00", False), (f"{after}T22:59:60-01:00", False),
+                                (f"{before}T23:59:60Z", False)):
+            if outcome(dt.date_time, value) != (("accept", value) if accepted else ("refuse", "date_time_leap_second")):
+                return False
+    return True
+
+
+@check("datetime_unit_named_evidence_follows_every_keyword")
+def _named_every_keyword(context):
+    """T41 data points (_constraint_sources' reference and combinator keywords): a named field whose schema uses each
+    of $ref, $dynamicRef, $recursiveRef, allOf, anyOf, oneOf, not, if, then and else cites each subschema, in order."""
+    _, inv, _, _ = _mods()
+    t = {"type": "string", "format": "date-time"}
+    doc = {"$defs": {"t1": dict(t), "t2": dict(t), "t3": dict(t), "n": {"title": "N", "properties": {"observed_at_utc": {
+        "$ref": "#/$defs/t1", "$dynamicRef": "#/$defs/t2", "$recursiveRef": "#/$defs/t3",
+        "allOf": [{"type": "string"}], "anyOf": [{"minLength": 1}], "oneOf": [{"maxLength": 64}],
+        "not": {"const": ""}, "if": {"minLength": 2}, "then": {"maxLength": 40}, "else": {"maxLength": 30}}}}}}
+    root = _inventory_root(context, [], files=[("Plans/s.json", doc)])
+    row = _scratch_row("Plans/s.json", "/$defs/n")
+    classification, citations = inv.source_owner_evidence(row, json.loads(json.dumps(doc)), root)
+    field = "/$defs/n/properties/observed_at_utc"
+    return classification == "other_owner_observation" and [c["pointer"] for c in citations] == [
+        field, "/$defs/t1", "/$defs/t2", "/$defs/t3", field + "/allOf/0", field + "/anyOf/0", field + "/oneOf/0",
+        field + "/not", field + "/if", field + "/then", field + "/else"]
+
+
+# T41 data points (the value probe's ANNOTATIONS and ASSERTIONS tables): each keyword, with an argument that leaves the
+# value non-timestamp, on a definition the map's values reach, keeps the map's automatic non-timestamp credit. A keyword
+# dropped from its table is an unknown keyword there, which routes the map to review. ($dynamicAnchor and
+# $recursiveAnchor are in DYNAMIC, which earns no credit whatever the tables say.)
+INERT_KEYWORDS = {
+    "$schema": D202012, "$id": "urn:pm:scratch:t41-inert", "$anchor": "t41inert", "$comment": "t41",
+    "$vocabulary": {"https://json-schema.org/draft/2020-12/vocab/core": True},
+    "$defs": {"T41Unused": {"type": "string"}}, "definitions": {"T41Unused": {"type": "string"}},
+    "title": "t", "description": "d", "default": "ref:a", "examples": ["ref:a"], "deprecated": False,
+    "readOnly": False, "writeOnly": False, "type": "string", "const": "ref:a", "enum": ["ref:a", "ref:b"],
+    "format": "email", "pattern": "^ref:", "minLength": 1, "maxLength": 64, "minimum": 0, "maximum": 10,
+    "exclusiveMinimum": 0, "exclusiveMaximum": 10, "multipleOf": 1, "minItems": 0, "maxItems": 5, "uniqueItems": True,
+    "minContains": 0, "maxContains": 5, "minProperties": 0, "maxProperties": 5, "required": [],
+    "contentEncoding": "base64", "contentMediaType": "text/plain"}
+
+
+def _inert_keyword(keyword):
+    def run(context):
+        _, _, probe, _ = _mods()
+        if keyword not in (probe.ANNOTATIONS | probe.ASSERTIONS) - probe.DYNAMIC:
+            return False
+        evidence, _, _, result = probe_map(context, {**BASIC, "additionalProperties": {"$ref": "#/$defs/T41Inert"}},
+                                           {"T41Inert": {**SAFE, keyword: copy.deepcopy(INERT_KEYWORDS[keyword])}})
+        return evidence["automatic_credit"] and result == "wildcard_non_timestamp"
+    return run
+
+
+for _keyword in INERT_KEYWORDS:
+    check("datetime_unit_value_keyword_inert_%s" % _keyword)(_inert_keyword(_keyword))
+
+
+@check("datetime_unit_value_keyword_tables_covered")
+def _inert_tables_covered(context):
+    """Every ANNOTATIONS and ASSERTIONS keyword outside DYNAMIC has its inert check above, and no other."""
+    _, _, probe, _ = _mods()
+    return set(INERT_KEYWORDS) == (probe.ANNOTATIONS | probe.ASSERTIONS) - probe.DYNAMIC
+
+
+# T41 data points of the inventory: the collections its refusal loops walk, read with two or more items where the
+# second one decides (a walk cut to its first item passed the one-item cases), and the collections it builds.
+
+@check("datetime_unit_scan_exclusion_every_entry_checked")
+def _ex_every_entry(context):
+    body = json.dumps({"note": "observed_at_utc"})
+    good, bad = _exclusion("Plans/a.json", body), _exclusion("Plans/b.json", body, reason="   ")
+    rows, errors = _exclusion_errors(context, [good, bad], [("Plans/a.json", body), ("Plans/b.json", body)])
+    return not rows and bool(_errors(errors, "scan_exclusions_invalid", "invalid scan exclusion")) and len(errors) == 1
+
+
+@check("datetime_unit_scan_stale_exclusions_every_one")
+def _ex_stale_every(context):
+    body = json.dumps({"note": "observed_at_utc"})
+    entries = [_exclusion("Plans/gone1.json", body, citation="Plans/a.json"),
+               _exclusion("Plans/gone2.json", body, citation="Plans/a.json")]
+    rows, errors = _exclusion_errors(context, entries, [("Plans/a.json", "{}")])
+    return sorted((e["error"], e.get("path")) for e in errors) == [("stale_scan_exclusion", "Plans/gone1.json"),
+                                                                  ("stale_scan_exclusion", "Plans/gone2.json")]
+
+
+@check("datetime_unit_scan_every_jsonl_line")
+def _scan_jsonl(context):
+    """Every line of a JSON Lines file is a document, named by its own line number."""
+    root = context.scratch()
+    write(root, "Plans/a.jsonl", json.dumps({"note": "x"}) + "\n" + json.dumps(DECLARING) + "\n")
+    rows, errors = _scan(root)
+    return not errors and [(r["path"], r["origin"], r["pointer"]) for r in rows] == [("Plans/a.jsonl", "jsonl:2", "")]
+
+
+@check("datetime_unit_scan_every_pattern_property")
+def _scan_patterns(context):
+    """Each patternProperties entry is a declaration of its own: the second one is found too."""
+    root = context.scratch()
+    write(root, "Plans/a.json", {"$schema": D202012, "type": "object", "patternProperties": {
+        "^x_": {"type": "string"}, "^observed_": {"type": "string", "format": "date-time"}}})
+    rows, errors = _scan(root)
+    return not errors and [(r["pointer"], r["fields"]) for r in rows] == [("", ["observed_at_utc"])]
+
+
+@check("datetime_unit_scan_exclusion_referenced_by_nested_id_forbidden")
+def _ex_nested_id(context):
+    """A file whose nested $id another schema references is loadable, though it declares no $schema or root $id."""
+    body = json.dumps({"$defs": {"x": {"$id": "urn:pm:scratch:t41-nested", "type": "string"}}, "note": "observed_at_utc"})
+    files = [("Plans/a.json", body), ("Plans/ref.json", {"$schema": D202012, "$ref": "urn:pm:scratch:t41-nested"})]
+    rows, errors = _exclusion_errors(context, [_exclusion("Plans/a.json", body)], files)
+    return not rows and bool(_errors(errors, "scan_exclusions_invalid", "loadable_schema_exclusion_forbidden: Plans/a.json"))
+
+
+@check("datetime_unit_scan_exclusion_markdown_schema_forbidden")
+def _ex_markdown_schema(context):
+    """A Markdown file whose JSON block declares $schema is a loadable schema: it cannot be excluded."""
+    md = "```json\n" + json.dumps({"$schema": D202012, "examples": ["observed_at_utc"]}) + "\n```\n"
+    rows, errors = _exclusion_errors(context, [_exclusion("Plans/a.md", md, origin="file")], [("Plans/a.md", md)])
+    return not rows and bool(_errors(errors, "scan_exclusions_invalid", "loadable_schema_exclusion_forbidden: Plans/a.md"))
+
+
+@check("datetime_unit_scan_exclusion_referenced_through_id_base_forbidden")
+def _ex_id_base(context):
+    """A reference resolved against the referrer's $id base (not its path) names a loadable file too."""
+    body = json.dumps({"examples": ["observed_at_utc"]})
+    a = {"$schema": D202012, "$id": "https://pm-inventory.invalid/Plans/sub/a.json", "type": "object",
+         "properties": {"x": {"$ref": "b.json"}}}
+    rows, errors = _exclusion_errors(context, [_exclusion("Plans/sub/b.json", body)],
+                                     [("Plans/sub/b.json", body), ("Plans/a.json", a)])
+    return not rows and bool(_errors(errors, "scan_exclusions_invalid", "loadable_schema_exclusion_forbidden: Plans/sub/b.json"))
+
+
+@check("datetime_unit_gate_every_unclassified_node")
+def _g_unclassified_every(context):
+    root = _gate_root(context, [context.row(*NAMED)], files=[("Plans/new.json", DECLARING), ("Plans/new2.json", DECLARING)])
+    result = _gate(root)
+    return ([f["error"] for f in result["failures"]] == ["unclassified_schema_node"] * 2 and
+            result["unclassified_nodes"] == 2)
+
+
+@check("datetime_unit_gate_every_missing_node")
+def _g_missing_every(context):
+    body = json.dumps({"x": {"properties": {"observed_at_utc": {"type": "string"}}},
+                       "y": {"properties": {"persisted_at_utc": {"type": "string"}}}})
+    root = _inventory_root(context, [], files=[("Plans/data.json", body)])
+    rows = _projected_rows(context, root, [_scratch_row("Plans/data.json", "/x", owner="Plans/data.json"),
+                                           _scratch_row("Plans/data.json", "/y", owner="Plans/data.json")])
+    exclusion = _exclusion("Plans/data.json", json.dumps(json.loads(body)))
+    result = _gate(_gate_root(context, rows, files=[("Plans/data.json", body)], exclusions=[exclusion]))
+    return [f["error"] for f in result["failures"]] == ["inventory_node_missing"] * 2
+
+
+@check("datetime_unit_gate_every_changed_node")
+def _g_changed_every(context):
+    doc = {"$defs": {"title": "D", "a": {"properties": {"observed_at_utc": {"type": "string"}}},
+                     "b": {"properties": {"persisted_at_utc": {"type": "string"}}}}}
+    root = _inventory_root(context, [], files=[("Plans/s.json", doc)])
+    rows = _projected_rows(context, root, [_scratch_row("Plans/s.json", "/$defs/a", owner="D", resource_pointer="/$defs"),
+                                           _scratch_row("Plans/s.json", "/$defs/b", owner="D", resource_pointer="/$defs")])
+    result = _gate(_gate_root(context, rows, files=[("Plans/s.json", doc)]))
+    changed = {tuple(f["node"]) for f in result["failures"] if f["error"] == "inventory_node_changed"}
+    return result["status"] == "fail" and len(changed) == 2
+
+
+@check("datetime_unit_validate_owner_named_by_schema_identity")
+def _v_owner_identity(context):
+    """An owner named only by the node's schema_id const is its source owner."""
+    doc = {"$defs": {"n": {"properties": {"schema_id": {"const": "pm.scratch.t41_owner.v1"},
+                                          "observed_at_utc": {"type": "string"}}}}}
+    root = _inventory_root(context, [], files=[("Plans/s.json", doc)])
+    rows = _projected_rows(context, root, [_scratch_row("Plans/s.json", "/$defs/n", owner="pm.scratch.t41_owner.v1")])
+    return not _validate(context, rows, root=root)
+
+
+# A Storage row whose only quote naming both storage_utc_z and CV-253 is not in the owner text: the quote is refused,
+# and it names the profile for nothing, so the profile quote is missing too.
+check("datetime_unit_validate_owner_profile_quote_invalid_names_nothing")(_validate_case(
+    [STORAGE], _citation(2, quote="storage_utc_z CV-253 t41-not-in-the-owner-text"),
+    ("classification_citation_changed", "owner_profile_quote_missing"), exact=True))
+
+
+@check("datetime_unit_validate_every_role_error_reported")
+def _v_every_role_error(context):
+    """A reviewed record with an empty role is changed evidence and needs review: both are reported."""
+    _, inv, probe, _ = _mods()
+    rows = [context.row(*REVIEWED)]
+    root = _inventory_root(context, rows)
+    roles = json.loads((root / probe.ROLES).read_text())
+    for record in roles:
+        if tuple(record["node"]) == inv.node_key(rows[0]):
+            record["role"] = "  "
+    write(root, probe.ROLES, roles)
+    return {CHANGED, REVIEW} <= _codes(_validate(context, rows, root=root))
+
+
+@check("datetime_unit_validate_conflicting_field_profile_every_field")
+def _v_conflict_every(context):
+    """A copied Storage resource under another profile conflicts on every field the node declares."""
+    storage = context.row(*STORAGE)
+    root = _inventory_root(context, [storage])
+    write(root, "Plans/copy.schema.json", (root / STORAGE[0]).read_bytes())
+    copy_row = dict(copy.deepcopy(storage), path="Plans/copy.schema.json", profile="owner_schema",
+                    classification="other_owner_observation", owner=storage["resource_id"])
+    errors = _validate(context, [storage, copy_row], root=root)
+    return len(storage["fields"]) > 1 and sum(e["error"] == "conflicting_resource_field_profile"
+                                              for e in errors) == len(storage["fields"])
+
+
+# T41 data points of the value probe's fixed controls. The year sweep is a committed set of refusal controls; its
+# documented forms are written here again, independently of the probe, and the two must agree value for value (a
+# changed day, time or fraction formula changed which timestamps a deciding definition must refuse, and no check read
+# the values). Each fixed non-timestamp control keeps a definition that accepts it alone from deciding the string.
+
+def _independent_sweep():
+    import calendar as _calendar
+    zones = ("Z", "z", "+00:00", "-00:00", "+05:30", "-07:45", "+23:59", "-23:59")
+    values = []
+    for year in range(1970, 2101):
+        forms = [(s, z) for s in ("T", "t") for z in zones]
+        for i, (sep, zone) in enumerate(forms):
+            n = (i + year) % 10
+            values.append(f"{year:04d}-{1 + i % 12:02d}-{1 + (7 * i + year) % 28:02d}{sep}{(5 * i + year) % 24:02d}:"
+                          f"{(7 * i + year) % 60:02d}:{(13 * i + year) % 60:02d}{('.' + '123456789'[:n]) if n else ''}{zone}")
+        for zone in zones:
+            values += [f"{year:04d}-01-01T00:00:00{zone}", f"{year:04d}-12-31T23:59:59{zone}"]
+        values.append(f"{year:04d}-12-31T23:59:59.999999999Z")
+        day = f"{year:04d}-02-{29 if _calendar.isleap(year) else 28}"
+        values += [day + "T00:00:00Z", day + "T23:59:59Z", day + "t12:00:00.5+05:30"]
+        values += [leap + "T23:59:60Z" for leap in IERS_C72_INSERTIONS if leap.startswith(f"{year:04d}-")]
+    return tuple(dict.fromkeys(values))
+
+
+@check("datetime_unit_year_sweep_independent_edition")
+def _sweep_independent(context):
+    _, _, probe, _ = _mods()
+    return probe.year_sweep({}) == _independent_sweep()
+
+
+# The fixed non-timestamp controls, copied independently of the probe (FIX11's sixteen).
+CONTROLS_EDITION = ("", "a", "1", "x.y.z", "resource-id", "abc123", "2026", "2026-01-01", "12:00:00",
+                    "2026-01-01T00:00:00", "2026-01-01 00:00:00Z", "deadbeef", "Plans/x.schema.json",
+                    "https://example.invalid/a", "a" * 30, "0" * 30)
+
+
+def _control_not_deciding(control):
+    return _not_deciding({**BASIC, "additionalProperties": {"$ref": "#/$defs/T41OnlyControl"}}, "/$defs/T41OnlyControl",
+                         {"T41OnlyControl": {"type": "string", "const": control}})
+
+
+for _index, _control in enumerate(CONTROLS_EDITION):
+    check("datetime_unit_deciding_excludes_control_%02d" % _index)(_control_not_deciding(_control))
+
+
+@check("datetime_unit_controls_independent_edition")
+def _controls_edition(context):
+    _, _, probe, _ = _mods()
+    return tuple(probe.NON_TIMESTAMP_CONTROLS) == CONTROLS_EDITION
+
+
+# T41 data points (the value probe's DYNAMIC set): a $dynamicRef or $recursiveRef anywhere in the closure, even off
+# the value path (here in a reachable value's $defs), makes the closure dynamic, so the map earns no automatic credit.
+# Dropping either from DYNAMIC made that closure static and credited the map.
+def _dynamic_off_path(keyword):
+    def run(context):
+        evidence, _, errors, result = probe_map(context, {**BASIC, "additionalProperties": {
+            **REF, "$defs": {"T41Dynamic": {keyword: "#/$defs/SafeRef"}}}})
+        return not evidence["automatic_credit"] and errors == (REVIEW,) and result == "wildcard_review_required"
+    return run
+
+
+check("datetime_unit_closure_dynamic_ref_off_path")(_dynamic_off_path("$dynamicRef"))
+check("datetime_unit_closure_recursive_ref_off_path")(_dynamic_off_path("$recursiveRef"))
+
+
+# T41 data points (the value probe's reference walks: discovery's visit and the value paths' constraint_paths each
+# follow $ref, $dynamicRef and $recursiveRef): an observation role may cite a definition the map's values reach only
+# through a $dynamicRef or a $recursiveRef; the record is accepted. A walk that skipped the keyword lost the citation
+# from the sources or the value path, and refused the record.
+def _observation_through(keyword):
+    def run(context):
+        _, role, errors, result = probe_map(context, {**BASIC, "additionalProperties": {keyword: "#/$defs/T41Observed"}},
+                                            {"T41Observed": {"type": "string", "format": "date-time"}},
+                                            cited="/$defs/T41Observed", classification="other_owner_observation")
+        return role is not None and errors == () and result == "other_owner_observation"
+    return run
+
+
+check("datetime_unit_role_observation_cited_through_dynamic_ref")(_observation_through("$dynamicRef"))
+check("datetime_unit_role_observation_cited_through_recursive_ref")(_observation_through("$recursiveRef"))
+
+
+# ---------------------------------------------------------------------------
 # L. The gate-bar freshness checks themselves catch what they must.
 # ---------------------------------------------------------------------------
 
@@ -2379,6 +2816,21 @@ def _detect_new_site(context):
     keys = {p["key"] for p in gate_bar.mutation_points(extra, "pm_event_datetime")}
     committed = set(gate_bar.load_spec(context.root)["generated"]["points"])
     return keys - committed == {"site:datetime:date_time:date_time_extra#1"}
+
+
+@check("datetime_gate_bar_detects_new_data_point")
+def _detect_new_data_point(context):
+    """T41: the data the guards read are mutation points too, regenerated from the AST like the sites. One more
+    leap-table entry and one more module constant table are new points without a committed row, and nothing else."""
+    gate_bar = _gate_bar()
+    text = gate_bar._sources(context.root)["pm_event_datetime"][0]
+    extra = text.replace('    "2015-06-30", "2016-12-31",\n)', '    "2015-06-30", "2016-12-31", "2035-06-30",\n)', 1)
+    extra += '\n_T41_EXTRA = frozenset(("a", "b"))\n'
+    keys = {p["key"] for p in gate_bar.mutation_points(extra, "pm_event_datetime")}
+    committed = set(gate_bar.load_spec(context.root)["generated"]["points"])
+    return keys - committed == {"data:table_entry:datetime:<module>:drop_entry _LEAP_DAYS '2035-06-30'#1",
+                                "data:table_entry:datetime:<module>:drop_entry _T41_EXTRA 'a'#1",
+                                "data:table_entry:datetime:<module>:drop_entry _T41_EXTRA 'b'#1"}
 
 
 @check("datetime_gate_bar_detects_alias")
@@ -2447,3 +2899,44 @@ def _detect_partition(context):
     owner = copy.deepcopy(gate_bar.load_spec(context.root)["owner_text"])
     owner["guide"]["blocks"].pop()
     return any("has no rows for it" in p for p in gate_bar.partition_problems(context.root, owner))
+
+
+def _owner_pin_problems(context, path, old, new, after=""):
+    """The date-time owner statements' problems on a scratch copy of the owner text with one edit (T41 pins): the
+    first occurrence of old after the text after."""
+    gate_bar = _gate_bar()
+    owner = gate_bar.load_spec(context.root)["owner_text"]
+    paths = sorted({u["path"] for u in owner["units"]} | {owner["guide"]["path"]})
+    root = context.scratch(copies=paths)
+    text = (root / path).read_text(encoding="utf-8")
+    at = text.find(old, text.find(after))
+    if at < 0:
+        return ["edit text not found: " + old[:60]]
+    (root / path).write_text(text[:at] + new + text[at + len(old):], encoding="utf-8")
+    return gate_bar.owner_statements(root, owner)[1]
+
+
+@check("datetime_gate_bar_detects_per_lane_sentence_edit")
+def _detect_per_lane(context):
+    """T41 (REVIEW-datetime-fix16-opus finding 9): the reviewer's rewrite of the per-lane CV-1101 sentence."""
+    problems = _owner_pin_problems(context, "reports/event-authority-20261105/NUMRULE-ADOPTION.md",
+                                   "Enforce CV-1101 with `datetime_validator`/`date_time` at this lane’s envelope and timestamp-source boundaries",
+                                   "Enforce CV-1101 with a local regex at this lane’s envelope boundaries")
+    return any(p.startswith("guide section 'Per-lane replacements' changed") for p in problems)
+
+
+@check("datetime_gate_bar_detects_unselected_cv1101_field_edit")
+def _detect_cv1101_unselected(context):
+    """T41 (finding 9): an edit to CV-1101's validation_surfaces, outside the selected fields."""
+    text = (context.root / "Plans/Contracts_V0.md").read_text(encoding="utf-8")
+    start = text.index("### CV-1101 - ")
+    line = next(l for l in text[start:].split("\n") if l.startswith("validation_surfaces:"))
+    problems = _owner_pin_problems(context, "Plans/Contracts_V0.md", line, line + " # any regex accepted",
+                                   after="### CV-1101 - ")
+    return any("CV-1101: the unit section outside its selected fields changed" in p for p in problems)
+
+
+@check("datetime_gate_bar_owner_pins_quiet_without_edit")
+def _detect_pins_quiet(context):
+    return not [p for p in _owner_pin_problems(context, "Plans/Contracts_V0.md", "### CV-1101 - ", "### CV-1101 - ")
+                if "changed" in p]
