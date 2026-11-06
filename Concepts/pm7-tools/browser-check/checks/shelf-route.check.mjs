@@ -196,8 +196,16 @@ export default async function (t) {
     const m1 = await mark();
     // A menu whose items are all disabled (Jujutsu's Move here… on this fixture) has nothing to pick.
     await t.check(`${tag} has an item to pick, or only disabled items`, !!m1.pick || m1.allDisabled, JSON.stringify(m1), { hard: true });
+    // A real press at the item's centre: Playwright's click() waits forever on an aria-disabled item.
+    const press = async (sel) => {
+      const it = f.locator(sel);
+      await it.scrollIntoViewIfNeeded();
+      const at = await it.evaluate(e => { const r = e.getBoundingClientRect(), x = r.x + r.width / 2, y = r.y + r.height / 2, h = document.elementFromPoint(x, y); return { x, y, onTop: !!h && (h === e || e.contains(h)) }; });
+      await t.check(`${tag} ${sel} is on top where it is pressed`, at.onTop, '', { hard: true });
+      await t.page.mouse.click(off.x + at.x, off.y + at.y);
+    };
     for (const [i, what] of m1.inert.entries()) {
-      await f.locator(`[data-shelf-inert="${i}"]`).click();
+      await press(`[data-shelf-inert="${i}"]`);
       await t.check(`${tag} a ${what.split(' ')[0]} item (${what.slice(what.indexOf(' ') + 1)}) does not close the menu`, await open(), '', { hard: true });
     }
     if (!m1.pick) {
