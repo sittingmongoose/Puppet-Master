@@ -211,17 +211,34 @@ export function installWitness(cfg) {
 			const fk = f === 'none' ? '' : [...f.matchAll(/([a-z-]+)\(/g)].map((x) => x[1]).join(' ');
 			if ((cs.clipPath && cs.clipPath !== 'none') || mk !== 'none' || fk || fa || ca || ma) sig.push(`${role}:clip=${cs.clipPath}|mask=${mk}|filter=${fk}|attr=${ca ? 'clip-path ' : ''}${ma ? 'mask ' : ''}${fa ? 'filter' : ''}`);
 		};
+		const chainNodes = [];
 		for (let n = S.gPip; n && n.nodeType === 1; n = n.parentNode) {
 			const cs = getComputedStyle(n), fl = filterOf(cs);
+			chainNodes.push([n, cs]);
 			chainOp *= (+cs.opacity) * fl.op; chainBlur += fl.blur; chainDim *= fl.dim;
 			if (cs.display === 'none' || cs.contentVisibility === 'hidden') chainShown = false;
 			effects(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`);
 			const svgRoot = n.namespaceURI === 'http://www.w3.org/2000/svg' && n.tagName.toLowerCase() === 'svg' && !n.ownerSVGElement;
 			if ((n instanceof HTMLElement || svgRoot) && (cs.overflowX !== 'visible' || cs.overflowY !== 'visible')) clip = inter(clip, rect(n));
 		}
+		/* T52 (TOOLBATCH2 pre-check finding 7): a back-face flip. rotateY(180deg) with backface-visibility: hidden on the
+		   stage host for one frame paints nothing, and neither the classifier nor the paint chain read it. Each element's
+		   backface-visibility, and which face its transform composed from the root down shows (back when the composed
+		   matrix's m33 is negative: the face turned away from the viewer), join the signature, from the root to Pip's
+		   group and on each part; its look's calibration has neither. */
+		let composed = new DOMMatrix();
+		const facing = (n, cs, role, at) => {
+			const tf = cs.transform; let m = at;
+			if (tf && tf !== 'none') { try { m = at.multiply(new DOMMatrix(tf)); } catch (_) { sig.push(`${role}:transform=unreadable`); } }
+			if (cs.backfaceVisibility === 'hidden') sig.push(`${role}:backface=hidden`);
+			if (m.m33 < 0) sig.push(`${role}:facing=back`);
+			return m;
+		};
+		for (let i = chainNodes.length - 1; i >= 0; i--) { const [n, cs] = chainNodes[i]; composed = facing(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`, composed); }
 		const part = (e) => { const cs = getComputedStyle(e), fl = filterOf(cs); return { op: chainOp * (+cs.opacity) * fl.op, shown: chainShown && cs.display !== 'none' && cs.visibility === 'visible', blur: chainBlur + fl.blur, dim: chainDim * fl.dim, cs }; };
 		const ph = part(S.gHead), pc = part(S.gCtl), ps = S.pstrs.map(part);
 		effects(S.gHead, ph.cs, 'head'); effects(S.gCtl, pc.cs, 'controller'); S.pstrs.forEach((p, i) => effects(p, ps[i].cs, 'string'));
+		facing(S.gHead, ph.cs, 'head', composed); facing(S.gCtl, pc.cs, 'controller', composed); S.pstrs.forEach((p, i) => facing(p, ps[i].cs, 'string', composed));
 		rec[F.headVis] = ph.shown ? 1 : 0; rec[F.ctlVis] = pc.shown ? 1 : 0; rec[F.strVis] = ps.every((p) => p.shown) ? 1 : 0;
 		rec[F.opHead] = Math.round(ph.op * 1000); rec[F.opCtl] = Math.round(pc.op * 1000); rec[F.opStr] = Math.round(Math.min(...ps.map((p) => p.op)) * 1000);
 		rec[F.blur] = Math.round(ph.blur * 10); rec[F.dim] = Math.round(ph.dim * 1000);

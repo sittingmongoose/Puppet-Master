@@ -30,7 +30,9 @@ export const MUTATIONS = {
    witness once read a collapsed or missing host as "no stage on screen" or "window closed" and skipped the frame. */
 export const EXTRA = {
 	hostscale: 'the stage host transform scale(0) !important (its exact style attribute put back after one frame)',
-	hostgone: 'the stage host taken out of the window for one frame, then put back where it was'
+	hostgone: 'the stage host taken out of the window for one frame, then put back where it was',
+	/* T52 (TOOLBATCH2 pre-check finding 7): the stage host turned to its back face for one frame */
+	hostflip: 'the stage host transform rotateY(180deg) with backface-visibility hidden, both !important (its exact style attribute put back after one frame)'
 };
 export const kindsOf = (spec) => { const [look, kind] = String(spec).split(':'); if (!MUTATIONS[look]) throw new Error(`unknown look ${look}`); if (kind && !EXTRA[kind]) throw new Error(`unknown loss ${kind}`); return { look, kind: kind || MUTATIONS[look][0], what: kind ? EXTRA[kind] : MUTATIONS[look][1], name: kind ? `${look}-${kind}` : look }; };
 
@@ -51,6 +53,7 @@ export function mutantScript(look, kind) {
     switch (KIND) {
       case 'hostscale': s = host.getAttribute('style'); host.style.setProperty('transform', 'scale(0)', 'important'); return function () { if (s === null) host.removeAttribute('style'); else host.setAttribute('style', s); };
       case 'hostgone': { var par = host.parentNode, nxt = host.nextSibling; host.remove(); return function () { par.insertBefore(host, nxt); }; }
+      case 'hostflip': s = host.getAttribute('style'); host.style.setProperty('transform', 'rotateY(180deg)', 'important'); host.style.setProperty('backface-visibility', 'hidden', 'important'); return function () { if (s === null) host.removeAttribute('style'); else host.setAttribute('style', s); };
       case 'opacity': s = h.style.opacity; h.style.opacity = '0'; return function () { h.style.opacity = s; };
       case 'visibility': s = h.style.visibility; h.style.visibility = 'hidden'; return function () { h.style.visibility = s; };
       case 'clip': s = h.style.clipPath; h.style.clipPath = 'inset(50%)'; return function () { h.style.clipPath = s; };
