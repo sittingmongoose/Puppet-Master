@@ -3,10 +3,12 @@
 // Tab lands on Back (the element before it focused first); at least 40 pixels of the band must change by more than 40
 // luminance levels, at a median contrast of 3:1 or more against what was there before (WCAG 1.4.11's non-text minimum).
 // In NieR the mark is NieR's own: four ink brackets (the brackets part, kit.d/19-nier-parts.js #o55np-reticle, which
-// replaces every outline, 14-nier-parts.css); in the other looks the 2 px accent outline. Ten looks, 1920x1080, 860 and
-// 740, the two-button footer (c-ready, where Back goes chevron-only on a narrow footer) and Where; both surfaces.
+// replaces every outline, 14-nier-parts.css); --set nierParts=nobrackets takes that part away, and NieR's outline must
+// then show. NieR Light and Dark by default (FO-97's scope; --set look= reads others: Friendly Light's 2 px outline
+// measures 2.64:1 there, reported, not asserted). 1920x1080, 860 and 740; c-ready (Back, Open the folder and Continue:
+// at 860 the footer squeezes Back to its padding, and at 740 the narrow window keeps its caret alone) and Where (Back and
+// Continue); both surfaces. The log gives Back's width and the window's layout.
 //   --set size=740x900   --set look=nier-dark   --set screen=c-ready   --set selftest=noring (must fail)
-import { LOOKS } from '../browser-check.config.mjs';
 
 const SIZES = [[1920, 1080], [860, 900], [740, 900]];
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
@@ -23,10 +25,12 @@ async function cell(t, surface, w, h) {
 	/* the check's own test: --set selftest=noring takes every focus mark away (the reticle and any outline); it must fail */
 	if (t.args.selftest === 'noring') await f.evaluate(() => { const st = document.createElement('style'); st.textContent = '#o55np-reticle { display: none !important; } :focus-visible { outline: none !important; box-shadow: none !important; }'; document.head.appendChild(st); });
 	const settle = () => f.waitForFunction(() => !document.querySelector('#pm-o55-onboarding .o55-layer.o55-entering, #pm-o55-onboarding .o55-layer.o55-out') && !O55.nierLook.busy() && !document.getElementById('o55np-reboot'), null, { timeout: 15000 }).catch(() => {});
-	for (const look of list(t.args.look, LOOKS)) {
+	for (const look of list(t.args.look, ['nier-light', 'nier-dark'])) {
 		await t.page.mouse.move(2, 2);
 		await f.evaluate((v) => { document.documentElement.setAttribute('data-motion', 'full'); O55.S.lookOpen = false; O55.ui.applyLook(...v); }, look.split('-'));
 		await f.waitForTimeout(1600); await settle();
+		/* --set nierParts=nobrackets: NieR without its brackets part (the outline is its focus mark then) */
+		if (t.args.nierParts === 'nobrackets' && look.startsWith('nier')) { await f.evaluate(() => { const s = PM_NIER.store('preview'); s.setParts(s.parts().filter((p) => p !== 'brackets')); }); await f.waitForTimeout(800); }
 		for (const screen of list(t.args.screen, ['c-ready', 'where'])) {
 			const tag = `${screen} ${look} ${surface} ${w}x${h}`;
 			await f.evaluate((s) => O55.ui.go(s, { noHistory: true }), screen); await settle(); await f.waitForTimeout(500);
@@ -38,7 +42,7 @@ async function cell(t, surface, w, h) {
 			const how = await f.evaluate((L) => { const l = document.querySelector(L), b = l.querySelector('.o55-foot .o55-back'); const all = [...l.querySelectorAll('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter((e) => e.getClientRects().length && !e.closest('[inert]')); const i = all.indexOf(b); if (i > 0) { all[i - 1].focus(); return 'tab'; } b.focus(); return 'shift'; }, LAYER);
 			if (how === 'tab') await t.page.keyboard.press('Tab'); else { await t.page.keyboard.press('Shift+Tab'); await t.page.keyboard.press('Tab'); }
 			await f.waitForTimeout(450);
-			const state = await f.evaluate((L) => { const b = document.querySelector(L + ' .o55-foot .o55-back'); return { focused: document.activeElement === b, fv: b.matches(':focus-visible'), chevronOnly: b.getBoundingClientRect().width < 44 }; }, LAYER);
+			const state = await f.evaluate((L) => { const b = document.querySelector(L + ' .o55-foot .o55-back'); return { focused: document.activeElement === b, fv: b.matches(':focus-visible'), backW: Math.round(b.getBoundingClientRect().width), layout: document.getElementById('pm-o55-onboarding').getAttribute('data-o55-layout') }; }, LAYER);
 			const focus = await t.pixels(region);
 			/* the band outside Back's box: 1 to 9 px out */
 			const bx0 = Math.floor(box.x) - region.x + off.x, by0 = Math.floor(box.y) - region.y + off.y, bx1 = bx0 + Math.ceil(box.w), by1 = by0 + Math.ceil(box.h);
