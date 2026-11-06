@@ -79,17 +79,19 @@ export default async function (t) {
         await control.click();
         await t.check(`${target} tab ${tab} active`,await control.evaluate(e=>e.classList.contains('active')||e.getAttribute('aria-selected')==='true'),'',{hard:true});
       }
-      // Expand every displayed accordion, including nested ones exposed by a parent.
+      // Stable handles: the set of collapsed accordions shrinks after each click.
+      const heads=await panel.locator('[data-acc] > [data-collapse]').elementHandles();
       for (let pass=0;pass<20;pass++) {
-        const collapsed=panel.locator('[data-acc]:not(.open) > [data-collapse]');
         let opened=false;
-        for(const head of await collapsed.all()) if(await head.isVisible()) {
-          await head.scrollIntoViewIfNeeded(); await head.press('Enter');
-          await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),'',{hard:true}); opened=true;
+        for(const head of heads) if(await head.isVisible() && !await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open'))) {
+          await head.scrollIntoViewIfNeeded(); await head.click({position:{x:8,y:8}});
+          await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),'',{hard:true});
+          opened=true;
         }
         if(!opened)break;
         await t.check(`${target} accordion traversal bounded`,pass<19,'',{hard:true});
       }
+      for(const head of heads)await head.dispose();
       const discover = async () => panel.locator(selectors.wrap).evaluateAll((ws,sel)=>ws.map((w,i)=>{
         const e=w.querySelector(sel);
         if(!e)return null;
