@@ -642,7 +642,39 @@ export default async function (t) {
     // route that stops working fails; it does not look like a row that never had one). What each row kind opened is
     // remembered for the later walk, which asks another row of every kind that opened a menu again after the whole panel.
     const ctxKinds = [], ruleDone = new Set();
+    // T68 (opus-recheck-kit8 finding A): row kinds that live only inside collapsed tree folders (this fixture's modified
+    // and added files, all below a collapsed folder) were never probed, so a dead File actions route on them passed whole.
+    // Before the census, every collapsed folder of every tree in the pane opens by the tree's own key (ArrowRight on the
+    // focused row), each asserted (hard), until none is left collapsed; then the tree is let settle.
+    const openFolders = async (state) => {
+      const opened = [];
+      for (let n = 0; ; n++) {
+        const next = await panel.evaluate(p => {
+          document.querySelectorAll('[data-shelf-folder]').forEach(e => e.removeAttribute('data-shelf-folder'));
+          const e = [...p.querySelectorAll('[role="tree"] [role="treeitem"][aria-expanded="false"]')].find(x => !x.closest('[role="menu"]') && x.checkVisibility() && x.getBoundingClientRect().width);
+          if (!e) return null;
+          e.setAttribute('data-shelf-folder', '');
+          return (e.getAttribute('data-path') || e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 60);
+        });
+        if (next === null) break;
+        if (!await t.check(`${target} ${state} collapsed tree folders open in a bounded walk`, n < 200, `${n} opened`, { hard: true })) break;
+        const row = panel.locator('[data-shelf-folder]');
+        await reach(row);
+        await row.focus(); await t.page.keyboard.press('ArrowRight');
+        const ok = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'true', await row.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
+        await t.check(`${target} ${state} tree folder ${next} opens by ArrowRight for the context census`, ok, '', { hard: true });
+        opened.push(next);
+      }
+      if (opened.length) {
+        await panel.evaluate(p => new Promise(res => { const tr = [...p.querySelectorAll('[role="tree"]')]; let last = '', same = 0, n = 0;
+          const tick = () => { const k = tr.map(x => x.getBoundingClientRect().height).join(); same = k === last ? same + 1 : 0; last = k; if (same >= 3 || ++n > 120) res(); else requestAnimationFrame(tick); };
+          requestAnimationFrame(tick); }));
+        t.log(`${target} ${state}: ${opened.length} collapsed tree folders opened for the context census: ${opened.join(', ')}`);
+      }
+      return opened.length;
+    };
     const contextCensus = async (state, engine, tab) => {
+      await openFolders(state);
       const cands = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-probe]').forEach(e => e.removeAttribute('data-shelf-probe'));
         const seen = new Set(), out = [];
