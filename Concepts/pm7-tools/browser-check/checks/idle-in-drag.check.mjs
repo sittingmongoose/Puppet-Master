@@ -19,10 +19,21 @@
 // the hold through a timer, beside its parked job (astra-review-perf-3: owner work routed through another queue, which the
 // scheduler's native job never sees), and the check must FAIL on that owner's callback body.
 //
+// --set selftest=leak-<owner>-early runs each of that owner's parked callbacks once through queueMicrotask at the moment
+// the scheduler parks it for the drag (its cancelIdleCallback inside the drag, at the press); -early-promise runs it at
+// the end of a three-step promise chain, -early-message through a MessageChannel. Each is capped at 6 parked jobs, and
+// the check must FAIL on that owner's callback body (TOOLBATCH2 pre-check finding 1, T46).
+//
 // Every callback body is attributed by the request it was admitted under, not by the native job running it (T39): the
 // PM_BUSY.idle request binds its token to the owner that asked, there and then, so a body entered from any queue (a
 // timer, a microtask, a message) is still that owner's. Every body entry inside the hold must have an owner; one
 // without fails.
+//
+// The judged window opens at the press (T46): the time is taken before mouse.down(), and the recorder notes when a drag
+// class first goes on after the hold was armed; the window opens at the earlier of the two. The product's drag and the
+// scheduler's parking start at the press, so a body entered then, with the drag class on, is inside the drag even
+// though the hand has not moved yet. Every body and every fired callback with the drag class on, from there to the
+// release, is judged.
 //
 // A native idle callback is the scheduler's wrapper (PM_BUSY.idle's run), not the owner's work, so a resume is proven
 // by the owner's own callback: each function an owner hands PM_BUSY.idle is wrapped, and its entry is recorded against
@@ -67,9 +78,17 @@ async function regionsOf(t) {
 const RECORDER = (cfg) => {
 	if (window.__pmIdleRec) return;
 	try { localStorage.clear(); } catch (_) { /* opaque surface */ }
-	const R = window.__pmIdleRec = { fired: [], jobs: [], bodies: [], gated: true, hooked: false };
+	const R = window.__pmIdleRec = { fired: [], jobs: [], bodies: [], gated: true, hooked: false, armedAt: null, dragOnAt: null };
 	const DRAG = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
 	const inDrag = () => document.body && DRAG.some(c => document.body.classList.contains(c));
+	// T46: when a drag class first goes on after the hold is armed (the body's class, as the product's own observer reads
+	// it); the judged window opens no later than this
+	R.arm = () => { R.armedAt = performance.now(); R.dragOnAt = inDrag() ? R.armedAt : null; return R.armedAt; };
+	try {
+		const seen = new MutationObserver(() => { if (R.armedAt !== null && R.dragOnAt === null && inDrag()) R.dragOnAt = performance.now(); });
+		const watchBody = () => { if (document.body) seen.observe(document.body, { attributes: true, attributeFilter: ['class'] }); };
+		if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
+	} catch (_) { /* the press time still opens the window */ }
 	const ric = window.requestIdleCallback, cic = window.cancelIdleCallback, st = window.setTimeout;
 	const stackOf = () => { const n = Error.stackTraceLimit; Error.stackTraceLimit = 30; const s = new Error().stack || ''; Error.stackTraceLimit = n; return s; };
 	const frames = (s) => s.split('\n').slice(1).map((l) => { const m = /^\s*at (?:(.+?) \()?(.+?):(\d+):(\d+)\)?\s*$/.exec(l); return m ? { fn: m[1] || '', url: m[2], line: +m[3] } : null; }).filter((f) => f && f.url !== '<anonymous>');
@@ -147,10 +166,24 @@ const RECORDER = (cfg) => {
 			if (j.native) cic.call(window, j.native);
 			// who took it back: the scheduler for a drag (inside one), or the owner itself (outside any drag)
 			j.pending = false; j.cancelled = true; j.cancelDrag = inDrag(); j.cancelAt = performance.now(); pending.delete(id);
+			if (j.cancelDrag) leakEarly(j);
 		};
 	}
 	// selftest leak-<owner>: once the hold is on, that owner's pending callback runs again through a timer, beside the
 	// job the scheduler parked (the review's timer leak, made from the kit's side: the same wrapped owner function)
+	// selftest leak-<owner>-early[-promise|-message]: at the moment the scheduler parks one of that owner's jobs for the
+	// drag (its cancelIdleCallback inside the drag, at the press), run the job's wrapped owner function once through
+	// that queue; capped at 6 parked jobs (the pre-check's capped mutants, made from the kit's side)
+	const early = cfg.early ? { key: cfg.early.key, via: cfg.early.via, n: 0, runs: [] } : null;
+	R.early = early;
+	function leakEarly(j) {
+		if (!early || early.n >= 6 || j.owner !== early.key || !j.token || !tokenFn.has(j.token) || j.leaked) return;
+		j.leaked = true; early.n++;
+		const fn = tokenFn.get(j.token), go = () => { early.runs.push({ token: j.token, at: performance.now(), drag: inDrag() }); try { fn.call(window, { didTimeout: false, timeRemaining: () => 8 }); } catch (_) { /* the owner's own error */ } };
+		if (early.via === 'promise') Promise.resolve().then(() => 0).then(() => 0).then(go);
+		else if (early.via === 'message') { const ch = new MessageChannel(); ch.port1.onmessage = () => { ch.port1.close(); go(); }; ch.port2.postMessage(0); }
+		else queueMicrotask(go);
+	}
 	R.leak = (key) => { const token = [...tokenOwner.entries()].filter(([, o]) => o === key).map(([t]) => t).pop();
 		if (!token || !tokenFn.has(token)) return 0; st.call(window, () => { try { tokenFn.get(token).call(window, { didTimeout: false, timeRemaining: () => 8 }); } catch (_) { /* the owner's own error */ } }, 50); return token; };
 	R.release = () => { R.gated = false; for (const j of pending.values()) if (!j.native) ask(j);
@@ -173,7 +206,7 @@ const RECORDER = (cfg) => {
 const top = (stack) => stack.split('\n').slice(1).map((l) => /^\s*at (?:(.+?) \()?(.+?):(\d+):\d+\)?\s*$/.exec(l)).filter((m) => m && m[2] !== '<anonymous>' && !/(?:^|\.)(?:ask|idleWhenStill)(?: \[as \w+\])?$/.test(m[1] || '')).slice(0, 3).map((m) => `${m[1] || '(anonymous)'}:${m[3]}`).join(' < ');
 const brief = (jobs) => JSON.stringify(jobs.map((j) => ({ id: j.id, owner: j.owner, at: top(j.stack) })));
 
-async function holdDrag(t, f, sel, label, keys, leak = null) {
+async function holdDrag(t, f, sel, label, keys, leak = null, early = null) {
 	// where the divider is now, and what a press there would land on
 	const measure = () => f.evaluate((s) => {
 		const vis = (e) => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(e).display !== 'none'; };
@@ -204,12 +237,22 @@ async function holdDrag(t, f, sel, label, keys, leak = null) {
 	if (!(await t.check(`${label}: the press lands on the divider`, box.hit === 'the divider', `under the pointer: ${box.hit}`))) return null;
 	const axisX = box.h >= box.w;   // a tall bar moves sideways
 	const at = (d) => (axisX ? [box.x + d, box.y] : [box.x, box.y + d]);
+	// T46: the judged window opens at the press, not after the moves: the time is taken before mouse.down(), and the
+	// recorder notes when a drag class first goes on after arming; the window opens at the earlier of the two
+	const pressAt = await f.evaluate(() => window.__pmIdleRec.arm());
 	await t.page.mouse.down();
 	for (let i = 1; i <= 8; i++) { await t.page.mouse.move(...at(-i * 4)); await t.page.waitForTimeout(16); }
-	const began = await f.evaluate(() => performance.now());
+	const moved = await f.evaluate(() => performance.now());
+	const dragOnAt = await f.evaluate(() => window.__pmIdleRec.dragOnAt);
+	const began = dragOnAt === null ? pressAt : Math.min(pressAt, dragOnAt);
+	t.log(`${label}: judged window opens at the press (${Math.round(pressAt)}); drag class on ${dragOnAt === null ? 'not seen by the recorder' : `${Math.round(dragOnAt - pressAt)} ms after it`}; the hand's moves ended ${Math.round(moved - pressAt)} ms after it`);
+	await t.check(`${label}: the drag class went on at the press`, dragOnAt !== null && dragOnAt >= pressAt && dragOnAt <= moved, dragOnAt === null ? 'no drag class seen after arming' : `${Math.round(dragOnAt - pressAt)} ms after the press`);
 	const dragOn = await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag()) || document.body.classList.contains('pm-resizing'));
 	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)));
 	await f.evaluate(() => window.__pmIdleRec.release());
+	if (early) { const e = await f.evaluate(() => { const x = window.__pmIdleRec.early; return { n: x.n, runs: x.runs.map((r) => ({ token: r.token, drag: r.drag, at: Math.round(r.at) })) }; });
+		t.log(`SELFTEST ${label}: ${nameOf(early.key)} parked callbacks run again through ${early.via} at park time: ${e.n} (${JSON.stringify(e.runs)})`);
+		await t.check(`selftest ${label}: the ${nameOf(early.key)} early leak ran a parked callback inside the drag before the moves ended`, e.runs.some((r) => r.drag && r.at >= began && r.at <= moved), JSON.stringify({ began: Math.round(began), moved: Math.round(moved), runs: e.runs })); }
 	if (leak) { const tok = await f.evaluate((k) => window.__pmIdleRec.leak(k), leak); t.log(`SELFTEST ${label}: ${nameOf(leak)} callback (token ${tok}) run again through a timer during the hold`);
 		await t.check(`selftest ${label}: the ${nameOf(leak)} leak found a pending callback to run`, tok > 0, String(tok)); }
 	await t.mark(label + ' held');
@@ -220,7 +263,7 @@ async function holdDrag(t, f, sel, label, keys, leak = null) {
 	const offered = await t.check(`${label}: native idle delivery was eligible during hold`, await f.evaluate(() => !!window.__pmIdleRec.opportunity?.drag), 'independent native deadline inside the real held gesture');
 	await t.mark(label + ' released');
 	await t.page.mouse.up();
-	return { began, ended, queued, held: !!(dragOn && remained && offered) };
+	return { began, moved, ended, queued, held: !!(dragOn && remained && offered) };
 }
 
 async function judge(t, f, label, win, owners) {
@@ -259,7 +302,9 @@ export const tests = {
 		const selftest = String(t.args.selftest || '');
 		const omit = /^omit-(usage|theme|census|glass)$/.exec(selftest)?.[1] || null;
 		const leak = /^leak-(usage|theme|census|glass)$/.exec(selftest)?.[1] || null;
-		if (selftest) await t.check(`selftest ${selftest} is a known omission or leak`, !!omit || !!leak, 'omit-usage | omit-theme | omit-census | omit-glass | leak-usage | leak-theme | leak-census | leak-glass');
+		const em = /^leak-(usage|theme|census|glass)-early(?:-(promise|message))?$/.exec(selftest);
+		const early = em ? { key: em[1], via: em[2] || 'microtask' } : null;
+		if (selftest) await t.check(`selftest ${selftest} is a known omission or leak`, !!omit || !!leak || !!early, 'omit-<owner> | leak-<owner> | leak-<owner>-early | leak-<owner>-early-promise | leak-<owner>-early-message (owner: usage, theme, census, glass)');
 		// Glass prewarm is queued only in a Glass look: a run without one leaves that owner unexercised
 		await t.check('a Glass look is in this run (Glass prewarm owner)', looks.some((l) => /^glass-/.test(l)), `looks ${looks.join(',')}`);
 		const map = await regionsOf(t);
@@ -269,7 +314,7 @@ export const tests = {
 		const cdp = await t.page.context().newCDPSession(t.page);
 		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
 		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
-		await t.page.addInitScript(RECORDER, { ...map, omit });
+		await t.page.addInitScript(RECORDER, { ...map, omit, early });
 		if (!t.args.film) await t.viewport(Number(t.args.width || 1390), Number(t.args.height || 900));
 		const holds = Object.fromEntries(looks.map((l) => [l, 0]));
 		for (let repeat = 0; repeat < repeats; repeat++) {
@@ -298,7 +343,7 @@ export const tests = {
 			t.log(`SELFTEST ${look}: ${n} real ${nameOf(omit)} requests suppressed at the shared admission`);
 			await t.check(`selftest ${look}: the ${nameOf(omit)} omission actually suppressed real requests`, n > 0, String(n));
 		}
-		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`, keys, leak && keys.includes(leak) ? leak : null);
+		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`, keys, leak && keys.includes(leak) ? leak : null, early && keys.includes(early.key) ? early : null);
 		if (usage && usage.held) holds[look]++;
 		if (usage) {
 			// an owner's own withdrawal outside the drag (after the press snapshot, before the drag class) is not judged;
