@@ -613,9 +613,11 @@ than `origin/main`. The rule closes all three rather than accepting them: a land
 pre-existing rows in a bucket an earlier member also changed, or a readiness growth counter judged as staleness
 above the highest total any earlier member's report showed, is treated like a stopped landing (the batch closes and that landing is rechecked alone), and so is one whose
 `Gone since the baseline` count falls below an earlier member's (a bucket an earlier member emptied has come back,
-which no printed row shows); no batch opens within two hours of the seven-day limit. What stays unseen: a fall
-and rise inside one bucket that no report prints and that leaves the gone count unchanged; the comparison of
-changed rows then remains the lander's guard, as it is for a single landing. `scripts/pm-land.py` enforces the same.
+which no printed row shows); no batch opens within two hours of the seven-day limit. What stays unseen until the report names
+emptied buckets and prints every subcheck's total (planned, additive): a bucket lowered with no printed row and
+then brought back with the baseline's own row naming no batch file; one bucket emptied as another comes back; a total
+that falls and rises below the baseline's figure. In those shapes a landing can pass inside a batch that would stop
+alone, and nothing in the report shows it; `pm-land.py`'s README pins each one with a test. `scripts/pm-land.py` enforces the same.
 
 Why: from 2026-11-03 to 2026-11-06 `main` took about 18 follow-ups, about one per Plans landing. The two
 timed from the stream logs held the lock about 26 and 27 minutes each (snapshot about 5 minutes, then
