@@ -145,7 +145,7 @@ export default async function (t) {
 	for (let i = 0; i < 14; i++) await t.page.mouse.move(off[0] + win[0] - 120 + i * 18, off[1] + win[1] + (i % 2 ? 24 : -24));
 	await f.waitForFunction(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; return st && !st.sleepZ && st.bubble && /\S/.test(st.bubble.textContent || ''); }, null, { timeout: 15000 }).catch(() => {});
 	await f.waitForTimeout(2500);
-	t.check('Welcome: Pip is awake and greeting', await f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; return !!st && !st.sleepZ && window.O55.S.sess.screen === 'welcome'; }));
+	await t.check('Welcome: Pip is awake and greeting', await f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; return !!st && !st.sleepZ && window.O55.S.sess.screen === 'welcome'; }));
 	await f.evaluate(installSampler);
 
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
