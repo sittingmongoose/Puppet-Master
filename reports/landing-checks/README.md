@@ -726,10 +726,13 @@ is released, and that landing queues again and is checked alone against the new 
 touches `Plans/Spec_Lock.json`, `Plans/auto_decisions.jsonl` or `Plans/.evidence/**` is refused in a batch;
 one that needs an exemption the tool cannot see stays the lander's to keep out.
 
-**Taking over.** `--batch-start` takes the lock over only from `state: batch-idle` or a dead holder. Knowing the SHA
-is no hand-over: it can be read from `holder.txt`. A live hand holder may be mid-check, so taking over from it needs
-`--handed-over-by <its agent: line>`, which prints and logs that it asserts the pm-mail hand-over the rule requires;
-the tool cannot see that mail. Any other live holder stops the lander with `batch_busy`.
+**Taking over.** `--batch-start` and `--batch-close` take the lock over without more only from `state: batch-idle`,
+which a landing writes when it finishes or is aborted, from a dead holder, or from a holder with your own `--name`.
+Knowing the SHA is no hand-over: it can be read from `holder.txt`. A lander stopped inside the batch writes
+`state: stopped`, because it may be judging or repairing; it and a live hand holder may be mid-check, so taking over
+from either needs `--handed-over-by <its agent: line>`, which prints and logs that it asserts the pm-mail hand-over
+the rule requires. The tool cannot see that mail. A stopped holder whose stop says to close the batch closes it under
+its own name. A holder that is landing right now stops the lander with `batch_busy`, whatever it passes.
 
 **A dead batch is closed, not cleared.** A dead holder whose `holder.txt` names a `batch-start` is cleared only if
 nothing landed in it. If a row says something did, or `origin/main` has moved past that SHA, a plain lander, or

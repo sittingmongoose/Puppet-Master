@@ -1072,16 +1072,21 @@ class Lander:
             raise Refused(f"--batch-start {batch['start']} is not the open batch's batch-start {start}")
         ours = bool(st["lock"].get("token")) and fields.get("token") == st["lock"]["token"]
         agent = fields.get("agent")
-        if not ours and not verdict["dead"]:
-            if fields.get("tool") == TOOL_TAG:
-                if fields.get("state") != "batch-idle":
-                    raise Stop("batch_busy", f"{agent} holds this batch's lock right now (state: {fields.get('state')})",
-                               "Wait for its mail, then `resume`.")
-            elif agent != st["name"]:
-                if not st.get("handed_over_by") or st["handed_over_by"] != agent:
-                    raise Refused(f"{agent!r} holds this batch's lock by hand and may be mid-check, and knowing the batch-start "
-                                  "is no hand-over. Once it has handed the lock to you by pm-mail, pass "
-                                  f"--handed-over-by {agent}")
+        from_tool = fields.get("tool") == TOOL_TAG
+        idle = from_tool and fields.get("state") == "batch-idle"
+        if not ours and not verdict["dead"] and not idle:
+            if from_tool and fields.get("state") == "landing":
+                raise Stop("batch_busy", f"{agent} is landing inside this batch right now",
+                           "Wait for its mail, then `resume`.")
+            if agent != st["name"] and (not st.get("handed_over_by") or st["handed_over_by"] != agent):
+                if from_tool:
+                    raise Stop("batch_busy", f"{agent} stopped inside this batch and may be working on it, so the lock is "
+                                             "still its own, and knowing the batch-start is no hand-over",
+                               f"Once it has handed you the lock by pm-mail: `resume --handed-over-by {agent}`.")
+                raise Refused(f"{agent!r} holds this batch's lock by hand and may be mid-check, and knowing the batch-start "
+                              "is no hand-over. Once it has handed the lock to you by pm-mail, pass "
+                              f"--handed-over-by {agent}")
+            if agent != st["name"]:
                 say(f"--handed-over-by {agent}: this asserts that {agent} handed you the lock by pm-mail, as the rule "
                     "requires. The tool cannot see that mail.")
                 queue_log(self.cfg, "batch_handover_asserted", who=st["name"], by=agent, batch=start)
@@ -1980,8 +1985,8 @@ class Lander:
         keep = token_ours and (stop.keep_lock or ahead or st.get("followup_owed")
                                or (batch and (batch.get("landings") or batch["role"] != "open")))
         if keep:
-            # With main ahead, not batch-idle: nobody adopts this batch until main is put back.
-            self.idle_holder("batch-idle" if batch and not ahead else "stopped")
+            # Never batch-idle: this lander may be judging or repairing, and the lock passes only by pm-mail.
+            self.idle_holder("stopped")
             st["lock"]["held_while_stopped"] = iso()
             how = "kept (no heartbeat, so the 90-minute rule applies)"
         elif token_ours:
@@ -2217,7 +2222,7 @@ def plan_lines(cfg: Config, st: Dict[str, Any]) -> List[str]:
     lock = {
         None: f"mkdir {cfg.held}   (first in line in {cfg.queue_dir}; holder.txt with host, pid, heartbeat every minute)",
         "open": f"mkdir {cfg.held}   (as above, and holder.txt gets batch-start: <origin/main full SHA> after the fetch)",
-    }.get(role, f"take over {cfg.held} from batch-idle or a dead holder (from a live hand holder: --handed-over-by): "
+    }.get(role, f"take over {cfg.held} from batch-idle or a dead holder (from a stopped or hand holder: --handed-over-by): "
                 "holder.txt must name this batch-start; rewrite it")
     lines = ["# Steps, in the rule's order (`--checks-local` differs only where noted):", f"lock:        {lock}"]
     if branch is None:
@@ -2716,7 +2721,7 @@ def build_parser() -> argparse.ArgumentParser:
         item.add_argument("--readjudicated", action="store_true", help="you re-read the Plans passages main also changed")
         item.add_argument("--keep-worktree", action="store_true", help="don't remove the branch's worktree afterwards")
         item.add_argument("--handed-over-by", metavar="AGENT",
-                          help="--batch-start from a live hand holder: asserts that AGENT handed you the lock by pm-mail")
+                          help="--batch-start from a stopped or hand holder: asserts that AGENT handed you the lock by pm-mail")
         item.add_argument("--check-arg", action="append", metavar="ARG",
                           help="pass ARG on to the landing check, e.g. --check-arg=--cache. Only: "
                                + ", ".join(CHECK_ARG_SWITCHES + tuple(CHECK_ARG_VALUES)))

@@ -1299,7 +1299,8 @@ class BatchTests(Base):
         self.assertEqual(self.h.origin_main(), before)
         self.assertTrue(self.h.held())
         self.assertEqual(M.parse_holder(self.h.holder())["batch-start"], start)
-        self.assertEqual(self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "c").returncode, 0)
+        # Its stop says to close the batch, and the lock it kept is its own to close with.
+        self.assertEqual(self.h.tool("run", "--batch-close", "--batch-start", start, "--name", f"lander-{names[4]}").returncode, 0)
         self.assertEqual(self.h.tool("resume", "--branch", names[4]).returncode, 0)
         self.assertEqual(self.h.state(names[4])["status"], "done")
 
@@ -2848,6 +2849,106 @@ class HandOverTests(Base):
         result = self.land("fix/b", "--batch-start", start)
         self.assertEqual(result.returncode, 1, result.stdout)
         self.assertEqual(self.h.state()["stop"]["code"], "batch_busy")
+
+
+class StoppedMemberTests(Base):
+    """Review N4: a member stopped inside a batch may be judging or repairing, so its lock passes only by pm-mail."""
+
+    OTHER = "run-gates/lint-y  missing_ref  src/y.txt"
+
+    def stopped_for_a_comparison(self) -> str:
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        self.h.branch("fix/c", {"src/z.txt": "c\n"})
+        start = self.h.origin_main()
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        self.assertEqual(M.parse_holder(self.h.holder())["state"], "batch-idle", "a finished landing leaves it open")
+        report = landing_report(pre=[pre_row(self.OTHER, 3, 3, where="(names src/y.txt)")], compare=1)
+        self.h.set_plan("landing", [{"exit": 1, "raw": report}])
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "rows_need_comparison")
+        return start
+
+    def test_knowing_the_sha_does_not_take_it_over_and_the_judgement_still_stands(self):
+        start = self.stopped_for_a_comparison()
+        self.assertEqual(M.parse_holder(self.h.holder())["state"], "stopped")
+        before = self.h.holder()
+        calls = len(self.h.calls("landing"))
+        other = self.land("fix/c", "--batch-start", start)
+        self.assertEqual(other.returncode, 1, other.stdout)
+        self.assertEqual(self.h.state("fix/c")["stop"]["code"], "batch_busy")
+        self.assertIn("--handed-over-by lander-fix/b", other.stdout)
+        self.assertEqual(self.h.holder(), before)
+        self.assertEqual(len(self.h.calls("landing")), calls)
+        result = self.h.tool("resume", "--branch", "fix/b", "--rows-compared", "compared")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.h.calls("landing")), calls, "its one check, judged, and no start over")
+
+    def test_a_named_hand_over_takes_it_and_says_what_it_asserts(self):
+        start = self.stopped_for_a_comparison()
+        result = self.land("fix/c", "--batch-start", start, "--handed-over-by", "lander-fix/b")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("asserts that lander-fix/b handed you the lock by pm-mail", result.stdout)
+        self.assertIn("batch_handover_asserted", (self.h.lock / "queue" / "log.jsonl").read_text())
+
+    def test_a_hand_over_naming_someone_else_does_not(self):
+        start = self.stopped_for_a_comparison()
+        other = self.land("fix/c", "--batch-start", start, "--handed-over-by", "someone-else")
+        self.assertEqual(other.returncode, 1, other.stdout)
+        self.assertEqual(self.h.state("fix/c")["stop"]["code"], "batch_busy")
+
+    def test_a_hand_over_does_not_reach_a_holder_landing_right_now(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        self.h.branch("fix/c", {"src/z.txt": "c\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        start = M.parse_holder(self.h.holder())["batch-start"]
+        self.h.set_plan("landing", [{"sleep": 300}])
+        self.h.start("run", "fix/b", "--name", "member", "--batch-start", start)
+        self.h.wait_calls("landing", 2)
+        other = self.land("fix/c", "--batch-start", start, "--handed-over-by", "member")
+        self.assertEqual(other.returncode, 1, other.stdout)
+        self.assertEqual(self.h.state("fix/c")["stop"]["code"], "batch_busy")
+
+    def test_every_kept_stop_writes_stopped(self):
+        for row, code in (({"exit": 1, "timeouts": 1}, "timeouts_need_judgement"), ({"exit": 3}, "landing_check_could_not_run")):
+            with self.subTest(code=code):
+                name = f"fix/{code}"
+                self.h.branch(name, {f"src/{code}.txt": "x\n"})
+                self.h.set_plan("landing", [row])
+                if not self.h.held():
+                    self.h.branch("fix/first", {"src/first.txt": "x\n"})
+                    self.h.set_plan("landing", [{}, row])
+                    self.assertEqual(self.land("fix/first", "--batch-open").returncode, 0)
+                start = M.parse_holder(self.h.holder())["batch-start"]
+                self.assertEqual(self.land(name, "--batch-start", start, "--name", "x").returncode, 1)
+                self.assertEqual(self.h.state(name)["stop"]["code"], code)
+                self.assertEqual(M.parse_holder(self.h.holder())["state"], "stopped")
+                self.assertEqual(self.h.tool("abort", "--branch", name).returncode, 0)
+
+    def test_a_stop_that_says_to_close_is_closed_under_its_own_name_and_not_by_a_stranger(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"Plans/Spec_Lock.json": "{\"x\":1}\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        start = M.parse_holder(self.h.holder())["batch-start"]
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "reseal_in_batch", result.stdout)
+        stranger = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "stranger")
+        self.assertEqual(stranger.returncode, 1, stranger.stdout)
+        self.assertEqual(self.h.state("")["stop"]["code"], "batch_busy")
+        self.assertEqual(self.h.tool("abort", "--id", self.h.state("")["id"]).returncode, 0)
+        own = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "lander-fix/b")
+        self.assertEqual(own.returncode, 0, own.stdout + own.stderr)
+        self.assertFalse(self.h.held())
+
+    def test_an_aborted_members_batch_stays_open_to_the_next(self):
+        """Its landing is final, so nothing of it can be mid-rerun, and the batch does not sit out the 90 minutes."""
+        start = self.stopped_for_a_comparison()
+        self.assertEqual(self.h.tool("abort", "--branch", "fix/b").returncode, 0)
+        self.assertEqual(M.parse_holder(self.h.holder())["state"], "batch-idle")
+        result = self.land("fix/c", "--batch-start", start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 
 class MainAheadTests(Base):
