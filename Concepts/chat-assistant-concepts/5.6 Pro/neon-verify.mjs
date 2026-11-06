@@ -59,8 +59,11 @@
  *      ink rule never recolours a toned glyph (every thread, the composer menus, six panels; four themes).
  *   18 NieR's Pod 042 is clear of the jump chip, the bar, the queue, the decision panel and the composer (3 sizes,
  *      every thread, transcript top and bottom), of transcript buttons at the bottom, and faded back over any it passes;
- *      each view is judged once the Pod has settled (T40, FO-80). --selftest pod-never-shy (the fade has no effect) and
- *      --selftest pod-late-shy (the fade starts 5 s late) are real overlaps a person would see, and must fail it.
+ *      each view is judged once the Pod has settled (T40, FO-80). Before that, the Pod may stay opaque over a transcript
+ *      control for at most 500 ms after the control first lies under it: the product's own budget (the 90 ms check and
+ *      the 180 ms fade) with margin, watched on every frame from the thread's selection to the settled frame (T47).
+ *      --selftest pod-never-shy (the fade has no effect), --selftest pod-late-shy (the fade starts 5 s late) and
+ *      --selftest pod-delay-2s (the fade starts 2 s late) are real overlaps a person would see, and must fail it.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
  *
@@ -127,9 +130,9 @@ const OUT = argVal('--json', null);
 const REDUCED = argv.includes('--reduced');
 // Explicit focused receipts retain the original section bodies and predicates.
 const SECTION = argVal('--section', null), sectionFilter = SECTION ? new RegExp(SECTION) : null;
-// T40 negatives for check 18: each makes the Pod overlap a control the way a person would see it.
+// T40 and T47 negatives for check 18: each makes the Pod overlap a control the way a person would see it.
 const SELFTEST = argVal('--selftest', null);
-if (SELFTEST && !['pod-never-shy', 'pod-late-shy'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
+if (SELFTEST && !['pod-never-shy', 'pod-late-shy', 'pod-delay-2s'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
 let selectedSections = 0;
 
 if (!fs.existsSync(FILE)) { console.error('neon-verify: no such file ' + FILE); process.exit(2); }
@@ -1657,9 +1660,14 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    intersects no jump chip (visible or not: its slot), bar item, send-queue or decision button, or the composer; at the
    bottom (the resting place) no transcript button or link either (and it has not faded back), and the bar never
    overflows its row. Scrolled up, transcript content passes under the Pod as under PMConcept7's; whenever a transcript
-   control is under it, it has faded back (data-shy, opacity <= .2) so the control shows through. */
+   control is under it, it has faded back (data-shy, opacity <= .2) so the control shows through.
+   T47: the settle wait below must not hide a slow fade. The product fades the Pod back 90 ms after a control comes
+   under it (70-nier-pod-shy.js) over a 180 ms two-step transition, so on every frame from the thread's selection to
+   the settled frame the Pod may stay opaque (opacity > .2) over a counted transcript control for at most POD_OPAQUE_MS
+   after a control first lies under it (a control under it on every frame since then; the episode ends when none is). */
+const POD_OPAQUE_MS = 500;
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
-  const bad = [], windows = [], unsettled = []; let views = 0;
+  const bad = [], windows = [], unsettled = [], opaque = []; let views = 0;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, reducedMotion: REDUCED ? 'reduce' : 'no-preference' });
     await ctx.addInitScript(() => { try { localStorage.setItem('pm56-history-w', '320'); } catch (e) {} });
@@ -1680,18 +1688,55 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       if (SELFTEST) await p.evaluate(kind => {
         if (kind === 'pod-never-shy') {
           const st = document.createElement('style'); st.textContent = '#o55np-pod, #o55np-pod[data-shy] { opacity: 1 !important; transition: none !important; }'; document.head.appendChild(st);
+        } else if (kind === 'pod-delay-2s') {
+          /* T47: data-shy goes on in time, but the fade starts 2 s late, inside the 3 s settle bound: the Pod stays opaque
+             over the control for about 2 s after each scroll, then fades, so only the opaque-time bound catches it */
+          const st = document.createElement('style'); st.textContent = '#o55np-pod[data-shy] { transition-delay: 2s !important; }'; document.head.appendChild(st);
         } else {
           /* the page sets data-shy on time, but the fade starts 5 s late: the Pod stays opaque over the control longer
              than the 3 s settle bound, so the check judges it as it stands and must fail */
           const st = document.createElement('style'); st.textContent = '#o55np-pod[data-shy] { transition-delay: 5s !important; }'; document.head.appendChild(st);
         }
       }, SELFTEST);
+      /* T47: on every frame, how long the Pod has stayed opaque over a counted transcript control (the same controls,
+         bounds and 4 px floor the judgement below uses) since a control first lay under it */
+      await p.evaluate(BUDGET => {
+        const M = window.__nvPodOpaque = { phase: '', cur: null, over: [], worst: 0, worstAt: '', frames: 0 };
+        const tick = () => {
+          const now = performance.now(), pod = document.getElementById('o55np-pod'), tr = document.querySelector('.transcript');
+          M.frames++;
+          let first = null, op = 0;
+          if (pod && tr && getComputedStyle(pod).display !== 'none') {
+            const P = pod.getBoundingClientRect(), T = tr.getBoundingClientRect();
+            for (const e of document.querySelectorAll('.transcript button, .transcript a[href], .transcript summary')) {
+              const q = e.getBoundingClientRect(); if (q.bottom < T.top || q.top > T.bottom) continue;
+              const ix = Math.min(P.right, q.right) - Math.max(P.left, q.left), iy = Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top);
+              if (ix < 4 || iy < 4) continue;
+              const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
+              first = (e.textContent || e.className).trim().slice(0, 24) + ' ' + Math.round(ix) + 'x' + Math.round(iy); break;
+            }
+            op = +getComputedStyle(pod).opacity;
+          }
+          if (!first) M.cur = null;
+          else {
+            if (!M.cur) M.cur = { from: now, phase: M.phase, what: first, opaqueFor: 0, op, shy: false, reported: false };
+            if (op > .2 && now - M.cur.from >= M.cur.opaqueFor) Object.assign(M.cur, { opaqueFor: now - M.cur.from, op, what: first, shy: pod.hasAttribute('data-shy') });
+            if (M.cur.opaqueFor > M.worst) { M.worst = M.cur.opaqueFor; M.worstAt = M.cur.phase + ': ' + M.cur.what; }
+            if (M.cur.opaqueFor > BUDGET && !M.cur.reported) { M.cur.reported = true; M.over.push(M.cur); }
+          }
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }, POD_OPAQUE_MS);
+      const phase = label => p.evaluate(l => { window.__nvPodOpaque.phase = l; }, label);
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
       for (const id of ids) {
+        await phase(`${w} ${id} select`);
         await p.evaluate(i => window.PM56_DEMO.selectThread(i), id);
         await p.waitForTimeout(400);
         await p.mouse.move(5, h - 5);
         for (const pos of ['top', 'bottom']) {
+          await phase(`${w} ${id} ${pos}`);
           await p.evaluate(pos => { const t = document.querySelector('.transcript'); t.scrollTop = pos === 'top' ? 0 : t.scrollHeight; t.dispatchEvent(new Event('scroll')); }, pos);
           await p.waitForTimeout(1300); /* the transcript scrolls smoothly (about 600 ms) and the dock settles after it */
           /* the dock can shrink as it settles (recovery-collaboration's composer loses 42 px), which leaves the transcript
@@ -1755,14 +1800,21 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             return { out };
           }, pos);
           views++;
+          /* T47: every episode, up to this settled frame, in which the Pod stayed opaque over a control past the budget */
+          const late = await p.evaluate(() => { const M = window.__nvPodOpaque, x = M.over.map(c => ({ phase: c.phase, what: c.what, ms: Math.round(c.opaqueFor), op: c.op, shy: c.shy })); M.over = []; return x; });
+          for (const c of late) bad.push(`${c.phase}: opaque over transcript ${c.what} for ${c.ms} ms after a control first lay under the Pod (budget ${POD_OPAQUE_MS} ms: the 90 ms check and the 180 ms fade, with margin; shy ${c.shy}, opacity ${c.op})`);
           if (!settled.settled) unsettled.push(`${w} ${id} ${pos}`);
           if (r.nopod) bad.push(`${w} ${id}: no Pod`);
           else if (r.out.length) bad.push(`${w} ${id} ${pos}: ${r.out.join(', ')}${settled.settled ? '' : ' (not settled after 3 s; judged as it stood)'}`);
         }
       }
+      const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, frames: M.frames }; });
+      opaque.push({ size: `${w}x${h}`, ...m });
+      console.log('MEASURE Pod longest opaque time over a control ' + JSON.stringify(opaque.at(-1)));
+      if (!(m.frames > 0)) bad.push(`${w}x${h}: the Pod's opaque-time monitor saw no frame`);
     } finally { await shut(p); }
   }
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes)`, { bad: bad.slice(0, 12), windows, unsettled });
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, never opaque over one for more than ${POD_OPAQUE_MS} ms)`, { bad: bad.slice(0, 12), windows, unsettled, opaque });
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
