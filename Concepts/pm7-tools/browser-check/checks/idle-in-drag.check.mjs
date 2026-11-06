@@ -15,6 +15,14 @@
 //
 // --set selftest=omit-usage|omit-theme|omit-census|omit-glass suppresses that one owner's real requests at the shared
 // admission (by its function names, independently of the classifier) and the check must FAIL on that owner.
+// --set selftest=leak-usage|leak-theme|leak-census|leak-glass runs that owner's latest admitted callback once more during
+// the hold through a timer, beside its parked job (astra-review-perf-3: owner work routed through another queue, which the
+// scheduler's native job never sees), and the check must FAIL on that owner's callback body.
+//
+// Every callback body is attributed by the request it was admitted under, not by the native job running it (T39): the
+// PM_BUSY.idle request binds its token to the owner that asked, there and then, so a body entered from any queue (a
+// timer, a microtask, a message) is still that owner's. Every body entry inside the hold must have an owner; one
+// without fails.
 //
 // A native idle callback is the scheduler's wrapper (PM_BUSY.idle's run), not the owner's work, so a resume is proven
 // by the owner's own callback: each function an owner hands PM_BUSY.idle is wrapped, and its entry is recorded against
@@ -78,7 +86,10 @@ const RECORDER = (cfg) => {
 	const identities = new WeakMap(), pending = new Map(); let seq = 0, handle = 1000000000;
 	const note = (kind, owner, stack, t0, drag, id) => R.fired.push({ kind, owner, stack, at: t0, ms: performance.now() - t0, drag, id });
 	// an owner callback's entry, tied to the native job it runs inside and to the PM_BUSY.idle request that wrapped it
-	const entered = (token) => R.bodies.push({ job: R.job ? R.job.id : 0, owner: R.job ? R.job.owner : null, token, at: performance.now(), drag: inDrag() });
+	// its owner is the one its request was admitted under (tokenOwner), whatever queue delivers it; a native callback
+	// that is the owner's own function (token 0) belongs to its job's owner. jobOwner keeps the native job's view.
+	const tokenOwner = new Map(), tokenFn = new Map();
+	const entered = (token) => R.bodies.push({ job: R.job ? R.job.id : 0, owner: token ? (tokenOwner.get(token) ?? null) : (R.job ? R.job.owner : null), jobOwner: R.job ? R.job.owner : null, token, at: performance.now(), drag: inDrag() });
 	const ask = j => { j.native = ric.call(window, dl => {
 		pending.delete(j.handle); j.pending = false;
 		const at = performance.now(), drag = inDrag();
@@ -103,7 +114,10 @@ const RECORDER = (cfg) => {
 				if (omitHit && omitHit(new Error().stack || '')) { window.__pmIdleOmit.count++; return { cancel() {} }; }
 				if (typeof fn !== 'function') return real.call(this, fn, ...rest);
 				const token = ++tokens;
+				/* bound at admission: the asker's owner, or the shared admission's other jobs (sound, hover) */
+				const asked = ownerOf(new Error().stack || ''); tokenOwner.set(token, asked || 'busy');
 				const body = function (...a) { entered(token); return fn.apply(this, a); };
+				tokenFn.set(token, body);
 				const was = R.admitting; R.admitting = token;
 				try { return real.call(this, body, ...rest); } finally { R.admitting = was; }
 			};
@@ -135,6 +149,10 @@ const RECORDER = (cfg) => {
 			j.pending = false; j.cancelled = true; j.cancelDrag = inDrag(); j.cancelAt = performance.now(); pending.delete(id);
 		};
 	}
+	// selftest leak-<owner>: once the hold is on, that owner's pending callback runs again through a timer, beside the
+	// job the scheduler parked (the review's timer leak, made from the kit's side: the same wrapped owner function)
+	R.leak = (key) => { const token = [...tokenOwner.entries()].filter(([, o]) => o === key).map(([t]) => t).pop();
+		if (!token || !tokenFn.has(token)) return 0; st.call(window, () => { try { tokenFn.get(token).call(window, { didTimeout: false, timeRemaining: () => 8 }); } catch (_) { /* the owner's own error */ } }, 50); return token; };
 	R.release = () => { R.gated = false; for (const j of pending.values()) if (!j.native) ask(j);
 		// Independent native deadline proves this hold actually offered idle delivery.
 		ric.call(window, () => { R.opportunity = { at: performance.now(), drag: inDrag() }; }, { timeout: 500 });
@@ -155,7 +173,7 @@ const RECORDER = (cfg) => {
 const top = (stack) => stack.split('\n').slice(1).map((l) => /^\s*at (?:(.+?) \()?(.+?):(\d+):\d+\)?\s*$/.exec(l)).filter((m) => m && m[2] !== '<anonymous>' && !/(?:^|\.)(?:ask|idleWhenStill)(?: \[as \w+\])?$/.test(m[1] || '')).slice(0, 3).map((m) => `${m[1] || '(anonymous)'}:${m[3]}`).join(' < ');
 const brief = (jobs) => JSON.stringify(jobs.map((j) => ({ id: j.id, owner: j.owner, at: top(j.stack) })));
 
-async function holdDrag(t, f, sel, label, keys) {
+async function holdDrag(t, f, sel, label, keys, leak = null) {
 	// where the divider is now, and what a press there would land on
 	const measure = () => f.evaluate((s) => {
 		const vis = (e) => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(e).display !== 'none'; };
@@ -192,6 +210,8 @@ async function holdDrag(t, f, sel, label, keys) {
 	const dragOn = await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag()) || document.body.classList.contains('pm-resizing'));
 	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)));
 	await f.evaluate(() => window.__pmIdleRec.release());
+	if (leak) { const tok = await f.evaluate((k) => window.__pmIdleRec.leak(k), leak); t.log(`SELFTEST ${label}: ${nameOf(leak)} callback (token ${tok}) run again through a timer during the hold`);
+		await t.check(`selftest ${label}: the ${nameOf(leak)} leak found a pending callback to run`, tok > 0, String(tok)); }
 	await t.mark(label + ' held');
 	// held: the hand rests on the bar, with the small moves a held hand makes
 	for (let k = 0; k < HOLD_MS / 100; k++) { await t.page.mouse.move(...at(-32 + (k % 2 ? 1 : -1))); await t.page.waitForTimeout(100); }
@@ -218,8 +238,13 @@ async function judge(t, f, label, win, owners) {
 	const bodies = await f.evaluate(([a, b]) => window.__pmIdleRec.bodies.filter((c) => c.drag && c.at >= a && c.at <= b + 50), [win.began, win.ended]);
 	for (const o of [...owners, EXTRA]) {
 		const mine = bodies.filter((c) => c.owner === o.key);
-		await t.check(`${label}: no ${o.name} callback body entered inside the drag`, mine.length === 0, mine.length ? `${mine.length} entries (jobs ${[...new Set(mine.map((c) => c.job))].join(', ')})` : '0');
+		await t.check(`${label}: no ${o.name} callback body entered inside the drag`, mine.length === 0, mine.length ? `${mine.length} entries (${mine.map((c) => c.job ? `job ${c.job}` : `no native job, token ${c.token}`).join(', ')})` : '0');
 	}
+	// every body entered inside the hold is attributed, whatever queue delivered it (T39): an entry with no owner fails
+	const orphan = bodies.filter((c) => !c.owner);
+	await t.check(`${label}: every callback body entered inside the drag has an owner`, orphan.length === 0, orphan.length ? `${orphan.length} unattributed entries: ${JSON.stringify(orphan.slice(0, 4))}` : '0');
+	const drag = bodies.filter((c) => c.owner === 'drag');
+	if (drag.length) t.log(`${label}: ${drag.length} callback bodies of the drag's own bookkeeping inside the drag (not idle work, not judged)`);
 	// a timer an owner's idle work set may fire in a drag (a delay that ends there), but it starts nothing there
 	const timers = [...owners, EXTRA].flatMap((o) => (byOwner[o.key] || []).filter((c) => c.kind === 'timeout' && c.ms > 2));
 	await t.check(`${label}: no timer of those owners does work inside the drag`, timers.length === 0, timers.map((c) => `${nameOf(c.owner)} ${c.ms.toFixed(1)} ms at ${top(c.stack)}`).join('; ') || '0');
@@ -233,7 +258,8 @@ export const tests = {
 		if (!(await t.check('repeats is a positive whole number of holds per look', Number.isInteger(repeats) && repeats >= 1, `repeats=${JSON.stringify(t.args.repeats)}`))) return;
 		const selftest = String(t.args.selftest || '');
 		const omit = /^omit-(usage|theme|census|glass)$/.exec(selftest)?.[1] || null;
-		if (selftest) await t.check(`selftest ${selftest} is a known omission`, !!omit, 'omit-usage | omit-theme | omit-census | omit-glass');
+		const leak = /^leak-(usage|theme|census|glass)$/.exec(selftest)?.[1] || null;
+		if (selftest) await t.check(`selftest ${selftest} is a known omission or leak`, !!omit || !!leak, 'omit-usage | omit-theme | omit-census | omit-glass | leak-usage | leak-theme | leak-census | leak-glass');
 		// Glass prewarm is queued only in a Glass look: a run without one leaves that owner unexercised
 		await t.check('a Glass look is in this run (Glass prewarm owner)', looks.some((l) => /^glass-/.test(l)), `looks ${looks.join(',')}`);
 		const map = await regionsOf(t);
@@ -272,7 +298,7 @@ export const tests = {
 			t.log(`SELFTEST ${look}: ${n} real ${nameOf(omit)} requests suppressed at the shared admission`);
 			await t.check(`selftest ${look}: the ${nameOf(omit)} omission actually suppressed real requests`, n > 0, String(n));
 		}
-		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`, keys);
+		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`, keys, leak && keys.includes(leak) ? leak : null);
 		if (usage && usage.held) holds[look]++;
 		if (usage) {
 			// an owner's own withdrawal outside the drag (after the press snapshot, before the drag class) is not judged;
