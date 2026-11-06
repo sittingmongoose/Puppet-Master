@@ -37,7 +37,8 @@ export function installOracle() {
       labels: [...bar.querySelectorAll('.label')].every(e => getComputedStyle(e).display !== 'none'),
       width: bar.clientWidth, scroll: bar.scrollWidth, chat: document.querySelector('#chatPanel').getBoundingClientRect().width,
       pinned: document.body.dataset.phDrawer === 'pinned', history: document.querySelector('.history-flyout')?.getBoundingClientRect().width,
-      selected: PM56_DEMO.getState().selectedThread, resizing: document.body.classList.contains('pm-resizing') };
+      selected: PM56_DEMO.getState().selectedThread, resizing: document.body.classList.contains('pm-resizing'),
+      rect: (r => [r.left, r.top, r.width, r.height].map(Math.round))(wrap.getBoundingClientRect()) };
   };
   // Label boundary at the current look: the smallest content width at and above which the labelled row fits, each
   // width measured in its own regime (the 700/330/220 container rules move it). Scanned down from well above.
@@ -258,4 +259,15 @@ export default async function(t) {
   await t.shot('activity-visible-final', 'Activity strip after six hidden-render/reveal cycles');
   await t.check('activity fit survives hidden rendering', results.length === 6 && results.every(r => r.selected === 'query' && r.pinned &&
     Math.abs(r.history - 320) <= 1 && Math.abs(r.chat - 880) <= 1 && r.scroll - r.width <= 1 && valid(r)), JSON.stringify(results.map(r => JSON.parse(strip(r)))));
+
+  // F. The kit's outer window sizes, NieR Dark and Friendly Dark, at whatever column each layout gives the chat.
+  for (const look of ['nier-dark', 'friendly-dark']) {
+    await t.app.look(look);
+    for (const [w, h] of [[860, 1080], [1024, 1080], [1280, 1080], [1390, 1080], [1920, 1100], [740, 1000], [1280, 500]]) {
+      await t.viewport(w, h); await t.settle(); await frames(f);
+      const fit = await readFit(f);
+      await t.check(`window ${w}x${h} ${look}`, fit.chat > 0 && valid(fit), strip(fit));
+    }
+  }
+  await t.app.look('nier-dark');
 }

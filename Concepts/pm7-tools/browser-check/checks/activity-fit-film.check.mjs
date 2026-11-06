@@ -30,7 +30,7 @@ export default async function(t) {
     await f.waitForTimeout(1000);
     const r = await readFit(f);
     reveals.push(r);
-    await t.mark(`revealed ${i} ${r.scroll - r.width > 1 ? 'overflow' : 'fits'} client ${r.width} scroll ${r.scroll}`);
+    await t.mark(`revealed ${i} ${r.scroll - r.width > 1 ? 'overflow' : 'fits'} client ${r.width} scroll ${r.scroll} rect ${r.rect.join(',')}`);
   }
   await t.check('film: every reveal fits', reveals.every(r => r.scroll - r.width <= 1 && valid(r)), JSON.stringify(reveals.map(r => JSON.parse(strip(r)))));
 
@@ -42,7 +42,7 @@ export default async function(t) {
     await t.settle();
     await t.mark(`${look} drag start`);
     await boundaryDrag(t, f, `${look} film`, async (s, prev) => {
-      if (prev && s.tier !== prev.tier) await t.mark(`${look} tier ${prev.tier}->${s.tier} available ${s.available.toFixed(1)} need ${s.need.toFixed(1)}`);
+      if (prev && s.tier !== prev.tier) await t.mark(`${look} tier ${prev.tier}->${s.tier} available ${s.available.toFixed(1)} need ${s.need.toFixed(1)} rect ${s.rect.join(',')}`);
     });
     await t.mark(`${look} drag end`);
   }
