@@ -651,7 +651,10 @@ check included), worktree removal and the release.
 the new `main`, not sparse, with the symlink and the ignored `Plans/.audits` inputs copied and compared to
 the shared checkout's by SHA-256; `snapshot-current` with the next free run id; `--record-baseline`, retried
 once at `--subcheck-timeout-seconds 1200` if it refuses for a timeout; one commit of those two paths; then
-the ordinary landing. The readiness audit source is what the landing check selects by itself.
+the ordinary landing. The readiness audit source is what the landing check selects by itself. Its commit also
+stages the older run folders `snapshot-current` deletes after a full publish. That command's preflight still needs
+the predecessor, so a retry starts over at the worktree: `git checkout -f` and `git clean -ffd` put it back at the
+commit, tracked deletions included, in that local worktree and never in the shared checkout.
 
 **Where it stops, and what happens to `main` and the lock.** A stop always puts a fast-forward back with
 `git reset --keep origin/main`. The lock is released when nothing is owed, so that a slow repair holds up

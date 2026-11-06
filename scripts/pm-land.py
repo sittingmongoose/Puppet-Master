@@ -1355,6 +1355,9 @@ class Lander:
             raise Stop("low_disk", f"{probe} has {free} GB free, under the {cfg.min_free_gb} GB floor for a full worktree",
                        "Free space, then `resume`.")
         if (path / ".git").exists():
+            # A retry. This is the tool's own local worktree, never the shared checkout. snapshot-current deletes older
+            # run folders after a full publish and its preflight needs the predecessor, so -f puts tracked deletions
+            # back too, and clean takes out what the last try made.
             spec = ["-B", branch, ref] if branch else ["--detach", ref]
             self.git(path, "checkout", "-f", *spec)
             self.git(path, "clean", "-ffd", "--", "Plans/.plan_migration")
@@ -1763,6 +1766,7 @@ class Lander:
         st = self.st
         fu = st["fu"]
         wt = fu["worktree"]
+        # A path, so this stages the older run folders snapshot-current deleted, as well as the new one.
         self.git(wt, "add", "Plans/.plan_migration", BASELINE_FILE)
         staged = [line for line in self.git(wt, "diff", "--cached", "--name-only").stdout.splitlines() if line]
         extra = [path for path in staged if path != BASELINE_FILE and not path.startswith("Plans/.plan_migration/")]

@@ -109,11 +109,16 @@ sys.exit(row.get("exit", 0))
 '''
 
 STUB_MIGRATION = STUB_HEAD + r'''
+import shutil
 args = sys.argv[1:]
 row = behaviour("snapshot")
 record("snapshot", row)
 run_id = args[args.index("--run-id") + 1]
 base = Path("Plans/.plan_migration")
+predecessor = base / args[args.index("--supersedes-run-id") + 1]
+if not predecessor.is_dir() or not any(predecessor.iterdir()):
+    print(json.dumps({"status": "fail", "error": "preflight: predecessor summary missing: " + str(predecessor)}))
+    sys.exit(1)
 (base / run_id).mkdir()
 (base / run_id / "partial.json").write_text("{}\n")
 act(row)
@@ -124,6 +129,13 @@ if row.get("exit"):
     sys.exit(row["exit"])
 (base / run_id / "final.json").write_text(json.dumps(args) + "\n")
 (base / "current_run.json").write_text(json.dumps({"run_id": run_id}) + "\n")
+if row.get("delete_older"):
+    for folder in base.glob("pds-*-current-planunit-snapshot"):
+        if folder.name != run_id:
+            shutil.rmtree(folder)
+if row.get("exit_after_delete"):
+    print(json.dumps({"status": "fail"}))
+    sys.exit(row["exit_after_delete"])
 print(json.dumps({"status": "pass"}))
 '''
 
@@ -2874,6 +2886,136 @@ class HandRowTests(Base):
         result = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "closer")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertFalse(self.h.held())
+
+
+class SnapshotDeletesOlderRunsTests(Base):
+    """After a full publish snapshot-current deletes the older run folders, while its preflight still needs the
+    predecessor. So a retry must start from the follow-up's commit, deletions put back, and the commit must stage them."""
+
+    OLD = "pds-00000000-001-current-planunit-snapshot"
+    OLD_PATH = f"Plans/.plan_migration/{OLD}"
+
+    def assert_followup_deleted_the_old_run(self) -> None:
+        final = self.h.origin_main()
+        rows = self.h.g(self.h.origin, "diff", "--name-status", "--no-renames", f"{final}^", final).splitlines()
+        self.assertIn(f"D\t{self.OLD_PATH}/x.json", rows, "git add Plans/.plan_migration must stage the deletion")
+        for row in rows:
+            path = row.split("\t", 1)[1]
+            self.assertTrue(path.startswith("Plans/.plan_migration/") or path == M.BASELINE_FILE, row)
+        self.assertEqual(self.h.g(self.h.origin, "ls-tree", "-r", "--name-only", final, "--", self.OLD_PATH), "")
+        self.assertFalse((self.h.shared / self.OLD_PATH).exists(), "the shared checkout follows only by the fast-forward")
+        self.assertFalse(self.h.held())
+
+    def assert_retried_at_the_same_commit(self, wt_commit: str) -> None:
+        first, second = self.h.calls("snapshot")
+        self.assertEqual((first["head"], second["head"]), (wt_commit, wt_commit))
+        self.assertEqual(first["args"], second["args"], "the same run id, from the same current run")
+
+    def assert_shared_untouched_while_stopped(self) -> None:
+        self.assertTrue((self.h.shared / self.OLD_PATH / "x.json").exists(), "only the follow-up's own worktree")
+        self.assertEqual(self.h.g(self.h.shared, "status", "--porcelain", "--", "Plans/.plan_migration"), "")
+
+    def test_the_first_try_commits_the_deletions(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        self.h.set_plan("snapshot", [{"delete_older": True}])
+        result = self.land("fix/a")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assert_followup_deleted_the_old_run()
+
+    def test_a_retry_with_the_predecessor_missing_fails_preflight(self):
+        """The control: what the retries below would hit if nothing put the folder back."""
+        self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        self.h.set_plan("snapshot", [{"delete_older": True}])
+        self.h.set_plan("baseline", [{"exit": 1}])
+        self.assertEqual(self.land("fix/a").returncode, 1)
+        wt = Path(self.h.state()["fu"]["worktree"])
+        self.assertFalse((wt / self.OLD_PATH).exists(), "the stub deleted it")
+        again = subprocess.run([sys.executable, "scripts/pm-plan-migration.py", "snapshot-current", "--run-id", "pds-99999999-001-x",
+                                "--expected-doc-count", "2", "--supersedes-run-id", self.OLD],
+                               cwd=str(wt), env=self.h.env, capture_output=True, text=True)
+        self.assertEqual(again.returncode, 1, again.stdout)
+        self.assertIn("preflight", again.stdout)
+
+    def test_a_retry_after_the_baseline_failed_starts_from_the_commit(self):
+        wt_branch = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt_branch, "rev-parse", "HEAD")
+        self.h.set_plan("snapshot", [{"delete_older": True}, {"delete_older": True}])
+        self.h.set_plan("baseline", [{"exit": 1}])
+        result = self.land("fix/a")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "baseline_failed")
+        wt = Path(self.h.state()["fu"]["worktree"])
+        self.assertFalse((wt / self.OLD_PATH).exists())
+        self.assert_shared_untouched_while_stopped()
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assert_retried_at_the_same_commit(tip)
+        self.assert_followup_deleted_the_old_run()
+
+    def test_a_retry_after_a_kill_starts_from_the_commit(self):
+        wt_branch = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt_branch, "rev-parse", "HEAD")
+        self.h.set_plan("snapshot", [{"delete_older": True}, {"delete_older": True}])
+        killed = self.h.tool("run", "fix/a", "--name", "x", env={"PM_LAND_TEST_CRASH_BEFORE": "fu-baseline:fu"})
+        self.assertEqual(killed.returncode, 137)
+        self.assertFalse((Path(self.h.state()["fu"]["worktree"]) / self.OLD_PATH).exists())
+        self.assert_shared_untouched_while_stopped()
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assert_retried_at_the_same_commit(tip)
+        self.assert_followup_deleted_the_old_run()
+
+    def test_a_retry_after_the_snapshot_itself_failed_past_the_deletion(self):
+        wt_branch = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt_branch, "rev-parse", "HEAD")
+        self.h.set_plan("snapshot", [{"delete_older": True, "exit_after_delete": 1}, {"delete_older": True}])
+        result = self.land("fix/a")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "snapshot_failed")
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assert_retried_at_the_same_commit(tip)
+        self.assert_followup_deleted_the_old_run()
+
+    def test_a_retry_in_a_local_copy_starts_from_the_commit(self):
+        wt_branch = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt_branch, "rev-parse", "HEAD")
+        self.h.set_plan("snapshot", [{"delete_older": True}, {"delete_older": True}])
+        self.h.set_plan("baseline", [{"exit": 1}])
+        self.assertEqual(self.land("fix/a", "--checks-local").returncode, 1)
+        self.assert_shared_untouched_while_stopped()
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assert_retried_at_the_same_commit(tip)
+        self.assert_followup_deleted_the_old_run()
+
+    def test_a_retry_after_the_deletions_were_committed_starts_from_the_new_main(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        self.h.set_plan("snapshot", [{"delete_older": True}, {"delete_older": True}])
+        self.h.set_plan("landing", [{}, {"exit": 2}])
+        result = self.land("fix/a")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertTrue(self.h.state()["fu"]["sha"], "the follow-up's commit holds the deletions")
+        moved = self.h.commit_to_main("src/other.txt", "other\n")
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.calls("snapshot")[1]["head"], moved, "at the new main")
+        self.assert_followup_deleted_the_old_run()
+
+    def test_the_next_landing_finds_its_predecessor_and_takes_the_next_number(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        self.h.set_plan("snapshot", [{"delete_older": True}])
+        self.assertEqual(self.land("fix/a").returncode, 0)
+        self.h.branch("fix/b", {"Plans/doc-b.md": "changed\n"})
+        self.h.set_plan("snapshot", [{"delete_older": True}])
+        result = self.land("fix/b")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        first, second = [call["args"] for call in self.h.calls("snapshot")]
+        self.assertEqual(second[second.index("--supersedes-run-id") + 1], first[first.index("--run-id") + 1])
+        self.assertRegex(second[second.index("--run-id") + 1], r"-002-current-planunit-snapshot$")
+        final = self.h.origin_main()
+        names = self.h.g(self.h.origin, "ls-tree", "--name-only", f"{final}:Plans/.plan_migration").splitlines()
+        self.assertEqual(names, ["current_run.json", second[second.index("--run-id") + 1]])
 
 
 class DocumentedLimitsTests(Base):
