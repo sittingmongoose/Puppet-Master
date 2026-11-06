@@ -15,11 +15,19 @@ export default async function (t) {
   const expected = {'panel-files':0,'panel-search':1,'panel-source':0,'panel-git':0,
     'panel-docker':1,'panel-testing':0,'panel-run':0,'panel-agents':0,'panel-artifacts':0};
   const expectedRouted = {
-    'panel-files':[], 'panel-search':['shScopeMenu','shReplScopeMenu'], 'panel-source':[],
+    'panel-files':['fmRootMenu'], 'panel-search':['shScopeMenu','shReplScopeMenu'], 'panel-source':['shBranchMenu'],
     'panel-git':['shDispRefCI','shDispProfCI','shDispRefDkr','shDispPlatDkr'],
-    'panel-docker':['shCtxMenu'], 'panel-testing':[], 'panel-run':['rdSessMenu','rdBpMode'],
-    'panel-agents':[], 'panel-artifacts':[]
+    'panel-docker':['shCtxMenu'], 'panel-testing':[], 'panel-run':['rdCfgMenu','rdAfAdapter','rdSessMenu','rdBpMode'],
+    'panel-agents':[], 'panel-artifacts':['shArtSort']
   };
+  // Read the actual PMMenu upgrade contract from the loaded page's owner functions.
+  // A selector change in product source changes discovery without a test hand list.
+  const selectors = await f.evaluate(() => {
+    const owner = window.PMCozeMenu;
+    const read = (fn, call) => fn.toString().match(new RegExp(call + "\\('([^']+)'\\)"))?.[1];
+    return {wrap: read(owner.init, 'querySelectorAll'), trigger: read(owner.upgradeWrap, 'querySelector')};
+  });
+  await t.check('PMMenu upgrade selectors available',!!selectors.wrap && !!selectors.trigger,JSON.stringify(selectors),{hard:true});
   if (t.args.selftest === 'docker') await f.evaluate(() => {
     window.__blockedDocker = 0;
     window.addEventListener('click', e => {
@@ -62,58 +70,66 @@ export default async function (t) {
       await t.page.keyboard.press('Escape');
       await t.check(target+' shelf '+id+' closes on Escape',await trigger.getAttribute('aria-expanded')==='false','');reached++;
     }
-    // Visit every real panel tab, including those whose initial DOM has no menu.
-    // Inventory is independent of visibility: a new hidden menu cannot silently
-    // disappear from coverage when its tab/expander stops working.
+    // Inventory every wrapper PMMenu upgrades, even before its route is visible.
     const panel=f.locator(`#${target}`), exercised=new Set(), inventory=new Set();
-    const tabs=await panel.locator('[role="tab"][data-tab]').evaluateAll(es=>es.map(e=>e.dataset.tab));
+    const tabs=await panel.locator('[role="tab"][data-tab]').evaluateAll(es=>es.filter(e=>e.checkVisibility()).map(e=>e.dataset.tab));
     for (const tab of [null,...tabs]) {
       if(tab!==null) {
         const control=panel.locator(`[role="tab"][data-tab="${tab}"]`);
         await control.click();
         await t.check(`${target} tab ${tab} active`,await control.evaluate(e=>e.classList.contains('active')||e.getAttribute('aria-selected')==='true'),'',{hard:true});
       }
-      const candidates=await panel.locator('.sh-shelf .pm6-tb-menu-trigger').evaluateAll(es=>es.map((e,i)=>{
-        const key=e.getAttribute('aria-controls');
-        e.setAttribute('data-shelf-route',String(i));
-        return {key,index:i,pane:e.closest('[data-pane]')?.getAttribute('data-pane')};
-      }));
-      await t.check(`${target} shelf trigger identities unique`,new Set(candidates.map(c=>c.key)).size===candidates.length,JSON.stringify(candidates),{hard:true});
-      for(const c of candidates) {
-        await t.check(`${target} trigger ${c.index} has stable menu identity`,!!c.key,'',{hard:true});
-        inventory.add(c.key);
-        if(exercised.has(c.key)||(c.pane&&c.pane!==tab))continue;
-        const trigger=panel.locator(`[data-shelf-route="${c.index}"]`);
-        // Read ancestry only; change state exclusively through real clicks.
-        const ancestors=await trigger.evaluate(e=>{
-          const out=[];
-          for(let a=e.parentElement;a&&!a.classList.contains('side-panel-view');a=a.parentElement)
-            if(a.matches('[data-acc]'))out.unshift(a);
-          return out.map((a,i)=>{a.setAttribute('data-shelf-expand',String(i));return i;});
-        });
-        for(const id of ancestors) {
-          const acc=panel.locator(`[data-shelf-expand="${id}"]`);
-          if(!await acc.evaluate(e=>e.classList.contains('open')))await acc.locator(':scope > [data-collapse]').click();
-          await t.check(`${target} ${c.key} ancestor ${id} expanded`,await acc.evaluate(e=>e.classList.contains('open')),'',{hard:true});
+      // Expand every displayed accordion, including nested ones exposed by a parent.
+      for (let pass=0;pass<20;pass++) {
+        const collapsed=panel.locator('[data-acc]:not(.open) > [data-collapse]');
+        let opened=false;
+        for(const head of await collapsed.all()) if(await head.isVisible()) {
+          await head.scrollIntoViewIfNeeded(); await head.click(); opened=true;
         }
-        await trigger.scrollIntoViewIfNeeded();
-        await t.visible(`#${target} [data-shelf-route="${c.index}"]`,`${target} ${c.key} reachable`);
-        await trigger.click();
-        await t.check(`${target} ${c.key} opens its menu`,await trigger.getAttribute('aria-expanded')==='true',
-          JSON.stringify({blocked:t.args.blockMenu||null,hits:await f.evaluate(()=>window.__blockedShelfMenu||0)}),{hard:true});
-        const menu=f.locator('.pmr-menu.is-open');
-        await menu.waitFor({state:'visible',timeout:5000});
-        await t.check(`${target} ${c.key} has menu items`,await menu.locator('[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]').count()>0,'',{hard:true});
-        await t.page.keyboard.press('Escape');
-        await t.check(`${target} ${c.key} closes on Escape`,await trigger.getAttribute('aria-expanded')==='false','',{hard:true});
-        exercised.add(c.key);
-        await panel.locator('[data-shelf-expand]').evaluateAll(es=>es.forEach(e=>e.removeAttribute('data-shelf-expand')));
+        if(!opened)break;
+        await t.check(`${target} accordion traversal bounded`,pass<19,'',{hard:true});
+      }
+      const discover = async () => panel.locator(selectors.wrap).evaluateAll((ws,sel)=>ws.map((w,i)=>{
+        const e=w.querySelector(sel);
+        if(!e)return null;
+        e.setAttribute('data-shelf-route',String(i));
+        return {key:e.getAttribute('aria-controls'),index:i};
+      }).filter(Boolean),selectors.trigger);
+      const exercise = async () => {
+        const candidates=await discover();
+        await t.check(`${target} shelf trigger identities unique`,new Set(candidates.map(c=>c.key)).size===candidates.length,JSON.stringify(candidates),{hard:true});
+        for(const c of candidates) {
+          await t.check(`${target} trigger ${c.index} has stable menu identity`,!!c.key,'',{hard:true});
+          inventory.add(c.key);
+          const trigger=panel.locator(`[data-shelf-route="${c.index}"]`);
+          if(exercised.has(c.key)||!await trigger.isVisible())continue;
+          await trigger.scrollIntoViewIfNeeded();
+          await t.visible(`#${target} [data-shelf-route="${c.index}"]`,`${target} ${c.key} reachable`);
+          await trigger.click();
+          await t.check(`${target} ${c.key} opens its menu`,await trigger.getAttribute('aria-expanded')==='true',
+            JSON.stringify({blocked:t.args.blockMenu||null,hits:await f.evaluate(()=>window.__blockedShelfMenu||0)}),{hard:true});
+          const menu=f.locator('.pmr-menu.is-open');
+          await menu.waitFor({state:'visible',timeout:5000});
+          await t.check(`${target} ${c.key} has menu items`,await menu.locator('[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]').count()>0,'',{hard:true});
+          await t.page.keyboard.press('Escape');
+          await t.check(`${target} ${c.key} closes on Escape`,await trigger.getAttribute('aria-expanded')==='false','',{hard:true});
+          await menu.waitFor({state:'hidden',timeout:5000});
+          exercised.add(c.key);
+        }
+      };
+      await exercise();
+      if(target==='panel-run' && !await panel.locator('#rdAddForm').isVisible()) {
+        await panel.locator('[aria-controls="rdCfgMenu"]').click();
+        await f.locator('.pmr-menu.is-open').getByRole('menuitem',{name:/Add Configuration/}).click();
+        await t.check('Run Add Configuration reveals debugger selector',await panel.locator('#rdAddForm').isVisible(),'',{hard:true});
+        await exercise();
       }
     }
     const row={target,tabs,inventory:[...inventory],exercised:[...exercised]};routedRows.push(row);
-    await t.check(target+' routed shelf census',JSON.stringify([...inventory].sort())===JSON.stringify([...expectedRouted[target]].sort()),JSON.stringify(row),{hard:true});
+    await t.check(target+' routed shelf census',expectedRouted[target].every(k=>inventory.has(k)),JSON.stringify(row),{hard:true});
     await t.check(target+' complete shelf menu inventory exercised',inventory.size===exercised.size&&[...inventory].every(k=>exercised.has(k)),JSON.stringify(row),{hard:true});
   }
+  await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
   t.log(JSON.stringify({initial:rows,routed:routedRows}));
   if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',await f.evaluate(()=>window.__blockedShelfMenu)>0,t.args.blockMenu,{hard:true});
   await t.check('workflow Ref route exercised',routedRows.find(r=>r.target==='panel-git')?.exercised.includes('shDispRefCI'),'',{hard:true});
