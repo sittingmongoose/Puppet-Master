@@ -3231,15 +3231,20 @@ def run(repo, output, source_map, apply_cut=None):
             # receipt I/O. No live approval run or executable file is changed.
             # CA2-C12-N05: the seam lines come from the AST of the one binding of
             # main (the recount_validation call and the next fail_errors
-            # assignment), not from fixed line numbers.
-            main_def = top_functions(ast.parse((root / REL).read_bytes().decode()))['main']
-            assert v.main.__code__.co_firstlineno == function_span(main_def)[0]
-            seam_start = next(n.lineno for n in main_def.body if isinstance(n, ast.Assign)
-                              and isinstance(n.value, ast.Call) and isinstance(n.value.func, ast.Name)
-                              and n.value.func.id == 'recount_validation')
-            seam_stop = next(n.lineno for n in main_def.body if isinstance(n, ast.Assign) and n.lineno > seam_start
-                             and any(isinstance(t, ast.Name) and t.id == 'fail_errors' for t in n.targets))
+            # assignment), not from fixed line numbers. They are located inside
+            # each recorded test, so a validator the checker refuses to model (a
+            # name defined twice) fails these tests instead of aborting the corpus.
+            def main_seam():
+                main_def = top_functions(ast.parse((root / REL).read_bytes().decode()))['main']
+                assert v.main.__code__.co_firstlineno == function_span(main_def)[0]
+                start = next(n.lineno for n in main_def.body if isinstance(n, ast.Assign)
+                             and isinstance(n.value, ast.Call) and isinstance(n.value.func, ast.Name)
+                             and n.value.func.id == 'recount_validation')
+                stop = next(n.lineno for n in main_def.body if isinstance(n, ast.Assign) and n.lineno > start
+                            and any(isinstance(t, ast.Name) and t.id == 'fail_errors' for t in n.targets))
+                return start, stop
             def main_flags(complete, august_values=None):
+                seam_start, seam_stop = main_seam()
                 code = v.main.__code__
                 instructions = list(dis.get_instructions(v.main))
                 start = next(i.offset for i in instructions if i.positions.lineno == seam_start)
