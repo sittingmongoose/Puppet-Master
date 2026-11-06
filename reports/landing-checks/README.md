@@ -483,6 +483,19 @@ finished would mislead every landing after it. Rerun with a larger `--subcheck-t
 the refresh after a Plans landing, complete that retry before committing the follow-up and releasing
 the landing lock. The older baseline remains in place; rule 2 applies only while it is no more than seven days older than the base.
 
+## Lines for comparing one run with the next
+
+Beside what it judges, a compare run prints what a later run needs in order to tell what changed since this one.
+A landing inside a batch is judged against the baseline from before the batch, so that comparison is the only way to
+see a fix one landing made and the next one undid (`scripts/pm-land.py` does it). Nothing here judges these lines: they
+change no exit code and no other line, the baseline does not record them, and `--record-baseline` does not print them.
+
+- Under `Gone since the baseline`, the id of each bucket it counts: `  [gone] <check>|<subcheck>|<error>|<path>`. In
+  `--json` these are `resolved_buckets`, as before.
+- `Subcheck totals this run: <n>`, then every subcheck that ran, passing ones too: `  [total] <check>/<subcheck>  <total>`,
+  or `timed out` for one with no result. `plan-migration-validate/-` is that check's one total. In `--json`:
+  `subcheck_totals`, with `null` for one that timed out.
+
 ## Which paths count as the branch's
 
 `Plans/_shards/**` and `Plans/.plan_index/**` are regenerated whole whenever any owner document
