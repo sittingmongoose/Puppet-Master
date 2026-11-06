@@ -298,6 +298,14 @@ def regression_checks(root):
     checks.update(wildcard_battery_checks(root, inventory))
     checks.update(wildcard_context_checks(root, inventory))
     checks.update(wildcard_authority_checks(root, inventory))
+    # FIX16 gate-bar self-check: every fine-grained date-time check (the
+    # witnesses of the committed mutation set, the behaviour rules and the
+    # cycle-11 to cycle-14 attacks), and the freshness of the committed AST
+    # sites and owner-derived rules table.
+    from pm_event_datetime_selfcheck import run_all
+    from pm_event_datetime_mutations import freshness_checks
+    checks.update(run_all(root))
+    checks.update(freshness_checks(root)[0])
     return checks
 
 
