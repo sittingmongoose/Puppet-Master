@@ -702,7 +702,7 @@
     const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
     morphing = true;
     try { U.morph(layer, paneHtml(def)); } finally { morphing = false; }
-    if (keepReason && !keepReason.isConnected) { const ft = layer.querySelector('.o55-foot'); if (ft) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; ft.appendChild(keepReason); } }
+    if (keepReason && !keepReason.isConnected) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; layer.appendChild(keepReason); }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
@@ -1126,7 +1126,8 @@
     if (!reason) return;
     const layer = t.closest('.o55-layer'); if (!layer) return;
     let tip = layer.querySelector('.o55-reason');
-    if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.querySelector('.o55-foot').appendChild(tip); }
+    /* the layer's own, beside the scroller and the footer, never inside the footer (FO87-N1, 10-window.css .o55-reason) */
+    if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.appendChild(tip); }
     tip.textContent = reason; tip.style.animationDelay = ''; tip.dataset.at = String(performance.now()); tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
   }
   /* typing ticks at most one per 120 ms, the chat's rate (ACD-475; O55.sound's RATE.type matches it) */

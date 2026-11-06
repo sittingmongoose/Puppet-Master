@@ -157,7 +157,9 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
    every look: the bottom row of a control a scroll had just brought to the edge (Retro's Server guest checkbox, a
    whole-pixel scroll leaving its last 0.39 px under the edge) pressed the footer. As the layer's grid item the scroller
    takes a z-index with no position, so nothing inside it gets a new containing block; its clip ends where the footer
-   begins, so the footer keeps its own box. The refusal reason the footer floats above itself stays over it.) */
+   begins, so the footer keeps its own box. The refusal reason that floats above the footer is the layer's own, not the
+   footer's (FO87-N1): inside the footer, the footer's entrance fade made it a stacking context under the scroller for
+   up to a second, and the scroller's words painted over the reason.) */
 .o55-pane > .o55-layer > .o55-scroll { z-index: 1; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
 /* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
@@ -207,7 +209,10 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 #pm-o55-onboarding[data-family="retro"] .o55-btn { border: 2px solid var(--text-primary); text-transform: uppercase; font-family: var(--display-font); font-size: 12.5px; letter-spacing: 0.05em; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn.o55-ghost { border-color: transparent; box-shadow: none; }
-.o55-reason { position: absolute; z-index: 2; right: 22px; bottom: calc(100% + 8px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
+/* the refusal reason: a child of the screen's layer, placed in the footer's grid row, and above the scroller (1)
+   whatever the footer's own animation does (60-ui-core.js showReason). It stands where it stood as the footer's child:
+   7 px over the footer's 1 px top rule (8 px over its padding edge then) */
+.o55-reason { position: absolute; grid-row: 2; grid-column: 1; z-index: 2; right: 22px; bottom: calc(100% + 7px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
 .o55-reason.o55-reason-show { animation: o55-reason 2600ms ease both; }
 @keyframes o55-reason { 0% { opacity: 0; transform: translateY(6px); } 8%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 
