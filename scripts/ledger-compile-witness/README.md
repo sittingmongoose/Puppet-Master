@@ -85,9 +85,30 @@ unit's text wherever it sits in the section, so its registry is checked too, and
 every `preserved_exact_tokens` registry in a unit is read, not only the first.
 Any other form that names a targeted or repaired owner ID is refused as
 `unsupported_owner_definition_form` before a pass: a heading without a separator,
-a level 1, 5 or 6 heading, or a `plan_unit_id` line the grammar cannot read or that
+a level 1, 5 or 6 heading, a setext heading (a paragraph over an `===` or `---`
+underline) that names the ID, or a `plan_unit_id` line the grammar cannot read or that
 sits outside a fence. Longer identifiers that start with the ID (`AA-001.2`) and
 `DL-*` IDs are not refused.
+
+Headings and fences follow CommonMark where it matters to a definition (tool batch 2,
+C8-W1 and C8-W2):
+- An ATX heading may be indented up to three spaces, and its ID may be wrapped in
+  `**ID**`, `__ID__` or `[ID]`: `   ## **AA-001** — Title` is the same heading as
+  `## AA-001 — Title`, so a second one is a duplicate. Indented and wrapped forms are
+  read only outside fences (a fenced line is code); four spaces of indentation is code,
+  not a heading. A paragraph that is a list item or block quote over `---` is a
+  thematic break, not a setext heading.
+- A fence opens on three or more backticks or tildes indented at most three spaces (a
+  backtick opener's info string holds no backtick). It closes only on the same
+  character, at least as long as the opener, indented at most three spaces, with
+  nothing after it but spaces: a `` ```yaml `` line or a shorter run inside a longer
+  fence does not close it, and an unclosed fence runs to the end of the document. A
+  fence indented four spaces or more is indented code, so a `plan_unit_id` line in it
+  is outside any fence and refused. A heading line inside a fence is code, never a
+  heading definition (a fenced `plan_unit_id` line still is a declaration).
+- A `plan_unit_id: AA-001  # comment` line inside a fence does not match the grammar
+  (bare or quoted ID, nothing after it) and is refused as `unparsed_plan_unit_id_line`
+  (C8-W3). Put a comment on its own line.
 
 ## Targets and exact-token scope
 

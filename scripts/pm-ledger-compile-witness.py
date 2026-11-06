@@ -35,6 +35,36 @@ from pathlib import Path
 UNIT_ID_FORM = r"[A-Z0-9][A-Za-z0-9]*-\d+"
 UNIT_HEAD = re.compile(r"^(#{2,4})\s+(" + UNIT_ID_FORM + r")\s*[-–—:]\s+(.*)$")
 ANY_HEAD = re.compile(r"^(#{1,6})\s")
+# C8-W1: an ATX heading may be indented up to three spaces, and its ID may be wrapped in **, __ or [ ]. Both are
+# read only outside fences (a fenced line is code); column-0 headings keep their existing reading everywhere.
+INDENTED_UNIT_HEAD = re.compile(r"^ {0,3}(#{2,4})[ \t]+(?:\*\*(" + UNIT_ID_FORM + r")\*\*|__(" + UNIT_ID_FORM + r")__|\[(" + UNIT_ID_FORM + r")\]|("
+                                + UNIT_ID_FORM + r"))[ \t]*[-–—:][ \t]+(.*)$")
+INDENTED_ANY_HEAD = re.compile(r"^ {1,3}(#{1,6})[ \t]")
+# A setext underline: up to three spaces, then only = or only -.
+SETEXT_UNDER = re.compile(r"^ {0,3}(=+|-+)[ \t]*$")
+LIST_OR_QUOTE = re.compile(r"^ {0,3}([-*+]|\d{1,9}[.)])([ \t]|$)|^ {0,3}>")
+
+
+def unit_head(line: str, fenced: bool = False):
+    """(hashes, unit id, title) of a unit heading, or None. A fenced line is code, never a heading (C8-W2);
+    indented and wrapped forms (C8-W1) are read like column-0 ones."""
+    if fenced:
+        return None
+    m = UNIT_HEAD.match(line)
+    if m:
+        return m.group(1), m.group(2), m.group(3)
+    m = INDENTED_UNIT_HEAD.match(line)
+    if m:
+        return m.group(1), next(g for g in m.group(2, 3, 4, 5) if g), m.group(6)
+    return None
+
+
+def any_head(line: str, fenced: bool = False):
+    """The # run of any heading line, or None; a fenced line is code, never a heading."""
+    if fenced:
+        return None
+    m = ANY_HEAD.match(line) or INDENTED_ANY_HEAD.match(line)
+    return m.group(1) if m else None
 UNIT_ID = re.compile(r"\b(" + UNIT_ID_FORM + r")\b")
 CANDIDATE_ID = re.compile(r"\b([A-Z0-9]{2,5}-\d{2})\b")
 RECORD_HEAD = re.compile(r"^Records?\s+\d", re.I)
@@ -62,7 +92,11 @@ PLAN_UNIT_ID = re.compile(r"""^\s*plan_unit_id:\s*(?:"(""" + UNIT_ID_FORM + r"""
 PLAN_UNIT_LINE = re.compile(r"^\s*plan_unit_id\s*:")
 # The ID itself, not a longer identifier that starts with it (AA-001.2, AA-001-2).
 ID_HEAD = re.compile(r"^(#{1,6})\s+[\"'`]?(" + UNIT_ID_FORM + r")(?![.\w]|-\d)")
-FENCE_OPEN = re.compile(r"^\s*(`{3,}|~{3,})")
+INDENTED_ID_HEAD = re.compile(r"^ {0,3}(#{1,6})[ \t]+(?:\*\*|__|\[)?[\"'`]?(" + UNIT_ID_FORM + r")(?![.\w]|-\d)")
+# C8-W2: CommonMark fences. An opener is indented at most three spaces and is three or more backticks or tildes;
+# a backtick opener's info string holds no backtick. The closer is the same character, at least as long, indented
+# at most three spaces, with nothing after it but spaces. An unclosed fence runs to the end of the document.
+FENCE_OPEN = re.compile(r"^( {0,3})(`{3,}|~{3,})(.*)$")
 
 
 def declared_id(line: str):
@@ -71,16 +105,17 @@ def declared_id(line: str):
 
 
 def fences_in(lines: list[str]) -> list[tuple[int, int]]:
-    """Fenced blocks opened by ``` or ~~~ and closed by a line starting with the same three characters."""
+    """Fenced blocks by the CommonMark rules (C8-W2): opener and closer indented at most three spaces, the closer
+    the opener's character, at least as long, with no info string; a backtick opener's info has no backtick."""
     found, i = [], 0
     while i < len(lines):
         opening = FENCE_OPEN.match(lines[i])
-        if not opening:
+        if not opening or (opening.group(2)[0] == "`" and "`" in opening.group(3)):
             i += 1
             continue
-        marker = opening.group(1)[0] * 3
+        closer = re.compile(r"^ {0,3}" + re.escape(opening.group(2)[0]) + "{" + str(len(opening.group(2))) + r",}[ \t]*$")
         k = i + 1
-        while k < len(lines) and not lines[k].strip().startswith(marker):
+        while k < len(lines) and not closer.match(lines[k]):
             k += 1
         found.append((i, k))
         i = k + 1
@@ -103,8 +138,8 @@ def unsupported_forms(text: str, ids: set[str]) -> list[dict]:
         fenced.update(range(start + 1, stop))
     out = []
     for index, line in enumerate(lines):
-        head = ID_HEAD.match(line)
-        if head and head.group(2) in ids and not UNIT_HEAD.match(line):
+        head = None if index in fenced else ID_HEAD.match(line) or INDENTED_ID_HEAD.match(line)
+        if head and head.group(2) in ids and not unit_head(line, index in fenced):
             level = len(head.group(1))
             form = "heading_without_separator" if 2 <= level <= 4 else "heading_level_" + str(level)
             out.append({"unit": head.group(2), "form": form, "line": index + 1, "text": line.strip()})
@@ -114,6 +149,18 @@ def unsupported_forms(text: str, ids: set[str]) -> list[dict]:
             if named and (parsed is None or index not in fenced):
                 out.append({"unit": named[0], "form": "unparsed_plan_unit_id_line" if parsed is None else "plan_unit_id_outside_fence",
                             "line": index + 1, "text": line.strip()})
+        # C8-W1: a setext heading (a paragraph over an = or - underline) that names a targeted ID is refused.
+        if index and index not in fenced and SETEXT_UNDER.match(line):
+            start = index
+            while start > 0 and lines[start - 1].strip() and start - 1 not in fenced and not any_head(lines[start - 1]) \
+                    and not FENCE_OPEN.match(lines[start - 1]) and not SETEXT_UNDER.match(lines[start - 1]):
+                start -= 1
+            paragraph = lines[start:index]
+            front_matter = line.strip() == "---" and start == 1 and lines[0].strip() == "---"
+            if paragraph and not LIST_OR_QUOTE.match(paragraph[0]) and not front_matter:
+                named = sorted({uid for text in paragraph for uid in UNIT_ID.findall(text) if uid in ids})
+                if named:
+                    out.append({"unit": named[0], "form": "setext_heading", "line": start + 1, "text": " ".join(t.strip() for t in paragraph)})
     return out
 
 
@@ -134,20 +181,21 @@ def definitions_in(text: str) -> list[dict]:
     found, sections = [], {}
     i = 0
     while i < len(lines):
-        m = UNIT_HEAD.match(lines[i])
+        m = unit_head(lines[i], i in fenced)
         if not m:
             i += 1
             continue
+        hashes, uid, title = m
         j = i + 1
-        while j < len(lines) and not ANY_HEAD.match(lines[j]):
+        while j < len(lines) and not any_head(lines[j], j in fenced):
             j += 1
         end = i + 1
-        while end < len(lines) and (end in fenced or not ANY_HEAD.match(lines[end]) or len(ANY_HEAD.match(lines[end]).group(1)) > len(m.group(1))):
+        while end < len(lines) and (end in fenced or not any_head(lines[end]) or len(any_head(lines[end])) > len(hashes)):
             end += 1
         block = "\n".join(lines[i:j]).rstrip()
-        found.append({"unit": m.group(2), "form": "heading", "line_start": i + 1, "line_end": j, "text": block,
-                      "title": m.group(3).strip()})
-        sections.setdefault(m.group(2), []).append([i, end, False, len(found) - 1, j])
+        found.append({"unit": uid, "form": "heading", "line_start": i + 1, "line_end": j, "text": block,
+                      "title": title.strip()})
+        sections.setdefault(uid, []).append([i, end, False, len(found) - 1, j])
         i = j
     for start, stop, ids in fences:
         for uid in ids:

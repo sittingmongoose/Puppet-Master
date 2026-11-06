@@ -478,5 +478,35 @@ def exercise(g, *, scratch=None):
          status="findings", exit_code=2, verify=lambda r: r["witness_registry_hygiene"][0]["entries_absent_from_unit_text"] == ["ghost"])
     case("own-fence-under-subheading-supplies-registry-control", lambda f: f.update(owner=under.replace("BODY", "").replace("REG", '["live token"]')),
          verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"] and not r["configuration_findings"])
+    # Tool batch 2, C8-W1: indented and wrapped ATX headings are the same heading; a setext heading naming a target is refused.
+    case("tb2-indented-heading-duplicate-is-a-definition", lambda f: f.update(owner=clean + "\n   ## AA-001 — Again\n\nOther.\n"),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("heading", 10)))
+    case("tb2-bold-wrapped-heading-duplicate-is-a-definition", lambda f: f.update(owner=clean + "\n## **AA-001** — Again\n\nOther.\n"),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("heading", 10)))
+    case("tb2-underscore-wrapped-heading-duplicate-is-a-definition", lambda f: f.update(owner=clean + "\n## __AA-001__ — Again\n\nOther.\n"),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("heading", 10)))
+    case("tb2-bracket-wrapped-heading-duplicate-is-a-definition", lambda f: f.update(owner=clean + "\n### [AA-001] — Again\n\nOther.\n"),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("heading", 10)))
+    case("tb2-setext-equals-heading-is-refused", lambda f: f.update(owner=clean + "\nAA-001 — Again\n===\n\nOther.\n"),
+         status="findings", exit_code=2, verify=unsupported("setext_heading", 10))
+    case("tb2-setext-dash-heading-is-refused", lambda f: f.update(owner=clean + "\nAA-001 — Again\nstill the heading\n---\n\nOther.\n"),
+         status="findings", exit_code=2, verify=unsupported("setext_heading", 10))
+    case("tb2-indented-heading-inside-fence-control", lambda f: f.update(owner=clean + "\n```md\n   ## AA-001 — Example\n```\n"), verify=no_ambiguity)
+    case("tb2-four-space-heading-is-code-control", lambda f: f.update(owner=clean + "\n    ## AA-001 — Code\n"), verify=no_ambiguity)
+    case("tb2-list-item-over-thematic-break-control", lambda f: f.update(owner=clean + "\n- see AA-001\n---\n"), verify=no_ambiguity)
+    # C8-W2: CommonMark fences. A longer fence holds a shorter one; a closer needs the same character, at least the
+    # opener's length and no info string; four spaces of indentation make code, not a fence.
+    nested = ("## AA-001 — Owner\n\nRequired live token.\n\n````md\n```\nexample\n```\n````\n\n"
+              "```yaml\nplan_unit_id: AA-001\npreserved_exact_tokens: [\"live token\"]\n```\n")
+    case("tb2-longer-fence-holds-a-shorter-one-control", lambda f: f.update(owner=nested),
+         verify=lambda r: not r["configuration_findings"] and r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"])
+    case("tb2-closer-with-info-string-does-not-close", lambda f: f.update(owner=clean + "\n```yaml\nexample: 1\n```yaml\nplan_unit_id: AA-001\n```\n"),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("fence", 10)))
+    case("tb2-shorter-closer-does-not-close", lambda f: f.update(owner=clean + "\n````yaml\nexample: 1\n```\nplan_unit_id: AA-001\n````\n"),
+         status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("fence", 10)))
+    case("tb2-heading-inside-longer-fence-is-code-control",
+         lambda f: f.update(owner=clean + "\n````md\n```\nexample\n```\n## AA-001 — Example heading inside the fence\n````\n"), verify=no_ambiguity)
+    case("tb2-four-space-fence-is-not-a-fence", lambda f: f.update(owner=clean + "\n    ```yaml\n    plan_unit_id: AA-001\n    ```\n"),
+         status="findings", exit_code=2, verify=unsupported("plan_unit_id_outside_fence", 11))
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}
