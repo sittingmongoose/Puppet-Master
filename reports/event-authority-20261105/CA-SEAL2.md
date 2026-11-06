@@ -814,7 +814,7 @@ The synthetic control aligns `kept(x)` moved below a new function: the unchanged
 - **Provenance and data-flow audits:** the recheck's `history_audit.py` finds 620 rows and zero line-provenance mismatches. `data_audit.py` resolves all 744 data-flow consumers to the actual AST and retains its 40-row risky sample unchanged. `occurrence_audit.py` confirms the committed map totals, 620/620 rows on their own counterpart, 620/620 agreement with the recheck's whole-file line map, no historical occurrence claimed twice, and no preserved row in a new function.
 - **Committed rows:** no row changed outcome, and none needs a new evidenced outcome.
 
-**Limits.** Preservation is now occurrence identity: unchanged text, position, extent and enclosing structure inside an unchanged block of the same function. It is not data-flow equivalence. An unchanged predicate whose inputs are produced by a changed line keeps its preserved status; the changed line's own nodes are inventoried separately and need their own outcomes. Guard removal stays with the shared-tool sweep, as before. Alignment is line-based, so a moved statement loses preservation (fail-closed). When a line is duplicated, `difflib` deterministically maps one copy and the other needs its own outcome. Astra 2, 3 and 5 campaigns were not rerun: the brief named the corpus, the cycle-10 probes and Astra 6's replays, and no killed-by row, cut or validator byte changed. No governance, shard or index check was run; only `reports/` paths changed.
+**Limits.** Preservation is now occurrence identity: unchanged text, position, extent and enclosing structure inside an unchanged block of the same function. It is not data-flow equivalence. An unchanged predicate whose inputs are produced by a changed line keeps its preserved status. *(Corrected in round 11, CA2-C11-N02.)* In round 10 only a changed line's census nodes were inventoried, so a changed statement with no census node (for example `anchors = anchors[:1]` or `continue`), or a deleted line, was not seen by the coverage test. Since round 11 every node on an inserted or changed line of an aligned unit has a census or changed-line row, and every deleted or replaced CA-SEAL line a reviewed record. Guard removal stays with the shared-tool sweep, as before. Alignment is line-based. *(Corrected in round 11, CA2-C11-N03.)* `difflib` keeps the longer side of a move aligned, so the moved lines on that side keep preservation; the shorter side loses it and needs its own rows, and its old position shows up as deleted CA-SEAL lines. When a line is duplicated, `difflib` deterministically maps one copy and the other needs its own outcome. Astra 2, 3 and 5 campaigns were not rerun: the brief named the corpus, the cycle-10 probes and Astra 6's replays, and no killed-by row, cut or validator byte changed. No governance, shard or index check was run; only `reports/` paths changed.
 
 Root disk and RAM passed the 50/6 GB floors before every run (131–137 GB free, 11–17 GB available). Checkers ran one at a time; the corpus peak was about 93 MB. The replay harness caches only immutable revision-qualified Git blobs; the two original-map runs used none. Scratch held 19,177,878 bytes before removal.
 
@@ -843,3 +843,154 @@ The compact committed result is `CA-SEAL2-fix10-results.json`. Replay scripts, r
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/local-map-manifest.json` | `a52c38fb7baf273d950e81750cc5ca3ab018b0178119a272385c9a8981aa7510` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/extraction-restoration.json` | `a20a69b4cdf0112bfd2c8f9c1ec6c4ee27325d44a87c0e5c88d72c2afcc5b92f` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/cleanup.json` | `acf5636c3925442256b0ab865e27749cfdaa2df729ee9cbb890e51441d415f5e` |
+
+## Recheck cycle 11: findings and responses
+
+Round-11 worker: **CA-SEAL2-FIX11** (brief approved with option A for N02). Read the FIX11, FIX10 and FIX9 briefs and the blind Opus pre-check `reviews/CA-SEAL2-sol/REVIEW-cycle11-opus.md` with its evidence `cycle11-opus/` (especially `scope-probes.json`, `augassign-hidden-builder.json`, `augassign-corpus-summary.json`, `independent_map.py` and `scope_probes.py`). This is a tests/fixtures/records change from `715b7c1506dee7a4831110424bc620a58743cc16`, with no rebase. The code is in **`ef462bc5b52714f088aef1142af3fb89cc0d4b92`** (operator census, class table, changed-line rows, historical-line records, line counting) and **`babeb1b4f75281c7d8afb851e63f43e877094160`** (fresh-name rule, probe forging); the replay evidence, this section and the two corrected round-10 limit sentences are in the record commit. `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`, `V` the frozen validator, `E` `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/`.
+
+| Finding | Location and cause | Fix and verification |
+|---|---|---|
+| **CA2-C11-B01 — fixed** | `supplement_nodes()` listed bitwise And, Or and Xor only as `ast.BinOp`, so `x \|= y` (an `ast.AugAssign`) had no row. The pre-check's hidden builder `overall_pass \|= {"review_extra": False, **named}["review_extra"]` passed coverage and the full corpus while turning a failing receipt into `pass: true`. | `H:319` dispatches every node on its exact AST class (`CENSUS_RULES`, `H:288`), and `BinOp`, `AugAssign` and `UnaryOp` also on their operator's class (`H:299`, `H:311`), wherever they occur: a truth-carrying operator yields `BinOp(<op>)` or `AugAssign(<op>)`. `H:52–131` is a complete table of Python 3.14.4's 133 `ast` node and operator classes, each truth-carrying, data, structural or refused when present. `H:353` regenerates the class list from the running `ast` and refuses an unlisted class, a stale entry on the recorded minor version, a truth-carrying class without a census mechanism, a census rule for a class not marked truth-carrying, and any refused class anywhere in V; `validate_coverage()` runs it first (`H:843`). `census_totals()` (`H:738`) counts every operator occurrence by the node holding it and the test requires zero truth-carrying occurrences outside a census row. |
+| **CA2-C11-N02 — fixed (option A)** | The inventory covered census node types only, so a changed statement without one (`anchors = anchors[:1]`, `actual_ets = expected_ets`, `continue`) or a deleted guard changed what a preserved predicate does with no identity. | `aligned_units()` (`H:525`) aligns each aligned function and the module body outside top-level functions (`<module>`) to CA-SEAL and marks lines inserted, changed, deleted or replaced (`H:504`). `changed_line_inventory()` (`H:582`) requires a row for every node with a source position on an inserted or changed line (a statement by its header span) that does not anchor a census row: data or structural as its class is, with a reviewed reason; a truth carrier there that no census row carries is refused (`H:882`). `historical_line_inventory()` (`H:630`) requires a reviewed record for every CA-SEAL line of an aligned unit without a counterpart, and for every line of a CA-SEAL function that no longer exists. `fresh_name_problems()` (`H:702`, `H:903`) closes the same class at module scope: every name a change binds or mutates there (each top-level function new since CA-SEAL, and every statement on an inserted or changed module line) must be new to CA-SEAL, not a builtin, and bound once. The report's limit sentence (R:817) is corrected in place. |
+| **CA2-C11-N03 — fixed** | R:817 said a moved statement loses preservation; `difflib` keeps the longer side of a move aligned. | R:817 is corrected in place: the longer side keeps preservation, the shorter side loses it and needs its own rows, and its old position shows up as deleted CA-SEAL lines (which now need records). |
+| **CA2-C11-N04 — fixed** | `str.splitlines()` also breaks on form feed, vertical tab, U+0085 and others; the parser does not. | `source_lines()` (`H:32`) applies universal newlines (CRLF and a lone CR become LF), splits on LF only, and checks the count against the parser with a sentinel statement. The walker, the alignment and every probe use it. Controls: a form feed inside a string (`str.splitlines()` puts the next line one lower; the map now keeps both counterparts) and a lone carriage return. |
+| **Same class, found by this worker — fixed** | A top-level `def` lies outside every aligned unit, so a new one could rebind a name unchanged August code reads: `def isinstance(*args): return True` added at module level, with every row forged, **passes the round-10 checker** (`round11-audits.json`). | Refused by the fresh-name rule above: `negative_fresh_function_shadows_builtin`. |
+
+### Complete AST class table (Python 3.14.4)
+
+| Category | Classes |
+|---|---:|
+| truth-carrying | 37 |
+| data | 43 |
+| structural | 29 |
+| refused when present | 24 |
+| **total** | **133** |
+
+The full table, with the reason for each class, is in `CA-SEAL2-coverage.md`. Truth-carrying (37): `Compare`, `BoolOp`, `Call`, `IfExp`, `NamedExpr`, `Assert`, `If`, `While`, `Try`, `TryStar`, `ExceptHandler`, `comprehension`, `match_case`, the eight pattern classes, `And`, `Or`, `Not`, `BitAnd`, `BitOr`, `BitXor` and the ten comparison operators. Refused when present (24): async and generator nodes, `Global`, `Nonlocal`, PEP 695 type parameters and aliases, `TypeIgnore`, 3.14 template strings, deprecated compatibility classes and the non-exec parse roots; V contains none of them. Data (43) and structural (29) are everything else, the 14 abstract grammar categories included (structural). **Arithmetic is the one deliberate exclusion:** on Booleans it returns an int, never a bool, so it does not produce a truth value, though a nonzero result is truthy. On an inserted or changed line of an aligned unit it needs a changed-line row; in a function new since CA-SEAL it is a data operation the corpus has to see. In the 15 touched functions there are 137 arithmetic occurrences (`/` 78, `-` 31, `+` 27, `+=` 1), and none has a Boolean constant, comparison, Boolean operation or negation as a direct operand (`round11-audits.json`).
+
+### Operator census (15 touched functions)
+
+| Operator | Category | Occurrences, by holding node | Carried by a census row | Unanchored |
+|---|---|---|---:|---:|
+| `And` | truth-carrying | BoolOp 43 | 43 | 0 |
+| `BitAnd` | truth-carrying | BinOp 9 | 9 | 0 |
+| `BitOr` | truth-carrying | BinOp 3 | 3 | 0 |
+| `BitXor` | truth-carrying | 0 | 0 | 0 |
+| `Eq` | truth-carrying | Compare 58 | 58 | 0 |
+| `Gt` | truth-carrying | Compare 1 | 1 | 0 |
+| `GtE` | truth-carrying | 0 | 0 | 0 |
+| `In` | truth-carrying | Compare 23 | 23 | 0 |
+| `Is` | truth-carrying | Compare 23 | 23 | 0 |
+| `IsNot` | truth-carrying | Compare 36 | 36 | 0 |
+| `Lt` | truth-carrying | Compare 2 | 2 | 0 |
+| `LtE` | truth-carrying | Compare 6 | 6 | 0 |
+| `Not` | truth-carrying | UnaryOp 113 | 113 | 0 |
+| `NotEq` | truth-carrying | Compare 58 | 58 | 0 |
+| `NotIn` | truth-carrying | Compare 14 | 14 | 0 |
+| `Or` | truth-carrying | BoolOp 67 | 67 | 0 |
+| `Add` | data | AugAssign 1, BinOp 27 | 0 | 0 |
+| `Div` | data | BinOp 78 | 0 | 0 |
+| `FloorDiv` | data | 0 | 0 | 0 |
+| `Invert` | data | 0 | 0 | 0 |
+| `LShift` | data | 0 | 0 | 0 |
+| `MatMult` | data | 0 | 0 | 0 |
+| `Mod` | data | 0 | 0 | 0 |
+| `Mult` | data | 0 | 0 | 0 |
+| `Pow` | data | 0 | 0 | 0 |
+| `RShift` | data | 0 | 0 | 0 |
+| `Sub` | data | BinOp 31 | 0 | 0 |
+| `UAdd` | data | 0 | 0 | 0 |
+| `USub` | data | 0 | 0 | 0 |
+
+Census rows by node type are unchanged: `BinOp(BitAnd)` 9, `BinOp(BitOr)` 3, `BoolOp` 110, `Call` 891, `Compare` 219, `If test` 171, `IfExp` 17, `Try dispatch` 6, `UnaryOp(Not)` 113, `comprehension if` 38, `except alternative` 29, `except dispatch` 6, `parser callback` 5; `AugAssign(BitAnd)`, `AugAssign(BitOr)`, `AugAssign(BitXor)`, `BinOp(BitXor)`, `NamedExpr`, `Assert`, `match case`/`guard`, `While test` and `TryStar dispatch` 0. The whole validator has two bitwise AugAssigns, `emit |= set(...)` at V:600–601, in `validate_holding_bucket`, which is AST-identical to CA-SEAL and outside the touched-function census like every other untouched August statement.
+
+### Changed lines and deleted lines (N02, option A)
+
+| Aligned unit | Inserted lines | Changed lines | Deleted CA-SEAL lines | Replaced CA-SEAL lines | Changed-line rows |
+|---|---:|---:|---:|---:|---:|
+| `multi_family_receipt_state` | 0 | 1 | 0 | 1 | 5 |
+| `post_august_validator_pin` | 0 | 1 | 0 | 1 | 3 |
+| `main` | 18 | 0 | 0 | 0 | 81 |
+| `build_receipt` | 10 | 0 | 0 | 0 | 49 |
+| `<module>` | 43 | 0 | 0 | 0 | 52 |
+| **total** | | | **0** | **2** | **190** |
+
+The **190 changed-line rows** are data 189, structural 1; by class Assign 29, Attribute 8, BinOp 2, Constant 46, Dict 1, Expr 1, If 1, Import 3, Name 78, SetComp 2, Subscript 15, Tuple 1, alias 3. Each reason is a role phrase for the node, the reviewed reason of its statement, and the census rows of that statement that are not preserved, with their outcomes (`E/update_coverage.py` holds the reviewed statement text). 34 further nodes on those lines anchor census rows. The **2 historical-line records** are CA-SEAL lines 222 (`multi_family_receipt_state`) and 263 (`post_august_validator_pin`), both replaced in place by V:225 and V:266; V deletes no CA-SEAL line and removes no CA-SEAL function. The module-level changes are additions only: 3 imports and 14 constants, all names that CA-SEAL never binds or reads, read only by the 11 new functions; those 11 function names are new as well, so the fresh-name rule passes on V. An independent view (`git diff --no-index --patience` hunks and a set-based header walk written in `E/round11_audits.py`) reaches the same 190 rows and 34 anchors, finds no node without a row, and finds exactly the two removed CA-SEAL lines.
+
+### Regression probes (each must fail coverage)
+
+`H:1265` `edit_probe()` edits a scratch copy of V, carries every row's line metadata through a whole-file alignment (`rebase_lines()`, `H:959`), forges every row except the probe's own identities in the group under test (`forge_census()`, `forge_records()`), and regenerates every count (`refresh_totals()`, `H:810`). So the refusal names exactly the probe's identities, whatever else the table lacks. All run in the committed corpus.
+
+| Probe (corpus test `negative_…`) | Edit | Refusal |
+|---|---|---|
+| `census_augassign_bitor` | the pre-check's plain probe: `state['complete'] \|= True` before `recount_validation`'s return | `coverage sites missing=` exactly its `AugAssign(BitOr)` row |
+| `census_augassign_bitand`, `census_augassign_bitxor` | the same with `&=` and `^=` | exactly its `AugAssign(BitAnd)` / `AugAssign(BitXor)` row |
+| `census_hidden_builder_bitor` | the pre-check's hidden builder, `overall_pass \|= {"review_extra": False, **named}["review_extra"]` after the round-9 gate, with its changed-line rows forged | exactly its `AugAssign(BitOr)` row |
+| `census_hidden_builder_bitand`, `census_hidden_builder_bitxor` | the same with `&=` and `^=` | exactly its `AugAssign(...)` row |
+| `changed_truncated_input` | `anchors = anchors[:1]` before the preserved guard in `post_august_validator_pin` | `changed-line nodes missing=` its 6 nodes |
+| `changed_rebound_input` | `actual_ets = expected_ets` before the preserved partition comparison in `main` | its 3 nodes |
+| `changed_inserted_continue` | `continue` at the top of the partition loop | its `Continue` node |
+| `deleted_preserved_guard` | the preserved `if actual_ets != expected_ets:` block deleted in place | `historical lines missing=` its 9 CA-SEAL lines |
+| `changed_module_rebinding` | `POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT` at module level | `changed-line nodes missing=` its 3 nodes |
+| `changed_module_truth_carrier` | `PM_PROBE = isinstance(HOME, Path)` at module level | `truth-carrying node on a changed line without a census row` (the call) |
+| `fresh_module_rebinding` | the module rebinding with every row forged | `module-level binding is not fresh`: binds a CA-SEAL name, bound twice |
+| `fresh_module_mutation` | `HOLDING_DECISIONS["DL-039"] = None` with every row forged | mutates an object that is not new |
+| `fresh_function_shadows_builtin` | `def isinstance(*args): return True` at module level with every row forged | binds a builtin name |
+| `refused_class_present` | `global PM_PROBE` as `recount_validation`'s first statement | `ast class table`: refused `Global` present |
+| `ast_class_removed` | synthetic: `AugAssign` removed from the class table (V and table unchanged) | missing from the table, and refused when present (V uses it) |
+| `ast_truth_class_without_rule` | synthetic: `Subscript` marked truth-carrying | truth-carrying class without a census rule |
+| `ast_rule_for_data_class` | synthetic: `Call` marked data | census rule for a class not marked truth-carrying |
+
+`positive_ast_class_table` checks the running class list against the table, the recorded version and V's classes. The grammar control adds `&=`, `|=`, `^=` (one census row each), `+=` and `-` (none: the arithmetic exclusion), `while` and `except*`, and requires zero unanchored truth-carrying operators. The alignment control adds the line marks, changed-line rows and historical-line records of its synthetic edit (a removed function included), the form-feed and lone-CR controls, a deleted and a changed decorator, and module-level insertion, truth carrier and deletion. Every earlier probe still fails: Astra 6's three insertion controls (`negative_unlisted_*`), FIX10's five forged tables (`negative_preserved_*`) and the cycle-10 and cycle-11 replays below.
+
+### Fresh replay results and limits
+
+- **Corpus:** a fresh process on byte-verified scratch copies of `babeb1b4f7`, with the original supplied source map and no replay caches: exit 0, **220/220**, all **597/597** source hashes and lengths verified. The worktree's original-map run is also 220/220 (`final-corpus.json`). All 200 earlier test names remain and their result records are identical to round 10's; 20 tests are new (`positive_ast_class_table` and 19 negatives).
+- **Cycle-10 probes (`probes.py`):** Astra 6's five insertions each fail coverage with one missing and zero stale identities, and scratch bytes are restored; the ten adjacent insertions fail with missing counts **1,1,1,1,2,2,2,2,1,1**; the rebinding witness fails at `preserved occurrence mismatch`. These three outputs are byte-identical to round 10's.
+- **Astra 6 hidden builder (`| isinstance`) on scratch disk:** coverage refuses it (three missing census rows); the full corpus is **219/220**, failing only `positive_complete_predicate_coverage`; scratch bytes restored exactly.
+- **Cycle-11 hidden builder (`|=`, `&=`, `^=`) on scratch disk (`hidden_augassign_replay.py`):** the round-10 checker **accepts** all three after a metadata-only rebase, which reproduces CA2-C11-B01; the round-11 checker refuses each with exactly its `AugAssign(...)` row missing. With the `|=` form installed, the full corpus is **219/220**, failing only `positive_complete_predicate_coverage`. The direct witness still flips `pass` from false to true with the trigger and leaves it false without it, which is the perturbation coverage now catches, not an intact approval bypass. Scratch bytes restored exactly.
+- **Pre-check scripts (`cycle11/`, scratch root only changed):** `c10_witness.py` refuses all three variants as before. `scope_probes.py`, whose rebase moves only the `sites` and `supplement` rows: the three N02 statement probes and the deleted guard now fail coverage (each at `changed-line nodes missing`, since that rebase does not carry the new rows; the committed probes, which do, refuse them at their own rules), and the `|=` probe fails with its `AugAssign(BitOr)` row missing. `probes.py`: the map's verdicts on all 21 occurrence probes are identical to the pre-check's; through `full_rebase.py`, which also carries the changed-line rows, 19 fail coverage (17 at `changed-line nodes missing`, `except_header_widened` at `historical lines missing`, the two same-name copies on stale changed-line rows) and the two that pass add only a comment line or a blank line, which carry no node. `synthetic.py`: both form-feed cases now map correctly (no refused genuine node, no shifted claim). `independent_map.py`: 1,126 eligible nodes, identical counterparts, nothing only on one side. `real_dataflow.py`: no unflagged writer feeds a preserved predicate. `round9_accepts.py`: FIX10's five tables pass round 9 and fail the current checker. `augassign_hidden.py`: part A now fails coverage with its `AugAssign(BitOr)` row missing; parts B and C (in memory) are unchanged: the witness flips, and the in-memory corpus is 220/220, because coverage reads the bytes on disk. `augassign_corpus.py` (plain `|=` in memory): 211/220, the same nine `negative_aggregate_*` failures.
+- **FIX10's five tables (`preservation_probes.py`):** each passes the round-9 checker and fails the round-11 one at the occurrence check; the one-category cuts behave as in round 10 (sole claim, changed occurrence and changed header pass only without the not-an-unchanged-occurrence category), because the forger now also forges the round-11 rows.
+- **Audits:** `occurrence_audit.py` 620/620 rows on their own counterpart and on the recheck's whole-file line map; `history_audit.py` zero provenance mismatches; `data_audit.py` all 744 data-flow consumers resolve. `round11_audits.py`: the independent changed-line view, the arithmetic audit and the shadowing-def witness above.
+- **Committed rows:** the same **1,944** site ids with no field changed (identity, outcome, reason, evidence) and **0 new truth-carrying rows**. The table gains 190 changed-line rows, 2 historical-line records, `totals.census`, `totals.changed_line_nodes`, `totals.historical_lines`, `totals.occurrence_map.line_marks` and `removed_functions`, the `ast_classes` summary, schema `v5` and an extended completeness claim. No row needs a new evidenced outcome.
+
+**Limits.** The truth census covers the 15 touched functions; untouched functions are AST-identical to CA-SEAL. Option A covers the aligned units: the four aligned functions and the module body. In the 11 functions new since CA-SEAL nothing is preserved and every truth-carrying node has its own evidenced outcome; a data-only statement inserted there (an arithmetic or plain assignment) is seen by the corpus, not by the coverage test, and the hidden-builder witness shows the corpus need not see it. Arithmetic is excluded from the truth census by a written, reviewed decision, not by proof. The class table is built for Python 3.14.4; on another minor version every running class must still be in the table, and stale entries are tolerated. Guard removal stays with the shared-tool sweep, as before. B02 cuts and the Astra 2, 3 and 5 campaigns were not rerun: the brief named the corpus, the cycle-10 and cycle-11 probes and Astra 6's replays, and no killed-by row, cut or validator byte changed. No governance, shard or index check was run; only `reports/` paths changed.
+
+Root disk and RAM passed the 50/6 GB floors before every run (118–130 GB free, 9–27 GB available). Checkers ran one at a time; the corpus peak was about 168 MB and a run takes about 4 minutes. The replay harness caches only immutable revision-qualified Git blobs; the original-map runs used none. Scratch held 20,762,945 bytes before removal.
+
+Only five round-11 paths change, all under `reports/event-authority-20261105/`: H, the coverage JSON and Markdown, this report and the compact `CA-SEAL2-fix11-results.json`. The validator stays byte-for-byte at `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`. No validator, receipt, Plans, Spec Lock, `.evidence`, auto-decision, `.gitignore`, registry or Decision Log edit; no pm-mail, subagent, main push, admission, seal, browser or server. **CA-SEAL2-FIX11 joins the seal-applier exclusion.** Family grades N/A; IDs used none; stopped product questions none. Coordinated landing, actual landers/anchors, real per-name outcomes/depth and unchanged August approval requirements remain integration work.
+
+### Retained round-11 evidence
+
+The compact committed result is `CA-SEAL2-fix11-results.json`. Replay scripts, raw outputs and instructions are retained in E (`README.md`, `COMMANDS.md`) with the input extraction and local-copy manifests and a complete `SHA256SUMS`. Copied inputs, runtime scratch and the worker worktree are removed after the branch push. The report and coverage copies in the parent drafts directory are overwritten with this result.
+
+| Evidence path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/baseline.json` | `6b4fd8eb0837ef91202d72b008edb423fa1806adaf66bab9a0c528042a7de6b0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/final-corpus.json` | `088cb3557d24ff630638857cee21b0d27b1de38d044a0f015448a23c64ff4bbc` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/precommit-corpus.json` | `6b4fd8eb0837ef91202d72b008edb423fa1806adaf66bab9a0c528042a7de6b0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/update_coverage.py` | `810a02357baf7fb6a446fd7bc843d47c9c804400318aba596677aa073c38592c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/round11-audits.json` | `558665e49ce9601a9b8b5abaf7a7c3f51f02e348c9a1046355e84bec797bdf15` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/hidden-augassign-summary.json` | `df510565be253d7f4100b74ee4835579c7e476743ea2e6c1f1aaf00cbbdc370c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/hidden-augassign-corpus.json` | `446a32e791cbb14eb42710408bc342fc50fb7ccb63f4e76b27f59cf72585f433` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/hidden-predicate-summary.json` | `e6a8e50813e854a3dbfb53d3b4604986e3b03f0e8a0e434de9566bab4790c21d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/hidden-predicate-corpus.json` | `598d4356632ebc397405f098f64b98098188cba5be7be85529e64facb3f5d5a5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/coverage-probes.json` | `cdfc660fc5774043eadcd2911eb9e77ebb3bee99d632c275b3b1782f94d1873e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/adjacent-probes.json` | `fd78eb67ecb68b77f99a579b3ca9be46d0acd58816be09d8e0902c1647f4a83a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/preservation-rebinding.json` | `e658d93d8da24438cfd00478a35de38d0f7de6d36a9cd07bf8979a02250f4632` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/preservation-probes.json` | `986932b4a7912c5baf76a8f688e462ca88cf0c0ed4afa6f66ddd31097b824c06` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/scope-probes.json` | `c6756594290b97bf81e5135d59ebbcdb8cbfd28d2202b5811c62123a49f2f2db` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/occurrence-probes.json` | `b15682d642ebed3f6c5c490a9e01ad15dbd6d3a7e1a275f196141e5ce4bebd72` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/occurrence-probes-full-rebase.json` | `f1bea37cb0d14072d48781c562634cabb4858cef493d0d185afbf4d6ab7d729d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/augassign-hidden-builder.json` | `0c1e4fea9cfa7db4454cc86b5fa244c6dbc28aaf68c720dfd512f6accd7544ca` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/augassign-corpus-summary.json` | `f7ce6aae4ad1d03417e44b362a808acf81f3bd8c0b1e5f4dca2adc3f4eec6365` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/independent-map.json` | `c05eb5c98c3dc01fe242fff00eb69ebaa0324d2993ab73c27dc21e4317dbf426` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/synthetic-map-probes.json` | `311ae2dd830c5dfc745bc7eb74995ab2914bd306037d2abc2c2002c885cebac0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cycle11/c10-witness-replay.json` | `6abc62ed3dd754cf81172aa4c3c14f6b90fe431555a891cbce5f149542086bbd` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/occurrence-audit.json` | `7b634c4891e5ad8b58ea808317fc13c90a8cba5b9a032bcbe58a6b251d707d09` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/history-audit.json` | `2047c2bea36e370ec966771f760a21b6425936848b6c37048131cd85a8c3b078` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/data-flow-audit.json` | `72df40621edb7126043f9a3f617e897b73f81dbd2fdab64f124de8531378751b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/extraction-manifest.json` | `3dc3ffb38f8a37ef3a9349124868e53f20becfeaa45d248a9b2e14d66f844b4b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/local-map-manifest.json` | `bd2f8a584983f6e97a8a9ccd0ab7141f1a878904b15e1022daa1612ee85145c1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/extraction-restoration.json` | `99a7e224932d3466870819aafd1e3c09d5872f2da027a2c8e8afe73d97b1ac86` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11/cleanup.json` | `0f9a00f6c33b906f0ec6abf1a09cf00696ac01521931ac27a8f34570e48a150d` |
