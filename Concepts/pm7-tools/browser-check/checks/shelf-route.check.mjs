@@ -115,6 +115,7 @@ export default async function (t) {
     await t.check(target+' complete shelf menu inventory exercised',inventory.size===exercised.size&&[...inventory].every(k=>exercised.has(k)),JSON.stringify(row),{hard:true});
   }
   t.log(JSON.stringify({initial:rows,routed:routedRows}));
+  if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',await f.evaluate(()=>window.__blockedShelfMenu)>0,t.args.blockMenu,{hard:true});
   await t.check('workflow Ref route exercised',routedRows.find(r=>r.target==='panel-git')?.exercised.includes('shDispRefCI'),'',{hard:true});
   await t.check('all rail targets inspected and reachable shelf menus exercised',targets.length===Object.keys(expected).length&&reached===Object.values(expected).reduce((a,b)=>a+b,0),JSON.stringify({reached,rows}));
   await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route]').forEach(e=>{e.removeAttribute('data-shelf-case');e.removeAttribute('data-shelf-route');}));
