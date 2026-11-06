@@ -1,5 +1,13 @@
 // SW-42: inventory every shelf menu, including real panel tabs and expanders.
 export default async function (t) {
+  if (t.args.blockMenu) await t.page.addInitScript(id => {
+    window.__blockedShelfMenu = 0;
+    window.addEventListener('click', e => {
+      if (e.target.closest?.('.pm6-tb-menu-trigger')?.getAttribute('aria-controls') === id) {
+        window.__blockedShelfMenu++; e.preventDefault(); e.stopImmediatePropagation();
+      }
+    }, true);
+  }, t.args.blockMenu);
   await t.viewport(Number(t.args.width || 1920),Number(t.args.height || 1080)); const f = await t.app.open();
   if(t.args.look) await t.app.look(t.args.look);
   // Preserve the original initial-view census; the complete routed inventory below
@@ -20,14 +28,6 @@ export default async function (t) {
       }
     }, true);
   });
-  if (t.args.blockMenu) await f.evaluate(id => {
-    window.__blockedShelfMenu = 0;
-    window.addEventListener('click', e => {
-      if (e.target.closest?.('.pm6-tb-menu-trigger')?.getAttribute('aria-controls') === id) {
-        window.__blockedShelfMenu++; e.preventDefault(); e.stopImmediatePropagation();
-      }
-    }, true);
-  }, t.args.blockMenu);
   const targets = await f.locator('#activityBar .icon[data-target]').evaluateAll(es => es.filter(e => e.getBoundingClientRect().width).map(e=>e.dataset.target));
   await t.check('expected activity routes present', JSON.stringify([...targets].sort()) === JSON.stringify(Object.keys(expected).sort()), JSON.stringify(targets), {hard:true});
   const rows=[]; let reached=0; const routedRows=[];
