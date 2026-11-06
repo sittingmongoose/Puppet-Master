@@ -261,3 +261,30 @@ Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/
 | `witness_corpus.py` | `37c855086c9710785988ffa814cde872e55c40d1b242b243d4b6924c93192201` |
 | `witness-newcases-on-base.json` | `2a92469d3feb79d20ebd1f54871ad3a9be3f656a6b526971758954b73ee7984f` |
 | `witness-st-final.json` | `1d1f34369d881ea1999e31b38561f603d52acdf3cccacf33176606be5f57243e` |
+
+## Tool batch 3: findings and responses
+
+**TOOLBATCH2 pre-check finding 4 is fixed; nothing is disputed.** Base: `2a16722ca4`. Fix: `616c08e5b8` on `plans/tools-batch1-20261105`. The finding is HYPOTHETICAL: none of these shapes occurs in a real Plans document, before or after.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **4: CommonMark containers and HTML blocks — fixed** | `blocks_in`, `list_item_column`, `container_heading`, `fences_in`, `definitions_in`, `unsupported_forms`. The witness read fences without list items and had no HTML blocks: a list-item fence closed by a column-0 fence line, and a unit heading inside an HTML block or comment, made phantom units (the false-pass direction); a heading after a list-item fence was missed; a heading inside a list or blockquote was neither parsed nor refused. Now fences and HTML blocks are read in document order: a fence opened in a list item (on its marker line or a continuation line) is indented relative to the item's content column and ends with the item, at the first line indented less than that column; when that line is a fence closer (a closer less indented than its item), CommonMark opens a new fence there and the form is refused as `list_fence_closer_outdented` if the lines after it name a target. An HTML block (CommonMark's seven kinds, from its start to its end condition) holds no fence or heading, and a unit heading inside one is refused as `heading_in_html_block`. A unit heading in a blockquote or a list item is refused as `heading_in_blockquote` or `heading_in_list_item`. | The pre-check's 27 shapes against markdown-it-py 3.0.0's commonmark preset: 6 mismatches on the base, **0 now** (`shapes-base.txt`, `shapes-fix.txt`). 10 new regressions, 7 refusals and 3 controls (`tb3-*`); on the base 5 refusals pass falsely and 2 give an unrelated ambiguity finding (`newcases-on-base.json`). |
+
+### Rerun results
+
+| Check | `2a16722ca4` | Now |
+|---|---|---|
+| Self-test | 140/140 | **150/150**; the standalone flat copy with the share and worktrees denied: 150/150, 0 denied attempts |
+| Real ledgers (`ledger_scan.py`, all 39) | vacuous 18, findings 11, no-queue 5, error 3, pass 2 | **identical**, row by row (`ledgers-fix.json` = `ledgers-base.json`) |
+| Every Plans Markdown file of the branch (3,607, ledgers and evidence left out) | witness and CommonMark agree on 14,943 unit headings | **the same**: 0 phantom, 0 missed, 0 setext (`docs-fix-full.json` = `docs-base-full.json`) |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH3/witness/`.
+
+| File | SHA-256 |
+|---|---|
+| `shapes.json` (the pre-check's) | `605a3ec529d957562b6020191a9b6eb17b405bb5951d443e4cec293af180334f` |
+| `shapes-base.txt` | `8d44f3c9ab9cbc4e04d3135fed5e852fef00f02463c8b65040a6893172557aba` |
+| `shapes-fix.txt` | `74e26d0841b1e6f8a4608a62e103e24bda3ff56f97d3d58a11bbb3ab75fb18cc` |
+| `newcases-on-base.json` | `e9af86ec1aa6e42b7c3ffde1dfda0f2de36bf4fc248ce070c7929dc05c69c15b` |
+| `ledgers-fix.json`, `ledgers-base.json` | `6721d5ebb48e3a61c489bccf6b7b2ed36f25ea77c6a39e1e6621a65380fbced6` |
+| `docs-fix-full.json`, `docs-base-full.json` | `227846cbf3a7183fdb96d317c4c17293be916acdac68598c456a99d71d8986b4` |
