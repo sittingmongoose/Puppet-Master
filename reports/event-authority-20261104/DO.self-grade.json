@@ -181,11 +181,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -230,7 +230,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-680 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-680 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -241,11 +241,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -275,11 +275,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -655,11 +655,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -704,7 +704,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-681 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-681 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -715,11 +715,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -749,11 +749,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -1144,11 +1144,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1193,7 +1193,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-682 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-682 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1204,11 +1204,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1238,11 +1238,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -1619,11 +1619,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1668,7 +1668,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-683 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-683 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1679,11 +1679,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1713,11 +1713,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -2077,11 +2077,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2126,7 +2126,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-684 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-684 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2137,11 +2137,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2171,11 +2171,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -2527,11 +2527,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2576,7 +2576,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-685 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-685 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2587,11 +2587,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2621,11 +2621,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -2977,11 +2977,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3026,7 +3026,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-686 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-686 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3037,11 +3037,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3071,11 +3071,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -3427,11 +3427,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3476,7 +3476,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-687 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-687 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3487,11 +3487,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3521,11 +3521,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -3877,11 +3877,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3926,7 +3926,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-688 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-688 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3937,11 +3937,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3971,11 +3971,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -4327,11 +4327,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4376,7 +4376,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-689 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-689 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4387,11 +4387,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4421,11 +4421,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -4777,11 +4777,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4826,7 +4826,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-690 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-690 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4837,11 +4837,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4871,11 +4871,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -5227,11 +5227,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5276,7 +5276,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-691 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-691 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5287,11 +5287,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5321,11 +5321,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -5677,11 +5677,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5726,7 +5726,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-692 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-692 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5737,11 +5737,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5771,11 +5771,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -6127,11 +6127,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6176,7 +6176,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-693 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-693 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6187,11 +6187,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6221,11 +6221,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -6577,11 +6577,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6626,7 +6626,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-694 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-694 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6637,11 +6637,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6671,11 +6671,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -7027,11 +7027,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -7076,7 +7076,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-695 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-695 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7087,11 +7087,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7121,11 +7121,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -7477,11 +7477,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -7526,7 +7526,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-696 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-696 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7537,11 +7537,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7571,11 +7571,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -7927,11 +7927,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -7976,7 +7976,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-697 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-697 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7987,11 +7987,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8021,11 +8021,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -8377,11 +8377,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -8426,7 +8426,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-698 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-698 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8437,11 +8437,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8471,11 +8471,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -8827,11 +8827,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -8876,7 +8876,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-699 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-699 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8887,11 +8887,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8921,11 +8921,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -9277,11 +9277,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -9326,7 +9326,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-700 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-700 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9337,11 +9337,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -9371,11 +9371,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -9727,11 +9727,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -9776,7 +9776,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-701 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-701 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9787,11 +9787,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -9821,11 +9821,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -10177,11 +10177,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -10226,7 +10226,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-702 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-702 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10237,11 +10237,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -10271,11 +10271,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -10627,11 +10627,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -10676,7 +10676,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-703 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-703 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10687,11 +10687,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -10721,11 +10721,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -11077,11 +11077,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PARTIAL"
           },
           "change": "held",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): this family's retained and compatibility history positives carried four frontier copies of their base event's bytes, not their own (DO-P1F3-N1). They are regenerated with the lane builders and now hold their own event's bytes. That makes the retained-history fixtures true, but this cell is PARTIAL for the unlanded Storage retention integration and Q1/Q3, which the fixtures do not reach. It holds PARTIAL."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): this family's retained positives carried generation ids stale against SP-278's recipe (all), and some carried the base event's payload digest or a false replay-only flag in their index row. They and the history negatives built from them are regenerated with the lane builders; only those copies and the digests over them changed. The retained fixtures are true, but the cell stays PARTIAL for the unlanded Storage retention integration and Q1/Q3, which no fixture reaches. Holds."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -11126,7 +11126,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-704 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-704 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -11137,11 +11137,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb checkpoint_errors read no copy of the segment identity (the name's generation field and form, both selections' selected segment generation), no copy of the generation identity (the node's id and dataset name against its key, the key against SP-278's recipe), none of the frontier selection's within-generation facts, the anchor gap digest, the row's source locator or eight of its event copies, and the translation fields; most guards it had carried no exact-code negative; and this family's retained and compatibility positives held stale generation ids (and, for the board families, payload digests). So a forged copy was accepted and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. The inventory now rows all 167 fields (108 derived, 59 free), 29 new predicates guard the unread copies, 64 backfilled single-defect negatives prove the older guards, the builder derives every derived field and the positives are regenerated; cutting any one new predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -11171,11 +11171,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 12fb322ceb (DO-P1F05)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
@@ -11391,7 +11391,8 @@
     "shared-corpus-dependency": "23971fcea36d9b879f35e5ae1a984ebb6c2832e0",
     "DO-P1F-03": "ad933eede3a444c7649ddadb4577f1e215cccfe9",
     "DO-P1F04": "13a0753acb + a0b3c1695a",
-    "DO-P1F05": "05a18b3a05 + 593ad58879"
+    "DO-P1F05": "05a18b3a05 + 593ad58879",
+    "DO-P1F06": "cc7c6839e4 + 01bded7d7a"
   },
   "shared_sweep_items": [
     "DO-C8-N1",
@@ -11437,6 +11438,37 @@
   },
   "do_p1f5_regrade": {
     "scope": "consumers_checkpoints of all 25 families only; every other cell is carried unchanged (no fixture, retention rule, recipe, compatibility or withdrawal rule changed)",
+    "families": [
+      "config.validation.failed",
+      "crew.board_message_posted",
+      "crew.board_message_read",
+      "crew.board_messages_archived",
+      "parser.error",
+      "phase.force_completed",
+      "subagent.budget_warning",
+      "subagent.cancelled",
+      "subagent.completed",
+      "subagent.context_warning",
+      "subagent.escalated",
+      "subagent.failed",
+      "subagent.message_received",
+      "subagent.message_sent",
+      "subagent.model_switched",
+      "subagent.output_truncated",
+      "subagent.paused",
+      "subagent.progress",
+      "subagent.resumed",
+      "subagent.retried",
+      "subagent.spawned",
+      "subagent.started",
+      "subagent.timeout",
+      "subagent.tool_called",
+      "subagent.tool_completed"
+    ],
+    "status_counts_changed": false
+  },
+  "do_p1f6_regrade": {
+    "scope": "consumers_checkpoints, compatibility_withdrawal and retention of all 25 families; every other cell is carried unchanged (no owner text, payload schema, identity recipe, retry, redaction or transition rule changed)",
     "families": [
       "config.validation.failed",
       "crew.board_message_posted",
