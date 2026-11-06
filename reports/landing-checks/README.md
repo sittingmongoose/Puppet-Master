@@ -642,3 +642,25 @@ follow-up and releasing the landing lock.
 
 `plans/acceptance-and-landing-baseline-20260917` records the decisions behind this rule, DL-059 and
 DL-060, and lands after this one.
+
+## Tool batch 4: findings and responses
+
+REVIEW-etools-tb3-opus findings 7 and 8 (TOOLBATCH4 T63) are fixed; nothing is disputed. Base:
+`9647530869`. Fix: `c07818c2f0` on `fix/landing-check-renamed-shard-20261106`, which stays unlanded.
+Both findings are HYPOTHETICAL: the repository has no non-ASCII path, and no symbolic link under
+`Plans/.evidence/` or `Plans/_shards/` on `main`.
+
+| Finding | Location, cause and fix | Test (fails on the base, passes now) |
+|---|---|---|
+| 7: a non-ASCII evidence path the branch edited kept the rename excuse | `branch_paths`. `git diff --name-only` ran with git's default `core.quotePath`, so `touched` held `"Plans/.evidence/\303\251.json"` and the raw path of the evidence file was not found in it. The list is now read with `git -c core.quotePath=false diff --name-only -z` and split on NUL, so every path the branch names, and the on-branch match in general, is compared raw. | `test_a_non_ascii_evidence_path_the_branch_edited_keeps_its_class` |
+| 8: "the branch left the evidence file alone" was judged on commits only | `RenameContext.left_alone`. It now also requires that `git status --porcelain -z --untracked-files=all -- <file>` is empty (no uncommitted, staged, deleted or untracked change) and that neither the file nor a folder above it in the repository is a symbolic link. | `test_an_uncommitted_edit_of_the_evidence_keeps_its_class`, `test_an_untracked_evidence_file_keeps_its_class`, `test_an_evidence_symlink_keeps_its_class` |
+
+Soundness: nothing widens. Both changes can only take the rename excuse away (the failure is then
+classed by the other rules, as before T53).
+
+| Check | `9647530869` | Now |
+|---|---|---|
+| `python3 -B -m unittest tests.test_pm_landing_check` | 171/171 (4 failures with the 4 new tests) | **175/175** |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH4/landing/`:
+`tests-on-base-9647530869.txt` (the fix's test file run against the base script) and `tests-on-fix.txt`.
