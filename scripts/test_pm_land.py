@@ -216,6 +216,8 @@ class Harness:
             if proc.poll() is None:
                 proc.kill()
                 proc.wait()
+            if proc.stdout:
+                proc.stdout.close()
         for row in self.calls():
             try:
                 pid = int(row["pid"])

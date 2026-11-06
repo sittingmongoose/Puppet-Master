@@ -739,7 +739,36 @@ ahead of origin while checks run, and another thread's uncommitted files cannot 
 shard check reads a clean tree. The follow-up runs its checks in its own worktree the same way. It needs 50 GB
 free (`PM_LAND_MIN_FREE_GB`) and 6.4 GB for the copy.
 
-TIMING-PLACEHOLDER
+**The measurement is still to run, so nothing yet proves the local copy equivalent.** `--checks-local` stays
+behind its flag until it has been. Measured at `main` `74748ebd92` on 2026-11-06, at load 25 to 27: creating the
+full worktree 68 s (6.4 GB), copying the ignored inputs 14 s, hashing them on both sides 31 s (3,530 files, none
+differ), one shard check in the local copy 21 s. Not measured, because load stayed at 22 to 42 all afternoon
+against a bar of 12: the landing check on either side, the shard check in the shared checkout, and the comparison.
+
+To run it, at one `main` commit, at most two runs per side, and only while load is under 12, nobody holds the
+lock, the VM has no recordings and no stream F timing window is open (ask `pm-fo-lead` first):
+
+    C=$(git -C /mnt/Cursor/PuppetMaster rev-parse HEAD)      # must equal origin/main
+    W=~/tools-work/item20-timing/full; R=~/tools-work/item20-timing/out; mkdir -p "$R"
+    git -C ~/src/PuppetMaster fetch origin
+    git -C ~/src/PuppetMaster worktree add --no-checkout --detach "$W" "$C"
+    git -C "$W" checkout -f
+    ln -s /mnt/Cursor/PuppetMaster-Evidence/tests/agent_packet_restrictions "$W/tests/agent_packet_restrictions"
+    # copy the ten Plans/.audits inputs named under "What a full checkout has to contain" into "$W"
+
+    # local side, then the shared side with cd /mnt/Cursor/PuppetMaster and PYTHONDONTWRITEBYTECODE=1
+    cd "$W"
+    time nice -n 19 ionice -c3 python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json > "$R/local-1.shard.json"
+    time nice -n 19 ionice -c3 python3 scripts/pm-landing-check.py --base origin/main --json \
+        --keep-check-reports "$R/local-1" > "$R/local-1.json"
+
+Equivalent means: the same `git rev-parse HEAD` and `HEAD^{tree}`; the same ignored inputs by SHA-256
+(`inputs_manifest` in the script); and the same `--json` report and kept check reports, once `generated_at_utc`,
+`kept_check_reports` and `elapsed_seconds` are removed and both checkout paths are replaced by one name.
+`/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/TOOLS/item20-timing/` holds a harness that gates each
+run on those conditions and compares the reports:
+`long-job start item20 -- python3 -B <that folder>/run.py <commit> 10800 <checkout>/scripts/pm-land.py`, then
+`python3 -B <that folder>/compare.py`.
 
 ### Limits
 
@@ -754,6 +783,9 @@ TIMING-PLACEHOLDER
 - A landing killed after its push that loses the lock still owes its follow-up. `status` says so where it ran,
   and the next tool lander is told, but only its `resume` or a hand follow-up does it.
 - A branch not checked out in any worktree is refused: a rebase needs one.
+- Its end-to-end tests stub the three heavy checks, by design: no real landing has been run with it yet. The
+  flags it passes were read from each script's `--help` and the shard failure format from a real run; the first
+  real landing is its first end-to-end run with the real checks.
 
 Self-tests: `python3 scripts/test_pm_land.py`, on throwaway repositories with stubbed checks. No test touches
 the real lock, `main` or the shared checkout.
