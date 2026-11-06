@@ -610,8 +610,8 @@ has not risen, so landing 2's failure reads as pre-existing, where alone it woul
 counter: its rise reads as staleness when a printed stale row names a batch file, which can be landing 1's while
 landing 2 caused the rise past the print cap. (C) Baseline age is measured from `batch-start`, up to two hours older
 than `origin/main`. The rule closes all three rather than accepting them: a landing whose report shows changed
-pre-existing rows in a bucket an earlier member also changed, or a readiness growth-counter rise judged as
-staleness, is treated like a stopped landing (the batch closes and that landing is rechecked alone), and no batch
+pre-existing rows in a bucket an earlier member also changed, or a readiness growth counter judged as staleness
+above the highest total any earlier member's report showed, is treated like a stopped landing (the batch closes and that landing is rechecked alone), and no batch
 opens within two hours of the seven-day limit. `scripts/pm-land.py` enforces the same.
 
 Why: from 2026-11-03 to 2026-11-06 `main` took about 18 follow-ups, about one per Plans landing. The two
