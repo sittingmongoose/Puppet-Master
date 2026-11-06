@@ -56157,7 +56157,7 @@
       "node_type": "BinOp(Sub)",
       "site_id": "supplement:020441ddf29cb97ca912cb07e8bae04d189034772f9b7deb140982c861c2883d",
       "outcome": "non-predicate data operation",
-      "reason": "Set difference (-) produces a set of event, token or error identities; the concrete consumer is recorded below. Membership truth reaches a decision only through a separately inventoried census row of that consumer (If test, UnaryOp(Not), Compare, BoolOp or Call).",
+      "reason": "Set difference (-) produces the set of recount source names listed in the explicit source-locations map but absent from the pinned receipt's inputs map; the concrete consumer is recorded below. Membership truth reaches a decision only through a separately inventoried census row of that consumer (If test, UnaryOp(Not), Compare, BoolOp or Call).",
       "data_flow": [
         {
           "node_type": "BoolOp",
@@ -59157,7 +59157,7 @@
       "node_type": "BinOp(Sub)",
       "site_id": "supplement:f9feecf223053950a6d0f3e576eb46dba703385e8f4df0632252c850bdb7c090",
       "outcome": "non-predicate data operation",
-      "reason": "Set difference (-) produces a set of event, token or error identities; the concrete consumer is recorded below. Membership truth reaches a decision only through a separately inventoried census row of that consumer (If test, UnaryOp(Not), Compare, BoolOp or Call).",
+      "reason": "Set difference (-) produces the set of owner-decision IDs that are required but absent from the owner decision sheet; the concrete consumer is recorded below. Membership truth reaches a decision only through a separately inventoried census row of that consumer (If test, UnaryOp(Not), Compare, BoolOp or Call).",
       "data_flow": [
         {
           "node_type": "Call",

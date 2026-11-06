@@ -1146,3 +1146,38 @@ The compact committed result is `CA-SEAL2-fix12-results.json`. Replay scripts, r
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix12/extraction-manifest.json` | `c683ab9d8ad8083fc3a1b609844806d43bf86dd4d5afd526a10373c69494db55` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix12/extraction-restoration.json` | `e84d371323833d2dd9742361af6ce836ac6cf4981ad444a6bd1ff3b64e6a4f0a` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix12/cleanup.json` | `72b5608c5eccdcd29917b0873ea36ff58cb6d197276f5de75dc97c3611b8c0ad` |
+
+## Recheck cycle 13: findings and responses
+
+The blind Opus pre-check of round 12 ran under pm7-build's stopping bar (`reviews/CA-SEAL2-BAR.md`, ruling of 2026-11-06 07:01Z). Its review is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-cycle13-opus.md`. Its verdict was NOT_READY, on one REAL finding of LOW severity. It found nothing INVISIBLE.
+
+**How the pre-check ran.** A safety classifier stopped the reviewer while it wrote its own random-edit generator. The lead then ruled: no edit generator, and no new code that edits the validator. Some checks were therefore done by reading. The edit counts come from the committed control: 200 edits in the corpus, 600 through its count option, and the round-12 worker's 400-edit replay. All 1,200 failed coverage with the table byte-identical. By reading, the comparison of the table's `validator_sha256` with the validator's bytes means no edit can pass while the table is unchanged.
+
+### R01 (REAL, LOW): two census reasons named the wrong kind of value. Fixed.
+
+Two of the 27 rows that share the set-difference reason said their set holds "event, token or error identities". It holds neither:
+
+| Row | Site | What the set holds |
+|---|---|---|
+| `supplement:020441ddf29cb97ca912cb07e8bae04d189034772f9b7deb140982c861c2883d` | `recount_frozen_inputs`, V:968, `set(doc['locations']) - set(inputs)` | recount source names listed in the explicit source-locations map but absent from the pinned receipt's `inputs` map |
+| `supplement:f9feecf223053950a6d0f3e576eb46dba703385e8f4df0632252c850bdb7c090` | `main`, V:1805, `required_decision_ids - present_ids` | owner-decision IDs that are required but absent from the owner decision sheet |
+
+**Fix:** those two `reason` strings now name what each set holds. The rest of each reason is unchanged: the consumer, and the census row through which membership truth reaches a decision.
+- **What did not change:** every other field of both rows, all other 11,437 rows, the 25 other set-difference rows (the review checked them and found them right), every outcome, every data flow, the census, the line pins and the validator.
+- **The diff:** two lines of `CA-SEAL2-coverage.json`. `CA-SEAL2-coverage.md` does not print reasons, so regenerating it gives the same bytes.
+
+**After the fix:**
+- **Corpus:** a fresh run against this tree with the original supplied source map gives 239/239, exit 0, in 7:38 with a peak of 330 MB.
+- **Validator:** SHA-256 `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`, unchanged.
+- **Coverage table:** SHA-256 changes from `04aa0cdf5aaf1a4d8c693230ae18bf046a47c4fad67a0e11ec6bbc79122d6c89` to `cb63253108aa84c347b44fb378e4ba67ce486c5efde311f7e36850d21a6e373f`.
+- **Record files:** `CA-SEAL2-fix12-results.json` keeps its round-12 hash as the historical record.
+
+### HYPOTHETICAL findings H01 to H06: on TOOL-ISSUES, under the bar's first term
+
+pm7-build's bar requires hypothetical findings to be fixed in batches, not only noted. These six are on `/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/TOOL-ISSUES.md`: H03 as T44, and H01, H02, H04, H05 and H06 as T45. None of them can pass with the table unchanged.
+
+### Evidence
+
+`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/r01/` holds:
+- `coverage.diff`: the two-line change;
+- `run_corpus.py`, `corpus.json`, `corpus.log` and `corpus.time`: the corpus run.
