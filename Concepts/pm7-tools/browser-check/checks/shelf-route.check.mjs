@@ -167,8 +167,8 @@ export default async function (t) {
   };
   // FO-84b/c: a pick closes the menu and leaves the side panel open (the folded rail's overlay included). The pick is
   // the menu's selected or checked item when it has one (no state change), else its first enabled command item
-  // (data-demo-action / data-command-id): never an item that opens something in the centre. Before it, a disabled
-  // item and a branch parent must not close the menu. Then the menu opens again by its route and Enter on the same
+  // (data-demo-action / data-command-id), else (a plain list of choices) its first enabled item; never an item that
+  // opens something in the centre. Before it, a disabled item and a branch parent must not close the menu. Then the menu opens again by its route and Enter on the same
   // item must pick it the same way and give focus back to the route's origin (its trigger or row).
   const pickMenu = async (key, tag, reopen, origin) => {
     const open = () => f.evaluate(k => __shelf.keys().includes(k), key);
@@ -184,7 +184,7 @@ export default async function (t) {
       const off = it => it.getAttribute('aria-disabled') === 'true' || it.disabled;
       const own = all.filter(it => !it.hasAttribute('aria-haspopup') && !off(it));
       const chosen = own.find(it => it.getAttribute('aria-checked') === 'true' || it.getAttribute('aria-selected') === 'true' || it.classList.contains('active') || it.classList.contains('is-selected'))
-        || own.find(it => it.hasAttribute('data-demo-action') || it.hasAttribute('data-command-id'));
+        || own.find(it => it.hasAttribute('data-demo-action') || it.hasAttribute('data-command-id')) || own[0];
       chosen?.setAttribute('data-shelf-pick', '');
       const inert = [all.find(off), all.find(it => it.hasAttribute('aria-haspopup') && !off(it))].filter(Boolean);
       inert.forEach((it, i) => it.setAttribute('data-shelf-inert', String(i)));
