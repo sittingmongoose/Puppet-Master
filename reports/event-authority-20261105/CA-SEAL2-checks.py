@@ -2,6 +2,8 @@
 """DL-451 isolated input/receipt regressions; fixture trees stay outside the repo."""
 import argparse
 import ast
+import codecs
+import re
 import dis
 import types
 import copy
@@ -40,7 +42,8 @@ def frozen_source(repo=None):
     """The frozen validator's text, from FROZEN_COMMIT, checked against FROZEN_SHA."""
     command = ['git'] + (['-C', str(repo)] if repo is not None else []) + ['show', FROZEN_COMMIT + ':' + REL]
     raw = subprocess.check_output(command)
-    assert sha(raw) == FROZEN_SHA, ('frozen validator bytes changed', sha(raw))
+    if not (sha(raw) == FROZEN_SHA):
+        raise AssertionError(('frozen validator bytes changed', sha(raw)))
     return raw.decode()
 
 
@@ -54,7 +57,8 @@ def top_functions(tree):
     functions, seen = {}, set()
     for n in tree.body:
         if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            assert n.name not in seen, ('top-level name bound twice', n.name)
+            if not (n.name not in seen):
+                raise AssertionError(('top-level name bound twice', n.name))
             seen.add(n.name)
             if isinstance(n, ast.FunctionDef):
                 functions[n.name] = n
@@ -73,7 +77,8 @@ def source_lines(text):
     lines = text.split('\n')
     terminated = text.endswith('\n')
     probe = ast.parse(text + ('' if terminated else '\n') + 'pm_line_probe = 0\n').body[-1].lineno
-    assert probe == len(lines) + (0 if terminated else 1), ('line count differs from the parser', probe, len(lines))
+    if not (probe == len(lines) + (0 if terminated else 1)):
+        raise AssertionError(('line count differs from the parser', probe, len(lines)))
     return lines
 
 
@@ -156,7 +161,8 @@ _AST_CLASS_GROUPS = [
 AST_CLASSES = {}
 for _category, _reason, _names in _AST_CLASS_GROUPS:
     for _name in _names:
-        assert _name not in AST_CLASSES, ('class listed twice', _name)
+        if not (_name not in AST_CLASSES):
+            raise AssertionError(('class listed twice', _name))
         AST_CLASSES[_name] = (_category, _reason)
 
 
@@ -510,13 +516,15 @@ def occurrence_map(source, before):
                 ineligible[reason] += 1
                 continue
             site = supplement_identity(name, node, expression, node_type)['site_id']
-            assert site not in counterparts, ('ambiguous current occurrence', site)
+            if not (site not in counterparts):
+                raise AssertionError(('ambiguous current occurrence', site))
             counterparts[site] = supplement_identity(name, match, expression, node_type)['site_id']
             eligible += 1
         functions[name] = {'history': True, 'aligned_blocks': len(blocks),
                            'aligned_lines': sum(b.size for b in blocks), 'nodes': len(nodes),
                            'eligible_nodes': eligible}
-    assert len(set(counterparts.values())) == len(counterparts), 'occurrence map is not one-to-one'
+    if not (len(set(counterparts.values())) == len(counterparts)):
+        raise AssertionError('occurrence map is not one-to-one')
     totals = {'baseline': SEAL_BASE,
               'aligned_functions': sum(f['history'] for f in functions.values()),
               'new_functions': sum(not f['history'] for f in functions.values()),
@@ -715,7 +723,8 @@ def changed_line_inventory(source, before):
                             'end_line': n.end_lineno, 'end_column': n.end_col_offset,
                             'node_class': type(n).__name__, 'expression': node_text(n)}
                 site = 'changed:' + sha(json.dumps(identity, sort_keys=True).encode())
-                assert site not in rows, ('ambiguous changed-line node', site)
+                if not (site not in rows):
+                    raise AssertionError(('ambiguous changed-line node', site))
                 rows[site] = dict(identity, site_id=site, required_outcome=required_outcome(n, carried))
     return rows
 
@@ -792,7 +801,8 @@ def node_model(source, before):
     def add(unit_name, n, required, baseline):
         identity = dict(node_identity(unit_name, n), baseline_line=baseline)
         site = 'node:' + sha(json.dumps(identity, sort_keys=True).encode())
-        assert site not in rows, ('ambiguous node', site)
+        if not (site not in rows):
+            raise AssertionError(('ambiguous node', site))
         rows[site] = dict(identity, site_id=site, required_outcome=required)
 
     def mark(n, kind):
@@ -823,13 +833,15 @@ def node_model(source, before):
         if name in touched:
             continue
         old = historical[name]
-        assert ast.dump(old) == ast.dump(fn), ('untouched function differs from CA-SEAL', name)
+        if not (ast.dump(old) == ast.dump(fn)):
+            raise AssertionError(('untouched function differs from CA-SEAL', name))
         untouched += 1
         # AST-identical, so both walks visit counterpart nodes in the same order.
         for n, o in zip(ast.walk(fn), ast.walk(old)):
             if getattr(n, 'lineno', None) is None:
                 continue
-            assert type(n) is type(o), (name, type(n).__name__, type(o).__name__)
+            if not (type(n) is type(o)):
+                raise AssertionError((name, type(n).__name__, type(o).__name__))
             mark(n, 'node row')
             add(name, n, required_outcome(n, set(), UNCHANGED_TRUTH), o.lineno)
     positioned = [n for n in ast.walk(tree) if getattr(n, 'lineno', None) is not None]
@@ -1103,6 +1115,10 @@ NAMESPACE_BUILTINS = frozenset({'globals', 'vars', 'locals', 'setattr', 'delattr
 # Dunders CA-SEAL itself uses: __name__ and __file__ (module), super().__new__ (ExactNumber).
 ALLOWED_DUNDERS = frozenset({'__name__', '__file__', '__new__'})
 # Methods of the builtin list, dict and set types that never change the object.
+# T44: callees that only read a module container passed to them (builtins, unshadowed), and qualified ones
+NON_MUTATING_CALLS = frozenset({'sorted', 'set', 'frozenset', 'list', 'tuple', 'dict', 'len', 'any', 'all', 'min', 'max',
+                                'sum', 'iter', 'enumerate', 'zip', 'isinstance', 'repr', 'str', 'bool', 'reversed'})
+NON_MUTATING_QUALIFIED = frozenset({'json.dumps'})
 READ_ONLY_METHODS = frozenset({'copy', 'count', 'index', 'get', 'items', 'keys', 'values', 'fromkeys',
                                'difference', 'intersection', 'isdisjoint', 'issubset', 'issuperset',
                                'symmetric_difference', 'union'})
@@ -1126,7 +1142,15 @@ def module_scope_problems(tree):
       at a module name, a builtin, an imported module, a call result, or a
       local alias of any of these (CA2-C12-N02).
     - mutates_a_module_container: an attribute of a module-level list, dict or
-      set (or of an alias or element of one) other than a read-only method.
+      set (or of an alias or element of one, or of a call's result that is one)
+      other than a read-only method; and (T44, cycle-13 H03) a call that receives
+      one, positionally, starred or by keyword, unless the callee is a builtin
+      that only reads its argument (NON_MUTATING_CALLS) or json.dumps:
+      list.clear(EVIDENCE_FIELDS), dict.update(H, ...), operator.setitem(X, ...)
+      and a V function that mutates its parameter are refused. A module-level
+      function that returns a module name (directly or through its locals) makes
+      its call result an alias of that name, so y = f(); y.clear() and
+      f().clear() are refused too.
     - reflection: the namespace builtins (globals, vars, locals, setattr,
       delattr, exec, eval, compile, __import__, breakpoint) and every dunder
       name or attribute except those CA-SEAL uses (__name__, __file__,
@@ -1162,26 +1186,66 @@ def module_scope_problems(tree):
     for n in tree.body:
         if isinstance(n, ast.Assign) and container(n.value):
             containers.update(t.id for t in n.targets if isinstance(t, ast.Name))
+    # T44: a module container holds no mutable element, so a call that receives an element (not the container
+    # itself) cannot change module state through it
+    held = []
+    def mutable_elements(value):
+        items = (value.elts if isinstance(value, (ast.List, ast.Tuple, ast.Set))
+                 else [k for k in value.keys if k is not None] + value.values if isinstance(value, ast.Dict) else [])
+        for item in items:
+            if container(item) and not isinstance(item, ast.BinOp) or isinstance(item, (ast.ListComp, ast.SetComp, ast.DictComp)):
+                held.append(item)
+            elif isinstance(item, (ast.List, ast.Tuple, ast.Set, ast.Dict)):
+                mutable_elements(item)
+    for n in tree.body:
+        if isinstance(n, ast.Assign) and (container(n.value) or isinstance(n.value, ast.Tuple)):
+            mutable_elements(n.value)
 
     # Local aliases: a name bound, in its own scope, to a reference chain (or an
     # element of one, through for, comprehension, with and parameter defaults)
     # that starts at a module object or another alias. alias[scope][name] is the
     # module name it ultimately refers to (None for a call result or import).
     alias = {scope: {} for scope in bindings}
-    def origin(value):
+    # T44: whole[scope][name]: a local bound to a module object itself (not to an element or part of one, and not by
+    # iterating over it); returns / returns_whole: module-level functions whose own return statements return a
+    # module name (any reference into it / the object itself)
+    whole = {scope: {} for scope in bindings}
+    returns, returns_whole = {}, {}
+    functions = {n.name: n for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    def own_returns(fn):
+        out, stack = [], list(fn.body)
+        while stack:
+            n = stack.pop()
+            if isinstance(n, ast.Return) and n.value is not None:
+                out.append(n.value)
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda, ast.ClassDef)):
+                continue
+            stack.extend(ast.iter_child_nodes(n))
+        return out
+    def origin(value, itself=False):
         """Whether a value is a reference into a module object, and which module name it starts at.
 
         A display, conditional or Boolean expression refers wherever one of its
-        parts does: `for e in [X]` and `y = X or []` alias X.
+        parts does: `for e in [X]` and `y = X or []` alias X. With itself=True
+        (T44), only the module object itself counts: a bare name, a local bound
+        to the object itself, or a call of a function that returns it; an
+        attribute, an item and an iteration element do not.
         """
         parts = (value.elts if isinstance(value, (ast.List, ast.Tuple, ast.Set))
                  else value.values if isinstance(value, (ast.Dict, ast.BoolOp))
                  else [value.body, value.orelse] if isinstance(value, ast.IfExp)
                  else [value.value] if isinstance(value, ast.NamedExpr) else None)
         if parts is not None:
-            found = [origin(part) for part in parts if part is not None]
+            found = [origin(part, itself) for part in parts if part is not None]
             return next((f for f in found if f[0]), (False, None))
-        root = _pure_root(value)
+        if isinstance(value, ast.Call):
+            # T44: the result of a call of a module-level function that returns a module name
+            scope, made = owner.get(id(value)), returns_whole if itself else returns
+            if (isinstance(value.func, ast.Name) and scope is not None and value.func.id in made
+                    and resolves_to(value.func.id, scope, tree, bindings, parents) is tree):
+                return True, made[value.func.id]
+            return False, None
+        root = (value.id if isinstance(value, ast.Name) else None) if itself else _pure_root(value)
         scope = owner.get(id(value))
         if root is None or scope is None:
             return False, None
@@ -1190,8 +1254,9 @@ def module_scope_problems(tree):
             return True, root
         if root in imported[home]:
             return True, None
-        if root in alias[home]:
-            return True, alias[home][root]
+        known = whole if itself else alias
+        if root in known[home]:
+            return True, known[home][root]
         return False, None
     def stores(target):
         return [(x.id, owner[id(x)]) for x in ast.walk(target)
@@ -1205,7 +1270,7 @@ def module_scope_problems(tree):
         elif isinstance(node, ast.NamedExpr) and id(node.target) in owner:
             sources.append((node.value, [(node.target.id, owner[id(node.target)])]))
         elif isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)):
-            sources.append((node.iter, stores(node.target)))
+            sources.append((node.iter, stores(node.target), 'iteration'))
         elif isinstance(node, (ast.With, ast.AsyncWith)):
             sources += [(i.context_expr, stores(i.optional_vars)) for i in node.items if i.optional_vars]
         elif isinstance(node, ast.arguments) and id(node) in owner:
@@ -1216,14 +1281,27 @@ def module_scope_problems(tree):
     grew = True
     while grew:
         grew = False
-        for value, targets in sources:
-            refers, name = origin(value)
-            if not refers:
-                continue
-            for local, scope in targets:
-                if scope is not tree and local not in alias[scope]:
-                    alias[scope][local] = name
-                    grew = True
+        for value, targets, *how in sources:
+            for itself, known in ((False, alias), (True, whole)):
+                if itself and how:
+                    continue    # (iterating gives elements, never the object itself)
+                refers, name = origin(value, itself)
+                if not refers:
+                    continue
+                for local, scope in targets:
+                    if scope is not tree and local not in known[scope]:
+                        known[scope][local] = name
+                        grew = True
+        for fname, fn in functions.items():
+            for itself, made in ((False, returns), (True, returns_whole)):
+                if fname in made:
+                    continue
+                for value in own_returns(fn):
+                    refers, name = origin(value, itself)
+                    if refers and name is not None:
+                        made[fname] = name
+                        grew = True
+                        break
 
     writes, mutations, reflection = [], [], []
     for node in ast.walk(tree):
@@ -1242,11 +1320,30 @@ def module_scope_problems(tree):
                 target = root if home is tree else alias[home].get(root)
                 if target in containers:
                     mutations.append(root + '.' + node.attr + '@' + str(node.lineno))
+            elif isinstance(node.value, ast.Call):
+                # T44: f().clear() where f returns a module container
+                refers, target = origin(node.value)
+                if refers and target in containers:
+                    mutations.append(ast.unparse(node.value) + '.' + node.attr + '@' + str(node.lineno))
+        if isinstance(node, ast.Call):
+            # T44 (cycle-13 H03): a call that receives a module container, unless its callee only reads it
+            passed = [a.value if isinstance(a, ast.Starred) else a for a in node.args] + [k.value for k in node.keywords]
+            received = sorted({name for refers, name in (origin(a, True) for a in passed) if refers and name in containers})
+            callee = node.func
+            reads_only = ((isinstance(callee, ast.Name) and callee.id in NON_MUTATING_CALLS and callee.id not in module
+                           and resolves_to(callee.id, scope, tree, bindings, parents) is tree)
+                          or (isinstance(callee, ast.Attribute) and isinstance(callee.value, ast.Name)
+                              and callee.value.id + '.' + callee.attr in NON_MUTATING_QUALIFIED
+                              and resolves_to(callee.value.id, scope, tree, bindings, parents) is tree
+                              and callee.value.id in imported[tree]))
+            if received and not reads_only:
+                mutations.append(ast.unparse(callee) + '(' + ', '.join(received) + ')@' + str(node.lineno))
         name = node.id if isinstance(node, ast.Name) else node.attr if isinstance(node, ast.Attribute) else None
         if name is not None and ((name.startswith('__') and name.endswith('__') and name not in ALLOWED_DUNDERS)
                                  or (isinstance(node, ast.Name) and name in NAMESPACE_BUILTINS
                                      and resolves_to(name, scope, tree, bindings, parents) is tree)):
             reflection.append(name + '@' + str(node.lineno))
+    mutations += ['a mutable element of a module container@' + str(item.lineno) for item in held]
     problems.update(writes_a_module_object=sorted(set(writes)), mutates_a_module_container=sorted(set(mutations)),
                     reflection=sorted(set(reflection)))
     return problems
@@ -1306,10 +1403,15 @@ def census_totals(source, before):
                    'validator': dict(sorted(whole.get(name, Counter()).items()))} for name in names}
 
 
-def check_coverage(repo, test_names):
+def check_coverage(repo, test_names, expected_sha=None):
+    """Coverage of the bytes at repo/REL. With expected_sha (T45, cycle-13 H06), those bytes must be the ones the
+    corpus copied at its start and ran every behavioural test on: a file that changed during the run is refused,
+    so a passing corpus never certifies bytes it did not test."""
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
-    validate_coverage((repo / REL).read_bytes(), before,
-                      json.loads((repo / COVERAGE).read_bytes()), test_names, frozen=frozen_source(repo))
+    raw = (repo / REL).read_bytes()
+    if expected_sha is not None and sha(raw) != expected_sha:
+        raise AssertionError('validator bytes changed during the corpus: tested ' + expected_sha + ', now ' + sha(raw))
+    validate_coverage(raw, before, json.loads((repo / COVERAGE).read_bytes()), test_names, frozen=frozen_source(repo))
 
 
 @lru_cache(maxsize=16)
@@ -1321,7 +1423,8 @@ def coverage_model(source, before):
     previous, _ = predicate_supplement(before, '', [])
     counterparts, occurrence_totals = occurrence_map(source, before)
     previous_nodes = {r['site_id']: r for r in previous}
-    assert set(counterparts.values()) <= set(previous_nodes), 'occurrence map names no historical node'
+    if not (set(counterparts.values()) <= set(previous_nodes)):
+        raise AssertionError('occurrence map names no historical node')
     return ({r['site_id']: r for r in actual + supplement}, touched, previous_nodes,
             counterparts, occurrence_totals, changed_line_inventory(source, before),
             historical_line_inventory(source, before), census_totals(source, before))
@@ -1377,18 +1480,38 @@ def preservation_problems(rows, counterparts):
 def _group_check(rows, expected, label, identity_fields, outcome=True):
     """Every expected identity has exactly one row and every row an expected identity, with its reviewed reason."""
     recorded = {row['site_id']: row for row in rows}
-    assert len(recorded) == len(rows), 'duplicate ' + label
+    if not (len(recorded) == len(rows)):
+        raise AssertionError('duplicate ' + label)
     missing, stale = set(expected) - set(recorded), set(recorded) - set(expected)
-    assert not missing and not stale, (label + ' missing=' + repr(sorted(missing)) + ' stale=' + repr(sorted(stale)))
+    if not (not missing and not stale):
+        raise AssertionError(label + ' missing=' + repr(sorted(missing)) + ' stale=' + repr(sorted(stale)))
     for site, identity in expected.items():
         row = recorded[site]
-        assert all(row.get(k) == identity[k] for k in identity_fields), ('changed ' + label, site)
+        if not (all(row.get(k) == identity[k] for k in identity_fields)):
+            raise AssertionError(('changed ' + label, site))
         if outcome:
-            assert row.get('outcome') == identity['required_outcome'], (label + ' outcome', site, row.get('outcome'))
-        assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing ' + label + ' reason', site)
+            if not (row.get('outcome') == identity['required_outcome']):
+                raise AssertionError((label + ' outcome', site, row.get('outcome')))
+        if not (isinstance(row.get('reason'), str) and row['reason'].strip()):
+            raise AssertionError(('missing ' + label + ' reason', site))
+
+
+# T45 (cycle-13 H02): a PEP 263 coding declaration, as the tokenizer finds one on line 1 or 2
+CODING_DECLARATION = re.compile(rb'^[ \t\f]*#.*?coding[:=][ \t]*[-\w.]+')
+
+
+def line_endings(raw):
+    """How the lines of these bytes end (T45, cycle-13 H01): CRLF, a bare LF and a lone CR, counted."""
+    crlf = raw.count(b'\r\n')
+    return {'crlf': crlf, 'lf': raw.count(b'\n') - crlf, 'cr': raw.count(b'\r') - crlf}
 
 
 def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=None):
+    # T45 (cycle-13 H02): the checker reads V's bytes as the interpreter does. A coding declaration or a byte-order
+    # mark would make the AST reviewed here differ from the code a script run or an import executes, so either one
+    # is refused before anything is parsed.
+    if raw.startswith(codecs.BOM_UTF8) or any(CODING_DECLARATION.match(line) for line in raw.split(b'\n', 2)[:2]):
+        raise AssertionError('validator declares a source encoding (a coding line or a byte-order mark)')
     try:
         source = raw.decode()
         tree = ast.parse(source)
@@ -1397,105 +1520,160 @@ def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=N
     # The class table closes the census: an unlisted class, a truth-carrying
     # class without a census mechanism, or a refused class in V fails first.
     classes = ast_class_problems(tree, ast_classes)
-    assert not any(classes.values()), 'ast class table ' + json.dumps(classes, sort_keys=True)
-    assert table['ast_classes'] == ast_class_summary(ast_classes), 'changed ast class table summary'
+    if not (not any(classes.values())):
+        raise AssertionError('ast class table ' + json.dumps(classes, sort_keys=True))
+    if not (table['ast_classes'] == ast_class_summary(ast_classes)):
+        raise AssertionError('changed ast class table summary')
     # Round 12 (CA2-C12-B01, N02): every module name has one binding, the one
     # the checker reads and the script runs, and module objects are written
     # only by it. Nothing in the table can waive this.
     bindings = binding_problems(source, before)
-    assert not any(bindings.values()), 'module-level binding refused ' + json.dumps(bindings, sort_keys=True)
+    if not (not any(bindings.values())):
+        raise AssertionError('module-level binding refused ' + json.dumps(bindings, sort_keys=True))
     # Round 12 (CA2-C12-N01): the table pins every line of the frozen
     # validator, and every line inserted, changed, deleted or replaced relative
     # to it needs a reviewed record. An edit with the table unchanged stops here.
     frozen = frozen_source() if frozen is None else frozen
-    assert table['line_pins'] == line_pins(frozen), 'line pins are not the frozen validator'
+    if not (table['line_pins'] == line_pins(frozen)):
+        raise AssertionError('line pins are not the frozen validator')
     _group_check(table['frozen_lines'], frozen_line_inventory(source, frozen), 'frozen lines', FROZEN_IDENTITY,
                  outcome=False)
     (expected, touched, previous_nodes, counterparts, occurrence_totals,
      changed, historical, census) = coverage_model(source, before)
-    assert table['touched_functions'] == touched, 'changed touched-function inventory'
+    if not (table['touched_functions'] == touched):
+        raise AssertionError('changed touched-function inventory')
     rows = table['sites'] + table['supplement']
     recorded = {row['site_id']: row for row in rows}
-    assert len(recorded) == len(rows), 'duplicate coverage site'
+    if not (len(recorded) == len(rows)):
+        raise AssertionError('duplicate coverage site')
     missing, stale = set(expected) - set(recorded), set(recorded) - set(expected)
-    assert not missing and not stale, ('coverage sites missing=' + repr(sorted(missing))
+    if not (not missing and not stale):
+        raise AssertionError('coverage sites missing=' + repr(sorted(missing))
                                        + ' stale=' + repr(sorted(stale)))
     for site, identity in expected.items():
         row = recorded[site]
-        assert all(row.get(k) == value for k, value in identity.items()), ('changed site', site)
-        assert row['evidence'], ('missing evidence', site)
+        if not (all(row.get(k) == value for k, value in identity.items())):
+            raise AssertionError(('changed site', site))
+        if not (row['evidence']):
+            raise AssertionError(('missing evidence', site))
         if row['outcome'] == 'killed by':
-            assert row['killed_by'] and set(row['killed_by']) <= test_names, ('unknown test', site)
-            assert row['cut'], ('missing narrow cut', site)
+            if not (row['killed_by'] and set(row['killed_by']) <= test_names):
+                raise AssertionError(('unknown test', site))
+            if not (row['cut']):
+                raise AssertionError(('missing narrow cut', site))
         else:
-            assert row['outcome'] in {'same-predicate duplicate', 'implied', 'frozen-input only',
-                                      'structural', 'non-predicate data operation', 'preserved August predicate'}
-            assert row['reason'], ('missing survivor explanation', site)
+            if not (row['outcome'] in {'same-predicate duplicate', 'implied', 'frozen-input only',
+                                      'structural', 'non-predicate data operation', 'preserved August predicate'}):
+                raise AssertionError()
+            if not (row['reason']):
+                raise AssertionError(('missing survivor explanation', site))
             if row['outcome'] == 'non-predicate data operation':
-                assert row['data_flow'], ('missing data-flow evidence', site)
+                if not (row['data_flow']):
+                    raise AssertionError(('missing data-flow evidence', site))
             if row['outcome'] == 'preserved August predicate':
-                assert row['baseline_expression'] == row['expression']
+                if not (row['baseline_expression'] == row['expression']):
+                    raise AssertionError()
                 baseline = previous_nodes[row['baseline_site_id']]
-                assert baseline['line'] == row['baseline_line']
-                assert all(baseline[k] == row[k] for k in ('function', 'column', 'expression', 'node_type')), site
+                if not (baseline['line'] == row['baseline_line']):
+                    raise AssertionError()
+                if not (all(baseline[k] == row[k] for k in ('function', 'column', 'expression', 'node_type'))):
+                    raise AssertionError(site)
     # Expression equality above is necessary but not sufficient: the claimed
     # baseline must be the computed counterpart of this very node, once.
     problems = preservation_problems(rows, counterparts)
-    assert not any(problems.values()), 'preserved occurrence mismatch ' + json.dumps(problems, sort_keys=True)
-    assert table['totals']['occurrence_map'] == dict(
-        occurrence_totals, preserved_rows_matched=sum(r['outcome'] == 'preserved August predicate' for r in rows)), \
-        'changed occurrence-map totals'
+    if not (not any(problems.values())):
+        raise AssertionError('preserved occurrence mismatch ' + json.dumps(problems, sort_keys=True))
+    if not (table['totals']['occurrence_map'] == dict(
+        occurrence_totals, preserved_rows_matched=sum(r['outcome'] == 'preserved August predicate' for r in rows))):
+        raise AssertionError('changed occurrence-map totals')
     # N02, option A: every node on an inserted or changed line of a unit has a
     # row (round 12: every node of a function new since CA-SEAL), and every
     # CA-SEAL line without a counterpart a reason.
     refused = sorted(s for s, r in changed.items() if r['required_outcome'] == REFUSED)
-    assert not refused, 'truth-carrying node on a changed line without a census row ' + repr(refused)
+    if not (not refused):
+        raise AssertionError('truth-carrying node on a changed line without a census row ' + repr(refused))
     changed_rows = {row['site_id']: row for row in table['changed_line_nodes']}
-    assert len(changed_rows) == len(table['changed_line_nodes']), 'duplicate changed-line row'
+    if not (len(changed_rows) == len(table['changed_line_nodes'])):
+        raise AssertionError('duplicate changed-line row')
     missing, stale = set(changed) - set(changed_rows), set(changed_rows) - set(changed)
-    assert not missing and not stale, ('changed-line nodes missing=' + repr(sorted(missing))
+    if not (not missing and not stale):
+        raise AssertionError('changed-line nodes missing=' + repr(sorted(missing))
                                        + ' stale=' + repr(sorted(stale)))
     for site, identity in changed.items():
         row = changed_rows[site]
-        assert all(row.get(k) == identity[k] for k in CHANGED_IDENTITY), ('changed changed-line row', site)
-        assert row['outcome'] == identity['required_outcome'], ('changed-line outcome', site, row['outcome'])
-        assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing changed-line reason', site)
+        if not (all(row.get(k) == identity[k] for k in CHANGED_IDENTITY)):
+            raise AssertionError(('changed changed-line row', site))
+        if not (row['outcome'] == identity['required_outcome']):
+            raise AssertionError(('changed-line outcome', site, row['outcome']))
+        if not (isinstance(row.get('reason'), str) and row['reason'].strip()):
+            raise AssertionError(('missing changed-line reason', site))
     historical_rows = {row['site_id']: row for row in table['historical_lines']}
-    assert len(historical_rows) == len(table['historical_lines']), 'duplicate historical-line record'
+    if not (len(historical_rows) == len(table['historical_lines'])):
+        raise AssertionError('duplicate historical-line record')
     missing, stale = set(historical) - set(historical_rows), set(historical_rows) - set(historical)
-    assert not missing and not stale, ('historical lines missing=' + repr(sorted(missing))
+    if not (not missing and not stale):
+        raise AssertionError('historical lines missing=' + repr(sorted(missing))
                                        + ' stale=' + repr(sorted(stale)))
     for site, identity in historical.items():
         row = historical_rows[site]
-        assert all(row.get(k) == identity[k] for k in HISTORICAL_IDENTITY), ('changed historical record', site)
-        assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing historical reason', site)
+        if not (all(row.get(k) == identity[k] for k in HISTORICAL_IDENTITY)):
+            raise AssertionError(('changed historical record', site))
+        if not (isinstance(row.get('reason'), str) and row['reason'].strip()):
+            raise AssertionError(('missing historical reason', site))
     # Round 12 (CA2-C12-B02): the table is total. Census rows, changed-line
     # rows and node rows partition every positioned node of V, and every other
     # node is of a class recorded inside a positioned row.
     nodes, partition = node_model(source, before)
-    assert not any(partition['problems'].values()), 'node partition ' + json.dumps(partition['problems'], sort_keys=True)
+    if not (not any(partition['problems'].values())):
+        raise AssertionError('node partition ' + json.dumps(partition['problems'], sort_keys=True))
     refused = sorted(s for s, r in nodes.items() if r['required_outcome'] == REFUSED)
-    assert not refused, 'truth-carrying node without a census row ' + repr(refused)
+    if not (not refused):
+        raise AssertionError('truth-carrying node without a census row ' + repr(refused))
     _group_check(table['nodes'], nodes, 'node rows', NODE_IDENTITY)
     unanchored = {op: c['unanchored'] for op, c in census.items() if c['unanchored']}
-    assert not unanchored, ('truth-carrying operator without a census row', unanchored)
-    assert table['totals']['census'] == census, 'changed operator census totals'
-    assert table['totals']['changed_line_nodes'] == changed_line_totals(table['changed_line_nodes'])
-    assert table['totals']['historical_lines'] == historical_line_totals(table['historical_lines'])
-    assert table['totals']['nodes'] == node_totals(table['nodes']), 'changed node totals'
-    assert table['totals']['node_partition'] == partition_totals(partition), 'changed node partition totals'
-    assert table['totals']['frozen_lines'] == frozen_line_totals(table['frozen_lines']), 'changed frozen-line totals'
-    assert table['totals']['line_pins'] == pin_totals(table['line_pins']), 'changed line-pin totals'
-    assert len(table['prior_survivors']) == 84
-    assert table['validator_sha256'] == sha(raw), 'validator is not frozen'
-    assert table['totals']['walker_sites'] == len(table['sites'])
-    assert table['totals']['supplement_rows'] == sum(r['site_id'].startswith('supplement:') for r in expected.values())
-    assert table['totals']['combined_sites'] == len(expected)
+    if not (not unanchored):
+        raise AssertionError(('truth-carrying operator without a census row', unanchored))
+    if not (table['totals']['census'] == census):
+        raise AssertionError('changed operator census totals')
+    if not (table['totals']['changed_line_nodes'] == changed_line_totals(table['changed_line_nodes'])):
+        raise AssertionError()
+    if not (table['totals']['historical_lines'] == historical_line_totals(table['historical_lines'])):
+        raise AssertionError()
+    if not (table['totals']['nodes'] == node_totals(table['nodes'])):
+        raise AssertionError('changed node totals')
+    if not (table['totals']['node_partition'] == partition_totals(partition)):
+        raise AssertionError('changed node partition totals')
+    if not (table['totals']['frozen_lines'] == frozen_line_totals(table['frozen_lines'])):
+        raise AssertionError('changed frozen-line totals')
+    if not (table['totals']['line_pins'] == pin_totals(table['line_pins'])):
+        raise AssertionError('changed line-pin totals')
+    if not (len(table['prior_survivors']) == 84):
+        raise AssertionError()
+    if not (table['validator_sha256'] == sha(raw)):
+        raise AssertionError('validator is not frozen')
+    # T45 (cycle-13 H01): the line pins and frozen-line records compare text, and the parser reads CRLF, LF and a
+    # lone CR alike, so line endings are held to the frozen validator's own: a kind of ending F does not use (F is
+    # CRLF throughout) is refused, and an edit of an ending cannot pass with only validator_sha256 refreshed.
+    used, frozen_used = line_endings(raw), line_endings(frozen.encode())
+    foreign = sorted(kind for kind, count in used.items() if count and not frozen_used[kind])
+    if foreign:
+        raise AssertionError('validator line endings differ from the frozen validator: ' + json.dumps(
+            {'validator': used, 'frozen': frozen_used}, sort_keys=True))
+    if not (table['totals']['walker_sites'] == len(table['sites'])):
+        raise AssertionError()
+    if not (table['totals']['supplement_rows'] == sum(r['site_id'].startswith('supplement:') for r in expected.values())):
+        raise AssertionError()
+    if not (table['totals']['combined_sites'] == len(expected)):
+        raise AssertionError()
     outcomes = {outcome: sum(r['outcome'] == outcome for r in rows) for outcome in {r['outcome'] for r in rows}}
-    assert table['totals']['outcomes'] == outcomes
-    assert table['totals']['node_types'] == dict(Counter(r['node_type'] for r in table['supplement']))
-    assert table['totals']['node_outcomes'] == dict(Counter(r['outcome'] for r in table['supplement']))
-    assert table['totals']['unclassified'] == 0
+    if not (table['totals']['outcomes'] == outcomes):
+        raise AssertionError()
+    if not (table['totals']['node_types'] == dict(Counter(r['node_type'] for r in table['supplement']))):
+        raise AssertionError()
+    if not (table['totals']['node_outcomes'] == dict(Counter(r['outcome'] for r in table['supplement']))):
+        raise AssertionError()
+    if not (table['totals']['unclassified'] == 0):
+        raise AssertionError()
 
 
 def check_insertion_probe(repo, test_names, statement, return_function):
@@ -1529,11 +1707,13 @@ def insertion_probe(raw, before, table_raw, test_names, statement, return_functi
     recorded = {r['site_id'] for r in table['sites'] + table['supplement']}
     missing = {r['site_id'] for r in walker + supplement} - recorded
     inserted = [r for r in supplement if r['line'] == line]
-    assert inserted and all(r['site_id'] in missing for r in inserted), inserted
+    if not (inserted and all(r['site_id'] in missing for r in inserted)):
+        raise AssertionError(inserted)
     try:
         validate_coverage(altered_raw, before, table, test_names, frozen=frozen)
     except AssertionError as exc:
-        assert 'coverage sites missing=' in str(exc) and str(sorted(missing)) in str(exc), str(exc)
+        if not ('coverage sites missing=' in str(exc) and str(sorted(missing)) in str(exc)):
+            raise AssertionError(str(exc))
     else:
         raise AssertionError('unlisted insertion passed coverage')
     return missing
@@ -1664,7 +1844,8 @@ def forged_preservation(raw, before, table_raw, label, frozen=None):
         expect['not_an_unchanged_occurrence'] = sorted(
             r['site_id'] for r in table['supplement'] if r['outcome'] == PRESERVED and r['function'] == 'main'
             and line < r['line'] <= body.end_lineno)
-        assert expect['not_an_unchanged_occurrence']
+        if not (expect['not_an_unchanged_occurrence']):
+            raise AssertionError()
     else:
         raise ValueError('unknown preservation probe ' + label)
     altered = '\n'.join(lines)
@@ -1717,12 +1898,14 @@ def preservation_probe(raw, before, table_raw, test_names, label, frozen=None):
     try:
         validate_coverage(altered_raw, before, table, test_names, frozen=frozen)
     except AssertionError as exc:
-        assert str(exc).startswith(prefix), str(exc)
+        if not (str(exc).startswith(prefix)):
+            raise AssertionError(str(exc))
         problems = json.loads(str(exc)[len(prefix):])
     else:
         raise AssertionError('forged preservation passed coverage: ' + label)
     for key, sites in expect.items():
-        assert set(sites) <= set(problems[key]) and (sites or not problems[key]), (label, key, problems)
+        if not (set(sites) <= set(problems[key]) and (sites or not problems[key])):
+            raise AssertionError((label, key, problems))
     return problems
 
 
@@ -1859,6 +2042,21 @@ EDIT_PROBES = {
                                            'recount_outcomes: globals()["HOLDING_AUTHOR"] = "/root/other"'),
     'binding_alias_method_new_function': ('binding', BINDING,
                                           'recount_outcomes: fields = EVIDENCE_FIELDS, then fields.clear()'),
+    # T44 (cycle-13 H03): a module object mutated through a call that receives it, and through a call's result,
+    # each with every row forged
+    'binding_unbound_method_call_new_function': ('binding', BINDING,
+                                                 'recount_outcomes: list.clear(EVIDENCE_FIELDS), with every row forged'),
+    'binding_call_result_new_function': ('binding', BINDING,
+                                         'module: def pm_fields(): return EVIDENCE_FIELDS, and recount_outcomes: '
+                                         'pm_fields().clear(), with every row forged'),
+    # T45 (cycle-13 H01, H02): what the parser reads alike and the checker compared as text, each with every row
+    # forged and validator_sha256 refreshed, so only the new rule can refuse
+    'encoding_declaration_inserted': ('encoding', 'validator declares a source encoding',
+                                      'line 2: # -*- coding: latin-1 -*- inserted, with every row forged'),
+    'line_ending_crlf_to_lf': ('endings', 'validator line endings differ from the frozen validator',
+                               "line 1's CRLF made a bare LF, with every row forged and validator_sha256 refreshed"),
+    'line_ending_crlf_to_cr': ('endings', 'validator line endings differ from the frozen validator',
+                               "line 1's CRLF made a lone CR, with every row forged and validator_sha256 refreshed"),
 }
 # The non-empty problem lists each binding probe must produce, and nothing
 # else; None means any non-empty list (its entries carry line numbers).
@@ -1880,6 +2078,8 @@ BINDING_EXPECTED = {
     'binding_star_import': {'not_a_declaration': None},
     'binding_globals_write_new_function': {'writes_a_module_object': None, 'reflection': None},
     'binding_alias_method_new_function': {'mutates_a_module_container': None},
+    'binding_unbound_method_call_new_function': {'mutates_a_module_container': None},
+    'binding_call_result_new_function': {'mutates_a_module_container': None},
 }
 _AUG = {'bitor': '|=', 'bitand': '&=', 'bitxor': '^='}
 
@@ -1913,7 +2113,8 @@ def edit_probe_source(source, label):
         return insert(find('post_august_validator_pin', 'if (isinstance(receipt, dict) and isinstance(dl077, dict)'),
                       '        anchors = anchors[:1]')
     if label == 'changed_rebound_input':
-        assert lines[loop + 1].strip() == 'if actual_ets != expected_ets:'
+        if not (lines[loop + 1].strip() == 'if actual_ets != expected_ets:'):
+            raise AssertionError()
         return insert(loop + 2, '        actual_ets = expected_ets')
     if label == 'changed_inserted_continue':
         return insert(loop + 1, '        continue')
@@ -1924,6 +2125,19 @@ def edit_probe_source(source, label):
         return insert(cards, '    globals()["HOLDING_AUTHOR"] = "/root/other"')
     if label == 'binding_alias_method_new_function':
         return insert(cards, '    fields = EVIDENCE_FIELDS', '    fields.clear()')
+    if label == 'binding_unbound_method_call_new_function':
+        return insert(cards, '    list.clear(EVIDENCE_FIELDS)')
+    if label == 'encoding_declaration_inserted':
+        return insert(2, '# -*- coding: latin-1 -*-')
+    if label.startswith('line_ending_'):
+        return '\n'.join(lines), [], []     # (the text is unchanged; edit_probe changes one ending in the bytes)
+    if label == 'binding_call_result_new_function':
+        # (two insertions: a module-level function returning the container, then its result cleared)
+        at = next(i for i, text in enumerate(lines, 1) if text.startswith('MULTI_FAMILY_AUTHOR = '))
+        added = ['def pm_fields():', '    return EVIDENCE_FIELDS']
+        shifted = lines[:at] + added + lines[at:]
+        return ('\n'.join(shifted[:cards + 1] + ['    pm_fields().clear()'] + shifted[cards + 1:]),
+                [at + 1, at + 2, cards + 2], [])
     if label == 'binding_evidence_fields_truncation':
         third = find('third_change_validator_pin', 'third = recount_object(REPO / MULTI_FAMILY_RECEIPT)')
         return insert(third + 1, '        EVIDENCE_FIELDS[{"pm_fields": 12, **receipt}["pm_fields"]:] = []')
@@ -1934,10 +2148,12 @@ def edit_probe_source(source, label):
         return insert(lambda_line, indent + '# probe comment')
     if label == 'nodes_untouched_function_respaced':
         text = lines[lambda_line - 1]
-        assert text.count(', b""') == 1, text
+        if not (text.count(', b""') == 1):
+            raise AssertionError(text)
         respaced = text.replace(', b""', ',  b""')
-        assert ast.dump(ast.parse(source)) == ast.dump(ast.parse('\n'.join(
-            lines[:lambda_line - 1] + [respaced] + lines[lambda_line:])))
+        if not (ast.dump(ast.parse(source)) == ast.dump(ast.parse('\n'.join(
+            lines[:lambda_line - 1] + [respaced] + lines[lambda_line:])))):
+            raise AssertionError()
         return '\n'.join(lines[:lambda_line - 1] + [respaced] + lines[lambda_line:]), [lambda_line], []
     if label.startswith('binding_duplicate_def_'):
         name = label[len('binding_duplicate_def_'):]
@@ -1949,7 +2165,8 @@ def edit_probe_source(source, label):
         else:
             weak = lines[first - 1:fn.body[0].lineno - 1] + ['    return []']
             weak += [''] * (len(honest) - len(weak))
-        assert lines[-2:] == ['    raise SystemExit(main())', ''] or lines[-1] == '    raise SystemExit(main())', lines[-3:]
+        if not (lines[-2:] == ['    raise SystemExit(main())', ''] or lines[-1] == '    raise SystemExit(main())'):
+            raise AssertionError(lines[-3:])
         end = len(lines) - (1 if lines[-1] == '' else 0)
         altered = lines[:first - 1] + weak + lines[last:end] + ['', ''] + honest + lines[end:]
         return '\n'.join(altered), list(range(first, first + len(weak))), []
@@ -1998,6 +2215,8 @@ def edit_probe(raw, before, table_raw, test_names, label, frozen=None):
     old_lines = source_lines(source)
     altered, edited, deleted = edit_probe_source(source, label)
     altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
+    if label in ('line_ending_crlf_to_lf', 'line_ending_crlf_to_cr'):
+        altered_raw = altered_raw.replace(b'\r\n', b'\n' if label.endswith('_lf') else b'\r', 1)
     line_map = {}
     for b in difflib.SequenceMatcher(None, old_lines, source_lines(altered), autojunk=False).get_matching_blocks():
         for k in range(b.size):
@@ -2013,24 +2232,30 @@ def edit_probe(raw, before, table_raw, test_names, label, frozen=None):
         nodes = node_model(altered_raw.decode(), before)[0]
     if group == 'census':
         named = sorted(s for s, r in expected.items() if r.get('line') in edited)
-        assert named and all(expected[s]['node_type'].split('(')[0] in ('AugAssign', 'UnaryOp') for s in named), named
+        if not (named and all(expected[s]['node_type'].split('(')[0] in ('AugAssign', 'UnaryOp') for s in named)):
+            raise AssertionError(named)
     elif group == 'changed_line_nodes':
         named = sorted(s for s, r in changed.items() if r['line'] in edited)
         if prefix.startswith('truth-carrying'):
             named = sorted(s for s in named if changed[s]['required_outcome'] == REFUSED)
-        assert named, label
+        if not (named):
+            raise AssertionError(label)
     elif group == 'historical_lines':
-        assert deleted and not set(deleted) & set(line_map), deleted
+        if not (deleted and not set(deleted) & set(line_map)):
+            raise AssertionError(deleted)
         named = sorted(s for s, r in historical.items() if r['mark'] == 'deleted')
-        assert len(named) == len(deleted) and sorted(historical[s]['text'] for s in named) == sorted(
-            old_lines[n - 1] for n in deleted), (named, deleted)
+        if not (len(named) == len(deleted) and sorted(historical[s]['text'] for s in named) == sorted(
+            old_lines[n - 1] for n in deleted)):
+            raise AssertionError((named, deleted))
     elif group == 'frozen_lines':
         named = sorted(frozen_records)
-        assert sorted((r['mark'], r['line']) for r in frozen_records.values()) == sorted(
-            [('deleted', n) for n in deleted] + [('inserted', n) for n in edited]), frozen_records
+        if not (sorted((r['mark'], r['line']) for r in frozen_records.values()) == sorted(
+            [('deleted', n) for n in deleted] + [('inserted', n) for n in edited])):
+            raise AssertionError(frozen_records)
     elif group == 'nodes':
         named = sorted(s for s, r in nodes.items() if r['line'] in edited)
-        assert named, label
+        if not (named):
+            raise AssertionError(label)
     if modelled:
         forge_census(altered_raw, before, table, label, omit=set(named) if group == 'census' else ())
         forge_records(altered_raw, before, table, label, omit=set(named), frozen=frozen)
@@ -2041,20 +2266,29 @@ def edit_probe(raw, before, table_raw, test_names, label, frozen=None):
         message = str(exc)
     else:
         raise AssertionError('edit probe passed coverage: ' + label)
-    assert message.startswith(prefix), (label, message[:400])
+    if not (message.startswith(prefix)):
+        raise AssertionError((label, message[:400]))
     if group == 'none':
-        assert json.loads(message[len(prefix):])['refused_present'] == ['Global'], message
+        if not (json.loads(message[len(prefix):])['refused_present'] == ['Global']):
+            raise AssertionError(message)
     elif group == 'binding':
         problems = {k: v for k, v in json.loads(message[len(prefix):]).items() if v}
         want = BINDING_EXPECTED[label]
-        assert set(problems) == set(want) and all(v is None or problems[k] == v for k, v in want.items()), problems
+        if not (set(problems) == set(want) and all(v is None or problems[k] == v for k, v in want.items())):
+            raise AssertionError(problems)
     elif group == 'census':
         # The census identity alone refuses: every other inserted node is forged.
-        assert message == 'coverage sites missing=' + repr(named) + ' stale=[]', message[:400]
+        if not (message == 'coverage sites missing=' + repr(named) + ' stale=[]'):
+            raise AssertionError(message[:400])
+    elif group in ('encoding', 'endings'):
+        # T45: the rule itself refuses (its prefix, checked above); every row is forged and nothing else is named
+        pass
     elif prefix.startswith('truth-carrying'):
-        assert message == prefix + repr(named), message[:400]
+        if not (message == prefix + repr(named)):
+            raise AssertionError(message[:400])
     else:
-        assert message == prefix + repr(named) + ' stale=[]', message[:400]
+        if not (message == prefix + repr(named) + ' stale=[]'):
+            raise AssertionError(message[:400])
     return {'label': label, 'refusal': message[:240], 'named': named}
 
 
@@ -2079,11 +2313,13 @@ def check_class_table_probe(repo, test_names, label):
     try:
         validate_coverage((repo / REL).read_bytes(), before, table, test_names, ast_classes=edit(AST_CLASSES))
     except AssertionError as exc:
-        assert str(exc).startswith(prefix), str(exc)[:400]
+        if not (str(exc).startswith(prefix)):
+            raise AssertionError(str(exc)[:400])
         problems = json.loads(str(exc)[len(prefix):])
     else:
         raise AssertionError('edited class table passed coverage: ' + label)
-    assert {k: v for k, v in problems.items() if v} == named, problems
+    if not ({k: v for k, v in problems.items() if v} == named):
+        raise AssertionError(problems)
     return problems
 
 
@@ -2092,13 +2328,17 @@ def check_ast_class_table(repo):
     raw = (repo / REL).read_bytes()
     tree = ast.parse(raw.decode())
     problems = ast_class_problems(tree)
-    assert not any(problems.values()), problems
+    if not (not any(problems.values())):
+        raise AssertionError(problems)
     running = ast_class_names()
-    assert set(running) == set(AST_CLASSES), sorted(set(running) ^ set(AST_CLASSES))
+    if not (set(running) == set(AST_CLASSES)):
+        raise AssertionError(sorted(set(running) ^ set(AST_CLASSES)))
     present = {type(n).__name__ for n in ast.walk(tree)}
-    assert not any(category(n) == REFUSED for n in present)
+    if not (not any(category(n) == REFUSED for n in present)):
+        raise AssertionError()
     truth = sorted(n for n, (c, _) in AST_CLASSES.items() if c == TRUTH)
-    assert all(census_mechanism(n) for n in truth), truth
+    if not (all(census_mechanism(n) for n in truth)):
+        raise AssertionError(truth)
     return {'python': sys.version.split()[0], 'table_built_for': AST_TABLE_PYTHON, 'classes': len(running),
             'summary': ast_class_summary()}
 
@@ -2149,32 +2389,40 @@ def kept(x):
     old = {r['site_id']: r for r in predicate_supplement(before, '', [])[0]}
     mapped = sorted((r['line'], r['expression'], r['node_type'], old[counterparts[r['site_id']]]['line'])
                     for r in rows if r['site_id'] in counterparts)
-    assert mapped == [(6, 'isinstance(x, dict)', 'Call', 2), (9, 'x', 'If test', 3),
-                      (16, 'isinstance(x, int)', 'Call', 8)], mapped
-    assert totals['aligned_functions'] == 1 and totals['new_functions'] == 1, totals
-    assert totals['ineligible_nodes'] == {'changed enclosing context': 1, 'changed enclosing header': 1,
+    if not (mapped == [(6, 'isinstance(x, dict)', 'Call', 2), (9, 'x', 'If test', 3),
+                      (16, 'isinstance(x, int)', 'Call', 8)]):
+        raise AssertionError(mapped)
+    if not (totals['aligned_functions'] == 1 and totals['new_functions'] == 1):
+        raise AssertionError(totals)
+    if not (totals['ineligible_nodes'] == {'changed enclosing context': 1, 'changed enclosing header': 1,
                                           'changed handler list': 1, 'function new since CA-SEAL': 1,
-                                          'inserted or changed line': 8}, totals
-    assert len(rows) == 15 and len(set(counterparts.values())) == 3, (len(rows), counterparts)
+                                          'inserted or changed line': 8}):
+        raise AssertionError(totals)
+    if not (len(rows) == 15 and len(set(counterparts.values())) == 3):
+        raise AssertionError((len(rows), counterparts))
     # Round 11 (N02, option A): the same edit's line marks, changed-line rows
     # and CA-SEAL lines without a counterpart, the removed function included.
-    assert totals['line_marks']['kept'] == {'inserted': 4, 'changed': 3, 'deleted': 0, 'replaced': 3}, totals
-    assert totals['removed_functions'] == ['gone'], totals
+    if not (totals['line_marks']['kept'] == {'inserted': 4, 'changed': 3, 'deleted': 0, 'replaced': 3}):
+        raise AssertionError(totals)
+    if not (totals['removed_functions'] == ['gone']):
+        raise AssertionError(totals)
     changed = sorted((r['line'], r['node_class'], r['required_outcome'])
                      for r in changed_line_inventory(source, before).values())
     # Round 12 (CA2-C12-B02): every line of the new function `fresh` is an
     # inserted line, so its nodes have changed-line rows too (its call is a census row).
-    assert changed == [(1, 'FunctionDef', STRUCTURAL), (1, 'arg', STRUCTURAL), (2, 'Name', DATA), (2, 'Name', DATA),
+    if not (changed == [(1, 'FunctionDef', STRUCTURAL), (1, 'arg', STRUCTURAL), (2, 'Name', DATA), (2, 'Name', DATA),
                        (2, 'Name', DATA), (2, 'Return', STRUCTURAL),
                        (7, 'Assign', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA),
                        (8, 'Assign', DATA), (8, 'Name', DATA), (8, 'Name', DATA), (8, 'Name', DATA), (8, 'Name', DATA),
                        (10, 'Pass', STRUCTURAL), (13, 'If', STRUCTURAL), (13, 'Name', DATA),
                        (19, 'Name', DATA), (19, 'Name', DATA), (19, 'Name', DATA), (19, 'Name', DATA),
-                       (19, 'Return', STRUCTURAL)], changed
+                       (19, 'Return', STRUCTURAL)]):
+        raise AssertionError(changed)
     historical = sorted((r['function'], r['baseline_line'], r['mark'])
                         for r in historical_line_inventory(source, before).values())
-    assert historical == [('gone', 14, 'function removed'), ('gone', 15, 'function removed'),
-                          ('kept', 5, 'replaced'), ('kept', 9, 'replaced'), ('kept', 11, 'replaced')], historical
+    if not (historical == [('gone', 14, 'function removed'), ('gone', 15, 'function removed'),
+                          ('kept', 5, 'replaced'), ('kept', 9, 'replaced'), ('kept', 11, 'replaced')]):
+        raise AssertionError(historical)
 
     def mapped(source, before):
         counterparts, _ = occurrence_map(source, before)
@@ -2191,35 +2439,45 @@ def kept(x):
     # lone carriage return does.
     before = "def kept(x):\n    a = isinstance(x, dict)\n    b = isinstance(x, list)\n    return a\n"
     feed = "def kept(x):\n    s = 'p\x0cq'\n    a = isinstance(x, dict)\n    b = isinstance(x, list)\n    return a\n"
-    assert feed.splitlines().index('    a = isinstance(x, dict)') + 1 == 4
-    assert source_lines(feed).index('    a = isinstance(x, dict)') + 1 == 3
-    assert mapped(feed, before) == [(3, 'isinstance(x, dict)', 2), (4, 'isinstance(x, list)', 3)], mapped(feed, before)
-    assert records(feed, before) == ([('kept', 2, 'Assign', DATA), ('kept', 2, 'Constant', DATA),
-                                      ('kept', 2, 'Name', DATA)], []), records(feed, before)
+    if not (feed.splitlines().index('    a = isinstance(x, dict)') + 1 == 4):
+        raise AssertionError()
+    if not (source_lines(feed).index('    a = isinstance(x, dict)') + 1 == 3):
+        raise AssertionError()
+    if not (mapped(feed, before) == [(3, 'isinstance(x, dict)', 2), (4, 'isinstance(x, list)', 3)]):
+        raise AssertionError(mapped(feed, before))
+    if not (records(feed, before) == ([('kept', 2, 'Assign', DATA), ('kept', 2, 'Constant', DATA),
+                                      ('kept', 2, 'Name', DATA)], [])):
+        raise AssertionError(records(feed, before))
     copied = "def kept(x):\n    s = 'p\x0cq'\n    a = isinstance(x, dict)\n    a = isinstance(x, dict)\n    return a\n"
-    assert mapped(copied, before) == [(3, 'isinstance(x, dict)', 2)], mapped(copied, before)
-    assert records(copied, before)[1] == [('kept', 3, 'replaced')], records(copied, before)
+    if not (mapped(copied, before) == [(3, 'isinstance(x, dict)', 2)]):
+        raise AssertionError(mapped(copied, before))
+    if not (records(copied, before)[1] == [('kept', 3, 'replaced')]):
+        raise AssertionError(records(copied, before))
     lone = "def kept(x):\r    s = 1\n    a = isinstance(x, dict)\n    b = isinstance(x, list)\n    return a\n"
-    assert mapped(lone, before) == [(3, 'isinstance(x, dict)', 2), (4, 'isinstance(x, list)', 3)], mapped(lone, before)
+    if not (mapped(lone, before) == [(3, 'isinstance(x, dict)', 2), (4, 'isinstance(x, list)', 3)]):
+        raise AssertionError(mapped(lone, before))
     # N02: a deleted decorator is a CA-SEAL line without a counterpart; a
     # changed one puts the function header on a changed line.
     before = "@negate\ndef kept(x):\n    a = isinstance(x, dict)\n    return a\n"
     removed = "def kept(x):\n    a = isinstance(x, dict)\n    return a\n"
-    assert records(removed, before) == ([], [('kept', 1, 'deleted')]), records(removed, before)
+    if not (records(removed, before) == ([], [('kept', 1, 'deleted')])):
+        raise AssertionError(records(removed, before))
     other = "@other\ndef kept(x):\n    a = isinstance(x, dict)\n    return a\n"
-    assert records(other, before) == ([('kept', 1, 'Name', DATA), ('kept', 2, 'FunctionDef', STRUCTURAL)],
-                                      [('kept', 1, 'replaced')]), records(other, before)
+    if not (records(other, before) == ([('kept', 1, 'Name', DATA), ('kept', 2, 'FunctionDef', STRUCTURAL)],
+                                      [('kept', 1, 'replaced')])):
+        raise AssertionError(records(other, before))
     # The module body outside top-level functions is an aligned unit too; a
     # truth carrier there has no census row and is refused.
     before = "LIMIT = 1\n\n\ndef kept(x):\n    return isinstance(x, dict)\n"
     module = "LIMIT = 1\nLIMIT = 2\nFLAG = isinstance(LIMIT, int)\n\n\ndef kept(x):\n    return isinstance(x, dict)\n"
-    assert records(module, before) == ([
+    if not (records(module, before) == ([
         ('<module>', 2, 'Assign', DATA), ('<module>', 2, 'Constant', DATA), ('<module>', 2, 'Name', DATA),
         ('<module>', 3, 'Assign', DATA), ('<module>', 3, 'Call', REFUSED), ('<module>', 3, 'Name', DATA),
-        ('<module>', 3, 'Name', DATA), ('<module>', 3, 'Name', DATA), ('<module>', 3, 'Name', DATA)], []), \
-        records(module, before)
+        ('<module>', 3, 'Name', DATA), ('<module>', 3, 'Name', DATA), ('<module>', 3, 'Name', DATA)], [])):
+        raise AssertionError(records(module, before))
     gone = "\n\ndef kept(x):\n    return isinstance(x, dict)\n"
-    assert records(gone, before) == ([], [('<module>', 1, 'deleted')]), records(gone, before)
+    if not (records(gone, before) == ([], [('<module>', 1, 'deleted')])):
+        raise AssertionError(records(gone, before))
 
 
 def check_node_types():
@@ -2263,16 +2521,23 @@ def check_node_types():
                 'Try dispatch', 'except dispatch', 'except alternative', 'match case', 'match guard',
                 'AugAssign(BitAnd)', 'AugAssign(BitOr)', 'AugAssign(BitXor)', 'While test', 'TryStar dispatch'}
     types = Counter(r['node_type'] for r in rows)
-    assert required <= set(types), sorted(required - set(types))
+    if not (required <= set(types)):
+        raise AssertionError(sorted(required - set(types)))
     # Round 12 (CA2-C12-N03): arithmetic is a census row too, in either statement shape.
-    assert {'AugAssign(Add)', 'BinOp(Sub)'} <= set(types), types
-    assert all(types['AugAssign(' + op + ')'] == 1 for op in ('BitAnd', 'BitOr', 'BitXor')), types
+    if not ({'AugAssign(Add)', 'BinOp(Sub)'} <= set(types)):
+        raise AssertionError(types)
+    if not (all(types['AugAssign(' + op + ')'] == 1 for op in ('BitAnd', 'BitOr', 'BitXor'))):
+        raise AssertionError(types)
     calls = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call)]
-    assert sum(r['node_type'] == 'Call' for r in rows) == len(calls)
-    assert any(r['expression'] == 'unknown_predicate(flag)' for r in rows)
+    if not (sum(r['node_type'] == 'Call' for r in rows) == len(calls)):
+        raise AssertionError()
+    if not (any(r['expression'] == 'unknown_predicate(flag)' for r in rows)):
+        raise AssertionError()
     census = census_totals(source, '')
-    assert not any(c['unanchored'] for c in census.values()), census
-    assert census['BitOr']['touched_functions'] == {'AugAssign': 1, 'BinOp': 1}, census['BitOr']
+    if not (not any(c['unanchored'] for c in census.values())):
+        raise AssertionError(census)
+    if not (census['BitOr']['touched_functions'] == {'AugAssign': 1, 'BinOp': 1}):
+        raise AssertionError(census['BitOr'])
 
 
 def check_module_scope_rules(repo):
@@ -2282,12 +2547,67 @@ def check_module_scope_rules(repo):
     out = {}
     for label, text in (('validator', raw.decode()), ('ca_seal', before)):
         problems = module_scope_problems(ast.parse(text))
-        assert not any(problems.values()), (label, problems)
+        if not (not any(problems.values())):
+            raise AssertionError((label, problems))
         tree = ast.parse(text)
         out[label] = {'module_names': len(scope_analysis(tree)[0][tree]), 'module_statements': len(tree.body)}
     problems = binding_problems(raw.decode(), before)
-    assert not any(problems.values()), problems
+    if not (not any(problems.values())):
+        raise AssertionError(problems)
     return out
+
+
+def check_receipt_writer_bytes(repo):
+    """T45 (cycle-13 H04): the receipt writer runs the very bytes whose digest it records. A copy of V gets a planted
+    unchecked-hash .pyc compiled from other bytes: the source loader runs the planted code (the shape H04 names, so
+    the control bites), and write_recount_receipt.load_validator runs V's own bytes and returns exactly them."""
+    import py_compile
+    spec = importlib.util.spec_from_file_location('ca_seal2_receipt_writer', repo / 'reports/event-authority-20261105/write_recount_receipt.py')
+    writer = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(writer)
+    base = Path.home() / 'PM-Experiments'
+    base.mkdir(exist_ok=True)
+    raw = (repo / REL).read_bytes()
+    with tempfile.TemporaryDirectory(prefix='CA-SEAL2-pyc-', dir=base) as directory:
+        path = Path(directory) / Path(REL).name
+        path.write_bytes(raw)
+        planted = Path(directory) / 'planted_source.py'
+        planted.write_bytes(raw + b'\r\nPM_PLANTED_PYC = True\r\n')
+        py_compile.compile(str(planted), cfile=importlib.util.cache_from_source(str(path)), doraise=True,
+                           invalidation_mode=py_compile.PycInvalidationMode.UNCHECKED_HASH)
+        loader_spec = importlib.util.spec_from_file_location('ca_seal2_pyc_probe', path)
+        loaded = importlib.util.module_from_spec(loader_spec)
+        loader_spec.loader.exec_module(loaded)
+        if not getattr(loaded, 'PM_PLANTED_PYC', False):
+            raise AssertionError('the planted .pyc did not run through the source loader: the control does not bite')
+        try:
+            module, read = writer.load_validator(path)
+        finally:
+            sys.modules.pop('dl451_validator', None)
+        if getattr(module, 'PM_PLANTED_PYC', False) or read != raw:
+            raise AssertionError('the receipt writer ran bytes other than the ones it hashed')
+    return {'validator_sha256': sha(raw), 'planted_pyc_ran_through_the_source_loader': True, 'writer_ran_planted_pyc': False}
+
+
+def check_coverage_bytes_changed(repo, test_names):
+    """T45 (cycle-13 H06): coverage given the digest of bytes the corpus did not run refuses, and names both."""
+    other = sha(b'bytes the corpus did not run')
+    try:
+        check_coverage(repo, test_names, other)
+    except AssertionError as exc:
+        if not str(exc).startswith('validator bytes changed during the corpus: tested ' + other):
+            raise
+        return {'refusal': str(exc)[:240]}
+    raise AssertionError('coverage accepted bytes the corpus did not run')
+
+
+def check_no_asserts():
+    """T45 (cycle-13 H05): every check in this file is an explicit raise, never an assert statement, so python -O
+    (or PYTHONOPTIMIZE) removes none of them."""
+    found = [n.lineno for n in ast.walk(ast.parse(Path(__file__).read_bytes())) if isinstance(n, ast.Assert)]
+    if found:
+        raise AssertionError('assert statements in the checker at lines ' + repr(found))
+    return {'asserts': 0, 'optimize': sys.flags.optimize}
 
 
 def check_total_table_controls():
@@ -2298,22 +2618,26 @@ def check_total_table_controls():
     source = ("X = 1\nY = X / 2\nZ = 1 if X else 2\n\n\ndef same(a):\n    return a + 1\n\n\n"
               "def kept(a):\n    b = a\n    c = (lambda q: q or b)(a)\n    return b\n\n\ndef fresh(a):\n    return a\n")
     nodes, partition = node_model(source, before)
-    assert not any(partition['problems'].values()), partition
+    if not (not any(partition['problems'].values())):
+        raise AssertionError(partition)
     # 40 positioned nodes: 3 census anchors (the module's changed-line Div, and
     # kept's Call and BoolOp), 21 changed-line rows (module lines 2-3, kept's
     # line 12 and every line of the new function), 16 node rows (unchanged).
-    assert partition['positioned_nodes'] == 40 and partition['untouched_functions'] == 1, partition
-    assert partition['by_row_kind'] == {'census anchor': 3, 'changed-line row': 21, 'node row': 16}, partition
-    assert ids(nodes, ('function', 'line', 'node_class', 'baseline_line')) == [
+    if not (partition['positioned_nodes'] == 40 and partition['untouched_functions'] == 1):
+        raise AssertionError(partition)
+    if not (partition['by_row_kind'] == {'census anchor': 3, 'changed-line row': 21, 'node row': 16}):
+        raise AssertionError(partition)
+    if not (ids(nodes, ('function', 'line', 'node_class', 'baseline_line')) == [
         ('<module>', 1, 'Assign', 1, DATA), ('<module>', 1, 'Constant', 1, DATA), ('<module>', 1, 'Name', 1, DATA),
         ('kept', 10, 'FunctionDef', 8, STRUCTURAL), ('kept', 10, 'arg', 8, STRUCTURAL),
         ('kept', 11, 'Assign', 9, DATA), ('kept', 11, 'Name', 9, DATA), ('kept', 11, 'Name', 9, DATA),
         ('kept', 13, 'Name', 10, DATA), ('kept', 13, 'Return', 10, STRUCTURAL),
         ('same', 6, 'FunctionDef', 4, STRUCTURAL), ('same', 6, 'arg', 4, STRUCTURAL),
         ('same', 7, 'BinOp', 5, UNCHANGED_TRUTH), ('same', 7, 'Constant', 5, DATA), ('same', 7, 'Name', 5, DATA),
-        ('same', 7, 'Return', 5, STRUCTURAL)], ids(nodes, ('function', 'line', 'node_class', 'baseline_line'))
+        ('same', 7, 'Return', 5, STRUCTURAL)]):
+        raise AssertionError(ids(nodes, ('function', 'line', 'node_class', 'baseline_line')))
     changed = changed_line_inventory(source, before)
-    assert ids(changed) == [
+    if not (ids(changed) == [
         ('<module>', 2, 'Assign', DATA), ('<module>', 2, 'Constant', DATA), ('<module>', 2, 'Name', DATA),
         ('<module>', 2, 'Name', DATA), ('<module>', 3, 'Assign', DATA), ('<module>', 3, 'Constant', DATA),
         ('<module>', 3, 'Constant', DATA), ('<module>', 3, 'IfExp', REFUSED), ('<module>', 3, 'Name', DATA),
@@ -2322,25 +2646,36 @@ def check_total_table_controls():
         ('fresh', 17, 'Return', STRUCTURAL),
         ('kept', 12, 'Assign', DATA), ('kept', 12, 'Lambda', STRUCTURAL), ('kept', 12, 'Name', DATA),
         ('kept', 12, 'Name', DATA), ('kept', 12, 'Name', DATA), ('kept', 12, 'Name', DATA),
-        ('kept', 12, 'arg', STRUCTURAL)], ids(changed)
+        ('kept', 12, 'arg', STRUCTURAL)]):
+        raise AssertionError(ids(changed))
     # N04: a Lambda, and a module-level IfExp, on a changed line has a row whose text keeps its body.
     texts = {(r['line'], r['node_class']): r['expression'] for r in changed.values()}
-    assert texts[(12, 'Lambda')] == 'lambda q: q or b' and texts[(3, 'IfExp')] == '1 if X else 2', texts
+    if not (texts[(12, 'Lambda')] == 'lambda q: q or b' and texts[(3, 'IfExp')] == '1 if X else 2'):
+        raise AssertionError(texts)
     census, _ = predicate_supplement(source, before, [])
-    assert sorted((r['function'], r['line'], r['node_type']) for r in census) == [
-        ('<module>', 2, 'BinOp(Div)'), ('kept', 12, 'BoolOp'), ('kept', 12, 'Call')], census
+    if not (sorted((r['function'], r['line'], r['node_type']) for r in census) == [
+        ('<module>', 2, 'BinOp(Div)'), ('kept', 12, 'BoolOp'), ('kept', 12, 'Call')]):
+        raise AssertionError(census)
     # Frozen-line records: inserted, changed, deleted, replaced, and a node-free comment line.
     frozen = "a = 1\nb = 2\nc = 3\n"
     def marks(text):
         return sorted((r['mark'], r['line'], r['text']) for r in frozen_line_inventory(text, frozen).values())
-    assert marks(frozen) == []
-    assert marks("a = 1\nx = 0\nb = 2\nc = 3\n") == [('inserted', 2, 'x = 0')]
-    assert marks("a = 1\nc = 3\n") == [('deleted', 2, 'b = 2')]
-    assert marks("a = 1\nb = 9\nc = 3\n") == [('changed', 2, 'b = 9'), ('replaced', 2, 'b = 2')]
-    assert marks("a = 1\nb = 2\nc = 3 \n") == [('changed', 3, 'c = 3 '), ('replaced', 3, 'c = 3')]
-    assert marks("a = 1\n# note\nb = 2\nc = 3\n") == [('inserted', 2, '# note')]
-    assert marks("a = 1\nc = 3\nb = 2\n") == [('deleted', 3, 'c = 3'), ('inserted', 2, 'c = 3')]
-    assert line_pins(frozen) == [{'line': i + 1, 'sha256': sha(t.encode())} for i, t in enumerate(['a = 1', 'b = 2', 'c = 3', ''])]
+    if not (marks(frozen) == []):
+        raise AssertionError()
+    if not (marks("a = 1\nx = 0\nb = 2\nc = 3\n") == [('inserted', 2, 'x = 0')]):
+        raise AssertionError()
+    if not (marks("a = 1\nc = 3\n") == [('deleted', 2, 'b = 2')]):
+        raise AssertionError()
+    if not (marks("a = 1\nb = 9\nc = 3\n") == [('changed', 2, 'b = 9'), ('replaced', 2, 'b = 2')]):
+        raise AssertionError()
+    if not (marks("a = 1\nb = 2\nc = 3 \n") == [('changed', 3, 'c = 3 '), ('replaced', 3, 'c = 3')]):
+        raise AssertionError()
+    if not (marks("a = 1\n# note\nb = 2\nc = 3\n") == [('inserted', 2, '# note')]):
+        raise AssertionError()
+    if not (marks("a = 1\nc = 3\nb = 2\n") == [('deleted', 3, 'c = 3'), ('inserted', 2, 'c = 3')]):
+        raise AssertionError()
+    if not (line_pins(frozen) == [{'line': i + 1, 'sha256': sha(t.encode())} for i, t in enumerate(['a = 1', 'b = 2', 'c = 3', ''])]):
+        raise AssertionError()
     # Module-scope rules (CA2-C12-B01, N02): each refused form, and the forms CA-SEAL uses.
     base = 'X = [1]\nD = {}\n'
     def refused(code):
@@ -2365,10 +2700,23 @@ def check_total_table_controls():
                                                                  ['mutates_a_module_container', 'reflection']),
             ('def f():\n    d = {}\n    d["a"] = 1\n    return D.get("a"), X.index(1), d\n', []),
             ('def f():\n    X = []\n    X.append(1)\n    return X\n', []),
+            # T44 (cycle-13 H03): through a call that receives the object, or through a call's result
+            ('def f():\n    list.clear(X)\n', ['mutates_a_module_container']),
+            ('def f():\n    dict.update(D, a=1)\n', ['mutates_a_module_container']),
+            ('import operator\ndef f():\n    operator.setitem(D, "a", 1)\n', ['mutates_a_module_container']),
+            ('def h(a):\n    a.clear()\ndef f():\n    h(X)\n', ['mutates_a_module_container']),
+            ('def g():\n    return X\ndef f():\n    g().clear()\n', ['mutates_a_module_container']),
+            ('def g():\n    y = X\n    return y\ndef f():\n    z = g()\n    z.append(1)\n', ['mutates_a_module_container']),
+            ('def g():\n    return X\ndef f():\n    g()[0] = 1\n', ['writes_a_module_object']),
+            ('def f(sorted):\n    return sorted(X)\n', ['mutates_a_module_container']),
+            ('Y = [[1]]\n', ['mutates_a_module_container']),
+            ('import json\ndef f():\n    out = []\n    for e in X:\n        out.append(e)\n'
+             '    return sorted(X), set(D), len(X), list(X), isinstance(X, list), json.dumps(X), out\n', []),
             ('def f():\n    class E(float):\n        def __new__(cls, t):\n            v = super().__new__(cls, t)\n'
              '            v.t = t\n            return v\n    return E\n', []),
             ('if __name__ == "__main__":\n    raise SystemExit(main())\n', [])]:
-        assert refused(code) == keys, (code, refused(code), keys)
+        if not (refused(code) == keys):
+            raise AssertionError((code, refused(code), keys))
     return {'nodes': len(nodes), 'changed': len(changed)}
 
 
@@ -2412,7 +2760,8 @@ def random_line_edits(source, count=RANDOM_EDITS, seed=RANDOM_SEED):
     edits, seen, attempts = [], set(), 0
     while len(edits) < count:
         attempts += 1
-        assert attempts < 200 * count, 'random edits: too few parseable edits'
+        if not (attempts < 200 * count):
+            raise AssertionError('random edits: too few parseable edits')
         kind, line = kinds[len(edits) % 4], rng.choice(candidates)
         text, new = lines[line - 1], list(lines)
         if kind == 'insert':
@@ -2468,9 +2817,11 @@ def check_random_edits(repo, test_names, count=RANDOM_EDITS):
         else:
             raise AssertionError('random edit passed coverage with the table unchanged: %s at V:%d' % (kind, line))
         # The table the check read is the committed one, unchanged; the file's bytes are checked after the loop.
-        assert table == pristine, 'coverage check changed the table'
+        if not (table == pristine):
+            raise AssertionError('coverage check changed the table')
         kinds[kind] += 1
-    assert sum(kinds.values()) == count and (repo / COVERAGE).read_bytes() == table_raw
+    if not (sum(kinds.values()) == count and (repo / COVERAGE).read_bytes() == table_raw):
+        raise AssertionError()
     return {'edits': count, 'by_kind': dict(sorted(kinds.items())), 'refused_by': dict(sorted(rules.items()))}
 
 
@@ -2498,7 +2849,8 @@ def run(repo, output, source_map, apply_cut=None):
         try:
             action()
         except ValueError as exc:
-            assert str(exc) == message, (message, str(exc))
+            if not (str(exc) == message):
+                raise AssertionError((message, str(exc)))
         else:
             raise AssertionError('expected controlled refusal: ' + message)
 
@@ -2514,7 +2866,9 @@ def run(repo, output, source_map, apply_cut=None):
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(raw)
             return target
-        put(REL, (repo / REL).read_bytes())
+        tested_raw = (repo / REL).read_bytes()
+        tested_sha = sha(tested_raw)    # (T45, H06: the bytes every behavioural test below runs)
+        put(REL, tested_raw)
         spec = importlib.util.spec_from_file_location('dl451_fixture', root / REL)
         v = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(v)
@@ -2522,11 +2876,14 @@ def run(repo, output, source_map, apply_cut=None):
             # CA2-C12-B01: the corpus runs the one binding the checker reads.
             tree = ast.parse((root / REL).read_bytes().decode())
             problems = module_scope_problems(tree)
-            assert not any(problems.values()), problems
+            if not (not any(problems.values())):
+                raise AssertionError(problems)
             for name, fn in top_functions(tree).items():
-                assert getattr(v, name).__code__.co_firstlineno == function_span(fn)[0], name
+                if not (getattr(v, name).__code__.co_firstlineno == function_span(fn)[0]):
+                    raise AssertionError(name)
             module_names = set(scope_analysis(tree)[0][tree])
-            assert module_names <= set(vars(v)), sorted(module_names - set(vars(v)))
+            if not (module_names <= set(vars(v))):
+                raise AssertionError(sorted(module_names - set(vars(v))))
             return len(module_names)
         record('positive_imported_bindings_match_ast', imported_bindings_match)
         if apply_cut is not None:
@@ -2593,7 +2950,8 @@ def run(repo, output, source_map, apply_cut=None):
             frozen = json.loads(frozen_receipt)
             git_sources = [name for name in frozen['inputs']
                            if name not in real_map['locations'] and not name.startswith('/')]
-            assert git_sources
+            if not (git_sources):
+                raise AssertionError()
             unavailable_source = git_sources[0]
             single_git_map = copy.deepcopy(real_map)
             # This passing parent maps all other sources to their verified bytes.
@@ -2630,43 +2988,56 @@ def run(repo, output, source_map, apply_cut=None):
             fourth_raw = fourth_path.read_bytes()
             for label, raw in [('third_oserror', None), ('third_valueerror', b'[]\n')]:
                 fourth_path.write_bytes(fourth_raw)
-                assert v.third_change_validator_pin() == v.RECOUNT_BEFORE_SHA
+                if not (v.third_change_validator_pin() == v.RECOUNT_BEFORE_SHA):
+                    raise AssertionError()
                 if raw is None:
                     fourth_path.unlink()
                 else:
                     fourth_path.write_bytes(raw)
                 def live_fallback():
-                    assert v.third_change_validator_pin() == sha((root / REL).read_bytes())
+                    if not (v.third_change_validator_pin() == sha((root / REL).read_bytes())):
+                        raise AssertionError()
                 record('negative_' + label, live_fallback)
             fourth_path.write_bytes(fourth_raw)
 
             def august_snapshot():
                 inventory = json.loads((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())
                 denominator = json.loads(v.DENOM.read_bytes())
-                assert inventory['canonical_digest_sha256'] == denominator['freeze_digest_sha256']
-                assert sha((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes()) == sha((repo / str((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').relative_to(root))).read_bytes())
+                if not (inventory['canonical_digest_sha256'] == denominator['freeze_digest_sha256']):
+                    raise AssertionError()
+                if not (sha((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes()) == sha((repo / str((v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').relative_to(root))).read_bytes())):
+                    raise AssertionError()
                 pins = v.recount_snapshot_pins()
                 observed = {('august', 'inventory_sha256'): v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json',
                             ('august', 'denominator_sha256'): v.DENOM,
                             ('recount', 'observed_receipt_sha256'): root / v.RECOUNT_RECEIPT,
                             ('recount', 'list_sha256'): root / v.RECOUNT_LIST}
                 for (snapshot, field), path in observed.items():
-                    assert pins[snapshot][field] == sha(path.read_bytes()), (snapshot, field, pins)
-                assert pins['august']['inventory_sha256'] != pins['recount']['expected_list_sha256']
+                    if not (pins[snapshot][field] == sha(path.read_bytes())):
+                        raise AssertionError((snapshot, field, pins))
+                if not (pins['august']['inventory_sha256'] != pins['recount']['expected_list_sha256']):
+                    raise AssertionError()
             record('positive_preserved_August_snapshot_own_digest', august_snapshot)
 
             denominator_raw = v.DENOM.read_bytes()
             v.DENOM.unlink()
             def missing_snapshot():
                 pins = v.recount_snapshot_pins()
-                assert pins['august']['denominator_sha256'] is None, pins
-                assert pins['august']['inventory_sha256'] == sha(
-                    (v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())
-                assert pins['recount']['observed_receipt_sha256'] == sha(frozen_receipt)
-                assert pins['recount']['list_sha256'] == sha(frozen_list)
-                assert pins['august']['receipt_sha256'] == v.AUGUST_RECEIPT_SHA
-                assert pins['recount']['expected_receipt_sha256'] == v.RECOUNT_RECEIPT_SHA
-                assert pins['recount']['expected_list_sha256'] == v.RECOUNT_LIST_SHA
+                if not (pins['august']['denominator_sha256'] is None):
+                    raise AssertionError(pins)
+                if not (pins['august']['inventory_sha256'] == sha(
+                    (v.CENSUS / 'CURRENT_SOURCE_INVENTORY.json').read_bytes())):
+                    raise AssertionError()
+                if not (pins['recount']['observed_receipt_sha256'] == sha(frozen_receipt)):
+                    raise AssertionError()
+                if not (pins['recount']['list_sha256'] == sha(frozen_list)):
+                    raise AssertionError()
+                if not (pins['august']['receipt_sha256'] == v.AUGUST_RECEIPT_SHA):
+                    raise AssertionError()
+                if not (pins['recount']['expected_receipt_sha256'] == v.RECOUNT_RECEIPT_SHA):
+                    raise AssertionError()
+                if not (pins['recount']['expected_list_sha256'] == v.RECOUNT_LIST_SHA):
+                    raise AssertionError()
             record('negative_snapshot_missing_file', missing_snapshot)
             v.DENOM.write_bytes(denominator_raw)
 
@@ -2676,7 +3047,8 @@ def run(repo, output, source_map, apply_cut=None):
             lock_parent = json.loads((root / 'Plans/Spec_Lock.json').read_bytes())
             for label in ['anchor_ssot_type', 'anchor_files_type', 'anchor_entry_type', 'anchor_sha_type']:
                 anchors()
-                assert v.recount_anchor(v.RECOUNT_CHANGE) is True
+                if not (v.recount_anchor(v.RECOUNT_CHANGE) is True):
+                    raise AssertionError()
                 bad_lock = copy.deepcopy(lock_parent)
                 if label == 'anchor_ssot_type':
                     bad_lock['canonical_ssot_hashes'] = 1
@@ -2688,10 +3060,12 @@ def run(repo, output, source_map, apply_cut=None):
                     bad_lock['canonical_ssot_hashes']['files'][-1]['sha256'] = 123
                 put('Plans/Spec_Lock.json', encoded(bad_lock))
                 def anchor_false():
-                    assert v.recount_anchor(v.RECOUNT_CHANGE) is False
+                    if not (v.recount_anchor(v.RECOUNT_CHANGE) is False):
+                        raise AssertionError()
                 record('negative_' + label, anchor_false)
             anchors()
-            assert v.recount_relative('Plans/a') == 'Plans/a'
+            if not (v.recount_relative('Plans/a') == 'Plans/a'):
+                raise AssertionError()
             record('negative_relative_type', lambda: exact_refusal(
                 lambda: v.recount_relative(['a']), 'unsafe recount source path'))
             mapped_source = next(iter(real_map['locations']))
@@ -2782,11 +3156,13 @@ def run(repo, output, source_map, apply_cut=None):
             try:
                 def optional_map_absent():
                     actual_names, actual_custody = v.recount_frozen_inputs()
-                    assert actual_names == names
-                    assert actual_custody == {
+                    if not (actual_names == names):
+                        raise AssertionError()
+                    if not (actual_custody == {
                         'receipt_sha256': v.RECOUNT_RECEIPT_SHA, 'list_sha256': v.RECOUNT_LIST_SHA,
                         'source_revision': v.RECOUNT_REVISION, 'verified_sources': 597,
-                        'source_locations': None}, actual_custody
+                        'source_locations': None}):
+                        raise AssertionError(actual_custody)
                 record('negative_optional_map_absent', optional_map_absent)
             finally:
                 os.environ['PM_EA_RECOUNT_SOURCE_MAP'] = saved_map
@@ -2835,7 +3211,8 @@ def run(repo, output, source_map, apply_cut=None):
                     anchors()
                     v.recount_change_state()
                     edited = section.replace(token, b'[removed requirement]')
-                    assert token not in edited
+                    if not (token not in edited):
+                        raise AssertionError()
                     decision_path.write_bytes(decision_raw.replace(section, edited))
                     bad = copy.deepcopy(change)
                     bad['authority_section_sha256'] = sha(edited)
@@ -3050,7 +3427,8 @@ def run(repo, output, source_map, apply_cut=None):
                         try:
                             outcomes(card_parent)
                         except ValueError as exc:
-                            assert str(exc) == 'recount decision cards unresolved: ' + json.dumps([names[0]])
+                            if not (str(exc) == 'recount decision cards unresolved: ' + json.dumps([names[0]])):
+                                raise AssertionError()
                         else:
                             raise AssertionError('valid diagnostic card must remain unresolved')
                         if label == 'missing_event_name':
@@ -3196,14 +3574,19 @@ def run(repo, output, source_map, apply_cut=None):
             record('negative_registered_and_excluded_contradiction', lambda: outcomes(excluded), True, 'contradictory')
             def single_snapshot():
                 for named in [{}, {'recount': {'complete': True}}, {'august_result_before_recount': {'pass': True}}]:
-                    assert v.build_receipt(True, True, [], {}, {}, named, True)['pass'] is False
+                    if not (v.build_receipt(True, True, [], {}, {}, named, True)['pass'] is False):
+                        raise AssertionError()
                 named = {'recount': {'complete': True}, 'august_result_before_recount': {'pass': True}}
-                assert v.build_receipt(True, True, [], {}, {}, named, True)['pass'] is True
-                assert v.build_receipt(True, True, [{'error': 'anything'}], {}, {}, named, True)['pass'] is False
-                assert v.build_receipt(False, True, [], {}, {}, named, True)['pass'] is False
+                if not (v.build_receipt(True, True, [], {}, {}, named, True)['pass'] is True):
+                    raise AssertionError()
+                if not (v.build_receipt(True, True, [{'error': 'anything'}], {}, {}, named, True)['pass'] is False):
+                    raise AssertionError()
+                if not (v.build_receipt(False, True, [], {}, {}, named, True)['pass'] is False):
+                    raise AssertionError()
                 # The newly added bool() must retain a boolean result even when
                 # an explicitly supplied false value is integer zero.
-                assert v.build_receipt(True, True, [], {}, {}, named, 0)['pass'] is False
+                if not (v.build_receipt(True, True, [], {}, {}, named, 0)['pass'] is False):
+                    raise AssertionError()
             record('combined_result_boolean_and_single_snapshot_refusals', single_snapshot)
             named_parent = {'recount': {'complete': True}, 'august_result_before_recount': {'pass': True}}
             for label, index, field in [
@@ -3213,7 +3596,8 @@ def run(repo, output, source_map, apply_cut=None):
                 ('depth_observation_false', 1, 'contract_depth_complete'),
             ]:
                 args = [True, True, [], {}, {}, copy.deepcopy(named_parent), True]
-                assert v.build_receipt(*args)[field] is True
+                if not (v.build_receipt(*args)[field] is True):
+                    raise AssertionError()
                 if index is not None:
                     args[index] = False
                 elif label == 'recount_false':
@@ -3236,7 +3620,8 @@ def run(repo, output, source_map, apply_cut=None):
             # name defined twice) fails these tests instead of aborting the corpus.
             def main_seam():
                 main_def = top_functions(ast.parse((root / REL).read_bytes().decode()))['main']
-                assert v.main.__code__.co_firstlineno == function_span(main_def)[0]
+                if not (v.main.__code__.co_firstlineno == function_span(main_def)[0]):
+                    raise AssertionError()
                 start = next(n.lineno for n in main_def.body if isinstance(n, ast.Assign)
                              and isinstance(n.value, ast.Call) and isinstance(n.value.func, ast.Name)
                              and n.value.func.id == 'recount_validation')
@@ -3255,7 +3640,8 @@ def run(repo, output, source_map, apply_cut=None):
                 tail = bytearray()
                 for field in fields:
                     index = code.co_varnames.index(field)
-                    assert index < 256
+                    if not (index < 256):
+                        raise AssertionError()
                     tail.extend([dis.opmap['LOAD_FAST'], index])
                 tail.extend([dis.opmap['BUILD_TUPLE'], 4, dis.opmap['RETURN_VALUE'], 0])
                 body[stop:] = tail
@@ -3282,7 +3668,8 @@ def run(repo, output, source_map, apply_cut=None):
                 def refuses_incomplete(field=field):
                     # The parent runs inside record() (CA2-C12-N05): a broken seam fails this test only.
                     parent = main_flags(True)
-                    assert (parent['named'][field] if field == 'seal_prerequisites_met' else parent[field]) is True
+                    if not ((parent['named'][field] if field == 'seal_prerequisites_met' else parent[field]) is True):
+                        raise AssertionError()
                     flags = main_flags(False)
                     result = flags['named'][field] if field == 'seal_prerequisites_met' else flags[field]
                     if result is False:
@@ -3291,8 +3678,9 @@ def run(repo, output, source_map, apply_cut=None):
 
             for field in ['complete_denominator_known', 'contract_depth_complete', 'overall_pass', 'seal_prerequisites_met']:
                 def refuses_August_false(field=field):
-                    assert (main_flags(True)['named'][field] if field == 'seal_prerequisites_met'
-                            else main_flags(True)[field]) is True
+                    if not ((main_flags(True)['named'][field] if field == 'seal_prerequisites_met'
+                            else main_flags(True)[field]) is True):
+                        raise AssertionError()
                     supplied = ({'named': {'seal_prerequisites_met': False,
                                            'seal_prerequisites_blocking_errors': []}}
                                 if field == 'seal_prerequisites_met' else {field: False})
@@ -3312,25 +3700,34 @@ def run(repo, output, source_map, apply_cut=None):
 
             outcomes(outcome_doc)
             state, issues = v.recount_validation(set(names))
-            assert state['complete'] is True and issues == [], (state, issues)
+            if not (state['complete'] is True and issues == []):
+                raise AssertionError((state, issues))
             bad = copy.deepcopy(outcome_doc)
             bad['schema_id'] = 'wrong.schema'
             put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(bad))
             def aggregate_issue(code, detail):
                 state, issues = v.recount_validation(set(names))
-                assert state['complete'] is False, state
-                assert state['diagnostic_only'] is True, state
-                assert issues == [{'error': code, 'detail': detail}], issues
+                if not (state['complete'] is False):
+                    raise AssertionError(state)
+                if not (state['diagnostic_only'] is True):
+                    raise AssertionError(state)
+                if not (issues == [{'error': code, 'detail': detail}]):
+                    raise AssertionError(issues)
                 if code == 'recount_change_receipt_invalid':
-                    assert 'change_receipt_sha256' not in state, state
-                    assert state['outcomes']['complete'] is True, state
+                    if not ('change_receipt_sha256' not in state):
+                        raise AssertionError(state)
+                    if not (state['outcomes']['complete'] is True):
+                        raise AssertionError(state)
                 else:
-                    assert state['change_receipt_sha256'] == sha((root / v.RECOUNT_CHANGE).read_bytes()), state
-                    assert 'outcomes' not in state, state
+                    if not (state['change_receipt_sha256'] == sha((root / v.RECOUNT_CHANGE).read_bytes())):
+                        raise AssertionError(state)
+                    if not ('outcomes' not in state):
+                        raise AssertionError(state)
             record('negative_aggregate_input_issue', lambda: aggregate_issue(
                 'recount_input_or_outcome_invalid', 'recount outcomes snapshot identity mismatch'))
             outcomes(outcome_doc)
-            assert v.recount_validation(set(names))[0]['complete'] is True
+            if not (v.recount_validation(set(names))[0]['complete'] is True):
+                raise AssertionError()
             bad = copy.deepcopy(change)
             bad['authority_ref'] = 'Plans/Decision_Log.md#DL-450'
             put(v.RECOUNT_CHANGE, encoded(bad))
@@ -3342,7 +3739,8 @@ def run(repo, output, source_map, apply_cut=None):
             for label, path, code in [
                 ('aggregate_receipt_oserror', root / v.RECOUNT_CHANGE, 'recount_change_receipt_invalid'),
                 ('aggregate_input_oserror', v.RECOUNT_OUTCOMES, 'recount_input_or_outcome_invalid')]:
-                assert v.recount_validation(set(names))[0]['complete'] is True
+                if not (v.recount_validation(set(names))[0]['complete'] is True):
+                    raise AssertionError()
                 raw = path.read_bytes()
                 path.unlink()
                 record('negative_' + label, lambda path=path, code=code: aggregate_issue(
@@ -3390,7 +3788,7 @@ def run(repo, output, source_map, apply_cut=None):
             for key, value in original_env.items():
                 if value is None: os.environ.pop(key, None)
                 else: os.environ[key] = value
-    record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}))
+    record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}, tested_sha))
     record('positive_ast_class_table', lambda: check_ast_class_table(repo))
     record('positive_exhaustive_node_type_inventory', check_node_types)
     record('positive_occurrence_map_controls', check_occurrence_map)
@@ -3417,6 +3815,12 @@ def run(repo, output, source_map, apply_cut=None):
     record('positive_module_scope_rules_on_V_and_CA_SEAL', lambda: check_module_scope_rules(repo))
     record('positive_total_table_controls', check_total_table_controls)
     record('negative_random_single_line_edits', lambda: check_random_edits(repo, {r['name'] for r in results}))
+    # T45 (cycle-13 H06): coverage refuses bytes other than the ones the corpus ran; (H05) the checker carries no
+    # assert statement, so python -O cannot remove a check
+    record('negative_coverage_bytes_changed_during_corpus', lambda: check_coverage_bytes_changed(
+        repo, {r['name'] for r in results}))
+    record('positive_no_assert_statement_in_the_checker', check_no_asserts)
+    record('positive_receipt_writer_runs_the_hashed_bytes', lambda: check_receipt_writer_bytes(repo))
     summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
                'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
                'real_frozen_source_custody': custody, 'results': results,
