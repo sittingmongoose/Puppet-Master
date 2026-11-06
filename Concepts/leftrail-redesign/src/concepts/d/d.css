@@ -2649,9 +2649,10 @@
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
 }
 /* empty, the button is the shell's muted affordance (opacity .45 on the whole item); the glyph stays muted, the name is
-   at full label ink so it reads (it still opens: the menu says how to hide an icon) */
+   at full label ink so it reads (it still opens: the menu says how to hide an icon). A key focus lifts it as a hover
+   does, so the focus ring on its tile is not muted with it (FO-96). */
 [data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"] { opacity: 1; }
-[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, :focus-visible, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }
