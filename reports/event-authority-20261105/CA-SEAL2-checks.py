@@ -1150,7 +1150,14 @@ def module_scope_problems(tree):
       and a V function that mutates its parameter are refused. A module-level
       function that returns a module name (directly or through its locals) makes
       its call result an alias of that name, so y = f(); y.clear() and
-      f().clear() are refused too.
+      f().clear() are refused too. T64 (REVIEW-etools-tb3-opus finding 9): a
+      read-only callee is exempt only for a container passed bare, never
+      inside a display or a Boolean, conditional or assignment expression,
+      and never as a keyword value of dict (max([X]) and dict(a=X) hand X
+      back); a method's receiver is followed through Boolean, conditional and
+      assignment expressions, displays and items of displays ((X or []).clear(),
+      [X][0].clear()); and iterating over a display that holds the container
+      itself binds the loop target to the container (for x in [X]: list.clear(x)).
     - reflection: the namespace builtins (globals, vars, locals, setattr,
       delattr, exec, eval, compile, __import__, breakpoint) and every dunder
       name or attribute except those CA-SEAL uses (__name__, __file__,
@@ -1238,6 +1245,14 @@ def module_scope_problems(tree):
         if parts is not None:
             found = [origin(part, itself) for part in parts if part is not None]
             return next((f for f in found if f[0]), (False, None))
+        # T64: an item or attribute of a display (or of a Boolean, conditional or assignment expression) refers
+        # wherever the display does; [X][0] is X itself
+        if isinstance(value, (ast.Attribute, ast.Subscript, ast.Starred)):
+            base = value
+            while isinstance(base, (ast.Attribute, ast.Subscript, ast.Starred)):
+                base = base.value
+            if isinstance(base, (ast.List, ast.Tuple, ast.Set, ast.Dict, ast.BoolOp, ast.IfExp, ast.NamedExpr)):
+                return origin(base, itself)
         if isinstance(value, ast.Call):
             # T44: the result of a call of a module-level function that returns a module name
             scope, made = owner.get(id(value)), returns_whole if itself else returns
@@ -1284,8 +1299,13 @@ def module_scope_problems(tree):
         for value, targets, *how in sources:
             for itself, known in ((False, alias), (True, whole)):
                 if itself and how:
-                    continue    # (iterating gives elements, never the object itself)
-                refers, name = origin(value, itself)
+                    # (iterating gives elements, never the object itself; T64: unless the iterable is a display
+                    # whose element is the object itself: for x in [X] binds x to X)
+                    if not isinstance(value, (ast.List, ast.Tuple, ast.Set)):
+                        continue
+                    refers, name = next((f for f in (origin(e, True) for e in value.elts) if f[0]), (False, None))
+                else:
+                    refers, name = origin(value, itself)
                 if not refers:
                     continue
                 for local, scope in targets:
@@ -1320,6 +1340,12 @@ def module_scope_problems(tree):
                 target = root if home is tree else alias[home].get(root)
                 if target in containers:
                     mutations.append(root + '.' + node.attr + '@' + str(node.lineno))
+            elif isinstance(node.value, (ast.BoolOp, ast.IfExp, ast.NamedExpr, ast.List, ast.Tuple, ast.Set, ast.Dict,
+                                         ast.Attribute, ast.Subscript, ast.Starred)):
+                # T64: (X or []).clear(), (X if c else []).clear(), (y := X).clear(), [X][0].clear()
+                refers, target = origin(node.value)
+                if refers and target in containers:
+                    mutations.append(ast.unparse(node.value) + '.' + node.attr + '@' + str(node.lineno))
             elif isinstance(node.value, ast.Call):
                 # T44: f().clear() where f returns a module container
                 refers, target = origin(node.value)
@@ -1336,6 +1362,14 @@ def module_scope_problems(tree):
                               and callee.value.id + '.' + callee.attr in NON_MUTATING_QUALIFIED
                               and resolves_to(callee.value.id, scope, tree, bindings, parents) is tree
                               and callee.value.id in imported[tree]))
+            # T64: the exemption holds only for a container passed bare (a name), never inside a display or a Boolean,
+            # conditional or assignment expression (max([X]) and min([X], key=len) hand X back), and never as a
+            # keyword value of dict (dict(a=X)['a'] is X)
+            if received and reads_only:
+                wrapped = [a for a in passed if origin(a, True)[0] and not isinstance(a, ast.Name)]
+                by_keyword = isinstance(callee, ast.Name) and callee.id == 'dict' and any(origin(k.value, True)[0] for k in node.keywords)
+                if wrapped or by_keyword:
+                    reads_only = False
             if received and not reads_only:
                 mutations.append(ast.unparse(callee) + '(' + ', '.join(received) + ')@' + str(node.lineno))
         name = node.id if isinstance(node, ast.Name) else node.attr if isinstance(node, ast.Attribute) else None
@@ -2046,6 +2080,14 @@ EDIT_PROBES = {
     # each with every row forged
     'binding_unbound_method_call_new_function': ('binding', BINDING,
                                                  'recount_outcomes: list.clear(EVIDENCE_FIELDS), with every row forged'),
+    # T64 (REVIEW-etools-tb3-opus finding 9): the three routes left open, each with every row forged
+    'binding_max_display_result_new_function': ('binding', BINDING,
+                                                'recount_outcomes: max([EVIDENCE_FIELDS]).clear(), with every row forged'),
+    'binding_boolop_receiver_new_function': ('binding', BINDING,
+                                             'recount_outcomes: (EVIDENCE_FIELDS or []).clear(), with every row forged'),
+    'binding_display_iteration_call_new_function': ('binding', BINDING,
+                                                    'recount_outcomes: for pm_x in [EVIDENCE_FIELDS]: list.clear(pm_x), '
+                                                    'with every row forged'),
     'binding_call_result_new_function': ('binding', BINDING,
                                          'module: def pm_fields(): return EVIDENCE_FIELDS, and recount_outcomes: '
                                          'pm_fields().clear(), with every row forged'),
@@ -2080,6 +2122,9 @@ BINDING_EXPECTED = {
     'binding_alias_method_new_function': {'mutates_a_module_container': None},
     'binding_unbound_method_call_new_function': {'mutates_a_module_container': None},
     'binding_call_result_new_function': {'mutates_a_module_container': None},
+    'binding_max_display_result_new_function': {'mutates_a_module_container': None},
+    'binding_boolop_receiver_new_function': {'mutates_a_module_container': None},
+    'binding_display_iteration_call_new_function': {'mutates_a_module_container': None},
 }
 _AUG = {'bitor': '|=', 'bitand': '&=', 'bitxor': '^='}
 
@@ -2127,6 +2172,12 @@ def edit_probe_source(source, label):
         return insert(cards, '    fields = EVIDENCE_FIELDS', '    fields.clear()')
     if label == 'binding_unbound_method_call_new_function':
         return insert(cards, '    list.clear(EVIDENCE_FIELDS)')
+    if label == 'binding_max_display_result_new_function':
+        return insert(cards, '    max([EVIDENCE_FIELDS]).clear()')
+    if label == 'binding_boolop_receiver_new_function':
+        return insert(cards, '    (EVIDENCE_FIELDS or []).clear()')
+    if label == 'binding_display_iteration_call_new_function':
+        return insert(cards, '    for pm_x in [EVIDENCE_FIELDS]:', '        list.clear(pm_x)')
     if label == 'encoding_declaration_inserted':
         return insert(2, '# -*- coding: latin-1 -*-')
     if label.startswith('line_ending_'):
@@ -3821,14 +3872,20 @@ def run(repo, output, source_map, apply_cut=None):
         repo, {r['name'] for r in results}))
     record('positive_no_assert_statement_in_the_checker', check_no_asserts)
     record('positive_receipt_writer_runs_the_hashed_bytes', lambda: check_receipt_writer_bytes(repo))
+    # T64 (REVIEW-etools-tb3-opus finding 10): the interpreter and its flags, so a run under -O shows it was one
+    import platform
+    interpreter = {'implementation': platform.python_implementation(), 'version': sys.version.split()[0],
+                   'executable': sys.executable, 'optimize': sys.flags.optimize, 'dont_write_bytecode': sys.flags.dont_write_bytecode,
+                   'isolated': sys.flags.isolated, 'hash_randomization': sys.flags.hash_randomization}
     summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
+               'interpreter': interpreter,
                'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
                'real_frozen_source_custody': custody, 'results': results,
                'limits': ['No final approval, admission, live seal or all-green August main run is claimed.',
                           'Outcome positives inject the existing admitted set; they do not create or waive admission records.',
                           'Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed.']}
     output.write_text(json.dumps(summary, indent=2) + '\n')
-    print(json.dumps({k: summary[k] for k in ['status', 'checks', 'passed', 'failed']}))
+    print(json.dumps({k: summary[k] for k in ['status', 'checks', 'passed', 'failed', 'interpreter']}))
     for row in results:
         if not row['pass']: print(json.dumps(row))
     return 0 if summary['status'] == 'pass' else 1
