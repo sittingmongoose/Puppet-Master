@@ -10217,6 +10217,230 @@
       "single_defect": "recipe_unknown"
     },
     {
+      "id": "history-unknown-field-envelope_schema_id",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "envelope_schema_id",
+      "value": "fixture.unregistered.envelope_schema_id",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.envelope_schema_id",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-envelope_schema_version",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "envelope_schema_version",
+      "value": "fixture.unregistered.envelope_schema_version",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.envelope_schema_version",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-payload_schema_id",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "payload_schema_id",
+      "value": "fixture.unregistered.payload_schema_id",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.payload_schema_id",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-payload_schema_version",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "payload_schema_version",
+      "value": "fixture.unregistered.payload_schema_version",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.payload_schema_version",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-owner_source_id",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "owner_source_id",
+      "value": "fixture.unregistered.owner_source_id",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.owner_source_id",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-owner_edition",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "owner_edition",
+      "value": "fixture.unregistered.owner_edition",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.owner_edition",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-registry_revision",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "registry_revision",
+      "value": "fixture.unregistered.registry_revision",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.registry_revision",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-identity_recipe",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "identity_recipe",
+      "value": "fixture.unregistered.identity_recipe",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.identity_recipe",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-producer_recipe",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "producer_recipe",
+      "value": "fixture.unregistered.producer_recipe",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.producer_recipe",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-physical_profile",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "physical_profile",
+      "value": "fixture.unregistered.physical_profile",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.physical_profile",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-full_value_profile",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "full_value_profile",
+      "value": "fixture.unregistered.full_value_profile",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.full_value_profile",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-local_source_profile",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "local_source_profile",
+      "value": "fixture.unregistered.local_source_profile",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.local_source_profile",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-payload_profile",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "payload_profile",
+      "value": "fixture.unregistered.payload_profile",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.payload_profile",
+      "verifier_calls": 0
+    },
+    {
+      "id": "history-unknown-field-resource_manifest_sha256",
+      "op": "history",
+      "scenario": "unknown_field",
+      "field": "resource_manifest_sha256",
+      "value": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.resource_manifest_sha256",
+      "verifier_calls": 0
+    },
+    {
       "id": "history-rewritten_resources",
       "op": "history",
       "scenario": "rewritten_resources",
@@ -12878,6 +13102,21 @@
       "op": "full_value_commitment",
       "changes": {
         "schema_version": "1.0.0"
+      },
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "target_predicate": "full_value.schema_version",
+      "error": "full_value_edition",
+      "enforcement": "authored",
+      "single_defect": "full_value.schema_version"
+    },
+    {
+      "id": "full-value-wrong-version-2.1.0",
+      "op": "full_value_commitment",
+      "changes": {
+        "schema_version": "2.1.0"
       },
       "conflicts": [
         "C07",
@@ -24720,6 +24959,22 @@
       "single_defect": "payload_id_type.lowercase"
     },
     {
+      "id": "payload-id-last-byte",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "id": "26bebb121169d80246a4531d34864f8092849462dd92d2f2bc88800f23fdbac6"
+      },
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "payload_digest",
+      "target_predicate": "payload_digest",
+      "enforcement": "authored",
+      "single_defect": "payload_digest.whole-digest"
+    },
+    {
       "id": "binding-application-empty-project",
       "op": "binding_constructor",
       "changes": {
@@ -25825,6 +26080,19 @@
       "id": "append-policy-uppercase",
       "op": "append_policy",
       "value": "APPEND_ONCE",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "replay_policy",
+      "target_predicate": "replay_policy",
+      "enforcement": "authored",
+      "single_defect": "replay_policy.exact"
+    },
+    {
+      "id": "append-policy-trailing-space",
+      "op": "append_policy",
+      "value": "append_once ",
       "conflicts": [
         "C07",
         "C10"

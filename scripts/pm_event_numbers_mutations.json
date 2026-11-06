@@ -2354,6 +2354,54 @@
       "replace": "    return 0",
       "rule": "cli.exit-status",
       "witness": "check:cli_failing_corpus_exits_1"
+    },
+    {
+      "id": "review-fix4-B07",
+      "api": "RetainedDispatcher",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "source": "review-fix4",
+      "note": "Retained dispatch falls back to a verifier whose tuple shares identity and producer recipe names: an unknown/replaced-resource tuple is probed through an alternative verifier.",
+      "find": "        recipe = self._recipes.get(original.recipe)\n",
+      "replace": "        recipe = self._recipes.get(original.recipe) or next((r for t, r in self._recipes.items() if t.identity_recipe == original.recipe.identity_recipe and t.producer_recipe == original.recipe.producer_recipe), None)\n",
+      "witness": "history-unknown-field-payload_schema_version",
+      "rule": "dispatch.recipe-unknown"
+    },
+    {
+      "id": "review-fix4-X2",
+      "api": "full_value_commitment",
+      "class": "dropped_qualification",
+      "module": "pm_event_numbers",
+      "source": "review-fix4",
+      "note": "full_value_commitment accepts any 2.x schema_version instead of exactly 2.0.0.",
+      "find": "event.get(\"schema_version\") != \"2.0.0\":",
+      "replace": "not str(event.get(\"schema_version\", \"\")).startswith(\"2.\"):",
+      "witness": "full-value-wrong-version-2.1.0",
+      "rule": "full-value.edition"
+    },
+    {
+      "id": "review-fix4-X3",
+      "api": "verify_payload_bytes",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "source": "review-fix4",
+      "note": "Payload digest compared on its first 16 bytes only (truncated digest).",
+      "find": "    if bytes.fromhex(payload_id) != blake3.blake3(raw).digest():",
+      "replace": "    if bytes.fromhex(payload_id)[:16] != blake3.blake3(raw).digest()[:16]:",
+      "witness": "payload-id-last-byte",
+      "rule": "payload.blake3-id"
+    },
+    {
+      "id": "review-fix4-X5",
+      "api": "current_append_policy",
+      "class": "type_coercion",
+      "module": "pm_event_numbers",
+      "source": "review-fix4",
+      "note": "Append policy compared after strip(): 'append_once ' is admitted and returned padded.",
+      "find": "    if type(value) is not str or value not in (",
+      "replace": "    if type(value) is not str or value.strip() not in (",
+      "witness": "append-policy-trailing-space",
+      "rule": "append-policy.exact-string"
     }
   ],
   "rules_source": "Predicate-level rows. Each rule names hand-written mutation ids (each of which names it back through its rule field) and generated point keys; every one must be caught with its witness failing. A control rule's mutations must survive instead. Statement rows (statements) name these rules.",
@@ -2906,7 +2954,8 @@
       "mutations": [
         "predicate:site:full_value_commitment:full_value_edition#1:false event.get('schema_id') != 'pm.event.v0'#1",
         "full-value-no-edition-refusal",
-        "full-value-version-unchecked"
+        "full-value-version-unchecked",
+        "review-fix4-X2"
       ]
     },
     {
@@ -3108,7 +3157,8 @@
         "append-policy-no-membership",
         "append-policy-returns-bytes",
         "append-policy-no-type-check",
-        "S4-append-policy-casefold"
+        "S4-append-policy-casefold",
+        "review-fix4-X5"
       ]
     },
     {
@@ -3390,7 +3440,8 @@
       "api": "RetainedDispatcher",
       "rule": "A recipe tuple with no installed frozen verifier refuses; no alternative verifier is tried.",
       "mutations": [
-        "site:RetainedDispatcher.resolve:recipe_unknown#1"
+        "site:RetainedDispatcher.resolve:recipe_unknown#1",
+        "review-fix4-B07"
       ]
     },
     {
@@ -3447,7 +3498,8 @@
       "api": "verify_payload_bytes",
       "rule": "Payload IDs are BLAKE3 of the exact original bytes, never another hash.",
       "mutations": [
-        "payload-sha256"
+        "payload-sha256",
+        "review-fix4-X3"
       ]
     },
     {
@@ -3978,7 +4030,7 @@
     }
   },
   "owner_text": {
-    "purpose": "Selection of the owner text the rules table is derived from. Every sentence of the listed YAML fields of each unit, and of the selected guide sections, is a statement and needs one row in statements. Every guide section is either selected or excluded with a reason; every block exclusion must match exactly one block.",
+    "purpose": "Selection of the owner text the rules table is derived from. Every sentence of the listed YAML fields of each unit, and of the selected guide sections, is a statement and needs one row in statements. Every guide section is either selected or excluded with a reason; every block exclusion must match exactly one block. Excluded blocks, excluded sections and each unit's unselected YAML fields are pinned by SHA-256 (tool batch 2, T33): any edit there fails until a reviewer checks it for number rules and refreshes the pin.",
     "units": [
       {
         "path": "Plans/Contracts_V0.md",
@@ -3987,7 +4039,8 @@
           "canonical_text",
           "acceptance_criteria",
           "negative_constraints"
-        ]
+        ],
+        "unselected_sha256": "62e9e98fc10a02b815dc160bb491b48b2bc6d1cc0e1ac241da409cf4d1868c5b"
       },
       {
         "path": "Plans/storage-plan.md",
@@ -3996,7 +4049,8 @@
           "canonical_text",
           "acceptance_criteria",
           "negative_constraints"
-        ]
+        ],
+        "unselected_sha256": "f5ad8aa7bbf485bd974feb481997b7ec32dae64e5f8b2a8c0c327edbbce6017a"
       },
       {
         "path": "Plans/storage-plan.md",
@@ -4005,7 +4059,8 @@
           "canonical_text",
           "acceptance_criteria",
           "negative_constraints"
-        ]
+        ],
+        "unselected_sha256": "d053f85da702165355bb0cdfa48caf7eb3664a2e736e12d5f55a007dc3574fe0"
       }
     ],
     "guide": {
@@ -4025,34 +4080,44 @@
         {
           "section": "Shared calls",
           "starts_with": "Validate timestamp fields with",
-          "reason": "CV-1101 date-time profiles: the date-time suite (--scope all) owns this bullet, not the number scope."
+          "reason": "CV-1101 date-time profiles: the date-time suite (--scope all) owns this bullet, not the number scope.",
+          "sha256": "588854003f7b1765d68122443a167e0d3db22660ba690484c36c68969548545d"
         },
         {
           "section": "Shared calls",
           "starts_with": "Run `python3 scripts/pm_event_datetime_inventory.py`",
-          "reason": "CV-1101 date-time inventory gate: the date-time suite owns it."
+          "reason": "CV-1101 date-time inventory gate: the date-time suite owns it.",
+          "sha256": "4f468f819f1ecffd4383734eea31b24020f78f7d242d6b9f9403750873adc2ce"
         },
         {
           "section": "Shared calls",
           "starts_with": "Resource admission runs before every evaluated schema object",
-          "reason": "CV-1101 date-time resource admission: the date-time suite owns it."
+          "reason": "CV-1101 date-time resource admission: the date-time suite owns it.",
+          "sha256": "77bb1a5058a82e740827fcbe1c4d6e5ed26e7d57e6fd58ac5d491e6166748c76"
         },
         {
           "section": "Shared calls",
           "starts_with": "The static gate has a bounded universe",
-          "reason": "CV-1101 date-time static gate: the date-time suite owns it."
+          "reason": "CV-1101 date-time static gate: the date-time suite owns it.",
+          "sha256": "970e19fc644bb9cde669c3848da2305381aa4e9fb0f3281bbea1b1b14d8e1ae1"
         },
         {
           "section": "Shared calls",
           "starts_with": "Before any runtime installation, the inventory is validated",
-          "reason": "CV-1101 date-time inventory roles: the date-time suite owns it."
+          "reason": "CV-1101 date-time inventory roles: the date-time suite owns it.",
+          "sha256": "bbeabba87f072cbccddeca9e88d1ea89f9f844b97c7d8e1c747284eb1911b379"
         },
         {
           "section": "Authority boundary",
           "starts_with": "Timestamp grammar |",
-          "reason": "CV-1101 / CV-253 timestamp grammar: the date-time suite owns this row."
+          "reason": "CV-1101 / CV-253 timestamp grammar: the date-time suite owns this row.",
+          "sha256": "b4e00e4dbbdce83201ea4a7f79568bd2f6dee2e7d94d80c3cf76a07f503cc89f"
         }
-      ]
+      ],
+      "excluded_section_sha256": {
+        "Per-lane replacements": "3a73926ac483df6819ff8b6feaa801f7a9d40d846333798014b551567bd9ccfb",
+        "Ancillary lanes": "c9077f3501526ca21921acbd25fedff5415da0a6db7e8c1af38a758949f4f270"
+      }
     }
   },
   "statements_source": "One row per statement of the owner text selected in owner_text, keyed by source path, line and exact text (id names the unit or guide section, the field or block ordinal and the sentence ordinal). Each row names the rules it states or says why no mutation applies; note records a clause outside the helper. normative marks the sentences with a normative marker (must, refuse, required, only, exactly, never, no, not, or a digit); every statement has a row whatever its markers.",

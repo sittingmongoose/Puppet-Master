@@ -135,6 +135,11 @@ class Returned:
     value: object
 
 
+# The verifier calls of the latest history case, kept when the dispatcher refuses too, for cases that name the
+# calls they allow ("verifier_calls").
+_RETAINED_CALLS = {"calls": None}
+
+
 @dataclass
 class RetainedObservation:
     returned: object
@@ -265,6 +270,10 @@ def _retained(m, case, corpus):
     elif scenario == "unknown_recipe":
         # Authentic original, genuinely unsupported catalog entry. No stale seal.
         sealed = observed = replace(original, recipe=replace(base_recipe, identity_recipe="unregistered"))
+    elif scenario == "unknown_field":
+        # Tool batch 2 (T33, review-fix4 B07): an authentic original whose tuple equals an installed one in every
+        # field but this one. No verifier may be tried for it, however close it is to an installed tuple.
+        sealed = observed = replace(original, recipe=replace(base_recipe, **{case["field"]: case["value"]}))
     elif scenario == "rewritten_resources":
         # Supported tuple, but original resource selection has been tampered.
         observed = replace(original, recipe=replaced_resources)
@@ -320,7 +329,7 @@ def _retained(m, case, corpus):
     if scenario == "dict_expected":
         expected = asdict(binding)
 
-    calls = []
+    calls = _RETAINED_CALLS["calls"] = []
 
     class FixtureOwner:
         def authenticated_original(self, ref):
@@ -328,8 +337,15 @@ def _retained(m, case, corpus):
                 raise m.Refusal("original_authority")
             return observed
 
-    def verify(record):
+    def frozen(own):
+        # Each installed fixture verifier checks that it was selected for its own tuple (T33): a dispatch that
+        # probes an original through another tuple's verifier is refused there even without a per-field case.
+        return lambda record: verify(record, own)
+
+    def verify(record, own):
         calls.append(record.recipe)
+        if type(record.recipe) is m.RecipeTuple and record.recipe != own:
+            return False
         # Exact independent original pin joins bytes/identity/source/recipe/result.
         # These names describe fixture recipes, not newly registered product IDs.
         verification_bytes = (record.record_bytes.encode() if scenario == "string_record_bytes"
@@ -362,8 +378,8 @@ def _retained(m, case, corpus):
         return authentic
 
     dispatcher = m.RetainedDispatcher(FixtureOwner(), {
-        base_recipe: m.FrozenRecipe(verify), current_recipe: m.FrozenRecipe(verify),
-        replaced_resources: m.FrozenRecipe(verify),
+        base_recipe: m.FrozenRecipe(frozen(base_recipe)), current_recipe: m.FrozenRecipe(frozen(current_recipe)),
+        replaced_resources: m.FrozenRecipe(frozen(replaced_resources)),
     })
     out = dispatcher.resolve(ref, expected, disclose=lambda b: allow,
                              recipe_override=override)
@@ -906,6 +922,7 @@ def run_corpus(path, *, scope="all"):
                     "native_authority": "NOT_RUN", "self_test_scope": scope}
     failures, outcomes = [], {}
     for c in cases:
+        _RETAINED_CALLS["calls"] = None
         actual, result = evaluate(m, c, corpus)
         expected = ({"outcome": "refusal", "error": c["error"]} if "error" in c
                     else {"outcome": "acceptance", "output": c["output"]})
@@ -915,6 +932,9 @@ def run_corpus(path, *, scope="all"):
         elif "output" in c:
             for error in success_errors(result, c):
                 failures.append({"id": c["id"], "postcondition": error})
+        if "verifier_calls" in c and (_RETAINED_CALLS["calls"] is None or len(_RETAINED_CALLS["calls"]) != c["verifier_calls"]):
+            failures.append({"id": c["id"], "postcondition": "verifier calls %s, expected %d" % (
+                None if _RETAINED_CALLS["calls"] is None else len(_RETAINED_CALLS["calls"]), c["verifier_calls"])})
         if not c.get("target_predicate"):
             failures.append({"id": c["id"], "missing_target_predicate": True})
     # The CLI check's own nested run needs only its failing case; it skips the
@@ -1366,6 +1386,41 @@ def _unit_blocks(lines, unit, fields):
     return blocks
 
 
+def _unit_unselected_text(lines, unit, fields):
+    """The lines of one owner unit's YAML block that belong to no selected field (T33): what the rules table does
+    not read, pinned so an edit there cannot pass unseen."""
+    headings = [i for i, line in enumerate(lines) if line.startswith("### " + unit + " - ")]
+    if len(headings) != 1:
+        raise ValueError("owner unit heading not found exactly once: " + unit)
+    fence = next(i for i in range(headings[0] + 1, len(lines)) if lines[i].strip() == "```yaml")
+    end = next(i for i in range(fence + 1, len(lines)) if lines[i].strip() == "```")
+    out, field = [], None
+    for i in range(fence + 1, end):
+        key = re.match(r"([a-z_]+):(.*)$", lines[i])
+        if key:
+            field = key.group(1)
+        if field not in fields:
+            out.append(lines[i])
+    return "\n".join(out)
+
+
+def _guide_section_texts(lines):
+    """{section: raw text} for every "## " section of the guide, fences respected (T33 pins)."""
+    texts, section, fence = {}, "(preamble)", False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            fence = not fence
+        elif not fence and line.startswith("## "):
+            section = line[3:].strip()
+        texts.setdefault(section, []).append(line)
+    return {k: "\n".join(v) for k, v in texts.items()}
+
+
+def _pin(text):
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
 def _guide_blocks(lines, sections):
     """(section, block) for each paragraph, list item and table row of the guide.
 
@@ -1442,6 +1497,12 @@ def owner_statements(root, owner_text):
         except (OSError, ValueError, StopIteration) as error:
             problems.append("owner text %s %s unreadable: %s" % (unit["path"], unit["unit"], error))
             continue
+        # T33: the unit's unselected YAML fields are pinned: any edit there fails until reviewed and re-pinned.
+        unselected = _pin(_unit_unselected_text(lines, unit["unit"], unit["fields"]))
+        if unit.get("unselected_sha256") != unselected:
+            problems.append("owner text %s %s: unselected YAML fields changed (sha256 %s, pinned %s); review them for "
+                            "number rules and refresh unselected_sha256" % (unit["path"], unit["unit"], unselected,
+                                                                          unit.get("unselected_sha256")))
         ordinals = {}
         for field, block in blocks:
             ordinals[field] = ordinals.get(field, 0) + 1
@@ -1463,6 +1524,13 @@ def owner_statements(root, owner_text):
         for section in list(selected - {"(preamble)"}) + list(guide["excluded_sections"]):
             if section not in seen:
                 problems.append("stale guide section selection: %r" % section)
+        # T33: each excluded section's whole text is pinned: a rule added inside it fails until reviewed.
+        section_texts = _guide_section_texts(lines)
+        for section in guide["excluded_sections"]:
+            pin = _pin(section_texts.get(section, ""))
+            if guide.get("excluded_section_sha256", {}).get(section) != pin:
+                problems.append("excluded guide section %r changed (sha256 %s, pinned %s); review it for number rules "
+                                "and refresh excluded_section_sha256" % (section, pin, guide.get("excluded_section_sha256", {}).get(section)))
         excluded = guide.get("excluded_blocks", [])
         matched = [0] * len(excluded)
         ordinals = {}
@@ -1474,6 +1542,11 @@ def owner_statements(root, owner_text):
             if hits:
                 for j in hits:
                     matched[j] += 1
+                    # T33: an excluded block's full text is pinned, not only its first words.
+                    pin = _pin("\n".join(text for _, text in block))
+                    if excluded[j].get("sha256") != pin:
+                        problems.append("guide block exclusion %r changed (sha256 %s, pinned %s); review it for number "
+                                        "rules and refresh its sha256" % (excluded[j]["starts_with"], pin, excluded[j].get("sha256")))
                 continue
             for n, (line, sentence) in enumerate(_sentences(block), 1):
                 statements.append({"id": "guide:%s:%d.%d" % (section, ordinals[section], n),
