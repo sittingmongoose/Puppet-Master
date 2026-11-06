@@ -577,6 +577,37 @@ directory, which is why it cannot run where branches land.
 Land that separate commit through the ordinary fast-forward, shard-check, landing-check, main-push
 and worktree-removal procedure while holding the same landing lock; release it afterward.
 
+### A batch of landings shares one follow-up (from 2026-11-06)
+
+Several landings may share this refresh: CLAUDE.md and AGENTS.md, "Land in batches", give the rule.
+Inside a batch every landing check runs with `--base <batch-start>`, the `origin/main` the batch
+began from. Nothing in the script changes for that. It measures the branch by
+`git diff --name-only <base>..HEAD`, which from the batch start is every path any landing in the batch
+touched, and rule 2 holds while the baseline's commit is an ancestor of that base and no more than seven
+days older than it, which the baseline from before the batch is. So the second landing of a batch is
+judged exactly as one branch holding both changes would be judged at the batch start: a failure on
+a file the first landing touched counts as the branch's, and is judged by the same rules. Judging it
+against `origin/main` instead can stop it falsely: the first landing's staleness, not yet folded into
+a baseline, reads as new failures that name none of the second landing's files, and a rise it causes
+in a truncated subcheck, or in the readiness growth counter, stops the landing because the rows that
+explain it name none of the second landing's files.
+
+Judging the batch as one branch also means its totals carry every earlier landing's rise. A subcheck
+judged by its total only, or a bucket that only grows through a batch (each Plans landing regenerates
+shards, and until `TOOL-ISSUES.md` T32 and T53 land, a `missing_ref` from sealed evidence to a
+renamed shard counts as non-staleness), can stop a later landing that would pass on its own. The rule's
+answer is never an exemption and never a mid-batch baseline: the stopped landing is not pushed, the
+batch closes with its follow-up, and that landing's check is rerun alone against the new `main`. Keep
+`batch-start` a full SHA and refresh nothing mid-batch: a baseline recorded inside the batch names a
+commit that is not an ancestor of `batch-start`, so rule 2 would switch off and every pre-existing
+failure on a batch file would stop the next landing.
+
+Why: from 2026-11-03 to 2026-11-06 `main` took 18 follow-ups, about one per Plans landing. The two
+timed from the stream logs held the lock about 26 and 27 minutes each (snapshot about 5 minutes, then
+the baseline recording and the follow-up's own landing). A batch of four Plans landings saves three of
+them, about 80 minutes of lock time, and the merges of `main` that each follow-up forced into the
+branches waiting to land. These are the measured durations, not a measured saving: no batch has run yet.
+
 Six things that make the difference between a good baseline and a misleading one:
 
 - `git sparse-checkout disable`, because a sparse tree is missing inputs the checks read and records
