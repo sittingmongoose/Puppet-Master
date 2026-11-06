@@ -3,15 +3,16 @@
 
 diagnostics/refusal-note-film.check.mjs marks "press <tag>" at each press and logs FO87N1-FILM with each case's note
 rect (layout, its own slide left out), its ground and ink colours, and when the entry ended after the press. For each
-case the reader takes every frame from 0.45 s after the press (the note is fully shown by then, the double-click's second
-press included) to 2.0 s (before its own fade-out at 2.13 s), and counts the share of the note's box (2 px inset) whose
+case the reader takes every frame from 0.30 s after the note was shown (its own fade-in takes 0.21 s) to 1.85 s (before
+its own fade-out at 2.13 s); the note's and the entry's wall-clock times are mapped onto the film through the press
+mark's wall time, and counts the share of the note's box (2 px inset) whose
 pixels are within 48 of its ground or its ink. A frame is WRONG when that share is under 0.85: something else is painted
-over the note. Frames are split into during the entry (before entryEndMs) and after it. Usage:
+over the note. Frames are split into during the entry (before the entry ended) and after it. Usage:
   tools/refusal-note-film-reader.py <video.mp4> <run folder> <out.json>
 """
 import json, re, subprocess, sys
 
-START, END, OWN_T, TOL = 0.45, 2.0, 0.85, 48
+START, END, OWN_T, TOL = 0.30, 1.85, 0.85, 48
 
 
 def frames(video, t0, t1, box):
@@ -39,7 +40,7 @@ def own(buf, ground, ink):
 def main():
     video, run, out = sys.argv[1:4]
     s = json.load(open(f'{run}/summary.json'))
-    marks = {m['label']: m.get('at') for m in s.get('marks') or []}
+    marks = {m['label']: (m.get('at'), m.get('wall')) for m in s.get('marks') or []}
     log = None
     for line in open(f'{run}/run.log'):
         if 'FO87N1-FILM ' in line:
@@ -49,17 +50,20 @@ def main():
     for r in log['rows']:
         if not r.get('rect'):
             report.append({'tag': r['tag'], 'note': False}); print(r['tag'], 'no note'); continue
-        t = marks[f"press {r['tag']}"]
+        at, wall = marks[f"press {r['tag']}"]
+        if r.get('noteWall') is None:
+            report.append({'tag': r['tag'], 'note': False}); print(r['tag'], 'note never shown'); continue
+        t = at + (r['noteWall'] - wall) / 1000
         x, y, w, h = r['rect']
         box = (int(round(off['x'] + x)) + 2, int(round(off['y'] + y)) + 2, int(w) - 4, int(h) - 4)
-        end = (r.get('entryEndMs') or 0) / 1000
+        end = ((r['endWall'] - r['noteWall']) / 1000) if r.get('endWall') is not None else 0
         seq = []
         for ft, f in frames(video, t + START, t + END, box):
             share = own(f, r['ground'], r['ink'])
             seq.append({'t': round(ft - t, 3), 'share': round(share, 3), 'entry': (ft - t) < end, 'wrong': share < OWN_T})
         wrong = [q for q in seq if q['wrong']]
         report.append({'tag': r['tag'], 'frames': len(seq), 'entryFrames': sum(q['entry'] for q in seq), 'wrong': len(wrong),
-                       'wrongInEntry': sum(q['entry'] for q in wrong), 'minShare': min((q['share'] for q in seq), default=None), 'entryEndMs': r.get('entryEndMs'), 'seq': seq})
+                       'wrongInEntry': sum(q['entry'] for q in wrong), 'minShare': min((q['share'] for q in seq), default=None), 'entryAfterNoteMs': round(end * 1000), 'seq': seq})
         print(f"{r['tag']}: {len(seq)} frames ({report[-1]['entryFrames']} in the entry), WRONG {len(wrong)} ({report[-1]['wrongInEntry']} in the entry), min share {report[-1]['minShare']}")
     json.dump(report, open(out, 'w'), indent=1)
 

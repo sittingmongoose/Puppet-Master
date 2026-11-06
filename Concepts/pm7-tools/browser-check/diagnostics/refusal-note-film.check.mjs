@@ -2,8 +2,9 @@
 // (tools/refusal-note-film-reader.py). At 1280x500 (the page held at the window's top left, so film = page
 // coordinates), for each look and cycle: AI and Name, a real press on the disabled Continue as soon as it can be hit
 // during the entry, and a real double-click on the screen before (Begin with New, Creating once done). Mark "press <tag>"
-// at the click; the log line FO87N1-FILM gives, per case, the note's rect and colours and how long after the press the
-// entry ended (.o55-entering gone), so the reader can say, frame by frame, whether the note's box shows its own paint.
+// at the click; the log line FO87N1-FILM gives, per case, the note's rect and colours and the wall-clock times the note
+// was shown and the entry ended (.o55-entering gone), which the reader maps onto the film through the press mark, so it
+// can say, frame by frame, whether the note's box shows its own paint.
 //   browser-check run diagnostics/refusal-note-film.check.mjs --record /abs/film.mp4 --set page=<build> [--set cycles=2]
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 export default async function (t) {
@@ -33,12 +34,14 @@ export default async function (t) {
 				await t.check(`film fixture reaches the disabled Continue ${tag}`, !!at);
 				if (!at) { await settle(); continue; }
 				/* the entry's end, timed in the page from the press */
-				await f.evaluate(() => { window.__n1 = { t0: 0, end: null }; const mo = new MutationObserver(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); if (window.__n1.t0 && window.__n1.end == null && l && !l.classList.contains('o55-entering') && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out')) window.__n1.end = performance.now() - window.__n1.t0; }); mo.observe(document.querySelector('#pm-o55-onboarding .o55-pane'), { subtree: true, attributes: true, attributeFilter: ['class'], childList: true }); window.__n1.mo = mo; addEventListener('pointerdown', () => { if (!window.__n1.t0) window.__n1.t0 = performance.now(); }, { capture: true, once: true }); });
+				/* wall-clock times, mapped onto the film through the press mark: when the note is shown (it gets o55-reason-show)
+				   and when the entry ends (.o55-entering gone) */
+				await f.evaluate(() => { window.__n1 = { noteWall: null, endWall: null }; const pane = document.querySelector('#pm-o55-onboarding .o55-pane'); const mo = new MutationObserver(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); if (window.__n1.noteWall == null && l && l.querySelector('.o55-reason.o55-reason-show')) { window.__n1.noteWall = Date.now(); if (!l.classList.contains('o55-entering') && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out')) window.__n1.endWall = window.__n1.noteWall; } if (window.__n1.noteWall != null && window.__n1.endWall == null && l && !l.classList.contains('o55-entering') && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out')) window.__n1.endWall = Date.now(); }); mo.observe(pane, { subtree: true, attributes: true, attributeFilter: ['class'], childList: true }); window.__n1.mo = mo; });
 				await t.mark(`press ${tag}`);
 				if (route === 'press') await t.page.mouse.click(off.x + at.x, off.y + at.y);
 				else { await t.page.mouse.click(off.x + at.x, off.y + at.y); await t.page.waitForTimeout(150); await t.page.mouse.click(off.x + at.x, off.y + at.y, { clickCount: 2 }); }
 				await f.waitForTimeout(2200);
-				const info = await f.evaluate(() => { const rs = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-reason'); window.__n1.mo && window.__n1.mo.disconnect(); if (!rs) return null; const s = getComputedStyle(rs), m = new DOMMatrix(s.transform === 'none' ? undefined : s.transform), q = rs.getBoundingClientRect(), rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number); return { rect: [q.x - m.m41, q.y - m.m42, q.width, q.height].map((v) => Math.round(v * 100) / 100), ground: rgb(s.backgroundColor), ink: rgb(s.color), entryEndMs: window.__n1.end == null ? null : Math.round(window.__n1.end), screen: O55.S.sess.screen }; });
+				const info = await f.evaluate(() => { const rs = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-reason'); window.__n1.mo && window.__n1.mo.disconnect(); if (!rs) return null; const s = getComputedStyle(rs), m = new DOMMatrix(s.transform === 'none' ? undefined : s.transform), q = rs.getBoundingClientRect(), rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number); return { rect: [q.x - m.m41, q.y - m.m42, q.width, q.height].map((v) => Math.round(v * 100) / 100), ground: rgb(s.backgroundColor), ink: rgb(s.color), noteWall: window.__n1.noteWall, endWall: window.__n1.endWall, screen: O55.S.sess.screen }; });
 				rows.push({ tag, ...info });
 				await settle(); await f.waitForTimeout(600);
 			}
