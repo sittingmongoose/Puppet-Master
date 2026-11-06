@@ -584,9 +584,17 @@ class CommandKey(unittest.TestCase):
 class WhatTheCheckedScriptsRead(unittest.TestCase):
     """The claims the key depends on, kept true: each fails if a script starts to read what the key leaves out."""
 
-    def scripts(self):
-        skip = {"pm_landing_cache.py", "test_pm_landing_cache.py", "pm-landing-check.py", "test_pm_landing_readiness_inputs.py"}
-        return [path for path in sorted((REPO / "scripts").glob("*.py")) if path.name not in skip]
+    def scripts(self, folder=None):
+        # pm-land.py and its test run the landing; no aggregate runs them, so they are not validators (review M1).
+        skip = {"pm_landing_cache.py", "test_pm_landing_cache.py", "pm-landing-check.py", "test_pm_landing_readiness_inputs.py",
+                "pm-land.py", "test_pm_land.py"}
+        return [path for path in sorted((folder or REPO / "scripts").glob("*.py")) if path.name not in skip]
+
+    def test_the_landing_command_is_not_swept_in_as_a_validator(self):
+        with tempfile.TemporaryDirectory() as folder:
+            for name in ("pm-land.py", "test_pm_land.py", "pm-validate-x.py"):
+                (Path(folder) / name).write_text("import time\nstamp = time.time()\n")
+            self.assertEqual([path.name for path in self.scripts(Path(folder))], ["pm-validate-x.py"])
 
     def test_no_script_reads_an_ignored_environment_name(self):
         pattern = re.compile(r"""(?:environ(?:\.get|\.setdefault)?\s*[\[(]|getenv\(|\benv(?:iron)?\.get\(|\benv\[)\s*f?['"]([A-Za-z_][A-Za-z0-9_]*)['"]""")
