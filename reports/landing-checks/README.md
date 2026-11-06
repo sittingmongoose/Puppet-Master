@@ -500,6 +500,11 @@ change no exit code and no other line, the baseline does not record them, and `-
   subcheck that prints only a sample has its total alone, since which rows it prints can change on its own. In
   `--json`: `bucket_counts`.
 
+`--row-report <file>`, outside the repository and only when asked for, also writes every row of each subcheck to that
+file, with each staleness row's `names`: the paths of `git diff --name-only --no-renames <base>..HEAD` it names, regenerated
+and deleted ones included. A subcheck is `complete` when every row it counted is there: it printed them all, or is keyed
+from an export whose total matches. One that prints a sample lists none. It changes nothing else about a run.
+
 ## Which paths count as the branch's
 
 `Plans/_shards/**` and `Plans/.plan_index/**` are regenerated whole whenever any owner document
