@@ -73,5 +73,51 @@ export default async function(t) {
   }
   t.log(JSON.stringify({ withoutChatProcesses: found }));
   await t.check('a thread without the chat\'s Processes shows the concept\'s injected one, once', !!found && found.processes === 1 && found.injected === 1, JSON.stringify(found));
+
+  // F91-N1: the layer's own view and hover card, opened from its button on that thread, must not outlive the button
+  // when a switch to Query brings the chat's own Processes; and nothing reopens on the way back.
+  const layer = () => f.evaluate(sel => {
+    const vis = el => !!el && !el.hidden && getComputedStyle(el).display !== 'none' && getComputedStyle(el).visibility !== 'hidden' && el.getBoundingClientRect().width > 0;
+    const strip = document.querySelector(sel), kids = strip ? [...strip.children] : [];
+    return { panel: vis(document.getElementById('rw-activity-detail')), card: vis(document.getElementById('rw-processes-preview')),
+      ui: window.RW_THREAD && RW_THREAD.ui ? { open: RW_THREAD.ui.open, hoverOpen: RW_THREAD.ui.hoverOpen } : null,
+      processes: kids.filter(e => e.getAttribute('data-domain') === 'processes' || e.getAttribute('data-rw-domain') === 'processes').length,
+      injected: kids.filter(e => e.getAttribute('data-rw-domain') === 'processes').length };
+  }, STRIP);
+  if (found) {
+    const back = async () => { await f.evaluate(id => PM56_DEMO.selectThread(id), found.id); await t.settle(); await f.waitForTimeout(500); };
+    const toQuery = async () => { await f.evaluate(() => PM56_DEMO.selectThread('query')); await t.settle(); await f.waitForTimeout(500); };
+    // The view, opened by a real click on the layer's button.
+    await f.locator(`${STRIP} > [data-rw-domain="processes"]`).first().click();
+    await f.waitForFunction(() => { const p = document.getElementById('rw-activity-detail'); return p && !p.hidden; }, null, { timeout: 5000 });
+    // Pointer off the button: a button that reappears under a resting pointer opens its card by ordinary hover.
+    await t.page.mouse.move(5, 5);
+    const viewOpen = await layer();
+    await toQuery();
+    const viewQuery = await layer();
+    await back();
+    const viewBack = await layer();
+    t.log(JSON.stringify({ viewOpen, viewQuery, viewBack }));
+    await t.check('F91-N1 view: opened on a thread without the chat\'s Processes, closed by the switch to Query (one Processes, no orphan), not reopened on return',
+      viewOpen.panel && viewQuery.processes === 1 && viewQuery.injected === 0 && !viewQuery.panel && !viewQuery.card && !viewQuery.ui.open &&
+      !viewBack.panel && !viewBack.card && !viewBack.ui.open && viewBack.injected === 1, JSON.stringify({ viewOpen, viewQuery, viewBack }));
+    // Each case starts clean: a view the switch left open is closed through the layer's own path.
+    await f.evaluate(() => { if (window.RW_THREAD && RW_THREAD.ui.open) RW_THREAD.close(); });
+    await t.settle();
+    // The hover card, opened by resting a real pointer on the layer's button.
+    const box = await f.locator(`${STRIP} > [data-rw-domain="processes"]`).first().boundingBox();
+    await t.page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await f.waitForFunction(() => { const c = document.getElementById('rw-processes-preview'); return c && !c.hidden; }, null, { timeout: 5000 });
+    const cardOpen = await layer();
+    await toQuery();
+    const cardQuery = await layer();
+    await t.page.mouse.move(5, 5);
+    await back();
+    const cardBack = await layer();
+    t.log(JSON.stringify({ cardOpen, cardQuery, cardBack }));
+    await t.check('F91-N1 card: hovered on a thread without the chat\'s Processes, closed by the switch to Query (one Processes, no orphan), not reopened on return',
+      cardOpen.card && cardQuery.processes === 1 && cardQuery.injected === 0 && !cardQuery.card && !cardQuery.panel && !cardQuery.ui.hoverOpen &&
+      !cardBack.card && !cardBack.panel && cardBack.injected === 1, JSON.stringify({ cardOpen, cardQuery, cardBack }));
+  }
   await f.evaluate(() => PM56_DEMO.selectThread('query')); await t.settle();
 }
