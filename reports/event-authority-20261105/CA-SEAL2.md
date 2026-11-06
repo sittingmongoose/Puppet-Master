@@ -766,3 +766,80 @@ The compact committed result is `CA-SEAL2-fix9-results.json`. Replay scripts, ra
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix9/repo-check-summary.json` | `e5d977c35754f4e72cd3ffc73399e25e5378b5f933ba1cb4a9567026409fcbc3` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix9/index-comparison.json` | `e149b69019df6efa2da2e1961a8c24b245da0d06efb6a43bc1db98d66eb9ddd6` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix9/prior-evidence-restoration.json` | `08b4484ec60570292c9a620e905bc114dd320499b17fe116cce413d7f44750ae` |
+
+## Recheck cycle 10: findings and responses
+
+Round-10 worker: **CA-SEAL2-FIX10**. Read the FIX10 and FIX9 briefs, the blind Sol recheck `reviews/CA-SEAL2-sol/REVIEW-cycle10.md` and its evidence (`probes.py`, `preservation-rebinding.json`, `history_audit.py` and the other replay scripts). This is a tests/fixtures/records change from `fe09cf2be8f7f11ffc5c1f8f5980f40d68ced660`. The occurrence map, its validation and the probes are in **`422727d7f7b1431d3e829eadf45da772c97db814`**; the replay evidence and this section are in the follow-up record commit. `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/`.
+
+| Finding | Location and cause | Fix and verification |
+|---|---|---|
+| **CA2-C10-B01 — fixed** | Round-9 `validate_coverage()` accepted a `preserved August predicate` row when its claimed baseline node existed and matched the row's function, column, expression and node type. It never showed that the current node *is* that historical occurrence, and two rows could claim one baseline. An inserted `probe = isinstance(receipt, dict)` labelled with V:220's baseline passed. | `H:233` `occurrence_map()` aligns CA-SEAL `17c842445a` to the frozen validator function by function, over unchanged blocks (`difflib.SequenceMatcher` over each function's lines, decorators and signature included). `H:197` gives a node a counterpart only if its own span lies in one unchanged block, a historical node of the same type, expression and extent sits at the mapped position, and the enclosing chain up to the top-level function has the same node types and parent fields at unchanged positions, with every enclosing statement header unchanged. The map is one-to-one. `H:315` and `H:353–359` require each preservation row's baseline id to be its own node's counterpart, allow one claim per historical occurrence, and check the recorded map totals. Nodes in inserted or changed blocks, in a changed context, or in a function new since CA-SEAL have no counterpart and can never be preserved. |
+
+### Computed occurrence map
+
+| Measure | Value |
+|---|---:|
+| Touched functions aligned to CA-SEAL by name | **4** (`multi_family_receipt_state`, `post_august_validator_pin`, `main`, `build_receipt`) |
+| Touched functions new since CA-SEAL | 11 |
+| Aligned unchanged blocks | **8** (two per aligned function) |
+| Aligned unchanged lines | 1,306 |
+| Eligible nodes (computed counterpart) | **1,126** |
+| Ineligible: inserted or changed line / changed enclosing header / new function | 35 / 1 / 455 |
+| Preserved rows matched to their own counterpart | **620 of 620** |
+
+The 1,126 eligible nodes are exactly the 620 preserved rows and 506 non-predicate data operations. No killed, implied, duplicate, frozen-only or structural row is eligible, and none of the 36 ineligible nodes in the four aligned functions is preserved (they are 15 killed-by, 20 data-operation and 1 same-predicate-duplicate rows; see `occurrence-audit.json`). **No committed row changed outcome:** every one of the 620 rows passes through the computed map, with the same baseline id it already cited. The recheck's whole-file line map agrees for all 620. The coverage JSON gains `totals.occurrence_map`, schema `v4`, and corrected preservation wording; identities, outcomes and evidence are unchanged.
+
+### Regression probes (each must fail coverage)
+
+`H:421` `forged_preservation()` edits a scratch copy of V and forges the table an attacker would need under round 9: existing rows rebased, a vanished row taken over by the new node at its position (a preserved one becomes `implied`, since round 9 already refused an expression change), any other new node rebound to the preserved row sharing its function, column, expression and type, and every count and map total regenerated. `H:545` requires refusal at the occurrence check, naming the expected sites. The committed corpus runs all five as `negative_preserved_*`, plus the synthetic `positive_occurrence_map_controls` (`H:560`).
+
+| Probe | Edit and forged claim | Round-9 rule | Round-10 refusal |
+|---|---|---|---|
+| `rebinding_inserted_call` | The recheck's witness: `probe = isinstance(receipt, dict)` inserted before V:238's return, labelled with V:220's baseline | accepts | not an unchanged occurrence (the inserted call); claimed twice (V:220's baseline) |
+| `inserted_sole_claim` | Same insertion; V:220's own row relabelled `implied`, so the inserted call holds the only claim | accepts | not an unchanged occurrence (the inserted call) |
+| `duplicate_claim` | No source edit; V:1240's `isinstance(pins, str)` claims V:1227's baseline (line and evidence copied) | accepts | claims another occurrence (V:1240); claimed twice (V:1227's baseline) |
+| `changed_occurrence` | V:218 edited in place (`else None` → `else "x!"`); its preserved `isinstance(receipt, dict)` keeps line, column, text and baseline | accepts | not an unchanged occurrence (that call) |
+| `changed_enclosing_header` | V:1122 `if failures:` → `if not failures:`; the body's preserved V:1129 call and filter keep line, column, text and baseline | accepts | not an unchanged occurrence (both body nodes) |
+
+Every forged table passes the round-9 `validate_coverage()` from `fe09cf2be8` and fails the round-10 one with `preserved occurrence mismatch`. Earlier insertion probes are unchanged and still fail with missing identities. The one-category cut analysis (`preservation-probes.json`) shows which rule refuses which probe: dropping the not-an-unchanged-occurrence category lets the sole-claim, changed-occurrence and changed-header probes pass; the rebinding probe then still fails as a double claim, and the duplicate probe fails on both remaining categories. The once-only rule never refuses alone: the map is one-to-one, so any second claim is also a row that claims another node's occurrence. It stays as a direct check of brief rule 3.
+
+The synthetic control aligns `kept(x)` moved below a new function: the unchanged assignment, the unchanged `if x:` test and an unchanged `try` body call map; a duplicated copy of the assignment maps once; an inserted line, an `if` test changed to `if not x:`, a body moved from `if` to `else`, a body under that changed header, a handler changed to `except ValueError as exc:` (both its dispatch and the `Try` dispatch), a changed `return` and the new function's call have no counterpart.
+
+### Fresh replay results and limits
+
+- **Corpus:** a fresh process on byte-verified scratch copies of the code commit, with the original supplied source map and no replay caches: exit 0, **200/200**, all **597/597** source hashes and lengths verified. The worktree's original-map run is also 200/200 (`final-corpus.json`). All 194 previous test names remain and their result records are identical to the round-9 head's run. Six tests are new: `positive_occurrence_map_controls` and the five `negative_preserved_*` probes.
+- **Recheck cycle-10 probes (`probes.py`):** Astra 6's five insertions (assigned `isinstance`, Boolean `&`, bare filter, unknown call, assigned `bool`) each fail coverage with one missing and zero stale identities; scratch bytes are restored. The ten adjacent insertions still fail with missing counts **1,1,1,1,2,2,2,2,1,1**. **The rebinding witness now fails coverage**: `preserved occurrence mismatch`, the inserted call as not an unchanged occurrence and V:220's baseline as claimed twice.
+- **Astra 6 hidden builder replay:** the `overall_pass = overall_pass | isinstance(named.get('review_extra'), dict)` insertion has three missing identities and fails coverage. Its full corpus is **199/200**, exit 1, failing only `positive_complete_predicate_coverage`. The deliberately altered helper still turns false into true, which is the perturbation the coverage test now catches, not an intact approval bypass. Validator, coverage and receipt scratch bytes are restored exactly.
+- **B02 cuts:** the exact-member-only cut gives **197/200**, failing only the missing-name, duplicate-name and extra-name negatives. The admission-only cut gives **199/200**, failing only the missing-admission negative, while extra-name keeps its exact-member refusal.
+- **Provenance and data-flow audits:** the recheck's `history_audit.py` finds 620 rows and zero line-provenance mismatches. `data_audit.py` resolves all 744 data-flow consumers to the actual AST and retains its 40-row risky sample unchanged. `occurrence_audit.py` confirms the committed map totals, 620/620 rows on their own counterpart, 620/620 agreement with the recheck's whole-file line map, no historical occurrence claimed twice, and no preserved row in a new function.
+- **Committed rows:** no row changed outcome, and none needs a new evidenced outcome.
+
+**Limits.** Preservation is now occurrence identity: unchanged text, position, extent and enclosing structure inside an unchanged block of the same function. It is not data-flow equivalence. An unchanged predicate whose inputs are produced by a changed line keeps its preserved status; the changed line's own nodes are inventoried separately and need their own outcomes. Guard removal stays with the shared-tool sweep, as before. Alignment is line-based, so a moved statement loses preservation (fail-closed). When a line is duplicated, `difflib` deterministically maps one copy and the other needs its own outcome. Astra 2, 3 and 5 campaigns were not rerun: the brief named the corpus, the cycle-10 probes and Astra 6's replays, and no killed-by row, cut or validator byte changed. No governance, shard or index check was run; only `reports/` paths changed.
+
+Root disk and RAM passed the 50/6 GB floors before every run (131–137 GB free, 11–17 GB available). Checkers ran one at a time; the corpus peak was about 93 MB. The replay harness caches only immutable revision-qualified Git blobs; the two original-map runs used none. Scratch held 19,177,878 bytes before removal.
+
+Only five round-10 paths change, all under `reports/event-authority-20261105/`: H, the coverage JSON and Markdown, this report and the compact `CA-SEAL2-fix10-results.json`. The validator stays byte-for-byte at `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`. No validator, receipt, Plans, Spec Lock, `.evidence`, auto-decision, `.gitignore`, registry or Decision Log edit; no pm-mail, subagent, main push, admission, seal, browser or server. **CA-SEAL2-FIX10 joins the seal-applier exclusion.** Family grades N/A; IDs used none; stopped product questions none. Coordinated landing, actual landers/anchors, real per-name outcomes/depth and unchanged August approval requirements remain integration work.
+
+### Retained round-10 evidence
+
+The compact committed result is `CA-SEAL2-fix10-results.json`. Replay scripts, raw outputs and instructions are retained in E with the input extraction and local-copy manifests and a complete `SHA256SUMS`. Copied inputs, runtime scratch and the worker worktree are removed after the branch push. The report and coverage copies in the parent drafts directory are overwritten with this result.
+
+| Evidence path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/baseline.json` | `8dc6ae98347e298da7f1f721af0e4d903e5aaa121b21d0132c20e1cb09cd6c9c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/final-corpus.json` | `b668ba504922f7ae90038f24ffc0e866f672177ba91c89d29a8216bce59aefbc` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/round9-head-corpus.json` | `3276f047d4e11988b343dabda3e1aaaab6f36c771f68be84686b4b49bb33e38d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/preservation-probes.json` | `8d39424912ed25c220c6c1ac1376927fb6a83b6c2ff6dcab8a0035e71fec4183` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/occurrence-audit.json` | `6d80751a93e37e862cf69c10a5cf3771cea1c168b35d65677620ff3f57817ca9` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/preservation-rebinding.json` | `e658d93d8da24438cfd00478a35de38d0f7de6d36a9cd07bf8979a02250f4632` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/coverage-probes.json` | `cdfc660fc5774043eadcd2911eb9e77ebb3bee99d632c275b3b1782f94d1873e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/adjacent-probes.json` | `fd78eb67ecb68b77f99a579b3ca9be46d0acd58816be09d8e0902c1647f4a83a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/hidden-predicate-summary.json` | `c643af6b6f444b6f30fc219e09438a554ba8d61ea36a4fb29f888be54500932b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/hidden-predicate-corpus.json` | `5dcc6001e5d03ddaa2750a2f2994ba763dbc9a71dbf820136cbd8c09bdd8991a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/b02-summary.json` | `8fe43d11be62545c9e2814dd95c6716d04dcd40f13821d125b96c3e2799e756d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/history-audit.json` | `2047c2bea36e370ec966771f760a21b6425936848b6c37048131cd85a8c3b078` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/data-flow-audit.json` | `72df40621edb7126043f9a3f617e897b73f81dbd2fdab64f124de8531378751b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/extraction-manifest.json` | `19225d52dfaf0276c433b1532ff74183f25e0128d90c439c55cbdd6ae0c3827e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/local-map-manifest.json` | `a52c38fb7baf273d950e81750cc5ca3ab018b0178119a272385c9a8981aa7510` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/extraction-restoration.json` | `a20a69b4cdf0112bfd2c8f9c1ec6c4ee27325d44a87c0e5c88d72c2afcc5b92f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10/cleanup.json` | `acf5636c3925442256b0ab865e27749cfdaa2df729ee9cbb890e51441d415f5e` |
