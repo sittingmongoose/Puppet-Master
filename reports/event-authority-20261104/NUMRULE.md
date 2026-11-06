@@ -2131,3 +2131,32 @@ Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/
 | `num-mut-1.json.gz` | `b538e786a4cc0ca88b94ca899f3e93732a34975403669303b49fa10bcde34812` |
 | `num-scope-all.json.gz` | `dfcd44d8600de81a9e5687d4fbca1342e689af2e9918387c7fd5993e0761e9e8` |
 | `num-st-1.json` | `33e90b56f7198f6b76961039ab3e6dff2121f9a15743fd339bff6001420c6818` |
+
+## Tool batch 3: findings and responses (number scope, T50)
+
+**TOOLBATCH2 pre-check findings 5 and 8 are fixed; nothing is disputed.** Base: `8b2aca1282`. Fix: `61150203c6` on `plans/ea-numrule-20261105`. Number files only, plus the corpus content pin. Production helper code (`scripts/pm_event_numbers.py`, `pm_event_index_binding.py`) is unchanged, and no new case showed a production bug: nothing is REAL.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **5: blind survivors N05 and N07 — fixed** | `Plans/event_number_recipe_corpus.json`, `scripts/pm_event_numbers_mutations.json`. N05 (`full_value_commitment` accepts any `2.0.x`) and N07 (the payload digest compared without its first byte) had no case that tells them apart. New cases `full-value-wrong-version-2.0.1` (`schema_version` `2.0.1`, `full_value_edition`) and `payload-id-first-byte` (the BLAKE3 ID with only byte 0 changed, `payload_digest`). Both mutations are committed: `review-tb2-N05` (rule `full-value.edition`) and `review-tb2-N07` (rule `payload.blake3-id`), `source: review-toolbatch2`. | `--mutations`: each is caught by its new case alone (`failed_case_ids` is exactly the new case), so each survived the base corpus. |
+| **8: a unit's text outside its YAML fence was neither selected nor pinned — fixed** | `scripts/pm_event_numbers_corpus.py` `_unit_section_unselected_text`, `owner_statements`; `owner_text.units[].section_unselected_sha256`. The pin covered the unit's unselected YAML fields only, so a rule appended to CV-1100's `ContractRef:` line, or to its heading title, gave 0 problems. Each unit's whole section, from its heading to the line before the next heading of the same or a higher level (outside fences), less the selected field lines, is now pinned by SHA-256; any change fails the self-test, naming the new hash, until a reviewer checks the text for number rules and refreshes the pin. The pins record the sections as reviewed here: heading titles, unselected metadata fields and `ContractRef:` lines, none of which states a number rule. | The pre-check's `pins.py` on this tree (`pins-fix.json`): P1 (a rule on CV-1100's `ContractRef:` line) and P2 (on its heading title) now give 1 problem each (0 on the base); F5b gives 2 (both pins); F6 and F7b 1 each; the no-edit control 0. |
+
+**Note for the date-time worker (here, the same batch).** The corpus content pin in `scripts/pm_event_datetime_exclusions.json` is recomputed for the two new cases (`e4540227…` to `6a576962…`: SHA-256 of `json.dumps` of the corpus, as the inventory computes it).
+
+### Rerun results
+
+| Check | Base `8b2aca1282` | Now |
+|---|---|---|
+| `--self-test --scope numbers` | pass, 561 cases | **pass, 563 cases** |
+| `--self-test --scope numbers --mutations` | 370 mutations, 366 caught, 4 declared survivors | **372 mutations, 368 caught, 4 declared survivors**, 0 undeclared, 0 build errors, 0 problems; 108 rules caught |
+| N05 and N07 | survive | caught |
+| `--self-test --scope all` | pass | see the T41 section below |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH3/numbers/`.
+
+| File | SHA-256 |
+|---|---|
+| `pins.py` (the pre-check's) | `fe20716b90e9e95ae7548bd2f29bd422ca9eefb34fa68c141e5a30619a7a8996` |
+| `pins-fix.json` | `100156a9e05a731f621e16ead27495f2d71a02f16c4a4b57da3b664de72b7419` |
+| `num-selftest-t50.json` | `354789a1ead5baa02816c48fb5ecbabfd7eb638bc90fe15ccfc8b81156ebcf50` |
+| `num-mutations-t50.json.gz` | `c1e58b8de373cda37df761f8fae83824799c06ceccfa0dfca439f7298d12b7d7` |
