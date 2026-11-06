@@ -52,6 +52,26 @@ function boxOf(key) {
   if (n && getComputedStyle(n).display !== 'none' && n.getClientRects().length) { const g = document.createRange(); g.selectNodeContents(n); l = g.getBoundingClientRect(); }
   return { x: r.x, y: r.y, w: r.width, h: r.height, lit: el.classList.contains('active'), label: l && { x: l.x, y: l.y, w: l.width, h: l.height } };
 }
+// the name's letters: inside its text box, the pixels that stand out from the box's own ground (its most common
+// colour) by more than 40 luminance levels, grown by 1 px so a ring that only touches a letter counts; none of them may
+// change on a key focus. The region is the text box and 2 px round it.
+function inkDiff(rest, focus, pad) {
+  const w = rest.width, h = rest.height, Y = (d, i) => 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+  const counts = new Map();
+  for (let y = pad; y < h - pad; y++) for (let x = pad; x < w - pad; x++) { const i = 4 * (y * w + x), k = Math.round(Y(rest.data, i) / 8); counts.set(k, (counts.get(k) || 0) + 1); }
+  const ground = 8 * [...counts.entries()].sort((p, q) => q[1] - p[1])[0][0];
+  const ink = new Uint8Array(w * h); let letters = 0;
+  for (let y = pad; y < h - pad; y++) for (let x = pad; x < w - pad; x++) if (Math.abs(Y(rest.data, 4 * (y * w + x)) - ground) > 40) { ink[y * w + x] = 1; letters++; }
+  let crossed = 0;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    let near = false;
+    for (let dy = -1; dy <= 1 && !near; dy++) for (let dx = -1; dx <= 1; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w && ink[yy * w + xx]) { near = true; break; } }
+    if (!near) continue;
+    const i = 4 * (y * w + x);
+    if (Math.abs(Y(focus.data, i) - Y(rest.data, i)) > 40) crossed++;
+  }
+  return { letters, crossed };
+}
 function paintDiff(rest, focus) {
   let changed = 0; const ratios = [];
   for (let i = 0; i < rest.data.length; i += 4) {
@@ -115,14 +135,14 @@ export default async function (t) {
     if (!b) return null;
     const P = 9, x = Math.max(0, Math.floor(off.x + b.x) - P), y = Math.max(0, Math.floor(off.y + b.y) - P);
     const region = { x, y, width: Math.ceil(off.x + b.x + b.w) + P + 1 - x, height: Math.ceil(off.y + b.y + b.h) + P + 1 - y };
-    // with the names shown, the name's own box: a ring must not cross it (no pixel of it may change)
-    const L = b.label, lr = L && { x: Math.floor(off.x + L.x), y: Math.floor(off.y + L.y), width: Math.ceil(L.w), height: Math.ceil(L.h) };
+    // with the names shown, the name's own text box and 2 px round it: a ring must not cross or touch its letters
+    const L = b.label, lr = L && { x: Math.floor(off.x + L.x) - 2, y: Math.floor(off.y + L.y) - 2, width: Math.ceil(L.w) + 5, height: Math.ceil(L.h) + 5 };
     const rest = await t.pixels(region), restL = lr && await t.pixels(lr);
     await reach();
     await f.waitForTimeout(450);
     const now = await key();
     const focus = await t.pixels(region), focusL = lr && await t.pixels(lr);
-    return { key: target, lit: b.lit, focused: now.key === target, ...paintDiff(rest, focus), ...(lr ? { nameChanged: paintDiff(restL, focusL).changed } : {}) };
+    return { key: target, lit: b.lit, focused: now.key === target, ...paintDiff(rest, focus), ...(lr ? { name: inkDiff(restL, focusL, 2) } : {}) };
   };
   const byTab = target => async () => { for (let i = 0; i < controls.length; i++) { await kb.press('Tab'); if ((await key()).key === target) return; } };
   await t.page.mouse.move(off.x + 1200, off.y + 600);
@@ -278,10 +298,11 @@ export default async function (t) {
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
     await f.waitForFunction(() => !document.getElementById('activityBar').classList.contains('collapsed'), null, { timeout: 5000 }).catch(() => {});
     await f.waitForTimeout(900);
-    const wide = [await painted('files', byTab('files')), await painted('search', byTab('search'))];
+    // Pipelines: its p is the lowest letter on the bar, nearest a ring under the name
+    const wide = [await painted('files', byTab('files')), await painted('search', byTab('search')), await painted('repository_automation', byTab('repository_automation'))];
     t.log(`${look} names shown, painted rings ${JSON.stringify(wide)}`);
-    await t.check(`${look}, names shown: a painted key focus ring of ${known ? 'some contrast (FO-99)' : '3:1 or more'} on lit Files and on Search, and neither name is crossed`,
-      wide.every(ok) && wide[0]?.lit && wide.every(r => r && r.nameChanged != null && r.nameChanged <= 2), JSON.stringify(wide));
+    await t.check(`${look}, names shown: a painted key focus ring of ${known ? 'some contrast (FO-99)' : '3:1 or more'} on lit Files, on Search and on Pipelines, and no name's letters are crossed or touched`,
+      wide.every(ok) && wide[0]?.lit && wide.every(r => r && r.name && r.name.letters >= 15 && r.name.crossed === 0), JSON.stringify(wide));
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);
       await t.crop(`names-files-focus-${surface}-${look}`, f.locator('#activityBar'), `${look}: names shown, lit Files with the key focus ring`);
