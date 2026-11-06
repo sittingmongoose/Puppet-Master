@@ -19,7 +19,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { MUTATIONS, mutate, kindsOf } from './pip-steady-mutants.mjs';
+import { MUTATIONS, mutate, kindsOf, PAINTED } from './pip-steady-mutants.mjs';
 import { readWitness, paintContract } from '../helpers/pip-witness.mjs';
 
 const all = process.argv.slice(2), dd = all.indexOf('--'), args = dd < 0 ? all : all.slice(0, dd), extra = dd < 0 ? [] : all.slice(dd + 1);
@@ -32,9 +32,12 @@ const serve = opt('serve-dir'), base = opt('url-base');
 if (!!serve !== !!base) { console.error('--serve-dir and --url-base go together'); process.exit(2); }
 const place = (name, html) => { const dir = serve || path.join(out, 'pages'); fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(path.join(dir, name), html); return serve ? base.replace(/\/?$/, '/') + name : path.resolve(dir, name); };
 const html = rejudge ? null : fs.readFileSync(page, 'utf8');
+/* (T67: a look:kind listed twice, to run it on both surfaces, gets a job name of its own each time; the second used to
+   crash with EEXIST on the first one's folder) */
+const used = new Map(), unique = (n) => { const k = (used.get(n) || 0) + 1; used.set(n, k); return k === 1 ? n : `${n}-${k}`; };
 const jobs = rejudge ? JSON.parse(fs.readFileSync(path.join(out, 'jobs.json'), 'utf8')) : (opt('looks') === 'none' ? [] : opt('looks') ? opt('looks').split(',') : Object.keys(MUTATIONS)).map((spec, i) => {
-	const { look, name } = kindsOf(spec), { out: m, kind } = mutate(html, spec);
-	return { name: `mutant-${name}`, look, kind, page: place(`fo30-mutant-${name}.html`, m), sandbox: opt('sandbox') ?? String(i % 2), phases: opt('phases', 'welcome'), marker: 'PIP_MUTANT ' };
+	const { look, name } = kindsOf(spec), { out: m, kind } = mutate(html, spec), jn = unique(`mutant-${name}`);
+	return { name: jn, look, kind, page: place(`fo30-${jn}.html`, m), sandbox: opt('sandbox') ?? String(i % 2), phases: opt('phases', 'welcome'), marker: 'PIP_MUTANT ' };
 });
 if (!rejudge && opt('astra')) jobs.unshift({ name: 'astra-friendly-light', look: 'friendly-light', kind: 'opacity (Astra)', page: place('fo30-astra-mutation-friendly.html', fs.readFileSync(opt('astra'), 'utf8')), sandbox: opt('sandbox') ?? '0', phases: 'begin', marker: 'REVIEW_ONE_FRAME ' });
 /* --jobs <file.json>: more negatives, each [{ name, page, looks, phases, sandbox, marker, expect, filmOnly }], one film
@@ -68,11 +71,13 @@ for (const j of jobs) {
 			if (!L.filmed) L.problems.push('the frame with the loss never reached the film (capture rate): inconclusive, run again');
 			const dip = (s.dips || []).find((d) => d.look === look && L.seqs.some((q) => d.seqs.includes(q)));
 			L.filmCaught = !!dip; L.dip = dip || null; if (dip) matched.add(dip);
-			if (!dip) L.problems.push('the film scan did not report the loss');
+			/* (T67: a PAINTED kind leaves Pip painted: the film must report nothing there, and the contract must not flag it) */
+			if (PAINTED.has(kind) ? !!dip : !dip) L.problems.push(PAINTED.has(kind) ? 'the film scan reported a loss where Pip stays painted' : 'the film scan did not report the loss');
 			/* the structural contract of that very page frame */
 			L.structural = hit.flatMap((x) => contract.why(x));
 			L.structuralCaught = L.structural.length > 0;
-			if (FILM_ONLY.has(kind) ? L.structuralCaught : !L.structuralCaught) L.problems.push(FILM_ONLY.has(kind) ? 'the structural contract flagged a change it cannot see (something else changed)' : 'the structural contract passed a DOM-visible loss');
+			if (PAINTED.has(kind)) { if (L.structuralCaught) L.problems.push(`the structural contract flagged a change that leaves Pip painted (a false stop): ${L.structural.join('; ')}`); }
+			else if (FILM_ONLY.has(kind) ? L.structuralCaught : !L.structuralCaught) L.problems.push(FILM_ONLY.has(kind) ? 'the structural contract flagged a change it cannot see (something else changed)' : 'the structural contract passed a DOM-visible loss');
 			r.losses.push(L);
 		}
 		r.mutationSeqs = r.losses.flatMap((L) => L.seqs);
@@ -86,8 +91,12 @@ for (const j of jobs) {
 		r.runStructuralFailed = paintChecks.some((x) => !x.ok);
 		r.otherStructuralFailures = (sum.results || []).filter((x) => !x.ok && !paintChecks.includes(x)).map((x) => x.name.split(' › ').pop());
 		const filmOnlyRun = r.losses.length > 0 && r.losses.every((L) => FILM_ONLY.has(L.kind));
+		const paintedRun = r.losses.length > 0 && r.losses.every((L) => PAINTED.has(L.kind));
+		if (paintedRun) { if (r.runStructuralFailed) r.problems.push('the run\'s structural paint assertion failed where Pip stays painted (a false stop)'); if (!gj.ok) r.problems.push('the gate failed where Pip stays painted (a false stop)'); }
+		else {
 		if (filmOnlyRun ? r.runStructuralFailed : !r.runStructuralFailed) r.problems.push(filmOnlyRun ? 'the run\'s structural paint assertion failed on a film-only change (something else changed)' : 'the run\'s structural paint assertion passed');
 		if (gj.ok) r.problems.push('the gate passed');
+		}
 		if (s.cannotEvaluate && s.cannotEvaluate.length) r.problems.push(`scan could not evaluate: ${s.cannotEvaluate.slice(0, 3).join('; ')}`);
 	} catch (e) { r.problems.push(`unreadable result: ${e.message}`); }
 	r.ok = !r.problems.length;
@@ -95,5 +104,5 @@ for (const j of jobs) {
 	console.log(JSON.stringify({ negative: j.name, ok: r.ok, surface, seqs: r.mutationSeqs, filmed: r.filmed, filmCaught: r.filmCaught, structuralCaught: r.structuralCaught, otherStructural: r.otherStructuralFailures, problems: r.problems }));
 }
 fs.writeFileSync(path.join(out, 'negatives.json'), JSON.stringify({ build: page ? path.resolve(page) : null, extra, rejudged: !!rejudge, ok: results.every((r) => r.ok), results }, null, 2) + '\n');
-console.log(`FO-30 negatives: ${results.filter((r) => r.ok).length}/${results.length} rejected as required`);
+console.log(`FO-30 negatives: ${results.filter((r) => r.ok).length}/${results.length} as required (losses rejected, painted kinds passed)`);
 process.exitCode = results.every((r) => r.ok) ? 0 : 1;

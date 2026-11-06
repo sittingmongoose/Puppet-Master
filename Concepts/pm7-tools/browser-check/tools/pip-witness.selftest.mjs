@@ -7,7 +7,7 @@ import { FIELDS, paintContract, evaluateWitness } from '../helpers/pip-witness.m
 const F = Object.fromEntries(FIELDS.map((k, i) => [k, i]));
 const strings = ['', 'friendly-light', 'welcome', 'start', 'Pip missing from the stage', 'animation@pst-svg', 'pstOn@content',
 	'head:clip=none|mask=none|filter=url|attr=', 'controller:clip=none|mask=linear-gradient(transparent, transparent)|filter=|attr=',
-	'stage collapsed in an open window', 'stage missing from an open window', 'DIV.o55-stage:backface=hidden / DIV.o55-stage:facing=back / SVG.pst-svg:facing=back'];
+	'stage collapsed in an open window', 'stage missing from an open window', 'DIV.o55-stage:back face hidden and turned away'];
 const S = (x) => strings.indexOf(x);
 let seq = 0;
 const rec = (o = {}) => {
@@ -29,7 +29,7 @@ let checks = 0;
 assert.deepEqual(why(rec()), []); checks++;
 assert.match(why(rec({ gone: 1, why: S('Pip missing from the stage') }))[0], /missing from the stage/); checks++;
 assert.ok(why(rec({ foreign: S('animation@pst-svg'), opHead: 0, opCtl: 0 })).some((x) => /not one of the stage's own effects: animation@pst-svg/.test(x))); checks++;
-assert.ok(why(rec({ sig: S('head:clip=none|mask=none|filter=url|attr=') })).some((x) => /filter on Pip or its ancestors that its look's calibration did not have/.test(x))); checks++;
+assert.ok(why(rec({ sig: S('head:clip=none|mask=none|filter=url|attr=') })).some((x) => /a clip-path, mask, filter or hidden back face on Pip or its ancestors that its look's calibration did not have: "head:clip=none\|mask=none\|filter=url/.test(x))); checks++;
 assert.ok(why(rec({ sig: S('controller:clip=none|mask=linear-gradient(transparent, transparent)|filter=|attr=') })).some((x) => /controller:clip=none\|mask=linear-gradient/.test(x))); checks++;
 assert.ok(why(rec({ dim: 0 })).some((x) => /brightness 0/.test(x))); checks++;
 assert.ok(why(rec({ leafArea: 0 })).some((x) => /painted leaves 0/.test(x))); checks++;
@@ -38,8 +38,9 @@ assert.match(why(rec({ gone: 1, why: S('stage collapsed in an open window') }))[
 assert.match(why(rec({ gone: 1, why: S('stage missing from an open window') }))[0], /stage missing from an open window/); checks++;
 assert.equal(evaluateWitness({ ...w, recs: [...recs, rec({ gone: 1, why: S('stage collapsed in an open window'), placed: 0 })] }).find((a) => /are painted/.test(a.name)).ok, false); checks++;
 /* T52: an ancestor turned to its back face (rotateY(180deg), backface-visibility hidden) is a signature its look's
-   calibration did not have */
-assert.ok(why(rec({ sig: S('DIV.o55-stage:backface=hidden / DIV.o55-stage:facing=back / SVG.pst-svg:facing=back') })).some((x) => /DIV\.o55-stage:backface=hidden/.test(x))); checks++;
+   calibration did not have; T67: the in-page witness writes it only for a hidden back face turned away, and the text
+   names it as a hidden back face, not a clip, mask or filter */
+assert.ok(why(rec({ sig: S('DIV.o55-stage:back face hidden and turned away') })).some((x) => /hidden back face on Pip or its ancestors .*DIV\.o55-stage:back face hidden and turned away/.test(x))); checks++;
 /* the whole judgement: one missing-Pip frame among clean ones fails the run's paint assertion */
 const bad = { ...w, recs: [...recs, rec({ gone: 1, why: S('Pip missing from the stage'), placed: 0 })] };
 const paint = (x) => evaluateWitness(x).find((a) => /are painted/.test(a.name));
