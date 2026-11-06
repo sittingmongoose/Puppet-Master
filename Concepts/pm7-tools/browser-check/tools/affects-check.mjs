@@ -233,7 +233,7 @@ function selftest() {
 	const tour = map.sourceRows.findIndex((r) => r.files.includes(`${O}/src/js/8*.js`));
 	const fields = map.kitRows.findIndex((r) => r.files.includes(`${KIT}/helpers/onboarding-fields.mjs`));
 	const negatives = [
-		['a source no row places', (p) => { p.sourceRows[tour].files = p.sourceRows[tour].files.filter((g) => g !== `${O}/src/js/8*.js`); }, 'product source placed by no source row and not in affectsAll: ' + `${O}/src/js/80-tour-core.js`],
+		['a source no row places', (p) => { p.sourceRows[tour].files = p.sourceRows[tour].files.filter((g) => g !== `${O}/src/js/8*.js`); }, 'product source placed by no source row and not in affectsAll: ' + `${O}/src/js/82-tour-wizard.js`],
 		['a files glob that matches nothing', (p) => { p.noCheckRows[0].files.push('Concepts/no-such-folder/**'); }, 'files glob matches no file: Concepts/no-such-folder/**'],
 		['a checks glob that matches nothing', (p) => { p.affectsAlways.push('checks/no-such.check.mjs'); }, 'checks glob matches no check file: checks/no-such.check.mjs'],
 		['a check no row selects', (p) => { p.checkSurfaces['checks/widths.check.mjs'] = []; }, 'check file in no row and not in affectsAlways: checks/widths.check.mjs'],

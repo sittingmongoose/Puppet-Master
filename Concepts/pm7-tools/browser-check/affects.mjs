@@ -195,6 +195,9 @@ export const sourceRows = [
 	{ files: [`${O}/src/js/21-talk.js`, `${O}/src/copy.d/49-pip-settings.json`, `${O}/src/copy.d/55-nier-chips.json`, `${O}/src/copy.d/60-tour-settings.json`, `${O}/src/js/25-fixtures.js`], surfaces: ['settings'], why: 'Settings rows and editors that read O55 copy, talk mode and fixtures' },
 	{ files: [`${O}/src/js/8*.js`, `${O}/src/css/40-tour.css`, `${O}/src/css/41-tour-nier.css`, `${O}/src/css/43-chat-labels.css`, `${O}/src/copy.d/50-nier-tour.json`, `${O}/src/copy.d/60-tour-settings.json`], surfaces: ['tour'], why: 'the Guided Tour (80-85) and its styles' },
 	{ files: [`${O}/src/js/81-tour-chat.js`, `${O}/src/js/84-pod042-chat.js`, `${O}/src/css/43-chat-labels.css`, `${O}/src/copy.json`], surfaces: ['chat'], why: 'the Teacher and Pod 042 in the real chat, the guided-message labels, pod042 copy' },
+	{ files: [`${O}/src/js/20-store.js`, `${O}/src/js/25-fixtures.js`, `${O}/src/js/30-owners.js`, `${O}/src/js/50-art-core.js`, `${O}/src/js/60-ui-core.js`], surfaces: ['studio'], why: 'what the Demo Studio reads from the O55 core (91-demo-studio.js): O55.store, .fixtures, .owners, .pipStage, .screens' },
+	{ files: [`${O}/src/js/30-owners.js`], surfaces: ['tour', 'chat'], why: 'O55.owners, which the Teacher reads (81-tour-chat.js)' },
+	{ files: [`${O}/src/js/80-tour-core.js`], surfaces: ['window', 'studio', 'sound'], why: 'O55.tour, which the window (60-ui-core.js and the 67, 68 and 74 screens), the Demo Studio and the sound engine call' },
 	{ files: [`${O}/src/js/9*.js`, `${O}/src/css/5*.css`, `${O}/src/copy.d/75-demo-studio.json`], surfaces: ['studio', 'shell'], why: 'the Demo Studio (90-92) and its "Concept demo" item in the status bar' },
 	{ files: [`${O}/src/js/10-motion.js`], surfaces: ['window', 'tour', 'studio', 'timing'], why: 'O55.motion: the JS motion clock, Reduced Motion and low-resource detection' },
 	{ files: [`${O}/src/js/12-theme-transition.js`, `${O}/src/css/21-look-veil.css`], surfaces: ['looks', 'timing'], why: 'the cover a look change crosses through (PM_THEME_TRANSITION, PM_LOOK_COVERED)' },
@@ -214,6 +217,7 @@ export const sourceRows = [
 	{ files: [`${O}/src/settings/kit.d/19-nier-parts.js`, `${O}/src/settings/kit.d/20-nier-world.js`, `${O}/src/settings/kit.d/21-nier-scenes.js`, `${O}/src/settings/styles.d/13-nier.css`, `${O}/src/settings/styles.d/14-nier-parts.css`, `${O}/src/settings/styles.d/15-nier-world.css`, `${O}/src/settings/styles.d/16-nier-scenes.css`, `${O}/src/settings/styles.d/29-nier-calm.css`, `${O}/src/settings/nier/**`, `${O}/tools/nier_scene_art.py`, `${O}/tools/nier_scenes.py`],
 		surfaces: ['nier'], why: 'what NieR paints while it is on: tokens, parts, world, scenes, fonts (the parts editor, kit.d/22-nier-chips.js, has a row of its own below)' },
 	// Settings code the O55 module calls (found by the page globals each O55 file uses and where each is defined)
+	{ files: [`${O}/src/settings/kit.d/45-scoped.js`], surfaces: ['chat', 'studio', 'home', 'shell'], why: 'PM51.revealSetting, which 45-scoped wraps: the agents and processes panel (48-work.js) opens Settings through it' },
 	{ files: [`${O}/src/settings/managers/50-servers.js`, `${O}/src/settings/managers/53-transfer.js`], surfaces: ['window'], why: 'the away screen calls PM51.sysAway (50-servers) and the project screen reads PM_SETTINGS_PROJECT_SNAPSHOTS (53-transfer)' },
 	{ files: [`${O}/src/settings/kit.d/22-nier-chips.js`], surfaces: ['window', 'tour'], why: 'the NieR look in the window and the tour bar opens PM_NIER_CHIPS' },
 	{ files: [`${O}/src/settings/kit.d/10-values.js`, `${O}/src/settings/kit.d/40-bound.js`], surfaces: ['notify'], why: 'PM Notify reads settings through PM51.value' },
@@ -240,8 +244,9 @@ export const sourceRows = [
 ];
 
 // Files whose change means run everything: the page every check loads, the build and its whole-page passes, the shell,
-// the O55 core every O55 part uses, fonts and the hover engine (every painted text and control), the page-wide motion
-// start, idle and after-layout service, the look settings, the glyph system, and the kit config.
+// the O55 core every O55 part uses, the Settings kit that creates PM51 (PM Notify, the agents panel and the away screen call
+// it too), fonts and the hover engine (every painted text and control), the page-wide motion start, idle and after-layout
+// service, the look settings, the glyph system, and the kit config.
 export const affectsAll = [
 	'Concepts/PMConcept7.html',
 	`${O}/tools/build.py`, `${O}/tools/base_source.py`, `${O}/tools/settings_layer.py`, `${O}/tools/settings_restore.js`,
@@ -252,7 +257,7 @@ export const affectsAll = [
 	`${O}/src/css/01-webfonts.css`, `${O}/src/css/02-control-fonts.css`, `${O}/src/css/03-symbols.css`, `${O}/src/css/06-corners.css`,
 	`${O}/src/css/22-hover.css`, `${O}/src/css/23-hover-perf.css`, `${O}/src/css/24-no-pills.css`, `${O}/src/css/25-hover-controls.css`,
 	`${O}/src/css/60-switcher-looks.css`, `${O}/src/css/61-look-palette.css`, `${O}/src/fonts/**`,
-	`${O}/src/settings/kit.d/05-fixes.js`, `${O}/src/settings/kit.d/17-look.js`,
+	`${O}/src/settings/kit.js`, `${O}/src/settings/kit.d/05-fixes.js`, `${O}/src/settings/kit.d/17-look.js`,
 	'Concepts/pm7-tools/settings_refresh_source.py', 'Plans/settings_inventory.json',
 	'Concepts/glyph-system/opus-5.5/src/**', 'Concepts/glyph-system/opus-5.5/tools/glyph_layer.py',
 	`${C56}/neon-icons.js`, `${C56}/neon-icons.css`, `${C56}/pm56-neon-live.css`,

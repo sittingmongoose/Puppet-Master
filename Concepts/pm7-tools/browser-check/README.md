@@ -134,13 +134,17 @@ FO-61: Later must remain uncommitted and unconfirmed before the first comparison
 ## Run only what a change affects
 
 ```sh
-browser-check run $K/checks --changed origin/main...HEAD --set page=$OUT/build.html   # first: the checks this branch can affect
-browser-check run $K/checks --changed origin/main...HEAD --list                        # the selection, without running
+browser-check run $K/checks --changed origin/main... --set page=$OUT/build.html   # first: the checks this branch can affect
+browser-check run $K/checks --changed origin/main... --list                        # the selection, without running
 browser-check run $K/checks --set page=$OUT/build.html                                  # before landing: every check, as always
 node $K/tools/affects-check.mjs --select <file> [<file> ...]                            # the same selection, without browser-check
 ```
 
-`--changed` is opt-in and reads `affects.mjs`, this kit's map of which checks a changed file can affect. A changed check runs itself, `boot`, `sandbox` and `reduced-motion` always run, and a file the map does not place runs everything. **The full run is still required before landing.** The map moves a missed failure to that run; it does not excuse it.
+`--changed` is opt-in and reads `affects.mjs`, this kit's map of which checks a changed file can affect. `origin/main...` counts the commits since `main` plus uncommitted and untracked files, because the checks run on the working tree. A changed check runs itself, `boot`, `sandbox` and `reduced-motion` always run, and a file the map does not place runs everything. **The full run is still required before landing.** The map moves a missed failure to that run; it does not excuse it.
+
+**Before landing a kit change, run `node $K/tools/affects-check.mjs`.** A new check with no `checkSurfaces` entry would never be selected by a source change. `--changed` only prints a NOTE naming such checks; this self-check fails on them.
+
+`--reuse` (`browser-check guide results`) on this kit is all or nothing. Its tests share one page (`isolate` and `cacheIndependent` are unset), so a stored run is reused only for the same command, the same check files and every test green; one missing test or one stored failure on these bytes makes every test run, and a subset never matches. A `--changed --reuse` run reuses only a stored `--changed` run with the same selection, not a full run's store.
 
 How the map is made (`affects.mjs` says it in full):
 - `checkSurfaces` lists what each check exercises: the onboarding window, the Demo Studio, the tour, the chat, Home, Usage, the rail, Settings, notifications, sound, timing, looks, Glass, NieR, glyphs, the app page. The entries come from each check's code: its selectors, page globals, helpers and looks.
@@ -175,7 +179,7 @@ Measured with `node $K/tools/affects-check.mjs --measure 20` on `main` at 74748e
 | `062b429ef2` Keep Light Dark and Auto together in the onboarding header control | 2 | 61 | |
 | `1c5b57b244` fix(concepts): preserve quiet provider density and semantic NieR status checks | 4 | 61 | |
 | `6b1780c8aa` Offer NAS pairing only while the typed endpoint still names that NAS | 2 | 61 | |
-| `2035e6c390` Synchronize Auto selection controls and embedded onboarding storage schema | 642 | 61 | |
+| `2035e6c390` Synchronize Auto selection controls and embedded onboarding storage schema | 642 | 71 | |
 | `958778b130` Respect the default SSH method when returning to NAS pairing | 1 | 61 | |
 | `aa81b99953` Keep the empty consent ring on an inner press face | 4 | 61 | |
 | `30ffa2430a` Offer and retain Auto in onboarding appearance controls | 10 | 103 | `00-namespace.js` |
@@ -186,7 +190,7 @@ Measured with `node $K/tools/affects-check.mjs --measure 20` on `main` at 74748e
 | `d1a3e2c4a5` Preserve key cheer while clearing discarded draft and extend owner review | 7 | 62 | |
 
 What the numbers show:
-- **Overall:** the 20 commits select 1,431 of 2,060 check files (69%), and 5 of them select everything.
+- **Overall:** the 20 commits select 1,441 of 2,060 check files (70%), and 5 of them select everything.
 - **Onboarding window:** a change limited to the window selects 61 checks, because most of the kit tests the window.
 - **Whole branches:** product-source branches select more. Of the four lane branches merged into group 5 on 2026-11-06, the three that changed product sources selected 100, 103 and 103; the kit-only branch (`kit2-land`, 24 files) selected 16. To reproduce, use `--measure 10 --merges` for the first three and `--select` with the branch's files for `kit2-land`. Read only merges of a branch: a merge of `main` into a branch measures `main`'s changes.
 - **Not measured:** time. Checks differ widely in length, so the share of check files selected is not the share of time saved.
