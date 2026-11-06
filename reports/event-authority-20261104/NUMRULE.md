@@ -2096,3 +2096,29 @@ The report commit changes only this report set (`reports/event-authority-2026110
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle12-replay/full_git_checks.py` | `fb1607da85b182b0b3f4ea129b2ee86756c992d094e7480cf24125ed093469f2` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/harness-errors/run1-campaign.stdout` | `5c948f70f33050765d9dbc9cbd94f4197d38b24c0d2e42d1f96239859f677fba` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/harness-errors/run1-full-selftest-inventory.json` | `42d2341324aed84c9d88990425b087136fd98f802f0a2fbfe6ee3347e4c96693` |
+
+## Tool batch 2 (TOOL-ISSUES T32-T36): findings and responses (number scope, T33)
+
+**Pre-check findings 1, 2 and 3 of `reviews/NUMRULE-sol/REVIEW-numbers-fix4-opus.md` are fixed; none is disputed.** Base: `origin/plans/ea-numrule-20261105` at `d22b8dd68e` (the date-time worker's latest head when this batch began; number code as at `884d6bd295`). Number files only, plus the corpus content pin. Production helper code (`scripts/pm_event_numbers.py`) is unchanged, and no new case showed a production bug: nothing is REAL.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **1 (B07) — fixed** | `scripts/pm_event_numbers_corpus.py` (`_retained` scenario `unknown_field`, `frozen`/`verify`, `_RETAINED_CALLS`, `run_corpus`); `Plans/event_number_recipe_corpus.json`. The only unknown tuple in the corpus differed in `identity_recipe`, and one fixture verifier was installed for all three tuples, so a fallback dispatch keyed on any field subset holding `identity_recipe` passed. Added one `history` case per `RecipeTuple` field (14), each an authentic original whose tuple differs from the installed base tuple in that field alone, each requiring `recipe_unknown` and **zero verifier calls** (`verifier_calls: 0`, now checked for refusals too). Each installed fixture verifier now refuses a record whose recipe is not its own tuple. B07 is committed to the mutation set as `review-fix4-B07` (`source: review-fix4`, rule `dispatch.recipe-unknown`). | B07 survives the base corpus and is caught now; the 14 cases pass on the unchanged helper. |
+| **2 (X2, X3, X5) — fixed** | Corpus negatives `full-value-wrong-version-2.1.0` (`schema_version: 2.1.0`, `full_value_edition`), `payload-id-last-byte` (the BLAKE3 ID with only its last byte changed, `payload_digest`), `append-policy-trailing-space` (`"append_once "`, `replay_policy`). X2, X3 and X5 are committed as `review-fix4-X2` (rule `full-value.edition`), `review-fix4-X3` (rule `payload.blake3-id`) and `review-fix4-X5` (rule `append-policy.exact-string`). | Each survives the base corpus and is caught now. |
+| **3 — fixed** | `owner_statements` (`_unit_unselected_text`, `_guide_section_texts`, `_pin`); `scripts/pm_event_numbers_mutations.json` `owner_text`. Excluded blocks matched on their first words, excluded sections were skipped whole and only the selected YAML fields were read, so a rule added inside them on the same line never reached the table. Each excluded block (`sha256` on its rule), each excluded section (`excluded_section_sha256`) and each unit's unselected YAML fields (`unselected_sha256`) are now pinned by SHA-256 of their text; any change fails the self-test, naming the new hash, until a reviewer checks the text for number rules and refreshes the pin. The pins record the text as reviewed in the fix-4 pre-check (its Check 2 found the six excluded blocks and two excluded sections correct); the unselected fields are metadata (`plan_unit_id` … `owner_hints`). | The review's own scripts rerun on this tree: **F5b, F6 and F7b now fail** (1 problem each; 0 at the base); F0 intact gives 0; F1 to F5 and F7 still fail (F4 166, F5 13, F7 31 problems, one more each than before, from the pin). |
+
+**Note for the date-time worker.** The excluded guide blocks are date-time bullets of `reports/event-authority-20261105/NUMRULE-ADOPTION.md`. Editing one of them now fails the number self-test until its pin is refreshed in `scripts/pm_event_numbers_mutations.json` (`owner_text.guide.excluded_blocks[].sha256`); that is the point of finding 3.
+
+### Totals
+
+| Check | Base `d22b8dd68e` | Now |
+|---|---|---|
+| `--self-test --scope numbers` | pass, 544 cases | **pass, 561 cases** (295 negatives, 266 positives, 61 owner checks) |
+| `--self-test --scope numbers --mutations` | 366 mutations, 362 caught, 4 declared survivors | **370 mutations, 366 caught, 4 declared survivors**, 0 undeclared survivors, 0 build errors; 108 rules caught, 194 statements, 0 problems |
+| The four review-fix4 mutations on the base corpus | survive (B07, X2, X3, X5) | caught |
+| `--self-test --scope all` | — | **pass, 13,607 cases**, date-time inventory pass with the recomputed pin (13 min 39 s) |
+| Corpus content pin (`scripts/pm_event_datetime_exclusions.json`, the corpus entry) | `bc6bcc3c…e7cd1` | `e4540227…7df21d` |
+
+**Scope.** `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_numbers_mutations.json`, `Plans/event_number_recipe_corpus.json`, the corpus content pin and this report. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, date-time code, `main` push, pm-mail or subagent.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH2/numbers/`.
