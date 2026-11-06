@@ -1979,8 +1979,10 @@ def pre_row(bucket: str, baseline: int, count: int, fields: str = '{"n":1}', whe
     return f"  [{tag:<12}] {bucket}  {baseline} -> {count}  {fields}  {where}"
 
 
-def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts: int = 0, tail: str = "", gone: int = 0) -> str:
-    """A landing check's text report, line for line as main() in scripts/pm-landing-check.py prints it."""
+def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts: int = 0, tail: str = "", gone: int = 0,
+                   gone_ids=None, totals=None, counts=None) -> str:
+    """A landing check's text report, line for line as main() in scripts/pm-landing-check.py prints it. With `totals`,
+    the lines for comparing one run with the next; without them, a report from before those lines."""
     lines = ["pm-landing-check: baseline reports/landing-checks/baseline.json recorded at aaaaaaaaaaaa; this checkout is at bbbbbbbbbbbb",
              "  the baseline is current, so rule 2 applies: its commit aaaaaaaaaaaa is an ancestor of the base", "",
              "New since the baseline: 0",
@@ -1998,7 +2000,15 @@ def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts
     lines += ["Naming a path this branch touches: 0",
               f"Infrastructure results, not failures of this tree (never new, growth or blocking): {timeouts}"]
     lines += [f"  [infrastructure] run-gates/x{index}  subprocess_timeout (lint-x)  killed after 600 s" for index in range(timeouts)]
-    lines += [f"Gone since the baseline (nothing to do): {gone}", ""]
+    lines += [f"Gone since the baseline (nothing to do): {gone}"]
+    lines += [f"  [gone] {name}" for name in gone_ids or []]
+    if totals is not None:
+        lines.append(f"Subcheck totals this run: {len(totals)}")
+        lines += [f"  [total] {name}  {'timed out' if total is None else total}" for name, total in totals.items()]
+    if counts is not None:
+        lines.append(f"Bucket counts this run: {len(counts)}")
+        lines += [f"  [count] {name}  {count}" for name, count in counts.items()]
+    lines.append("")
     advice = []
     if pre and compare:
         advice.append(f"pre-existing failures whose count has not risen, {compare} of them with changed content on files this "
@@ -2058,6 +2068,11 @@ class ReportFormatTests(unittest.TestCase):
                        "Pre-existing, in a baseline bucket whose count has not risen (never blocks): ",
                        "Checks whose failure count rose: ",
                        "Gone since the baseline (nothing to do): ",
+                       'print(f"  [gone] {name}")',
+                       'print(f"Subcheck totals this run: {len(totals)}")',
+                       """print(f"  [total] {name}  {'timed out' if total is None else total}")""",
+                       'print(f"Bucket counts this run: {len(seen_buckets)}")',
+                       'print(f"  [count] {name}  {count}")',
                        "Nothing reported stops the landing: it is ",
                        "of them with changed content on files this branch touched, so compare those with the baseline's rows",
                        "(the readiness growth counter: its printed rows",
@@ -2426,6 +2441,69 @@ class BatchGapTests(Base):
         self.assertEqual(len(self.h.calls("landing")), 1)
         self.assertTrue(self.h.held())
 
+    def test_gone_ids_totals_and_counts_are_read_or_said_to_be_missing(self):
+        report = M.read_report(landing_report(gone=1, gone_ids=["run-gates|x|e|a b.md"], totals={"run-gates/x": 3, "run-gates/y": None},
+                                              counts={"run-gates|x|e|a b.md": 2}))
+        self.assertEqual(report["gone_ids"], ["run-gates|x|e|a b.md"])
+        self.assertEqual(report["totals"], {"run-gates/x": 3, "run-gates/y": None})
+        self.assertEqual(report["bucket_counts"], {"run-gates|x|e|a b.md": 2})
+        self.assertFalse(report["ids_unread"])
+        old = M.read_report(landing_report())
+        self.assertEqual((old["gone_ids"], old["totals"], old["bucket_counts"], old["ids_unread"]), (None, None, None, False))
+
+    def test_ids_that_do_not_add_up_cannot_be_told(self):
+        report = M.read_report(landing_report(gone=2, gone_ids=["a"], totals={"run-gates/x": 3}))
+        self.assertTrue(report["ids_unread"])
+        fine = M.read_report(landing_report(gone=2, gone_ids=["a", "b"], totals={"run-gates/x": 3}))
+        self.assertIn("do not add up", M.batch_gap(report, [fine])[1])
+        self.assertIn("do not add up", M.batch_gap(fine, [report])[1])
+
+    def test_a_total_is_compared_with_the_previous_report_not_the_lowest_or_the_first(self):
+        def rep(total):
+            return M.read_report(landing_report(totals={"run-gates/x": total}))
+        self.assertEqual(M.batch_gap(rep(4), [rep(5), rep(3)])[0], "batch_total_rise")
+        self.assertIsNone(M.batch_gap(rep(3), [rep(5), rep(3)]))
+        self.assertIsNone(M.batch_gap(rep(2), [rep(5), rep(3)]))
+
+    def test_a_timed_out_total_is_passed_over_to_the_last_number(self):
+        def rep(total):
+            return M.read_report(landing_report(totals={"run-gates/x": total}))
+        self.assertIsNone(M.batch_gap(rep(None), [rep(5)]), "no number to compare: its own judgement stop covers it")
+        self.assertEqual(M.batch_gap(rep(6), [rep(5), rep(None)])[0], "batch_total_rise")
+        self.assertIsNone(M.batch_gap(rep(5), [rep(5), rep(None)]))
+        self.assertEqual(M.batch_gap(rep(1), [rep(None)])[0], "batch_total_rise", "no number at all: it counts from none")
+
+    def test_a_hand_member_with_no_report_on_record_cannot_be_told(self):
+        report = M.read_report(landing_report(totals={"run-gates/x": 1}))
+        self.assertIn("not on record", M.batch_gap(report, [None])[1])
+
+    def test_an_older_earlier_report_is_passed_over_and_the_landing_is_told(self):
+        report = M.read_report(landing_report(totals={"run-gates/x": 9}))
+        older = M.read_report(landing_report())
+        self.assertIsNone(M.batch_gap(report, [older]))
+        self.assertFalse(M.shows_what_changed(report, [older]))
+        self.assertFalse(M.shows_what_changed(older, []))
+        self.assertTrue(M.shows_what_changed(report, [report]))
+
+    def test_with_an_older_check_the_batch_stays_and_says_so_once(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        self.h.branch("fix/c", {"src/z.txt": "c\n"})
+        start = self.h.origin_main()
+        said = "prints no gone ids, subcheck totals or bucket counts"
+        first = self.land("fix/a", "--batch-open")
+        self.assertEqual(first.returncode, 0, first.stdout)
+        self.assertNotIn(said, first.stdout, "the first member has nothing to compare with")
+        self.h.set_plan("landing", [{"exit": 1, "timeouts": 1}])
+        second = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "timeouts_need_judgement", second.stdout)
+        self.assertEqual(second.stdout.count(said), 1)
+        again = self.h.tool("resume", "--branch", "fix/b")
+        self.assertEqual(again.returncode, 0, again.stdout + again.stderr)
+        self.assertEqual(sum(1 for row in self.h.state("fix/b")["notes"] if said in row), 1, "once per landing")
+        self.assertTrue(self.h.held(), "the batch stays open, as it did before those lines")
+        self.assertEqual(M.parse_holder(self.h.holder())["batch-start"], start)
+
     def test_a_gone_count_below_an_earlier_reports_closes_it_on_exit_0_too(self):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
         self.h.branch("fix/b", {"src/y.txt": "b\n"})
@@ -2522,7 +2600,7 @@ class RealReportBatchTests(Base):
     def row(self, ref: str = "#x", path: str = "Plans/A.md") -> dict:
         return {"path": path, "error": "missing_ref", "ref": ref}
 
-    def reports(self, baseline: list, first: list, second: list, edits=("Plans/A.md", "Plans/A.md")) -> tuple:
+    def reports(self, baseline, first, second, edits=("Plans/A.md", "Plans/A.md")) -> tuple:
         """The two members' (exit, report) from one recorded baseline, each member one more commit on one file."""
         path = ROOT / "tests" / "test_pm_landing_check.py"
         if not path.exists():
@@ -2542,7 +2620,7 @@ class RealReportBatchTests(Base):
         run.setUp()
         self.addCleanup(run.doCleanups)
 
-        def member(rows: list, rel: str, number: int) -> tuple:
+        def member(rows, rel: str, number: int) -> tuple:
             target = run.repo / rel
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(f"edit {number}\n", encoding="utf-8")
@@ -2616,40 +2694,81 @@ class RealReportBatchTests(Base):
         start, result = self.land_both(one, two)
         self.assert_closed_and_alone(start, result)
 
-    def test_unseen_a_fresh_row_on_a_later_members_own_file_stops_only_for_the_comparison(self):
-        """README, "What stays unseen". The first member edits another file, so its fix prints nothing."""
+    def test_a_fresh_row_on_a_later_members_own_file_in_a_bucket_lowered_unseen_closes_it(self):
+        """The first member edits another file, so its fix prints no row: only the subcheck's total says it happened."""
         one, two = self.reports([self.row("#1"), self.row("#2")], [self.row("#1")], [self.row("#1"), self.row("#3")],
                                 edits=("Plans/B.md", "Plans/A.md"))
         self.assertEqual((one[0], two[0]), (0, 1))
         self.assertIn("compare those", two[1])
         start, result = self.land_both(one, two)
-        self.assertEqual(result.returncode, 1, result.stdout)
-        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "rows_need_comparison")
-        self.assertEqual(self.h.state("fix/b")["batch"]["start"], start, "not closed")
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("run-gates/lint_path_refs's total rose from 1 to 2", result.stdout)
 
-    def test_unseen_the_baselines_own_row_back_naming_no_batch_file_passes(self):
-        """README, "What stays unseen". Nothing prints, so nothing stops it."""
+    def test_the_baselines_own_row_back_naming_no_batch_file_closes_it(self):
+        """Nothing else prints: exit 0 twice, and no row. Alone it is a rise that stops."""
         other = "Plans/Other.md"
         one, two = self.reports([self.row("#1", other), self.row("#2", other)], [self.row("#1", other)],
                                 [self.row("#1", other), self.row("#2", other)])
         self.assertEqual((one[0], two[0]), (0, 0))
         start, result = self.land_both(one, two)
-        self.assertEqual(result.returncode, 0, result.stdout)
-        self.assertEqual(len(self.h.calls("landing")), 2)
-        self.assertTrue(self.h.held(), "not closed")
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("rose from 1 to 2", result.stdout)
 
-    def test_unseen_one_bucket_emptied_as_another_comes_back_keeps_the_gone_count(self):
-        """README, "What stays unseen"."""
+    def test_one_bucket_emptied_as_another_comes_back_closes_it(self):
+        """The gone count does not move and neither does the subcheck's total: only the ids show it."""
         first, second = self.row("#1", "Plans/A.md"), self.row("#2", "Plans/Other.md")
         one, two = self.reports([first, second], [second], [first])
-        self.assertEqual(self.assert_same_gone(one[1], two[1]), 1)
+        self.assertEqual(M.read_report(one[1])["gone"], M.read_report(two[1])["gone"])
+        self.assertEqual(M.read_report(one[1])["totals"], M.read_report(two[1])["totals"])
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("listed as gone is back", result.stdout)
+        self.assertIn("Plans/A.md", result.stdout)
+
+    def test_one_bucket_raised_as_another_falls_in_one_subcheck_closes_it(self):
+        """Exit 0 twice, the same total, nothing gone: only the bucket counts show it. Alone it is exit 2."""
+        o1, o2 = self.row("#1", "Plans/Other.md"), self.row("#2", "Plans/Other.md")
+        t1, t2 = self.row("#1", "Plans/Third.md"), self.row("#2", "Plans/Third.md")
+        one, two = self.reports([o1, o2, t1, t2], [o1, t1, t2], [o1, o2, t1])
+        self.assertEqual((one[0], two[0]), (0, 0))
+        self.assertEqual(M.read_report(one[1])["totals"], M.read_report(two[1])["totals"])
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("Plans/Other.md rose from 1 to 2", result.stdout)
+
+    def test_a_sample_subchecks_total_that_falls_and_rises_below_the_baselines_closes_it(self):
+        rows = [self.row(f"#{number}", "Plans/Big.md") for number in range(60)]
+        one, two = self.reports((rows, 120), (rows, 100), (rows, 110))
+        self.assertEqual((one[0], two[0]), (0, 0))
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("rose from 100 to 110", result.stdout)
+
+    def test_control_a_later_member_that_moves_nothing_keeps_the_batch(self):
+        kept = self.row("#1", "Plans/Other.md")
+        one, two = self.reports([kept, self.row("#2", "Plans/Gone.md")], [kept], [kept])
+        self.assertEqual((one[0], two[0]), (0, 0))
         start, result = self.land_both(one, two)
         self.assertEqual(result.returncode, 0, result.stdout)
-        self.assertTrue(self.h.held(), "not closed")
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held())
+        self.assertNotIn("prints no gone ids", result.stdout)
 
-    def assert_same_gone(self, one: str, two: str) -> int:
-        self.assertEqual(M.read_report(one)["gone"], M.read_report(two)["gone"])
-        return M.read_report(two)["gone"]
+    def test_control_a_later_member_that_lowers_more_keeps_the_batch(self):
+        o1, o2, o3 = (self.row(f"#{number}", "Plans/Other.md") for number in (1, 2, 3))
+        one, two = self.reports([o1, o2, o3], [o1, o2], [o1])
+        self.assertEqual((one[0], two[0]), (0, 0))
+        start, result = self.land_both(one, two)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertTrue(self.h.held())
+
+    def test_control_a_later_member_that_empties_another_bucket_keeps_the_batch(self):
+        a, b, c = self.row("#1", "Plans/A1.md"), self.row("#2", "Plans/B1.md"), self.row("#3", "Plans/C1.md")
+        one, two = self.reports([a, b, c], [b, c], [c])
+        self.assertEqual((one[0], two[0]), (0, 0))
+        start, result = self.land_both(one, two)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertTrue(self.h.held())
 
 
 class BatchClearingTests(Base):

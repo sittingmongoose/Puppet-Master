@@ -139,6 +139,12 @@ REPORT_PRE_ROW = re.compile(r"^  \[(pre-existing|improved)\s*\] (.+?)  (\d+) -> 
 REPORT_ROW_WHERE = re.compile(r"^(.*?)  ?\((names .*|content changed)\)$")
 REPORT_COUNTER = re.compile(r"^  \[staleness\] (\S+)  (\d+) -> (\d+) \(the readiness growth counter", re.M)
 REPORT_GONE = re.compile(r"^Gone since the baseline \(nothing to do\): (\d+)", re.M)
+# Printed by pm-landing-check.py from fix/landing-check-report-ids on; an older one has none of these.
+REPORT_GONE_ROW = re.compile(r"^  \[gone\] (.+)$", re.M)
+REPORT_TOTALS = re.compile(r"^Subcheck totals this run: (\d+)$", re.M)
+REPORT_TOTAL_ROW = re.compile(r"^  \[total\] (\S+)  (\d+|timed out)$", re.M)
+REPORT_COUNTS = re.compile(r"^Bucket counts this run: (\d+)$", re.M)
+REPORT_COUNT_ROW = re.compile(r"^  \[count\] (.+)  (\d+)$", re.M)
 
 
 def read_report(text: str) -> Dict[str, Any]:
@@ -171,6 +177,14 @@ def read_report(text: str) -> Dict[str, Any]:
             read += 1
     if declared is not None and read != declared:
         unread = True
+    # None for an older pm-landing-check, which prints no such lines. A count that disagrees with its rows is unreadable.
+    totals_head, counts_head = REPORT_TOTALS.search(text), REPORT_COUNTS.search(text)
+    gone_ids = REPORT_GONE_ROW.findall(text) if totals_head else None
+    totals = {name: None if value == "timed out" else int(value) for name, value in REPORT_TOTAL_ROW.findall(text)} if totals_head else None
+    counts = {name: int(value) for name, value in REPORT_COUNT_ROW.findall(text)} if counts_head else None
+    ids_unread = bool(totals_head) and (
+        gone is None or len(gone_ids) != int(gone.group(1)) or len(totals) != int(totals_head.group(1))
+        or (bool(counts_head) and len(counts) != int(counts_head.group(1))))
     return {
         "infrastructure": int(infrastructure.group(1)) if infrastructure else None,
         "crashed": bool(REPORT_TRACEBACK.search(text)),
@@ -179,7 +193,19 @@ def read_report(text: str) -> Dict[str, Any]:
         "pre_unread": unread,
         "counter": {name: int(reported) for name, _was, reported in REPORT_COUNTER.findall(text)},
         "gone": int(gone.group(1)) if gone else None,
+        "gone_ids": gone_ids,
+        "totals": totals,
+        "bucket_counts": counts,
+        "ids_unread": ids_unread,
     }
+
+
+REPORT_DIGEST = ("pre", "pre_unread", "compare", "counter", "gone", "gone_ids", "totals", "bucket_counts", "ids_unread")
+
+
+def shows_what_changed(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]]) -> bool:
+    """Whether this report and every earlier one on record print the lines that say what moved between them."""
+    return report.get("totals") is not None and all(row is None or row.get("totals") is not None for row in earlier)
 
 
 def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]]) -> Optional[tuple]:
@@ -190,7 +216,9 @@ def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]
     stale row. An earlier member's fix may print no row at all: a bucket it emptied is only a number in `Gone since the
     baseline`, and one it lowered with no row naming a batch file prints nothing. `earlier` is each earlier member's
     report digest in order, None where there is none (a hand lander). Returns (stop code, why). What a report did not
-    print cannot be seen: README, "Batches".
+    print cannot be seen: README, "Batches". A pm-landing-check that prints gone ids, totals and bucket counts prints it
+    all: a bucket no longer gone, or a total or count above the previous report's, could not rise alone unseen. Without
+    those lines (older reports carry None) only the checks before them apply, and the caller says so.
     """
     if not earlier:
         return None
@@ -242,6 +270,35 @@ def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]
             return ("batch_readiness_rise", f"{name} rose to {reported} ({'no rise' if seen < 0 else seen} in the earlier "
                                             "reports) and is judged as staleness, which an earlier member's stale row can "
                                             "explain; alone it must be explained by this landing's own")
+    return moved_since_earlier(report, earlier)
+
+
+def moved_since_earlier(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]]) -> Optional[tuple]:
+    """What the printed ids, totals and counts say rose since the earlier members' reports."""
+    if report.get("totals") is None:
+        return None
+    if report.get("ids_unread") or any(row is not None and row.get("ids_unread") for row in earlier):
+        return ("batch_rows_overlap", "a report's gone ids, subcheck totals or bucket counts do not add up, so what moved "
+                                      "between the reports cannot be told")
+    if any(row is None for row in earlier):
+        return ("batch_rows_overlap", "an earlier member's report is not on record, so what moved since it cannot be told")
+    comparable = [row for row in earlier if row.get("totals") is not None]
+    if not comparable:
+        return None
+    back = sorted(set().union(*(row.get("gone_ids") or [] for row in comparable)) - set(report.get("gone_ids") or []))
+    if back:
+        return ("batch_rows_overlap", "a bucket an earlier member's report listed as gone is back, whatever else went: "
+                                      + "; ".join(back[:10]))
+    for name, total in sorted(report["totals"].items()):
+        was = next((row["totals"][name] for row in reversed(comparable) if row["totals"].get(name) is not None), 0)
+        if total is not None and total > was:
+            return ("batch_total_rise", f"{name}'s total rose from {was} to {total} since the last report, which the "
+                                        "baseline from before the batch cannot show; alone it would be a rise")
+    latest = comparable[-1].get("bucket_counts")
+    for name, count in sorted((report.get("bucket_counts") or {}).items()):
+        if latest is not None and count > latest.get(name, 0):
+            return ("batch_total_rise", f"bucket {name} rose from {latest.get(name, 0)} to {count} since the last report, "
+                                        "which no total shows; alone it would be a rise")
     return None
 
 
@@ -1522,12 +1579,18 @@ class Lander:
         gap = None
         # Exit 0 too: a bucket that comes back with an unchanged row naming no batch file prints nothing at all.
         if code in (0, 1) and timeouts >= 0 and batch and step.get("target") == "land" and batch.get("landings"):
-            gap = batch_gap(report, self.earlier_digests())
+            earlier = self.earlier_digests()
+            gap = batch_gap(report, earlier)
+            if not gap and not shows_what_changed(report, earlier) and not st.get("batch_unseen_said"):
+                st["batch_unseen_said"] = True
+                self.note("this pm-landing-check prints no gone ids, subcheck totals or bucket counts, so in this batch a "
+                          "bucket an earlier member lowered or emptied and this one raised may not be seen (README, "
+                          "\"Batches\"). A newer one closes the batch for it")
         t["check"] = {"sha": head, "tree": self.git(cwd, "rev-parse", f"{head}^{{tree}}").stdout.strip(),
                       "origin_main": t["origin_main"], "base": t["base_arg"], "exit": code, "log": str(log),
                       "reports": str(keep), "timeouts": timeouts, "cwd": str(cwd),
                       "rows_changed": report["compare"] if code == 1 else 0, "batch_close": gap[0] if gap else None,
-                      "digest": {key: report[key] for key in ("pre", "pre_unread", "compare", "counter", "gone")}}
+                      "digest": {key: report[key] for key in REPORT_DIGEST}}
         self.save()
         if timeouts < 0:
             why = "a traceback" if report["crashed"] else "no Infrastructure line"
@@ -1938,7 +2001,8 @@ class Lander:
 
     def batch_can_close_and_retry(self, stop: Stop, step: Dict[str, Any]) -> bool:
         batch = self.st.get("batch")
-        return bool(batch) and stop.code in ("landing_check_blocked", "batch_rows_overlap", "batch_readiness_rise") \
+        return bool(batch) and stop.code in ("landing_check_blocked", "batch_rows_overlap", "batch_readiness_rise",
+                                             "batch_total_rise") \
             and step.get("target") == "land" and bool(batch.get("landings"))
 
     def close_batch_and_retry(self, stop: Stop, step: Dict[str, Any]) -> None:

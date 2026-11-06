@@ -790,8 +790,21 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
   current in the batch and stale alone. No batch opens on a baseline within two hours of the limit, counted to now or
   to `origin/main`, whichever is later, and a member stops with `batch_baseline_past_limit` once it is past it. A
   baseline rule 2 ignores anyway opens one: a batch and a lone landing are then judged alike.
+- **What moved between two reports.** The rows above show only what a report chooses to print, so the check also prints
+  every run's gone ids, subcheck totals and bucket counts ("Lines for comparing one run with the next"). A member closes
+  the batch when a bucket any earlier report listed as gone is not gone in its own, when a subcheck's total or a bucket's
+  count is above the previous report's, or when an earlier member's report is not on record (a hand lander). It does so
+  even on exit 0. Each rise would show alone after the earlier member's follow-up, and none shows against the baseline
+  from before the batch. A subcheck that timed out has no total to compare; its own stop for a judgement covers it.
 
-What stays unseen is what no report prints. These do not close the batch, and would stop alone:
+**What that costs.** A total rises for any cause, so a stale row counts too: two members that each add a governance
+staleness row do not share a batch, and the second pays one landing check before its follow-up and recheck. A batch
+keeps its saving for members that raise nothing, such as a Plans landing followed by landings that touch nothing
+hashed or inventoried. A closing can also be needless: a bucket reads as no longer gone, or as new, when its subcheck
+timed out or printed only a sample in one of the two reports. That costs one follow-up.
+
+**Against an older `pm-landing-check.py`,** which prints none of those lines, the tool says once per landing that these
+shapes may not be seen, and they do not close the batch, though each would stop alone:
 
 - A bucket lowered with no row naming a batch file, and raised again by a fresh row on a later member's own file. That
   row reads `(names ...)`, like any pre-existing row on a touched file, so it stops for the comparison above and does
@@ -799,8 +812,9 @@ What stays unseen is what no report prints. These do not close the batch, and wo
 - The same bucket raised again by the baseline's own row, naming no batch file: nothing prints, so nothing stops it.
 - A member that empties one bucket as another comes back: the gone count does not move. A row it lists on a batch
   file reads as pre-existing, with no comparison to stop for.
+- One bucket raised as another falls in one subcheck: no total moves either.
 - A total that falls and rises again below the baseline's figure prints no counter row, and a rise in a subcheck that
-  prints only a sample, staying under the baseline's total, has no guard here at all.
+  prints only a sample, staying under the baseline's total, has no guard at all.
 
 ### The lock queue
 
