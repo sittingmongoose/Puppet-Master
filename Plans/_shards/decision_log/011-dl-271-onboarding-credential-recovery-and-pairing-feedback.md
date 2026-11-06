@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L28891
+Source lines: L26794-L29043
 
-Source SHA256: `d76f4681607dcb094e826cc884fa55ded6496c249182926053e0aa48e0516fb9`
+Source SHA256: `870ee3b984c78048983b0accdaad6b401acadbeb34df2226b8d5337d19e92cbf`
 
 ---
 
@@ -2105,4 +2105,156 @@ preserved_exact_tokens:
   - auto
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-333 - Typed Command Definitions Live In Owner Docs For UCC-049..UCC-105
+
+```yaml
+plan_unit_id: DL-333
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-333 records Jared's answer of 2026-11-05 ("approve all") to closure question Q5, raised by closure row B16 607
+  against the UCC-049..UCC-105 strict schema overlay in Plans/UI_Command_Catalog.md. Each active command that the
+  overlay's command_id rule resolves gets one typed payload definition in the owner doc for its area, in the shared
+  pm.command_payload_definitions.v1 format that UCC-230 fixes. A definition gives the command's args with types,
+  required flags and defaults, its typed owner result carried by the CV-333 UICommandResponse, and error and
+  disabled-reason codes narrowed from the overlay's closed sets. The overlay keeps its common fields and closed code
+  sets and points each row range at those owner-doc definitions instead of "this catalog"; catalog command rows still
+  hold no data shapes. UCC-230 routes every command to one of the owner units CRAU-115, CRAU-116, W-095, ACD-637,
+  ACD-638, ACD-639, SMPFS-328, SMPFS-329, CS-125, AMS-141, RAP-129, F3-716, F3-717, EP-236, GRS-218, PRDB-024,
+  PWIZ-109, PNC-037, SSYS-076, OP-049, ACD-640 and F3-718, which the owner-doc packets add. Agents write the definitions, fanned out by owner
+  doc, with mechanical ones allowed on a cheaper model; scripts/pm-command-payload-defs-check.py verifies coverage,
+  placement, types, defaults, required identity, envelope, narrowings, results, provenance and command kinds. Jared's
+  only words in this decision are "approve all". The ten questions the Q5 design left open were settled by the
+  coordinator (pm7-build, 2026-11-05) as technical calls under that answer, not as owner answers; they are listed in
+  coordinator_resolutions. Resolution 11, the checker's literal-default scope, is a later coordinator call under the
+  same answer. A command whose resolution is not yet applied stays in UCC-230's contested list and gets no
+  definition until it is.
+coordinator_resolutions:
+  - "Resolution 1 (PRD Builder, Planning Wizard and Plan Compile ids): the catalog ids stay canonical for the 28 commands; the field lists of Plans/prd_planning_runtime_contracts.json ui_command_contracts move under the catalog ids and that file's own ids are recorded as aliases; topic.open and annotation.resolve take their fields from the catalog rows; cmd.plan_compile.open_build takes the PlanCompileRun identity the catalog names, not goal_run_id."
+  - "Resolution 2: cmd.docker.image.push is a primary command with its own DockerImagePushV3Request; the UCC-051 compatibility-alias note goes."
+  - "Resolution 3 (Docker build): the flow stays as Plans/Containers_Registry_and_Unraid.md already requires it: infer the target, prompt instead of guessing when ambiguous, expose build and bake preview commands, persist the selected target and resolve build_run to it. cmd.docker.build.select_target, cmd.docker.build.run, cmd.docker.bake.preview and cmd.docker.bake.run stay current; cmd.docker.build.image, cmd.docker.build.compose and cmd.docker.build.bake get catalog rows as the build modes; each of the seven is registered by a unit and has a production wiring row."
+  - "Resolution 4: cmd.chat.worktree.bind_existing is retired as a non-alias; its production wiring row is dropped and the Contracts_V0 alias note is corrected."
+  - "Resolution 5: cmd.git.worktree.request_prune is its own command, the non-mutating approval-request phase of the two-phase prune flow (GI-041); the UCC-054 alias note changes."
+  - "Resolution 6: owner disabled states outside the overlay's closed set (the GitHub_Integration worktree states and the prd_planning_runtime_contracts.json codes) map to closed disabled-reason codes through UCC-230 owner_state_code_map; the owner word stays display detail and the closed set is not expanded."
+  - "Resolution 7: cmd.runtime.open_queue_analysis, cmd.runtime.open_remediation_lineage and cmd.runtime.open_safe_point_history are exempt from the blocked identity blocked_sequence and allowed_action_id; they keep run_id."
+  - "Resolution 8: cmd.chat.new is exempt from thread_id; it runs before a thread exists and carries draft identity."
+  - "Resolution 9a: typing /teach opens the Teach popup, as DL-127 already decided; UCC-102 and CS-053 no longer treat /teach as a Teacher launch. The Teacher keeps the help icon and CS-053's intent-classified natural-language route. This is not a new owner decision."
+  - "Resolution 9b: History (UCC-100), Vision bridge (UCC-101) and Teach guided GUI (UCC-102) get minted command ids, catalog rows, unit tokens, owner definitions and production wiring rows from the actions those units already list. An action too vague to define without inventing behaviour is reported to the coordinator instead of being minted."
+  - "Resolution 10: the catalog's existing payload columns stay as history with a one-line pointer to the owner definition."
+  - "Resolution 11 (checker scope; pm7-build, pm-mail 1105094308-ee03): fields of type timestamp, url or path take no literal default. The checker refuses any such literal and fails closed instead of validating its syntax; the owners (webfetch for URLs, FileSafe for paths, RFC 3339 consumers for timestamps) validate syntax at run time, and an owner that needs a literal default first adds its validation to the checker. No definition writes one today, so no canon behavior changes."
+gui_related: false
+gui_classification_reason: Records where command payload shapes live; no GUI behavior changes.
+split_recommended: false
+depends_on: [CV-333, UCC-098, UCC-109, DL-127]
+unblocks: []
+acceptance_criteria:
+  - "No UI_Command_Catalog command row gains a payload field; the overlay names the owner-doc definition unit for every row range."
+  - "Every active UCC-049..UCC-105 command has exactly one definition, in the owner doc UCC-230 names, or is listed as contested until its resolution is applied."
+  - "python3 scripts/pm-command-payload-defs-check.py exits 0."
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_payload_shape_drift
+reasoning_tier: high
+context_scope: command_payload_definition_home
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/UI_Command_Catalog.md
+  - scripts/pm-command-payload-defs-check.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the stream C owner questions; Q5 is this entry"
+  - "pm-mail 1105034552-f6f4 (pm7-build, 2026-11-05): coordinator resolutions 1-10 under that answer"
+  - "pm-mail 1105094308-ee03 (pm7-build, 2026-11-05): coordinator resolution 11, the checker's literal-default scope"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/drafts/for-jared-rows.md (B16 row 607)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/DESIGN.md and inventory.jsonl"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"
+preserved_exact_tokens:
+  - "DL-333"
+  - "pm.command_payload_definitions.v1"
+  - "approve all"
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-335 - cmd.chat.worktree.bind_existing Is Retired As A Non-Alias
+
+```yaml
+plan_unit_id: DL-335
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-335 retires cmd.chat.worktree.bind_existing as a non-alias. Plans/UI_Command_Catalog.md UCC-058 already rules
+  that "Arbitrary Bind Existing remains outside the Assistant thread-worktree MVP and must not be exposed as
+  cmd.chat.worktree.bind_existing", yet the projects refresh had given that id a binding row, a production-wiring
+  row, a planned handler and an actionable Touch row. The owner answer is Jared's "approve all" to closure question
+  Q5 (2026-11-05, DL-333); those are his only words in this decision. Retiring the command is coordinator resolution
+  4 under that answer (pm7-build, 2026-11-05), and how the retirement is applied is a later coordinator ruling
+  (pm7-build, 2026-11-05); neither is an owner answer. The projects-refresh command census in
+  Plans/projects_refresh_command_bindings.json falls from 494 to 493 because a command that UCC-058 forbids exposing
+  was retired; no other command is added or removed, and the 28 new primaries are unchanged. Its production-wiring
+  row catalog.chat_worktree_bind_existing goes (1332 to 1331 entries) and Plans/Wiring_Matrix.production.exclusions.json
+  lists the token with a note. Its binding row, its command_id entries in the binding and application-workflow
+  schemas and its planned handler handlers::chat::worktree_bind_existing go, and it no longer routes as a
+  compatibility alias (Plans/Contracts_V0.md section 7.1 and CV-160). Its Touch row TOUCH-FB-162 stays under profile
+  TCP-FB-259, now blocked with an absent handler and absent wiring, so that no TCP-FB number moves: the TCP-FB
+  derivation in scripts/pm_wiring_inventory.py keeps the retired command's stored number instead of counting list
+  positions past it. UCC-230 lists it as a retired non-alias that gets no payload definition.
+coordinator_resolutions:
+  - "Resolution 4 (pm-mail 1105034552-f6f4, pm7-build, 2026-11-05): cmd.chat.worktree.bind_existing is retired as a non-alias; its production wiring row is dropped and the Contracts_V0 alias note is corrected."
+  - "Cascade ruling (pm-mail 1105041321-b509, pm7-build, 2026-11-05): \"Mark the Touch row blocked rather than deleting it, so TCP-FB numbers do not move; trim the two enums; drop the binding row and take the census to 493. The change record says plainly that the count fell because a forbidden command was retired, and it cites the rule that forbids exposing it.\""
+gui_related: false
+gui_classification_reason: Removes a command that no GUI control may expose; no visible behavior changes.
+split_recommended: false
+depends_on: [DL-333]
+unblocks: []
+acceptance_criteria:
+  - "Plans/projects_refresh_command_bindings.json has 493 commands, none of them cmd.chat.worktree.bind_existing, and scripts/pm_projects_refresh_contracts.py pins 493."
+  - "cmd.chat.worktree.bind_existing has no production-wiring row, binding row, handler, schema enum entry or dispatch alias, and Plans/Wiring_Matrix.production.exclusions.json lists it."
+  - "Touch row TOUCH-FB-162 stays under TCP-FB-259, blocked, and every other TCP-FB id is unchanged."
+  - "UCC-230 lists cmd.chat.worktree.bind_existing in non_definition_tokens as retired_non_alias, and its contested list is empty."
+validation_surfaces:
+  - python3 scripts/pm-projects-refresh-contracts.py
+  - python3 scripts/pm-touch-closure-verify.py
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-command-payload-defs-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: forbidden_command_exposed_or_touch_ids_renumbered
+reasoning_tier: medium
+context_scope: command_retirement
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Contracts_V0.md
+  - Plans/projects_refresh_command_bindings.json
+  - Plans/Wiring_Matrix.production.json
+  - Plans/touch_closure.json
+  - scripts/pm_wiring_inventory.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the stream C owner questions; Q5 is DL-333"
+  - "pm-mail 1105034552-f6f4 (pm7-build, 2026-11-05): coordinator resolution 4 under that answer"
+  - "pm-mail 1105041321-b509 (pm7-build, 2026-11-05): coordinator ruling on how the retirement cascades"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/R4-REPORT.md"
+preserved_exact_tokens:
+  - "DL-335"
+  - "cmd.chat.worktree.bind_existing"
+  - "approve all"
+  - "TCP-FB-259"
+negative_constraints:
+  - "Do not expose cmd.chat.worktree.bind_existing as a command, alias or control."
+  - "Do not renumber any TCP-FB id when a projects-refresh command is retired."
+owner_hints:
+  - Plans/UI_Command_Catalog.md
 ```

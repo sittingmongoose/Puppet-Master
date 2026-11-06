@@ -23576,7 +23576,9 @@ canonical_text: Teach is the feature and Teacher is the Persona used inside it. 
   role/persona badge, model/context/source chips, thread summary/state, activity cards, and handoff disclosure.
   Teach durable memory capture stays distinct from one-off Teacher-guided instruction; eligible answers may offer
   Save as taught memory through an explicit capture card with scope, source, secret-safety, conflict/supersession,
-  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions.
+  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions. Amended 2026-11-05 under DL-333, following
+  DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture, not the Teacher; the Teacher is summoned
+  through help icons and the natural-language summons above.
 gui_related: true
 gui_classification_reason: Defines Teacher-in-chat threads, help launches, activity cards, capture UI, and thread
   states.
@@ -24036,7 +24038,9 @@ canonical_text: >-
   clicked onboarding Teacher affordance opens or selects a Teacher-capable Assistant Chat thread with current-surface
   context. One-off Teacher guidance from onboarding does not become durable Teach memory unless the user explicitly
   confirms persistence. If provider setup was skipped or no usable provider route exists, Assistant Chat names the
-  degraded/limited state instead of promising Teacher can answer normally.
+  degraded/limited state instead of promising Teacher can answer normally. Amended 2026-11-05 under DL-333, following
+  DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture and is not a Teacher launch; the Teacher
+  keeps the help-icon launch and the intent-classified natural-language route of CS-053.
 gui_related: true
 gui_classification_reason: Defines visible Assistant Chat/Teacher onboarding copy, thread launch behavior, and degraded-state user messaging.
 depends_on: [ACD-426, UCC-102, CS-053, MS-117]

@@ -23461,84 +23461,6 @@
       "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
       "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
     },
-    "catalog.chat_worktree_bind_existing": {
-      "ui_element_id": "catalog.chat_worktree_bind_existing",
-      "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
-      "ui_command_id": "cmd.chat.worktree.bind_existing",
-      "handler_location": "handlers::chat::worktree_bind_existing",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.chat.worktree.bind_existing must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.chat.worktree.bind_existing must expose projected state selector and disabled reason before dispatch",
-        "cmd.chat.worktree.bind_existing dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.chat.worktree.bind_existing must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.worktree.bind_existing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Requires an explicitly bound real Project/backend/owner target; this is an actual target requirement, not a blanket app mode gate. No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
-        "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
-        "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
-        "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-        "Projects refresh exact effect: cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "Closed unavailable reasons are owner-projected; no_project_context applies only to actual missing Project targets, not valid app operations. All new handlers remain handler_unavailable."
-      ],
-      "evidence_required": "Production wiring contract for cmd.chat.worktree.bind_existing; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.chat_worktree_bind_existing.availability",
-      "disabled_reason_projection": "state.commands.chat_worktree_bind_existing.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Projects refresh: cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.chat.worktree.bind_existing.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.chat_worktree_bind_existing exposes a stable role/name/description matching cmd.chat.worktree.bind_existing.",
-        "keyboard_access": "catalog.chat_worktree_bind_existing is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.chat_worktree_bind_existing preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.chat_worktree_bind_existing surfaces state.commands.chat_worktree_bind_existing.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.chat_worktree_bind_existing.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.chat.worktree.bind_existing reaches handlers::chat::worktree_bind_existing with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.chat_worktree_bind_existing.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.chat_worktree_bind_existing.availability and disabled copy reads state.commands.chat_worktree_bind_existing.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.chat_worktree_bind_existing.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.chat_worktree_bind_existing.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        },
-        {
-          "test_id": "fb.catalog.chat_worktree_bind_existing.scope_target",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Positive real app/Project target and original exact Project replay; negative wrong scope/Computer/root/owner target; no native proof from fixtures."
-        },
-        {
-          "test_id": "fb.catalog.chat_worktree_bind_existing.currentness",
-          "evidence_kind": "state_projection",
-          "requirement": "Changed preview/source/target/permission/Stop/pause or stale caller return refuses before effect, and repeated original key/digest cannot repeat effects."
-        },
-        {
-          "test_id": "fb.catalog.chat_worktree_bind_existing.owner_return",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.chat.worktree.bind_existing records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ],
-      "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
-    },
     "catalog.chat_worktree_create": {
       "ui_element_id": "catalog.chat_worktree_create",
       "ui_location": "Assistant Chat surface; Projects refresh reverse consumers: No project chat/Files/Search/History/Context; conversion report and exact captured source",
@@ -89608,6 +89530,1798 @@
       ],
       "event_test_requirements": [
         "No unregistered EventRecord; authenticate actual owner result/receipt, no duplicate effects on refusal or identical replay."
+      ]
+    },
+    "catalog.history_focus": {
+      "ui_element_id": "catalog.history_focus",
+      "ui_location": "Orchestrator > History",
+      "ui_command_id": "cmd.history.focus",
+      "handler_location": "handlers::history::focus",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.focus must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.focus must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.focus dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.focus must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.focus must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.focus is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.focus; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_focus.availability",
+      "disabled_reason_projection": "state.commands.history_focus.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.focus.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_focus exposes a stable role/name/description matching cmd.history.focus.",
+        "keyboard_access": "catalog.history_focus is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_focus preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_focus surfaces state.commands.history_focus.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_focus.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.focus reaches handlers::history::focus with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_focus.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_focus.availability and disabled copy reads state.commands.history_focus.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_focus.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_focus.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.focus records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_switch_subview": {
+      "ui_element_id": "catalog.history_switch_subview",
+      "ui_location": "Orchestrator > History > Documents / Runs",
+      "ui_command_id": "cmd.history.switch_subview",
+      "handler_location": "handlers::history::switch_subview",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.switch_subview must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.switch_subview must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.switch_subview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.switch_subview must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.switch_subview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.switch_subview is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.switch_subview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_switch_subview.availability",
+      "disabled_reason_projection": "state.commands.history_switch_subview.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.switch_subview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.switch_subview.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_switch_subview exposes a stable role/name/description matching cmd.history.switch_subview.",
+        "keyboard_access": "catalog.history_switch_subview is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_switch_subview preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_switch_subview surfaces state.commands.history_switch_subview.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_switch_subview.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.switch_subview reaches handlers::history::switch_subview with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_switch_subview.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_switch_subview.availability and disabled copy reads state.commands.history_switch_subview.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_switch_subview.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.switch_subview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_switch_subview.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.switch_subview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_set_include_archived": {
+      "ui_element_id": "catalog.history_set_include_archived",
+      "ui_location": "Orchestrator > History > All history > Include archived",
+      "ui_command_id": "cmd.history.set_include_archived",
+      "handler_location": "handlers::history::set_include_archived",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.set_include_archived must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.set_include_archived must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.set_include_archived dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.set_include_archived must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.set_include_archived must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.set_include_archived is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.set_include_archived; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_set_include_archived.availability",
+      "disabled_reason_projection": "state.commands.history_set_include_archived.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.set_include_archived has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.set_include_archived.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_set_include_archived exposes a stable role/name/description matching cmd.history.set_include_archived.",
+        "keyboard_access": "catalog.history_set_include_archived is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_set_include_archived preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_set_include_archived surfaces state.commands.history_set_include_archived.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_set_include_archived.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.set_include_archived reaches handlers::history::set_include_archived with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_set_include_archived.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_set_include_archived.availability and disabled copy reads state.commands.history_set_include_archived.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_set_include_archived.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.set_include_archived has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_set_include_archived.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.set_include_archived records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_open_row": {
+      "ui_element_id": "catalog.history_open_row",
+      "ui_location": "Orchestrator > History > row > Open",
+      "ui_command_id": "cmd.history.open_row",
+      "handler_location": "handlers::history::open_row",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.open_row must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.open_row must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.open_row dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.open_row must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.open_row must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.open_row is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.open_row; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_open_row.availability",
+      "disabled_reason_projection": "state.commands.history_open_row.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.open_row has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.open_row.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_open_row exposes a stable role/name/description matching cmd.history.open_row.",
+        "keyboard_access": "catalog.history_open_row is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_open_row preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_open_row surfaces state.commands.history_open_row.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_open_row.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.open_row reaches handlers::history::open_row with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_row.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_open_row.availability and disabled copy reads state.commands.history_open_row.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_row.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.open_row has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_row.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.open_row records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_open_artifacts": {
+      "ui_element_id": "catalog.history_open_artifacts",
+      "ui_location": "Orchestrator > History > row > Artifacts",
+      "ui_command_id": "cmd.history.open_artifacts",
+      "handler_location": "handlers::history::open_artifacts",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.open_artifacts must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.open_artifacts must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.open_artifacts dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.open_artifacts must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.open_artifacts must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.open_artifacts is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.open_artifacts; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_open_artifacts.availability",
+      "disabled_reason_projection": "state.commands.history_open_artifacts.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.open_artifacts has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.open_artifacts.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_open_artifacts exposes a stable role/name/description matching cmd.history.open_artifacts.",
+        "keyboard_access": "catalog.history_open_artifacts is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_open_artifacts preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_open_artifacts surfaces state.commands.history_open_artifacts.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_open_artifacts.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.open_artifacts reaches handlers::history::open_artifacts with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_artifacts.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_open_artifacts.availability and disabled copy reads state.commands.history_open_artifacts.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_artifacts.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.open_artifacts has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_artifacts.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.open_artifacts records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_open_evidence": {
+      "ui_element_id": "catalog.history_open_evidence",
+      "ui_location": "Orchestrator > History > row > Evidence",
+      "ui_command_id": "cmd.history.open_evidence",
+      "handler_location": "handlers::history::open_evidence",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.open_evidence must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.open_evidence must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.open_evidence dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.open_evidence must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.open_evidence must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.open_evidence is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.open_evidence; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_open_evidence.availability",
+      "disabled_reason_projection": "state.commands.history_open_evidence.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.open_evidence has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.open_evidence.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_open_evidence exposes a stable role/name/description matching cmd.history.open_evidence.",
+        "keyboard_access": "catalog.history_open_evidence is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_open_evidence preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_open_evidence surfaces state.commands.history_open_evidence.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_open_evidence.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.open_evidence reaches handlers::history::open_evidence with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_evidence.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_open_evidence.availability and disabled copy reads state.commands.history_open_evidence.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_evidence.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.open_evidence has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_open_evidence.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.open_evidence records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_compare_versions": {
+      "ui_element_id": "catalog.history_compare_versions",
+      "ui_location": "Orchestrator > History > Documents > row > Compare versions",
+      "ui_command_id": "cmd.history.compare_versions",
+      "handler_location": "handlers::history::compare_versions",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.compare_versions must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.compare_versions must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.compare_versions dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.compare_versions must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.compare_versions must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.compare_versions is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.compare_versions; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_compare_versions.availability",
+      "disabled_reason_projection": "state.commands.history_compare_versions.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.compare_versions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.compare_versions.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_compare_versions exposes a stable role/name/description matching cmd.history.compare_versions.",
+        "keyboard_access": "catalog.history_compare_versions is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_compare_versions preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_compare_versions surfaces state.commands.history_compare_versions.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_compare_versions.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.compare_versions reaches handlers::history::compare_versions with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_compare_versions.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_compare_versions.availability and disabled copy reads state.commands.history_compare_versions.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_compare_versions.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.compare_versions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_compare_versions.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.compare_versions records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_duplicate_as_draft": {
+      "ui_element_id": "catalog.history_duplicate_as_draft",
+      "ui_location": "Orchestrator > History > Documents > row > Duplicate as draft",
+      "ui_command_id": "cmd.history.duplicate_as_draft",
+      "handler_location": "handlers::history::duplicate_as_draft",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.duplicate_as_draft must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.duplicate_as_draft must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.duplicate_as_draft dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.duplicate_as_draft must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.duplicate_as_draft must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.duplicate_as_draft is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.duplicate_as_draft; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_duplicate_as_draft.availability",
+      "disabled_reason_projection": "state.commands.history_duplicate_as_draft.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.duplicate_as_draft has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.duplicate_as_draft.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_duplicate_as_draft exposes a stable role/name/description matching cmd.history.duplicate_as_draft.",
+        "keyboard_access": "catalog.history_duplicate_as_draft is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_duplicate_as_draft preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_duplicate_as_draft surfaces state.commands.history_duplicate_as_draft.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_duplicate_as_draft.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.duplicate_as_draft reaches handlers::history::duplicate_as_draft with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_duplicate_as_draft.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_duplicate_as_draft.availability and disabled copy reads state.commands.history_duplicate_as_draft.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_duplicate_as_draft.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.duplicate_as_draft has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_duplicate_as_draft.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.duplicate_as_draft records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_reopen_in_wizard": {
+      "ui_element_id": "catalog.history_reopen_in_wizard",
+      "ui_location": "Orchestrator > History > Documents > row > Reopen in Wizard",
+      "ui_command_id": "cmd.history.reopen_in_wizard",
+      "handler_location": "handlers::history::reopen_in_wizard",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.reopen_in_wizard must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.reopen_in_wizard must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.reopen_in_wizard dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.reopen_in_wizard must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.reopen_in_wizard must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.reopen_in_wizard is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.reopen_in_wizard; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_reopen_in_wizard.availability",
+      "disabled_reason_projection": "state.commands.history_reopen_in_wizard.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.reopen_in_wizard has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.reopen_in_wizard.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_reopen_in_wizard exposes a stable role/name/description matching cmd.history.reopen_in_wizard.",
+        "keyboard_access": "catalog.history_reopen_in_wizard is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_reopen_in_wizard preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_reopen_in_wizard surfaces state.commands.history_reopen_in_wizard.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_reopen_in_wizard.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.reopen_in_wizard reaches handlers::history::reopen_in_wizard with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_reopen_in_wizard.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_reopen_in_wizard.availability and disabled copy reads state.commands.history_reopen_in_wizard.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_reopen_in_wizard.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.reopen_in_wizard has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_reopen_in_wizard.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.reopen_in_wizard records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_send_forward": {
+      "ui_element_id": "catalog.history_send_forward",
+      "ui_location": "Orchestrator > History > Documents > row > Send forward",
+      "ui_command_id": "cmd.history.send_forward",
+      "handler_location": "handlers::history::send_forward",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.send_forward must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.send_forward must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.send_forward dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.send_forward must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.send_forward must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.send_forward is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.send_forward; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_send_forward.availability",
+      "disabled_reason_projection": "state.commands.history_send_forward.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.send_forward has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.send_forward.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_send_forward exposes a stable role/name/description matching cmd.history.send_forward.",
+        "keyboard_access": "catalog.history_send_forward is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_send_forward preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_send_forward surfaces state.commands.history_send_forward.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_send_forward.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.send_forward reaches handlers::history::send_forward with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_send_forward.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_send_forward.availability and disabled copy reads state.commands.history_send_forward.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_send_forward.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.send_forward has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_send_forward.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.send_forward records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_export_selected": {
+      "ui_element_id": "catalog.history_export_selected",
+      "ui_location": "Orchestrator > History > row > Export",
+      "ui_command_id": "cmd.history.export_selected",
+      "handler_location": "handlers::history::export_selected",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.export_selected must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.export_selected must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.export_selected dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.export_selected must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.export_selected must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.export_selected is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.export_selected; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_export_selected.availability",
+      "disabled_reason_projection": "state.commands.history_export_selected.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.export_selected has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.export_selected.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_export_selected exposes a stable role/name/description matching cmd.history.export_selected.",
+        "keyboard_access": "catalog.history_export_selected is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_export_selected preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_export_selected surfaces state.commands.history_export_selected.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_export_selected.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.export_selected reaches handlers::history::export_selected with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_selected.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_export_selected.availability and disabled copy reads state.commands.history_export_selected.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_selected.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.export_selected has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_selected.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.export_selected records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_export_bundle": {
+      "ui_element_id": "catalog.history_export_bundle",
+      "ui_location": "Orchestrator > History > selection > Export bundle",
+      "ui_command_id": "cmd.history.export_bundle",
+      "handler_location": "handlers::history::export_bundle",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.export_bundle must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.export_bundle must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.export_bundle dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.export_bundle must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.export_bundle must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.export_bundle is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.export_bundle; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_export_bundle.availability",
+      "disabled_reason_projection": "state.commands.history_export_bundle.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.export_bundle has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.export_bundle.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_export_bundle exposes a stable role/name/description matching cmd.history.export_bundle.",
+        "keyboard_access": "catalog.history_export_bundle is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_export_bundle preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_export_bundle surfaces state.commands.history_export_bundle.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_export_bundle.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.export_bundle reaches handlers::history::export_bundle with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_bundle.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_export_bundle.availability and disabled copy reads state.commands.history_export_bundle.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_bundle.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.export_bundle has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_bundle.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.export_bundle records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_export_filtered_view": {
+      "ui_element_id": "catalog.history_export_filtered_view",
+      "ui_location": "Orchestrator > History > filter bar > Export filtered view",
+      "ui_command_id": "cmd.history.export_filtered_view",
+      "handler_location": "handlers::history::export_filtered_view",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.export_filtered_view must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.export_filtered_view must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.export_filtered_view dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.export_filtered_view must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.export_filtered_view must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.export_filtered_view is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.export_filtered_view; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_export_filtered_view.availability",
+      "disabled_reason_projection": "state.commands.history_export_filtered_view.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.export_filtered_view has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.export_filtered_view.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_export_filtered_view exposes a stable role/name/description matching cmd.history.export_filtered_view.",
+        "keyboard_access": "catalog.history_export_filtered_view is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_export_filtered_view preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_export_filtered_view surfaces state.commands.history_export_filtered_view.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_export_filtered_view.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.export_filtered_view reaches handlers::history::export_filtered_view with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_filtered_view.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_export_filtered_view.availability and disabled copy reads state.commands.history_export_filtered_view.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_filtered_view.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.export_filtered_view has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_export_filtered_view.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.export_filtered_view records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_clone_as_new_run": {
+      "ui_element_id": "catalog.history_clone_as_new_run",
+      "ui_location": "Orchestrator > History > Runs > row > Clone as new run",
+      "ui_command_id": "cmd.history.clone_as_new_run",
+      "handler_location": "handlers::history::clone_as_new_run",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.clone_as_new_run must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.clone_as_new_run must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.clone_as_new_run dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.clone_as_new_run must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.clone_as_new_run must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.clone_as_new_run is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.clone_as_new_run; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_clone_as_new_run.availability",
+      "disabled_reason_projection": "state.commands.history_clone_as_new_run.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.clone_as_new_run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.clone_as_new_run.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_clone_as_new_run exposes a stable role/name/description matching cmd.history.clone_as_new_run.",
+        "keyboard_access": "catalog.history_clone_as_new_run is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_clone_as_new_run preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_clone_as_new_run surfaces state.commands.history_clone_as_new_run.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_clone_as_new_run.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.clone_as_new_run reaches handlers::history::clone_as_new_run with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_clone_as_new_run.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_clone_as_new_run.availability and disabled copy reads state.commands.history_clone_as_new_run.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_clone_as_new_run.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.clone_as_new_run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_clone_as_new_run.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.clone_as_new_run records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_inspect_records": {
+      "ui_element_id": "catalog.history_inspect_records",
+      "ui_location": "Orchestrator > History > row > Inspect ledger / raw records",
+      "ui_command_id": "cmd.history.inspect_records",
+      "handler_location": "handlers::history::inspect_records",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.inspect_records must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.inspect_records must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.inspect_records dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.inspect_records must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.inspect_records must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.inspect_records is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.inspect_records; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_inspect_records.availability",
+      "disabled_reason_projection": "state.commands.history_inspect_records.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.inspect_records has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.inspect_records.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_inspect_records exposes a stable role/name/description matching cmd.history.inspect_records.",
+        "keyboard_access": "catalog.history_inspect_records is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_inspect_records preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_inspect_records surfaces state.commands.history_inspect_records.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_inspect_records.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.inspect_records reaches handlers::history::inspect_records with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_inspect_records.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_inspect_records.availability and disabled copy reads state.commands.history_inspect_records.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_inspect_records.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.inspect_records has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_inspect_records.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.inspect_records records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.history_rebuild_projection": {
+      "ui_element_id": "catalog.history_rebuild_projection",
+      "ui_location": "Orchestrator > History > stale projection banner > Rebuild",
+      "ui_command_id": "cmd.history.rebuild_projection",
+      "handler_location": "handlers::history::rebuild_projection",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.history.rebuild_projection must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.history.rebuild_projection must expose projected state selector and disabled reason before dispatch",
+        "cmd.history.rebuild_projection dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.history.rebuild_projection must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.history.rebuild_projection must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.history.rebuild_projection is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.history.rebuild_projection; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.history_rebuild_projection.availability",
+      "disabled_reason_projection": "state.commands.history_rebuild_projection.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.history.rebuild_projection has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.history.rebuild_projection.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.history_rebuild_projection exposes a stable role/name/description matching cmd.history.rebuild_projection.",
+        "keyboard_access": "catalog.history_rebuild_projection is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.history_rebuild_projection preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.history_rebuild_projection surfaces state.commands.history_rebuild_projection.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.history_rebuild_projection.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.history.rebuild_projection reaches handlers::history::rebuild_projection with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.history_rebuild_projection.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.history_rebuild_projection.availability and disabled copy reads state.commands.history_rebuild_projection.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.history_rebuild_projection.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.history.rebuild_projection has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.history_rebuild_projection.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.history.rebuild_projection records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_vision_bridge_select_source": {
+      "ui_element_id": "catalog.chat_vision_bridge_select_source",
+      "ui_location": "Assistant Chat > vision bridge > source chip",
+      "ui_command_id": "cmd.chat.vision_bridge.select_source",
+      "handler_location": "handlers::chat::vision_bridge_select_source",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.vision_bridge.select_source must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.vision_bridge.select_source must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.vision_bridge.select_source dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.vision_bridge.select_source must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.vision_bridge.select_source must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.vision_bridge.select_source is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.vision_bridge.select_source; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_vision_bridge_select_source.availability",
+      "disabled_reason_projection": "state.commands.chat_vision_bridge_select_source.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.vision_bridge.select_source has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.vision_bridge.select_source.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_vision_bridge_select_source exposes a stable role/name/description matching cmd.chat.vision_bridge.select_source.",
+        "keyboard_access": "catalog.chat_vision_bridge_select_source is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_vision_bridge_select_source preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_vision_bridge_select_source surfaces state.commands.chat_vision_bridge_select_source.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_select_source.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.vision_bridge.select_source reaches handlers::chat::vision_bridge_select_source with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_select_source.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_vision_bridge_select_source.availability and disabled copy reads state.commands.chat_vision_bridge_select_source.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_select_source.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.vision_bridge.select_source has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_select_source.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.vision_bridge.select_source records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_vision_bridge_pick_recent_screenshot": {
+      "ui_element_id": "catalog.chat_vision_bridge_pick_recent_screenshot",
+      "ui_location": "Assistant Chat > vision bridge > source chip > Recent screenshot",
+      "ui_command_id": "cmd.chat.vision_bridge.pick_recent_screenshot",
+      "handler_location": "handlers::chat::vision_bridge_pick_recent_screenshot",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.vision_bridge.pick_recent_screenshot must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.vision_bridge.pick_recent_screenshot must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.vision_bridge.pick_recent_screenshot dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.vision_bridge.pick_recent_screenshot must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.vision_bridge.pick_recent_screenshot must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.vision_bridge.pick_recent_screenshot is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.vision_bridge.pick_recent_screenshot; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_vision_bridge_pick_recent_screenshot.availability",
+      "disabled_reason_projection": "state.commands.chat_vision_bridge_pick_recent_screenshot.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.vision_bridge.pick_recent_screenshot has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.vision_bridge.pick_recent_screenshot.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_vision_bridge_pick_recent_screenshot exposes a stable role/name/description matching cmd.chat.vision_bridge.pick_recent_screenshot.",
+        "keyboard_access": "catalog.chat_vision_bridge_pick_recent_screenshot is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_vision_bridge_pick_recent_screenshot preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_vision_bridge_pick_recent_screenshot surfaces state.commands.chat_vision_bridge_pick_recent_screenshot.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_pick_recent_screenshot.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.vision_bridge.pick_recent_screenshot reaches handlers::chat::vision_bridge_pick_recent_screenshot with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_pick_recent_screenshot.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_vision_bridge_pick_recent_screenshot.availability and disabled copy reads state.commands.chat_vision_bridge_pick_recent_screenshot.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_pick_recent_screenshot.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.vision_bridge.pick_recent_screenshot has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_pick_recent_screenshot.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.vision_bridge.pick_recent_screenshot records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_vision_bridge_inspect": {
+      "ui_element_id": "catalog.chat_vision_bridge_inspect",
+      "ui_location": "Assistant Chat > vision bridge card > Inspect",
+      "ui_command_id": "cmd.chat.vision_bridge.inspect",
+      "handler_location": "handlers::chat::vision_bridge_inspect",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.vision_bridge.inspect must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.vision_bridge.inspect must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.vision_bridge.inspect dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.vision_bridge.inspect must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.vision_bridge.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.vision_bridge.inspect is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.vision_bridge.inspect; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_vision_bridge_inspect.availability",
+      "disabled_reason_projection": "state.commands.chat_vision_bridge_inspect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.vision_bridge.inspect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.vision_bridge.inspect.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_vision_bridge_inspect exposes a stable role/name/description matching cmd.chat.vision_bridge.inspect.",
+        "keyboard_access": "catalog.chat_vision_bridge_inspect is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_vision_bridge_inspect preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_vision_bridge_inspect surfaces state.commands.chat_vision_bridge_inspect.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_inspect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.vision_bridge.inspect reaches handlers::chat::vision_bridge_inspect with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_inspect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_vision_bridge_inspect.availability and disabled copy reads state.commands.chat_vision_bridge_inspect.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_inspect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.vision_bridge.inspect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_inspect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.vision_bridge.inspect records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_vision_bridge_rerun": {
+      "ui_element_id": "catalog.chat_vision_bridge_rerun",
+      "ui_location": "Assistant Chat > vision bridge card > Rerun with a question",
+      "ui_command_id": "cmd.chat.vision_bridge.rerun",
+      "handler_location": "handlers::chat::vision_bridge_rerun",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.vision_bridge.rerun must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.vision_bridge.rerun must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.vision_bridge.rerun dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.vision_bridge.rerun must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.vision_bridge.rerun must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.vision_bridge.rerun is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.vision_bridge.rerun; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_vision_bridge_rerun.availability",
+      "disabled_reason_projection": "state.commands.chat_vision_bridge_rerun.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.vision_bridge.rerun has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.vision_bridge.rerun.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_vision_bridge_rerun exposes a stable role/name/description matching cmd.chat.vision_bridge.rerun.",
+        "keyboard_access": "catalog.chat_vision_bridge_rerun is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_vision_bridge_rerun preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_vision_bridge_rerun surfaces state.commands.chat_vision_bridge_rerun.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_rerun.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.vision_bridge.rerun reaches handlers::chat::vision_bridge_rerun with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_rerun.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_vision_bridge_rerun.availability and disabled copy reads state.commands.chat_vision_bridge_rerun.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_rerun.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.vision_bridge.rerun has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_rerun.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.vision_bridge.rerun records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_vision_bridge_copy_description": {
+      "ui_element_id": "catalog.chat_vision_bridge_copy_description",
+      "ui_location": "Assistant Chat > vision bridge card > Copy description",
+      "ui_command_id": "cmd.chat.vision_bridge.copy_description",
+      "handler_location": "handlers::chat::vision_bridge_copy_description",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.vision_bridge.copy_description must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.vision_bridge.copy_description must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.vision_bridge.copy_description dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.vision_bridge.copy_description must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.vision_bridge.copy_description must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.vision_bridge.copy_description is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.vision_bridge.copy_description; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_vision_bridge_copy_description.availability",
+      "disabled_reason_projection": "state.commands.chat_vision_bridge_copy_description.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.vision_bridge.copy_description has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.vision_bridge.copy_description.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_vision_bridge_copy_description exposes a stable role/name/description matching cmd.chat.vision_bridge.copy_description.",
+        "keyboard_access": "catalog.chat_vision_bridge_copy_description is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_vision_bridge_copy_description preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_vision_bridge_copy_description surfaces state.commands.chat_vision_bridge_copy_description.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_copy_description.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.vision_bridge.copy_description reaches handlers::chat::vision_bridge_copy_description with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_copy_description.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_vision_bridge_copy_description.availability and disabled copy reads state.commands.chat_vision_bridge_copy_description.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_copy_description.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.vision_bridge.copy_description has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_copy_description.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.vision_bridge.copy_description records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_vision_bridge_attach_result": {
+      "ui_element_id": "catalog.chat_vision_bridge_attach_result",
+      "ui_location": "Assistant Chat > vision bridge card > Attach result",
+      "ui_command_id": "cmd.chat.vision_bridge.attach_result",
+      "handler_location": "handlers::chat::vision_bridge_attach_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.vision_bridge.attach_result must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.vision_bridge.attach_result must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.vision_bridge.attach_result dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.vision_bridge.attach_result must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.vision_bridge.attach_result must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.vision_bridge.attach_result is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.vision_bridge.attach_result; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_vision_bridge_attach_result.availability",
+      "disabled_reason_projection": "state.commands.chat_vision_bridge_attach_result.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.vision_bridge.attach_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.vision_bridge.attach_result.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_vision_bridge_attach_result exposes a stable role/name/description matching cmd.chat.vision_bridge.attach_result.",
+        "keyboard_access": "catalog.chat_vision_bridge_attach_result is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_vision_bridge_attach_result preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_vision_bridge_attach_result surfaces state.commands.chat_vision_bridge_attach_result.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_attach_result.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.vision_bridge.attach_result reaches handlers::chat::vision_bridge_attach_result with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_attach_result.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_vision_bridge_attach_result.availability and disabled copy reads state.commands.chat_vision_bridge_attach_result.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_attach_result.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.vision_bridge.attach_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_attach_result.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.vision_bridge.attach_result records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.chat_vision_bridge_manage_permission": {
+      "ui_element_id": "catalog.chat_vision_bridge_manage_permission",
+      "ui_location": "Assistant Chat > vision bridge card > Manage always accept",
+      "ui_command_id": "cmd.chat.vision_bridge.manage_permission",
+      "handler_location": "handlers::chat::vision_bridge_manage_permission",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.vision_bridge.manage_permission must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.chat.vision_bridge.manage_permission must expose projected state selector and disabled reason before dispatch",
+        "cmd.chat.vision_bridge.manage_permission dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.chat.vision_bridge.manage_permission must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.chat.vision_bridge.manage_permission must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.chat.vision_bridge.manage_permission is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.chat.vision_bridge.manage_permission; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.chat_vision_bridge_manage_permission.availability",
+      "disabled_reason_projection": "state.commands.chat_vision_bridge_manage_permission.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.vision_bridge.manage_permission has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.chat.vision_bridge.manage_permission.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.chat_vision_bridge_manage_permission exposes a stable role/name/description matching cmd.chat.vision_bridge.manage_permission.",
+        "keyboard_access": "catalog.chat_vision_bridge_manage_permission is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.chat_vision_bridge_manage_permission preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.chat_vision_bridge_manage_permission surfaces state.commands.chat_vision_bridge_manage_permission.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_manage_permission.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.chat.vision_bridge.manage_permission reaches handlers::chat::vision_bridge_manage_permission with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_manage_permission.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.chat_vision_bridge_manage_permission.availability and disabled copy reads state.commands.chat_vision_bridge_manage_permission.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_manage_permission.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.chat.vision_bridge.manage_permission has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.chat_vision_bridge_manage_permission.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.vision_bridge.manage_permission records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_open_from_help": {
+      "ui_element_id": "catalog.teacher_open_from_help",
+      "ui_location": "Help icon on a major surface",
+      "ui_command_id": "cmd.teacher.open_from_help",
+      "handler_location": "handlers::teacher::open_from_help",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.open_from_help must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.open_from_help must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.open_from_help dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.open_from_help must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.open_from_help must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.open_from_help is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.open_from_help; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_open_from_help.availability",
+      "disabled_reason_projection": "state.commands.teacher_open_from_help.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.open_from_help has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.open_from_help.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_open_from_help exposes a stable role/name/description matching cmd.teacher.open_from_help.",
+        "keyboard_access": "catalog.teacher_open_from_help is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_open_from_help preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_open_from_help surfaces state.commands.teacher_open_from_help.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_open_from_help.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.open_from_help reaches handlers::teacher::open_from_help with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_open_from_help.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_open_from_help.availability and disabled copy reads state.commands.teacher_open_from_help.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_open_from_help.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.open_from_help has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_open_from_help.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.open_from_help records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_continue_in_teacher": {
+      "ui_element_id": "catalog.teacher_continue_in_teacher",
+      "ui_location": "Assistant Chat > summon disambiguation > Continue with Teacher",
+      "ui_command_id": "cmd.teacher.continue_in_teacher",
+      "handler_location": "handlers::teacher::continue_in_teacher",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.continue_in_teacher must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.continue_in_teacher must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.continue_in_teacher dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.continue_in_teacher must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.continue_in_teacher must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.continue_in_teacher is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.continue_in_teacher; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_continue_in_teacher.availability",
+      "disabled_reason_projection": "state.commands.teacher_continue_in_teacher.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.continue_in_teacher has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.continue_in_teacher.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_continue_in_teacher exposes a stable role/name/description matching cmd.teacher.continue_in_teacher.",
+        "keyboard_access": "catalog.teacher_continue_in_teacher is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_continue_in_teacher preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_continue_in_teacher surfaces state.commands.teacher_continue_in_teacher.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_continue_in_teacher.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.continue_in_teacher reaches handlers::teacher::continue_in_teacher with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_continue_in_teacher.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_continue_in_teacher.availability and disabled copy reads state.commands.teacher_continue_in_teacher.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_continue_in_teacher.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.continue_in_teacher has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_continue_in_teacher.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.continue_in_teacher records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_guide_open_route": {
+      "ui_element_id": "catalog.teacher_guide_open_route",
+      "ui_location": "Teacher guided overlay > step > Open route",
+      "ui_command_id": "cmd.teacher.guide.open_route",
+      "handler_location": "handlers::teacher::guide_open_route",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.guide.open_route must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.guide.open_route must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.guide.open_route dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.guide.open_route must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.guide.open_route must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.guide.open_route is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.guide.open_route; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_guide_open_route.availability",
+      "disabled_reason_projection": "state.commands.teacher_guide_open_route.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.guide.open_route has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.guide.open_route.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_guide_open_route exposes a stable role/name/description matching cmd.teacher.guide.open_route.",
+        "keyboard_access": "catalog.teacher_guide_open_route is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_guide_open_route preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_guide_open_route surfaces state.commands.teacher_guide_open_route.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_guide_open_route.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.guide.open_route reaches handlers::teacher::guide_open_route with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_open_route.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_guide_open_route.availability and disabled copy reads state.commands.teacher_guide_open_route.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_open_route.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.guide.open_route has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_open_route.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.guide.open_route records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_guide_focus": {
+      "ui_element_id": "catalog.teacher_guide_focus",
+      "ui_location": "Teacher guided overlay > step > Focus panel",
+      "ui_command_id": "cmd.teacher.guide.focus",
+      "handler_location": "handlers::teacher::guide_focus",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.guide.focus must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.guide.focus must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.guide.focus dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.guide.focus must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.guide.focus must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.guide.focus is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.guide.focus; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_guide_focus.availability",
+      "disabled_reason_projection": "state.commands.teacher_guide_focus.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.guide.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.guide.focus.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_guide_focus exposes a stable role/name/description matching cmd.teacher.guide.focus.",
+        "keyboard_access": "catalog.teacher_guide_focus is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_guide_focus preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_guide_focus surfaces state.commands.teacher_guide_focus.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_guide_focus.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.guide.focus reaches handlers::teacher::guide_focus with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_focus.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_guide_focus.availability and disabled copy reads state.commands.teacher_guide_focus.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_focus.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.guide.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_focus.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.guide.focus records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_guide_highlight": {
+      "ui_element_id": "catalog.teacher_guide_highlight",
+      "ui_location": "Teacher guided overlay > step > Highlight",
+      "ui_command_id": "cmd.teacher.guide.highlight",
+      "handler_location": "handlers::teacher::guide_highlight",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.guide.highlight must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.guide.highlight must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.guide.highlight dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.guide.highlight must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.guide.highlight must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.guide.highlight is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.guide.highlight; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_guide_highlight.availability",
+      "disabled_reason_projection": "state.commands.teacher_guide_highlight.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.guide.highlight has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.guide.highlight.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_guide_highlight exposes a stable role/name/description matching cmd.teacher.guide.highlight.",
+        "keyboard_access": "catalog.teacher_guide_highlight is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_guide_highlight preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_guide_highlight surfaces state.commands.teacher_guide_highlight.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_guide_highlight.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.guide.highlight reaches handlers::teacher::guide_highlight with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_highlight.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_guide_highlight.availability and disabled copy reads state.commands.teacher_guide_highlight.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_highlight.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.guide.highlight has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_highlight.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.guide.highlight records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_guide_scroll_to": {
+      "ui_element_id": "catalog.teacher_guide_scroll_to",
+      "ui_location": "Teacher guided overlay > step > Scroll to section",
+      "ui_command_id": "cmd.teacher.guide.scroll_to",
+      "handler_location": "handlers::teacher::guide_scroll_to",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.guide.scroll_to must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.guide.scroll_to must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.guide.scroll_to dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.guide.scroll_to must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.guide.scroll_to must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.guide.scroll_to is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.guide.scroll_to; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_guide_scroll_to.availability",
+      "disabled_reason_projection": "state.commands.teacher_guide_scroll_to.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.guide.scroll_to has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.guide.scroll_to.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_guide_scroll_to exposes a stable role/name/description matching cmd.teacher.guide.scroll_to.",
+        "keyboard_access": "catalog.teacher_guide_scroll_to is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_guide_scroll_to preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_guide_scroll_to surfaces state.commands.teacher_guide_scroll_to.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_guide_scroll_to.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.guide.scroll_to reaches handlers::teacher::guide_scroll_to with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_scroll_to.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_guide_scroll_to.availability and disabled copy reads state.commands.teacher_guide_scroll_to.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_scroll_to.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.guide.scroll_to has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_scroll_to.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.guide.scroll_to records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_guide_inspect": {
+      "ui_element_id": "catalog.teacher_guide_inspect",
+      "ui_location": "Teacher guided overlay > step > Expand details",
+      "ui_command_id": "cmd.teacher.guide.inspect",
+      "handler_location": "handlers::teacher::guide_inspect",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.guide.inspect must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.guide.inspect must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.guide.inspect dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.guide.inspect must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.guide.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.guide.inspect is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.guide.inspect; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_guide_inspect.availability",
+      "disabled_reason_projection": "state.commands.teacher_guide_inspect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.guide.inspect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.guide.inspect.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_guide_inspect exposes a stable role/name/description matching cmd.teacher.guide.inspect.",
+        "keyboard_access": "catalog.teacher_guide_inspect is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_guide_inspect preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_guide_inspect surfaces state.commands.teacher_guide_inspect.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_guide_inspect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.guide.inspect reaches handlers::teacher::guide_inspect with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_inspect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_guide_inspect.availability and disabled copy reads state.commands.teacher_guide_inspect.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_inspect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.guide.inspect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_inspect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.guide.inspect records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_explain_current_ui": {
+      "ui_element_id": "catalog.teacher_explain_current_ui",
+      "ui_location": "Teacher thread > Explain this screen",
+      "ui_command_id": "cmd.teacher.explain_current_ui",
+      "handler_location": "handlers::teacher::explain_current_ui",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.explain_current_ui must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.explain_current_ui must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.explain_current_ui dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.explain_current_ui must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.explain_current_ui must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.explain_current_ui is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.explain_current_ui; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_explain_current_ui.availability",
+      "disabled_reason_projection": "state.commands.teacher_explain_current_ui.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.explain_current_ui has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.explain_current_ui.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_explain_current_ui exposes a stable role/name/description matching cmd.teacher.explain_current_ui.",
+        "keyboard_access": "catalog.teacher_explain_current_ui is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_explain_current_ui preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_explain_current_ui surfaces state.commands.teacher_explain_current_ui.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_explain_current_ui.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.explain_current_ui reaches handlers::teacher::explain_current_ui with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_explain_current_ui.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_explain_current_ui.availability and disabled copy reads state.commands.teacher_explain_current_ui.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_explain_current_ui.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.explain_current_ui has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_explain_current_ui.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.explain_current_ui records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.teacher_guide_do_it": {
+      "ui_element_id": "catalog.teacher_guide_do_it",
+      "ui_location": "Teacher guided overlay > step > Do it",
+      "ui_command_id": "cmd.teacher.guide.do_it",
+      "handler_location": "handlers::teacher::guide_do_it",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.teacher.guide.do_it must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.teacher.guide.do_it must expose projected state selector and disabled reason before dispatch",
+        "cmd.teacher.guide.do_it dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.teacher.guide.do_it must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.teacher.guide.do_it must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "cmd.teacher.guide.do_it is minted by DL-333 resolution 9b; its typed args are the owner-doc definition that UI_Command_Catalog UCC-230 names, and availability stays handler_unavailable until that definition and a handler exist"
+      ],
+      "evidence_required": "Production wiring contract for cmd.teacher.guide.do_it; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.teacher_guide_do_it.availability",
+      "disabled_reason_projection": "state.commands.teacher_guide_do_it.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.teacher.guide.do_it has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.teacher.guide.do_it.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.teacher_guide_do_it exposes a stable role/name/description matching cmd.teacher.guide.do_it.",
+        "keyboard_access": "catalog.teacher_guide_do_it is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.teacher_guide_do_it preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.teacher_guide_do_it surfaces state.commands.teacher_guide_do_it.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.teacher_guide_do_it.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.teacher.guide.do_it reaches handlers::teacher::guide_do_it with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_do_it.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.teacher_guide_do_it.availability and disabled copy reads state.commands.teacher_guide_do_it.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_do_it.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.teacher.guide.do_it has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.teacher_guide_do_it.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.teacher.guide.do_it records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     }
   }

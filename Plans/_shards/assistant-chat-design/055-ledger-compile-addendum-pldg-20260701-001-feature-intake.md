@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24020-L24099
+Source lines: L24022-L24103
 
-Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
+Source SHA256: `d8416202d71866909a534630a1aa3fcfba8e9fee408134822f864c8f55d03973`
 
 ---
 
@@ -27,7 +27,9 @@ canonical_text: >-
   clicked onboarding Teacher affordance opens or selects a Teacher-capable Assistant Chat thread with current-surface
   context. One-off Teacher guidance from onboarding does not become durable Teach memory unless the user explicitly
   confirms persistence. If provider setup was skipped or no usable provider route exists, Assistant Chat names the
-  degraded/limited state instead of promising Teacher can answer normally.
+  degraded/limited state instead of promising Teacher can answer normally. Amended 2026-11-05 under DL-333, following
+  DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture and is not a Teacher launch; the Teacher
+  keeps the help-icon launch and the intent-classified natural-language route of CS-053.
 gui_related: true
 gui_classification_reason: Defines visible Assistant Chat/Teacher onboarding copy, thread launch behavior, and degraded-state user messaging.
 depends_on: [ACD-426, UCC-102, CS-053, MS-117]

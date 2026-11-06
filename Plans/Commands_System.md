@@ -3725,7 +3725,9 @@ owner_doc: Plans/Commands_System.md
 canonical_text: Teach/Teacher can be summoned through /teach, help icon launches, and varied natural-language phrases
   such as asking PM to teach, explain, show how, walk me through, or help me do something. Summon phrase resolution
   disambiguates Teach guidance from implementation/build requests, carries current-surface context into a new or
-  selected Teacher thread, and exposes Help icon/summon phrase guidance in Help/Glossary entries.
+  selected Teacher thread, and exposes Help icon/summon phrase guidance in Help/Glossary entries. Amended 2026-11-05
+  under DL-333, following DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture, not the Teacher;
+  the Teacher is summoned through the help icon and the intent-classified natural-language route above.
 gui_related: true
 gui_classification_reason: Defines user-facing /teach and natural-language invocation routes into Assistant Chat.
 depends_on:
@@ -9861,7 +9863,7 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.chat.revoke_investigation_item, cmd.chat.rewind, cmd.chat.run_user_command, cmd.chat.search, cmd.chat.send,
   cmd.chat.settings, cmd.chat.stop, cmd.chat.switch_thread, cmd.chat.toggle_message_details, cmd.chat.web.cancel,
   cmd.chat.web.crawl, cmd.chat.web.extract, cmd.chat.web.fetch, cmd.chat.web.help, cmd.chat.web.map, cmd.chat.web.request_again,
-  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.bind_existing, cmd.chat.worktree.create,
+  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.create,
   cmd.chat.worktree.info, cmd.chat.worktree.merge, cmd.chat.worktree.pr, cmd.chat.worktree.remove, cmd.chat.worktree.unbind,
   cmd.file.copy_full_path, cmd.file.copy_nodes, cmd.file.copy_path, cmd.file.copy_relative_path, cmd.file.cut_nodes,
   cmd.file.delete, cmd.file.expand_capped, cmd.file.new_file, cmd.file.new_folder, cmd.file.open, cmd.file.open_in_system_default,
@@ -9873,7 +9875,9 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.terminal.allow_agent_input, cmd.terminal.deny_agent_input, cmd.terminal.hand_back, cmd.terminal.interrupt,
   cmd.terminal.stop_agent, cmd.terminal.take_over, cmd.terminal.appearance.set, cmd.terminal.appearance.import_scheme,
   cmd.terminal.clear, cmd.terminal.revoke_agent_input, cmd.terminal.send_signal, cmd.chat.queue.send_now,
-  cmd.chat.processes.open. Native availability remains handler_unavailable. Resolve the selected WorkflowScopeV2:
+  cmd.chat.processes.open. cmd.chat.worktree.bind_existing is not one of them: DL-335 retires it as a non-alias
+  because UCC-058 forbids exposing it, and its Touch row TCP-FB-259 stays blocked. Native availability remains
+  handler_unavailable. Resolve the selected WorkflowScopeV2:
   application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required
   thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their
   actual Server scope without fabricating a thread; view-only and metadata reads require only their declared

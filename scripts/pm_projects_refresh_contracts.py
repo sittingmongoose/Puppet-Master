@@ -423,7 +423,9 @@ def binding_failures(document, corpus, *, whole=True):
         tools = {r['tool_id'] for r in document['tools']}
         if tools != PROJECT_TOOLS | COMPUTER_TOOLS.keys():
             errors.append('finite tool census')
-        if len(document['commands']) != 494 or sum(bool(r['new_primary']) for r in document['commands']) != 28:
+        # 494 -> 493 (DL-335): cmd.chat.worktree.bind_existing is retired as a non-alias because UCC-058
+        # forbids exposing it; it was not a new primary, so the 28 new primaries are unchanged.
+        if len(document['commands']) != 493 or sum(bool(r['new_primary']) for r in document['commands']) != 28:
             errors.append('finite primary command census')
         if len(document['local_actions']) != 62 or len(document['non_dispatch_controls']) != 1:
             errors.append('finite local/non-dispatch census')
