@@ -105,6 +105,7 @@ else:
     print("Infrastructure results, not failures of this tree (never new, growth or blocking): %d" % row.get("timeouts", 0))
     for index in range(row.get("timeouts", 0)):
         print("  [infrastructure] run-gates/x%d  subprocess_timeout (lint-x)  killed after 600 s" % index)
+    print("Gone since the baseline (nothing to do): 0")
 sys.exit(row.get("exit", 0))
 '''
 
@@ -1977,7 +1978,7 @@ def pre_row(bucket: str, baseline: int, count: int, fields: str = '{"n":1}', whe
     return f"  [{tag:<12}] {bucket}  {baseline} -> {count}  {fields}  {where}"
 
 
-def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts: int = 0, tail: str = "") -> str:
+def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts: int = 0, tail: str = "", gone: int = 0) -> str:
     """A landing check's text report, line for line as main() in scripts/pm-landing-check.py prints it."""
     lines = ["pm-landing-check: baseline reports/landing-checks/baseline.json recorded at aaaaaaaaaaaa; this checkout is at bbbbbbbbbbbb",
              "  the baseline is current, so rule 2 applies: its commit aaaaaaaaaaaa is an ancestor of the base", "",
@@ -1996,7 +1997,7 @@ def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts
     lines += ["Naming a path this branch touches: 0",
               f"Infrastructure results, not failures of this tree (never new, growth or blocking): {timeouts}"]
     lines += [f"  [infrastructure] run-gates/x{index}  subprocess_timeout (lint-x)  killed after 600 s" for index in range(timeouts)]
-    lines += ["Gone since the baseline (nothing to do): 0", ""]
+    lines += [f"Gone since the baseline (nothing to do): {gone}", ""]
     advice = []
     if pre and compare:
         advice.append(f"pre-existing failures whose count has not risen, {compare} of them with changed content on files this "
@@ -2042,7 +2043,7 @@ class ReportFormatTests(unittest.TestCase):
                 text = f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n{line}\nChecks whose failure count rose: 0"
                 entry = M.read_report(text)["pre"]["run-gates/lint-x  missing_ref  src/x.txt"]
                 self.assertEqual((entry["baseline"], entry["count"], entry["improved"]), (5, count, standing == "improved"), line)
-                self.assertEqual(entry["content_changed"], where.endswith("(content changed)"), line)
+                self.assertEqual(bool(entry["content_rows"]), where.endswith("(content changed)"), line)
                 self.assertFalse(M.read_report(text)["pre_unread"], line)
 
     def test_a_row_with_no_path_is_read_too(self):
@@ -2055,6 +2056,7 @@ class ReportFormatTests(unittest.TestCase):
         for phrase in ("Infrastructure results, not failures of this tree (never new, growth or blocking): ",
                        "Pre-existing, in a baseline bucket whose count has not risen (never blocks): ",
                        "Checks whose failure count rose: ",
+                       "Gone since the baseline (nothing to do): ",
                        "Nothing reported stops the landing: it is ",
                        "of them with changed content on files this branch touched, so compare those with the baseline's rows",
                        "(the readiness growth counter: its printed rows",
@@ -2070,6 +2072,8 @@ class ReportFormatTests(unittest.TestCase):
         self.assertEqual(report["compare"], 2)
         self.assertEqual(report["counter"], {READINESS: 218})
         self.assertEqual(report["pre"][BUCKET]["rows"], ['{"n":1}', '{"n":2}'])
+        self.assertEqual(M.read_report(landing_report(gone=4))["gone"], 4)
+        self.assertIsNone(M.read_report("no such line")["gone"])
         self.assertFalse(report["pre_unread"])
         self.assertFalse(report["crashed"])
 
@@ -2421,6 +2425,43 @@ class BatchGapTests(Base):
         self.assertEqual(len(self.h.calls("landing")), 1)
         self.assertTrue(self.h.held())
 
+    def test_a_gone_count_below_an_earlier_reports_closes_it_on_exit_0_too(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 0, "raw": landing_report(gone=2)}, {"exit": 0, "raw": landing_report(gone=1)}, {}])
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        self.a_sha = self.h.origin_main()
+        result = self.land("fix/b", "--batch-start", start)
+        self.closed_and_alone(start, result)
+        self.assertIn("fell from 2 to 1", result.stdout)
+
+    def test_a_gone_count_that_holds_or_rises_keeps_the_batch(self):
+        for second in (2, 3):
+            self.assertIsNone(M.batch_gap(M.read_report(landing_report(gone=second)), [M.read_report(landing_report(gone=2))]), second)
+
+    def test_the_gone_count_is_held_to_the_highest_earlier_one_not_the_latest(self):
+        earlier = [M.read_report(landing_report(gone=3)), M.read_report(landing_report(gone=1))]
+        self.assertEqual(M.batch_gap(M.read_report(landing_report(gone=2)), earlier)[0], "batch_rows_overlap")
+
+    def test_a_report_with_no_gone_line_cannot_be_told(self):
+        gap = M.batch_gap(M.read_report("no such line"), [M.read_report(landing_report())])
+        self.assertIn("cannot be told", gap[1])
+        gap = M.batch_gap(M.read_report(landing_report()), [dict(M.read_report(landing_report()), gone=None)])
+        self.assertIn("cannot be told", gap[1])
+
+    def test_a_content_changed_row_no_earlier_report_listed_closes_it(self):
+        start, result = self.two_members(landing_report(), landing_report(pre=[pre_row(BUCKET, 2, 2, '{"n":3}', "(content changed)")]))
+        self.closed_and_alone(start, result)
+        self.assertIn("no earlier report listed", result.stdout)
+
+    def test_a_content_changed_row_an_earlier_report_listed_keeps_the_batch(self):
+        row = pre_row(BUCKET, 2, 2, '{"n":3}', "(content changed)")
+        start, result = self.two_members(landing_report(pre=[row]), landing_report(pre=[row]))
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held())
+
     def test_a_check_marked_for_closing_is_never_a_passing_check(self):
         cfg = M.config_from(M.build_parser().parse_args(["status"]))
         lander = M.Lander(cfg, {"id": "x", "name": "x", "lock": {}, "for_jared": []})
@@ -2470,6 +2511,144 @@ class BatchGapTests(Base):
         self.assertEqual(self.h.origin_main(), start)
         self.assertTrue(self.h.held())
         self.assertIn("--batch-close", result.stdout)
+
+
+class RealReportBatchTests(Base):
+    """Review N1: the real main() of pm-landing-check.py writes each member's report, and pm-land.py reads it."""
+
+    ROW = {"path": "Plans/A.md", "error": "missing_ref", "ref": "#x"}
+
+    def row(self, ref: str = "#x", path: str = "Plans/A.md") -> dict:
+        return {"path": path, "error": "missing_ref", "ref": ref}
+
+    def reports(self, baseline: list, first: list, second: list, edits=("Plans/A.md", "Plans/A.md")) -> tuple:
+        """The two members' (exit, report) from one recorded baseline, each member one more commit on one file."""
+        path = ROOT / "tests" / "test_pm_landing_check.py"
+        if not path.exists():
+            self.skipTest("this sparse tree has no tests/test_pm_landing_check.py")
+        spec = importlib.util.spec_from_file_location("pm_landing_check_tests", path)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+
+        class Run(module.LandingRun):
+            def runTest(self):
+                pass
+
+        run = Run()
+        argv = list(sys.argv)
+        self.addCleanup(lambda: sys.argv.__setitem__(slice(None), argv))
+        run.setUp()
+        self.addCleanup(run.doCleanups)
+
+        def member(rows: list, rel: str, number: int) -> tuple:
+            target = run.repo / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(f"edit {number}\n", encoding="utf-8")
+            run.git("add", rel)
+            run.git("commit", "-qm", f"member {number}")
+            run.stub(gates={"lint_path_refs": rows})
+            return run.compare()
+
+        run.stub(gates={"lint_path_refs": baseline})
+        run.record()
+        return member(first, edits[0], 1), member(second, edits[1], 2)
+
+    def land_both(self, one: tuple, two: tuple) -> tuple:
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": one[0], "raw": one[1]}, {"exit": two[0], "raw": two[1]}, {}])
+        first = self.land("fix/a", "--batch-open")
+        self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
+        self.a_sha = self.h.origin_main()
+        return start, self.land("fix/b", "--batch-start", start)
+
+    def assert_closed_and_alone(self, start: str, result) -> None:
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        landing = self.h.calls("landing")
+        self.assertEqual([row["args"][:2] for row in landing],
+                         [["--base", start], ["--base", start], ["--base", "origin/main"]], result.stdout)
+        self.assertEqual(landing[2]["origin_main"], self.a_sha, "rechecked before fix/b is on main")
+        self.assertFalse(self.h.held())
+
+    def test_shape_x_the_same_row_back_on_a_file_the_member_edits(self):
+        one, two = self.reports([self.row()], [], [self.row()])
+        self.assertEqual((one[0], two[0]), (0, 1))
+        self.assertIn("Gone since the baseline (nothing to do): 1", one[1])
+        self.assertIn("[pre-existing]", two[1])
+        self.assertNotIn("compare those", two[1])
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("fell from 1 to 0", result.stdout)
+
+    def test_shape_y_different_content_back_closes_rather_than_stopping_to_compare(self):
+        one, two = self.reports([self.row()], [], [self.row("#y")])
+        self.assertEqual((one[0], two[0]), (0, 1))
+        self.assertIn("compare those", two[1])
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+
+    def test_shape_z_a_fresh_row_naming_no_batch_file_in_a_bucket_lowered_unseen(self):
+        other = "Plans/Other.md"
+        one, two = self.reports([self.row("#1", other), self.row("#2", other)], [self.row("#1", other)],
+                                [self.row("#1", other), self.row("#3", other)])
+        self.assertEqual((one[0], two[0]), (0, 1))
+        self.assertNotIn("Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n  counted", one[1])
+        self.assertIn("(content changed)", two[1])
+        self.assertNotIn("compare those", two[1])
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("no earlier report listed", result.stdout)
+
+    def test_a_bucket_emptied_and_back_with_exit_0_and_no_row_printed(self):
+        other = "Plans/Other.md"
+        one, two = self.reports([self.row("#1", other)], [], [self.row("#1", other)])
+        self.assertEqual((one[0], two[0]), (0, 0))
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+
+    def test_control_rows_naming_a_batch_file(self):
+        one, two = self.reports([self.row("#1"), self.row("#2")], [self.row("#1")], [self.row("#1"), self.row("#3")])
+        self.assertEqual((one[0], two[0]), (1, 1))
+        self.assertIn("[improved", one[1])
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+
+    def test_unseen_a_fresh_row_on_a_later_members_own_file_stops_only_for_the_comparison(self):
+        """README, "What stays unseen". The first member edits another file, so its fix prints nothing."""
+        one, two = self.reports([self.row("#1"), self.row("#2")], [self.row("#1")], [self.row("#1"), self.row("#3")],
+                                edits=("Plans/B.md", "Plans/A.md"))
+        self.assertEqual((one[0], two[0]), (0, 1))
+        self.assertIn("compare those", two[1])
+        start, result = self.land_both(one, two)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "rows_need_comparison")
+        self.assertEqual(self.h.state("fix/b")["batch"]["start"], start, "not closed")
+
+    def test_unseen_the_baselines_own_row_back_naming_no_batch_file_passes(self):
+        """README, "What stays unseen". Nothing prints, so nothing stops it."""
+        other = "Plans/Other.md"
+        one, two = self.reports([self.row("#1", other), self.row("#2", other)], [self.row("#1", other)],
+                                [self.row("#1", other), self.row("#2", other)])
+        self.assertEqual((one[0], two[0]), (0, 0))
+        start, result = self.land_both(one, two)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held(), "not closed")
+
+    def test_unseen_one_bucket_emptied_as_another_comes_back_keeps_the_gone_count(self):
+        """README, "What stays unseen"."""
+        first, second = self.row("#1", "Plans/A.md"), self.row("#2", "Plans/Other.md")
+        one, two = self.reports([first, second], [second], [first])
+        self.assertEqual(self.assert_same_gone(one[1], two[1]), 1)
+        start, result = self.land_both(one, two)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertTrue(self.h.held(), "not closed")
+
+    def assert_same_gone(self, one: str, two: str) -> int:
+        self.assertEqual(M.read_report(one)["gone"], M.read_report(two)["gone"])
+        return M.read_report(two)["gone"]
 
 
 class BatchClearingTests(Base):

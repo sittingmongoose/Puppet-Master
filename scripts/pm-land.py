@@ -138,12 +138,14 @@ REPORT_PRE_HEAD = re.compile(r"^Pre-existing, in a baseline bucket whose count h
 REPORT_PRE_ROW = re.compile(r"^  \[(pre-existing|improved)\s*\] (.+?)  (\d+) -> (\d+)(?:  (.*))?$")
 REPORT_ROW_WHERE = re.compile(r"^(.*?)  ?\((names .*|content changed)\)$")
 REPORT_COUNTER = re.compile(r"^  \[staleness\] (\S+)  (\d+) -> (\d+) \(the readiness growth counter", re.M)
+REPORT_GONE = re.compile(r"^Gone since the baseline \(nothing to do\): (\d+)", re.M)
 
 
 def read_report(text: str) -> Dict[str, Any]:
     """The parts of a landing check's report the tool acts on. `pre_unread`: rows it could not read, or past the print cap."""
     infrastructure = REPORT_INFRASTRUCTURE.search(text)
     compare = REPORT_COMPARE.search(text)
+    gone = REPORT_GONE.search(text)
     pre: Dict[str, Dict[str, Any]] = {}
     declared = None
     read = 0
@@ -161,9 +163,11 @@ def read_report(text: str) -> Dict[str, Any]:
             tag, bucket, baseline, count, rest = row.groups()
             where = REPORT_ROW_WHERE.match(rest or "")
             entry = pre.setdefault(bucket, {"baseline": int(baseline), "count": int(count), "improved": tag == "improved",
-                                            "content_changed": False, "rows": []})
-            entry["content_changed"] = entry["content_changed"] or bool(where and where.group(2) == "content changed")
-            entry["rows"].append(where.group(1) if where else (rest or ""))
+                                            "content_rows": [], "rows": []})
+            printed = where.group(1) if where else (rest or "")
+            entry["rows"].append(printed)
+            if where and where.group(2) == "content changed":
+                entry["content_rows"].append(printed)
             read += 1
     if declared is not None and read != declared:
         unread = True
@@ -174,6 +178,7 @@ def read_report(text: str) -> Dict[str, Any]:
         "pre": pre,
         "pre_unread": unread,
         "counter": {name: int(reported) for name, _was, reported in REPORT_COUNTER.findall(text)},
+        "gone": int(gone.group(1)) if gone else None,
     }
 
 
@@ -182,23 +187,38 @@ def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]
 
     Every check in a batch is judged against the baseline from before the batch, so a bucket an earlier member lowered
     and this one raises again still reads as pre-existing, and a readiness rise is excused by the earlier member's
-    stale row. `earlier` is each earlier member's report digest in order, None where there is none (a hand lander).
-    Returns (stop code, why). What a report did not print cannot be seen: README, "Batches".
+    stale row. An earlier member's fix may print no row at all: a bucket it emptied is only a number in `Gone since the
+    baseline`, and one it lowered with no row naming a batch file prints nothing. `earlier` is each earlier member's
+    report digest in order, None where there is none (a hand lander). Returns (stop code, why). What a report did not
+    print cannot be seen: README, "Batches".
     """
     if not earlier:
         return None
-    gone = any(row is None for row in earlier)
+    absent = any(row is None for row in earlier)
     known = [row for row in earlier if row is not None]
     mine = report["pre"]
-    if gone or report["pre_unread"] or any(row.get("pre_unread") for row in known):
+    if known:
+        if report.get("gone") is None or any(row.get("gone") is None for row in known):
+            return ("batch_rows_overlap", "a report here has no `Gone since the baseline` line, so whether a bucket an "
+                                          "earlier member emptied has come back cannot be told")
+        highest = max(row["gone"] for row in known)
+        if report["gone"] < highest:
+            return ("batch_rows_overlap", f"`Gone since the baseline` fell from {highest} to {report['gone']}: a bucket an "
+                                          "earlier member of this batch emptied has come back, which no printed row shows")
+    if absent or report["pre_unread"] or any(row.get("pre_unread") for row in known):
         if mine or report["pre_unread"] or report["compare"]:
             return ("batch_rows_overlap", "this report lists pre-existing rows, and an earlier member's report is missing "
                                           "or printed only part of its rows, so what they share cannot be told")
     else:
         shared = []
+        unlisted = []
         for bucket, entry in sorted(mine.items()):
             views = [row for row in known if bucket in row["pre"]]
-            if not any(row["pre"][bucket]["improved"] or row["pre"][bucket]["content_changed"] or row.get("compare")
+            listed = {text for row in views for text in row["pre"][bucket]["rows"]}
+            if any(text not in listed for text in entry["content_rows"]):
+                unlisted.append(bucket)
+                continue
+            if not any(row["pre"][bucket]["improved"] or row["pre"][bucket]["content_rows"] or row.get("compare")
                        for row in views):
                 continue
             # Every member's report lists what the earlier ones touched too, so compare with the latest view.
@@ -208,8 +228,12 @@ def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]
         if shared:
             return ("batch_rows_overlap", "pre-existing rows changed in a bucket an earlier member of this batch also "
                                           "changed, so the baseline's count no longer tells: " + "; ".join(shared[:10]))
+        if unlisted:
+            return ("batch_rows_overlap", "a `(content changed)` row no earlier report listed: an earlier member may have "
+                                          "lowered its bucket without printing it, so the baseline's count no longer "
+                                          "tells: " + "; ".join(unlisted[:10]))
     for name, reported in sorted(report["counter"].items()):
-        if gone:
+        if absent:
             return ("batch_readiness_rise", f"{name}'s rise is judged as staleness, and an earlier member's report is "
                                             "missing, so what this landing added cannot be told")
         seen = max((row.get("counter", {}).get(name, -1) for row in known), default=-1)
@@ -1484,13 +1508,14 @@ class Lander:
             timeouts = report["infrastructure"] if report["infrastructure"] is not None else -1
         batch = st.get("batch")
         gap = None
-        if code == 1 and timeouts >= 0 and batch and step.get("target") == "land" and batch.get("landings"):
+        # Exit 0 too: a bucket that comes back with an unchanged row naming no batch file prints nothing at all.
+        if code in (0, 1) and timeouts >= 0 and batch and step.get("target") == "land" and batch.get("landings"):
             gap = batch_gap(report, self.earlier_digests())
         t["check"] = {"sha": head, "tree": self.git(cwd, "rev-parse", f"{head}^{{tree}}").stdout.strip(),
                       "origin_main": t["origin_main"], "base": t["base_arg"], "exit": code, "log": str(log),
                       "reports": str(keep), "timeouts": timeouts, "cwd": str(cwd),
                       "rows_changed": report["compare"] if code == 1 else 0, "batch_close": gap[0] if gap else None,
-                      "digest": {key: report[key] for key in ("pre", "pre_unread", "compare", "counter")}}
+                      "digest": {key: report[key] for key in ("pre", "pre_unread", "compare", "counter", "gone")}}
         self.save()
         if timeouts < 0:
             why = "a traceback" if report["crashed"] else "no Infrastructure line"
@@ -1498,11 +1523,11 @@ class Lander:
                        f"landing check exit {code} with {why} in its report: it did not finish judging, so it says "
                        f"nothing about this tree, and no judgement excuses that. Report: {log}",
                        "Fix the cause, then `resume`, which reruns it. Never re-record the baseline for this.")
+        if gap:
+            raise Stop(gap[0], f"{gap[1]}. Report: {log}")
         if code == 0:
             return
         if code == 1:
-            if gap:
-                raise Stop(gap[0], f"{gap[1]}. Report: {log}")
             tail = "\n".join(text.splitlines()[-4:])
             self.for_jared(f"landing check exit 1 on {head[:12]}: nothing in it stops the landing; report: {log} "
                            f"(full reports: {keep}). Governance staleness in it is a reseal request. Last lines:\n{tail}")

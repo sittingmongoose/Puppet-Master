@@ -751,6 +751,12 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
   batch when its report's pre-existing or improved rows differ, by count or by text, from the latest earlier report's
   in a bucket an earlier report marked as changed (`improved`, `(content changed)`, or any row of a report that says
   "compare those"). Rows a report only lists again do not count: each report lists what the earlier members touched.
+- **A bucket an earlier member fixed without printing it.** The report lists a row only if it names a batch file or
+  its content changed. A bucket emptied is only a number in `Gone since the baseline`, and one lowered with no row
+  naming a batch file prints nothing, yet alone either stops the later member. A member closes the batch when that
+  count is below the highest any earlier report showed, even on exit 0: a bucket has come back. It also closes it on a
+  `(content changed)` row no earlier report listed. Either can close a batch needlessly, for one follow-up: the count
+  also falls when a subcheck that counted earlier timed out or printed only a sample this time.
 - **The readiness growth counter.** A rise judged as staleness can be excused in the batch by an earlier member's
   stale row, where alone it needs this landing's own. A member closes the batch when the counter's total is above the
   highest any earlier report showed. A total no higher is no rise alone either, so it stays. In practice, two members
@@ -763,11 +769,16 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
   to `origin/main`, whichever is later, and a member stops with `batch_baseline_past_limit` once it is past it. A
   baseline rule 2 ignores anyway opens one: a batch and a lone landing are then judged alike.
 
-What this cannot see is what a report does not print. A member that lowers a bucket without its report listing that
-bucket, because no remaining row names its files, leaves no trace, and a total that falls and rises again below the
-baseline's figure prints no counter row. A later member's changed row in such a bucket still stops for the comparison
-above, and that comparison, with the baseline's rows, is then the only guard; a rise in a subcheck that prints only a
-sample, staying under the baseline's total, has no guard here at all.
+What stays unseen is what no report prints. These pass in the batch and would stop alone:
+
+- A bucket lowered with no row naming a batch file, and raised again by a fresh row on a later member's own file. That
+  row reads `(names ...)`, like any pre-existing row on a touched file, so it stops for the comparison above and does
+  not close the batch. The comparison with the baseline's rows is then the only guard.
+- The same bucket raised again by the baseline's own row, naming no batch file: nothing prints, so nothing stops it.
+- A member that empties one bucket as another comes back: the gone count does not move. A row it lists on a batch
+  file reads as pre-existing, with no comparison to stop for.
+- A total that falls and rises again below the baseline's figure prints no counter row, and a rise in a subcheck that
+  prints only a sample, staying under the baseline's total, has no guard here at all.
 
 ### The lock queue
 
