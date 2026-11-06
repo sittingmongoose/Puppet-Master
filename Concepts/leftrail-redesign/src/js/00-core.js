@@ -154,6 +154,7 @@ function button(a, opts) {
   if (a.menu && opts.menus && opts.menus[a.menu]) {
     el.setAttribute('aria-haspopup', 'menu');
     el.addEventListener('click', ev => { ev.preventDefault(); PMR.menu.toggle(opts.menus[a.menu], el, { menus: opts.menus }); });
+    PMR.menu.keys(el);
   }
   return el;
 }

@@ -234,6 +234,7 @@ const LANE_E = (() => {
         },
       });
     });
+    PMR.menu.keys(trig);
     const onChange = () => { sync(); requestAnimationFrame(() => riseProvider(panel)); };
     sel.addEventListener('change', onChange);
     inject(sel.parentNode, trig, sel);
