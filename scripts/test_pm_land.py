@@ -2936,8 +2936,10 @@ class StoppedMemberTests(Base):
         self.assertEqual(self.h.state("fix/b")["stop"]["code"], "reseal_in_batch", result.stdout)
         stranger = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "stranger")
         self.assertEqual(stranger.returncode, 1, stranger.stdout)
-        self.assertEqual(self.h.state("")["stop"]["code"], "batch_busy")
-        self.assertEqual(self.h.tool("abort", "--id", self.h.state("")["id"]).returncode, 0)
+        docs = [json.loads(path.read_text()) for path in (self.h.lock / "state").glob("*.json")]
+        closing = next(doc for doc in docs if doc.get("branch") is None)  # state ids sort by the second, so name it
+        self.assertEqual(closing["stop"]["code"], "batch_busy")
+        self.assertEqual(self.h.tool("abort", "--id", closing["id"]).returncode, 0)
         own = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "lander-fix/b")
         self.assertEqual(own.returncode, 0, own.stdout + own.stderr)
         self.assertFalse(self.h.held())
