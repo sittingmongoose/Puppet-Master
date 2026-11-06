@@ -233,6 +233,9 @@ class Trace:
     """What one traced command did. `reasons` holds why it cannot be cached; empty means it can."""
 
     reads: set[tuple[str, str]] = field(default_factory=set)
+    # The reads that found something. Deleted after the unit read it and before it was hashed, a path would read as
+    # absent with no ctime left to give the change away.
+    present: set[tuple[str, str]] = field(default_factory=set)
     git: list[dict[str, Any]] = field(default_factory=list)
     git_needs_state: bool = False
     written: set[str] = field(default_factory=set)
@@ -365,10 +368,12 @@ class TraceReader:
                 return True
         return False
 
-    def add_read(self, kind: str, path: str) -> None:
+    def add_read(self, kind: str, path: str, absent: bool = False) -> None:
         if is_pseudo(path) or is_bytecode(path) or self.internal(path):
             return
         self.trace.reads.add((kind, self.token(path)))
+        if not absent:
+            self.trace.present.add((kind, self.token(path)))
 
     def add_write(self, path: str, make_dir: bool = False) -> None:
         if is_pseudo(path):
@@ -446,6 +451,7 @@ class TraceReader:
         return self.absolute(pid, base, text)
 
     def apply_read(self, pid: int, name: str, args: list[str], failed: bool, result: str) -> None:
+        absent = failed and result.split()[1:2] in (["ENOENT"], ["ENOTDIR"])
         if name in {"open", "creat"}:
             path, flags = self.named_path(pid, args, 0), args[1] if len(args) > 1 else ""
         elif name in {"openat", "openat2"}:
@@ -453,24 +459,24 @@ class TraceReader:
         elif name in {"stat", "lstat", "access", "getxattr", "lgetxattr", "listxattr", "llistxattr", "statfs"}:
             path = self.named_path(pid, args, 0)
             if path:
-                self.add_read("lstat" if name in {"lstat", "lgetxattr", "llistxattr"} else "stat", path)
+                self.add_read("lstat" if name in {"lstat", "lgetxattr", "llistxattr"} else "stat", path, absent)
             return
         elif name in {"newfstatat", "fstatat64", "statx", "faccessat", "faccessat2"}:
             path = self.named_path(pid, args, 1, 0)
             if path:
                 # newfstatat keeps its flags last, statx third, and only they can say not to follow a symlink.
                 follow = not any("AT_SYMLINK_NOFOLLOW" in argument for argument in args[2:])
-                self.add_read("stat" if follow else "lstat", path)
+                self.add_read("stat" if follow else "lstat", path, absent)
             return
         elif name == "readlink":
             path = self.named_path(pid, args, 0)
             if path:
-                self.add_read("link", path)
+                self.add_read("link", path, absent)
             return
         elif name == "readlinkat":
             path = self.named_path(pid, args, 1, 0)
             if path:
-                self.add_read("link", path)
+                self.add_read("link", path, absent)
             return
         else:  # pragma: no cover - READ_SYSCALLS is exhausted above.
             self.trace.refuse(f"it made a call this reader does not know: {name}")
@@ -479,7 +485,7 @@ class TraceReader:
             return
         writes = name == "creat" or any(flag in flags for flag in ("O_WRONLY", "O_RDWR", "O_CREAT", "O_TRUNC", "O_APPEND"))
         if failed:
-            self.add_read("stat", path)
+            self.add_read("stat", path, absent)
             return
         if writes:
             self.add_write(path)
@@ -1044,6 +1050,7 @@ class Store:
         if unstable:
             return "", f"an input was changing while it was hashed: {self.short_name(unstable[0].split(' ', 1)[1])}"
         raced = raced_inputs(values, self.fingerprints, started_ns, self.race_margin_ns)
+        raced += [token for kind, token in sorted(trace.present) if values.get(f"{kind} {token}") == "absent"]
         if raced:
             return "", f"an input changed about when it ran: {self.short_name(raced[0])}"
         manifest_id = sha256_text(canonical(sorted(values)))[:32]

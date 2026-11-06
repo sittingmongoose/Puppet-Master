@@ -225,6 +225,11 @@ def v_git_files_slow(args):
     return report_status("git-files-slow", [], files=out)
 
 
+def v_helper(args):
+    import helper_mod
+    return report_status("helper", [], value=helper_mod.VALUE)
+
+
 def v_scratch(args):
     with tempfile.TemporaryDirectory() as tmp:
         (Path(tmp) / "x.txt").write_text("x")
@@ -241,7 +246,7 @@ COMMANDS = {"validate-evidence": v_a, "validate-auto-decisions": v_b, "validate-
             "absent": v_absent, "stat-size": v_stat_size, "link": v_link, "listed-link": v_listed_link, "env": v_env,
             "git-files": v_git_files, "git-origin": v_git_origin, "git-head": v_git_head, "git-batch": v_git_batch,
             "git-write": v_git_write, "git-selftest": v_git_selftest, "writes": v_writes, "timeout-row": v_timeout_row,
-            "killed": v_killed, "crash": v_crash, "sleep": v_sleep, "git-files-slow": v_git_files_slow, "scratch": v_scratch, "unicode": v_unicode,
+            "killed": v_killed, "crash": v_crash, "helper": v_helper, "sleep": v_sleep, "git-files-slow": v_git_files_slow, "scratch": v_scratch, "unicode": v_unicode,
             "run-gates": cmd_run_gates, "audit-governance": cmd_audit_governance}
 
 
@@ -303,6 +308,7 @@ class Fixture(unittest.TestCase):
         self.write("scripts/pm-plan-migration.py", FAKE_MIGRATION, root)
         shutil.copy(LANDING_PATH, root / "scripts" / "pm-landing-check.py")
         shutil.copy(MODULE_PATH, root / "scripts" / "pm_landing_cache.py")
+        self.write("scripts/helper_mod.py", "VALUE = 1\n", root)
         self.write("a.txt", "fine\n", root)
         self.write("b.txt", "fine\n", root)
         self.write("sized.txt", "abc\n", root)
@@ -363,6 +369,7 @@ class ReadingATrace(unittest.TestCase):
     def test_a_missing_path_is_an_input_too(self):
         trace = self.read('10 newfstatat(AT_FDCWD</repo>, "maybe.txt", 0x7ffc, 0) = -1 ENOENT (No such file or directory)')
         self.assertEqual(trace.reads, {("stat", "@ROOT/maybe.txt")})
+        self.assertEqual(trace.present, set())
 
     def test_lstat_and_stat_stay_apart(self):
         trace = self.read('10 newfstatat(AT_FDCWD</repo>, "a", {st_mode=S_IFREG|0644, st_size=1, ...}, AT_SYMLINK_NOFOLLOW) = 0',
@@ -677,6 +684,16 @@ class NegativesOnOneValidator(Fixture):
         path.write_text(path.read_text() + "# a comment\n")
         self.assertEqual(self.status("validate-auto-decisions"), "fresh")
 
+    def test_an_imported_modules_bytes_are_an_input_when_only_its_bytecode_was_read(self):
+        """With a valid .pyc the importer only stats the source, and an edit can keep its size."""
+        subprocess.run([sys.executable, "scripts/pm-plans-verify.py", "helper"], cwd=self.root, check=True, capture_output=True)
+        self.assertEqual(self.status("helper"), "fresh")
+        self.assertEqual(self.status("helper"), "cache")
+        self.write("scripts/helper_mod.py", "VALUE = 2\n")
+        row, _code, out = self.unit("helper")
+        self.assertEqual(row["status"], "fresh", row)
+        self.assertEqual(json.loads(out)["value"], 2)
+
     def test_a_new_script_beside_it_reruns_it_because_the_importer_listed_that_folder(self):
         self.status("validate-auto-decisions")
         self.write("scripts/brand_new.py", "x = 1\n")
@@ -788,6 +805,18 @@ class WhatIsNeverStored(Fixture):
         self.assertIn("about when it ran", row["detail"])
         self.assertEqual(list(self.cache.rglob("r-*.json.gz")), [])
         self.assertEqual(self.status("sleep"), "fresh")
+
+    def test_an_input_deleted_while_it_runs(self):
+        argv = [sys.executable, str(MODULE_PATH), "exec", "--root", str(self.root), "--cache-dir", str(self.cache), "--stats", str(self.stats),
+                "--label", "unit", "--race-margin-ms", "0", "--", sys.executable, "scripts/pm-plans-verify.py", "sleep"]
+        proc = subprocess.Popen(argv, cwd=self.root, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(1.0)
+        (self.root / "a.txt").unlink()
+        proc.wait()
+        row = json.loads(self.stats.read_text().splitlines()[0])
+        self.assertEqual(row["status"], "never", row)
+        self.assertIn("about when it ran", row["detail"])
+        self.assertEqual(list(self.cache.rglob("r-*.json.gz")), [])
 
     def test_a_file_appearing_after_a_validator_asked_git_for_the_list(self):
         argv = [sys.executable, str(MODULE_PATH), "exec", "--root", str(self.root), "--cache-dir", str(self.cache), "--stats", str(self.stats),
