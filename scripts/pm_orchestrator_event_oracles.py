@@ -1261,6 +1261,15 @@ def sequence_copy_checks(fixtures, schema, owner_module):
                 if key == 'event_cases':
                     assert recover_original(bad, schema, owner_module) == unverified, (case['case_id'], name)
                     checks += 1
+    # Builder control: Storage assigns the event another sequence number, and recapture_history derives every copy.
+    for case in fixtures['event_cases']:
+        moved = copy.deepcopy(case)
+        moved['event']['sequence_id'] += 1
+        recapture_history(moved)
+        assert checkpoint_errors(moved, root, formats) == [], (case['case_id'], 'resequenced')
+        assert historical_read_errors(moved, schema, owner_module) == [], (case['case_id'], 'resequenced')
+        assert recover_original(moved, schema, owner_module)['status'] == 'original_result', case['case_id']
+        checks += 3
     # Exact type: the guard itself refuses every other representation of a copy. Through checkpoint_errors the
     # strict schema refuses the forms it does not admit; an integral float raises in SP-278's binding codec
     # (DO-P1F4-S1, part 2).
@@ -1368,6 +1377,25 @@ def record_recipe(case, recipe):
         'source_sha256': hashlib.sha256(packed(value)).hexdigest(), 'verified': True, 'value': value}
 
 
+def refresh_sequence_copies(case):
+    """DO-P1F05: write every anchor, frontier and row copy of the event's sequence number from the event.
+
+    One-event model: one segment, which the last frame names; the name keeps its generation and its form.
+    """
+    node = checkpoint_node(case)
+    coverage = node['frontier']['coverage']
+    assert len(coverage['segments']) == 1 and coverage['last_frame'] is not None, 'one-event model'
+    sequence = case['event']['sequence_id']
+    for holder in (coverage, node['anchor']):
+        holder.update(first_retained_sequence_id=sequence, through_sequence_id=sequence, retained_event_count=1)
+    coverage['last_frame']['last_sequence_id'] = sequence
+    coverage['segments'][0].update(first_sequence_id=sequence, last_sequence_id=sequence, retained_event_count=1)
+    closed = SEGMENT_NAME.fullmatch(coverage['segments'][0]['segment_name']).group(3) is not None
+    set_segment_name(case, sequence, sequence if closed else None)
+    case['read']['row']['sequence_id'] = sequence
+    return case
+
+
 def recapture_history(case):
     """Refresh copied Storage observations after changing a synthetic original."""
     event = case['event']; read = case['read']; row = read['row']
@@ -1381,6 +1409,7 @@ def recapture_history(case):
     segment = coverage['segments'][0]
     segment['scanned_through_offset'] = segment['source_durable_end_offset'] = len(data)
     segment['source_durable_bytes_sha256'] = hashlib.sha256(data).hexdigest()
+    refresh_sequence_copies(case)
     case['producer_semantic_digest'] = semantic_digest(event)
     row.update(event_id=event['event_id'], idempotency_key=event['idempotency_key'],
                producer_semantic_digest=semantic_digest(event))
