@@ -139,7 +139,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-sound[aria-pressed="false"] svg { opacity: 0.7; }
 
 /* body: stage + pane */
-.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
+.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; position: relative; z-index: 0; }
+/* (FO-83: the interior is a layer of its own, under the header (10) and Adjust NieR's panel (3, 13-nier-look.css), and
+   Glass draws its strips' lenses inside it (data-lg-lens-host, 60-ui-core.js). In the window's lens layer (30) the lens
+   of a screen the panel covers painted over the editor, and one under the open look menu over the menu, in every frame
+   from the panel's rise to its close; here no lens of the interior can paint above anything the interior lies under.) */
 /* clipped, never scrollable: overflow hidden still makes a scroll container, and Glass's world (its caustics, back ellipse
    and reflection) reaches past the box, so focus, scrollIntoView or scroll anchoring could scroll it and Pip's whole
    painted stage slid ~250 px left and 60 px up inside an unmoved panel (final run FO-15); overflow: clip cannot scroll */
