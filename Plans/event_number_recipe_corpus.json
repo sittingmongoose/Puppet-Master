@@ -24322,7 +24322,7 @@
       },
       "profile": "pm.application.physical_messagepack.v1",
       "reported_length": 4294967296,
-      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the helper module's len() report 4294967296 for the 1-byte binary input (true length elsewhere), so the bin32 uint32 limit is reached without allocating 4 GiB. Only the length predicate is exercised; real-length cases cover the emitted bytes.",
+      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the helper module's len() report 4294967296 for the 1-byte binary input (true length elsewhere), so the bin32 uint32 limit is reached without allocating 4 GiB. Only the length predicate is exercised; real-length cases cover the emitted bytes. Dependence: the fixture works only while storage_value_bytes reads the length through its module-global len; a behaviour-preserving refactor (v.__len__()) fails both reported-length cases, a false alarm in the safe direction, never a mask.",
       "conflicts": [
         "C05",
         "C06"
@@ -24340,7 +24340,7 @@
       },
       "profile": "pm.application.physical_messagepack.v1",
       "reported_length": 4294967295,
-      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the helper module's len() report 4294967295 for the 1-byte binary input (true length elsewhere), so the bin32 uint32 limit is reached without allocating 4 GiB. Only the length predicate is exercised; real-length cases cover the emitted bytes.",
+      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the helper module's len() report 4294967295 for the 1-byte binary input (true length elsewhere), so the bin32 uint32 limit is reached without allocating 4 GiB. Only the length predicate is exercised; real-length cases cover the emitted bytes. Dependence: the fixture works only while storage_value_bytes reads the length through its module-global len; a behaviour-preserving refactor (v.__len__()) fails both reported-length cases, a false alarm in the safe direction, never a mask.",
       "conflicts": [
         "C05",
         "C06"
@@ -25054,6 +25054,874 @@
       ],
       "output": "1",
       "target_predicate": "jcs.sign_path_without_kind"
+    },
+    {
+      "id": "parse-array-lone-surrogate",
+      "op": "parse",
+      "raw": "[\"\\ud800\"]",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar.array_element"
+    },
+    {
+      "id": "parse-array-object-lone-surrogate",
+      "op": "parse",
+      "raw": "[{\"a\":\"\\ud800\"}]",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar.array_element"
+    },
+    {
+      "id": "parse-nested-array-lone-surrogate",
+      "op": "parse",
+      "raw": "[[1,\"\\ud800\"]]",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar.array_element"
+    },
+    {
+      "id": "jcs-typed-integer-10^21-exponent-token",
+      "op": "jcs_value",
+      "value": {
+        "@int": "1000000000000000000000"
+      },
+      "typed": true,
+      "conflicts": [
+        "C01",
+        "C02"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind.integer_as_exponent"
+    },
+    {
+      "id": "producer-type-qualified-10^21-bytes",
+      "op": "producer",
+      "route": "bytes",
+      "changes": {
+        "payload": {
+          "n": {
+            "@int": "1000000000000000000000"
+          }
+        }
+      },
+      "qualification": {
+        "type_sensitive_paths": [
+          [
+            "payload",
+            "n"
+          ]
+        ]
+      },
+      "conflicts": [
+        "C01",
+        "C02"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind.integer_as_exponent"
+    },
+    {
+      "id": "full-value-float-known-answer",
+      "op": "full_value_commitment",
+      "changes": {
+        "payload": {
+          "schema_version": "2.0.0",
+          "recovery_set_id": "pm.storage.recovery_set.v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "integrity_ids": [],
+          "recovery_ids": [
+            "pm.storage.recovery.v1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          ],
+          "interrupted_transaction_kinds": [
+            "rotation_truncation"
+          ],
+          "manifest_generation": 10,
+          "recovery_epoch": 0,
+          "active_segment_ref": "pm.storage.segment.v1:1:1:active:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "fixture_float32": 1.5,
+          "fixture_integral_float": 1.0,
+          "fixture_negative_zero": -0.0,
+          "fixture_float64": 0.1
+        }
+      },
+      "fixture_boundary": "Codec known answer: the frozen base original event with four fixture-only float payload members. The expected SHA-256 comes from an EventRecord MessagePack encoder written from SP-1100/SP-236 that reproduces the frozen CV-339 preimage of the base event.",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "a7ccb84e12fc0cbf0752f737cc54fcfd68baf0cc30e14e3c3f241c67b42e04c1",
+      "target_predicate": "full_value.event_value_profile"
+    },
+    {
+      "id": "recipe-empty-envelope-schema-id",
+      "op": "recipe_constructor",
+      "field_index": 0,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-envelope-schema-version",
+      "op": "recipe_constructor",
+      "field_index": 1,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-payload-schema-id",
+      "op": "recipe_constructor",
+      "field_index": 2,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-payload-schema-version",
+      "op": "recipe_constructor",
+      "field_index": 3,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-owner-source-id",
+      "op": "recipe_constructor",
+      "field_index": 4,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-registry-revision",
+      "op": "recipe_constructor",
+      "field_index": 6,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-identity-recipe",
+      "op": "recipe_constructor",
+      "field_index": 7,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-producer-recipe",
+      "op": "recipe_constructor",
+      "field_index": 8,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-physical-profile",
+      "op": "recipe_constructor",
+      "field_index": 9,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-full-value-profile",
+      "op": "recipe_constructor",
+      "field_index": 10,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-local-source-profile",
+      "op": "recipe_constructor",
+      "field_index": 11,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-payload-profile",
+      "op": "recipe_constructor",
+      "field_index": 12,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-empty-resource-manifest-sha256",
+      "op": "recipe_constructor",
+      "field_index": 13,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "recipe-integer-envelope-schema-id",
+      "op": "recipe_constructor",
+      "field_index": 0,
+      "value": 1,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.type"
+    },
+    {
+      "id": "binding-empty-storage-instance-id",
+      "op": "binding_constructor",
+      "changes": {
+        "storage_instance_id": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.nonempty"
+    },
+    {
+      "id": "binding-empty-scope-kind",
+      "op": "binding_constructor",
+      "changes": {
+        "scope_kind": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.nonempty"
+    },
+    {
+      "id": "binding-empty-server-id",
+      "op": "binding_constructor",
+      "changes": {
+        "server_id": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.nonempty"
+    },
+    {
+      "id": "binding-empty-event-type",
+      "op": "binding_constructor",
+      "changes": {
+        "event_type": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.nonempty"
+    },
+    {
+      "id": "binding-empty-idempotency-key",
+      "op": "binding_constructor",
+      "changes": {
+        "idempotency_key": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.nonempty"
+    },
+    {
+      "id": "binding-empty-owner-operation-id",
+      "op": "binding_constructor",
+      "changes": {
+        "owner_operation_id": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.nonempty"
+    },
+    {
+      "id": "binding-empty-source-commitment",
+      "op": "binding_constructor",
+      "changes": {
+        "source_commitment": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.nonempty"
+    },
+    {
+      "id": "json-number-malformed-1.",
+      "op": "json_number",
+      "token": "1.",
+      "integer": false,
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "json_number_token",
+      "target_predicate": "json_number_token",
+      "enforcement": "authored",
+      "single_defect": "json_number_token.grammar"
+    },
+    {
+      "id": "json-number-malformed-.5",
+      "op": "json_number",
+      "token": ".5",
+      "integer": false,
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "json_number_token",
+      "target_predicate": "json_number_token",
+      "enforcement": "authored",
+      "single_defect": "json_number_token.grammar"
+    },
+    {
+      "id": "json-number-malformed-1e",
+      "op": "json_number",
+      "token": "1e",
+      "integer": false,
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "json_number_token",
+      "target_predicate": "json_number_token",
+      "enforcement": "authored",
+      "single_defect": "json_number_token.grammar"
+    },
+    {
+      "id": "json-number-malformed-1e+",
+      "op": "json_number",
+      "token": "1e+",
+      "integer": false,
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "json_number_token",
+      "target_predicate": "json_number_token",
+      "enforcement": "authored",
+      "single_defect": "json_number_token.grammar"
+    },
+    {
+      "id": "parse-exponent-1e+2",
+      "op": "parse",
+      "raw": "1e+2",
+      "returns": {
+        "@json_number": "1e+2",
+        "integer": {
+          "@bool": false
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json.number_grammar"
+    },
+    {
+      "id": "json-number-exponent-1e+2",
+      "op": "json_number",
+      "token": "1e+2",
+      "integer": false,
+      "returns": {
+        "@object": {
+          "number": {
+            "@json_number": "1e+2",
+            "integer": {
+              "@bool": false
+            }
+          },
+          "exact": {
+            "@decimal": "1E+2"
+          }
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json_number.token_retained"
+    },
+    {
+      "id": "parse-exponent-1E5",
+      "op": "parse",
+      "raw": "1E5",
+      "returns": {
+        "@json_number": "1E5",
+        "integer": {
+          "@bool": false
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json.number_grammar"
+    },
+    {
+      "id": "json-number-exponent-1E5",
+      "op": "json_number",
+      "token": "1E5",
+      "integer": false,
+      "returns": {
+        "@object": {
+          "number": {
+            "@json_number": "1E5",
+            "integer": {
+              "@bool": false
+            }
+          },
+          "exact": {
+            "@decimal": "1E+5"
+          }
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json_number.token_retained"
+    },
+    {
+      "id": "parse-exponent-1E+5",
+      "op": "parse",
+      "raw": "1E+5",
+      "returns": {
+        "@json_number": "1E+5",
+        "integer": {
+          "@bool": false
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json.number_grammar"
+    },
+    {
+      "id": "json-number-exponent-1E+5",
+      "op": "json_number",
+      "token": "1E+5",
+      "integer": false,
+      "returns": {
+        "@object": {
+          "number": {
+            "@json_number": "1E+5",
+            "integer": {
+              "@bool": false
+            }
+          },
+          "exact": {
+            "@decimal": "1E+5"
+          }
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json_number.token_retained"
+    },
+    {
+      "id": "parse-exponent--2.5E-3",
+      "op": "parse",
+      "raw": "-2.5E-3",
+      "returns": {
+        "@json_number": "-2.5E-3",
+        "integer": {
+          "@bool": false
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json.number_grammar"
+    },
+    {
+      "id": "json-number-exponent--2.5E-3",
+      "op": "json_number",
+      "token": "-2.5E-3",
+      "integer": false,
+      "returns": {
+        "@object": {
+          "number": {
+            "@json_number": "-2.5E-3",
+            "integer": {
+              "@bool": false
+            }
+          },
+          "exact": {
+            "@decimal": "-0.0025"
+          }
+        }
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "json_number.token_retained"
+    },
+    {
+      "id": "parse-utf8-bom-bytes",
+      "op": "parse",
+      "raw_hex": "efbbbf31",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax.byte_order_mark"
+    },
+    {
+      "id": "jcs-numeric-kind-number",
+      "op": "jcs_value",
+      "value": {
+        "@int": "1"
+      },
+      "kind": "number",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_numeric_kind",
+      "target_predicate": "jcs_numeric_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_numeric_kind.closed_set"
+    },
+    {
+      "id": "history-falsy-override-empty-list",
+      "op": "history",
+      "scenario": "falsy_override",
+      "override": [],
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "caller_recipe_override",
+      "target_predicate": "caller_recipe_override",
+      "enforcement": "authored",
+      "single_defect": "caller_recipe_override.falsy"
+    },
+    {
+      "id": "history-falsy-override-false",
+      "op": "history",
+      "scenario": "falsy_override",
+      "override": false,
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "caller_recipe_override",
+      "target_predicate": "caller_recipe_override",
+      "enforcement": "authored",
+      "single_defect": "caller_recipe_override.falsy"
+    },
+    {
+      "id": "decode-default-profile-float32",
+      "op": "decode",
+      "hex": "ca3fc00000",
+      "default_profile": true,
+      "returns": {
+        "@float": "1.5"
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "accepted",
+      "target_predicate": "physical.default_profile"
+    },
+    {
+      "id": "decode-default-profile-noncanonical-float64",
+      "op": "decode",
+      "hex": "cb3ff8000000000000",
+      "default_profile": true,
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "physical_noncanonical",
+      "target_predicate": "physical_noncanonical",
+      "enforcement": "authored",
+      "single_defect": "msgpack.float.minimal_width"
+    },
+    {
+      "id": "physical-default-profile-float32",
+      "op": "physical",
+      "value": {
+        "@float": "1.5"
+      },
+      "default_profile": true,
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "ca3fc00000",
+      "target_predicate": "physical.default_profile"
+    },
+    {
+      "id": "payload-media-case-variant",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "media_type": "Application/JSON"
+      },
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "payload_media",
+      "target_predicate": "payload_media",
+      "enforcement": "authored",
+      "single_defect": "payload_media.exact"
+    },
+    {
+      "id": "physical-binding-lone-surrogate",
+      "op": "physical",
+      "value": {
+        "@code_points": [
+          55296
+        ]
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding_domain",
+      "enforcement": "authored",
+      "single_defect": "binding.valid_utf8"
+    },
+    {
+      "id": "append-policy-uppercase",
+      "op": "append_policy",
+      "value": "APPEND_ONCE",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "replay_policy",
+      "target_predicate": "replay_policy",
+      "enforcement": "authored",
+      "single_defect": "replay_policy.exact"
+    },
+    {
+      "id": "payload-empty",
+      "op": "payload",
+      "length": 0,
+      "returns": null,
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "output": "accepted",
+      "target_predicate": "payload.exact_bytes"
+    },
+    {
+      "id": "parsed-decimal-default-kind",
+      "op": "parsed_decimal",
+      "token": "1.5",
+      "returns": {
+        "@parsed_decimal": "1.5",
+        "kind": "float"
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "parsed_decimal.default_kind"
+    },
+    {
+      "id": "parsed-decimal-declared-kind",
+      "op": "parsed_decimal",
+      "token": "1.50",
+      "kind": "decimal",
+      "returns": {
+        "@parsed_decimal": "1.50",
+        "kind": "decimal"
+      },
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "output": "accepted",
+      "target_predicate": "parsed_decimal.declared_kind"
+    },
+    {
+      "id": "physical-lone-surrogate-key",
+      "op": "physical",
+      "value": {
+        "@map": [
+          [
+            {
+              "@code_points": [
+                55296
+              ]
+            },
+            1
+          ]
+        ]
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar.physical_key"
+    },
+    {
+      "id": "physical-binding-integer-key",
+      "op": "physical",
+      "value": {
+        "@map": [
+          [
+            {
+              "@int": "1"
+            },
+            2
+          ]
+        ]
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding_domain",
+      "enforcement": "authored",
+      "single_defect": "binding.string_keys"
     },
     {
       "id": "envelope-embedded-01-root_ref-baseline",

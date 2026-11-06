@@ -12,7 +12,11 @@ typed() below. run_mutations() replays a committed mutation set against the
 number scope; each mutation must make it fail. Besides the hand-written
 mutations, it enumerates mutation points from the helper's AST (every refusal
 site, every weakening of a refusal guard's predicates, every relational
-boundary) and generates one mutant per point.
+boundary, every delegated refusal call, every container branch, every field of
+a field loop) and generates one mutant per point. Its rules table is derived
+from the owner text (owner_statements below): every statement of CV-1100,
+SP-1100, SP-1101 and the guide's number sections needs a current row. The
+owner check cli_failing_corpus_exits_1 runs the helper's own CLI path.
 """
 from __future__ import annotations
 
@@ -24,6 +28,7 @@ from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
+import re
 import sys
 import types
 
@@ -32,12 +37,13 @@ import types
 NUMBER_OPS = frozenset(("token", "slot", "integer", "boolean", "parse_token", "parse", "current_json",
                         "current_json_slot", "jcs", "jcs_value", "jcs_kind_declaration", "physical",
                         "uint64", "decode", "append_policy", "history", "payload", "recipe_constructor",
-                        "binding_constructor", "json_number", "producer", "full_value_commitment"))
+                        "binding_constructor", "json_number", "producer", "full_value_commitment",
+                        "parsed_decimal"))
 # Operations whose API returns a value beyond the output string. Each of their
 # positives must carry an independent "returns" oracle.
 RETURNING_OPS = frozenset(("token", "slot", "integer", "uint64", "boolean", "parse", "parse_token",
                            "current_json", "current_json_slot", "decode", "payload",
-                           "recipe_constructor", "binding_constructor", "json_number"))
+                           "recipe_constructor", "binding_constructor", "json_number", "parsed_decimal"))
 SCOPES = ("all", "numbers")
 MUTATION_CLASSES = ("value_rounding", "type_coercion", "dropped_qualification", "substituted_serializer",
                     "wrong_hash", "removed_refusal", "off_by_one_boundary")
@@ -249,6 +255,10 @@ def _retained(m, case, corpus):
             expected = replace(binding, **{name: val})
     elif scenario == "caller_override":
         override = base_recipe
+    elif scenario == "falsy_override":
+        # A falsy caller override (empty list, False, ""): still a caller
+        # override, which refuses whatever its truth value.
+        override = _value(case["override"])
     elif scenario == "downgrade":
         sealed = replace(original, recipe=current_recipe)
         observed = original  # Supported old recipe, wrong original selection.
@@ -471,6 +481,12 @@ def _reported_length(m, target, length):
     exact input object and the true length for everything else. A 1-byte binary
     then reaches the 2^32 bin32 limit without allocating 4 GiB. Only the length
     predicate is exercised; the real-length cases cover the emitted bytes.
+
+    Dependence, documented: the fixture works only while storage_value_bytes
+    reads the binary length through the module-global name len. A
+    behaviour-preserving refactor (v.__len__(), memoryview(v).nbytes) makes
+    both reported-length cases fail: a false alarm in the safe direction,
+    never a mask. Such a refactor must move this fixture with it.
     """
     if length is None:
         yield
@@ -522,6 +538,10 @@ def execute(m, case, corpus):
     if op == "json_number":
         number = m.JsonNumber(case["token"], case["integer"])
         return Returned("accepted", {"number": number, "exact": number.exact()})
+    if op == "parsed_decimal":
+        # The public carrier itself, with its default kind unless "kind" is given.
+        kind = {"numeric_kind": case["kind"]} if "kind" in case else {}
+        return Returned("accepted", m.ParsedDecimal(case["token"], **kind))
     if op == "binding_constructor":
         values = dict(storage_instance_id="store-A", scope_kind="application", server_id="server-A",
                       project_id=None, event_type="fixture.number", event_id="original-event",
@@ -610,15 +630,19 @@ def execute(m, case, corpus):
         return m.full_value_commitment(_value(case["container"]) if "container" in case else event)
     if op == "physical":
         value = _value(case["value"])
+        # "default_profile": call with no profile argument, exercising the
+        # helper's own default; otherwise the profile is always passed.
+        profile = {} if case.get("default_profile") else {"profile": case.get("profile", m.EVENT_VALUE)}
         with _reported_length(m, value, case.get("reported_length")):
-            out = m.storage_value_bytes(value, profile=case.get("profile", m.EVENT_VALUE))
+            out = m.storage_value_bytes(value, **profile)
         if case.get("output_form") == "head":
             # Long outputs: the header bytes and the exact total length.
             return {"head": out[:case.get("head_bytes", 8)].hex(), "length": len(out)}
         return out.hex()
     if op == "decode":
         raw = case["hex"] if case.get("hex_as_text") else bytes.fromhex(case["hex"])
-        return Returned("accepted", m.decode_storage_value(raw, profile=case.get("profile", m.EVENT_VALUE)))
+        profile = {} if case.get("default_profile") else {"profile": case.get("profile", m.EVENT_VALUE)}
+        return Returned("accepted", m.decode_storage_value(raw, **profile))
     if op == "history":
         return _retained(m, case, corpus)
     if op == "recipe_constructor":
@@ -719,7 +743,85 @@ def number_integration_checks(m, root):
     for n in (16384, 16385):
         raw = b"x" * n
         checks["payload_exact_size_" + str(n)] = len(raw) == n and blake3.blake3(raw).digest() != blake3.blake3(raw + b"\n").digest()
+    if not _CLI_STATE["nested"]:
+        checks["cli_failing_corpus_exits_1"] = _cli_exit_status(m) == (1, "fail")
     return checks
+
+
+# The CLI check runs the helper's own __main__ path; under --mutations the
+# mutant's code object is registered here, so a mutant of the entry point or of
+# main()'s exit mapping is judged like any other.
+_CLI_STATE = {"nested": False, "code": {}}
+CLI_FAILING_CORPUS = {
+    "cases": [{"id": "cli-wrong-expected", "op": "token", "raw": "1", "conflicts": [], "output": "accepted",
+               "returns": {"@int": "2"}, "target_predicate": "cli.exit_status"}],
+    "guard_isolation_sweep": [], "historical_originals": {}}
+
+
+def _cli_exit_status(m):
+    """(exit status, printed status) of the helper's CLI on a one-case failing corpus.
+
+    The helper's module code is executed as __main__, in process, with the
+    argument vector `--self-test --scope numbers --corpus <failing corpus>`.
+    The argument parser, main()'s exit mapping and `raise SystemExit(main())`
+    all run; the one case has a wrong expected value, so the CLI must raise
+    SystemExit(1) and print status fail. The nested run skips this check.
+    """
+    import io
+    import tempfile
+    from contextlib import redirect_stdout
+    code = _CLI_STATE["code"].get(m.__name__)
+    if code is None:
+        code = compile(Path(m.__file__).read_text(encoding="utf-8"), m.__file__, "exec")
+    main_module = types.ModuleType("__main__")
+    main_module.__file__ = m.__file__
+    saved_main, saved_argv = sys.modules.get("__main__"), sys.argv
+    out, status = io.StringIO(), None
+    with tempfile.TemporaryDirectory() as tmp:
+        corpus = Path(tmp) / "cli-failing-corpus.json"
+        corpus.write_text(json.dumps(CLI_FAILING_CORPUS))
+        _CLI_STATE["nested"] = True
+        sys.modules["__main__"] = main_module
+        sys.argv = [m.__file__, "--self-test", "--scope", "numbers", "--corpus", str(corpus)]
+        try:
+            with redirect_stdout(out):
+                exec(code, main_module.__dict__)
+        except SystemExit as error:
+            status = error.code
+        except Exception as error:
+            status = "exception: " + type(error).__name__
+        finally:
+            _CLI_STATE["nested"] = False
+            sys.argv = saved_argv
+            if saved_main is None:
+                sys.modules.pop("__main__", None)
+            else:
+                sys.modules["__main__"] = saved_main
+    try:
+        printed = json.loads(out.getvalue()).get("status")
+    except (ValueError, AttributeError):
+        printed = None
+    return status, printed
+
+
+def cli_subprocess_status(helper_file):
+    """The same failing corpus through a real `python3 pm_event_numbers.py` process.
+
+    Run once per --mutations run, on the helper file on disk, from an
+    unrelated working directory: (process exit code, printed status).
+    """
+    import subprocess
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        corpus = Path(tmp) / "cli-failing-corpus.json"
+        corpus.write_text(json.dumps(CLI_FAILING_CORPUS))
+        process = subprocess.run([sys.executable, "-B", str(helper_file), "--self-test", "--scope", "numbers",
+                                  "--corpus", str(corpus)], capture_output=True, text=True, cwd=tmp, timeout=600)
+    try:
+        printed = json.loads(process.stdout).get("status")
+    except (ValueError, AttributeError):
+        printed = None
+    return process.returncode, printed
 
 
 def datetime_integration_checks(m, root, inventory_check):
@@ -815,7 +917,9 @@ def run_corpus(path, *, scope="all"):
                 failures.append({"id": c["id"], "postcondition": error})
         if not c.get("target_predicate"):
             failures.append({"id": c["id"], "missing_target_predicate": True})
-    checks = number_integration_checks(m, root)
+    # The CLI check's own nested run needs only its failing case; it skips the
+    # owner checks, which the outer run performs.
+    checks = number_integration_checks(m, root) if not _CLI_STATE["nested"] else {}
     if scope == "all":
         checks.update(datetime_integration_checks(m, root, inventory_check))
     else:
@@ -863,7 +967,20 @@ GENERATED_FAMILIES = {
                          "literal tuple scanned by any() is dropped.",
     "comparison_boundary": "Every <, <=, > and >= in the helper. The mutant flips strictness (< and <=, > "
                            "and >=), the off-by-one at that width, range or limit boundary.",
+    "delegated_refusal": "Every call, inside the helper, to a module-level function or class of the helper that "
+                         "holds a refusal site directly or through another such call. The mutant replaces the "
+                         "call with its first positional argument (the unchecked input), or None without one.",
+    "container_branch": "Every if or elif branch whose test is type(x) is list or type(x) is dict: one per "
+                        "container kind of each recursive walk or type dispatch. The mutant deletes that branch, "
+                        "so the container falls through to the following branches.",
+    "field_iteration": "Every fields(self) iteration inside a dataclass method, once per field of that class. "
+                       "The mutant iterates every field except that one.",
 }
+# Names through which the helper emits an error code. mutation_points refuses
+# any other use of them (an alias such as _deny = _refuse, a getattr string, a
+# Refusal built outside a raise or _refuse), so every refusal stays a direct,
+# enumerable call or raise.
+REFUSAL_NAMES = ("_refuse", "Refusal")
 
 
 def _ordered(nodes):
@@ -926,6 +1043,76 @@ def _weakenings(expr, positive):
                 yield "drop", scanned, position
 
 
+def refusal_alias_problems(source):
+    """Every use of _refuse or Refusal other than a direct call, raise or handler.
+
+    Allowed: calling _refuse(...); raise Refusal(...) or a call to Refusal inside
+    _refuse itself; Refusal as an except-handler type; the two definitions. An
+    alias (_deny = _refuse), an attribute or getattr-string access, or any other
+    reference would hide a refusal site from the enumeration, so it fails.
+    """
+    tree = ast.parse(source)
+    parents = _parent_map(tree)
+    problems = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name) and node.id in REFUSAL_NAMES and isinstance(node.ctx, ast.Load):
+            parent = parents.get(node)
+            ok = isinstance(parent, ast.Call) and parent.func is node and (
+                node.id == "_refuse" or isinstance(parents.get(parent), ast.Raise)
+                or _qualname(parent, parents) == "_refuse")
+            handler = parent
+            while isinstance(handler, ast.Tuple):
+                handler = parents.get(handler)
+            ok = ok or (isinstance(handler, ast.ExceptHandler) and handler.type is not None
+                        and (handler.type is node or handler.type is parent))
+            if not ok:
+                problems.append("refusal alias or indirect reference: %s at line %d (%s)"
+                                % (node.id, node.lineno, ast.unparse(parent)[:80]))
+        elif isinstance(node, ast.Name) and node.id in REFUSAL_NAMES and not isinstance(node.ctx, ast.Load):
+            problems.append("refusal name rebound: %s at line %d" % (node.id, node.lineno))
+        elif isinstance(node, ast.Attribute) and node.attr in REFUSAL_NAMES:
+            problems.append("refusal attribute access: %s at line %d" % (ast.unparse(node), node.lineno))
+        elif isinstance(node, ast.Constant) and node.value in REFUSAL_NAMES:
+            problems.append("refusal name as a string: %r at line %d" % (node.value, node.lineno))
+        elif isinstance(node, ast.alias) and (node.name in REFUSAL_NAMES or node.asname in REFUSAL_NAMES):
+            problems.append("refusal name imported: %s" % ast.unparse(node))
+        elif isinstance(node, (ast.FunctionDef, ast.ClassDef)) and node.name in REFUSAL_NAMES:
+            if parents.get(node) is not tree:
+                problems.append("refusal name defined below module level: %s at line %d" % (node.name, node.lineno))
+    defined = [n.name for n in tree.body if isinstance(n, (ast.FunctionDef, ast.ClassDef))]
+    for name in REFUSAL_NAMES:
+        if defined.count(name) != 1:
+            problems.append("refusal name %s must be defined exactly once at module level" % name)
+    return problems
+
+
+def _refusing_callables(tree):
+    """Module-level functions and classes holding a refusal site, directly or by a call."""
+    defs = {n.name: n for n in tree.body if isinstance(n, (ast.FunctionDef, ast.ClassDef))}
+    calls = {name: {c.func.id for c in ast.walk(node) if isinstance(c, ast.Call) and isinstance(c.func, ast.Name)}
+             for name, node in defs.items()}
+    refusing = {name for name, node in defs.items() if name not in REFUSAL_NAMES and (
+        "_refuse" in calls[name] or any(isinstance(n, ast.Raise) for n in ast.walk(node)))}
+    changed = True
+    while changed:
+        changed = False
+        for name in defs:
+            if name not in refusing and name not in REFUSAL_NAMES and calls[name] & refusing:
+                refusing.add(name)
+                changed = True
+    return refusing
+
+
+def _container_test(test):
+    """'list' or 'dict' when the test is exactly type(x) is list / type(x) is dict."""
+    if (isinstance(test, ast.Compare) and len(test.ops) == 1 and isinstance(test.ops[0], ast.Is)
+            and isinstance(test.left, ast.Call) and isinstance(test.left.func, ast.Name)
+            and test.left.func.id == "type" and len(test.left.args) == 1
+            and isinstance(test.comparators[0], ast.Name) and test.comparators[0].id in ("list", "dict")):
+        return test.comparators[0].id
+    return None
+
+
 def mutation_points(source):
     """Every generated mutation point of the helper source, from its AST.
 
@@ -971,6 +1158,30 @@ def mutation_points(source):
                 text = ast.unparse(compare)
                 add("comparison_boundary", "boundary:%s:%s:%d" % (name, text, position), compare, function=name,
                     action=type(op).__name__ + "->" + _FLIPPED[type(op)].__name__, detail=position, text=text)
+    refusing = _refusing_callables(tree)
+    for call in _ordered([n for n in nodes if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+                          and n.func.id in refusing]):
+        name = _qualname(call, parents)
+        add("delegated_refusal", "delegated:%s:%s" % (name, call.func.id), call, function=name,
+            action="pass_first_argument" if call.args else "none", text=ast.unparse(call))
+    for branch in _ordered([n for n in nodes if isinstance(n, ast.If) and _container_test(n.test)]):
+        name = _qualname(branch, parents)
+        kind = _container_test(branch.test)
+        add("container_branch", "container:%s:%s" % (name, ast.unparse(branch.test)), branch, function=name,
+            action="delete_branch", detail=kind, text=ast.unparse(branch.test))
+    for call in _ordered([n for n in nodes if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+                          and n.func.id == "fields" and len(n.args) == 1 and isinstance(n.args[0], ast.Name)
+                          and n.args[0].id == "self"]):
+        owner = call
+        while owner in parents and not isinstance(owner, ast.ClassDef):
+            owner = parents[owner]
+        if not isinstance(owner, ast.ClassDef):
+            continue
+        name = _qualname(call, parents)
+        for stmt in owner.body:
+            if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
+                add("field_iteration", "field:%s:skip %s" % (name, stmt.target.id), call, function=name,
+                    action="skip_field", detail=stmt.target.id, text=ast.unparse(call))
     return points
 
 
@@ -985,6 +1196,25 @@ def _point_code(source, file, point):
         node.ops[point["detail"]] = _FLIPPED[type(node.ops[point["detail"]])]()
     elif point["action"] == "drop":
         del node.elts[point["detail"]]
+    elif point["family"] == "container_branch":
+        parent = _parent_map(tree)[node]
+        for field, current in ast.iter_fields(parent):
+            if type(current) is list and any(item is node for item in current):
+                position = next(i for i, item in enumerate(current) if item is node)
+                current[position:position + 1] = node.orelse or [ast.copy_location(ast.Pass(), node)]
+    elif point["family"] in ("delegated_refusal", "field_iteration"):
+        if point["family"] == "delegated_refusal":
+            new = node.args[0] if node.args else ast.Constant(None)
+        else:
+            new = ast.parse("[_f for _f in fields(self) if _f.name != %r]" % point["detail"], mode="eval").body
+        parent = _parent_map(tree)[node]
+        for field, current in ast.iter_fields(parent):
+            if current is node:
+                setattr(parent, field, ast.copy_location(new, node))
+            elif type(current) is list:
+                for position, item in enumerate(current):
+                    if item is node:
+                        current[position] = ast.copy_location(new, node)
     else:
         new = ast.Pass() if isinstance(node, ast.Raise) else ast.Constant(
             None if point["family"] == "refusal_site" else point["detail"])
@@ -1041,6 +1271,7 @@ def _run_mutant(target, build, sources, corpus_path, time_limit):
             code = build()
             text, file = sources[target]
             _load_module(target, code, file)
+            _CLI_STATE["code"][target] = code
             if target == "pm_event_index_binding":
                 numbers_text, numbers_file = sources["pm_event_numbers"]
                 _load_module("pm_event_numbers", compile(numbers_text, numbers_file, "exec"), numbers_file)
@@ -1056,11 +1287,271 @@ def _run_mutant(target, build, sources, corpus_path, time_limit):
         return {"result": "caught" if outcome["status"] == "fail" else "survives", "failed": failed,
                 "failed_checks": checks}
     finally:
+        _CLI_STATE["code"].clear()
         for name, module in saved.items():
             if module is None:
                 sys.modules.pop(name, None)
             else:
                 sys.modules[name] = module
+
+
+# ---- The rules table, derived from the owner text ----
+#
+# The owner text is split into statements: every sentence of the selected YAML
+# fields of CV-1100, SP-1100 and SP-1101, and of the adoption guide's selected
+# sections (paragraphs, list items and table rows; code fences are skipped).
+# The mutation set holds one row per statement, keyed by source path, line and
+# exact text. A statement without a row, or a row whose source line no longer
+# holds its text, fails the mutation self-test.
+
+# The brief's normative markers. Every statement needs a row whatever its
+# markers; the flag is reported so a reviewer can sort rows by it.
+NORMATIVE_MARKERS = re.compile(
+    r"\b(?:must|refuses?|refused|refusal|required?|requires|only|exactly|exact|never|no|not|cannot|"
+    r"rejects?|disallows?)\b|[0-9]", re.IGNORECASE)
+_SENTENCE_END = re.compile(r"[.!?](?:\*\*|[)\"'`\]])*(?=\s+[^a-z\s])")
+
+
+def _sentences(block):
+    """Split one block [(line, text), ...] into [(line, sentence), ...]."""
+    text, starts = "", []
+    for line, part in block:
+        if text:
+            text += " "
+        starts.append((len(text), line))
+        text += part.strip()
+    out, begin = [], 0
+    for match in list(_SENTENCE_END.finditer(text)) + [None]:
+        end = match.end() if match else len(text)
+        sentence = text[begin:end].strip()
+        if sentence:
+            offset = begin + (len(text[begin:end]) - len(text[begin:end].lstrip()))
+            out.append((max(line for start, line in starts if start <= offset), sentence))
+        begin = end
+    return out
+
+
+def _unit_blocks(lines, unit, fields):
+    """(field, block) for each paragraph or list item of one owner unit's YAML.
+
+    A block-scalar line is its own paragraph (each owner paragraph is one
+    line); a list item joins its continuation lines.
+    """
+    headings = [i for i, line in enumerate(lines) if line.startswith("### " + unit + " - ")]
+    if len(headings) != 1:
+        raise ValueError("owner unit heading not found exactly once: " + unit)
+    fence = next(i for i in range(headings[0] + 1, len(lines)) if lines[i].strip() == "```yaml")
+    end = next(i for i in range(fence + 1, len(lines)) if lines[i].strip() == "```")
+    blocks, field, scalar = [], None, False
+    for i in range(fence + 1, end):
+        line = lines[i]
+        key = re.match(r"([a-z_]+):(.*)$", line)
+        if key:
+            field = key.group(1) if key.group(1) in fields else None
+            rest = key.group(2).strip()
+            scalar = rest in ("|-", "|", ">-", ">")
+            if field and rest and not scalar:
+                blocks.append((field, [(i + 1, rest)]))
+            continue
+        if field is None or not line.strip():
+            continue
+        if line.startswith("- "):
+            content = line[2:].strip()
+            blocks.append((field, [] if content in ("|-", "|") else [(i + 1, content)]))
+            scalar = False
+        elif scalar:
+            blocks.append((field, [(i + 1, line.strip())]))
+        elif blocks and blocks[-1][0] == field:
+            blocks[-1][1].append((i + 1, line.strip()))
+    return blocks
+
+
+def _guide_blocks(lines, sections):
+    """(section, block) for each paragraph, list item and table row of the guide.
+
+    The text before the first "## " heading is the "(preamble)" section;
+    "### " headings stay inside their "## " section. Fenced code, headings and
+    table header rows are not statements.
+    """
+    blocks, section, fence, item_indent = [], "(preamble)", False, None
+    seen = []
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            fence = not fence
+            item_indent = None
+            continue
+        if fence:
+            continue
+        if line.startswith("## "):
+            section = line[3:].strip()
+            seen.append(section)
+            item_indent = None
+            continue
+        if line.startswith("#"):
+            item_indent = None
+            continue
+        if not stripped:
+            item_indent = None
+            continue
+        if section not in sections:
+            continue
+        if stripped.startswith("|"):
+            if re.fullmatch(r"\|(?:\s*:?-+:?\s*\|)+", stripped):
+                if blocks and blocks[-1][0] == section and blocks[-1][2] == "table_row":
+                    blocks.pop()  # The row above a separator is the header row.
+                continue
+            cells = [c.strip() for c in stripped.strip("|").split("|")]
+            blocks.append((section, [(i + 1, " | ".join(cells))], "table_row"))
+            item_indent = None
+            continue
+        item = re.match(r"(\s*)(?:[-*]|\d+\.)\s+(.*)$", line)
+        if item:
+            blocks.append((section, [(i + 1, item.group(2))], "list_item"))
+            item_indent = len(item.group(1))
+            continue
+        indent = len(line) - len(line.lstrip())
+        if blocks and blocks[-1][0] == section and (item_indent is not None and indent > item_indent
+                                                    or blocks[-1][2] == "paragraph" and item_indent is None
+                                                    and _continues(lines, i)):
+            blocks[-1][1].append((i + 1, stripped))
+            continue
+        blocks.append((section, [(i + 1, stripped)], "paragraph"))
+        item_indent = None
+    return blocks, seen
+
+
+def _continues(lines, i):
+    """True when line i continues the paragraph on line i - 1 (no blank line between)."""
+    return i > 0 and lines[i - 1].strip() != "" and not lines[i - 1].lstrip().startswith(("#", "|", "```"))
+
+
+def owner_statements(root, owner_text):
+    """Every statement of the selected owner text: (statements, problems).
+
+    Each statement is {"id", "source", "line", "statement", "normative"}. Ids
+    name the unit or guide section, the field or block ordinal and the
+    sentence ordinal, so they move when the text moves.
+    """
+    statements, problems = [], []
+    for unit in owner_text["units"]:
+        path = root / unit["path"]
+        try:
+            lines = path.read_text(encoding="utf-8").split("\n")
+            blocks = _unit_blocks(lines, unit["unit"], unit["fields"])
+        except (OSError, ValueError, StopIteration) as error:
+            problems.append("owner text %s %s unreadable: %s" % (unit["path"], unit["unit"], error))
+            continue
+        ordinals = {}
+        for field, block in blocks:
+            ordinals[field] = ordinals.get(field, 0) + 1
+            for n, (line, sentence) in enumerate(_sentences(block), 1):
+                statements.append({"id": "%s:%s:%d.%d" % (unit["unit"], field, ordinals[field], n),
+                                   "source": unit["path"], "line": line, "statement": sentence})
+    guide = owner_text["guide"]
+    try:
+        lines = (root / guide["path"]).read_text(encoding="utf-8").split("\n")
+    except OSError as error:
+        problems.append("owner text %s unreadable: %s" % (guide["path"], error))
+        lines = None
+    if lines is not None:
+        selected = set(guide["sections"])
+        blocks, seen = _guide_blocks(lines, selected)
+        for section in seen:
+            if section not in selected and not guide["excluded_sections"].get(section):
+                problems.append("guide section %r is neither selected nor excluded with a reason" % section)
+        for section in list(selected - {"(preamble)"}) + list(guide["excluded_sections"]):
+            if section not in seen:
+                problems.append("stale guide section selection: %r" % section)
+        excluded = guide.get("excluded_blocks", [])
+        matched = [0] * len(excluded)
+        ordinals = {}
+        for section, block, kind in blocks:
+            ordinals[section] = ordinals.get(section, 0) + 1
+            first = block[0][1]
+            hits = [j for j, rule in enumerate(excluded)
+                    if rule["section"] == section and first.startswith(rule["starts_with"])]
+            if hits:
+                for j in hits:
+                    matched[j] += 1
+                continue
+            for n, (line, sentence) in enumerate(_sentences(block), 1):
+                statements.append({"id": "guide:%s:%d.%d" % (section, ordinals[section], n),
+                                   "source": guide["path"], "line": line, "statement": sentence})
+        for rule, count in zip(excluded, matched):
+            if count != 1 or not rule.get("reason"):
+                problems.append("guide block exclusion %r must match exactly one block and give a reason (%d)"
+                                % (rule["starts_with"], count))
+    for statement in statements:
+        statement["normative"] = NORMATIVE_MARKERS.search(statement["statement"]) is not None
+    return statements, problems
+
+
+def check_rules_table(root, spec):
+    """Statement rows, rule rows and hand-written mutations, checked together.
+
+    Every extracted statement has exactly one row with the same source, line
+    and text; every row matches a statement (else it is stale). A row names
+    rules, each caught with failing witnesses, or says why no mutation
+    applies. Every rule is named by a row, and every hand-written mutation
+    names a rule that lists it.
+    """
+    problems = []
+    statements, extraction_problems = owner_statements(root, spec["owner_text"])
+    problems.extend(extraction_problems)
+    rows = spec.get("statements", [])
+    key = lambda r: (r["source"], r["line"], r["statement"])
+    extracted = {key(s): s for s in statements}
+    if len(extracted) != len(statements):
+        problems.append("two owner statements share a source line and text")
+    by_text = {}
+    for s in statements:
+        by_text.setdefault((s["source"], s["statement"]), []).append(s["line"])
+    row_keys = {}
+    for row in rows:
+        k = key(row)
+        if k in row_keys:
+            problems.append("duplicate statement row: %s line %d" % (row["source"], row["line"]))
+        row_keys[k] = row
+        if k not in extracted:
+            now = by_text.get((row["source"], row["statement"]))
+            problems.append("stale statement row %s: %s line %d no longer holds its text%s"
+                            % (row.get("id"), row["source"], row["line"],
+                               " (now at line %s)" % now if now else ""))
+        elif extracted[k]["id"] != row.get("id"):
+            problems.append("statement row id %s should be %s" % (row.get("id"), extracted[k]["id"]))
+        if bool(row.get("rules")) == bool(row.get("no_mutation")):
+            problems.append("statement row %s needs exactly one of rules or no_mutation" % row.get("id"))
+    for k, s in extracted.items():
+        if k not in row_keys:
+            problems.append("owner statement without a row: %s %s line %d: %s"
+                            % (s["id"], s["source"], s["line"], s["statement"][:120]))
+    rules = {r["id"]: r for r in spec.get("rules", [])}
+    named = {name for row in rows for name in row.get("rules", [])}
+    for name in sorted(named - set(rules)):
+        problems.append("statement rows name an unknown rule: " + name)
+    for name in sorted(set(rules) - named):
+        problems.append("rule %s is named by no statement row" % name)
+    for mutation in spec["mutations"]:
+        rule = rules.get(mutation.get("rule"))
+        if rule is None:
+            problems.append("hand-written mutation %s names no known rule" % mutation["id"])
+        elif mutation["id"] not in rule["mutations"]:
+            problems.append("mutation %s names rule %s, which does not list it" % (mutation["id"], rule["id"]))
+    mutation_rule = {m["id"]: m.get("rule") for m in spec["mutations"]}
+    for rule in rules.values():
+        for name in rule["mutations"]:
+            if name in mutation_rule and mutation_rule[name] != rule["id"] and name not in rule.get("shared", ()):
+                problems.append("rule %s lists %s, which names rule %s; list it under shared"
+                                % (rule["id"], name, mutation_rule[name]))
+    totals = {"statements": len(statements), "normative_statements": sum(s["normative"] for s in statements),
+              "statement_rows": len(rows), "rows_with_rules": sum(bool(r.get("rules")) for r in rows),
+              "rows_without_mutation": sum(bool(r.get("no_mutation")) for r in rows),
+              "statements_without_row": sum(k not in row_keys for k in extracted),
+              "stale_rows": sum(key(r) not in extracted for r in rows),
+              "hand_written_with_rule": sum(m.get("rule") in rules for m in spec["mutations"]),
+              "hand_written_orphans": sum(m.get("rule") not in rules for m in spec["mutations"])}
+    return problems, totals
 
 
 def _judge(row, run, declared, witness, problems, label):
@@ -1081,21 +1572,26 @@ def _judge(row, run, declared, witness, problems, label):
         problems.append(label + ": mutation survived the number corpus")
         return
     if witness:
+        # A witness is a corpus case id, or "check:<name>" for an owner check.
         row["witness"] = witness
-        row["witness_failed"] = witness in run["failed"]
+        row["witness_failed"] = (witness.removeprefix("check:") in run["failed_checks"] if witness.startswith("check:")
+                                 else witness in run["failed"])
         if not row["witness_failed"]:
-            problems.append("%s: witness case %s did not fail" % (label, witness))
+            problems.append("%s: witness %s did not fail" % (label, witness))
 
 
 def run_mutations(corpus_path, mutation_path, *, time_limit=120):
     """Replay the committed mutation set against the number scope.
 
-    Pass means: the intact corpus passes; every (API, class) cell has a
-    mutation or a reasoned not-applicable entry; every listed rule has a
-    witnessed hand-written mutation; the AST mutation points match the
+    Pass means: the intact corpus passes, and the real CLI exits 1 on a
+    failing corpus; every (API, class) cell has a mutation or a reasoned
+    not-applicable entry; the rules table matches the owner text (every
+    statement has a row, no row is stale, every row names witnessed rules or
+    says why no mutation applies, every hand-written mutation names its rule);
+    the helper has no refusal alias; the AST mutation points match the
     committed entries exactly (no new, no stale point); every mutant builds,
-    runs and fails the number corpus, with its witness case among the
-    failures; and every declared survivor really survives.
+    runs and fails the number corpus, with its witness among the failures; and
+    every declared survivor really survives.
     """
     import pm_event_numbers as intact
     import pm_event_index_binding as binding
@@ -1106,6 +1602,10 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
     baseline = run_corpus(corpus_path, scope="numbers")
     if baseline["status"] != "pass":
         problems.append("intact number corpus does not pass")
+    cli = cli_subprocess_status(intact.__file__)
+    if cli != (1, "fail"):
+        problems.append("the CLI on a failing corpus gave (exit, status) %r, not (1, 'fail')" % (cli,))
+    problems.extend(refusal_alias_problems(sources["pm_event_numbers"][0]))
     classes = MUTATION_CLASSES + tuple(spec.get("extra_classes", ()))
     by_id = {}
     for mutation in spec["mutations"]:
@@ -1185,6 +1685,18 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
         if not rule["mutations"] or missing:
             problems.append("rule %s: no mutation, or unknown mutation %s" % (rule["id"], missing))
         rows = [rows_by_name[name] for name in rule["mutations"] if name in rows_by_name]
+        if rule.get("control"):
+            # A harness control rule: each of its mutations is a declared
+            # survivor that must really survive (a no-op edit, for example).
+            for row in rows:
+                if not (row.get("declared_survivor") and row.get("result") == "survives"):
+                    problems.append("control rule %s: %s is not a surviving declared control"
+                                    % (rule["id"], row.get("id", row.get("key"))))
+            held = bool(rows) and not missing and all(row.get("result") == "survives" for row in rows)
+            rules.append({"id": rule["id"], "owner": rule["owner"], "api": rule["api"], "rule": rule["rule"],
+                          "mutations": rule["mutations"], "result": "caught" if held else "NOT CAUGHT",
+                          "control": True})
+            continue
         for row in rows:
             if not row.get("witness_failed"):
                 problems.append("rule %s: %s is not caught with a failing witness case"
@@ -1193,17 +1705,42 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
         rules.append({"id": rule["id"], "owner": rule["owner"], "api": rule["api"], "rule": rule["rule"],
                       "mutations": rule["mutations"], "result": "caught" if caught else "NOT CAUGHT"})
 
+    root = Path(__file__).resolve().parents[1]
+    table_problems, table_totals = check_rules_table(root, spec)
+    problems.extend(table_problems)
+    rule_result = {r["id"]: r["result"] for r in rules}
+    statements = []
+    for row in spec.get("statements", []):
+        out = {key: row[key] for key in ("id", "source", "line", "statement")}
+        if row.get("note"):
+            out["note"] = row["note"]
+        if row.get("rules"):
+            out["rules"] = row["rules"]
+            out["result"] = ("caught" if all(rule_result.get(name) == "caught" for name in row["rules"])
+                             else "NOT CAUGHT")
+        else:
+            out["no_mutation"] = row.get("no_mutation")
+            out["result"] = "no mutation applies"
+        statements.append(out)
+
     every = results + generated
     review = [r for r in results if r.get("source") == "review"]
     review_fix2 = [r for r in results if r.get("source") == "review-fix2"]
+    review_fix3 = [r for r in results if r.get("source") == "review-fix3"]
     family_counts = {family: sum(p["family"] == family for p in points) for family in GENERATED_FAMILIES}
     totals = {
         "apis": len(spec["apis"]),
         "rules": len(rules),
         "rules_caught": sum(r["result"] == "caught" for r in rules),
+        **table_totals,
+        "statement_rows_caught": sum(s["result"] == "caught" for s in statements),
+        "statement_rows_not_caught": sum(s["result"] == "NOT CAUGHT" for s in statements),
         "refusal_sites": family_counts["refusal_site"],
         "refusal_predicates": family_counts["refusal_predicate"],
         "comparison_boundaries": family_counts["comparison_boundary"],
+        "delegated_refusals": family_counts["delegated_refusal"],
+        "container_branches": family_counts["container_branch"],
+        "field_iterations": family_counts["field_iteration"],
         "hand_written_mutations": len(results),
         "generated_mutations": len(generated),
         "mutations": len(every),
@@ -1222,11 +1759,15 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
         "review_fix2_mutations": len(review_fix2),
         "review_fix2_caught": sum(r.get("result") == "caught" for r in review_fix2),
         "review_fix2_declared_controls": sum("declared_survivor" in r for r in review_fix2),
+        "review_fix3_mutations": len(review_fix3),
+        "review_fix3_caught": sum(r.get("result") == "caught" for r in review_fix3),
     }
     return {"status": "fail" if problems else "pass", "mutation_set": spec["schema_id"],
             "intact": {key: baseline[key] for key in ("status", "corpus_cases", "case_passes",
                                                        "positives", "negatives")} |
                       {"owner_integration_checks": len(baseline["owner_integration_checks"])},
+            "cli_subprocess": {"exit": cli[0], "status": cli[1]},
             "totals": totals, "problems": problems, "generated_families": GENERATED_FAMILIES,
-            "rules": rules, "matrix": matrix, "mutations": results, "generated": generated,
+            "statements": statements, "rules": rules, "matrix": matrix, "mutations": results,
+            "generated": generated,
             "self_test_scope": "numbers", "native_authority": "NOT_RUN"}
