@@ -159,9 +159,13 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 
 /* footer + buttons */
 .o55-foot { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 22px 16px; border-top: 1px solid var(--o55-line); background: color-mix(in srgb, var(--surface) 96%, var(--text-primary) 2%); }
-/* a long primary label wraps inside its button rather than pushing past the window */
-.o55-foot > .o55-btn { min-width: 0; }
-.o55-foot > .o55-primary { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
+/* a long primary label wraps inside its button rather than pushing past the window. A footer button with a ? of its own
+   (Ready's Tour and Enter, Welcome's Skip) sits with it in an .o55-opt-foot wrapper, which these rules did not reach: the
+   wrapper kept both buttons' labels on one line, and between 808 and about 950 wide (the wide window beside its stage)
+   Ready's footer ran past the window, Take the Guided Tour cut 25-99 px and its ? outside (FO88-N2). There both labels may
+   wrap, at their own size */
+.o55-foot > .o55-btn, .o55-foot > .o55-opt-foot, .o55-foot > .o55-opt-foot > .o55-btn { min-width: 0; }
+.o55-foot > .o55-primary, .o55-foot > .o55-opt-foot > .o55-btn { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
 #pm-o55-onboarding[data-family="glass"] .o55-foot { background: color-mix(in srgb, #fff 4%, transparent); }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
