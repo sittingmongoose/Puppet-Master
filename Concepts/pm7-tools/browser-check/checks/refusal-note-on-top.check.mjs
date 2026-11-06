@@ -5,10 +5,10 @@
 // Continue as soon as it can be hit during the screen's entry, and a real double-click on the Continue of the screen
 // before it (Begin with New chosen, Creating once done), the second click landing on the new screen's disabled Continue
 // during its entry. Each frame the note shows (opacity over 0.3) it must be the top box at its centre and four inset
-// points (the note alone takes the pointer for the read); one capture taken during the entry must show the note's own
-// paint (at least 85% of its box in its own ground or ink); and, settled, it keeps the place it had as the footer's
-// child: 7 px over the footer's top rule, 22 px from the layer's right. Ten looks, 1920x1080 and 1280x500, both
-// surfaces, normal motion (`--set motion=` for more).
+// points (the note alone takes the pointer for the read); and, settled, it keeps the place it had as the footer's
+// child: 7 px over the footer's top rule, 22 px from the layer's right. Painted pixels during the entry are read from a
+// 60 fps film (diagnostics/refusal-note-film.check.mjs, tools/refusal-note-film-reader.py): a capture here takes longer
+// than the entry lasts. Ten looks, 1920x1080 and 1280x500, both surfaces, normal motion (`--set motion=` for more).
 //   --set size=1280x500   --set look=basic-light   --set screen=ai,name   --set route=press,double
 import { LOOKS } from '../browser-check.config.mjs';
 
@@ -75,23 +75,12 @@ async function cell(t, surface, w, h) {
 					}
 					await t.check(`FO87-N1 fixture: the route reaches the screen's disabled Continue ${tag}`, !!landed, JSON.stringify(landed));
 					if (!landed) { await settle(); continue; }
-					/* sample every frame, and one capture during the entry */
+					/* sample every frame (the painted proof is the film: diagnostics/refusal-note-film, a capture here takes longer
+					   than the entry lasts) */
 					const sampling = f.evaluate(SAMPLE, 1700);
-					const shot = await f.waitForFunction((L) => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'), rs = l && l.querySelector('.o55-reason.o55-reason-show'); return rs && l.classList.contains('o55-entering') && +getComputedStyle(rs).opacity > 0.97 ? true : null; }, LAYER, { timeout: 1500, polling: 'raf' }).then(() => true, () => false);
-					let paint = null;
-					if (shot) {
-						const note = f.locator(LAYER + ' .o55-reason.o55-reason-show');
-						const colors = await note.evaluate((e) => { const s = getComputedStyle(e), rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number); return { ground: rgb(s.backgroundColor), ink: rgb(s.color) }; });
-						const img = await t.pixels(note);
-						const still = await f.evaluate((L) => !!document.querySelector(L.replace(':not(.o55-out)', '.o55-entering:not(.o55-out)')), LAYER);
-						let own = 0; const n = img.data.length / 4;
-						for (let i = 0; i < n; i++) { const px = [img.data[4 * i], img.data[4 * i + 1], img.data[4 * i + 2]]; const near = (c) => Math.max(...c.map((v, k) => Math.abs(v - px[k]))) <= 48; if (near(colors.ground) || near(colors.ink)) own++; }
-						paint = { share: +(own / n).toFixed(3), duringEntry: still, px: n };
-					}
 					const s = await sampling;
 					const screenNow = await f.evaluate(() => O55.S.sess.screen);
 					await t.check(`FO87-N1 the refusal note is on top in every frame it shows, entry included ${tag}`, screenNow === screen && s.frames >= 3 && s.under.length === 0, JSON.stringify({ screenNow, frames: s.frames, entering: s.entering, under: s.under.length, firstUnder: s.firstUnder }));
-					await t.check(`FO87-N1 the note's own paint shows during the entry ${tag}`, !shot || (paint && (!paint.duringEntry || paint.share >= 0.85)), JSON.stringify({ shot, paint }));
 					await settle();
 					/* settled: the note's place, as before: 7 px over the footer's top rule, 22 px from the right */
 					const place = await f.evaluate((L) => { const l = document.querySelector(L), rs = l && l.querySelector('.o55-reason'), ft = l && l.querySelector('.o55-foot'); if (!rs || !ft) return null; const q = rs.getBoundingClientRect(), fr = ft.getBoundingClientRect(), lr = l.getBoundingClientRect(), st = getComputedStyle(rs).transform, m = new DOMMatrix(st === 'none' ? undefined : st); /* (its own slide in and out left out) */ return { gapToFooter: +(fr.top - (q.bottom - m.m42)).toFixed(2), rightInset: +(lr.right - (q.right - m.m41)).toFixed(2), transform: st }; }, LAYER);
