@@ -233,9 +233,10 @@ export default async function (t) {
   const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
   for (const look of looks) {
     await t.app.look(look);
-    // a look change plays under a cover (NieR's switch-on reboots the screen), and NieR's brackets wait for it to lift
+    // a look change plays under a cover (NieR's switch-on reboots the screen), and NieR's brackets hold off until that
+    // cover has gone, which is after it reports itself uncovered at the reveal (19-nier-parts.js rbRelease)
     await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.() &&
-      window.PM_NIER?.wanted?.() === window.PM_NIER?.on?.(), null, { timeout: 20000 }).catch(() => {});
+      window.PM_NIER?.wanted?.() === window.PM_NIER?.on?.() && !document.getElementById('o55np-reboot'), null, { timeout: 20000 }).catch(() => {});
     await frames(f, 4);
     await sentinel('#activityBar');
     await kb.press('Tab');
