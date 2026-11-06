@@ -3092,6 +3092,67 @@ class HandRowTests(Base):
         self.assertEqual(result.returncode, 1, result.stdout)
         self.assertEqual(self.h.state()["stop"]["code"], "batch_rows_missing")
 
+    def test_rows_added_after_the_stop_count_on_resume(self):
+        """Review N3: the stop says to add the rows and resume, so resume must not erase them."""
+        start = self.h.origin_main()
+        earlier = self.h.commit_to_main("src/first.txt", "f\n")
+        wt = self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.hand_lock(self.holder_text(start))
+        self.assertEqual(self.join(start).returncode, 1)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_rows_missing")
+        path = self.h.lock / "held" / "holder.txt"
+        path.write_text(path.read_text() + f"batch-landing: fix/old {earlier}\n")
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        rows = M.parse_holder(self.h.holder())["batch-landing"]
+        self.assertEqual(rows, [f"fix/old {earlier}", f"fix/a {tip}"])
+
+    def test_a_first_row_corrected_after_the_stop_counts_on_resume(self):
+        start = self.h.origin_main()
+        earlier = self.h.commit_to_main("src/first.txt", "f\n")
+        wt = self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        wrong = "c" * 40
+        self.h.hand_lock(self.holder_text(start, f"fix/old {wrong}"))
+        self.assertEqual(self.join(start).returncode, 1)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_rows_missing")
+        path = self.h.lock / "held" / "holder.txt"
+        path.write_text(path.read_text().replace(wrong, earlier))
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(M.parse_holder(self.h.holder())["batch-landing"], [f"fix/old {earlier}", f"fix/a {tip}"])
+
+    def test_a_row_in_another_shape_added_after_the_stop_is_refused_on_resume(self):
+        start = self.h.origin_main()
+        self.h.commit_to_main("src/first.txt", "f\n")
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.hand_lock(self.holder_text(start))
+        self.assertEqual(self.join(start).returncode, 1)
+        path = self.h.lock / "held" / "holder.txt"
+        path.write_text(path.read_text() + "batch-landing: fix/old\n")
+        text = path.read_text()
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("batch-landing: <branch> <sha>", result.stderr)
+        self.assertEqual(path.read_text(), text)
+
+    def test_a_row_a_killed_run_already_wrote_is_not_counted_twice(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        start = M.parse_holder(self.h.holder())["batch-start"]
+        killed = self.land("fix/b", "--batch-start", start, env={"PM_LAND_TEST_CRASH_BEFORE": "push:land"})
+        self.assertEqual(killed.returncode, 137)
+        tip = self.h.shared_head()
+        self.h.g(self.h.shared, "push", "-q", "origin", "main")
+        path = self.h.lock / "held" / "holder.txt"
+        path.write_text(path.read_text() + f"batch-landing: fix/b {tip}\n")
+        result = self.h.tool("resume", "--branch", "fix/b")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len([row for row in M.parse_holder(self.h.holder())["batch-landing"] if row.startswith("fix/b ")]), 1)
+
     def test_a_batch_with_broken_rows_can_still_be_closed(self):
         start = self.h.origin_main()
         self.h.hand_lock(self.holder_text(start, "fix/old"), age=91 * 60)

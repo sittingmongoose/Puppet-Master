@@ -741,6 +741,7 @@ holder.
 that both limits hold. With no `batch-first-push:` line, the two hours count from the first row's commit time, which
 is a little early. A row in another shape is refused, not dropped uncounted, and so is a `main` past `batch-start`
 with no rows or a first row naming no commit; only a close goes on regardless, since that is what a broken batch needs.
+`holder.txt` is the record: correct the rows there and `resume` reads them again.
 
 **Where a batch would be weaker than one follow-up per landing.** The check judges the batch as one branch against
 the baseline from before it. That is as strict as one combined branch, but a later member can pass where it would

@@ -1043,6 +1043,20 @@ class Lander:
                 self.for_jared(f"landing {other.get('id')} ({other.get('branch')}) pushed Plans changes and still owes "
                                "its snapshot and baseline follow-up: `resume` it where it ran, or do it by hand")
 
+    def take_batch_rows(self, fields: Dict[str, Any]) -> None:
+        """holder.txt is the record of this batch's landings: a hand lander may have written or corrected them."""
+        batch = self.st["batch"]
+        rows = []
+        for row in fields.get("batch-landing") or []:
+            parts = row.split()
+            if len(parts) == 2:
+                rows.append({"branch": parts[0], "sha": parts[1]})
+            elif batch["role"] != "close":  # closing needs no count, and is what a broken batch needs
+                raise Refused(f"holder.txt has a row the batch limits cannot count: {row!r}. The format is "
+                              "`batch-landing: <branch> <sha>`: correct it, or close the batch")
+        batch["first_push"] = fields.get("batch-first-push") or batch.get("first_push")
+        batch["landings"] = rows
+
     def adopt_batch_lock(self) -> None:
         """Inside a batch the lock passes by pm-mail; knowing the full batch-start SHA is the handover."""
         st = self.st
@@ -1071,17 +1085,8 @@ class Lander:
                 say(f"--handed-over-by {agent}: this asserts that {agent} handed you the lock by pm-mail, as the rule "
                     "requires. The tool cannot see that mail.")
                 queue_log(self.cfg, "batch_handover_asserted", who=st["name"], by=agent, batch=start)
-        rows = []
-        for row in fields.get("batch-landing") or []:
-            parts = row.split()
-            if len(parts) == 2:
-                rows.append({"branch": parts[0], "sha": parts[1]})
-            elif batch["role"] != "close":  # closing needs no count, and is what a broken batch needs
-                raise Refused(f"holder.txt has a row the batch limits cannot count: {row!r}. The format is "
-                              "`batch-landing: <branch> <sha>`: correct it, or close the batch")
         batch["start"] = start
-        batch["first_push"] = fields.get("batch-first-push") or batch.get("first_push")
-        batch["landings"] = rows
+        self.take_batch_rows(fields)
         st["lock"]["token"] = uuid.uuid4().hex
         self.rewrite_holder("landing")
         st["lock"]["taken"] = iso()
@@ -1648,7 +1653,9 @@ class Lander:
             if any(path.startswith("Plans/") for path in changed):
                 st["followup_owed"] = True
             if batch:
-                batch.setdefault("landings", []).append({"branch": st["branch"], "sha": sha})
+                # A run killed after writing holder.txt left this row there already, and take_batch_rows read it.
+                if not any(row.get("sha") == sha for row in batch.setdefault("landings", [])):
+                    batch["landings"].append({"branch": st["branch"], "sha": sha})
                 batch["first_push"] = batch.get("first_push") or iso()
                 self.rewrite_holder("landing")
         self.save()
@@ -2102,6 +2109,8 @@ class Lander:
         lock_done = not at_lock_step
         retaken = False
         if st["lock"].get("token") and self.holds_lock():
+            if st.get("batch"):
+                self.take_batch_rows(parse_holder(read_holder_text(self.cfg) or ""))
             self.rewrite_holder("landing")
             self.start_heartbeat()
             say("the lock is still this landing's")
