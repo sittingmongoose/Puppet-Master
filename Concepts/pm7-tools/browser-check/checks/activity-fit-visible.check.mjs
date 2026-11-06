@@ -212,6 +212,91 @@ export default async function(t) {
       1, 0, () => document.getElementById('fo76-cssom')?.remove());
   }
 
+  // G. FO-76 follow-up: an item another layer injects into the live strip (the background-activity concept's
+  // Processes button, the way its rw-thread.js does it: a keyed button after Subagents that the chat's reconcile
+  // removes and a root MutationObserver puts back, its attributes rewritten with the same values on a timer). The fit
+  // must measure it too: the 36 widths of the review's sweep, a content change, its removal and the reported reveals,
+  // and the two observers must not answer each other forever.
+  await setWidth(800);
+  await f.evaluate(() => {
+    const root = document.getElementById('pmRoot');
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'activity-item fo76-foreign'; btn.setAttribute('data-k', 'fo76-foreign');
+    btn.setAttribute('aria-label', 'Injected activity, 3 running'); btn.setAttribute('data-tone', 'working');
+    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="label">Processes</span><span class="count">3</span>';
+    const place = () => {
+      const bar = document.querySelector('#pmRoot .activity-wrap > :is(.activity-bar, .pm56-activity-bar)');
+      if (!bar || !window.__fo76Foreign) return;
+      const after = bar.querySelector(':scope > .activity-item[data-domain="subagents"]') || bar.querySelector(':scope > .activity-item[data-domain="todo"]');
+      const ref = after ? after.nextSibling : bar.firstChild;
+      if (btn.parentNode !== bar || (after && btn.previousSibling !== after)) bar.insertBefore(btn, ref);
+    };
+    let sched = false;
+    const mo = new MutationObserver(() => { if (!sched) { sched = true; Promise.resolve().then(() => { sched = false; place(); }); } });
+    mo.observe(root, { childList: true, subtree: true });
+    const timer = setInterval(() => { btn.setAttribute('data-tone', 'working'); btn.setAttribute('aria-label', btn.getAttribute('aria-label')); place(); }, 700);
+    window.__fo76Foreign = { btn, mo, timer, place };
+    place();
+  });
+  await frames(f);
+  const sweep = [], badSweep = [];
+  for (const w of [900, 860, 820, 800, 780, 760, 740, 720, 700, 680, 660, 640, 620, 600, 580, 560, 540, 520, 500, 480, 460, 440, 420, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800, 860, 900]) {
+    await setWidth(w); await f.waitForTimeout(300);
+    const r = await readFit(f);
+    const injected = await f.evaluate(() => !!document.querySelector('#pmRoot .activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .fo76-foreign'));
+    sweep.push({ w, injected, tier: r.tier, available: +r.available.toFixed(1), need: +r.need.toFixed(1), client: r.width, scroll: r.scroll });
+    if (!injected || !valid(r)) badSweep.push({ w, injected, ...JSON.parse(strip(r)) });
+  }
+  t.log(JSON.stringify({ foreignSweep: sweep }));
+  await t.check('injected strip item: 36 widths valid and unclipped', badSweep.length === 0, JSON.stringify({ n: badSweep.length, first: badSweep.slice(0, 3) }));
+  // Its label grows past the fit, then shrinks back: the fit follows within 3 frames.
+  await setWidth(1000); await f.waitForTimeout(300);
+  const grow0 = await readFit(f);
+  await f.evaluate(() => { __fo76Foreign.btn.querySelector('.label').textContent = 'Processes, scripts, watchers, builds and browser sessions'; });
+  await frames(f);
+  const grow1 = await readFit(f);
+  await f.evaluate(() => { __fo76Foreign.btn.querySelector('.label').textContent = 'Processes'; });
+  await frames(f);
+  const grow2 = await readFit(f);
+  await t.check('injected strip item: its own content change reaches the fit within 3 frames',
+    grow0.tier === 0 && valid(grow0) && grow1.tier >= 1 && valid(grow1) && grow2.tier === 0 && valid(grow2),
+    JSON.stringify([grow0, grow1, grow2].map(r => JSON.parse(strip(r)))));
+  // Idle for 3 s with the item's timer rewriting it: each chat render drops the copies with the item and the mirror
+  // puts them back (2 per render), but the two observers must not answer each other: copies inserted stay within
+  // twice the renders seen, plus one, and each fit row ends with exactly one copy.
+  const idle = await f.evaluate(async () => {
+    const sizer = document.querySelector('#pmRoot .activity-wrap > .activity-sizer');
+    const bar = document.querySelector('#pmRoot .activity-wrap > :is(.activity-bar, .pm56-activity-bar)');
+    let inserted = 0, renders = 0;
+    const mo = new MutationObserver(rs => { for (const r of rs) for (const n of r.addedNodes) if (n.nodeType === 1 && n.hasAttribute('data-ab-foreign')) inserted++; });
+    mo.observe(sizer, { childList: true, subtree: true });
+    const live = new MutationObserver(rs => { for (const r of rs) for (const n of r.removedNodes) if (n === __fo76Foreign.btn) renders++; });
+    live.observe(bar, { childList: true });
+    await new Promise(r => setTimeout(r, 3000)); mo.disconnect(); live.disconnect();
+    return { inserted, renders, copies: [...sizer.querySelectorAll(':scope > .activity-fit > *')].map(row => row.querySelectorAll(':scope > .fo76-foreign').length) };
+  });
+  t.log(JSON.stringify({ foreignIdle: idle }));
+  await t.check('injected strip item: one copy per fit row, re-copied only after a render removes it (no observer ping-pong)',
+    idle.inserted <= 2 * idle.renders + 2 && idle.copies.length === 2 && idle.copies.every(n => n === 1), JSON.stringify(idle));
+  // The reported route with the item in the strip.
+  await t.viewport(1512, 982); await setWidth(560);
+  const foreignReveals = [];
+  for (let i = 0; i < 3; i++) {
+    await f.evaluate(() => PMW.chatCol.setVisible(false));
+    await f.waitForFunction(() => document.querySelector('#chatPanel').getBoundingClientRect().width === 0);
+    await f.evaluate(() => { PM56_DEMO.setVariant(3, 1); PM56_DEMO.setVariant(3, 0); PMW.chatCol.setVisible(true); });
+    await t.settle(); await f.waitForTimeout(1000);
+    foreignReveals.push(await readFit(f));
+  }
+  await t.check('injected strip item: reveals at 1512×982 column 560 fit', foreignReveals.every(r => r.scroll - r.width <= 1 && valid(r)), JSON.stringify(foreignReveals.map(r => JSON.parse(strip(r)))));
+  // Removed: the copies follow.
+  await t.viewport(1920, 1100); await setWidth(700); await f.waitForTimeout(300);
+  await f.evaluate(() => { const x = __fo76Foreign; delete window.__fo76Foreign; x.mo.disconnect(); clearInterval(x.timer); x.btn.remove(); });
+  await frames(f);
+  const gone = await readFit(f), left = await f.evaluate(() => document.querySelectorAll('#pmRoot .activity-sizer .fo76-foreign').length);
+  await t.check('injected strip item removed: copies gone and the fit follows within 3 frames', left === 0 && valid(gone), JSON.stringify({ left, ...JSON.parse(strip(gone)) }));
+  await rerender(f); await t.settle();
+
   // D. Every look, both motion settings: widths across the pseudo-content and container boundaries, a look switch
   // while Chat is hidden, and a real drag of the column handle across the label boundary in both directions.
   const motions = t.args.targeted ? [] : ['no-preference', 'reduce'];

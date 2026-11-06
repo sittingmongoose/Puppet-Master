@@ -2420,7 +2420,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      content and the container and media regimes all reach the fit through layout, a Chat revealed after hiding
      included, and a resize step reads three stored numbers instead of probing the live strip. The copies' widths do
      not depend on the tier chosen, so the 8 px hysteresis below cannot feed back into them. */
-  const abFit={ro:null,sizer:null,rows:[],avail:0,labeled:0,compact:0};
+  const abFit={ro:null,mo:null,sizer:null,rows:[],bar:null,foreign:null,avail:0,labeled:0,compact:0};
   function applyActivityTier(){
     const wrap=abFit.sizer&&abFit.sizer.parentElement;
     const {avail,labeled,compact}=abFit;
@@ -2449,21 +2449,56 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
     applyActivityTier();
   }
-  // Called on every chrome sync: it only (re)arms the observer when render replaced the sizer, and reads no layout.
+  /* An item another layer put into the live strip, which the template never renders (the background-activity
+     concept's Processes button is one), is copied into both fit rows at the same place, so the fit measures every
+     item the strip actually shows. A MutationObserver on the live bar and on the rows runs this; it reads no layout.
+     The rows are written only when what is foreign changed: such a layer may rewrite its item with the same values on
+     a timer and re-insert it from its own observer, and an unconditional write here would answer it forever. The
+     copies lose ids, actions, domain ids, ARIA and tab stops, as the template's copies do. */
+  const AB_COPY_DROP=/^(?:id|tabindex|data-action|data-domain|aria-.*)$/;
+  function mirrorForeignActivityItems(){
+    const {bar,rows}=abFit;
+    if(!bar||!bar.isConnected||rows.length!==2) return;
+    const order=[...rows[0].children].filter(e=>!e.hasAttribute('data-ab-foreign')).map(e=>e.getAttribute('data-hover-domain'));
+    const plan=[];
+    let j=0;
+    for(const e of bar.children){
+      if(j<order.length&&e.getAttribute('data-action')==='open-activity'&&e.getAttribute('data-domain')===order[j]){ j++; continue; }
+      plan.push({e,before:j<order.length?order[j]:null});
+    }
+    const key=plan.map(p=>p.before+'\n'+p.e.outerHTML).join('\n\n');
+    if(key===abFit.foreign&&rows.every(r=>r.querySelectorAll(':scope > [data-ab-foreign]').length===plan.length)) return;
+    abFit.foreign=key;
+    for(const row of rows){
+      for(const n of row.querySelectorAll(':scope > [data-ab-foreign]')) n.remove();
+      for(const p of plan){
+        const c=p.e.cloneNode(true);
+        for(const n of [c,...c.querySelectorAll('*')]) for(const a of [...n.attributes]) if(AB_COPY_DROP.test(a.name)) n.removeAttribute(a.name);
+        c.setAttribute('data-ab-foreign','');
+        row.insertBefore(c,p.before?row.querySelector(`:scope > [data-hover-domain="${CSS.escape(p.before)}"]:not([data-ab-foreign])`):null);
+      }
+    }
+  }
+  // Called on every chrome sync: it (re)arms the observers when render replaced the sizer or the live bar, brings
+  // the copies of foreign items up to date, and reads no layout.
   function syncActivityCompact(){
     const sizer=document.querySelector('.activity-wrap > .activity-sizer');
     const rows=sizer?[...sizer.querySelectorAll(':scope > .activity-fit > .activity-bar')]:[];
+    const bar=sizer?sizer.parentElement.querySelector(':scope > .activity-bar'):null;
     if(!sizer||rows.length!==2){
-      if(abFit.sizer){ abFit.ro.disconnect(); abFit.sizer=null; abFit.rows=[]; }
+      if(abFit.sizer){ abFit.ro.disconnect(); abFit.mo.disconnect(); abFit.sizer=null; abFit.rows=[]; abFit.bar=null; }
       abCompactTier=0;
       return;
     }
-    if(sizer===abFit.sizer&&rows[0]===abFit.rows[0]&&rows[1]===abFit.rows[1]) return;
-    if(!abFit.ro) abFit.ro=new ResizeObserver(onActivityFit);
-    else abFit.ro.disconnect();
-    Object.assign(abFit,{sizer,rows,avail:0,labeled:0,compact:0});
-    abFit.ro.observe(sizer);
-    for(const row of rows) abFit.ro.observe(row,{box:'border-box'});
+    if(sizer!==abFit.sizer||rows[0]!==abFit.rows[0]||rows[1]!==abFit.rows[1]||bar!==abFit.bar){
+      if(!abFit.ro){ abFit.ro=new ResizeObserver(onActivityFit); abFit.mo=new MutationObserver(mirrorForeignActivityItems); }
+      else { abFit.ro.disconnect(); abFit.mo.disconnect(); }
+      Object.assign(abFit,{sizer,rows,bar,foreign:null,avail:0,labeled:0,compact:0});
+      abFit.ro.observe(sizer);
+      for(const row of rows){ abFit.ro.observe(row,{box:'border-box'}); abFit.mo.observe(row,{childList:true}); }
+      if(bar) abFit.mo.observe(bar,{childList:true,subtree:true,attributes:true,characterData:true});
+    }
+    mirrorForeignActivityItems();
   }
   function syncChatChrome(){
     syncComposerCompact();
