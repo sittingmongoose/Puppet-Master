@@ -623,6 +623,16 @@ and the tool exclude each other, and the rule in `.claude/CLAUDE.md` stays what 
 checks and treats their exit codes as the rule says; it never refreshes the snapshot or baseline before
 the landing it follows is pushed, in the middle of a batch, or to make a landing pass.
 
+**Stopping bar for this tool**, in the terms of `/mnt/Cursor/Agent-Guides/test-tool-bar.md`, written on 2026-11-06
+after the Opus pre-check found it missing and before the first gate review: a finding about `pm-land.py` stops work
+only if it is shown to make the tool push `main` when a check stopped the landing, skip or reorder a step the rule
+requires, leave `main` ahead of origin with no holder who must fix it, refresh a snapshot or baseline before its
+landing is pushed or in the middle of a batch, clear a live holder, or lose a batch's follow-up; or if it shows a
+product bug. Until the tool has run a real landing, "shown" means reproduced end to end on its real code in the
+harness of `scripts/test_pm_land.py`, whose stubs print the real check's format and exit codes. Everything else, a
+false stop, a crash, a portability gap, a missing doc, is still fixed: one row each on
+`/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/TOOL-ISSUES.md`, for the 6-hour batch. Nothing is dropped.
+
     python3 scripts/pm-land.py plan <branch> --name <you>      # every step and command; changes nothing
     python3 scripts/pm-land.py run <branch> --name <you>       # land it
     python3 scripts/pm-land.py status                          # lock, queue, landings; readable by anyone
@@ -647,7 +657,7 @@ the ordinary landing. The readiness audit source is what the landing check selec
 `git reset --keep origin/main`. The lock is released when nothing is owed, so that a slow repair holds up
 nobody; `resume` then queues, takes it again and starts over at the fetch, as the rule's order requires. It
 is kept, with no heartbeat, so that the 90-minute rule applies, when a follow-up is owed, a batch is open,
-or the landing check needs a judgement.
+the landing check needs a judgement, or `main` is still ahead of origin.
 
 - A rebase conflict: the rebase is aborted, the branch is unchanged, the files are named. A Plans conflict
   is the branch owner's to re-adjudicate. It is never resolved here, and derived files are regenerated.
@@ -661,8 +671,23 @@ or the landing check needs a judgement.
   cannot read or confirm stops it, including an untracked file another thread left there.
 - Landing check exit 2 or 3, or any exit but 0 and 1: stop. Exit 1: go on, and the report is kept for Jared.
 - **Exit 1 with a timed-out subcheck stops too**, because the rule says to rerun that subcheck on its own and
-  judge it before pushing: `resume --timeouts-judged "<what you ran and found>"`. So does an exit 1 whose
-  report has no `Infrastructure results` line, because a Python traceback also exits 1.
+  judge it before pushing: `resume --timeouts-judged "<what you ran and found>"`.
+- **So does one that says to compare changed pre-existing rows** ("compare those with the baseline's rows"),
+  because the rule asks for that comparison and the same count can hide one failure fixed and another added:
+  `resume --rows-compared "<what you compared and found>"`. If a report needs both, give both in one `resume`.
+- **A judgement covers the check on record when it was given, and no other.** The text goes to the report for
+  Jared before the push. Any new check, on a new commit or in the follow-up, drops it and is judged on its own, and
+  `resume` with no judgement runs the check again.
+- **A crash is never excused.** Exit 1 with no `Infrastructure results` line, or a `Traceback` at the start of a line
+  anywhere in the log (exit 0 too), means the check did not finish judging, so it says nothing about this tree: stop,
+  and `resume` reruns it. A traceback quoted inside a failure row is not a crash: failure details do quote them.
+- **`main` that cannot be put back keeps the lock.** If `git reset --keep origin/main` fails, say because someone
+  edited a file the branch touches while the check ran, the stop prints `CRITICAL` and keeps the lock, and neither
+  `resume` nor `abort` goes on or releases it until `main` is back. So for a `main` ahead of origin that no landing
+  of this tool left. The rule's "never left ahead" then has a holder who must fix it.
+- `--check-arg` passes on only `--cache`, `--no-cache`, `--cache-dir`, `--cache-max-mb` and
+  `--subcheck-timeout-seconds`; anything else exits 2 before anything runs. `--base`, `--baseline`,
+  `--record-baseline` and `--allow-sparse` are the rule's to set, not a lander's.
 - The commit it pushes is the commit it checked: before the push it fetches again and requires origin/main,
   the lock token, HEAD and the tree id to be what the check saw.
 
@@ -698,6 +723,49 @@ is released, and that landing queues again and is checked alone against the new 
 touches `Plans/Spec_Lock.json`, `Plans/auto_decisions.jsonl` or `Plans/.evidence/**` is refused in a batch;
 one that needs an exemption the tool cannot see stays the lander's to keep out.
 
+**Taking over.** `--batch-start` takes the lock over only from `state: batch-idle` or a dead holder. Knowing the SHA
+is no hand-over: it can be read from `holder.txt`. A live hand holder may be mid-check, so taking over from it needs
+`--handed-over-by <its agent: line>`, which prints and logs that it asserts the pm-mail hand-over the rule requires;
+the tool cannot see that mail. Any other live holder stops the lander with `batch_busy`.
+
+**A dead batch is closed, not cleared.** A dead holder whose `holder.txt` names a `batch-start` is cleared only if
+nothing landed in it. If a row says something did, or `origin/main` has moved past that SHA, a plain lander, or
+`lock take`, stops and prints `run --batch-close --batch-start <sha>`, because clearing it would lose the batch's
+follow-up. The close takes the lock over as above.
+
+**Hand-opened batches.** The tool reads a hand lander's rows as `batch-landing: <branch> <sha>`, one per landing, so
+that both limits hold. With no `batch-first-push:` line, the two hours count from the first row's commit time, which
+is a little early. A row in another shape is refused, not dropped uncounted, and so is a `main` past `batch-start`
+with no rows or a first row naming no commit; only a close goes on regardless, since that is what a broken batch needs.
+
+**Where a batch would be weaker than one follow-up per landing.** The check judges the batch as one branch against
+the baseline from before it. That is as strict as one combined branch, but a later member can pass where it would
+stop alone after the earlier member's follow-up. Each such case is treated as a stopped landing: the batch closes
+with its follow-up at the current `main`, and the member is rechecked alone against the new `origin/main`.
+
+- **Rows in a shared bucket.** Landing 1 lowers a bucket from 5 to 4 and landing 2 adds a different failure to it:
+  in the batch that is 5 against 5, pre-existing; alone it is 4 against 5, a rise that blocks. A member closes the
+  batch when its report's pre-existing or improved rows differ, by count or by text, from the latest earlier report's
+  in a bucket an earlier report marked as changed (`improved`, `(content changed)`, or any row of a report that says
+  "compare those"). Rows a report only lists again do not count: each report lists what the earlier members touched.
+- **The readiness growth counter.** A rise judged as staleness can be excused in the batch by an earlier member's
+  stale row, where alone it needs this landing's own. A member closes the batch when the counter's total is above the
+  highest any earlier report showed. A total no higher is no rise alone either, so it stays. In practice, two members
+  that each edit an inventoried source do not share a batch.
+- **An earlier report it cannot read.** A hand lander's report is not on record, and the check prints only 40
+  pre-existing rows. Then a member listing such rows, or showing the counter, closes the batch, since what they share
+  cannot be told.
+- **The seven-day limit.** Rule 2 is measured from `--base`, which stays at `batch-start`, so a baseline could read as
+  current in the batch and stale alone. No batch opens on a baseline within two hours of the limit, counted to now or
+  to `origin/main`, whichever is later, and a member stops with `batch_baseline_past_limit` once it is past it. A
+  baseline rule 2 ignores anyway opens one: a batch and a lone landing are then judged alike.
+
+What this cannot see is what a report does not print. A member that lowers a bucket without its report listing that
+bucket, because no remaining row names its files, leaves no trace, and a total that falls and rises again below the
+baseline's figure prints no counter row. A later member's changed row in such a bucket still stops for the comparison
+above, and that comparison, with the baseline's rows, is then the only guard; a rise in a subcheck that prints only a
+sample, staying under the baseline's total, has no guard here at all.
+
 ### The lock queue
 
 Beside `held/`, `queue/` holds a ticket per waiting agent (priority, name, branch, host, pid, start time, UTC
@@ -720,6 +788,11 @@ minute (`time` too, for a hand lander reading it). The rule for a dead holder:
 | The tool, stopped or idle in a batch; or by hand | only by the 90-minute rule |
 | Any of them | nothing written for 90 minutes: today's rule |
 
+A run holds the lock for at most three hours (`PM_LAND_MAX_HOLD_SECONDS`). A hung check would otherwise keep its
+heartbeat beating forever, so that neither rule ever fired. Past that the heartbeat stops and `queue/log.jsonl` says
+so; the holder then reads as dead by the last row. The run goes on, and if the lock was cleared meanwhile its push is
+refused. If it had fast-forwarded `main`, the next lander stops on that until a person ends the hung run.
+
 Only the first in line clears a holder. It renames `held/` aside, compares `holder.txt` with what it judged
 (it puts it back if that changed), and logs who, why and when to `queue/log.jsonl`. If the dead landing left
 `main` fast-forwarded and its state says it never pushed, the next lander resets that back; a `main` ahead of
@@ -731,7 +804,7 @@ origin that no stopped landing owns stops the landing. For hand landers, with no
 
 ### Checks in a local copy: `run --checks-local`
 
-Not today's rule, so behind this flag. The shard check and the landing check run in a full worktree on local
+Not today's rule, so behind this flag, which prints that its equivalence is not yet measured. The shard check and the landing check run in a full worktree on local
 disk (`~/pm-worktrees/land-<id>`) at the exact commit, with the ignored inputs compared by SHA-256 to the
 shared checkout's. The shared checkout only fast-forwards and pushes, after they pass: the dirty check and
 the inputs are read again, and the push requires its HEAD and tree to be the checked commit's. `main` is never
