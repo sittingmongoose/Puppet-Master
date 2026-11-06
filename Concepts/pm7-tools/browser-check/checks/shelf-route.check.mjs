@@ -511,7 +511,10 @@ export default async function (t) {
     // trigger; Source Control's Publish and review chevron in each engine) folds on one press and unfolds on a second,
     // and Enter and Space on the focused control do the same.
     const disclosures = {};
+    // --set disclosures=0 skips this census (to reach later Source Control assertions on a base without FO-84d; the
+    // disclosure floor then fails by design)
     const disclosureCensus = async (state) => {
+      if (t.args.disclosures === '0') return;
       const ctls = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-disc]').forEach(e => e.removeAttribute('data-shelf-disc'));
         const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY));
