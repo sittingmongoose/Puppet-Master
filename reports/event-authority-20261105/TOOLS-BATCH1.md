@@ -161,3 +161,67 @@ Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-2
 | `verify-fix4.py` | `4c1b9eea0a05407d614c4ad99bc21287fecb47c9cbd1914fb5d5406eb02d6cb5` |
 | `ledger-scan.py` | `a218afbf4db43ae084d1d3626d5cdb2de390bf22b7f3217f0d41f92d53452047` |
 | `prepare-report.py` | `66da6dd2bc9d22838973e0facadfd01828c76843111452f671e72bbe9e423dcd` |
+
+## Batch 1, Opus pre-check cycle 7: findings and responses
+
+**W7-1 to W7-4 are fixed in `266482160bc860da29a0b6632edcb63bfbbcaa7d`; none is disputed.** Base: `9e95b3fc3844ec725fbecde8c3ed74ff9d50e0e5`. The pre-check found no blocking witness defect; these were its nonblocking notes, done now as the brief asks. This section supersedes the `DL-*` exception, short-ID and definition-form behaviour and the 103-regression count above. No independent review of this round is claimed.
+
+| Note | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **W7-1 — fixed** | `scripts/pm-ledger-compile-witness.py`, `run`. The same-document `DL-*` exception was silent, and the repair witness compared only a unit's first definition, so a PlanUnit-only repair under a reused decision number was reported unchanged. Every same-document repeat of a targeted or repaired `DL-*` unit is now listed in `repeated_decision_units`, with each definition's lines and title. `titles_differ` is true when the titles still differ after case, punctuation and a trailing reference list are removed. A repair now compares every definition with the base, fires only when none changed, and names the changed ones in `changed_occurrences`. | A reused number with two titles is disclosed with `titles_differ` true; a log entry and its title-cased PlanUnit give false. A PlanUnit-only change is a repair (exit 0; exit 2 at the base) naming occurrence 2. A log-only change names occurrence 1. No change still fires. |
+| **W7-2 — fixed** | `run`, repair witness. An unresolved repair ID with fewer than three digits was only disclosed. Now an ID that resolves to no unit is set aside only when it is one of the ledger's own candidate IDs (record headings and correction `finding_id`s), at any digit count, under `unresolved_candidate_ids` (also kept as `unresolved_short_ids`). Any other unresolved ID stays named, is listed under `named_but_unresolved` and fires as not targeted. | Nonexistent `AA-99` and `ZZ-9`: exit 2, as `AA-999` already was (exit 0 at the base). `RT-01` and a three-digit correction `finding_id` stay set aside. |
+| **W7-3 — fixed** | `definitions_in`, `unsupported_forms`. Quoted `plan_unit_id` values and `~~~` fences are recognised as definitions, so they count as duplicates or as a heading's own metadata. A separator-less heading, a level 1, 5 or 6 heading, or a `plan_unit_id` line the grammar cannot read or that sits outside a fence, naming a targeted or repaired owner ID, is refused as `unsupported_owner_definition_form` before any pass. Longer identifiers (`AA-001.2`) and `DL-*` IDs are not refused: decision units supply no owner evidence, and three real addendum headings such as `## DL-059 to DL-065 Accepted ... Addendum` name decisions without defining them. | Double- and single-quoted fences and a `~~~` fence: `ambiguous_owner_unit` (exit 0 at the base). The four unsupported forms: exit 2 naming the form and line (exit 0 at the base). Quoted and `~~~` own-metadata, dotted-sub-ID and decision-addendum controls pass. |
+| **W7-4 — fixed** | `definitions_in`, `registry`. A heading's own metadata fence under a deeper subheading counted for uniqueness but was outside the unit text, so its registry was never checked. That fence is now part of the unit's text, and every registry in a unit is read, not only the first. | A ghost entry in that fence fires registry hygiene (exit 0 at the base). A registry that lives only in that fence now supplies the token's registry evidence (exit 2 at the base). |
+
+### Rerun results
+
+Each command ran serially from scratch copies of the commits, with a 1 GiB address-space cap and a 6 GiB available-memory floor, on Python 3.14.4/Linux. Every review driver of cycles 5 to 7 ran against both the base and this tool from its own copy, changed only in its hard-coded tool or scratch path.
+
+| Check | Result |
+|---|---|
+| **Self-test** | **126/126** in normal and optimized Python, with identical JSON. The 103 earlier regressions keep their order, expectations and results, and 23 are new. |
+| **New regressions on the base tool** | All 103 earlier ones pass there. 18 of the 23 new ones fail: 10 were false passes (exit 0 where a finding is due), 3 false findings (exit 2 on a correct repair or registry), and 5 need the new disclosure fields. The other 5 are controls on which both tools agree. |
+| **Unit tests** | `tests/test_pm_ledger_compile_witness.py` passes. |
+| **Pre-check driver `witness_adjacent.py` (cycle 7)** | 36 rows. Exactly the eight rows the notes name change: the separator-less heading, the level-5 heading, the quoted and `~~~` fences, the subheading ghost registry and the nonexistent two- and one-digit repair IDs now exit 2; the PlanUnit-only repair now exits 0. The reused-number row stays exit 0 and is now disclosed. The other 28 rows keep their exits and statuses. |
+| **`witness-probes.py` (cycle 6), `witness-adjacent.py` and its structured copy (cycle 5)** | All 20 and all 6 and 6 fixtures keep their exits and statuses. |
+| **GRS-027, read-only** | `vacuous`, exit 2, `no_owner_targets`. `--allow-empty`: exit 0, status names the flag. |
+| **Every real ledger, read-only, base tool versus this one** | Same status for all 39 entries (18 vacuous, 11 findings, 5 no-queue, 3 error, 2 pass), same configuration findings by kind and unit, same repair rows and every earlier summary field equal. No ledger changed. New disclosure: 24 same-document decision repeats across 3 ledgers, 5 of them with titles that still differ after normalisation. |
+| **Standalone** | Flat two-file copy from another directory, with program paths denied and with the share, the source clone and both worktree roots denied under `python3 -I`: 126/126, 0 denied-path attempts. The generic `--scratch` run also passes. |
+| **Evidence audit** | 863 assertions pass. |
+
+**Limits.**
+- **Titles are text.** `titles_differ` compares normalised titles; whether two titles name one decision is a human judgement, and the witness only shows them. Of the real repeats, the differing ones are paraphrases of one decision in the ledgers checked.
+- **Forms are found by ID shape.** A heading or declaration that names an owner ID in a shape the grammar does not match at all is still neither a definition nor refused. A `Repairs` sentence naming no unit at all is still not a finding.
+- **Semantic fidelity is not checked.** Tokens, IDs and accepted labels do not establish it, so the README's human-review requirement stands. Only Python 3.14.4/Linux was exercised.
+
+**Guard-tool figures above.** The current guard head is `7bcf23d4d527e6e31a55dd36d9e71d096584a6e9`, reported in its own `GUARDTOOL.md`.
+
+**Resources and scope.** Only the tool, its corpus helper, the standalone README and these report companions change. No owner Markdown, live ledger, registry, Decision Log, Spec Lock, `.evidence` or `.gitignore` edit, no `main` push, no pm-mail and no subagent.
+
+Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/`.
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `self-test.json` | `00ac992a9595f398f240a30ae0da5ca9ced6d8652b76bb8c04811ea5c18314ed` |
+| `self-test-optimized.json` | `00ac992a9595f398f240a30ae0da5ca9ced6d8652b76bb8c04811ea5c18314ed` |
+| `new-regressions-on-base-tool.json` | `aadb260e0066df476497286c7b3548ccb7789b060fec7fb450ec9b861cc485a4` |
+| `audit-results.json` | `bda1087696320edcc198fe643e4dcdd7aa719cd83cb74c1421917517b47d3060` |
+| `commands.json` | `1d1223c77da46d74b64a6921509d07626b6ef8ee6e7912ec2164fa5f7d043806` |
+| `new/cycle5/witness-adjacent.json` | `dd6d615c98932423a51f589e5b99bf2d695eb7fe2b0dcddda2fee6e9eddde3b2` |
+| `new/cycle5/witness-adjacent-structured.json` | `500574784b56eca9d458c2384828922180ae8bb27c82150b3421b2a8d053c4ea` |
+| `new/cycle6/witness-probes.json` | `953fc6438c0fbd6d6bc2673fe0fbf089587527a7beb931ea44ea7a632480cf28` |
+| `new/cycle7/witness-adjacent.json` | `26f528279761c27ba8293c082e661a5b93614b5021f68bdd37a4c4ba7a103719` |
+| `base/cycle5/witness-adjacent.json` | `8354c858baa5b7df1ccaf1bbf038bcf1c342238a1e7d8c70a7b3b8961ce9fd28` |
+| `base/cycle5/witness-adjacent-structured.json` | `4b6552d25089d592adeaa369fda08ca8a11b113952cafd3868b5b737dd6227ec` |
+| `base/cycle6/witness-probes.json` | `04a905829093d3c029a9088cb917a17b3b3f20409864a06345fdd2ff885f9a65` |
+| `base/cycle7/witness-adjacent.json` | `3a544ca69c413431d96e6c214ddfef2fca4ad785906ba3610f61e5b32938c7e4` |
+| `new/real-ledgers.json` | `b9c05e2549a9f0a56049adf7c67350d5569c83ea7473a1e382499ff028e08065` |
+| `base/real-ledgers.json` | `9cd143b32fb4112a33656ea05daa3ba397e98cb9b12ccb4d3197653353226586` |
+| `standalone-witness.json` | `00ac992a9595f398f240a30ae0da5ca9ced6d8652b76bb8c04811ea5c18314ed` |
+| `standalone-strict-witness.json` | `00ac992a9595f398f240a30ae0da5ca9ced6d8652b76bb8c04811ea5c18314ed` |
+| `standalone-scratch.json` | `00ac992a9595f398f240a30ae0da5ca9ced6d8652b76bb8c04811ea5c18314ed` |
+| `grs027-current.json` | `f68f216b44be8ad7f0b6d618b04232e1f38eee8726024bd3f454d32787762680` |
+| `grs027-explicit-empty.json` | `b5012fc47f06d2d404f04506d3b5d959083f554eb8dbe36c555b0b60fbc1933b` |
+| `verify-witness.py` | `6151d0213e02380167ae021a7958daf10006ea94582ce5df0244fd43d82e5a30` |
+| `audit-witness.py` | `0768029b3f718fe87fbe26ffa526ddaa4c12c1543ef177dc0bca3f67b3336129` |
+| `prepare-witness-report.py` | `42a15df80a25554218a5bae83b412bb1a2488bb4f9d5b021ac90745932549af6` |
