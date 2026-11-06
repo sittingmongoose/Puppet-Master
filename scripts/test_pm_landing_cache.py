@@ -240,6 +240,27 @@ def v_scratch(args):
     return report_status("scratch", [], names=names)
 
 
+def v_scratch_link(args):
+    with tempfile.TemporaryDirectory() as tmp:
+        link = os.path.join(tmp, "through")
+        os.symlink(str(ROOT / "a.txt"), link)
+        return report_status("scratch_link", [], text=open(link).read())
+
+
+def v_scratch_link_relative(args):
+    with tempfile.TemporaryDirectory() as tmp:
+        link = os.path.join(tmp, "through")
+        os.symlink(os.path.relpath(str(ROOT / "a.txt"), tmp), link)
+        return report_status("scratch_link", [], text=open(link).read())
+
+
+def v_scratch_link_folder(args):
+    with tempfile.TemporaryDirectory() as tmp:
+        link = os.path.join(tmp, "through")
+        os.symlink(str(ROOT / "listed"), link)
+        return report_status("scratch_link", [], text=open(os.path.join(link, "one.txt")).read())
+
+
 def v_unicode(args):
     return report_status("unicode", [], text=(ROOT / "listed" / "café one.txt").read_text())
 
@@ -249,6 +270,7 @@ COMMANDS = {"validate-evidence": v_a, "validate-auto-decisions": v_b, "validate-
             "git-files": v_git_files, "git-origin": v_git_origin, "git-head": v_git_head, "git-batch": v_git_batch,
             "git-write": v_git_write, "git-selftest": v_git_selftest, "writes": v_writes, "timeout-row": v_timeout_row,
             "killed": v_killed, "crash": v_crash, "helper": v_helper, "sleep": v_sleep, "git-files-slow": v_git_files_slow, "scratch": v_scratch, "unicode": v_unicode,
+            "scratch-link": v_scratch_link, "scratch-link-relative": v_scratch_link_relative, "scratch-link-folder": v_scratch_link_folder,
             "run-gates": cmd_run_gates, "audit-governance": cmd_audit_governance}
 
 
@@ -431,6 +453,28 @@ class ReadingATrace(unittest.TestCase):
     def test_a_write_outside_scratch_stops_the_unit(self):
         trace = self.read('10 openat(AT_FDCWD</repo>, "out.txt", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3</repo/out.txt>')
         self.assertIn("it wrote outside scratch: @ROOT/out.txt", trace.reasons)
+
+    def test_a_symlinks_target_is_read(self):
+        """Review C1: what a run reads through a link it made itself is the target, so the target is an input."""
+        for line, read in (('10 symlink("/repo/a.txt", "/tmp/x") = 0', "@ROOT/a.txt"),
+                           ('10 symlinkat("/repo/a.txt", AT_FDCWD</tmp>, "x") = 0', "@ROOT/a.txt"),
+                           ('10 symlink("../repo/a.txt", "/tmp/x") = 0', "@ROOT/a.txt"),
+                           ('10 symlinkat("b.txt", AT_FDCWD</tmp/s>, "x") = 0', "/tmp/s/b.txt")):
+            with self.subTest(line=line):
+                trace = self.read(line)
+                self.assertEqual((trace.reads, trace.reasons), ({("file", read)}, []))
+
+    def test_a_symlink_to_what_the_run_made_itself_is_not_an_input(self):
+        trace = self.read('10 mkdir("/tmp/x1", 0700) = 0', '10 openat(AT_FDCWD</repo>, "/tmp/x1/y", O_WRONLY|O_CREAT, 0600) = 3</tmp/x1/y>',
+                          '10 symlink("/tmp/x1/y", "/tmp/x1/z") = 0', '10 symlink("y", "/tmp/x1/w") = 0')
+        self.assertEqual((trace.reads, trace.reasons), (set(), []))
+
+    def test_a_failed_symlink_reads_no_target(self):
+        trace = self.read('10 symlink("/repo/a.txt", "/tmp/x") = -1 EEXIST (File exists)')
+        self.assertEqual(trace.reads, {("stat", "/tmp/x")})
+
+    def test_a_symlink_whose_target_cannot_be_read_stops_the_unit(self):
+        self.assertTrue(any("target" in reason for reason in self.read('10 symlink(0x7ffc, "/tmp/x") = 0').reasons))
 
     def test_every_kind_of_write_counts(self):
         for line in ('10 unlink("/repo/x") = 0', '10 rename("/tmp/a", "/repo/x") = 0', '10 mkdir("/repo/x", 0777) = 0',
@@ -710,6 +754,31 @@ class NegativesOnOneValidator(Fixture):
         (self.root / "link").unlink()
         (self.root / "link").symlink_to("b.txt")
         self.assertEqual(self.status("link"), "fresh")
+
+    def test_a_file_read_through_a_link_the_run_made_reruns_it(self):
+        """Review C1: the file changes, the validator reads it through its own scratch link: never the old result."""
+        for command in ("scratch-link", "scratch-link-relative"):
+            with self.subTest(command=command):
+                self.write("a.txt", f"before {command}\n")
+                first, code, out = self.unit(command)
+                self.assertEqual((first["status"], code), ("fresh", 0), out)
+                self.assertIn(f"before {command}", out)
+                self.assertEqual(self.status(command), "cache")
+                self.write("a.txt", f"after {command}\n")
+                row, code, out = self.unit(command)
+                self.assertEqual(row["status"], "fresh", row)
+                self.assertIn(f"after {command}", out)
+
+    def test_a_folder_linked_into_scratch_is_never_stored(self):
+        """Its files are read through the link, so what they hold is not in the key: the unit is not cached."""
+        self.assertEqual(self.status("scratch-link-folder"), "never")
+        row, code, _out = self.unit("scratch-link-folder")
+        self.assertEqual((row["status"], code), ("never", 0), row)
+        self.assertIn("it linked a folder", row["detail"])
+        self.write("listed/one.txt", "changed\n")
+        row, code, out = self.unit("scratch-link-folder")
+        self.assertEqual(row["status"], "never")
+        self.assertIn("changed", out)
 
     def test_a_new_file_behind_a_symlinked_folder_reruns_it(self):
         self.status("listed-link")

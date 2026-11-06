@@ -531,6 +531,25 @@ class TraceReader:
                 self.add_read("stat", path)
             else:
                 self.add_write(path)
+        if name in {"symlink", "symlinkat"} and not failed and second:
+            self.add_link_target(second, args[0] if args else "")
+
+    def add_link_target(self, link: str, token: str) -> None:
+        """What a run reads through a link it made is the link's target, and the link's path reads as the run's own.
+        So the target is the input. A folder's files would be read through the link, unseen, so that is never stored."""
+        text, cut = string_argument(token)
+        if text is None or cut:
+            self.trace.refuse(f"a symlink's target in the trace could not be read: {token[:80]}")
+            return
+        joined = text if text.startswith("/") else link.rsplit("/", 1)[0] + "/" + text
+        # A `..` here climbs out of the folder the link is in, which the run has usually removed by now.
+        target = os.path.realpath(joined) if ".." in joined.split("/") else normal_path(joined)
+        if self.internal(target):
+            return
+        if os.path.isdir(target):
+            self.trace.refuse(f"it linked a folder: {self.token(target)}")
+            return
+        self.add_read("file", target)
 
     def apply_exec(self, pid: int, name: str, args: list[str], failed: bool) -> None:
         index = 1 if name == "execveat" else 0
