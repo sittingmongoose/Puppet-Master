@@ -40,6 +40,7 @@ which is how the self-tests run against throwaway repositories (scripts/test_pm_
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 import hashlib
@@ -56,7 +57,7 @@ import sys
 import threading
 import time
 import traceback
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Callable, Dict, List, Optional, Sequence
 import uuid
 
 STATE_SCHEMA = "pm.land.state.v1"
@@ -200,7 +201,16 @@ def read_report(text: str) -> Dict[str, Any]:
     }
 
 
+ROW_REPORT_SCHEMA = "pm.landing_check.rows.v1"
 REPORT_DIGEST = ("pre", "pre_unread", "compare", "counter", "gone", "gone_ids", "totals", "bucket_counts", "ids_unread")
+
+
+def writes_row_report(cwd: Any) -> bool:
+    """Whether the landing check in this tree takes --row-report: an older one would refuse it, and read as blocked."""
+    try:
+        return "--row-report" in (Path(cwd) / LANDING_CHECK[1]).read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
 
 
 def shows_what_changed(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]]) -> bool:
@@ -208,7 +218,59 @@ def shows_what_changed(report: Dict[str, Any], earlier: Sequence[Optional[Dict[s
     return report.get("totals") is not None and all(row is None or row.get("totals") is not None for row in earlier)
 
 
-def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]]) -> Optional[tuple]:
+def read_row_report(path: Any) -> Optional[Dict[str, Any]]:
+    """What pm-landing-check.py --row-report wrote, or None."""
+    try:
+        doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return None
+    return doc if isinstance(doc, dict) and doc.get("schema_id") == ROW_REPORT_SCHEMA else None
+
+
+def subcheck_of(bucket: str) -> str:
+    """`check/subcheck` of a bucket id, `check|subcheck|error|path`."""
+    check, _, rest = bucket.partition("|")
+    return f"{check}/{rest.partition('|')[0] or '-'}"
+
+
+def why_not_exempt(subcheck: str, now: Optional[Dict[str, Any]], previous: Optional[Dict[str, Any]],
+                   own: Sequence[str]) -> Optional[str]:
+    """None when what this subcheck added since the previous report is only this member's own staleness. Then alone,
+    after the previous member's follow-up, each added row would be staleness on this member's files, which stops nothing.
+
+    Every added row must be seen (the subcheck is complete in both reports, its rows adding up to its total), be
+    staleness by the landing check's own test, and name this member's files and no other file of the batch. The caller
+    gives this member's own range, so a row on another member's file is told apart. Otherwise, says why.
+    """
+    if now is None or previous is None:
+        return "the landing check wrote no row report for one of the two runs, so what was added cannot be seen"
+    rows = {}
+    for side, doc in (("this", now), ("the previous", previous)):
+        entry = (doc.get("subchecks") or {}).get(subcheck)
+        if not isinstance(entry, dict) or not entry.get("complete") or len(entry.get("rows") or []) != entry.get("reported"):
+            return (f"{subcheck} is not complete in {side} report (no row report for it, a sample, or no complete export), "
+                    "so what was added cannot be seen")
+        rows[side] = entry["rows"]
+    added = Counter(row["key"] for row in rows["this"]) - Counter(row["key"] for row in rows["the previous"])
+    if not added:
+        return f"{subcheck} rose, but no added row can be found in it"
+    mine = set(own)
+    for row in rows["this"]:
+        if not added.get(row["key"]):
+            continue
+        if not row.get("stale"):
+            return f"an added row is not staleness: {row['key']}"
+        names = row.get("names") or []
+        if not names:
+            return f"an added staleness row names no file of this batch, so it cannot be attributed: {row['key']}"
+        others = sorted(set(names) - mine)
+        if others:
+            return f"an added staleness row names another member's file ({others[0]}): {row['key']}"
+    return None
+
+
+def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]],
+              exempt: Optional[Callable[[str], Optional[str]]] = None) -> Optional[tuple]:
     """Why this member's report, fine inside the batch, may not hold alone after the earlier members' follow-up.
 
     Every check in a batch is judged against the baseline from before the batch, so a bucket an earlier member lowered
@@ -218,14 +280,16 @@ def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]
     report digest in order, None where there is none (a hand lander). Returns (stop code, why). What a report did not
     print cannot be seen: README, "Batches". A pm-landing-check that prints gone ids, totals and bucket counts prints it
     all: a bucket no longer gone, or a total or count above the previous report's, could not rise alone unseen. Without
-    those lines (older reports carry None) only the checks before them apply, and the caller says so.
+    those lines (older reports carry None) only the checks before them apply, and the caller says so. `exempt` says why a
+    subcheck's rise is not only this member's own staleness, or None when it is.
     """
     if not earlier:
         return None
     absent = any(row is None for row in earlier)
     known = [row for row in earlier if row is not None]
     mine = report["pre"]
-    if known:
+    comparing = bool(known) and not absent and shows_what_changed(report, earlier)
+    if known and not comparing:
         if report.get("gone") is None or any(row.get("gone") is None for row in known):
             return ("batch_rows_overlap", "a report here has no `Gone since the baseline` line, so whether a bucket an "
                                           "earlier member emptied has come back cannot be told")
@@ -260,7 +324,7 @@ def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]
             return ("batch_rows_overlap", "a `(content changed)` row no earlier report listed: an earlier member may have "
                                           "lowered its bucket without printing it, so the baseline's count no longer "
                                           "tells: " + "; ".join(unlisted[:10]))
-    for name, reported in sorted(report["counter"].items()):
+    for name, reported in sorted(report["counter"].items()) if not comparing else ():
         if absent:
             return ("batch_readiness_rise", f"{name}'s rise is judged as staleness, and an earlier member's report is "
                                             "missing, so what this landing added cannot be told")
@@ -270,11 +334,13 @@ def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]
             return ("batch_readiness_rise", f"{name} rose to {reported} ({'no rise' if seen < 0 else seen} in the earlier "
                                             "reports) and is judged as staleness, which an earlier member's stale row can "
                                             "explain; alone it must be explained by this landing's own")
-    return moved_since_earlier(report, earlier)
+    return moved_since_earlier(report, earlier, exempt)
 
 
-def moved_since_earlier(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]]) -> Optional[tuple]:
-    """What the printed ids, totals and counts say rose since the earlier members' reports."""
+def moved_since_earlier(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]],
+                        exempt: Optional[Callable[[str], Optional[str]]] = None) -> Optional[tuple]:
+    """What the printed ids, totals and counts say rose since the previous report, unless it is only this member's own
+    staleness. Each report is compared with the one before it, so one rise excused here is not held against the next."""
     if report.get("totals") is None:
         return None
     if report.get("ids_unread") or any(row is not None and row.get("ids_unread") for row in earlier):
@@ -285,20 +351,26 @@ def moved_since_earlier(report: Dict[str, Any], earlier: Sequence[Optional[Dict[
     comparable = [row for row in earlier if row.get("totals") is not None]
     if not comparable:
         return None
-    back = sorted(set().union(*(row.get("gone_ids") or [] for row in comparable)) - set(report.get("gone_ids") or []))
-    if back:
-        return ("batch_rows_overlap", "a bucket an earlier member's report listed as gone is back, whatever else went: "
-                                      + "; ".join(back[:10]))
+    rises = []
+    for bucket in sorted(set(comparable[-1].get("gone_ids") or []) - set(report.get("gone_ids") or [])):
+        rises.append((subcheck_of(bucket), "batch_rows_overlap",
+                      f"a bucket the previous member's report listed as gone is back, whatever else went: {bucket}"))
     for name, total in sorted(report["totals"].items()):
         was = next((row["totals"][name] for row in reversed(comparable) if row["totals"].get(name) is not None), 0)
         if total is not None and total > was:
-            return ("batch_total_rise", f"{name}'s total rose from {was} to {total} since the last report, which the "
-                                        "baseline from before the batch cannot show; alone it would be a rise")
+            rises.append((name, "batch_total_rise", f"{name}'s total rose from {was} to {total} since the last report, which "
+                                                    "the baseline from before the batch cannot show"))
     latest = comparable[-1].get("bucket_counts")
     for name, count in sorted((report.get("bucket_counts") or {}).items()):
         if latest is not None and count > latest.get(name, 0):
-            return ("batch_total_rise", f"bucket {name} rose from {latest.get(name, 0)} to {count} since the last report, "
-                                        "which no total shows; alone it would be a rise")
+            rises.append((subcheck_of(name), "batch_total_rise",
+                          f"bucket {name} rose from {latest.get(name, 0)} to {count} since the last report, which no total shows"))
+    said: Dict[str, Optional[str]] = {}
+    for subcheck, code, what in rises:
+        if subcheck not in said:
+            said[subcheck] = exempt(subcheck) if exempt else "the landing check wrote no row report, so what was added cannot be seen"
+        if said[subcheck]:
+            return (code, f"{what}; alone it would be a rise, and it is not this landing's own staleness: {said[subcheck]}")
     return None
 
 
@@ -1542,6 +1614,24 @@ class Lander:
                                f"{str(sha)[:12]}: {text}")
             self.st[key] = None
 
+    def own_staleness(self, cwd: Any, t: Dict[str, Any], row_report: Path, earlier: Sequence[Optional[Dict[str, Any]]],
+                      excused: List[str]) -> Callable[[str], Optional[str]]:
+        """Why a subcheck's rise is not only this member's own staleness; its own range is the previous member's main SHA
+        to its own, not the batch's union. Reads the two row reports when the first rise asks."""
+        read: Dict[str, Any] = {}
+
+        def exempt(subcheck: str) -> Optional[str]:
+            if not read:
+                read["now"] = read_row_report(row_report)
+                read["previous"] = read_row_report((earlier[-1] or {}).get("rows_file")) if earlier else None
+                read["own"] = self.diff_names(cwd, self.st["batch"]["landings"][-1]["sha"], t["sha"])
+            why = why_not_exempt(subcheck, read["now"], read["previous"], read["own"])
+            if why is None:
+                excused.append(subcheck)
+            return why
+
+        return exempt
+
     def earlier_digests(self) -> List[Optional[Dict[str, Any]]]:
         """The report digest of each earlier member of this batch, from its state; None for one with no record."""
         by_sha = {}
@@ -1563,7 +1653,10 @@ class Lander:
         if head != t["sha"]:
             raise Stop("checked_tree_moved", f"{cwd} is at {head}, not {t['sha']}, before the landing check")
         keep = self.report_dir / f"check-reports-{st['seq']:02d}"
-        command = LANDING_CHECK + ["--base", t["base_arg"], "--keep-check-reports", str(keep)] + list(st.get("check_args") or [])
+        row_report = self.report_dir / f"check-rows-{st['seq']:02d}.json"
+        asks_rows = bool(st.get("batch")) and step.get("target") == "land" and writes_row_report(cwd)
+        command = LANDING_CHECK + ["--base", t["base_arg"], "--keep-check-reports", str(keep)] \
+            + (["--row-report", str(row_report)] if asks_rows else []) + list(st.get("check_args") or [])
         code, log = self.run_logged("landing-check", command, cwd)
         after = self.rev(cwd, "HEAD")
         if after != head:
@@ -1580,7 +1673,11 @@ class Lander:
         # Exit 0 too: a bucket that comes back with an unchanged row naming no batch file prints nothing at all.
         if code in (0, 1) and timeouts >= 0 and batch and step.get("target") == "land" and batch.get("landings"):
             earlier = self.earlier_digests()
-            gap = batch_gap(report, earlier)
+            excused: List[str] = []
+            gap = batch_gap(report, earlier, self.own_staleness(cwd, t, row_report, earlier, excused))
+            if excused and not gap:
+                self.for_jared(f"this landing stays in its batch: {', '.join(sorted(set(excused)))} rose since the previous "
+                               "report, and every added row is staleness naming only this landing's own files")
             if not gap and not shows_what_changed(report, earlier) and not st.get("batch_unseen_said"):
                 st["batch_unseen_said"] = True
                 self.note("this pm-landing-check prints no gone ids, subcheck totals or bucket counts, so in this batch a "
@@ -1590,7 +1687,7 @@ class Lander:
                       "origin_main": t["origin_main"], "base": t["base_arg"], "exit": code, "log": str(log),
                       "reports": str(keep), "timeouts": timeouts, "cwd": str(cwd),
                       "rows_changed": report["compare"] if code == 1 else 0, "batch_close": gap[0] if gap else None,
-                      "digest": {key: report[key] for key in REPORT_DIGEST}}
+                      "digest": dict({key: report[key] for key in REPORT_DIGEST}, rows_file=str(row_report) if asks_rows else None)}
         self.save()
         if timeouts < 0:
             why = "a traceback" if report["crashed"] else "no Infrastructure line"

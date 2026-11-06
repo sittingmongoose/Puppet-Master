@@ -797,16 +797,25 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
   baseline rule 2 ignores anyway opens one: a batch and a lone landing are then judged alike.
 - **What moved between two reports.** The rows above show only what a report chooses to print, so the check also prints
   every run's gone ids, subcheck totals and bucket counts ("Lines for comparing one run with the next"). A member closes
-  the batch when a bucket any earlier report listed as gone is not gone in its own, when a subcheck's total or a bucket's
-  count is above the previous report's, or when an earlier member's report is not on record (a hand lander). It does so
-  even on exit 0. Each rise would show alone after the earlier member's follow-up, and none shows against the baseline
-  from before the batch. A subcheck that timed out has no total to compare; its own stop for a judgement covers it.
+  the batch when a bucket the previous report listed as gone is not gone in its own, when a subcheck's total or a bucket's
+  count is above the previous report's, or when an earlier member's report is not on record (a hand lander), even on
+  exit 0, unless the rise is that member's own staleness. Each such rise would show alone after the previous member's
+  follow-up, and none shows against the baseline from before the batch. A subcheck that timed out has no total to
+  compare; its own stop for a judgement covers it.
 
-**What that costs.** A total rises for any cause, so a stale row counts too: two members that each add a governance
-staleness row do not share a batch, and the second pays one landing check before its follow-up and recheck. A batch
-keeps its saving for members that raise nothing, such as a Plans landing followed by landings that touch nothing
-hashed or inventoried. A closing can also be needless: a bucket reads as no longer gone, or as new, when its subcheck
-timed out or printed only a sample in one of the two reports. That costs one follow-up.
+**A member's own staleness does not close the batch.** Plans landings add staleness rows as a matter of course, and alone
+those stop nothing. So a rise in a subcheck stays in the batch when, for every row that subcheck added since the previous
+report (compared by the check's own row key, read from `--row-report`, which the tool asks for inside a batch):
+
+- **it is seen:** the subcheck is complete in both reports, its rows adding up to its total, because it printed them all
+  or is keyed from a complete export whose total matches;
+- **it is staleness,** by the check's own test;
+- **it is this member's:** it names a path of this member's own range, the previous member's `main` SHA to its own, and no
+  other path of the batch. Regenerated and deleted paths count, because evidence rows name shards.
+
+Anything else that rises closes: a subcheck that prints only a sample with no complete export, a row that is not
+staleness, a stale row that names another member's file or no file of the batch, and the readiness growth counter unless
+its added rows pass the same test. So does a rise when the check wrote no row report. Each stay is reported for Jared.
 
 **Against an older `pm-landing-check.py`,** which prints none of those lines, the tool says once per landing that these
 shapes may not be seen, and they do not close the batch, though each would stop alone:

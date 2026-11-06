@@ -84,6 +84,7 @@ sys.exit(row.get("exit", 0))
 '''
 
 STUB_LANDING = STUB_HEAD + r'''
+import shutil
 args = sys.argv[1:]
 record("baseline" if "--record-baseline" in args else "landing", {})
 row = behaviour("baseline" if "--record-baseline" in args else "landing")
@@ -94,6 +95,8 @@ if "--record-baseline" in args:
         Path("reports/landing-checks/baseline.json").write_text(json.dumps({"commit": git("rev-parse", "HEAD"), "at": time.time()}) + "\n")
     print(row.get("text", "pm-landing-check: baseline written"))
     sys.exit(code)
+if "--row-report" in args and row.get("rows_file"):
+    shutil.copy(row["rows_file"], args[args.index("--row-report") + 1])
 if "--keep-check-reports" in args:
     keep = Path(args[args.index("--keep-check-reports") + 1])
     keep.mkdir(parents=True, exist_ok=True)
@@ -2592,16 +2595,13 @@ class BatchGapTests(Base):
         self.assertIn("--batch-close", result.stdout)
 
 
-class RealReportBatchTests(Base):
-    """Review N1: the real main() of pm-landing-check.py writes each member's report, and pm-land.py reads it."""
-
-    ROW = {"path": "Plans/A.md", "error": "missing_ref", "ref": "#x"}
+class RealReports:
+    """Each member's report and row report written by the real main() of pm-landing-check.py, read by pm-land.py."""
 
     def row(self, ref: str = "#x", path: str = "Plans/A.md") -> dict:
         return {"path": path, "error": "missing_ref", "ref": ref}
 
-    def reports(self, baseline, first, second, edits=("Plans/A.md", "Plans/A.md")) -> tuple:
-        """The two members' (exit, report) from one recorded baseline, each member one more commit on one file."""
+    def real_run(self):
         path = ROOT / "tests" / "test_pm_landing_check.py"
         if not path.exists():
             self.skipTest("this sparse tree has no tests/test_pm_landing_check.py")
@@ -2619,28 +2619,60 @@ class RealReportBatchTests(Base):
         self.addCleanup(lambda: sys.argv.__setitem__(slice(None), argv))
         run.setUp()
         self.addCleanup(run.doCleanups)
+        run.tests_module = module
+        return run
 
-        def member(rows, rel: str, number: int) -> tuple:
-            target = run.repo / rel
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(f"edit {number}\n", encoding="utf-8")
-            run.git("add", rel)
-            run.git("commit", "-qm", f"member {number}")
-            run.stub(gates={"lint_path_refs": rows})
-            return run.compare()
+    def members(self, baseline, states, edits, subcheck="lint_path_refs", exports=None, audit=None) -> list:
+        """One recorded baseline, then for each member one more commit on its files and (exit, report, row report).
+        `exports`: for each state, the rows its command's export holds, or None when it cannot be read."""
+        run = self.real_run()
+        folder = Path(tempfile.mkdtemp(prefix="pm-land-rows-"))
+        self.addCleanup(shutil.rmtree, folder, True)
+        given = {}
+        if exports is not None:
+            run.module.aggregate_subcheck_argv = run.tests_module.same_validator_argv
 
-        run.stub(gates={"lint_path_refs": baseline})
+            def run_export(root, argv, timeout_seconds):
+                rows = given.get(argv[0])
+                if rows is None:
+                    return {"report": None, "timed_out": False, "error": "unreadable", "elapsed_seconds": 0.1}
+                return {"report": {"check": argv[0], "status": "fail", "failures": [dict(row) for row in rows]},
+                        "timed_out": False, "error": None, "elapsed_seconds": 0.1}
+
+            run.module.run_export = run_export
+            given.update(exports[0])
+        run.stub(gates={subcheck: baseline}, audit=audit)
         run.record()
-        return member(first, edits[0], 1), member(second, edits[1], 2)
+        out = []
+        for number, (rows, rels) in enumerate(zip(states, edits), 1):
+            for rel in (rels if isinstance(rels, tuple) else (rels,)):
+                target = run.repo / rel
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(f"edit {number}\n", encoding="utf-8")
+                run.git("add", rel)
+            run.git("commit", "-qm", f"member {number}")
+            if exports is not None:
+                given.clear()
+                given.update(exports[number])
+            run.stub(gates={subcheck: rows}, audit=audit)
+            rows_file = folder / f"rows-{number}.json"
+            code, text = run.compare("--row-report", str(rows_file))
+            out.append((code, text, str(rows_file)))
+        return out
 
-    def land_both(self, one: tuple, two: tuple) -> tuple:
-        self.h.branch("fix/a", {"src/x.txt": "a\n"})
-        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+    def reports(self, baseline, first, second, edits=("Plans/A.md", "Plans/A.md"), **options) -> list:
+        return self.members(baseline, [first, second], edits, **options)
+
+    def land_both(self, one: tuple, two: tuple, files=None) -> tuple:
+        first_files, second_files = files or ({"src/x.txt": "a\n"}, {"src/y.txt": "b\n"})
+        self.h.branch("fix/a", first_files)
         start = self.h.origin_main()
-        self.h.set_plan("landing", [{"exit": one[0], "raw": one[1]}, {"exit": two[0], "raw": two[1]}, {}])
+        self.h.set_plan("landing", [{"exit": one[0], "raw": one[1], "rows_file": one[2]},
+                                    {"exit": two[0], "raw": two[1], "rows_file": two[2]}, {}])
         first = self.land("fix/a", "--batch-open")
         self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
         self.a_sha = self.h.origin_main()
+        self.h.branch("fix/b", second_files)  # from the new main: two members may edit one file
         return start, self.land("fix/b", "--batch-start", start)
 
     def assert_closed_and_alone(self, start: str, result) -> None:
@@ -2651,6 +2683,10 @@ class RealReportBatchTests(Base):
         self.assertEqual(landing[2]["origin_main"], self.a_sha, "rechecked before fix/b is on main")
         self.assertFalse(self.h.held())
 
+
+class RealReportBatchTests(RealReports, Base):
+    """Review N1: the real main() of pm-landing-check.py writes each member's report, and pm-land.py reads it."""
+
     def test_shape_x_the_same_row_back_on_a_file_the_member_edits(self):
         one, two = self.reports([self.row()], [], [self.row()])
         self.assertEqual((one[0], two[0]), (0, 1))
@@ -2659,7 +2695,7 @@ class RealReportBatchTests(Base):
         self.assertNotIn("compare those", two[1])
         start, result = self.land_both(one, two)
         self.assert_closed_and_alone(start, result)
-        self.assertIn("fell from 1 to 0", result.stdout)
+        self.assertIn("listed as gone is back", result.stdout)
 
     def test_shape_y_different_content_back_closes_rather_than_stopping_to_compare(self):
         one, two = self.reports([self.row()], [], [self.row("#y")])
@@ -2769,6 +2805,255 @@ class RealReportBatchTests(Base):
         start, result = self.land_both(one, two)
         self.assertEqual(result.returncode, 0, result.stdout)
         self.assertTrue(self.h.held())
+
+
+class StalenessExemptionTests(RealReports, Base):
+    """A member's rise does not close the batch only when every added row is seen, is staleness, and names this member's
+    own files and no other file of the batch. Alone after the previous member's follow-up, that stops nothing."""
+
+    SPEC = "verify_spec_lock"
+    A, B = {"Plans/A.md": "a\n"}, {"Plans/B.md": "b\n"}
+
+    @staticmethod
+    def stale(path: str, ref: str = "#1", kind: str = "stale_hash") -> dict:
+        return {"path": path, "error": kind, "ref": ref}
+
+    def assert_shared(self, start: str, result, checks: int = 2) -> None:
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual([row["args"][:2] for row in self.h.calls("landing")], [["--base", start]] * checks, result.stdout)
+        self.assertTrue(self.h.held(), "the batch stays open")
+        self.assertEqual(M.parse_holder(self.h.holder())["batch-start"], start)
+        self.assertEqual(self.h.calls("snapshot"), [], "no follow-up yet")
+
+    def assert_closed(self, start: str, result, why: str) -> None:
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn(why, result.stdout)
+        landing = self.h.calls("landing")
+        self.assertEqual([row["args"][:2] for row in landing[:3]],
+                         [["--base", start], ["--base", start], ["--base", "origin/main"]], result.stdout)
+        self.assertEqual(landing[2]["origin_main"], self.a_sha, "the batch's follow-up runs before fix/b is on main")
+        self.assertIsNone(self.h.state("fix/b")["batch"])
+        self.assertEqual(self.h.state("fix/b")["status"], "done")
+        self.assertFalse(self.h.held())
+        self.assertGreaterEqual(len(self.h.calls("snapshot")), 1)
+
+    def test_two_plans_members_each_adding_their_own_stale_rows_share_a_batch(self):
+        one, two = self.reports([], [self.stale("Plans/A.md")], [self.stale("Plans/A.md"), self.stale("Plans/B.md")],
+                                edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        self.assertEqual((one[0], two[0]), (1, 1))
+        self.assertEqual((M.read_report(one[1])["totals"]["run-gates/verify_spec_lock"],
+                          M.read_report(two[1])["totals"]["run-gates/verify_spec_lock"]), (1, 2), "a real rise")
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_shared(start, result)
+        self.assertTrue(any("every added row is staleness naming only this landing's own files" in row
+                            for row in self.h.state("fix/b")["for_jared"]))
+        closed = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "lander-fix/b")
+        self.assertEqual(closed.returncode, 0, closed.stdout + closed.stderr)
+        self.assertEqual(len(self.h.calls("snapshot")), 1, "one follow-up for both")
+
+    def test_four_plans_members_share_one_follow_up(self):
+        names = [f"Plans/M{number}.md" for number in range(4)]
+        states = [[self.stale(name) for name in names[:count + 1]] for count in range(4)]
+        reports = self.members([], states, names, subcheck=self.SPEC)
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": code, "raw": text, "rows_file": rows} for code, text, rows in reports] + [{}])
+        for number, name in enumerate(names):
+            self.h.branch(f"fix/m{number}", {name: "x\n"})
+        self.assertEqual(self.land("fix/m0", "--batch-open").returncode, 0)
+        for number in (1, 2, 3):
+            result = self.land(f"fix/m{number}", "--batch-start", start)
+            self.assert_shared(start, result, number + 1)
+        closed = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "lander-fix/m3")
+        self.assertEqual(closed.returncode, 0, closed.stdout + closed.stderr)
+        self.assertEqual(len(self.h.calls("snapshot")), 1)
+
+    def test_a_stale_row_naming_the_other_members_file_closes(self):
+        one, two = self.reports([], [self.stale("Plans/A.md")],
+                                [self.stale("Plans/A.md"), self.stale("Plans/B.md"), self.stale("Plans/A.md", "#2")],
+                                edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "names another member's file (Plans/A.md)")
+
+    def test_a_stale_row_naming_its_own_and_the_other_members_file_closes(self):
+        both = {"path": "Plans/B.md", "error": "stale_hash", "also": "Plans/A.md"}
+        one, two = self.reports([], [self.stale("Plans/A.md")], [self.stale("Plans/A.md"), both],
+                                edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "names another member's file (Plans/A.md)")
+
+    def test_a_stale_row_on_a_file_both_members_edit_is_this_members(self):
+        """Added since the previous report, on a file its own range touches."""
+        one, two = self.reports([], [self.stale("Plans/A.md")], [self.stale("Plans/A.md"), self.stale("Plans/A.md", "#2")],
+                                edits=("Plans/A.md", "Plans/A.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, {"Plans/A.md": "a second\n", "Plans/B.md": "b\n"}))
+        self.assert_shared(start, result)
+
+    def test_a_stale_row_naming_no_file_of_the_batch_closes(self):
+        one, two = self.reports([], [self.stale("Plans/A.md")], [self.stale("Plans/A.md"), self.stale("Plans/Untouched.md")],
+                                edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "names no file of this batch")
+
+    def test_a_non_staleness_row_closes_though_every_other_is_its_own(self):
+        wrong = {"path": "Plans/Other.md", "error": "missing_ref", "ref": "#1"}
+        one, two = self.reports([], [self.stale("Plans/A.md")], [self.stale("Plans/A.md"), self.stale("Plans/B.md"), wrong],
+                                edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "an added row is not staleness")
+
+    def test_a_truncated_subcheck_rise_under_the_baselines_total_closes_though_every_printed_row_is_its_own_staleness(self):
+        rows = [self.stale("Plans/B.md", f"#{number}") for number in range(60)]
+        one, two = self.reports((rows, 120), (rows, 100), (rows, 110), edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        self.assertEqual((one[0], two[0]), (0, 1), "the check itself does not stop it")
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "is not complete in this report")
+
+    def test_a_truncated_subcheck_rise_over_the_baselines_total_closes_because_the_check_stops_it(self):
+        rows = [self.stale("Plans/B.md", f"#{number}") for number in range(60)]
+        one, two = self.reports((rows, 120), (rows, 120), (rows, 130), edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        self.assertEqual(two[0], 2)
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "landing check exit 2")
+
+    def keyed(self, rows: list) -> tuple:
+        """The aggregate prints a sample of them, and its total matches the export."""
+        return (rows, len(rows))
+
+    def test_a_subcheck_keyed_from_a_complete_export_in_both_reports_is_seen(self):
+        first = [self.stale("Plans/A.md", f"#{number}", "artifact_hash_stale") for number in range(60)]
+        second = first + [self.stale("Plans/B.md", "#1", "artifact_hash_stale")]
+        name = "validate_evidence"
+        one, two = self.members(first[:0], [self.keyed(first), self.keyed(second)], ("Plans/A.md", "Plans/B.md"), subcheck=name,
+                                exports=[{}, {"validate-evidence": first}, {"validate-evidence": second}])
+        self.assertIn("[keyed    ]", one[1] + two[1])
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_shared(start, result)
+
+    def test_a_subcheck_keyed_now_but_not_in_the_previous_report_closes(self):
+        first = [self.stale("Plans/A.md", f"#{number}", "artifact_hash_stale") for number in range(60)]
+        second = first + [self.stale("Plans/B.md", "#1", "artifact_hash_stale")]
+        one, two = self.members(self.keyed(first), [self.keyed(first), self.keyed(second)], ("Plans/A.md", "Plans/B.md"), subcheck="validate_evidence",
+                                exports=[{"validate-evidence": first}, {}, {"validate-evidence": second}])
+        self.assertIn("[not keyed]", one[1])
+        self.assertIn("[keyed    ]", two[1])
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "is not complete in the previous report")
+
+    def test_an_export_whose_total_does_not_match_closes(self):
+        first = [self.stale("Plans/A.md", f"#{number}", "artifact_hash_stale") for number in range(60)]
+        second = first + [self.stale("Plans/B.md", "#1", "artifact_hash_stale")]
+        before = first + [self.stale("Plans/C.md", "#1", "artifact_hash_stale"), self.stale("Plans/C.md", "#2", "artifact_hash_stale")]
+        one, two = self.members(self.keyed(before), [self.keyed(first), self.keyed(second)], ("Plans/A.md", "Plans/B.md"), subcheck="validate_evidence",
+                                exports=[{"validate-evidence": before}, {"validate-evidence": first}, {"validate-evidence": first}])
+        self.assertIn("holds 60 rows, but the printed total is 61", two[1])
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "is not complete in this report")
+
+    def drift(self, path: str, ref: str = "#1") -> dict:
+        return {"path": path, "error": "event_authority_currentness_source_drift", "ref": ref}
+
+    def test_the_readiness_counter_truncated_with_no_export_closes(self):
+        name = "validate_implementation_readiness"
+        rows = [self.drift("Plans/C.md", f"#{number}") for number in range(60)]
+        grown = rows[:45] + [self.drift("Plans/B.md", f"#{number}") for number in range(15)]
+        one, two = self.reports((rows, 70), (rows, 70), (grown, 75), edits=("Plans/A.md", "Plans/B.md"), subcheck=name)
+        self.assertEqual(two[0], 1, two[1])
+        self.assertIn("the readiness growth counter", two[1])
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "is not complete in this report")
+
+    def test_the_readiness_counter_with_its_added_rows_seen_and_its_own_stays(self):
+        name = "validate_implementation_readiness"
+        first = [self.drift("Plans/A.md", f"#{number}") for number in range(60)]
+        second = first + [self.drift("Plans/B.md")]
+        one, two = self.members(first[:0], [self.keyed(first), self.keyed(second)], ("Plans/A.md", "Plans/B.md"), subcheck=name,
+                                exports=[{}, {"validate-implementation-readiness": first}, {"validate-implementation-readiness": second}])
+        self.assertIn(f"run-gates/{name}", two[1])
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_shared(start, result)
+
+    def test_a_gone_bucket_back_with_its_own_stale_row_stays(self):
+        one, two = self.reports([self.stale("Plans/C.md")], [], [self.stale("Plans/C.md", "#2")],
+                                edits=("Plans/C.md", "Plans/C.md"), subcheck=self.SPEC)
+        self.assertEqual(M.read_report(one[1])["gone_ids"], ["run-gates|verify_spec_lock|stale_hash|Plans/C.md"])
+        self.assertEqual(M.read_report(two[1])["gone_ids"], [])
+        start, result = self.land_both(one, two, ({"Plans/C.md": "c\n"}, {"Plans/C.md": "c second\n"}))
+        self.assert_shared(start, result)
+
+    def test_a_gone_bucket_back_on_a_file_this_member_did_not_touch_closes(self):
+        one, two = self.reports([self.stale("Plans/C.md")], [], [self.stale("Plans/C.md", "#2")],
+                                edits=("Plans/C.md", "Plans/B.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, ({"Plans/C.md": "c\n"}, self.B))
+        self.assert_closed(start, result, "listed as gone is back")
+
+    def test_one_stale_bucket_raised_as_another_falls_on_its_own_file_stays(self):
+        b1, b2, c1, c2 = self.stale("Plans/B.md"), self.stale("Plans/B.md", "#2"), self.stale("Plans/C.md"), self.stale("Plans/C.md", "#2")
+        one, two = self.reports([b1, b2, c1, c2], [b1, c1, c2], [b1, b2, c1], edits=("Plans/D.md", "Plans/B.md"), subcheck=self.SPEC)
+        self.assertEqual(M.read_report(one[1])["totals"], M.read_report(two[1])["totals"])
+        start, result = self.land_both(one, two, ({"Plans/D.md": "d\n"}, self.B))
+        self.assert_shared(start, result)
+
+    def test_a_shard_a_stale_row_names_counts_as_the_member_whose_diff_regenerated_it(self):
+        shard = "Plans/_shards/B/001.md"
+        row = {"path": "Plans/.evidence/e.json", "error": "artifact_hash_stale", "artifact": shard}
+        one, two = self.reports([], [self.stale("Plans/A.md")], [self.stale("Plans/A.md"), row],
+                                edits=("Plans/A.md", ("Plans/B.md", shard)), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, {"Plans/B.md": "b\n", shard: "s\n"}))
+        self.assert_shared(start, result)
+
+    def test_a_shard_only_the_other_member_regenerated_closes(self):
+        shard = "Plans/_shards/A/001.md"
+        row = {"path": "Plans/.evidence/e.json", "error": "artifact_hash_stale", "artifact": shard}
+        one, two = self.reports([], [self.stale("Plans/A.md")], [self.stale("Plans/A.md"), self.stale("Plans/B.md"), row],
+                                edits=(("Plans/A.md", shard), "Plans/B.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, ({"Plans/A.md": "a\n", shard: "s\n"}, self.B))
+        self.assert_closed(start, result, f"names another member's file ({shard})")
+
+    def test_a_rise_with_no_row_report_closes(self):
+        def rep(total):
+            return M.read_report(landing_report(totals={"run-gates/x": total}))
+        self.assertIn("no row report", M.batch_gap(rep(6), [rep(5)])[1])
+        self.assertIn("no row report", M.batch_gap(rep(6), [rep(5)], lambda name: M.why_not_exempt(name, None, None, []))[1])
+
+    def rows(self, *rows, reported=None, complete=True) -> dict:
+        return {"subchecks": {"run-gates/x": {"reported": len(rows) if reported is None else reported, "complete": complete, "rows": list(rows)}}}
+
+    def test_what_exempts_a_subcheck_row_by_row(self):
+        kept = {"key": "k1", "stale": True, "names": ["Plans/A.md"]}
+        own = {"key": "k2", "stale": True, "names": ["Plans/B.md"]}
+        before = self.rows(kept)
+        self.assertIsNone(M.why_not_exempt("run-gates/x", self.rows(kept, own), before, ["Plans/B.md"]))
+        self.assertIn("not staleness", M.why_not_exempt("run-gates/x", self.rows(kept, dict(own, stale=False)), before, ["Plans/B.md"]))
+        self.assertIn("names no file", M.why_not_exempt("run-gates/x", self.rows(kept, dict(own, names=[])), before, ["Plans/B.md"]))
+        self.assertIn("another member", M.why_not_exempt("run-gates/x", self.rows(kept, own), before, ["Plans/Z.md"]))
+        self.assertIn("not complete in this", M.why_not_exempt("run-gates/x", self.rows(kept, own, reported=3), before, ["Plans/B.md"]))
+        self.assertIn("not complete in this", M.why_not_exempt("run-gates/x", self.rows(kept, own, complete=False), before, ["Plans/B.md"]))
+        self.assertIn("not complete in the previous", M.why_not_exempt("run-gates/x", self.rows(kept, own), self.rows(kept, complete=False), ["Plans/B.md"]))
+        self.assertIn("not complete in this", M.why_not_exempt("run-gates/y", self.rows(kept), before, []))
+        self.assertIn("no added row", M.why_not_exempt("run-gates/x", self.rows(kept), before, []))
+        twice = M.why_not_exempt("run-gates/x", self.rows(kept, dict(kept, stale=False)), before, ["Plans/A.md"])
+        self.assertIn("not staleness", twice, "the same key twice is one added row, and the row list is what says so")
+
+    def test_an_older_landing_check_is_not_asked_for_a_row_report(self):
+        folder = self.h.tmp / "older"
+        (folder / "scripts").mkdir(parents=True)
+        (folder / "scripts" / "pm-landing-check.py").write_text("no such flag here\n")
+        self.assertFalse(M.writes_row_report(folder))
+        self.assertTrue(M.writes_row_report(ROOT))
+        self.assertFalse(M.writes_row_report(self.h.tmp / "nowhere"))
+
+    def test_a_landing_outside_a_batch_is_not_asked_for_one(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.assertEqual(self.land("fix/a").returncode, 0)
+        self.assertNotIn("--row-report", self.h.calls("landing")[0]["args"])
+
+    def test_a_batch_member_is_asked_for_one_and_its_follow_up_is_not(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        start = self.h.origin_main()
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        self.assertIn("--row-report", self.h.calls("landing")[0]["args"])
+        self.assertEqual(self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "lander-fix/a").returncode, 0)
+        self.assertNotIn("--row-report", self.h.calls("landing")[1]["args"])
 
 
 class BatchClearingTests(Base):
