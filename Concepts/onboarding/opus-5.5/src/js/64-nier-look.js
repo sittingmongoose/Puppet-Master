@@ -284,10 +284,11 @@
   function openPanel(from) {
     const S = O55.S, w = win(), n = N(), C = window.PM_NIER_CHIPS;
     if (!w || !n || !n.store) return null;
+    /* the look menu gives way to the editor, also when the editor is open already: the menu opens over it (FO-81), and
+       its Adjust NieR then closes the menu and takes focus to the editor's heading */
+    if (S.lookOpen) { S.lookOpen = false; O55.ui.refresh(); if (panel) O55.sound.play('unsheet'); }
     if (panel) { const h = panel.host.querySelector('.o55-nierpanel-h'); if (h) h.focus({ preventScroll: true }); return panel; }
     heavy(); /* mounting the editor is a large build of its own */
-    /* the look menu gives way to the editor */
-    if (S.lookOpen) { S.lookOpen = false; O55.ui.refresh(); }
     const body = w.querySelector('.o55-body');
     const host = document.createElement('section');
     host.className = 'o55-nierpanel';
