@@ -283,9 +283,11 @@ narrow.installRailPeek = function () {
     if (e.target.closest && e.target.closest('.left-panel, #fileContextMenu')) return;
     ma.removeAttribute('data-pmw-rail-peek');
   }, true);
+  // an Escape a menu over the overlay already spent (PMMenu and PMR.menu mark it with preventDefault) closes only that
+  // menu; the next Escape closes the overlay (FO-84)
   doc.addEventListener('keydown', function (e) {
     var ma = mainArea();
-    if (e.key === 'Escape' && ma && ma.hasAttribute('data-pmw-rail-peek')) { ma.removeAttribute('data-pmw-rail-peek'); }
+    if (e.key === 'Escape' && !e.defaultPrevented && ma && ma.hasAttribute('data-pmw-rail-peek')) { ma.removeAttribute('data-pmw-rail-peek'); }
   });
   bus.on('open', function () { var ma = mainArea(); if (ma) ma.removeAttribute('data-pmw-rail-peek'); });
 };

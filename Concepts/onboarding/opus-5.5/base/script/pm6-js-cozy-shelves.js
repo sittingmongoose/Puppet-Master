@@ -327,7 +327,14 @@
     document.addEventListener('click', function (ev) {
       if (!ev.target.closest('.pm6-tb-menu, .pm6-chat-more-menu, .pm6-tb-menu-trigger, .pm-ctx-menu')) closeAll();
     });
-    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') closeAll(); });
+    /* An Escape that closes a menu is spent on it: marked handled (preventDefault, only when a menu was open) so a
+       layer under the menu, such as the folded rail's overlay (home 44-narrow.js), stays for the next Escape (FO-84).
+       No stopPropagation: every other document listener still hears the key. */
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'Escape' || !openMenus.length) return;
+      closeAll();
+      ev.preventDefault();
+    });
     window.addEventListener('resize', function () { closeAll(true); });
     window.addEventListener('scroll', function () {
       openMenus.forEach(function (m) { if (m._pmRailHome) positionRail(m); else if (m._pmBottomHome) positionBottom(m); });

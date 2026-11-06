@@ -157,16 +157,19 @@ export default async function (t) {
     const closed = await f.waitForFunction(k => !__shelf.open().some(m => __shelf.key(m) === k), key, { timeout: 5000 }).then(() => true, () => false);
     await t.check(`${tag} closes on Escape`, closed, '', { hard: true });
     await f.waitForFunction(k => ![...document.querySelectorAll('[role="menu"]')].some(m => __shelf.key(m) === k && m.checkVisibility()), key, { timeout: 5000 }).catch(() => {});
-    // One Escape closes one layer: the side panel the menu came from stays open. Where it does not (the
-    // narrow rail overlay), report it and reopen the panel by its icon so the rest of the census still runs.
-    if (panelBefore) {
-      const kept = await slot.isVisible();
-      await t.check(`${tag} Escape leaves the side panel open`, kept, kept ? '' : 'the side panel closed with the menu');
-      if (!kept) {
-        await f.locator(`#activityBar .icon[data-target="${current}"]`).click();
-        await t.check(`${tag} side panel reopened by its icon`, await slot.isVisible(), '', { hard: true });
-      }
-    }
+    // FO-84: one Escape closes one layer. The side panel the menu came from stays open (the folded rail's overlay
+    // included); once per panel a second Escape must then close that overlay, and its icon reopens it.
+    if (panelBefore) await t.check(`${tag} Escape closes the menu and leaves the side panel open`, await slot.isVisible(), '', { hard: true });
+    await secondEscape(tag);
+  };
+  const secondDone = new Set();
+  const secondEscape = async (tag) => {
+    if (secondDone.has(current) || !await f.evaluate(() => !!document.querySelector('[data-pmw-rail-peek]'))) return;
+    secondDone.add(current);
+    await t.page.keyboard.press('Escape');
+    await t.check(`${tag} a second Escape closes the folded rail's overlay`, await f.locator('#sidePanelSlot').isHidden(), '', { hard: true });
+    await f.locator(`#activityBar .icon[data-target="${current}"]`).click();
+    await t.check(`${current} side panel reopened by its icon`, await f.locator('#sidePanelSlot').isVisible(), '', { hard: true });
   };
   // Nested branches: each parent item opens its menu by pointer and by ArrowRight, and ArrowLeft returns.
   const branches = async (key, tag) => {
@@ -379,7 +382,9 @@ export default async function (t) {
       for (let pass=0;pass<20;pass++) {
         let opened=false;
         for(const head of heads) if(await head.isVisible() && !await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open'))) {
-          await head.scrollIntoViewIfNeeded(); await head.click({position:{x:8,y:8}});
+          // Centre it in its own scroller with the wheel: at the scroller's edge a short panel's sticky
+          // footer (Source Control's Publish card at 1280x500) covers it.
+          await reach(head); await head.click({position:{x:8,y:8}});
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),'',{hard:true});
           opened=true;
         }
@@ -418,6 +423,8 @@ export default async function (t) {
           await t.page.keyboard.press('Escape');
           await t.check(`${target} ${c.key} closes on Escape`,await trigger.getAttribute('aria-expanded')==='false','',{hard:true});
           await menu.waitFor({state:'hidden',timeout:5000});
+          await t.check(`${target} ${c.key} Escape closes the menu and leaves the side panel open`,await f.locator('#sidePanelSlot').isVisible(),'',{hard:true});
+          await secondEscape(`${target} ${c.key}`);
           exercised.add(c.key);
           if(c.key==='rdCfgMenu' && !await panel.locator('#rdAddForm').isVisible()) {
             // Enter this branch while the launch selector is still in view;
@@ -426,6 +433,14 @@ export default async function (t) {
             await t.check('launch selector reopens for Add Configuration',await trigger.getAttribute('aria-expanded')==='true','',{hard:true});
             await menu.waitFor({state:'visible',timeout:5000});
             await menu.getByRole('menuitem',{name:/Add Configuration/}).click();
+            // A pick closes the menu, not the side panel. The folded rail's overlay closes on any press outside
+            // the panel (its exemption covers File actions only); report it and reopen the panel by its icon.
+            const kept = await f.locator('#sidePanelSlot').isVisible();
+            await t.check('Run menu pick leaves the side panel open', kept, kept ? '' : 'the side panel closed on the pick');
+            if (!kept) {
+              await f.locator(`#activityBar .icon[data-target="${target}"]`).click();
+              await t.check('Run side panel reopened by its icon', await f.locator('#sidePanelSlot').isVisible(), '', { hard: true });
+            }
             await t.check('Run Add Configuration reveals debugger selector',await panel.locator('#rdAddForm').isVisible(),'',{hard:true});
           }
         }
